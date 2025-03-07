@@ -19,4 +19,18 @@ extension UIView {
 		}
 		return nil
 	}
+
+	func subviewOfType<T: AnyObject>(where pred: (T) -> Bool) -> T? {
+		for view in subviews {
+			if let v = view as? T,
+			   pred(v)
+			{
+				return v
+			}
+			if let v: T = view.subviewOfType(where: pred) {
+				return v
+			}
+		}
+		return nil
+	}
 }

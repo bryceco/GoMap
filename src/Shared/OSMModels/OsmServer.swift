@@ -44,7 +44,10 @@ struct OsmServer {
 		apiURL = "https://" + apiHost + "/"
 		serverURL = "https://" + serverHost + "/"
 		oAuth2 = OAuth2(serverURL: URL(string: serverURL)!,
-		                client_id: oAuth_client_id)
+		                basePath: "oauth2",
+		                authPath: "authorize",
+		                client_id: oAuth_client_id,
+		                scope: "read_prefs write_prefs read_gpx write_gpx write_notes write_api")
 		nominatimUrl = "https://" + nominatimHost + "/"
 		if let osmchaHost = osmchaHost {
 			osmchaUrl = "https://" + osmchaHost + "/"

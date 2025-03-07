@@ -17,7 +17,7 @@ protocol PresetValueTextFieldOwner: AnyObject {
 	func valueChanged(for textField: PresetValueTextField, ended: Bool)
 }
 
-class PresetValueTextField: AutocompleteTextField {
+class PresetValueTextField: AutocompleteTextField, PanororamaxDelegate {
 	weak var owner: PresetValueTextFieldOwner!
 	var defaultInputAccessoryView: UIView?
 
@@ -181,6 +181,7 @@ class PresetValueTextField: AutocompleteTextField {
 		let associatedView2 = getHeightButton()
 			?? getYesNoButton(keyValueDict: owner?.keyValueDict ?? [:])
 			?? getUnitsButton()
+			?? getPhotographButton()
 
 		rightView = associatedView1 ?? associatedView2
 		rightViewMode = rightView != nil ? .always : .never
@@ -460,5 +461,72 @@ class PresetValueTextField: AutocompleteTextField {
 		}, onRecognize: { _ in
 		})
 		owner.viewController?.navigationController?.pushViewController(vc, animated: true)
+	}
+
+	// MARK: Photograph button (image, panoramax, etc)
+
+	var panoramaxKey: String?
+	private func getPhotographButton() -> UIView? {
+		guard #available(iOS 13.0, *),
+		      OsmTags.isKey(key, variantOf: "panoramax")
+		else {
+			return nil
+		}
+		let button = UIButton(type: .system)
+		button.layer.borderWidth = 2.0
+		button.layer.borderColor = UIColor.systemBlue.cgColor
+		button.layer.cornerRadius = 15.0
+		button.setImage(UIImage(named: "camera"), for: .normal)
+
+		button.addTarget(self, action: #selector(openPanoramaxViewController(_:)), for: .touchUpInside)
+		return button
+	}
+
+	func panoramaxUpdate(photoID: String) {
+		// Because the table cells can reload while taking the photo we
+		// need to locate the correct cell again:
+		guard let tableView: UITableView = superviewOfType() else {
+			return
+		}
+		guard let cell = tableView.visibleCells.compactMap({
+			let c: PresetValueTextField? = $0.subviewOfType(where: {
+				$0.key == self.panoramaxKey
+			})
+			return c
+		}).first
+		else {
+			return
+		}
+		// update text
+		cell.text = photoID
+		cell.notifyValueChange(ended: false)
+		cell.notifyValueChange(ended: true)
+	}
+
+	@available(iOS 13.0, *)
+	@objc func openPanoramaxViewController(_ sender: Any?) {
+		resignFirstResponder()
+
+		// get location
+		let mapView = AppDelegate.shared.mapView!
+		let location: LatLon
+		if let object = mapView.editorLayer.selectedPrimary?.selectionPoint() {
+			location = object
+		} else if let pushPin = mapView.pushPin?.arrowPoint {
+			location = mapView.mapTransform.latLon(forScreenPoint: pushPin)
+		} else {
+			// shouldn't get here
+			return
+		}
+
+		// save our key value so we can locate the correct cell when we come back
+		panoramaxKey = key
+
+		let vc = PanoramaxViewController.create()
+		vc.panoramax = PanoramaxServer(serverURL: URL(string: "https://panoramax.openstreetmap.fr")!)
+		vc.photoID = text ?? ""
+		vc.delegate = self
+		vc.location = location
+		owner.viewController?.present(vc, animated: true)
 	}
 }

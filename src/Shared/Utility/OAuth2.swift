@@ -26,16 +26,17 @@ enum OAuthError: LocalizedError {
 
 class OAuth2 {
 	static let redirect_uri = "gomaposm://oauth/callback"
-	static let scope = "read_prefs write_prefs read_gpx write_gpx write_notes write_api"
 
 	private var safariVC: SFSafariViewController?
 	private var state = ""
 	private(set) var authorizationHeader: (name: String, value: String)?
 
 	let serverURL: URL
+	let basePath: String
+	let authPath: String
 	let client_id: String
+	let scope: String // "read_prefs write_prefs read_gpx write_gpx write_notes write_api"
 
-	var oauthUrl: URL { return serverURL.appendingPathComponent("oauth2") }
 	var keychainIdentifier: String {
 		let OAUTH_KEYCHAIN_IDENTIFIER = "OAuth_access_token"
 		if serverURL.host == "www.openstreetmap.org" {
@@ -45,10 +46,16 @@ class OAuth2 {
 	}
 
 	init(serverURL: URL,
-	     client_id: String)
+	     basePath: String,
+	     authPath: String,
+	     client_id: String,
+	     scope: String)
 	{
 		self.serverURL = serverURL
+		self.basePath = basePath
+		self.authPath = authPath
 		self.client_id = client_id
+		self.scope = scope
 		if let token = KeyChain.getStringForIdentifier(keychainIdentifier) {
 			setAuthorizationToken(token: token)
 		}
@@ -69,7 +76,9 @@ class OAuth2 {
 	}
 
 	private func url(withPath path: String, with dict: [String: String]) -> URL {
-		var components = URLComponents(string: oauthUrl.appendingPathComponent(path).absoluteString)!
+		let url = serverURL.appendingPathComponent(basePath).appendingPathComponent(path)
+		var components = URLComponents(url: url,
+		                               resolvingAgainstBaseURL: true)!
 		components.queryItems = dict.map({ k, v in URLQueryItem(name: k, value: v) })
 		return components.url!
 	}
@@ -93,11 +102,11 @@ class OAuth2 {
 	{
 		authCallback = callback
 		state = "\(Int.random(in: 0..<1000_000000))-\(Int.random(in: 0..<1000_000000))"
-		let url = url(withPath: "authorize", with: [
+		let url = url(withPath: authPath, with: [
 			"client_id": client_id,
 			"redirect_uri": Self.redirect_uri,
 			"response_type": "code",
-			"scope": Self.scope,
+			"scope": scope,
 			"state": state
 		])
 		safariVC = SFSafariViewController(url: url)
@@ -107,8 +116,10 @@ class OAuth2 {
 	// Once the user responds to the Safari popup the application is invoked and
 	// the app delegate calls this function
 	func redirectHandler(url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) {
-		safariVC?.dismiss(animated: true)
-		safariVC = nil
+		defer {
+			safariVC?.dismiss(animated: true)
+			safariVC = nil
+		}
 		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
 			doCallback(.failure(OAuthError.badRedirectUrl(url.absoluteString)))
 			return

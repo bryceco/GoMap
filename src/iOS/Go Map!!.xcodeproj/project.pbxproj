@@ -23,6 +23,8 @@
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
 		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
+		021BC21E2D6E6E0E004631C5 /* Panoramax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021BC21D2D6E6E05004631C5 /* Panoramax.swift */; };
+		021BC2222D7625FB004631C5 /* Panoramax.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021BC2212D7625FB004631C5 /* Panoramax.storyboard */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
 		021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBA258591D000F6E1C0 /* PresetKey.swift */; };
 		021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBF258594EE00F6E1C0 /* PresetValue.swift */; };
@@ -345,6 +347,8 @@
 		02092ED029E8ADB70095042B /* ArchivePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePath.swift; sourceTree = "<group>"; };
 		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
+		021BC21D2D6E6E05004631C5 /* Panoramax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panoramax.swift; sourceTree = "<group>"; };
+		021BC2212D7625FB004631C5 /* Panoramax.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Panoramax.storyboard; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		021FADBA258591D000F6E1C0 /* PresetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKey.swift; sourceTree = "<group>"; };
 		021FADBF258594EE00F6E1C0 /* PresetValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetValue.swift; sourceTree = "<group>"; };
@@ -838,6 +842,8 @@
 				6442666322540EDF00C0D545 /* Observable */,
 				6453776323D38D1F00656A1C /* OSMModels */,
 				02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */,
+				021BC2212D7625FB004631C5 /* Panoramax.storyboard */,
+				021BC21D2D6E6E05004631C5 /* Panoramax.swift */,
 				C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
@@ -1397,6 +1403,7 @@
 				027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */,
 				02F0297C2BFAFF53002F7956 /* DataOverlays.storyboard in Resources */,
 				0246A78126A4AA3A00941A44 /* DirectionViewController.xib in Resources */,
+				021BC2222D7625FB004631C5 /* Panoramax.storyboard in Resources */,
 				02EA545E2AB7CCA4004688F9 /* Localizable.xcstrings in Resources */,
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
 				0287D25229947B2900BEAD9E /* QuestChooser.storyboard in Resources */,
@@ -1447,6 +1454,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02E9ABC02BA151AA00F0EF69 /* GoogleMaps.secret in Sources */,
+				021BC21E2D6E6E0E004631C5 /* Panoramax.swift in Sources */,
 				020798012994706000D3C654 /* QuestBuilderController.swift in Sources */,
 				0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */,
 				02CE3CE229909D1D00DDACE0 /* QuestSolverController.swift in Sources */,
