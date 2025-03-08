@@ -58,7 +58,6 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 
 		// get the track
 		guard let track = AppDelegate.shared.mapView.gpxLayer.activeTrack else {
-			print("missing track")
 			return
 		}
 
@@ -108,7 +107,6 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 		guard let activity = activity,
 		      let track = AppDelegate.shared.mapView.gpxLayer.activeTrack
 		else {
-			print("missing track")
 			return
 		}
 		let state = GpxTrackAttributes.ContentState(startTime: track.creationDate,
@@ -136,11 +134,6 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 	}
 
 	func endTrack(fromWidget: Bool) {
-		if fromWidget {
-			// This will cause us to be called again with fromWidget = false
-			AppDelegate.shared.mapView.mainViewController.setGpsState(.NONE)
-			return
-		}
 		guard let activity = activity,
 		      let track = AppDelegate.shared.mapView.gpxLayer.activeTrack
 		else {
@@ -152,6 +145,9 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 			state.pointCount = track.points.count
 			state.status = .ended
 			await activity.end(using: state, dismissalPolicy: .immediate)
+		}
+		if fromWidget {
+			AppDelegate.shared.mapView.mainViewController.setGpsState(.NONE)
 		}
 		self.activity = nil
 	}

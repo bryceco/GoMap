@@ -123,8 +123,13 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 		NotificationCenter.default.addObserver(
 			self,
-			selector: #selector(UIApplicationDelegate.applicationDidEnterBackground(_:)),
+			selector: #selector(applicationDidEnterBackground(_:)),
 			name: UIApplication.didEnterBackgroundNotification,
+			object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(applicationDidBecomeActive(_:)),
+			name: UIApplication.didBecomeActiveNotification,
 			object: nil)
 	}
 
@@ -693,12 +698,26 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	}
 
 	@objc func applicationDidEnterBackground(_ sender: Any?) {
-		let appDelegate = AppDelegate.shared
-		if appDelegate.mapView!.gpsInBackground, appDelegate.mapView!.displayGpxLogs {
+		let mapView = AppDelegate.shared.mapView!
+		if mapView.gpsInBackground,
+		   mapView.displayGpxLogs
+		{
 			// allow GPS collection in background
+			if #available(iOS 16.2, *) {
+				GpxTrackWidgetManager.shared.startTrack(fromWidget: false)
+			} else {
+				// Fallback on earlier versions
+			}
 		} else {
 			// turn off GPS tracking
 			setGpsState(GPS_STATE.NONE)
+		}
+	}
+
+	@objc func applicationDidBecomeActive(_ sender: Any?) {
+		// allow GPS collection in background
+		if #available(iOS 16.2, *) {
+			GpxTrackWidgetManager.shared.endTrack(fromWidget: false)
 		}
 	}
 
