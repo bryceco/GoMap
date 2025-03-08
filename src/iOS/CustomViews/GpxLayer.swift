@@ -39,22 +39,22 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 		}
 	}
 
-	func startNewTrack(continuing: Bool) {
+	func startNewTrack(continuingCurrentTrack: Bool) {
 		if activeTrack != nil {
-			endActiveTrack(continuing: continuing)
+			endActiveTrack(continuingCurrentTrack: continuingCurrentTrack)
 		}
 		activeTrack = GpxTrack()
 		stabilizingCount = 0
 		selectedTrack = activeTrack
 
 #if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
-		if #available(iOS 16.2, *), !continuing {
+		if #available(iOS 16.2, *), !continuingCurrentTrack {
 			GpxTrackWidgetManager.shared.startTrack(fromWidget: false)
 		}
 #endif
 	}
 
-	func endActiveTrack(continuing: Bool) {
+	func endActiveTrack(continuingCurrentTrack: Bool) {
 		if let activeTrack = activeTrack {
 			// redraw shape with archive color
 			setNeedsLayout()
@@ -62,7 +62,7 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 			activeTrack.finish()
 
 #if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
-			if #available(iOS 16.2, *), !continuing {
+			if #available(iOS 16.2, *), !continuingCurrentTrack {
 				GpxTrackWidgetManager.shared.endTrack(fromWidget: false)
 			}
 #endif
@@ -172,8 +172,8 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 			// if the number of points is too large then the periodic save will begin taking too long,
 			// and drawing performance will degrade, so start a new track every hour
 			if activeTrack.points.count >= 3600 {
-				endActiveTrack(continuing: true)
-				startNewTrack(continuing: true)
+				endActiveTrack(continuingCurrentTrack: true)
+				startNewTrack(continuingCurrentTrack: true)
 				stabilizingCount = 100 // already stable
 				addPoint(location)
 			}
@@ -313,7 +313,7 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 		let active = activeTrack != nil
 		let stable = stabilizingCount
 
-		endActiveTrack(continuing: false)
+		endActiveTrack(continuingCurrentTrack: false)
 		sublayers = nil
 
 		let dir = saveDirectory()
@@ -327,7 +327,7 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 		setNeedsLayout()
 
 		if active {
-			startNewTrack(continuing: false)
+			startNewTrack(continuingCurrentTrack: false)
 			stabilizingCount = stable
 		}
 	}
