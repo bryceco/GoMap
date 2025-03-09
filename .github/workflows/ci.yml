@@ -21,12 +21,8 @@ jobs:
           xcodebuild test \
             -scheme GoMapTests \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2' \
-            -allowProvisioningUpdates \
-            -authenticationKeyID $(APPLE_ID_KEY_ID) \
-            -authenticationKeyIssuerID $(APPLE_ID_ISSUER_ID)
+            -allowProvisioningUpdates 
           xcodebuild test \
             -scheme GoMapUITests \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2' \
-            -allowProvisioningUpdates \
-            -authenticationKeyID $(APPLE_ID_KEY_ID) \
-            -authenticationKeyIssuerID $(APPLE_ID_ISSUER_ID)
+            -allowProvisioningUpdates 
