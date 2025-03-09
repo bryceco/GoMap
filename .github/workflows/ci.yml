@@ -1,0 +1,32 @@
+name: XCode tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+
+jobs:
+  test:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Tests on iPhone Simulator
+        run: |
+          cd src/iOS
+          xcodebuild test \
+            -scheme GoMapTests \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2' \
+            -allowProvisioningUpdates \
+            -authenticationKeyID $(APPLE_ID_KEY_ID) \
+            -authenticationKeyIssuerID $(APPLE_ID_ISSUER_ID)
+          xcodebuild test \
+            -scheme GoMapUITests \
+            -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2' \
+            -allowProvisioningUpdates \
+            -authenticationKeyID $(APPLE_ID_KEY_ID) \
+            -authenticationKeyIssuerID $(APPLE_ID_ISSUER_ID)
