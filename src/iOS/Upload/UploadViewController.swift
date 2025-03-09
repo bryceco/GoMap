@@ -24,6 +24,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 	@IBOutlet var clearCommentButton: UIButton!
 	@IBOutlet var commentHistoryButton: UIButton!
 	@IBOutlet var sourceHistoryButton: UIButton!
+	@IBOutlet var changesetCommentPlaceholder: UILabel!
 
 	var recentCommentList = MostRecentlyUsed<String>(maxCount: 5,
 	                                                 userPrefsKey: UserPrefs.shared.recentCommitComments)
@@ -70,6 +71,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		commentTextView.text = UserPrefs.shared.uploadComment.value
 		sourceTextField.text = UserPrefs.shared.uploadSource.value
 		sourceTextField.placeholder = "survey, Bing, knowledge" // overrules translations: see #557
+		changesetCommentPlaceholder.isHidden = commentTextView.text.count > 0
 
 		let text = mapData?.changesetAsAttributedString()
 		if text == nil {
@@ -127,6 +129,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 					view.text = message
 					view.resignFirstResponder()
 				}
+				self.changesetCommentPlaceholder.isHidden = self.commentTextView.text.count > 0
 			}))
 		}
 		actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
@@ -325,18 +328,21 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
 		if textView == commentTextView {
 			clearCommentButton.isHidden = commentTextView.text.count == 0
+			changesetCommentPlaceholder.isHidden = commentTextView.text.count > 0
 		}
 	}
 
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		if textView == commentTextView {
 			clearCommentButton.isHidden = commentTextView.text.count == 0
+			changesetCommentPlaceholder.isHidden = true
 		}
 	}
 
 	func textViewDidEndEditing(_ textView: UITextView) {
 		if textView == commentTextView {
 			clearCommentButton.isHidden = true
+			changesetCommentPlaceholder.isHidden = commentTextView.text.count > 0
 		}
 	}
 

@@ -1405,6 +1405,18 @@
         }
       }
     },
+    "xNB-pJ-M20.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Describe your changes... \"; ObjectID = \"xNB-pJ-M20\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Describe your changes... "
+          }
+        }
+      }
+    },
     "yZR-tZ-66S.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Source:\"; ObjectID = \"yZR-tZ-66S\";",
       "extractionState" : "extracted_with_value",
