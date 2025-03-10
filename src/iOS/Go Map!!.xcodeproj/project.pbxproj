@@ -236,7 +236,7 @@
 		ED56E5B426026542000B368C /* BingMetadataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B226026541000B368C /* BingMetadataViewController.swift */; };
 		ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B326026541000B368C /* ClearCacheViewController.swift */; };
 		ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C026027A50000B368C /* CustomPresetController.swift */; };
-		ED56E5C526027A50000B368C /* CustomPresetListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C126027A50000B368C /* CustomPresetListViewController.swift */; };
+		ED56E5C526027A50000B368C /* CustomPresetFieldListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C126027A50000B368C /* CustomPresetFieldListViewController.swift */; };
 		ED56E5C626027A50000B368C /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C226027A50000B368C /* ContactUsViewController.swift */; };
 		ED56E5C726027A50000B368C /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C326027A50000B368C /* CreditsViewController.swift */; };
 		ED56E5E426028181000B368C /* DisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5E326028181000B368C /* DisplayViewController.swift */; };
@@ -588,7 +588,7 @@
 		ED56E5B226026541000B368C /* BingMetadataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingMetadataViewController.swift; sourceTree = "<group>"; };
 		ED56E5B326026541000B368C /* ClearCacheViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearCacheViewController.swift; sourceTree = "<group>"; };
 		ED56E5C026027A50000B368C /* CustomPresetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresetController.swift; sourceTree = "<group>"; };
-		ED56E5C126027A50000B368C /* CustomPresetListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresetListViewController.swift; sourceTree = "<group>"; };
+		ED56E5C126027A50000B368C /* CustomPresetFieldListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresetFieldListViewController.swift; sourceTree = "<group>"; };
 		ED56E5C226027A50000B368C /* ContactUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		ED56E5C326027A50000B368C /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		ED56E5E326028181000B368C /* DisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayViewController.swift; sourceTree = "<group>"; };
@@ -775,7 +775,7 @@
 				C3D096AB263D48F700E3B129 /* AppDelegate.swift */,
 				ED56E5B226026541000B368C /* BingMetadataViewController.swift */,
 				ED56E5C026027A50000B368C /* CustomPresetController.swift */,
-				ED56E5C126027A50000B368C /* CustomPresetListViewController.swift */,
+				ED56E5C126027A50000B368C /* CustomPresetFieldListViewController.swift */,
 				02F0297A2BFAFF2E002F7956 /* DataOverlays */,
 				64D74BF02253DF39004FFD20 /* Direction */,
 				0244399629CA9A28009FC2D0 /* DisplaySettings */,
@@ -1587,7 +1587,7 @@
 				020E160B267A82050037DE49 /* TileServer.swift in Sources */,
 				02E049BE2651D1750028B57F /* UndoAction.m in Sources */,
 				026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */,
-				ED56E5C526027A50000B368C /* CustomPresetListViewController.swift in Sources */,
+				ED56E5C526027A50000B368C /* CustomPresetFieldListViewController.swift in Sources */,
 				02FF1EC82BDC1E180071C96F /* OsmServer.swift in Sources */,
 				C3D096CF263EA0DB00E3B129 /* KeyChain.swift in Sources */,
 				ED56E5EC26028B5F000B368C /* FilterObjectsViewController.swift in Sources */,

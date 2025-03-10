@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -239,7 +239,7 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHA-2B-6DC">
                                             <rect key="frame" x="0.0" y="10" width="393" height="24"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                            <state key="normal" title="Customize Presets">
+                                            <state key="normal" title="Custom Fields">
                                                 <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             </state>
                                             <connections>
@@ -388,7 +388,7 @@
                                         <stackView opaque="NO" contentMode="center" axis="vertical" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="DcA-k0-mZa">
                                             <rect key="frame" x="90" y="15.333333333333336" width="295" height="36"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gv7-b8-wUw" userLabel="Title">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gv7-b8-wUw" userLabel="Title">
                                                     <rect key="frame" x="0.0" y="0.0" width="295" height="20.333333333333332"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
@@ -397,7 +397,7 @@
                                                         <fragment content="Placeholder - Do not translate"/>
                                                     </attributedString>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daQ-tl-pKh" userLabel="Details">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="daQ-tl-pKh" userLabel="Details">
                                                     <rect key="frame" x="0.0" y="20.333333333333329" width="295" height="15.666666666666664"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <color key="textColor" systemColor="secondaryLabelColor"/>
@@ -925,10 +925,10 @@
             </objects>
             <point key="canvasLocation" x="1003" y="491"/>
         </scene>
-        <!--Custom Preset-->
+        <!--Custom Field-->
         <scene sceneID="xG0-rV-m58">
             <objects>
-                <tableViewController id="i45-Ke-tiE" userLabel="Custom Preset" customClass="CustomPresetController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="i45-Ke-tiE" customClass="CustomPresetController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="NTs-dG-Mrg">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1527,7 +1527,7 @@
                             <outlet property="delegate" destination="i45-Ke-tiE" id="7is-ZX-Wxi"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Custom Preset" id="OND-s7-I6f">
+                    <navigationItem key="navigationItem" title="Custom Field" id="OND-s7-I6f">
                         <barButtonItem key="backBarButtonItem" title="Cancel" id="Rfe-SO-p0w"/>
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="KHU-2b-P1F">
                             <connections>
@@ -1564,10 +1564,10 @@
             </objects>
             <point key="canvasLocation" x="4734" y="41"/>
         </scene>
-        <!--Custom Presets List-->
+        <!--Custom Fields List-->
         <scene sceneID="G4E-gX-Ira">
             <objects>
-                <tableViewController id="gE9-be-N2e" userLabel="Custom Presets List" customClass="CustomPresetListViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="gE9-be-N2e" userLabel="Custom Fields List" customClass="CustomPresetFieldListViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="dGd-nr-PM0">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1627,7 +1627,7 @@
                             <outlet property="delegate" destination="gE9-be-N2e" id="DY4-Nf-cB2"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Custom Presets" id="GIO-W7-q5U" userLabel="Custom Presets">
+                    <navigationItem key="navigationItem" title="Custom Fields" id="GIO-W7-q5U">
                         <barButtonItem key="backBarButtonItem" title="Back" id="KX3-hG-OyE"/>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>

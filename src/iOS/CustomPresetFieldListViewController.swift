@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomPresetListViewController: UITableViewController {
+class CustomPresetFieldListViewController: UITableViewController {
 	var customPresets: PresetKeyUserDefinedList?
 
 	override func viewDidLoad() {
@@ -30,7 +30,7 @@ class CustomPresetListViewController: UITableViewController {
 	// MARK: - Table view data source
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		NSLocalizedString("You can define your own custom presets here", comment: "POI editor presets")
+		NSLocalizedString("You can define custom fields for presets. A field is a single key/value pair associated with a feature.", comment: "POI editor presets")
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {

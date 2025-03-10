@@ -5635,25 +5635,25 @@
                   "few" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg файла"
+                      "value" : "%ld файла"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg файлов"
+                      "value" : "%ld файлов"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg файл"
+                      "value" : "%ld файл"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg файла"
+                      "value" : "%ld файла"
                     }
                   }
                 }
@@ -23050,138 +23050,6 @@
         }
       }
     },
-    "Clear Aerial Tiles" : {
-      "comment" : "Delete cached data",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "خريطة صور متجانبة واضحة"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "خريطة صور متجانبة واضحة"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vyčistit letecké snímky"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luftbildkacheln leeren"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Azulejos transparentes para fotografía aérea"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tühjenda aerofotode paanid"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zerutikako laukiak hustu"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Effacer les tuiles d'imagerie aérienne"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Izbriši pločice aerofotografije"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pulisci Tiles Aerei"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "画像タイルをクリア"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "हवाई प्रतिमा पुसा"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tøm flyfoto-flis"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luchtbeeldtegels leegmaken"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar quadrículas de imagens aéreas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar quadrículas de imagens aéreas"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Очистить тайлы аэрофотосъёмки"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Почистити тайли аерофото"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除卫星瓦片"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除空照圖磚"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除空照圖磚"
-          }
-        }
-      }
-    },
     "Clear All" : {
       "localizations" : {
         "cs" : {
@@ -23295,504 +23163,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Почистити тайли базової мапи"
-          }
-        }
-      }
-    },
-    "Clear GPS Overlay Tiles" : {
-      "comment" : "Delete cached data",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مسح الطبقة العلوية لصور ال GPS"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مسح الطبقة العلوية لصور ال GPS"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vyčistit dlaždice GPX překryvu"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPS-Overlay Kacheln leeren"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Borrar los mosaicos de superposición del GPS"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tühjenda GPS ülekatete paanid"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gaineko GPS laukiak hustu"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Effacer les tuiles de surcouche GPS"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Izbriši pločice GPS sloja"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPSオーバーレイタイルをクリア"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPS आच्छादन फरश्या पुसा"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tøm GPS-overlagsflis"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPS-overlaytegels leegmaken"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar quadrículas de sobreposição GPS"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar quadrículas de sobreposição GPS"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Очистить тайлы слоя GPS"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Почистити тайли GPS-треків"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除GPS叠加层瓦片"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除 GPS 圖磚"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除 GPS 圖磚"
-          }
-        }
-      }
-    },
-    "Clear GPX Tracks" : {
-      "comment" : "Delete cached data",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مسح مسارات GPX"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مسح مسارات GPX"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vyčistit GPX trasy"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPX-Tracks leeren"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vaciar trazas GPX"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tühjenda GPX-rajad"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tyhjennä GPX-jäljet"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Effacer les suivis GPX"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Izbriši GPX staze"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancella le tracce GPX"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPXトラックをクリア"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPX ट्रॅक पुसून टाका"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tøm GPX-spor"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPS-tracks leegmaken"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar trilhos GPX"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar trilhas GPX"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Очистить GPX-треки"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Видалити GPX-треки"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除GPX轨迹"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除 GPX 路徑"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除 GPX 路徑"
-          }
-        }
-      }
-    },
-    "Clear Locator Overlay Tiles" : {
-      "comment" : "Delete cached data",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مسح صور طبقة محدد المواقع"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مسح صور طبقة محدد المواقع"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vyčistit dlaždice překryvu polohy"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Locator-Overlay Kacheln leeren"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Borrar mosaicos de superposición de localizador"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tühjenda lokaatori ülekatte paanid"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Effacer les tuiles de surcouche de localisation"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Izbriši pločice lokatorskog sloja"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "位置オーバーレイタイルをクリア"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Locator आच्छादन फरश्या पुसा"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Locator-overlaytegels leegmaken"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar quadrículas de sobreposição Locator"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar quadrículas de sobreposição Locator"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Очистить тайлы слоя Locator"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Видалити тайли шару «Локатор»"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除定位叠加层瓦片"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除定位器圖磚"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除定位器圖磚"
-          }
-        }
-      }
-    },
-    "Clear Mapnik Tiles" : {
-      "comment" : "Delete cached data",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مسح ذاكرة طبقة Mapnik"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مسح ذاكرة طبقة Mapnik"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vyčistit Mapnik dlaždice"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mapnik Kacheln leeren"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Teselas transparentes de Mapnik"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tühjenda Mapnik paanid"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mapnik laukiak hustu"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Effacer les tuiles Mapnik"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Izbriši Mapnik pločice"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mapnikタイルをクリア"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mapnik फरशा साफ करा"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tøm Mapnik-flis"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mapnik-tegels leegmaken"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar quadrículas Mapnik"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Limpar quadrículas Mapnik"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Очистить тайлы Mapnik"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Почистити тайли Mapnik"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除Mapnik瓦片"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除 Mapnik 圖磚"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "清除 Mapnik 圖磚"
           }
         }
       }
@@ -30357,7 +29727,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error al recuperar los metadatos: %s"
+            "value" : "Error al recuperar los metadatos: %@"
           }
         },
         "et" : {
@@ -32928,125 +32298,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "公里/小時"
-          }
-        }
-      }
-    },
-    "Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اختيارك للغة يؤثر على الإعدادات المسبقة للوسوم والتي تمت ترجمتها لمحرر iD، أما الواجهة الأساسية للتطبيق لا تزال بالإنجليزية."
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "اختيارك للغة يؤثر على الإعدادات المسبقة للوسوم والتي تمت ترجمتها لمحرر iD، أما الواجهة الأساسية للتطبيق لا تزال بالإنجليزية."
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Výběr jazyka ovlivňuje rozhraní aplikace a předvolby, které jsou lokalizované pro editor iD."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Die Sprachauswahl betrifft nur Vorlagen und nur jene Vorlagen die für iD übersetzt wurden. Die Hauptoberfläche ist immer noch englisch."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La selección del idioma solo afecta a las preconfiguraciones y solo para aquellas que estén traducidas en iD. La interfaz principal sigue estando en inglés."
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keele valik mõjutab ainult ja neid eelseadeid, mis on iD jaoks tõlgitud. Peamine kasutajaliides on endiselt inglise keeles."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Le choix de la langue s'applique seulement aux Presets et seulement pour ceux qui sont traduits pour iD. L'interface principale reste en anglais."
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Odabir jezika utječe samo na predodređene postavke i na one, koje su prevedene za iD. Jezik glavnog sučelja je i nadalje engleski."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "La selezione della lingua influisce solo sui preset e solo su quelli tradotti per iD. L'interfaccia principale è ancora inglese."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "言語選択はiD用に翻訳されたプリセットにだけ影響します。メインのインタフェースはまだ英語だけです。"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "भाषेची निवड ही फक्त iD मध्ये अनुवादित असलेल्या प्रेसेटला लागू होते. मुख्य इंटरफेस हा इंग्रजीतच राहतो."
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Språkvalg har kun innvirkning på forvalg, som også er oversatt for iD. Hovedgrensesnittet er fremdeles Engelsk."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Taalkeuze beïnvloed alleen presets en alleen die presets die voor iD vertaald zijn. De interface is verder in het Engels."
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Atualmente a escolha do idioma só altera o idioma dos modelos de etiquetas (se estiverem traduzidos no editor iD). A interface principal ainda é mostrada em inglês. Futuramente estará disponível em outros idiomas."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "A seleção de idioma afeta apenas os modelos de etiquetas (somente etiquetas traduzidas no editor iD). A interface principal ainda é em inglês. Futuramente será disponibilizada em outros idiomas."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Выбор языка относится исключительно к пресетам и только тем пресатам, которые переведены для iD. Основной интерфейс будет английским."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Змінення мови вплине тільки на заготовки й лише на ті що перекладені для iD. Основний інтерфейс буде англійською."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "語言選擇只會套用到預設組合以及那些在 iD 編輯器中已經翻譯完的預設組合。介面仍然是英文。"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "語言選擇只會套用到預設組合以及那些在 iD 編輯器中已經翻譯完的預設組合。介面仍然是英文。"
           }
         }
       }
@@ -42053,19 +41304,19 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255"
+                  "value" : "Umetanje %ld znaka, maksimalni broj znakova za oznaku je 255"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255"
+                  "value" : "Umetanje %ld znaka, maksimalni broj znakova za oznaku je 255"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Umetanje %@ znakova, maksimalni broj znakova za oznaku je 255"
+                  "value" : "Umetanje %ld znakova, maksimalni broj znakova za oznaku je 255"
                 }
               }
             }
@@ -42299,25 +41550,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %@ символов, максимальная длина тега 255"
+                  "value" : "Вставка %ld символов, максимальная длина тега 255"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %@ символов, максимальная длина тега 255"
+                  "value" : "Вставка %ld символов, максимальная длина тега 255"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %@ символа, максимальная длина тега 255"
+                  "value" : "Вставка %ld символа, максимальная длина тега 255"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %@ символов, максимальная длина тега 255"
+                  "value" : "Вставка %ld символов, максимальная длина тега 255"
                 }
               }
             }
@@ -42939,7 +42190,7 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %@ тегов"
+                  "value" : "Вставка %ld тегов"
                 }
               },
               "one" : {
@@ -51535,7 +50786,7 @@
         "nb-NO" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gjennomferdsel TILLATT fra %1$s til %2$s"
+            "value" : "Gjennomferdsel TILLATT fra %1$@ til %2$@"
           }
         },
         "nl" : {
@@ -53003,83 +52254,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "上一步"
-          }
-        }
-      }
-    },
-    "Unknown" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Neznámé"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unbekannt"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desconocido"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nepoznato"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "不明"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "अज्ञात"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desconhecido"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Desconhecido"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Не указано"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Невідомо"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "不明的"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "不明的"
           }
         }
       }
@@ -55911,118 +55085,8 @@
         }
       }
     },
-    "You can define your own custom presets here" : {
-      "comment" : "POI editor presets",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "من هنا يمكنك تحديد إعداداتك المسبقة المخصصة"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "من هنا يمكنك تحديد إعداداتك المسبقة المخصصة"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tady můžete definovat vlastní předvolby"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hier können Sie eigene Voreinstellungen definieren"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Puede definir sus propias preconfiguraciones aquí"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Siin saad määrata isiklikud eelseadistused"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Vous pouvez définir vos propres préréglages ici"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ovdje možeš definirati vlastite predodređene postavke"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ここではあなた自身のカスタムプリセットを定義できます"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Du kan definere dine egne tilpassede forvalg her"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Je kan je eigen presets hier definiëren"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pode definir os seus modelos de etiquetas personalizados aqui"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Você pode definir seus modelos de etiquetas personalizados aqui"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Здесь вы можете создать свои личные предустановки"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тут ви можете створити свої власні заготовки"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "您可以在这里定义自己的自定义预设"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "您可以在這裡自定義預設組合"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "您可以在這裡自定義預設組合"
-          }
-        }
-      }
+    "You can define custom fields for presets. A field is a single key/value pair associated with a feature." : {
+      "comment" : "POI editor presets"
     },
     "You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." : {
       "localizations" : {

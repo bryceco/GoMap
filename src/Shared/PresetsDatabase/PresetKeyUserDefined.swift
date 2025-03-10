@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-// A preset the user defined as a custom preset
+// A preset the user defined as a custom field
 final class PresetKeyUserDefined: PresetKey {
 	override public class var supportsSecureCoding: Bool { return true }
 

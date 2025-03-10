@@ -4076,132 +4076,132 @@
       }
     },
     "GIO-W7-q5U.title" : {
-      "comment" : "Class = \"UINavigationItem\"; title = \"Custom Presets\"; ObjectID = \"GIO-W7-q5U\";",
+      "comment" : "Class = \"UINavigationItem\"; title = \"Custom Fields\"; ObjectID = \"GIO-W7-q5U\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "إعدادات مسبقة مخصصة"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "إعدادات مسبقة مخصصة"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Vlastní předvolby"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Benutzerdefinierte Vorlagen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Custom Presets"
+            "value" : "Custom Fields"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Preconfiguraciones personalizadas"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Kohandatud eelseaded"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Préréglages personnalisés"
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Prilagođene predodređene postavke"
           }
         },
         "id" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Preset Kustom"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "カスタムプリセット"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Egendefinerte forvalg"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Aangepaste presets"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Modelo de etiquetas personalizados"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Modelo de etiquetas personalizados"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Пользовательские предустановки"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Користувацькі заготовки"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Thẻ đặt trước Tùy biến"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "自定义预设"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "自定義預設組合"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "自定義預設組合"
           }
         }
@@ -7280,132 +7280,132 @@
       }
     },
     "OND-s7-I6f.title" : {
-      "comment" : "Class = \"UINavigationItem\"; title = \"Custom Preset\"; ObjectID = \"OND-s7-I6f\";",
+      "comment" : "Class = \"UINavigationItem\"; title = \"Custom Field\"; ObjectID = \"OND-s7-I6f\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "إعداد مسبق مخصص"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "إعداد مسبق مخصص"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Vlastní předvolba"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Benutzerdefinierte Vorlage"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Custom Preset"
+            "value" : "Custom Field"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Preconfiguración personalizada"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Kohandatud eelseadistus"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Préréglage personnalisé"
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Prilagođena predodređena postavka"
           }
         },
         "id" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Preset Kustom"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "カスタムプリセット"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Egendefinert forvalg"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Aangepaste preset"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Modelo de etiquetas personalizado"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Modelo de etiquetas personalizado"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Пользовательская предустановка"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Користувацька заготовка"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Thẻ đặt trước Tùy biến"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "自定义预设"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "自定義預設組合"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "自定義預設組合"
           }
         }
@@ -7568,132 +7568,132 @@
       }
     },
     "pHA-2B-6DC.normalTitle" : {
-      "comment" : "Class = \"UIButton\"; normalTitle = \"Customize Presets\"; ObjectID = \"pHA-2B-6DC\";",
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Custom Fields\"; ObjectID = \"pHA-2B-6DC\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "تخصيص الإعدادات المسبقة"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "تخصيص الإعدادات المسبقة"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Přizpůsobit předvolby"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Voreinstellungen anpassen"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Customize Presets"
+            "value" : "Custom Fields"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Personalizar preconfiguraciones"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Eelseadete kohandamine"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Personnaliser les préréglages"
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Prilagodi predodređene postavke"
           }
         },
         "id" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Sesuaikan Preset"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "プリセットのカスタマイズ"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Tilpass forvalg"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Presets aanpassen"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Personalizar modelos de etiquetas"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Personalizar modelos de etiquetas"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Настроить предустановки"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Налаштувати заготовки"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Tùy biến Thẻ đặt trước"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "自定义预设"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "自定義預設組合"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "自定義預設組合"
           }
         }
