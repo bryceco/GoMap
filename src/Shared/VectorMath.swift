@@ -19,24 +19,12 @@ let TRANSFORM_3D = 0
 
 // MARK: Point
 
-// @retroactive is only supported in Swift 5.10 and above.
-#if swift(>=5.10)
 extension CGPoint: @retroactive Hashable {
 	public func hash(into hasher: inout Hasher) {
 		hasher.combine(x)
 		hasher.combine(y)
 	}
-}
-#else
-extension CGPoint: Hashable {
-	public func hash(into hasher: inout Hasher) {
-		hasher.combine(x)
-		hasher.combine(y)
-	}
-}
-#endif
 
-extension CGPoint {
 	static let zero = CGPoint(x: 0.0, y: 0.0)
 
 	@inline(__always) func withOffset(_ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
