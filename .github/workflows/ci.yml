@@ -17,7 +17,7 @@ jobs:
 
       - uses: swift-actions/setup-swift@65540b95f51493d65f5e59e97dcef9629ddf11bf
         with:
-          swift-version: "5"
+          swift-version: "swift-5.10.1-RELEASE"
 
       - name: Get swift version
         run: swift --version
