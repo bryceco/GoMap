@@ -739,6 +739,18 @@
         }
       }
     },
+    "4H7-Z8-IQR.headerTitle" : {
+      "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Implied Parent Feature\"; ObjectID = \"4H7-Z8-IQR\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Implied Parent Feature"
+          }
+        }
+      }
+    },
     "6VA-gm-L0S.title" : {
       "comment" : "Class = \"UITableViewController\"; title = \"Point of Interest\"; ObjectID = \"6VA-gm-L0S\";",
       "extractionState" : "extracted_with_value",
@@ -873,6 +885,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "興趣點"
+          }
+        }
+      }
+    },
+    "6yC-L7-V38.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"Quercus \"; ObjectID = \"6yC-L7-V38\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Quercus "
+          }
+        }
+      }
+    },
+    "6zU-bk-hWw.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"6zU-bk-hWw\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "key"
           }
         }
       }
@@ -1489,6 +1525,18 @@
         }
       }
     },
+    "AAx-p2-Mzh.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"broadleaved \"; ObjectID = \"AAx-p2-Mzh\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "broadleaved "
+          }
+        }
+      }
+    },
     "aCs-vS-YXj.placeholder" : {
       "comment" : "Class = \"UITextField\"; placeholder = \"ref\"; ObjectID = \"aCs-vS-YXj\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
@@ -1891,6 +1939,18 @@
         }
       }
     },
+    "bF4-TU-MTA.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Add New\"; ObjectID = \"bF4-TU-MTA\"; Note = \"Add user-defined tagging preset\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Add New"
+          }
+        }
+      }
+    },
     "Bnh-U0-D7i.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Add New\"; ObjectID = \"Bnh-U0-D7i\"; Note = \"Add user-defined tagging preset\";",
       "extractionState" : "extracted_with_value",
@@ -2181,6 +2241,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "全部標籤"
+          }
+        }
+      }
+    },
+    "cNV-jf-zYM.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Custom Features\"; ObjectID = \"cNV-jf-zYM\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Custom Features"
           }
         }
       }
@@ -3265,6 +3337,18 @@
         }
       }
     },
+    "eN0-0z-hUp.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"tree \"; ObjectID = \"eN0-0z-hUp\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "tree "
+          }
+        }
+      }
+    },
     "Eou-a6-V4g.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Key\"; ObjectID = \"Eou-a6-V4g\";",
       "extractionState" : "extracted_with_value",
@@ -3933,6 +4017,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "清除"
+          }
+        }
+      }
+    },
+    "ftg-j1-Ep9.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"Oak\"; ObjectID = \"ftg-j1-Ep9\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Oak"
           }
         }
       }
@@ -5005,6 +5101,18 @@
         }
       }
     },
+    "j2j-qT-aHG.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"leaf_type\"; ObjectID = \"j2j-qT-aHG\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "leaf_type"
+          }
+        }
+      }
+    },
     "JAT-qD-dTS.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Value 1\"; ObjectID = \"JAT-qD-dTS\";",
       "extractionState" : "extracted_with_value",
@@ -5827,6 +5935,42 @@
         }
       }
     },
+    "kzw-8S-p9j.headerTitle" : {
+      "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Preset Name\"; ObjectID = \"kzw-8S-p9j\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Preset Name"
+          }
+        }
+      }
+    },
+    "l2k-lT-vHS.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"genus:en\"; ObjectID = \"l2k-lT-vHS\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "genus:en"
+          }
+        }
+      }
+    },
+    "Lhz-HA-Q6j.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Custom Feature\"; ObjectID = \"Lhz-HA-Q6j\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Custom Feature"
+          }
+        }
+      }
+    },
     "li7-oV-pgT.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Value 5\"; ObjectID = \"li7-oV-pgT\";",
       "extractionState" : "extracted_with_value",
@@ -6403,6 +6547,18 @@
         }
       }
     },
+    "MU8-ia-Kco.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"MU8-ia-Kco\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "key"
+          }
+        }
+      }
+    },
     "ng7-T9-SJ6.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Value 4\"; ObjectID = \"ng7-T9-SJ6\";",
       "extractionState" : "extracted_with_value",
@@ -6765,6 +6921,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "值 2"
+          }
+        }
+      }
+    },
+    "nrU-9j-jfm.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"value \"; ObjectID = \"nrU-9j-jfm\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "value "
+          }
+        }
+      }
+    },
+    "Nxm-fU-1eX.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"natural\"; ObjectID = \"Nxm-fU-1eX\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "natural"
           }
         }
       }
@@ -7699,6 +7879,30 @@
         }
       }
     },
+    "pNE-0W-9Qa.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Custom Features\"; ObjectID = \"pNE-0W-9Qa\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Custom Features"
+          }
+        }
+      }
+    },
+    "pqN-F1-JGm.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"Oak Tree\"; ObjectID = \"pqN-F1-JGm\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Oak Tree"
+          }
+        }
+      }
+    },
     "pxY-di-zg7.placeholder" : {
       "comment" : "Class = \"UITextField\"; placeholder = \"Restaurant\"; ObjectID = \"pxY-di-zg7\";",
       "extractionState" : "extracted_with_value",
@@ -7844,139 +8048,151 @@
       }
     },
     "QDv-7w-nbx.headerTitle" : {
-      "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Preset Name\"; ObjectID = \"QDv-7w-nbx\";",
+      "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Field Name\"; ObjectID = \"QDv-7w-nbx\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "اسم محدد مسبقا"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "اسم محدد مسبقا"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Název předvolby"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Vorlagename"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Preset Name"
+            "value" : "Field Name"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nombre de preconfiguración"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Eelseadistuse nimi"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nom du préréglage"
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ime predodređene postavke"
           }
         },
         "id" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nama Preset"
           }
         },
         "it" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nome preimpostato"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "プリセット名"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Forvalgsnavn"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Preset-naam"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nome do modelo de etiquetas"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nome do modelo de etiquetas"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Название предустановки"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Назва заготовки"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Tên Thẻ đặt trước"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "预设名称"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "預設組合的名稱"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "預設組合的名稱"
+          }
+        }
+      }
+    },
+    "qTY-bY-Dwe.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"genus\"; ObjectID = \"qTY-bY-Dwe\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "genus"
           }
         }
       }
@@ -8271,6 +8487,42 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"
+          }
+        }
+      }
+    },
+    "Ruw-WB-IgL.footerTitle" : {
+      "comment" : "Class = \"UITableViewSection\"; footerTitle = \"Tags to add when selecting this feature.\"; ObjectID = \"Ruw-WB-IgL\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Tags to add when selecting this feature."
+          }
+        }
+      }
+    },
+    "Ruw-WB-IgL.headerTitle" : {
+      "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Feature Tags\"; ObjectID = \"Ruw-WB-IgL\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Feature Tags"
+          }
+        }
+      }
+    },
+    "sGi-dQ-1v0.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Feature type:\"; ObjectID = \"sGi-dQ-1v0\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Feature type:"
           }
         }
       }
@@ -8611,6 +8863,18 @@
         }
       }
     },
+    "TJk-hO-Ejc.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Name\"; ObjectID = \"TJk-hO-Ejc\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Name"
+          }
+        }
+      }
+    },
     "TK4-E8-1q7.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"TK4-E8-1q7\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
@@ -8745,6 +9009,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "標題"
+          }
+        }
+      }
+    },
+    "u2W-Xt-qyS.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"value \"; ObjectID = \"u2W-Xt-qyS\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "value "
+          }
+        }
+      }
+    },
+    "UJ1-oM-H4Z.title" : {
+      "comment" : "Class = \"UIBarButtonItem\"; title = \"Back\"; ObjectID = \"UJ1-oM-H4Z\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Back"
           }
         }
       }
@@ -9751,6 +10039,18 @@
         }
       }
     },
+    "WXF-5S-E8m.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"WXF-5S-E8m\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Title"
+          }
+        }
+      }
+    },
     "X1y-nK-nVJ.placeholder" : {
       "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"X1y-nK-nVJ\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
@@ -10087,6 +10387,18 @@
         }
       }
     },
+    "xRb-oM-jei.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"value \"; ObjectID = \"xRb-oM-jei\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "value "
+          }
+        }
+      }
+    },
     "z19-cc-gHZ.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Value\"; ObjectID = \"z19-cc-gHZ\";",
       "extractionState" : "extracted_with_value",
@@ -10231,6 +10543,18 @@
         }
       }
     },
+    "ZNr-2O-LuN.placeholder" : {
+      "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"ZNr-2O-LuN\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "key"
+          }
+        }
+      }
+    },
     "zpj-gL-2Nt.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"ⓘ\"; ObjectID = \"zpj-gL-2Nt\";",
       "extractionState" : "extracted_with_value",
@@ -10371,6 +10695,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"
+          }
+        }
+      }
+    },
+    "zqH-07-JEp.title" : {
+      "comment" : "Class = \"UIBarButtonItem\"; title = \"Cancel\"; ObjectID = \"zqH-07-JEp\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Cancel"
           }
         }
       }

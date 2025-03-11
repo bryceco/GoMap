@@ -188,6 +188,8 @@
 		02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */; };
 		02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */; };
 		02F6A459268AE42800F2ACE7 /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A458268AE42800F2ACE7 /* Debugger.swift */; };
+		02FC7F962D7FD6E800DC333D /* CustomFeatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC7F952D7FD6DC00DC333D /* CustomFeatureController.swift */; };
+		02FC7F982D7FD6FD00DC333D /* CustomFeatureListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */; };
 		02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */; };
 		02FF1EC82BDC1E180071C96F /* OsmServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FF1EC72BDC1E180071C96F /* OsmServer.swift */; };
 		64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */; };
@@ -235,8 +237,8 @@
 		ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */; };
 		ED56E5B426026542000B368C /* BingMetadataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B226026541000B368C /* BingMetadataViewController.swift */; };
 		ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B326026541000B368C /* ClearCacheViewController.swift */; };
-		ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C026027A50000B368C /* CustomPresetController.swift */; };
-		ED56E5C526027A50000B368C /* CustomPresetFieldListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C126027A50000B368C /* CustomPresetFieldListViewController.swift */; };
+		ED56E5C426027A50000B368C /* CustomFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C026027A50000B368C /* CustomFieldController.swift */; };
+		ED56E5C526027A50000B368C /* CustomFieldListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C126027A50000B368C /* CustomFieldListViewController.swift */; };
 		ED56E5C626027A50000B368C /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C226027A50000B368C /* ContactUsViewController.swift */; };
 		ED56E5C726027A50000B368C /* CreditsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C326027A50000B368C /* CreditsViewController.swift */; };
 		ED56E5E426028181000B368C /* DisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5E326028181000B368C /* DisplayViewController.swift */; };
@@ -515,6 +517,8 @@
 		02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+HitTest.swift"; sourceTree = "<group>"; };
 		02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Ext.swift"; sourceTree = "<group>"; };
 		02F6A458268AE42800F2ACE7 /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
+		02FC7F952D7FD6DC00DC333D /* CustomFeatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeatureController.swift; sourceTree = "<group>"; };
+		02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeatureListViewController.swift; sourceTree = "<group>"; };
 		02FF1EC72BDC1E180071C96F /* OsmServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmServer.swift; sourceTree = "<group>"; };
 		64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationURLParserTestCase.swift; sourceTree = "<group>"; };
 		64348CEA225E7CD900ADE7FB /* GoMapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -587,8 +591,8 @@
 		ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTextField.swift; sourceTree = "<group>"; };
 		ED56E5B226026541000B368C /* BingMetadataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingMetadataViewController.swift; sourceTree = "<group>"; };
 		ED56E5B326026541000B368C /* ClearCacheViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearCacheViewController.swift; sourceTree = "<group>"; };
-		ED56E5C026027A50000B368C /* CustomPresetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresetController.swift; sourceTree = "<group>"; };
-		ED56E5C126027A50000B368C /* CustomPresetFieldListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresetFieldListViewController.swift; sourceTree = "<group>"; };
+		ED56E5C026027A50000B368C /* CustomFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFieldController.swift; sourceTree = "<group>"; };
+		ED56E5C126027A50000B368C /* CustomFieldListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFieldListViewController.swift; sourceTree = "<group>"; };
 		ED56E5C226027A50000B368C /* ContactUsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
 		ED56E5C326027A50000B368C /* CreditsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditsViewController.swift; sourceTree = "<group>"; };
 		ED56E5E326028181000B368C /* DisplayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayViewController.swift; sourceTree = "<group>"; };
@@ -700,6 +704,10 @@
 		02A3598F2704E51700101369 /* POI */ = {
 			isa = PBXGroup;
 			children = (
+				02FC7F952D7FD6DC00DC333D /* CustomFeatureController.swift */,
+				02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */,
+				ED56E5C026027A50000B368C /* CustomFieldController.swift */,
+				ED56E5C126027A50000B368C /* CustomFieldListViewController.swift */,
 				02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */,
 				027AB4FF250E9C8A00C404CD /* POI.storyboard */,
 				C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */,
@@ -774,8 +782,6 @@
 			children = (
 				C3D096AB263D48F700E3B129 /* AppDelegate.swift */,
 				ED56E5B226026541000B368C /* BingMetadataViewController.swift */,
-				ED56E5C026027A50000B368C /* CustomPresetController.swift */,
-				ED56E5C126027A50000B368C /* CustomPresetFieldListViewController.swift */,
 				02F0297A2BFAFF2E002F7956 /* DataOverlays */,
 				64D74BF02253DF39004FFD20 /* Direction */,
 				0244399629CA9A28009FC2D0 /* DisplaySettings */,
@@ -1511,7 +1517,7 @@
 				02A59EE1297F6E6A00B0A676 /* Dictionary+Extension.swift in Sources */,
 				02EDBF6926535BB700B7072E /* OsmWay.swift in Sources */,
 				02B2E25E2C3F3DC600815F08 /* DarkModeImage.swift in Sources */,
-				ED56E5C426027A50000B368C /* CustomPresetController.swift in Sources */,
+				ED56E5C426027A50000B368C /* CustomFieldController.swift in Sources */,
 				02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */,
 				02CE3CE929919FC400DDACE0 /* LocationButton.swift in Sources */,
 				EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */,
@@ -1549,6 +1555,7 @@
 				02A59EDF297F358900B0A676 /* PresetArea.swift in Sources */,
 				02BB355B29B6757C00FB52E5 /* NsiLogoDatabase.swift in Sources */,
 				C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */,
+				02FC7F982D7FD6FD00DC333D /* CustomFeatureListViewController.swift in Sources */,
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
 				02CC01D12584195E004444EF /* PresetFeature.swift in Sources */,
 				02505C5529A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift in Sources */,
@@ -1584,10 +1591,11 @@
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				02225DA729EB3AE900859F9D /* GpxTrack.swift in Sources */,
 				02008650265B25DC008F37DD /* Database.swift in Sources */,
+				02FC7F962D7FD6E800DC333D /* CustomFeatureController.swift in Sources */,
 				020E160B267A82050037DE49 /* TileServer.swift in Sources */,
 				02E049BE2651D1750028B57F /* UndoAction.m in Sources */,
 				026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */,
-				ED56E5C526027A50000B368C /* CustomPresetFieldListViewController.swift in Sources */,
+				ED56E5C526027A50000B368C /* CustomFieldListViewController.swift in Sources */,
 				02FF1EC82BDC1E180071C96F /* OsmServer.swift in Sources */,
 				C3D096CF263EA0DB00E3B129 /* KeyChain.swift in Sources */,
 				ED56E5EC26028B5F000B368C /* FilterObjectsViewController.swift in Sources */,

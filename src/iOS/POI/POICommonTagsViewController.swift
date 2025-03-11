@@ -317,7 +317,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			return extraTags.count // tags plus an empty slot
 		}
 		if section > (allPresets?.sectionCount() ?? 0) {
-			return 1 // customize button
+			return 2 // customization buttons
 		}
 		return allPresets?.tagsInSection(section) ?? 0
 	}
@@ -341,9 +341,17 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				return cell
 			}
 			if indexPath.section > (allPresets?.sectionCount() ?? 0) {
-				// customize button
-				let cell = tableView.dequeueReusableCell(withIdentifier: "CustomizePresets", for: indexPath)
-				return cell
+				// customization buttons
+				switch indexPath.row {
+				case 0:
+					let cell = tableView.dequeueReusableCell(withIdentifier: "CustomFeatures", for: indexPath)
+					return cell
+				case 1:
+					let cell = tableView.dequeueReusableCell(withIdentifier: "CustomFields", for: indexPath)
+					return cell
+				default:
+					fatalError("unexpected customize button row \(indexPath.row)")
+				}
 			}
 		}
 
