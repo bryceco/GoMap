@@ -148,7 +148,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 
 		// If its an NSI feature then retrieve the logo icon
-		let icon = feature.nsiLogo({ img in
+		let icon = feature.nsiLogo(callback: { img in
 			// If it completes later then update any cells using it
 			for cell in self.tableView.visibleCells {
 				if let cell = cell as? FeaturePickerCell,

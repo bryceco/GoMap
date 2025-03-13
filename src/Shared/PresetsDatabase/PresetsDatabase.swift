@@ -16,7 +16,7 @@ final class PresetsDatabase {
 	}
 
 	// these map a FeatureID to a feature
-	let stdFeatures: [String: PresetFeature] // only generic presets
+	var stdFeatures: [String: PresetFeature] // only generic presets + user custom features
 	var nsiFeatures: [String: PresetFeature] // only NSI presets
 	// these map a tag key to a list of features that require that key
 	let stdFeatureIndex: [String: [PresetFeature]] // generic preset index
@@ -124,29 +124,39 @@ final class PresetsDatabase {
 		nsiFeatureIndex = stdFeatureIndex
 		nsiGeoJson = [String: GeoJSONGeometry]()
 
-		DispatchQueue.global(qos: .userInitiated).async {
-			let startTime = Date()
-			let nsiDict = Self.jsonForFile("nsi_presets.json") as! [String: Any]
-			let readTime = Date()
-			let nsiPresets = (nsiDict["presets"] as! [String: Any])
-				.mapValuesWithKeys({ k, v in
-					PresetFeature(withID: k,
-					              jsonDict: v as! [String: Any],
-					              isNSI: true)!
-				})
-			let nsiIndex = Self.buildTagIndex([self.stdFeatures, nsiPresets],
-			                                  basePresets: self.stdFeatures)
-			DispatchQueue.main.async {
-				self.nsiFeatures = nsiPresets
-				self.nsiFeatureIndex = nsiIndex
-#if DEBUG && false
-				if debug, isUnderDebugger() {
-					self.testAllPresetFields()
-				}
-#endif
+		DispatchQueue.main.async {
+			// Get features provided by the user. This is done async because
+			// we need to be initialized before adding in the presets.
+			if let customFeatures = CustomFeatureList.restore() {
+				self.insertCustomFeatures(customFeatures.list)
 			}
-			print("NSI read = \(readTime.timeIntervalSince(startTime)), " +
-				"decode = \(Date().timeIntervalSince(readTime))")
+
+			// After custom items are added we can compute NSI, which
+			// includes stdFeatures, custom features and NSI.
+			DispatchQueue.global(qos: .userInitiated).async {
+				let startTime = Date()
+				let nsiDict = Self.jsonForFile("nsi_presets.json") as! [String: Any]
+				let readTime = Date()
+				let nsiPresets = (nsiDict["presets"] as! [String: Any])
+					.mapValuesWithKeys({ k, v in
+						PresetFeature(withID: k,
+									  jsonDict: v as! [String: Any],
+									  isNSI: true)!
+					})
+				let nsiIndex = Self.buildTagIndex([self.stdFeatures, nsiPresets],
+												  basePresets: self.stdFeatures)
+				DispatchQueue.main.async {
+					self.nsiFeatures = nsiPresets
+					self.nsiFeatureIndex = nsiIndex
+#if DEBUG && false
+					if debug, isUnderDebugger() {
+						self.testAllPresetFields()
+					}
+#endif
+				}
+				print("NSI read = \(readTime.timeIntervalSince(startTime)), " +
+					  "decode = \(Date().timeIntervalSince(readTime))")
+			}
 		}
 
 		// Load geojson outlines for NSI in the background
@@ -210,6 +220,20 @@ final class PresetsDatabase {
 	func enumeratePresetsUsingBlock(_ block: (_ feature: PresetFeature) -> Void) {
 		for v in stdFeatures.values {
 			block(v)
+		}
+	}
+
+	func insertCustomFeatures(_ features: [CustomFeature]) {
+		// remove all exising features
+		let removals = stdFeatures.compactMap { $0.value is CustomFeature ? $0.key : nil }
+		for key in removals {
+			stdFeatures.removeValue(forKey: key)
+			nsiFeatures.removeValue(forKey: key)
+		}
+		// add in the new list
+		for f in features {
+			stdFeatures[f.featureID] = f
+			nsiFeatures[f.featureID] = f
 		}
 	}
 

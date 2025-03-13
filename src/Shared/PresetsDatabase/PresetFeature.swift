@@ -186,20 +186,20 @@ class PresetFeature: CustomDebugStringConvertible {
 		return _iconUnscaled
 	}
 
-	func nsiLogo(_ callback: ((UIImage) -> Void)?) -> UIImage? {
+	func nsiLogo(callback: ((UIImage) -> Void)?) -> UIImage? {
 		guard nsiSuggestion else {
 			return iconUnscaled?.withRenderingMode(.alwaysTemplate)
 		}
-
 		if let icon = _nsiLogo {
 			return icon
 		}
-		if let callback = callback {
-			if let icon = NsiLogoDatabase.shared.retrieveLogoForNsiItem(featureID: featureID,
-			                                                            whenFinished: { img in
-			                                                            	self._nsiLogo = img
-			                                                            	callback(img)
-			                                                            })
+		if let callback {
+			let nsi = NsiLogoDatabase.shared
+			if let icon = nsi.retrieveLogoForNsiItem(featureID: featureID,
+			                                         whenFinished: { img in
+			                                         	self._nsiLogo = img
+			                                         	callback(img)
+			                                         })
 			{
 				_nsiLogo = icon
 				return icon

@@ -57,6 +57,7 @@ class CustomFeatureListViewController: UITableViewController {
 
 		if isMovingFromParent {
 			customFeatures.save()
+			PresetsDatabase.shared.insertCustomFeatures(customFeatures.list)
 		}
 	}
 

@@ -310,8 +310,8 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if drillDownGroup != nil {
-			return drillDownGroup?.presetKeys.count ?? 0
+		if let drillDownGroup {
+			return drillDownGroup.presetKeys.count
 		}
 		if section == (allPresets?.sectionCount() ?? 0) {
 			return extraTags.count // tags plus an empty slot
@@ -410,7 +410,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 					cell.valueField.rightViewMode = .always
 				}
 
-				if let icon = currentFeature?.nsiLogo(setupIcon) {
+				if let icon = currentFeature?.nsiLogo(callback: setupIcon) {
 					setupIcon(icon)
 				} else {
 					cell.valueField.rightView = nil
