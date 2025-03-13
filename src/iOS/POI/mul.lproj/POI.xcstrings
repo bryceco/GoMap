@@ -739,18 +739,6 @@
         }
       }
     },
-    "4H7-Z8-IQR.headerTitle" : {
-      "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Implied Parent Feature\"; ObjectID = \"4H7-Z8-IQR\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Implied Parent Feature"
-          }
-        }
-      }
-    },
     "6VA-gm-L0S.title" : {
       "comment" : "Class = \"UITableViewController\"; title = \"Point of Interest\"; ObjectID = \"6VA-gm-L0S\";",
       "extractionState" : "extracted_with_value",
@@ -2095,6 +2083,30 @@
         }
       }
     },
+    "CBg-8X-VJp.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Area\"; ObjectID = \"CBg-8X-VJp\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Area"
+          }
+        }
+      }
+    },
+    "CBg-8X-VJp.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"CBg-8X-VJp\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
+          }
+        }
+      }
+    },
     "cN9-3h-H3l.title" : {
       "comment" : "Class = \"UINavigationItem\"; title = \"All Tags\"; ObjectID = \"cN9-3h-H3l\";",
       "extractionState" : "extracted_with_value",
@@ -3049,6 +3061,30 @@
         }
       }
     },
+    "DhX-ri-fx9.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Vertex\"; ObjectID = \"DhX-ri-fx9\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Vertex"
+          }
+        }
+      }
+    },
+    "DhX-ri-fx9.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"DhX-ri-fx9\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
+          }
+        }
+      }
+    },
     "dsA-B6-s7R.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Value 9\"; ObjectID = \"dsA-B6-s7R\";",
       "extractionState" : "extracted_with_value",
@@ -3777,6 +3813,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "值 3"
+          }
+        }
+      }
+    },
+    "fdT-wh-QoF.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Point\"; ObjectID = \"fdT-wh-QoF\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Point"
+          }
+        }
+      }
+    },
+    "fdT-wh-QoF.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"fdT-wh-QoF\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
           }
         }
       }
@@ -5931,18 +5991,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "上一步"
-          }
-        }
-      }
-    },
-    "kzw-8S-p9j.headerTitle" : {
-      "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Preset Name\"; ObjectID = \"kzw-8S-p9j\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Preset Name"
           }
         }
       }
@@ -9891,6 +9939,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "值 10"
+          }
+        }
+      }
+    },
+    "WjA-Nb-uzp.configuration.title" : {
+      "comment" : "Class = \"UIButton\"; configuration.title = \"Line\"; ObjectID = \"WjA-Nb-uzp\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Line"
+          }
+        }
+      }
+    },
+    "WjA-Nb-uzp.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"WjA-Nb-uzp\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
           }
         }
       }

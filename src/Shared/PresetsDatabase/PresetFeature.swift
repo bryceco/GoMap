@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // A feature-defining tag such as amenity=shop
-final class PresetFeature: CustomDebugStringConvertible {
+class PresetFeature: CustomDebugStringConvertible {
 	static let uninitializedImage = UIImage()
 
 	let _addTags: [String: String]?

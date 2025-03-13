@@ -25564,6 +25564,9 @@
         }
       }
     },
+    "Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." : {
+      "comment" : "POI editor presets"
+    },
     "Delete" : {
       "comment" : "Edit action",
       "localizations" : {
