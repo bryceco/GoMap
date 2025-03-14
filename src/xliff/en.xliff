@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="1tR-eI-DSh.configuration.title" xml:space="preserve">
@@ -204,7 +204,7 @@
   </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -236,7 +236,7 @@
   </file>
   <file original="DisplaySettings/Base.lproj/Display.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -355,9 +355,9 @@
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
-        <source>Enable Filters</source>
-        <target state="new">Enable Filters</target>
-        <note>Class = "UILabel"; text = "Enable Filters"; ObjectID = "LxX-tl-ZLH";</note>
+        <source>Object Filters</source>
+        <target state="new">Object Filters</target>
+        <note>Class = "UILabel"; text = "Object Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
@@ -438,9 +438,9 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
-        <source>Enable Rotation</source>
-        <target state="new">Enable Rotation</target>
-        <note>Class = "UILabel"; text = "Enable Rotation"; ObjectID = "VUR-wT-knn";</note>
+        <source>Map Rotation</source>
+        <target state="new">Map Rotation</target>
+        <note>Class = "UILabel"; text = "Map Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
@@ -740,7 +740,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="GpxWidget/InfoPlist.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -762,7 +762,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="GpxWidget/Localizable.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="%@" xml:space="preserve">
@@ -819,7 +819,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -846,7 +846,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="InfoPlist.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -918,7 +918,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="Localizable.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="" xml:space="preserve">
@@ -1497,11 +1497,6 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="new">Changeset</target>
         <note>OSM changeset identifier</note>
       </trans-unit>
-      <trans-unit id="Clear Aerial Tiles" xml:space="preserve">
-        <source>Clear Aerial Tiles</source>
-        <target state="new">Clear Aerial Tiles</target>
-        <note>Delete cached data</note>
-      </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
         <target state="new">Clear All</target>
@@ -1510,26 +1505,6 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
         <source>Clear Basemap Tiles</source>
         <target state="new">Clear Basemap Tiles</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear GPS Overlay Tiles" xml:space="preserve">
-        <source>Clear GPS Overlay Tiles</source>
-        <target state="new">Clear GPS Overlay Tiles</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear GPX Tracks" xml:space="preserve">
-        <source>Clear GPX Tracks</source>
-        <target state="new">Clear GPX Tracks</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear Locator Overlay Tiles" xml:space="preserve">
-        <source>Clear Locator Overlay Tiles</source>
-        <target state="new">Clear Locator Overlay Tiles</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear Mapnik Tiles" xml:space="preserve">
-        <source>Clear Mapnik Tiles</source>
-        <target state="new">Clear Mapnik Tiles</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
@@ -1603,6 +1578,11 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Database error</source>
         <target state="new">Database error</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." xml:space="preserve">
+        <source>Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</source>
+        <target state="new">Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</target>
+        <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
         <source>Delete</source>
@@ -1839,11 +1819,6 @@ Error: %@</target>
         <source>Keys</source>
         <target state="new">Keys</target>
         <note>The tag keys section of a quest definition</note>
-      </trans-unit>
-      <trans-unit id="Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English." xml:space="preserve">
-        <source>Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</source>
-        <target state="new">Language selection affects only Presets and only for those presets that are translated for iD. The main interface is still English.</target>
-        <note/>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
         <source>Last updated %@</source>
@@ -2632,11 +2607,6 @@ Select the highway from which you are approaching the intersection, then tap an 
         <target state="new">Undo</target>
         <note/>
       </trans-unit>
-      <trans-unit id="Unknown" xml:space="preserve">
-        <source>Unknown</source>
-        <target state="new">Unknown</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
         <source>Unknown role</source>
         <target state="new">Unknown role</target>
@@ -2741,9 +2711,9 @@ To continue press Commit once again, otherwise press Cancel.</source>
 To continue press Commit once again, otherwise press Cancel.</target>
         <note/>
       </trans-unit>
-      <trans-unit id="You can define your own custom presets here" xml:space="preserve">
-        <source>You can define your own custom presets here</source>
-        <target state="new">You can define your own custom presets here</target>
+      <trans-unit id="You can define custom fields for presets. A field is a single key/value pair associated with a feature." xml:space="preserve">
+        <source>You can define custom fields for presets. A field is a single key/value pair associated with a feature.</source>
+        <target state="new">You can define custom fields for presets. A field is a single key/value pair associated with a feature.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
@@ -3004,7 +2974,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -3026,7 +2996,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/InfoPlist.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -3043,7 +3013,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/Localizable.xcstrings" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -3065,7 +3035,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -3098,6 +3068,16 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">Point of Interest</target>
         <note>Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S";</note>
       </trans-unit>
+      <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve">
+        <source>Quercus </source>
+        <target state="new">Quercus </target>
+        <note>Class = "UITextField"; placeholder = "Quercus "; ObjectID = "6yC-L7-V38"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
+        <source>key</source>
+        <target state="new">key</target>
+        <note>Class = "UITextField"; placeholder = "key"; ObjectID = "6zU-bk-hWw";</note>
+      </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
         <source>Title</source>
         <target state="new">Title</target>
@@ -3118,6 +3098,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">Restaurant</target>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j";</note>
       </trans-unit>
+      <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve">
+        <source>broadleaved </source>
+        <target state="new">broadleaved </target>
+        <note>Class = "UITextField"; placeholder = "broadleaved "; ObjectID = "AAx-p2-Mzh"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
         <source>dog</source>
         <target state="new">dog</target>
@@ -3127,6 +3112,16 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Add New</source>
         <target state="new">Add New</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; Note = "Add user-defined tagging preset";</note>
+      </trans-unit>
+      <trans-unit id="CBg-8X-VJp.configuration.title" xml:space="preserve">
+        <source>Area</source>
+        <target state="new">Area</target>
+        <note>Class = "UIButton"; configuration.title = "Area"; ObjectID = "CBg-8X-VJp";</note>
+      </trans-unit>
+      <trans-unit id="CBg-8X-VJp.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <target state="new">Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
@@ -3142,6 +3137,16 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Applies To</source>
         <target state="new">Applies To</target>
         <note>Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i";</note>
+      </trans-unit>
+      <trans-unit id="DhX-ri-fx9.configuration.title" xml:space="preserve">
+        <source>Vertex</source>
+        <target state="new">Vertex</target>
+        <note>Class = "UIButton"; configuration.title = "Vertex"; ObjectID = "DhX-ri-fx9";</note>
+      </trans-unit>
+      <trans-unit id="DhX-ri-fx9.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <target state="new">Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "DhX-ri-fx9";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
         <source>Key</source>
@@ -3164,9 +3169,9 @@ You may want to clear the cache (under Display settings) to improve performance.
         <note>Class = "UITableViewController"; title = "Custom Tags"; ObjectID = "G5R-oP-lp3";</note>
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
-        <source>Custom Presets</source>
-        <target state="new">Custom Presets</target>
-        <note>Class = "UINavigationItem"; title = "Custom Presets"; ObjectID = "GIO-W7-q5U";</note>
+        <source>Custom Fields</source>
+        <target state="new">Custom Fields</target>
+        <note>Class = "UINavigationItem"; title = "Custom Fields"; ObjectID = "GIO-W7-q5U";</note>
       </trans-unit>
       <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
         <source>Back</source>
@@ -3188,10 +3193,25 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">Back</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE";</note>
       </trans-unit>
+      <trans-unit id="Lhz-HA-Q6j.title" xml:space="preserve">
+        <source>Custom Feature</source>
+        <target state="new">Custom Feature</target>
+        <note>Class = "UINavigationItem"; title = "Custom Feature"; ObjectID = "Lhz-HA-Q6j";</note>
+      </trans-unit>
+      <trans-unit id="MU8-ia-Kco.placeholder" xml:space="preserve">
+        <source>key</source>
+        <target state="new">key</target>
+        <note>Class = "UITextField"; placeholder = "key"; ObjectID = "MU8-ia-Kco";</note>
+      </trans-unit>
+      <trans-unit id="Nxm-fU-1eX.placeholder" xml:space="preserve">
+        <source>natural</source>
+        <target state="new">natural</target>
+        <note>Class = "UITextField"; placeholder = "natural"; ObjectID = "Nxm-fU-1eX";</note>
+      </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
-        <source>Custom Preset</source>
-        <target state="new">Custom Preset</target>
-        <note>Class = "UINavigationItem"; title = "Custom Preset"; ObjectID = "OND-s7-I6f";</note>
+        <source>Custom Field</source>
+        <target state="new">Custom Field</target>
+        <note>Class = "UINavigationItem"; title = "Custom Field"; ObjectID = "OND-s7-I6f";</note>
       </trans-unit>
       <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
         <source>Type</source>
@@ -3199,9 +3219,9 @@ You may want to clear the cache (under Display settings) to improve performance.
         <note>Class = "UILabel"; text = "Type"; ObjectID = "P3A-5n-1Iq";</note>
       </trans-unit>
       <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
-        <source>Preset Name</source>
-        <target state="new">Preset Name</target>
-        <note>Class = "UITableViewSection"; headerTitle = "Preset Name"; ObjectID = "QDv-7w-nbx";</note>
+        <source>Field Name</source>
+        <target state="new">Field Name</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Field Name"; ObjectID = "QDv-7w-nbx";</note>
       </trans-unit>
       <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
         <source>Value 6</source>
@@ -3213,10 +3233,30 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">Cancel</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w";</note>
       </trans-unit>
+      <trans-unit id="Ruw-WB-IgL.footerTitle" xml:space="preserve">
+        <source>Tags to add when selecting this feature.</source>
+        <target state="new">Tags to add when selecting this feature.</target>
+        <note>Class = "UITableViewSection"; footerTitle = "Tags to add when selecting this feature."; ObjectID = "Ruw-WB-IgL";</note>
+      </trans-unit>
+      <trans-unit id="Ruw-WB-IgL.headerTitle" xml:space="preserve">
+        <source>Feature Tags</source>
+        <target state="new">Feature Tags</target>
+        <note>Class = "UITableViewSection"; headerTitle = "Feature Tags"; ObjectID = "Ruw-WB-IgL";</note>
+      </trans-unit>
+      <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
+        <source>Name</source>
+        <target state="new">Name</target>
+        <note>Class = "UILabel"; text = "Name"; ObjectID = "TJk-hO-Ejc";</note>
+      </trans-unit>
       <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
         <source>Title</source>
         <target state="new">Title</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="UJ1-oM-H4Z.title" xml:space="preserve">
+        <source>Back</source>
+        <target state="new">Back</target>
+        <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "UJ1-oM-H4Z";</note>
       </trans-unit>
       <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
         <source>relation</source>
@@ -3228,6 +3268,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">Wheelchair Access</target>
         <note>Class = "UILabel"; text = "Wheelchair Access"; ObjectID = "Vli-Ct-Lpz";</note>
       </trans-unit>
+      <trans-unit id="WXF-5S-E8m.text" xml:space="preserve">
+        <source>Title</source>
+        <target state="new">Title</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "WXF-5S-E8m";</note>
+      </trans-unit>
       <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
         <source>Inscription</source>
         <target state="new">Inscription</target>
@@ -3237,6 +3282,16 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Value 10</source>
         <target state="new">Value 10</target>
         <note>Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ";</note>
+      </trans-unit>
+      <trans-unit id="WjA-Nb-uzp.configuration.title" xml:space="preserve">
+        <source>Line</source>
+        <target state="new">Line</target>
+        <note>Class = "UIButton"; configuration.title = "Line"; ObjectID = "WjA-Nb-uzp";</note>
+      </trans-unit>
+      <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <target state="new">Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
         <source>Value 7</source>
@@ -3258,6 +3313,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">key</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
+      <trans-unit id="ZNr-2O-LuN.placeholder" xml:space="preserve">
+        <source>key</source>
+        <target state="new">key</target>
+        <note>Class = "UITextField"; placeholder = "key"; ObjectID = "ZNr-2O-LuN";</note>
+      </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>
         <target state="new">Subtitle</target>
@@ -3273,10 +3333,20 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">Configure</target>
         <note>Class = "UIBarButtonItem"; title = "Configure"; ObjectID = "aLi-Vs-z0k";</note>
       </trans-unit>
+      <trans-unit id="bF4-TU-MTA.text" xml:space="preserve">
+        <source>Add New</source>
+        <target state="new">Add New</target>
+        <note>Class = "UILabel"; text = "Add New"; ObjectID = "bF4-TU-MTA"; Note = "Add user-defined tagging preset";</note>
+      </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
         <source>All Tags</source>
         <target state="new">All Tags</target>
         <note>Class = "UINavigationItem"; title = "All Tags"; ObjectID = "cN9-3h-H3l";</note>
+      </trans-unit>
+      <trans-unit id="cNV-jf-zYM.title" xml:space="preserve">
+        <source>Custom Features</source>
+        <target state="new">Custom Features</target>
+        <note>Class = "UINavigationItem"; title = "Custom Features"; ObjectID = "cNV-jf-zYM";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
         <source>value</source>
@@ -3303,15 +3373,35 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">Dogs Allowed</target>
         <note>Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp";</note>
       </trans-unit>
+      <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve">
+        <source>tree </source>
+        <target state="new">tree </target>
+        <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
         <source>Attributes</source>
         <target state="new">Attributes</target>
         <note>Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF";</note>
       </trans-unit>
+      <trans-unit id="fdT-wh-QoF.configuration.title" xml:space="preserve">
+        <source>Point</source>
+        <target state="new">Point</target>
+        <note>Class = "UIButton"; configuration.title = "Point"; ObjectID = "fdT-wh-QoF";</note>
+      </trans-unit>
+      <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <target state="new">Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "fdT-wh-QoF";</note>
+      </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
         <target state="new">clean</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve">
+        <source>Oak</source>
+        <target state="new">Oak</target>
+        <note>Class = "UITextField"; placeholder = "Oak"; ObjectID = "ftg-j1-Ep9"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
         <source>Label</source>
@@ -3338,6 +3428,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">Changeset</target>
         <note>Class = "UILabel"; text = "Changeset"; ObjectID = "ijx-N9-1eO";</note>
       </trans-unit>
+      <trans-unit id="j2j-qT-aHG.placeholder" xml:space="preserve">
+        <source>leaf_type</source>
+        <target state="new">leaf_type</target>
+        <note>Class = "UITextField"; placeholder = "leaf_type"; ObjectID = "j2j-qT-aHG";</note>
+      </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
         <source>The possible values for the preset</source>
         <target state="new">The possible values for the preset</target>
@@ -3352,6 +3447,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>leisure </source>
         <target state="new">leisure </target>
         <note>Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="l2k-lT-vHS.placeholder" xml:space="preserve">
+        <source>genus:en</source>
+        <target state="new">genus:en</target>
+        <note>Class = "UITextField"; placeholder = "genus:en"; ObjectID = "l2k-lT-vHS";</note>
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
         <source>Common Tags</source>
@@ -3388,6 +3488,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">ⓘ</target>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "nil-45-Wvp";</note>
       </trans-unit>
+      <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve">
+        <source>value </source>
+        <target state="new">value </target>
+        <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
         <source>Value 11</source>
         <target state="new">Value 11</target>
@@ -3409,14 +3514,34 @@ You may want to clear the cache (under Display settings) to improve performance.
         <note>Class = "UILabel"; text = "Name"; ObjectID = "omf-S9-Yjq";</note>
       </trans-unit>
       <trans-unit id="pHA-2B-6DC.normalTitle" xml:space="preserve">
-        <source>Customize Presets</source>
-        <target state="new">Customize Presets</target>
-        <note>Class = "UIButton"; normalTitle = "Customize Presets"; ObjectID = "pHA-2B-6DC";</note>
+        <source>Custom Fields</source>
+        <target state="new">Custom Fields</target>
+        <note>Class = "UIButton"; normalTitle = "Custom Fields"; ObjectID = "pHA-2B-6DC";</note>
+      </trans-unit>
+      <trans-unit id="pNE-0W-9Qa.normalTitle" xml:space="preserve">
+        <source>Custom Features</source>
+        <target state="new">Custom Features</target>
+        <note>Class = "UIButton"; normalTitle = "Custom Features"; ObjectID = "pNE-0W-9Qa";</note>
+      </trans-unit>
+      <trans-unit id="pqN-F1-JGm.placeholder" xml:space="preserve">
+        <source>Oak Tree</source>
+        <target state="new">Oak Tree</target>
+        <note>Class = "UITextField"; placeholder = "Oak Tree"; ObjectID = "pqN-F1-JGm";</note>
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
         <source>Restaurant</source>
         <target state="new">Restaurant</target>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "pxY-di-zg7";</note>
+      </trans-unit>
+      <trans-unit id="qTY-bY-Dwe.placeholder" xml:space="preserve">
+        <source>genus</source>
+        <target state="new">genus</target>
+        <note>Class = "UITextField"; placeholder = "genus"; ObjectID = "qTY-bY-Dwe";</note>
+      </trans-unit>
+      <trans-unit id="sGi-dQ-1v0.text" xml:space="preserve">
+        <source>Feature type:</source>
+        <target state="new">Feature type:</target>
+        <note>Class = "UILabel"; text = "Feature type:"; ObjectID = "sGi-dQ-1v0";</note>
       </trans-unit>
       <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve">
         <source>value</source>
@@ -3433,6 +3558,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">Key</target>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf";</note>
       </trans-unit>
+      <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve">
+        <source>value </source>
+        <target state="new">value </target>
+        <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
         <source>Presets</source>
         <target state="new">Presets</target>
@@ -3448,6 +3578,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">Value 12</target>
         <note>Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa";</note>
       </trans-unit>
+      <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve">
+        <source>value </source>
+        <target state="new">value </target>
+        <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
         <source>Value</source>
         <target state="new">Value</target>
@@ -3458,11 +3593,16 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">ⓘ</target>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "zpj-gL-2Nt";</note>
       </trans-unit>
+      <trans-unit id="zqH-07-JEp.title" xml:space="preserve">
+        <source>Cancel</source>
+        <target state="new">Cancel</target>
+        <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "zqH-07-JEp";</note>
+      </trans-unit>
     </body>
   </file>
   <file original="Settings/Base.lproj/Settings.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -3842,7 +3982,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="en" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.0" build-num="16A242d"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.2" build-num="16C5032a"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
@@ -3894,6 +4034,11 @@ http://glyphish.com
         <source>survey, Bing, etc.</source>
         <target state="new">survey, Bing, etc.</target>
         <note>Class = "UITextField"; placeholder = "survey, Bing, etc."; ObjectID = "ps9-Hb-Vow";</note>
+      </trans-unit>
+      <trans-unit id="xNB-pJ-M20.text" xml:space="preserve">
+        <source>Describe your changes... </source>
+        <target state="new">Describe your changes... </target>
+        <note>Class = "UILabel"; text = "Describe your changes... "; ObjectID = "xNB-pJ-M20";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
         <source>Source:</source>

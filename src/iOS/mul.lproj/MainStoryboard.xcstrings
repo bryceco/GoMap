@@ -161,6 +161,12 @@
             "value" : "Hangi juhised"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helbidea lortu"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -237,6 +243,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "В путь"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "திசைகளைப் பெறுங்கள்"
           }
         },
         "uk" : {
@@ -401,6 +413,12 @@
             "value" : "Первый"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "முதல்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -431,6 +449,12 @@
       "comment" : "Class = \"UIButton\"; configuration.title = \"Comment\"; ObjectID = \"2g1-vb-Cjc\"; Note = \"Add a comment for a Note\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Komentář"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -473,10 +497,22 @@
             "value" : "Megjegyzés"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コメント"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Комментировать"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கருத்து"
           }
         },
         "zh-Hant" : {
@@ -629,6 +665,12 @@
             "value" : "Комментарий"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கருத்து"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -731,10 +773,22 @@
             "value" : "Ссылка на источник Bing"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பிங் பண்புக்கூறு"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Джерело Bing"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ghi công Bing"
           }
         },
         "zh-Hant" : {
@@ -891,6 +945,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загрузить"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பதிவேற்றும்"
           }
         },
         "uk" : {
@@ -1163,6 +1223,12 @@
             "value" : "Новый комментарий:"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "புதிய கருத்து:"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1307,6 +1373,12 @@
             "value" : "66.6 FPS"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 எஃப்.பி.எச்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1407,6 +1479,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Комментарий для пакета правок"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மாற்றங்கள் இங்கே செல்கின்றன"
           }
         },
         "uk" : {
@@ -1589,6 +1667,12 @@
             "value" : "Переориентировать карту на север"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மறுசீரமைப்பு வரைபடம் வடக்கு"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1749,6 +1833,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Компас"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "திசைகாட்டி"
           }
         },
         "uk" : {
@@ -1919,6 +2009,12 @@
             "value" : "Искать место"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இருப்பிடத்தைத் தேடுங்கள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2087,6 +2183,12 @@
             "value" : "Центр"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "நடுவண்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2235,6 +2337,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загрузить на сервер"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கமிட்"
           }
         },
         "uk" : {
@@ -2495,6 +2603,12 @@
             "value" : "Подзаголовок"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வசன வரிகள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2747,6 +2861,12 @@
             "value" : "Заметка"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "குறிப்பு"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2915,6 +3035,12 @@
             "value" : "Увеличьте, чтобы править"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "திருத்த பெரிதாக்கவும்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3017,6 +3143,12 @@
       "comment" : "Class = \"UIButton\"; configuration.title = \"Comment & Resolve\"; ObjectID = \"OJ0-aO-ri1\"; Note = \"Add a comment and resolve Note\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Komentář a vyřešení"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3053,10 +3185,22 @@
             "value" : "Megjegyzés hozzáadása & jegyzet megoldása"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コメント & 解決"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Комментировать и устранить"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கருத்து & தீர்க்க"
           }
         },
         "zh-Hant" : {
@@ -3189,6 +3333,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Устранить"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கருத்து & தீர்க்க"
           }
         },
         "uk" : {
@@ -3365,6 +3515,12 @@
             "value" : "Etiqueta"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etiketa"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3429,6 +3585,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Метка"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "சிட்டை"
           }
         },
         "uk" : {
@@ -3599,6 +3761,12 @@
             "value" : "Карты Bing"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பிங் வரைபடங்கள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3747,6 +3915,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Искать место"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இருப்பிடத்தைத் தேடுங்கள்"
           }
         },
         "uk" : {
@@ -3917,6 +4091,12 @@
             "value" : "Заголовок"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தலைப்பு"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4067,6 +4247,12 @@
             "value" : "Укажите название («Нью-Йорк»), URL-адрес или любой текст, содержащий широту и долготу, или ссылку на объект OSM («way 51014987»):"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஒரு பெயர் (\"நியூயார்க்\"), முகவரி அல்லது LAT/LON ஆயத்தொகுப்புகளைக் கொண்ட பிற உரை அல்லது OSM பொருளின் குறிப்பு (\"வழி 51014987\") ஐக் குறிப்பிடவும்:"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4158,6 +4344,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "ta" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2014-06-17 17:54 UTC"
@@ -4367,6 +4559,12 @@
             "value" : "Заголовок"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தலைப்பு"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4445,6 +4643,12 @@
             "value" : "Niagara juga"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pasaia Donibane"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4521,6 +4725,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ниагарский водопад"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "நயாகரா நீர்வீழ்ச்சி"
           }
         },
         "uk" : {
@@ -4691,6 +4901,12 @@
             "value" : "Теги"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "குறிச்சொற்கள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4859,6 +5075,12 @@
             "value" : "Удалить"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "நீக்கு"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5025,6 +5247,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ещё..."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மேலும் ..."
           }
         },
         "uk" : {

@@ -119,6 +119,12 @@
             "value" : "ОК"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "சரி"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -237,6 +243,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Go Map!! откроется на местоположение где было сделано фото."
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வரைபடத்திற்குச் செல்லுங்கள் !! புகைப்படம் எடுக்கப்பட்ட இடத்தில் திறக்கப்படும்."
           }
         },
         "uk" : {
@@ -381,6 +393,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отмена"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ரத்துசெய்"
           }
         },
         "uk" : {

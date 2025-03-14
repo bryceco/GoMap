@@ -53,6 +53,12 @@
             "value" : "Go Map!!"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வரைபடத்திற்குச் செல்லுங்கள் !!"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -117,6 +123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PhotoShare"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "புகைப்படங்கள்"
           }
         },
         "uk" : {

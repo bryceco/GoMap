@@ -131,6 +131,12 @@
             "value" : "Изменения:"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மாற்றங்கள்:"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -413,6 +419,12 @@
             "value" : "Внести изменения"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கமிட்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -569,6 +581,12 @@
             "value" : "Править"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தொகு"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -671,6 +689,12 @@
             "value" : "🔽"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔽"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -737,6 +761,12 @@
             "value" : "Muudatuste kommentaar:"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akdaketa-multzoaren komentarioa:"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -795,6 +825,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Комментарий к пакету правок:"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மாற்றங்கள்:"
           }
         },
         "uk" : {
@@ -957,6 +993,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загрузить"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பதிவேற்றும்"
           }
         },
         "uk" : {
@@ -1229,6 +1271,12 @@
             "value" : "обследование, Bing и т.д."
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "சர்வே, பிங், முதலியன."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1377,6 +1425,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Почта"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஏற்றுமதி"
           }
         },
         "uk" : {
@@ -1557,6 +1611,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "මූලාශ්‍රය:"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஆதாரம்:"
           }
         },
         "uk" : {

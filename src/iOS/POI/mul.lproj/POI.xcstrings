@@ -407,6 +407,12 @@
             "value" : "Назад"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பின்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -561,6 +567,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Атрибуты"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பண்புக்கூறுகள்"
           }
         },
         "uk" : {
@@ -845,6 +857,12 @@
             "value" : "Точка интереса"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஆர்வத்தின் புள்ளி"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1025,6 +1043,12 @@
             "value" : "Заголовок"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தலைப்பு"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1181,6 +1205,12 @@
             "value" : "Да"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஆம்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1331,6 +1361,12 @@
             "value" : "Все теги"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "அனைத்து குறிச்சொற்களும்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1479,6 +1515,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ресторан"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "உணவகம்"
           }
         },
         "uk" : {
@@ -1895,6 +1937,12 @@
             "value" : "Настроить"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "உள்ளமைக்கவும்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2049,6 +2097,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Добавить новый"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "புதியதைச் சேர்க்கவும்"
           }
         },
         "uk" : {
@@ -2223,6 +2277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Все теги"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "அனைத்து குறிச்சொற்களும்"
           }
         },
         "uk" : {
@@ -2507,6 +2567,12 @@
             "value" : "Ключ пресета"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "முன்னமைக்கப்பட்ட விசை"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2649,6 +2715,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 8"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 8"
           }
         },
         "uk" : {
@@ -2915,6 +2987,12 @@
             "value" : "Данный пресет будет доступен при редактировании объектов с данной комбинацией ключ/значение. Оставьте незаполненным любое из полей для возможности подстановки."
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இந்த விசை/மதிப்பு கலவையுடன் பொருந்தக்கூடிய பொருள்களைத் திருத்தும்போது முன்னமைவு கிடைக்கும். வைல்டு கார்டுக்கு காலியாக விடவும்."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3033,6 +3111,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Применимо к"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பொருந்தும்"
           }
         },
         "uk" : {
@@ -3197,6 +3281,12 @@
             "value" : "Значение 9"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 9"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3339,6 +3429,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Собакам разрешено"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "நாய்கள் அனுமதிக்கப்படுகின்றன"
           }
         },
         "uk" : {
@@ -3503,6 +3599,12 @@
             "value" : "Ключ"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "விசை"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3647,6 +3749,12 @@
             "value" : "Атрибуты"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பண்புக்கூறுகள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3789,6 +3897,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 3"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 3"
           }
         },
         "uk" : {
@@ -4197,6 +4311,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Настраиваемые теги"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தனிப்பயன் குறிச்சொற்கள்"
           }
         },
         "uk" : {
@@ -4613,6 +4733,12 @@
             "value" : "väärtus"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "balorea"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4683,6 +4809,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "значение"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு"
           }
         },
         "uk" : {
@@ -4835,6 +4967,12 @@
             "value" : "Назад"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பின்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4985,6 +5123,12 @@
             "value" : "Атрибуты"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பண்புக்கூறுகள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5063,6 +5207,12 @@
             "value" : "Muudatuste kogum"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aldaketa-multzoa"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5127,6 +5277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Пакет правок"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மாற்றங்கள்"
           }
         },
         "uk" : {
@@ -5285,6 +5441,12 @@
             "value" : "Значение 1"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 1"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5429,6 +5591,12 @@
             "value" : "Тип POI"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "POI வகை"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5567,6 +5735,12 @@
             "value" : "Возможные значения для предустановки"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "முன்னமைவுக்கான சாத்தியமான மதிப்புகள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5697,6 +5871,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Предустановленные значения"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "முன்னமைக்கப்பட்ட மதிப்புகள்"
           }
         },
         "uk" : {
@@ -5963,6 +6143,12 @@
             "value" : "Назад"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பின்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6131,6 +6317,12 @@
             "value" : "Значение 5"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 5"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6281,6 +6473,12 @@
             "value" : "Распространённые теги"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பொதுவான குறிச்சொற்கள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6425,6 +6623,12 @@
             "value" : "Распространённые теги"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பொதுவான குறிச்சொற்கள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6497,6 +6701,12 @@
             "value" : "Nimi"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izena"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6561,6 +6771,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Наименование"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பெயர்"
           }
         },
         "uk" : {
@@ -6719,6 +6935,12 @@
             "value" : "Значение 4"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 4"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6804,6 +7026,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
+        "ta" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"
@@ -6939,6 +7167,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 2"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 2"
           }
         },
         "uk" : {
@@ -7107,6 +7341,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 11"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 11"
           }
         },
         "uk" : {
@@ -7409,6 +7649,12 @@
             "value" : "Nimi"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izena"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7473,6 +7719,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Наименование"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பெயர்"
           }
         },
         "uk" : {
@@ -7763,6 +8015,12 @@
             "value" : "Тип"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வகை"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7997,6 +8255,12 @@
             "value" : "Restoran"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jantegi"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8061,6 +8325,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ресторан"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "உணவகம்"
           }
         },
         "uk" : {
@@ -8357,6 +8627,12 @@
             "value" : "Значение 6"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 6"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8505,6 +8781,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отмена"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ரத்துசெய்"
           }
         },
         "uk" : {
@@ -8883,6 +9165,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ключ"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "விசை"
           }
         },
         "uk" : {
@@ -9329,6 +9617,12 @@
             "value" : "Предустановки"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "முன்னமைவுகள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9459,6 +9753,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Доступ для инвалидных колясок"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "சக்கர நாற்காலி அணுகல்"
           }
         },
         "uk" : {
@@ -9707,6 +10007,12 @@
             "value" : "Väärtus 12"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Balorea 12"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9771,6 +10077,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 12"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 12"
           }
         },
         "uk" : {
@@ -9909,6 +10221,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 10"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 10"
           }
         },
         "uk" : {
@@ -10077,6 +10395,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение 7"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு 7"
           }
         },
         "uk" : {
@@ -10517,6 +10841,12 @@
             "value" : "Väärtus"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Balorea"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10581,6 +10911,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Значение"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு"
           }
         },
         "uk" : {
@@ -10734,6 +11070,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
+        "ta" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"

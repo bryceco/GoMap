@@ -137,6 +137,12 @@
             "value" : "Расположите устройство параллельно направлению движения объекта."
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "உங்கள் சாதனத்தை பொருளின் திசைக்கு இணையாக வைக்கவும்."
+          }
+        },
         "tzm" : {
           "stringUnit" : {
             "state" : "translated",
@@ -303,6 +309,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отмена"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ரத்துசெய்"
           }
         },
         "tzm" : {

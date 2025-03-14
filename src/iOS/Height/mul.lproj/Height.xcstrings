@@ -125,6 +125,12 @@
             "value" : "Высота"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "உயரம்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -281,6 +287,12 @@
             "value" : "Отмена"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ரத்துசெய்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -429,6 +441,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Задать высоту"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "உயரம் அமைக்கவும்"
           }
         },
         "uk" : {
@@ -585,6 +603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Расстояние"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தூரம்"
           }
         },
         "uk" : {

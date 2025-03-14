@@ -6,7 +6,7 @@
 //  Copyright © 2024 Bryce Cogswell. All rights reserved.
 //
 
-#if canImport(ActivityKit)
+#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 import SwiftUI
 import WidgetKit
 
