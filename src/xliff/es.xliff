@@ -1699,7 +1699,7 @@ Error: %@</target>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
         <source>Error fetching metadata: %@</source>
-        <target state="translated">Error al recuperar los metadatos: %@</target>
+        <target state="translated">Error al recuperar los metadatos: %s</target>
         <note/>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">

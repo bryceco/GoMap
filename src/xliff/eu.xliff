@@ -921,7 +921,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$#@megabytes@ , %2$#@files@</source>
-        <target state="translated">%1$#@megabytes@ , %2$#@files@</target>
+        <target state="translated">%1$#@MB@ , %2$#@fitxategi@</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.one" xml:space="preserve">
@@ -974,7 +974,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@metro@, %2$#@nodo@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
@@ -999,12 +999,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
-        <target state="translated">%1$#@meters@, %2$#@points@</target>
+        <target state="translated">%1$#@metro@, %2$#@puntu@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
+        <target state="translated">%1$#@metro@, %2$#@puntu@, %3$#@bide-puntu@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">

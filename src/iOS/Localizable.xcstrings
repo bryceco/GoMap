@@ -5791,25 +5791,25 @@
                   "few" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg файла"
+                      "value" : "%2$ld файла"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg файлов"
+                      "value" : "%2$ld файлов"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg файл"
+                      "value" : "%2$ld файл"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg файла"
+                      "value" : "%2$ld файла"
                     }
                   }
                 }
@@ -7075,13 +7075,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%எல்.டி நாள்"
+                  "value" : "%ld நாள்"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%எல்.டி நாட்கள்"
+                  "value" : "%ld நாட்கள்"
                 }
               }
             }
@@ -7734,7 +7734,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%எல்.டி திருத்தங்கள், கடைசி செயலில் %@"
+                  "value" : "%ld திருத்தங்கள், கடைசி செயலில் %@"
                 }
               }
             }
@@ -9200,7 +9200,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1 $#@மீட்டர்@, %2 $#@முனைகள்@"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -9211,13 +9211,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%1 $ ld மீட்டர்"
+                      "value" : "%arg மீட்டர்"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%1 $ ld மீட்டர்"
+                      "value" : "%arg மீட்டர்"
                     }
                   }
                 }
@@ -9231,13 +9231,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2 $ ld முனை"
+                      "value" : "%arg முனை"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2 $ ld முனைகள்"
+                      "value" : "%arg முனைகள்"
                     }
                   }
                 }
@@ -10873,7 +10873,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1 $#@மீட்டர்@, %2 $#@புள்ளிகள்@"
+            "value" : "%#@meters@, %#@points@"
           },
           "substitutions" : {
             "meters" : {
@@ -10884,13 +10884,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%எல்.டி மீட்டர்"
+                      "value" : "%ld மீட்டர்"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%எல்.டி மீட்டர்"
+                      "value" : "%ld மீட்டர்"
                     }
                   }
                 }
@@ -10904,13 +10904,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%எல்.டி புள்ளி"
+                      "value" : "%ld புள்ளி"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%எல்.டி புள்ளிகள்"
+                      "value" : "%ld புள்ளிகள்"
                     }
                   }
                 }
@@ -13128,7 +13128,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1 $#@மீட்டர்@, %2 $#@புள்ளிகள்@, %3 $#@வழித்தடங்கள்@"
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
@@ -13139,13 +13139,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%எல்.டி மீட்டர்"
+                      "value" : "%ld மீட்டர்"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%எல்.டி மீட்டர்"
+                      "value" : "%ld மீட்டர்"
                     }
                   }
                 }
@@ -13159,13 +13159,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%எல்.டி புள்ளி"
+                      "value" : "%ld புள்ளி"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%எல்.டி புள்ளிகள்"
+                      "value" : "%ld புள்ளிகள்"
                     }
                   }
                 }
@@ -13179,13 +13179,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%எல்.டி வேன் பாயிண்ட்"
+                      "value" : "%ld வேன் பாயிண்ட்"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%எல்.டி வழிப்பாதைகள்"
+                      "value" : "%ld வழிப்பாதைகள்"
                     }
                   }
                 }
@@ -14929,7 +14929,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1 $#@ வழிகள்@ இறக்குமதி செய்யப்பட்டது,\n %2 $#@ நகல்@ தவிர்க்கப்பட்டது"
+            "value" : "%#@routes@ இறக்குமதி செய்யப்பட்டது,\n%#@duplicates@ தவிர்க்கப்பட்டது"
           },
           "substitutions" : {
             "duplicates" : {
@@ -14940,13 +14940,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2 $ ld நகல்"
+                      "value" : "%arg நகல்"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2 $ ld நகல்கள்"
+                      "value" : "%arg நகல்கள்"
                     }
                   }
                 }
@@ -15783,13 +15783,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%எல்.டி பொருள்"
+                  "value" : "%ld பொருள்"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%எல்.டி பொருள்கள்"
+                  "value" : "%ld பொருள்கள்"
                 }
               }
             }
@@ -16430,13 +16430,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%லு ஓடு தேவை"
+                  "value" : "%lu ஓடு தேவை"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%லு ஓடுகள் தேவை"
+                  "value" : "%lu ஓடுகள் தேவை"
                 }
               }
             }
@@ -43703,25 +43703,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %@ символов, максимальная длина тега 255"
+                  "value" : "Вставка %ld символов, максимальная длина тега 255"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %@ символов, максимальная длина тега 255"
+                  "value" : "Вставка %ld символов, максимальная длина тега 255"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %@ символа, максимальная длина тега 255"
+                  "value" : "Вставка %ld символа, максимальная длина тега 255"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %@ символов, максимальная длина тега 255"
+                  "value" : "Вставка %ld символов, максимальная длина тега 255"
                 }
               }
             }
@@ -43751,13 +43751,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%எல்.டி எழுத்து ஒட்டுதல், அதிகபட்ச குறிச்சொல் நீளம் 255 ஆகும்"
+                  "value" : "%ld எழுத்து ஒட்டுதல், அதிகபட்ச குறிச்சொல் நீளம் 255 ஆகும்"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%எல்.டி எழுத்துக்கள் ஒட்டுதல், அதிகபட்ச குறிச்சொல் நீளம் 255 ஆகும்"
+                  "value" : "%ld எழுத்துக்கள் ஒட்டுதல், அதிகபட்ச குறிச்சொல் நீளம் 255 ஆகும்"
                 }
               }
             }
@@ -44361,7 +44361,7 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %@ тегов"
+                  "value" : "Вставка %ld тегов"
                 }
               },
               "one" : {
@@ -44403,13 +44403,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%எல்.டி குறிச்சொல்லை ஒட்டுதல்"
+                  "value" : "%ld குறிச்சொல்லை ஒட்டுதல்"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%எல்.டி குறிச்சொற்களை ஒட்டுதல்"
+                  "value" : "%ld குறிச்சொற்களை ஒட்டுதல்"
                 }
               }
             }
@@ -53587,7 +53587,7 @@
         "nb-NO" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gjennomferdsel TILLATT fra %1$s til %2$s"
+            "value" : "Gjennomferdsel TILLATT fra %1$@ til %2$@"
           }
         },
         "nl" : {
@@ -59031,13 +59031,13 @@
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "கோ வரைபடத்தின் இந்த பதிப்பில் %எல்.டி மாற்றங்களை பதிவேற்றியுள்ளீர்கள் !!\n\n இந்த பயன்பாட்டை மதிப்பிடவா?"
+                  "value" : "கோ வரைபடத்தின் இந்த பதிப்பில் %ld மாற்றங்களை பதிவேற்றியுள்ளீர்கள் !!\n\n இந்த பயன்பாட்டை மதிப்பிடவா?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "கோ வரைபடத்தின் இந்த பதிப்பில் %எல்.டி மாற்றங்களை பதிவேற்றியுள்ளீர்கள் !!\n\n இந்த பயன்பாட்டை மதிப்பிடவா?"
+                  "value" : "கோ வரைபடத்தின் இந்த பதிப்பில் %ld மாற்றங்களை பதிவேற்றியுள்ளீர்கள் !!\n\n இந்த பயன்பாட்டை மதிப்பிடவா?"
                 }
               }
             }
