@@ -2391,7 +2391,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
         <source>Travel ALLOWED from %@ to %@</source>
-        <target state="translated">Gjennomferdsel TILLATT fra %1$s til %2$s</target>
+        <target state="translated">Gjennomferdsel TILLATT fra %1$@ til %2$@</target>
         <note/>
       </trans-unit>
       <trans-unit id="Travel ONLY from %@ to %@" xml:space="preserve">
