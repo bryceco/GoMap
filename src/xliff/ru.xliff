@@ -1055,22 +1055,22 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.few" xml:space="preserve">
         <source>%2$ld files</source>
-        <target state="translated">%2$d файла</target>
+        <target state="translated">%2$ld файла</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.many" xml:space="preserve">
         <source>%2$ld files</source>
-        <target state="translated">%2$d файлов</target>
+        <target state="translated">%2$ld файлов</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.one" xml:space="preserve">
         <source>%2$ld file</source>
-        <target state="translated">%2$d файл</target>
+        <target state="translated">%2$ld файл</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.other" xml:space="preserve">
         <source>%2$ld files</source>
-        <target state="translated">%2$d файла</target>
+        <target state="translated">%2$ld файла</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.few" xml:space="preserve">
@@ -2337,22 +2337,22 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.few" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="translated">Вставка %@ символов, максимальная длина тега 255</target>
+        <target state="translated">Вставка %ld символов, максимальная длина тега 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.many" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="translated">Вставка %@ символов, максимальная длина тега 255</target>
+        <target state="translated">Вставка %ld символов, максимальная длина тега 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
         <source>Pasting %ld character, maximum tag length is 255</source>
-        <target state="translated">Вставка %@ символа, максимальная длина тега 255</target>
+        <target state="translated">Вставка %ld символа, максимальная длина тега 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="translated">Вставка %@ символов, максимальная длина тега 255</target>
+        <target state="translated">Вставка %ld символов, максимальная длина тега 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.few" xml:space="preserve">
@@ -2362,7 +2362,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.many" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="translated">Вставка %@ тегов</target>
+        <target state="translated">Вставка %ld тегов</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
