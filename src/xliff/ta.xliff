@@ -1025,12 +1025,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
         <source>%ld Day</source>
-        <target state="translated">%எல்.டி நாள்</target>
+        <target state="translated">%ld நாள்</target>
         <note>One or more days</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.other" xml:space="preserve">
         <source>%ld Days</source>
-        <target state="translated">%எல்.டி நாட்கள்</target>
+        <target state="translated">%ld நாட்கள்</target>
         <note>One or more days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
@@ -1040,109 +1040,109 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
-        <target state="translated">%எல்.டி திருத்தங்கள், கடைசி செயலில் %@</target>
+        <target state="translated">%ld திருத்தங்கள், கடைசி செயலில் %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="translated">%1 $#@மீட்டர்@, %2 $#@முனைகள்@</target>
+        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$ld meter</source>
-        <target state="translated">%1 $ ld மீட்டர்</target>
+        <target state="translated">%1$ld மீட்டர்</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="translated">%1 $ ld மீட்டர்</target>
+        <target state="translated">%1$ld மீட்டர்</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="translated">%2 $ ld முனை</target>
+        <target state="translated">%2$ld முனை</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="translated">%2 $ ld முனைகள்</target>
+        <target state="translated">%2$ld முனைகள்</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
-        <target state="translated">%1 $#@மீட்டர்@, %2 $#@புள்ளிகள்@</target>
+        <target state="translated">%1$#@meters@, %2$#@points@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="translated">%1 $#@மீட்டர்@, %2 $#@புள்ளிகள்@, %3 $#@வழித்தடங்கள்@</target>
+        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="translated">%எல்.டி மீட்டர்</target>
+        <target state="translated">%ld மீட்டர்</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="translated">%எல்.டி மீட்டர்</target>
+        <target state="translated">%ld மீட்டர்</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
-        <target state="translated">%எல்.டி புள்ளி</target>
+        <target state="translated">%ld புள்ளி</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="translated">%எல்.டி புள்ளிகள்</target>
+        <target state="translated">%ld புள்ளிகள்</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
         <source>%ld waypoint</source>
-        <target state="translated">%எல்.டி வேன் பாயிண்ட்</target>
+        <target state="translated">%ld வேன் பாயிண்ட்</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.other" xml:space="preserve">
         <source>%ld waypoints</source>
-        <target state="translated">%எல்.டி வழிப்பாதைகள்</target>
+        <target state="translated">%ld வழிப்பாதைகள்</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="translated">%எல்.டி மீட்டர்</target>
+        <target state="translated">%ld மீட்டர்</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="translated">%எல்.டி மீட்டர்</target>
+        <target state="translated">%ld மீட்டர்</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
-        <target state="translated">%எல்.டி புள்ளி</target>
+        <target state="translated">%ld புள்ளி</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="translated">%எல்.டி புள்ளிகள்</target>
+        <target state="translated">%ld புள்ளிகள்</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
-        <target state="translated">%1 $#@ வழிகள்@ இறக்குமதி செய்யப்பட்டது,
- %2 $#@ நகல்@ தவிர்க்கப்பட்டது</target>
+        <target state="translated">%1$#@routes@ இறக்குமதி செய்யப்பட்டது,
+%2$#@duplicates@ தவிர்க்கப்பட்டது</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.one" xml:space="preserve">
         <source>%2$ld duplicate</source>
-        <target state="translated">%2 $ ld நகல்</target>
+        <target state="translated">%2$ld நகல்</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.other" xml:space="preserve">
         <source>%2$ld duplicates</source>
-        <target state="translated">%2 $ ld நகல்கள்</target>
+        <target state="translated">%2$ld நகல்கள்</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.one" xml:space="preserve">
@@ -1157,22 +1157,22 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
         <source>%ld object</source>
-        <target state="translated">%எல்.டி பொருள்</target>
+        <target state="translated">%ld பொருள்</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
-        <target state="translated">%எல்.டி பொருள்கள்</target>
+        <target state="translated">%ld பொருள்கள்</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.one" xml:space="preserve">
         <source>%lu tile needed</source>
-        <target state="translated">%லு ஓடு தேவை</target>
+        <target state="translated">%lu ஓடு தேவை</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.other" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="translated">%லு ஓடுகள் தேவை</target>
+        <target state="translated">%lu ஓடுகள் தேவை</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
@@ -2127,22 +2127,22 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
         <source>Pasting %ld character, maximum tag length is 255</source>
-        <target state="translated">%எல்.டி எழுத்து ஒட்டுதல், அதிகபட்ச குறிச்சொல் நீளம் 255 ஆகும்</target>
+        <target state="translated">%ld எழுத்து ஒட்டுதல், அதிகபட்ச குறிச்சொல் நீளம் 255 ஆகும்</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="translated">%எல்.டி எழுத்துக்கள் ஒட்டுதல், அதிகபட்ச குறிச்சொல் நீளம் 255 ஆகும்</target>
+        <target state="translated">%ld எழுத்துக்கள் ஒட்டுதல், அதிகபட்ச குறிச்சொல் நீளம் 255 ஆகும்</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
         <source>Pasting %ld tag</source>
-        <target state="translated">%எல்.டி குறிச்சொல்லை ஒட்டுதல்</target>
+        <target state="translated">%ld குறிச்சொல்லை ஒட்டுதல்</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="translated">%எல்.டி குறிச்சொற்களை ஒட்டுதல்</target>
+        <target state="translated">%ld குறிச்சொற்களை ஒட்டுதல்</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
@@ -2719,7 +2719,7 @@ These members are marked with '&gt;'.</source>
         <source>You've uploaded %ld changeset with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="translated">கோ வரைபடத்தின் இந்த பதிப்பில் %எல்.டி மாற்றங்களை பதிவேற்றியுள்ளீர்கள் !!
+        <target state="translated">கோ வரைபடத்தின் இந்த பதிப்பில் %ld மாற்றங்களை பதிவேற்றியுள்ளீர்கள் !!
 
  இந்த பயன்பாட்டை மதிப்பிடவா?</target>
         <note/>
@@ -2728,7 +2728,7 @@ Rate this app?</source>
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="translated">கோ வரைபடத்தின் இந்த பதிப்பில் %எல்.டி மாற்றங்களை பதிவேற்றியுள்ளீர்கள் !!
+        <target state="translated">கோ வரைபடத்தின் இந்த பதிப்பில் %ld மாற்றங்களை பதிவேற்றியுள்ளீர்கள் !!
 
  இந்த பயன்பாட்டை மதிப்பிடவா?</target>
         <note/>
