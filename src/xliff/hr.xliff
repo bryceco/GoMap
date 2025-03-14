@@ -2238,17 +2238,17 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.few" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="translated">Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255</target>
+        <target state="translated">Umetanje %ld znaka, maksimalni broj znakova za oznaku je 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
         <source>Pasting %ld character, maximum tag length is 255</source>
-        <target state="translated">Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255</target>
+        <target state="translated">Umetanje %ld znaka, maksimalni broj znakova za oznaku je 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="translated">Umetanje %@ znakova, maksimalni broj znakova za oznaku je 255</target>
+        <target state="translated">Umetanje %ld znakova, maksimalni broj znakova za oznaku je 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.few" xml:space="preserve">
