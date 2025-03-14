@@ -5000,7 +5000,7 @@
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@megabytes@ , %#@files@"
+            "value" : "%1$#@MB@ , %2$#@fitxategi@"
           },
           "substitutions" : {
             "files" : {
@@ -5791,25 +5791,25 @@
                   "few" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$ld файла"
+                      "value" : "%arg файла"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$ld файлов"
+                      "value" : "%arg файлов"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$ld файл"
+                      "value" : "%arg файл"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2$ld файла"
+                      "value" : "%arg файла"
                     }
                   }
                 }
@@ -7734,7 +7734,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "%ld திருத்தங்கள், கடைசி செயலில் %@"
+                  "value" : "%எல்.டி திருத்தங்கள், கடைசி செயலில் %@"
                 }
               }
             }
@@ -8300,7 +8300,7 @@
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@nodes@"
+            "value" : "%1$#@metro@, %2$#@nodo@"
           },
           "substitutions" : {
             "meters" : {
@@ -9973,7 +9973,7 @@
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@points@"
+            "value" : "%1$#@metro@, %2$#@puntu@"
           },
           "substitutions" : {
             "meters" : {
@@ -11846,7 +11846,7 @@
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@points@, %#@waypoints@"
+            "value" : "%1$#@metro@, %2$#@puntu@, %3$#@bide-puntu@"
           },
           "substitutions" : {
             "meters" : {
@@ -31064,7 +31064,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error al recuperar los metadatos: %@"
+            "value" : "Error al recuperar los metadatos: %s"
           }
         },
         "et" : {
@@ -43457,19 +43457,19 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Umetanje %ld znaka, maksimalni broj znakova za oznaku je 255"
+                  "value" : "Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Umetanje %ld znaka, maksimalni broj znakova za oznaku je 255"
+                  "value" : "Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Umetanje %ld znakova, maksimalni broj znakova za oznaku je 255"
+                  "value" : "Umetanje %@ znakova, maksimalni broj znakova za oznaku je 255"
                 }
               }
             }
@@ -43703,25 +43703,25 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %ld символов, максимальная длина тега 255"
+                  "value" : "Вставка %@ символов, максимальная длина тега 255"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %ld символов, максимальная длина тега 255"
+                  "value" : "Вставка %@ символов, максимальная длина тега 255"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %ld символа, максимальная длина тега 255"
+                  "value" : "Вставка %@ символа, максимальная длина тега 255"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %ld символов, максимальная длина тега 255"
+                  "value" : "Вставка %@ символов, максимальная длина тега 255"
                 }
               }
             }
@@ -44361,7 +44361,7 @@
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Вставка %ld тегов"
+                  "value" : "Вставка %@ тегов"
                 }
               },
               "one" : {
@@ -53587,7 +53587,7 @@
         "nb-NO" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gjennomferdsel TILLATT fra %1$@ til %2$@"
+            "value" : "Gjennomferdsel TILLATT fra %1$s til %2$s"
           }
         },
         "nl" : {
