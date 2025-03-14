@@ -704,7 +704,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		{
 			// allow GPS collection in background
 			if #available(iOS 16.2, *) {
+#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 				GpxTrackWidgetManager.shared.startTrack(fromWidget: false)
+#endif
 			} else {
 				// Fallback on earlier versions
 			}
@@ -717,7 +719,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	@objc func applicationDidBecomeActive(_ sender: Any?) {
 		// allow GPS collection in background
 		if #available(iOS 16.2, *) {
+#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 			GpxTrackWidgetManager.shared.endTrack(fromWidget: false)
+#endif
 		}
 	}
 
