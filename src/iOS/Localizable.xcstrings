@@ -4227,7 +4227,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1 $#@மீட்டர்@, %2 $#@முனைகள்@"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -4244,7 +4244,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%1 $ .1f மீட்டர்"
+                      "value" : "%arg மீட்டர்"
                     }
                   }
                 }
@@ -5000,7 +5000,7 @@
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@MB@ , %2$#@fitxategi@"
+            "value" : "%#@megabytes@ , %#@files@"
           },
           "substitutions" : {
             "files" : {
@@ -5931,7 +5931,7 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "$ 1 %."
+                      "value" : "$1%."
                     }
                   },
                   "other" : {
@@ -8300,7 +8300,7 @@
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@metro@, %2$#@nodo@"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -9973,7 +9973,7 @@
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@metro@, %2$#@puntu@"
+            "value" : "%#@meters@, %#@points@"
           },
           "substitutions" : {
             "meters" : {
@@ -11846,7 +11846,7 @@
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@metro@, %2$#@puntu@, %3$#@bide-puntu@"
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
@@ -31064,7 +31064,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error al recuperar los metadatos: %s"
+            "value" : "Error al recuperar los metadatos: %@"
           }
         },
         "et" : {
@@ -43457,19 +43457,19 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255"
+                  "value" : "Umetanje %ld znaka, maksimalni broj znakova za oznaku je 255"
                 }
               },
               "one" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Umetanje %@ znaka, maksimalni broj znakova za oznaku je 255"
+                  "value" : "Umetanje %ld znaka, maksimalni broj znakova za oznaku je 255"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Umetanje %@ znakova, maksimalni broj znakova za oznaku je 255"
+                  "value" : "Umetanje %ld znakova, maksimalni broj znakova za oznaku je 255"
                 }
               }
             }
