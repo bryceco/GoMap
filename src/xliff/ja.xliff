@@ -1169,6 +1169,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">営業時間を追加</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Panoramax Photo" xml:space="preserve">
+        <source>Add Panoramax Photo</source>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
         <target state="translated">駐車場の種類を追加</target>

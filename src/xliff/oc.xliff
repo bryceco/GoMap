@@ -1569,6 +1569,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">Ajustar leis oraris de dubertura</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Panoramax Photo" xml:space="preserve">
+        <source>Add Panoramax Photo</source>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
         <target state="translated">Ajustar la mena d’aparcament</target>

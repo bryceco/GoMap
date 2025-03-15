@@ -1212,6 +1212,10 @@ Cancella le cache dei riquadri Mapnik o Overlay per scaricare i riquadri più re
         <target state="translated">Aggiungi orari apertura</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Panoramax Photo" xml:space="preserve">
+        <source>Add Panoramax Photo</source>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
         <target state="translated">Aggiungi tipo di parcheggio</target>

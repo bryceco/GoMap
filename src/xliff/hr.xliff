@@ -1366,6 +1366,10 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
         <target state="translated">Dodaj radne sate</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Panoramax Photo" xml:space="preserve">
+        <source>Add Panoramax Photo</source>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
         <target state="translated">Dodaj vrstu parkirališta</target>

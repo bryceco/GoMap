@@ -1461,6 +1461,10 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
         <target state="translated">Přidat otevírací dobu</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Panoramax Photo" xml:space="preserve">
+        <source>Add Panoramax Photo</source>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
         <target state="translated">Přidat typ parkoviště</target>

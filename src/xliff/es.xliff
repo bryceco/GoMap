@@ -1269,6 +1269,10 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
         <target state="translated">Añadir horarios de apertura</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Panoramax Photo" xml:space="preserve">
+        <source>Add Panoramax Photo</source>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
         <target state="translated">Añadir tipos de estacionamiento</target>

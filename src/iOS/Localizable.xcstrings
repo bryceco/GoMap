@@ -4238,7 +4238,7 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%1 $ .1f மீட்டர்"
+                      "value" : "%arg மீட்டர்"
                     }
                   },
                   "other" : {
@@ -4258,13 +4258,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2 $ ld முனை"
+                      "value" : "%arg முனை"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2 $ ld முனைகள்"
+                      "value" : "%arg முனைகள்"
                     }
                   }
                 }
@@ -5900,7 +5900,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1 $#@megabytes@, %2 $#@கோப்புகள்@"
+            "value" : "%#@megabytes@, %2$#@கோப்புகள்@"
           },
           "substitutions" : {
             "files" : {
@@ -5911,13 +5911,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2 $ ld கோப்பு"
+                      "value" : "%arg கோப்பு"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%2 $ ld கோப்புகள்"
+                      "value" : "%arg கோப்புகள்"
                     }
                   }
                 }
@@ -5931,13 +5931,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "$1%."
+                      "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "$ 1 %."
+                      "value" : "%arg"
                     }
                   }
                 }
@@ -14960,13 +14960,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%1 $ ld புதிய பாதை"
+                      "value" : "%arg புதிய பாதை"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%1 $ ld புதிய வழிகள்"
+                      "value" : "%arg புதிய வழிகள்"
                     }
                   }
                 }
@@ -29154,7 +29154,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "தூரம்: %1 $@ ± %2 $@ மீட்டர்"
+            "value" : "தூரம்: %1$@ ± %2$@ மீட்டர்"
           }
         },
         "uk" : {
@@ -32274,7 +32274,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "உயரம்: %1 $@ ± %2 $@ மீட்டர்"
+            "value" : "உயரம்: %1$@ ± %2$@ மீட்டர்"
           }
         },
         "uk" : {

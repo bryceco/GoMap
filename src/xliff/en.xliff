@@ -1271,6 +1271,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="new">Add Opening Hours</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Panoramax Photo" xml:space="preserve">
+        <source>Add Panoramax Photo</source>
+        <target state="new">Add Panoramax Photo</target>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
         <target state="new">Add Parking Type</target>

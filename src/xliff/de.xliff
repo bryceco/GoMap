@@ -1265,6 +1265,10 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
         <target state="translated">Öffnungszeiten hinzufügen</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Panoramax Photo" xml:space="preserve">
+        <source>Add Panoramax Photo</source>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
         <target state="translated">Parkplatztyp hinzufügen</target>
