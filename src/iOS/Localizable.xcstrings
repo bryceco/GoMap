@@ -18475,6 +18475,9 @@
         }
       }
     },
+    "Add Panoramax Photo" : {
+      "comment" : "A type of quest"
+    },
     "Add Parking Type" : {
       "comment" : "A type of quest",
       "localizations" : {

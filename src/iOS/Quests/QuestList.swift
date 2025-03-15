@@ -290,6 +290,20 @@ class QuestList {
 				tagKey: "opening_hours",
 				includeFeatures: []).makeQuestInstance()
 
+			let addPanoramaxPhoto = QuestInstance(
+				ident: "__PanoramaxPhoto",
+				title: NSLocalizedString("Add Panoramax Photo", comment: "A type of quest"),
+				label: "ic_quest_panoramax",
+				editKeys: ["panoramax"],
+				appliesToObject: { (obj: OsmBaseObject) in
+					let tags = obj.tags
+					return websitePredicate(tags) &&
+						tags["panoramax"] == nil
+				},
+				acceptsValue: {
+					UUID(uuidString: $0) != nil
+				})
+
 			builtinList = [
 				addBuildingType,
 				addSidewalkSurface,
@@ -299,6 +313,7 @@ class QuestList {
 				addSpeedLimit,
 				addWebsite,
 				addParkingLotType,
+				addPanoramaxPhoto,
 				ResurveyQuest(ageInYears: 2.0)
 			]
 			// we want all built-in idents to be easily recognized and not collide with user defined quests:
