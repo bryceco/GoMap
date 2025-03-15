@@ -5900,7 +5900,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@megabytes@, %2$#@கோப்புகள்@"
+            "value" : "%#@megabytes@ , %#@files@"
           },
           "substitutions" : {
             "files" : {
