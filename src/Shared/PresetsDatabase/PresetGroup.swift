@@ -28,11 +28,13 @@ final class PresetGroup {
 	let name: String? // e.g. Address
 	let presetKeys: [PresetKeyOrGroup]
 	let isDrillDown: Bool
+	let usesBoth: Bool // a special group that supports things like left/right/both
 
-	init(name: String?, tags: [PresetKeyOrGroup], isDrillDown: Bool = false) {
+	init(name: String?, tags: [PresetKeyOrGroup], isDrillDown: Bool = false, usesBoth: Bool) {
 		self.name = name
 		presetKeys = tags
 		self.isDrillDown = isDrillDown
+		self.usesBoth = usesBoth
 	}
 
 	convenience init(fromMerger p1: PresetGroup, with p2: PresetGroup, sort: Bool) {
@@ -48,7 +50,7 @@ final class PresetGroup {
 				return false // shouldn't happen
 			})
 		}
-		self.init(name: p1.name, tags: list)
+		self.init(name: p1.name, tags: list, usesBoth: p1.usesBoth)
 	}
 
 	var description: String {

@@ -198,8 +198,8 @@ extension PresetsDatabase {
 				autocorrect: autocorrect)
 			tags.append(.key(tag))
 		}
-		let group = PresetGroup(name: label, tags: tags, isDrillDown: true)
-		let group2 = PresetGroup(name: nil, tags: [.group(group)], isDrillDown: true)
+		let group = PresetGroup(name: label, tags: tags, isDrillDown: true, usesBoth: false)
+		let group2 = PresetGroup(name: nil, tags: [.group(group)], isDrillDown: true, usesBoth: false)
 		return group2
 	}
 
@@ -330,7 +330,7 @@ extension PresetsDatabase {
 				keyboard: .default,
 				capitalize: .none,
 				autocorrect: .no)
-			let group = PresetGroup(name: nil, tags: [.key(tag)])
+			let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 			return group
 
 		case "radio", "structureRadio", "manyCombo", "multiCombo":
@@ -360,7 +360,7 @@ extension PresetsDatabase {
 						keyboard: .default,
 						capitalize: .none,
 						autocorrect: .no)
-					let group = PresetGroup(name: nil, tags: [.key(tag)])
+					let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 					return group
 				}
 				let group = multiComboWith(label: label, keys: keys, options: options!, strings: field.strings,
@@ -380,7 +380,7 @@ extension PresetsDatabase {
 					keyboard: .default,
 					capitalize: .none,
 					autocorrect: .no)
-				let group = PresetGroup(name: nil, tags: [.key(tag)])
+				let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 				return group
 			}
 
@@ -404,7 +404,7 @@ extension PresetsDatabase {
 				keyboard: .default,
 				capitalize: .none,
 				autocorrect: .no)
-			let group = PresetGroup(name: nil, tags: [.key(tag)])
+			let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 			return group
 
 		case "access", "directionalCombo": // "cycleway" is no longer used
@@ -428,7 +428,7 @@ extension PresetsDatabase {
 					autocorrect: .no)
 				tagList.append(.key(tag))
 			}
-			let group = PresetGroup(name: label, tags: tagList)
+			let group = PresetGroup(name: label, tags: tagList, usesBoth: field.type == "directionalCombo")
 			return group
 
 		case "address":
@@ -481,7 +481,7 @@ extension PresetsDatabase {
 					presets: nil)
 				addrs.append(.key(tag))
 			}
-			let group = PresetGroup(name: label, tags: addrs)
+			let group = PresetGroup(name: label, tags: addrs, usesBoth: false)
 			return group
 
 		case "text", "number", "email", "identifier", "maxweight_bridge", "textarea",
@@ -525,7 +525,7 @@ extension PresetsDatabase {
 				capitalize: capitalize,
 				autocorrect: autocorrect,
 				presets: nil)
-			let group = PresetGroup(name: nil, tags: [.key(tag)])
+			let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 			return group
 
 		case "localized":

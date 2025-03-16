@@ -167,7 +167,7 @@ final class PresetsForFeature {
 			capitalize: UITextAutocapitalizationType.words,
 			autocorrect: UITextAutocorrectionType.no,
 			presets: nil)
-		let typeGroup = PresetGroup(name: "Type", tags: [.key(typeTag), .key(nameTag)])
+		let typeGroup = PresetGroup(name: "Type", tags: [.key(typeTag), .key(nameTag)], usesBoth: false)
 		sectionList = [typeGroup]
 
 		// Add user-defined presets
@@ -187,7 +187,7 @@ final class PresetsForFeature {
 			customGroup.append(.key(custom))
 		}
 		if customGroup.count != 0 {
-			let group = PresetGroup(name: nil, tags: customGroup)
+			let group = PresetGroup(name: nil, tags: customGroup, usesBoth: false)
 			sectionList.append(group)
 		}
 
@@ -209,7 +209,8 @@ final class PresetsForFeature {
 
 		// Create a break between the common items and the rare items
 		sectionList.append(PresetGroup(name: nil,
-		                               tags: [PresetKeyOrGroup]()))
+		                               tags: [PresetKeyOrGroup](),
+		                               usesBoth: false))
 
 		// add moreFields fields
 		let fields = PresetsForFeature.fieldsFor(featureID: feature.featureID, field: { f in f.moreFields })
@@ -224,7 +225,8 @@ final class PresetsForFeature {
 
 		// Create a break before universal items
 		sectionList.append(PresetGroup(name: nil,
-		                               tags: [PresetKeyOrGroup]()))
+		                               tags: [PresetKeyOrGroup](),
+		                               usesBoth: false))
 
 		// add universal fields
 		let uni = PresetsDatabase.shared.presetFields.compactMap({ k, v in v.universal ? k : nil })
