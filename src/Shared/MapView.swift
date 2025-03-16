@@ -1151,6 +1151,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func ask(toRate uploadCount: Int) {
+		// Don't ask if running under TestFlight
+		if Bundle.main.appStoreReceiptURL?.path.contains("sandboxReceipt") ?? false {
+			return
+		}
 		let countLog10 = log10(Double(uploadCount))
 		if uploadCount > 1, countLog10 == floor(countLog10) {
 			let title = String.localizedStringWithFormat(
