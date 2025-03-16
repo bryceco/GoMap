@@ -26,8 +26,7 @@ extension CoreGraphics.CGPoint: Swift.Hashable {
 	}
 }
 
-extension CGPoint
-{
+extension CGPoint {
 	static let zero = CGPoint(x: 0.0, y: 0.0)
 
 	@inline(__always) func withOffset(_ dx: CGFloat, _ dy: CGFloat) -> CGPoint {

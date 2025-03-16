@@ -140,11 +140,11 @@ final class PresetsDatabase {
 				let nsiPresets = (nsiDict["presets"] as! [String: Any])
 					.mapValuesWithKeys({ k, v in
 						PresetFeature(withID: k,
-									  jsonDict: v as! [String: Any],
-									  isNSI: true)!
+						              jsonDict: v as! [String: Any],
+						              isNSI: true)!
 					})
 				let nsiIndex = Self.buildTagIndex([self.stdFeatures, nsiPresets],
-												  basePresets: self.stdFeatures)
+				                                  basePresets: self.stdFeatures)
 				DispatchQueue.main.async {
 					self.nsiFeatures = nsiPresets
 					self.nsiFeatureIndex = nsiIndex
@@ -155,7 +155,7 @@ final class PresetsDatabase {
 #endif
 				}
 				print("NSI read = \(readTime.timeIntervalSince(startTime)), " +
-					  "decode = \(Date().timeIntervalSince(readTime))")
+					"decode = \(Date().timeIntervalSince(readTime))")
 			}
 		}
 
