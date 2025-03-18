@@ -66,34 +66,33 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	func updateButtonPositionsFor(layout: MainViewButtonLayout) {
 		UserPrefs.shared.mapViewButtonLayout.value = layout.rawValue
 
+		guard
+			let addButton = mapView.addNodeButton,
+			let superview = addButton.superview,
+			let c = superview.constraints.first(where: {
+				if ($0.firstItem as? UIView) == addButton,
+				   ($0.secondItem is UILayoutGuide) || ($0.secondItem is UIView),
+				   $0.firstAttribute == .leading || $0.firstAttribute == .trailing,
+				   $0.secondAttribute == .leading || $0.secondAttribute == .trailing
+				{
+					return true
+				}
+				return false
+			})
+		else { return }
+
+		superview.removeConstraint(c)
 		let isLeft = layout == .buttonsOnLeft
 		let attribute: NSLayoutConstraint.Attribute = isLeft ? .leading : .trailing
-		let addButton = mapView.addNodeButton
-		let superview = addButton?.superview
-		for c in superview?.constraints ?? [] {
-			if (c.firstItem as? UIView) != addButton {
-				continue
-			}
-			if !((c.secondItem is UILayoutGuide) || (c.secondItem is UIView)) {
-				continue
-			}
-			if c.firstAttribute == .leading || c.firstAttribute == .trailing,
-			   c.secondAttribute == .leading || c.secondAttribute == .trailing
-			{
-				superview?.removeConstraint(c)
-				let c2 = NSLayoutConstraint(
-					item: c.firstItem as Any,
-					attribute: attribute,
-					relatedBy: .equal,
-					toItem: c.secondItem,
-					attribute: attribute,
-					multiplier: 1.0,
-					constant: CGFloat(isLeft ? abs(Float(c.constant)) : -abs(Float(c.constant))))
-				superview?.addConstraint(c2)
-				return
-			}
-		}
-		assertionFailure() // didn't find the constraint
+		let c2 = NSLayoutConstraint(
+			item: c.firstItem as Any,
+			attribute: attribute,
+			relatedBy: .equal,
+			toItem: c.secondItem,
+			attribute: attribute,
+			multiplier: 1.0,
+			constant: isLeft ? abs(c.constant) : -abs(c.constant))
+		superview.addConstraint(c2)
 	}
 
 	// MARK: Initialization
