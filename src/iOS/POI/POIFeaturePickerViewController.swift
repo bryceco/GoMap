@@ -76,7 +76,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		if searchArray.count != 0 {
+		if (searchBar.text?.count ?? 0) > 0 {
+			// only show one section when searching
 			return 1
 		}
 		return isTopLevel ? 2 : 1
@@ -84,7 +85,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		if isTopLevel {
-			return section == 0 && searchArray.count == 0
+			return section == 0 && (searchBar.text?.count ?? 0) == 0
 				? NSLocalizedString("Most recent", comment: "")
 				: NSLocalizedString("All choices", comment: "")
 		} else {
@@ -112,15 +113,15 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if searchArray.count != 0 {
+		if (searchBar.text?.count ?? 0) > 0 {
 			return searchArray.count
+		} else if isTopLevel, section == 0 {
+			// showing most recent list
+			let count = mostRecentArray.count
+			return count < mostRecentMaximum ? count : mostRecentMaximum
 		} else {
-			if isTopLevel, section == 0 {
-				let count = mostRecentArray.count
-				return count < mostRecentMaximum ? count : mostRecentMaximum
-			} else {
-				return featureList.count
-			}
+			// showing feature list
+			return featureList.count
 		}
 	}
 
@@ -130,7 +131,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let feature: PresetFeature
-		if searchArray.count != 0 {
+		if searchArray.count > 0 {
 			feature = searchArray[indexPath.row]
 		} else if isTopLevel, indexPath.section == 0 {
 			// most recents
@@ -213,9 +214,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			updateTags(with: feature)
 			navigationController?.popToRootViewController(animated: true)
 			return
-		}
-
-		if isTopLevel, indexPath.section == 0 {
+		} else if isTopLevel, indexPath.section == 0 {
 			// most recents
 			let feature = mostRecentArray[indexPath.row]
 			updateTags(with: feature)
