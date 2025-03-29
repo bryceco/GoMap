@@ -69,6 +69,7 @@
       </trans-unit>
       <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
         <source>Search for Location</source>
+        <target state="translated">Hae sijaintia</target>
         <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
       </trans-unit>
       <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
@@ -113,6 +114,7 @@
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
+        <target state="translated">Anna nimi ("New York"), URL tai muu teksti sisältäen lat/lon koordinaatit, tai viitteen OSM objektiin ("way 51014987"):</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
       <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
@@ -1279,6 +1281,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
+        <target state="translated">Parempilaatuinen taustakuva on saatavilla sijainnillesi. Vaihdetaanko siihen?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
@@ -3249,6 +3252,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="2Zi-cz-7Va.text" xml:space="preserve">
         <source>Show Touches</source>
+        <target state="translated">Näytä kosketukset</target>
         <note>Class = "UILabel"; text = "Show Touches"; ObjectID = "2Zi-cz-7Va"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3AM-Eb-jch.text" xml:space="preserve">
@@ -3266,6 +3270,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
         <source>Select a server if you would like to edit data located on an alternate OSM server.</source>
+        <target state="translated">Valitse palvelin jos haluat muokata toisen OSM palvelimen tietoja.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Select a server if you would like to edit data located on an alternate OSM server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
@@ -3455,6 +3460,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="fbD-Hr-HNI.headerTitle" xml:space="preserve">
         <source>Credentials</source>
+        <target state="translated">Tili</target>
         <note>Class = "UITableViewSection"; headerTitle = "Credentials"; ObjectID = "fbD-Hr-HNI";</note>
       </trans-unit>
       <trans-unit id="gec-8l-k4H.text" xml:space="preserve">
@@ -3496,6 +3502,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="m7D-wn-3MP.title" xml:space="preserve">
         <source>Prepare for Offline</source>
+        <target state="translated">Valmistele Offline -tilaa varten</target>
         <note>Class = "UINavigationItem"; title = "Prepare for Offline"; ObjectID = "m7D-wn-3MP";</note>
       </trans-unit>
       <trans-unit id="m7u-CH-jgg.headerTitle" xml:space="preserve">
@@ -3520,6 +3527,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="rfX-TP-V0l.text" xml:space="preserve">
         <source>Prepare for Offline</source>
+        <target state="translated">Valmistele Offline -tilaa varten</target>
         <note>Class = "UILabel"; text = "Prepare for Offline"; ObjectID = "rfX-TP-V0l";</note>
       </trans-unit>
       <trans-unit id="snH-kp-6ib.normalTitle" xml:space="preserve">
