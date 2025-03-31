@@ -83,8 +83,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="300" image="photo" translatesAutoresizingMaskIntoConstraints="NO" id="kQK-pl-MGI">
-                                <rect key="frame" x="16" y="121" width="361" height="620.66666666666663"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalCompressionResistancePriority="300" image="photo" translatesAutoresizingMaskIntoConstraints="NO" id="kQK-pl-MGI">
+                                <rect key="frame" x="16" y="120.99999999999997" width="361" height="482.33333333333326"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9YD-c3-CaM">
                                 <rect key="frame" x="125.00000000000001" y="69" width="143.33333333333337" height="44"/>
@@ -154,10 +154,18 @@
                                     <action selector="done:" destination="aZ2-Vw-zLE" eventType="touchUpInside" id="1ny-8R-rLH"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="58h-7V-zny">
+                                <rect key="frame" x="20" y="611.33333333333337" width="353" height="130.33333333333337"/>
+                                <string key="text">Panoramax is a public, decentralized hosting service for geolocated street-level pictures. Uploaded photos are published under a share-alike (CC-BY-SA) license. Faces and PII are automatically blurred. Uploaded photos are associated with your OSM identity. </string>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="CBj-ZO-6oS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="58h-7V-zny" firstAttribute="leading" secondItem="CBj-ZO-6oS" secondAttribute="leading" constant="20" id="3Dg-YR-htK"/>
                             <constraint firstItem="9YD-c3-CaM" firstAttribute="centerX" secondItem="CBj-ZO-6oS" secondAttribute="centerX" id="DaS-3C-zJ5"/>
                             <constraint firstItem="CBj-ZO-6oS" firstAttribute="top" secondItem="9YD-c3-CaM" secondAttribute="top" constant="-10" id="Kj7-Rs-2RU"/>
                             <constraint firstItem="kQK-pl-MGI" firstAttribute="leading" secondItem="CBj-ZO-6oS" secondAttribute="leading" constant="16" id="MVo-Ug-wHa"/>
@@ -166,9 +174,11 @@
                             <constraint firstItem="kQK-pl-MGI" firstAttribute="top" secondItem="9YD-c3-CaM" secondAttribute="bottom" constant="8" symbolic="YES" id="RX9-Tt-IpL"/>
                             <constraint firstItem="Hd5-Oz-btw" firstAttribute="centerY" secondItem="9YD-c3-CaM" secondAttribute="centerY" id="S3P-fv-HKa"/>
                             <constraint firstItem="CBj-ZO-6oS" firstAttribute="bottom" secondItem="afo-5Q-2Ie" secondAttribute="bottom" constant="24.333333333333371" id="UfZ-lu-ITu"/>
-                            <constraint firstItem="afo-5Q-2Ie" firstAttribute="top" secondItem="kQK-pl-MGI" secondAttribute="bottom" constant="8" symbolic="YES" id="Vqt-Ji-a1e"/>
+                            <constraint firstItem="58h-7V-zny" firstAttribute="top" secondItem="kQK-pl-MGI" secondAttribute="bottom" constant="8" symbolic="YES" id="fx6-S2-KOx"/>
                             <constraint firstItem="CBj-ZO-6oS" firstAttribute="trailing" secondItem="Hd5-Oz-btw" secondAttribute="trailing" id="ib9-4G-00h"/>
                             <constraint firstItem="CBj-ZO-6oS" firstAttribute="trailing" secondItem="kQK-pl-MGI" secondAttribute="trailing" constant="16" id="lHc-eL-E7z"/>
+                            <constraint firstItem="afo-5Q-2Ie" firstAttribute="top" secondItem="58h-7V-zny" secondAttribute="bottom" constant="8" symbolic="YES" id="tR3-RH-2ZU"/>
+                            <constraint firstItem="CBj-ZO-6oS" firstAttribute="trailing" secondItem="58h-7V-zny" secondAttribute="trailing" constant="20" id="u1o-jI-UaR"/>
                         </constraints>
                     </view>
                     <connections>
@@ -181,7 +191,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HDo-mp-t5D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1566" y="-14"/>
+            <point key="canvasLocation" x="-1567.175572519084" y="-14.084507042253522"/>
         </scene>
     </scenes>
     <resources>
