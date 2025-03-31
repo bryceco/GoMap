@@ -1931,6 +1931,12 @@
             "value" : "Helbidea bilatu"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hae sijaintia"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4179,6 +4185,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Määra nimi (\"New York\"), URL või muu tekst, mis sisaldab koordinaate laius-/pikkuskoordinaate või viidet OSM objektile (\"way 51014987\"):"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anna nimi (\"New York\"), URL tai muu teksti sisältäen lat/lon koordinaatit, tai viitteen OSM objektiin (\"way 51014987\"):"
           }
         },
         "fr" : {

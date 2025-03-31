@@ -904,6 +904,12 @@
             "state" : "new",
             "value" : "Quercus "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quercus "
+          }
         }
       }
     },
@@ -915,6 +921,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "key"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "索引鍵"
           }
         }
       }
@@ -1564,6 +1576,12 @@
             "state" : "new",
             "value" : "broadleaved "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "broadleaved "
+          }
         }
       }
     },
@@ -1984,6 +2002,12 @@
             "state" : "new",
             "value" : "Add New"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增"
+          }
         }
       }
     },
@@ -2146,6 +2170,12 @@
             "state" : "new",
             "value" : "Area"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "區域"
+          }
         }
       }
     },
@@ -2157,6 +2187,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按鈕"
           }
         }
       }
@@ -2325,6 +2361,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Custom Features"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定義圖徵"
           }
         }
       }
@@ -3008,7 +3050,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "預設組合會被套用，如果所編輯物件的鍵與值有匹配到相對應的預設組合。或者您可以留下空白，效果等同萬用字元。"
+            "value" : "預設組合會被套用，如果所編輯物件的索引鍵與值有匹配到相對應的預設組合。或者您可以留下空白，效果等同萬用字元。"
           }
         },
         "zh-Hant-HK" : {
@@ -3154,6 +3196,12 @@
             "state" : "new",
             "value" : "Vertex"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "交點"
+          }
         }
       }
     },
@@ -3165,6 +3213,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按鈕"
           }
         }
       }
@@ -3476,6 +3530,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "tree "
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "tree "
           }
         }
@@ -3940,6 +4000,12 @@
             "state" : "new",
             "value" : "Point"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "點"
+          }
         }
       }
     },
@@ -3951,6 +4017,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按鈕"
           }
         }
       }
@@ -4202,6 +4274,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Oak"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Oak"
           }
         }
@@ -5326,6 +5404,12 @@
             "state" : "new",
             "value" : "leaf_type"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "葉形"
+          }
         }
       }
     },
@@ -6190,6 +6274,12 @@
             "state" : "new",
             "value" : "genus:en"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生物學上的屬：英語"
+          }
         }
       }
     },
@@ -6201,6 +6291,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Custom Feature"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定義圖徵"
           }
         }
       }
@@ -6820,6 +6916,12 @@
             "state" : "new",
             "value" : "key"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "索引鍵"
+          }
         }
       }
     },
@@ -7216,6 +7318,12 @@
             "state" : "new",
             "value" : "value "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "value "
+          }
         }
       }
     },
@@ -7227,6 +7335,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "natural"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自然"
           }
         }
       }
@@ -8194,6 +8308,12 @@
             "state" : "new",
             "value" : "Custom Features"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定義圖徵"
+          }
         }
       }
     },
@@ -8205,6 +8325,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Oak Tree"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "橡樹"
           }
         }
       }
@@ -8511,6 +8637,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "genus"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生物學的屬"
           }
         }
       }
@@ -8830,6 +8962,12 @@
             "state" : "new",
             "value" : "Tags to add when selecting this feature."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇這個圖徵時應該被添加的標籤。"
+          }
         }
       }
     },
@@ -8842,6 +8980,12 @@
             "state" : "new",
             "value" : "Feature Tags"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "圖徵的標籤"
+          }
         }
       }
     },
@@ -8853,6 +8997,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Feature type:"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "圖徵類型："
           }
         }
       }
@@ -9208,6 +9358,12 @@
             "state" : "new",
             "value" : "Name"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名稱"
+          }
         }
       }
     },
@@ -9358,6 +9514,12 @@
             "state" : "new",
             "value" : "value "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "value "
+          }
         }
       }
     },
@@ -9369,6 +9531,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Back"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上一步"
           }
         }
       }
@@ -10270,6 +10438,12 @@
             "state" : "new",
             "value" : "Line"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "線條"
+          }
         }
       }
     },
@@ -10281,6 +10455,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按鈕"
           }
         }
       }
@@ -10443,6 +10623,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Title"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標題"
           }
         }
       }
@@ -10792,6 +10978,12 @@
             "state" : "new",
             "value" : "value "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "value "
+          }
         }
       }
     },
@@ -10960,6 +11152,12 @@
             "state" : "new",
             "value" : "key"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "索引鍵"
+          }
         }
       }
     },
@@ -11121,6 +11319,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Cancel"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         }
       }

@@ -761,6 +761,12 @@
             "value" : "Teklak erakuts"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Näytä kosketukset"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1209,6 +1215,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Määra host kui soovid muuta teises OSM serveris asuvaid andmeid. Vaikimisi host on api.openstreetmap.org."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valitse palvelin jos haluat muokata toisen OSM palvelimen tietoja."
           }
         },
         "fr" : {
@@ -3791,6 +3803,12 @@
             "value" : "Rekvisiidid"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tili"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5957,6 +5975,12 @@
             "value" : "Ettevalmistus võrguühenduseta kasutamiseks"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valmistele Offline -tilaa varten"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7047,6 +7071,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ettevalmistus võrguühenduseta kasutamiseks"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valmistele Offline -tilaa varten"
           }
         },
         "fr" : {

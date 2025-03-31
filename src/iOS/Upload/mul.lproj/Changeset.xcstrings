@@ -1468,6 +1468,12 @@
             "state" : "new",
             "value" : "Describe your changes... "
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請描述您的編輯... "
+          }
         }
       }
     },

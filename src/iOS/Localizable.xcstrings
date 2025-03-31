@@ -18476,7 +18476,15 @@
       }
     },
     "Add Panoramax Photo" : {
-      "comment" : "A type of quest"
+      "comment" : "A type of quest",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加 Panoramax 照片"
+          }
+        }
+      }
     },
     "Add Parking Type" : {
       "comment" : "A type of quest",
@@ -19356,7 +19364,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在新增成員："
+            "value" : "新增成員中："
           }
         },
         "zh-Hant-HK" : {
@@ -21450,6 +21458,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hay mejores imágenes de fondo para su ubicación. ¿Quiere cambiar?"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parempilaatuinen taustakuva on saatavilla sijainnillesi. Vaihdetaanko siihen?"
           }
         },
         "hr" : {
@@ -25530,7 +25544,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "為每一個該被包含或排除於篩選條件之中的 key=value 分別在表單中新增一列，要篩選缺少 key 的情況請將 value 留空，要篩選任意 value 請使用 key=*。"
+            "value" : "為每一個該被包含或排除於篩選條件之中的「鍵-值對」分別在表單中新增一列，要篩選缺少索引鍵的情況請將值留空，要篩選任意值請使用 key=*。"
           }
         },
         "zh-Hant-HK" : {
@@ -26638,7 +26652,15 @@
       }
     },
     "Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." : {
-      "comment" : "POI editor presets"
+      "comment" : "POI editor presets",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用特定的標籤們來定義您專屬的圖徵以快速新增物件。這些標籤組合可以在常用標籤中被搜尋到。"
+          }
+        }
+      }
     },
     "Delete" : {
       "comment" : "Edit action",
@@ -57866,7 +57888,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "哪些標籤的 key 在這個任務中被修改了？"
+            "value" : "哪些標籤的索引鍵在這個任務中被修改了？"
           }
         },
         "zh-Hant-HK" : {
@@ -58148,7 +58170,15 @@
       }
     },
     "You can define custom fields for presets. A field is a single key/value pair associated with a feature." : {
-      "comment" : "POI editor presets"
+      "comment" : "POI editor presets",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您可以為預設組合定義客製化的欄位。一組欄位由一組和圖徵有關的「鍵-值對」組成。"
+          }
+        }
+      }
     },
     "You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'." : {
       "localizations" : {
