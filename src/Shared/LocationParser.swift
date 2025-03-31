@@ -271,7 +271,8 @@ class LocationParser {
 
 		// decode as apple maps link
 		if components.host == "maps.apple.com",
-		   let latLon = components.queryItems?.first(where: { $0.name == "ll" })?.value
+		   let latLon = components.queryItems?.first(where: {
+			   $0.name == "ll" || $0.name == "coordinate" })?.value
 		{
 			var lat = 0.0, lon = 0.0
 			let scanner = Scanner(string: latLon)
