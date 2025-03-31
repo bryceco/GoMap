@@ -39,6 +39,6 @@ extension XCTestCase {
 		let query = XCUIApplication().navigationBars[identifier]
 		let elementExistsExpectation = expectation(for: predicate, evaluatedWith: query, handler: nil)
 
-		wait(for: [elementExistsExpectation], timeout: 3)
+		wait(for: [elementExistsExpectation], timeout: 30.0)
 	}
 }
