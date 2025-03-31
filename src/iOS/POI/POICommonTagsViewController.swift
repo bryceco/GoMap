@@ -513,7 +513,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let dest = segue.destination as? POIPresetValuePickerController,
 		   let cell = sender as? FeaturePresetCell,
-		   case let .key(presetKey) = cell.presetKey
+		   case .key(let presetKey) = cell.presetKey
 		{
 			dest.key = presetKey.tagKey
 			dest.presetValueList = presetKey.presetList ?? []
