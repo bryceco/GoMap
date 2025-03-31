@@ -63,7 +63,7 @@ class TagInfo {
 				? "keys/all?query=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc"
 				: "key/values?key=\(cleanKey)&page=1&rp=25&sortname=count_all&sortorder=desc")
 			guard let url = URL(string: url),
-				  let rawData = try? Data(contentsOf: url)
+			      let rawData = try? Data(contentsOf: url)
 			else { return }
 
 			let json = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [String: Any]
@@ -135,7 +135,7 @@ class TagInfo {
 				url = abibase.absoluteString.appending("tag/wiki_pages?key=\(key)&value=\(value)")
 			}
 			guard let url = URL(string: url),
-				  let rawData = try? Data(contentsOf: url)
+			      let rawData = try? Data(contentsOf: url)
 			else { return }
 
 			let json = try? JSONSerialization.jsonObject(with: rawData, options: []) as? [String: Any]
