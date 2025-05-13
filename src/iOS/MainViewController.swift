@@ -119,17 +119,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		// long press for quick access to aerial imagery
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayButtonLongPressGesture(_:)))
 		displayButton.addGestureRecognizer(longPress)
-
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(applicationDidEnterBackground(_:)),
-			name: UIApplication.didEnterBackgroundNotification,
-			object: nil)
-		NotificationCenter.default.addObserver(
-			self,
-			selector: #selector(applicationDidBecomeActive(_:)),
-			name: UIApplication.didBecomeActiveNotification,
-			object: nil)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -693,34 +682,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		case GPS_STATE.LOCATION,
 		     GPS_STATE.HEADING:
 			setGpsState(GPS_STATE.NONE)
-		}
-	}
-
-	@objc func applicationDidEnterBackground(_ sender: Any?) {
-		let mapView = AppDelegate.shared.mapView!
-		if mapView.gpsInBackground,
-		   mapView.displayGpxLogs
-		{
-			// allow GPS collection in background
-			if #available(iOS 16.2, *) {
-#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
-				GpxTrackWidgetManager.shared.startTrack(fromWidget: false)
-#endif
-			} else {
-				// Fallback on earlier versions
-			}
-		} else {
-			// turn off GPS tracking
-			setGpsState(GPS_STATE.NONE)
-		}
-	}
-
-	@objc func applicationDidBecomeActive(_ sender: Any?) {
-		// allow GPS collection in background
-		if #available(iOS 16.2, *) {
-#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
-			GpxTrackWidgetManager.shared.endTrack(fromWidget: false)
-#endif
 		}
 	}
 

@@ -194,6 +194,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
+	// Set true when the user moved the screen manually, so GPS updates shouldn't recenter screen on user
 	public var userOverrodeLocationPosition = false {
 		didSet {
 			centerOnGPSButton.isHidden = !userOverrodeLocationPosition || gpsState == .NONE
@@ -382,6 +383,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		return screenFromMapTransform.inverse()
 	}
 
+	var gpsLastActive = Date.distantPast
 	var gpsState: GPS_STATE = .NONE {
 		didSet {
 			if gpsState != oldValue {
@@ -1740,9 +1742,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			locating = false
 		}
 
-		let pp = mapTransform.latLon(forScreenPoint: pushPin?.arrowPoint ?? CGPoint.zero)
-
-		if !userOverrodeLocationPosition {
+		if !userOverrodeLocationPosition,
+		   UIApplication.shared.applicationState == .active
+		{
 			// move view to center on new location
 			if userOverrodeLocationZoom {
 				centerOn(latLon: LatLon(newLocation.coordinate))
@@ -1752,7 +1754,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 		}
 
-		pushPin?.arrowPoint = mapTransform.screenPoint(forLatLon: pp, birdsEye: true)
+		if let pushPin = pushPin {
+			let pp = mapTransform.latLon(forScreenPoint: pushPin.arrowPoint)
+			pushPin.arrowPoint = mapTransform.screenPoint(forLatLon: pp, birdsEye: true)
+		}
+
 		updateUserLocationIndicator(newLocation)
 	}
 
@@ -1914,7 +1920,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let screenAngle = screenFromMapTransform.rotation()
 		compassButton.rotate(angle: CGFloat(screenAngle))
 		if !locationBallLayer.isHidden {
-			if gpsState == .HEADING, abs(locationBallLayer.heading - -.pi / 2) < 0.0001 {
+			if gpsState == .HEADING,
+			   abs(locationBallLayer.heading - -.pi / 2) < 0.0001
+			{
 				// don't pin location ball to North until we've animated our rotation to north
 				locationBallLayer.heading = -.pi / 2
 			} else {

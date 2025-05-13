@@ -274,13 +274,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	func applicationWillResignActive(_ application: UIApplication) {
-		// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-		// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+		// Sent when the application is about to move from active to inactive state.
+		// This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message)
+		// or when the user quits the application and it begins the transition to the background state.
+		// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates.
+		// Games should use this method to pause the game.
+	}
+
+	func applicationDidBecomeActive(_ application: UIApplication) {
+		// Restart any tasks that were paused (or not yet started) while the application was inactive.
+		// If the application was previously in the background, optionally refresh the user interface.
 	}
 
 	func applicationDidEnterBackground(_ application: UIApplication) {
 		// set app badge if edits are pending
-		let pendingEdits = mapView?.editorLayer.mapData.modificationCount() ?? 0
+		let pendingEdits = mapView.editorLayer.mapData.modificationCount()
 		if pendingEdits != 0 {
 			UNUserNotificationCenter.current().requestAuthorization(options: .badge,
 			                                                        completionHandler: { _, _ in
@@ -288,31 +296,66 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		}
 		UIApplication.shared.applicationIconBadgeNumber = pendingEdits
 
+		// Save when we last used GPS
+		mapView.gpsLastActive = Date()
+
 		// while in background don't update our location so we don't download tiles/OSM data when moving
-		mapView.userOverrodeLocationPosition = true
-		mapView?.locationManager.stopUpdatingHeading()
+		mapView.locationManager.stopUpdatingHeading()
 
 		// Save preferences in case user force-kills us while we're in background
 		UserPrefs.shared.synchronize()
+
+		if mapView.gpsState != .NONE,
+		   mapView.gpsInBackground,
+		   mapView.displayGpxLogs
+		{
+			// Show GPX activity widget
+			if #available(iOS 16.2, *) {
+#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
+				GpxTrackWidgetManager.shared.startTrack(fromWidget: false)
+#endif
+			}
+		} else {
+			// turn off GPS tracking
+			mapView.locationManager.stopUpdatingLocation()
+		}
 	}
 
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	func applicationWillEnterForeground(_ application: UIApplication) {
-		// allow gps to update our location
-		mapView.userOverrodeLocationPosition = false
-		if mapView?.gpsState != GPS_STATE.NONE {
-			mapView?.locationManager.startUpdatingHeading()
+		if mapView.gpsState != .NONE {
+			if mapView.gpsInBackground,
+			   mapView.displayGpxLogs
+			{
+				// GPS was running in the background
+				mapView.locationManager.startUpdatingHeading()
+			} else {
+				// If the user recently closed the app with GPS running, then enable GPS again
+				if Date().timeIntervalSince(mapView.gpsLastActive) < 30 * 60 {
+					mapView.locationManager.startUpdatingLocation()
+					mapView.locationManager.startUpdatingHeading()
+				} else {
+					// turn off GPS on resume when user hasn't used app recently
+					mapView.mainViewController.setGpsState(GPS_STATE.NONE)
+				}
+			}
+		} else {
+			// GPS wasn't enabled when we went to background
 		}
 
-		// remove badge now, so it disappears promptly on exit
+		// remove icon badge now, so it disappears promptly on exit
 		UIApplication.shared.applicationIconBadgeNumber = 0
 
 		// Update preferences in case ubiquitous values changed while in the background
 		UserPrefs.shared.synchronize()
-	}
 
-	func applicationDidBecomeActive(_ application: UIApplication) {
-		// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+// Remove GPX activity widget
+#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
+		if #available(iOS 16.2, *) {
+			// This doesn't end the track itself, just the widget presentation:
+			GpxTrackWidgetManager.shared.endTrack(fromWidget: false)
+		}
+#endif
 	}
 
 	func applicationWillTerminate(_ application: UIApplication) {
