@@ -342,7 +342,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			// for the earth to be larger than the screen
 			let area = mapTransform.zoom() > 8 ? SurfaceAreaOfRect(screenLatLonRect()) : Double.greatestFiniteMagnitude
 			var isZoomedOut = area > 2.0 * 1000 * 1000
-			if !editorLayer.isHidden, !editorLayer.atVisibleObjectLimit, area < 1000.0 * 1000 * 1000 {
+			if !editorLayer.isHidden,
+			   !editorLayer.atVisibleObjectLimit,
+			   area < 1000.0 * 1000 * 1000
+			{
 				isZoomedOut = false
 			}
 			viewStateZoomedOut = isZoomedOut

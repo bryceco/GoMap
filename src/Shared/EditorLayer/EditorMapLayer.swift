@@ -112,6 +112,7 @@ final class EditorMapLayer: CALayer {
 
 	var silentUndo = false // don't flash message about undo
 
+	// Indicates that enough objects are on-screen that we might have to hide some objects
 	private(set) var atVisibleObjectLimit = false
 
 	init(owner: EditorMapLayerOwner) {
@@ -1475,8 +1476,10 @@ final class EditorMapLayer: CALayer {
 			}
 		}
 
-		// sort from big to small objects, and remove excess objects
-		objects = RenderInfo.sortByPriority(list: objects, keepingFirst: objectLimit)
+		if owner.mapTransform.zoom() < 21.0 {
+			// sort from big to small objects, and remove excess objects
+			objects = RenderInfo.sortByPriority(list: objects, keepingFirst: objectLimit)
+		}
 
 		// sometimes there are way too many address nodes that clog up the view, so limit those items specifically
 		objectLimit = objects.count
