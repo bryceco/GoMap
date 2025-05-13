@@ -223,9 +223,11 @@ class PresetValueTextField: AutocompleteTextField, PanororamaxDelegate {
 		if OsmTags.isKey(key, variantOf: "wikipedia") {
 			let a = value.components(separatedBy: ":")
 			guard a.count >= 2,
-			      let lang = a[0].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed),
-			      let page = a[1].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
+			      let lang = a[0].addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
 			else { return }
+			let page = a.dropFirst()
+				.map({ $0.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed) ?? "" })
+				.joined(separator: ":")
 			string = "https://\(lang).wikipedia.org/wiki/\(page)"
 		} else if OsmTags.isKey(key, variantOf: "wikidata") {
 			guard let page = value.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlPathAllowed)
