@@ -291,6 +291,12 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func purgeCachedData(_ style: MapDataPurgeStyle) {
+		// Deselect selected objects
+		owner.removePin()
+		selectedNode = nil
+		selectedWay = nil
+		selectedRelation = nil
+
 #if DEBUG
 		// Get a weak reference to every object. Once we've purged everything then all
 		// references should be zeroed. If not then there is a retain cycle somewhere.
@@ -306,10 +312,6 @@ final class EditorMapLayer: CALayer {
 		weakly += mapData.relations.values.map { Weakly(obj: $0) }
 #endif
 
-		owner.removePin()
-		selectedNode = nil
-		selectedWay = nil
-		selectedRelation = nil
 		switch style {
 		case .hard:
 			mapData.purgeHard()
