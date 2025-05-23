@@ -1777,7 +1777,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		for way in ways.values {
 			let nodes = way.nodes
 			for index in nodes.indices.dropLast() {
-				assert(nodes[index].ident != nodes[index + 1].ident)
+				if nodes[index].ident == nodes[index + 1].ident {
+					print("Duplicate nodes: node \(nodes[index].ident) in way \(nodes[index].ident) (\(index),\(index+1) of \(nodes.count))")
+				}
 			}
 		}
 
@@ -1789,7 +1791,14 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			}
 		}
 		if let index = wayCountDict.first(where: { $0.value != 0 }) {
-			print("node \(index.key) has bad wayCount: \(index.value)")
+			let node = nodes[index.key]!
+			print("node \(node.ident) has bad wayCount: \(index.value)")
+			print("starting wayCount = \(node.wayCount)")
+			for way in ways.values {
+				if way.nodes.contains(node) {
+					print("way \(way.ident) contains node \(node.ident)")
+				}
+			}
 			assertionFailure()
 		}
 	}

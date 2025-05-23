@@ -82,6 +82,10 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 
 	override func serverUpdate(with newerVersion: OsmBaseObject) {
 		super.serverUpdate(with: newerVersion)
+		// undo wayCount in contained nodes
+		for node in nodes {
+			node.setWayCount(node.wayCount - 1, undo: nil)
+		}
 		nodeRefs = (newerVersion as! OsmWay).nodeRefs
 		nodes = (newerVersion as! OsmWay).nodes
 	}
