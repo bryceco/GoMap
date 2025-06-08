@@ -125,7 +125,7 @@ final class OsmXmlGenerator {
 			} else if way.isModified(), !way.deleted {
 				// added/modified
 				let element = Self.element(for: way)
-				for node in way.nodes {
+				for node in way.nodes.removingDuplicatedItems() {
 					let refElement = DDXMLElement.element(withName: "nd") as! DDXMLElement
 					refElement
 						.addAttribute(DDXMLNode

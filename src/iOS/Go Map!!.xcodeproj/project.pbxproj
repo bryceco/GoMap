@@ -87,6 +87,7 @@
 		02930750268BFB6700B2A326 /* QuadDownloadLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */; };
 		0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */; };
 		0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB2299D84F7002EED90 /* MaxarAerial.secret */; };
+		02969EBA2DF630A6003BA34A /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02969EB92DF630A6003BA34A /* Array+Extension.swift */; };
 		029853B72C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */; };
 		029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */; };
 		02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925626416BF5000A2A99 /* GpxLayer.swift */; };
@@ -416,6 +417,7 @@
 		0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadDownloadLayer.swift; sourceTree = "<group>"; };
 		0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerIgnoreList.swift; sourceTree = "<group>"; };
 		0293FEB2299D84F7002EED90 /* MaxarAerial.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MaxarAerial.secret; sourceTree = "<group>"; };
+		02969EB92DF630A6003BA34A /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasemapTileServerListViewController.swift; sourceTree = "<group>"; };
 		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
@@ -1057,6 +1059,7 @@
 			children = (
 				022BF8782C30C25300E07528 /* AnyJSON.swift */,
 				02092ED029E8ADB70095042B /* ArchivePath.swift */,
+				02969EB92DF630A6003BA34A /* Array+Extension.swift */,
 				02A123EC264CAE6F005638C1 /* Atomic.swift */,
 				02D95B9529E0AE7F00F8FCA9 /* CharacterSet+Extension.swift */,
 				02B2E25D2C3F3DC600815F08 /* DarkModeImage.swift */,
@@ -1302,7 +1305,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1530;
-				LastUpgradeCheck = 1620;
+				LastUpgradeCheck = 1640;
 				ORGANIZATIONNAME = "Bryce Cogswell";
 				TargetAttributes = {
 					02ACBA2E16713CCB00BB4414 = {
@@ -1492,6 +1495,7 @@
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */,
 				02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */,
+				02969EBA2DF630A6003BA34A /* Array+Extension.swift in Sources */,
 				02505C5929A52EA80078D60D /* QuestDefinitionWithFilters.swift in Sources */,
 				ED91352526020945006A637A /* OfflineViewController.swift in Sources */,
 				ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */,
@@ -1820,6 +1824,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1885,6 +1890,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1930,7 +1936,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CURRENT_PROJECT_VERSION = 4601;
-				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!! Debug";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Go Map!!-Prefix.pch";
@@ -1976,7 +1981,6 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CURRENT_PROJECT_VERSION = 4601;
-				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!!";
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -2029,7 +2033,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4601;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = MKTTC6734C;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -2081,7 +2084,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 4601;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -2129,7 +2131,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4601;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = MKTTC6734C;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -2177,7 +2178,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 4601;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -2221,7 +2221,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = MKTTC6734C;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -2263,7 +2262,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -2304,7 +2302,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = MKTTC6734C;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
@@ -2345,7 +2342,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
