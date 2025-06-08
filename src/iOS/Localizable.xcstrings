@@ -39,7 +39,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "\tSeos "
+            "value" : "\tRelatsioon "
           }
         },
         "fi" : {
@@ -2493,7 +2493,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "(seos %@)"
+            "value" : "(relatsioon %@)"
           }
         },
         "fi" : {
@@ -2814,6 +2814,12 @@
         "es" : {
           "stringUnit" : {
             "state" : "needs_review",
+            "value" : "%.0f m²"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "%.0f m²"
           }
         },
@@ -6246,7 +6252,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ (seos)"
+            "value" : "%@ (relatsioon)"
           }
         },
         "fi" : {
@@ -8251,7 +8257,7 @@
         },
         "et" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
@@ -8262,14 +8268,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meter"
+                      "state" : "translated",
+                      "value" : "%arg meeter"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg meetrit"
                     }
                   }
                 }
@@ -8282,14 +8288,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg node"
+                      "state" : "translated",
+                      "value" : "%arg sõlm"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg sõlme"
                     }
                   }
                 }
@@ -11777,7 +11783,7 @@
         },
         "et" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "%#@meters@, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
@@ -11788,14 +11794,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld meter"
+                      "state" : "translated",
+                      "value" : "%ld meeter"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld meters"
+                      "state" : "translated",
+                      "value" : "%ld meetrit"
                     }
                   }
                 }
@@ -11808,14 +11814,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld point"
+                      "state" : "translated",
+                      "value" : "%ld punkt"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld points"
+                      "state" : "translated",
+                      "value" : "%ld punkti"
                     }
                   }
                 }
@@ -11828,14 +11834,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld waypoint"
+                      "state" : "translated",
+                      "value" : "%ld teekonnapunkt"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld waypoints"
+                      "state" : "translated",
+                      "value" : "%ld teekonnapunkti"
                     }
                   }
                 }
@@ -13980,8 +13986,8 @@
         },
         "et" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+            "state" : "translated",
+            "value" : "%#@routes@ imporditud,\n%#@duplicates@ vahele jäetud"
           },
           "substitutions" : {
             "duplicates" : {
@@ -13991,14 +13997,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicate"
+                      "state" : "translated",
+                      "value" : "%arg duplikaat"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg duplikaati"
                     }
                   }
                 }
@@ -14011,14 +14017,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new route"
+                      "state" : "translated",
+                      "value" : "%arg uus marsruut"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg uut marsruuti"
                     }
                   }
                 }
@@ -16859,6 +16865,12 @@
             "value" : "1 Día"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 päev"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17216,7 +17228,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seos, millesse punkt kuulub, ei ole täielikult alla laetud"
+            "value" : "Relatsioon, millesse see sõlm kuulub, ei ole täielikult alla laaditud"
           }
         },
         "fr" : {
@@ -17492,6 +17504,12 @@
             "value" : "Agregar el tipo del edificio"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisa hoone päev"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17585,6 +17603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Agregar la superficie de la autopista"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisa maantee pinnakate"
           }
         },
         "hr" : {
@@ -18142,7 +18166,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "lisa objekt seosesse"
+            "value" : "lisa objekt relatsiooni"
           }
         },
         "fr" : {
@@ -18250,6 +18274,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Añadir horarios de apertura"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisa tööajad"
           }
         },
         "hr" : {
@@ -18478,6 +18508,18 @@
     "Add Panoramax Photo" : {
       "comment" : "A type of quest",
       "localizations" : {
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisa Panoramaxi foto"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить панораму"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18505,6 +18547,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Añadir tipos de estacionamiento"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisa parkimise tüüp"
           }
         },
         "hr" : {
@@ -18602,6 +18650,12 @@
             "value" : "Añadir superficie de acera"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisa kõnnitee pinnakate"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18697,6 +18751,12 @@
             "value" : "Añadir límite de velocidad"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisa kiiruspiirang"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18784,6 +18844,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Añadir número de teléfono"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisa telefoninumber"
           }
         },
         "hr" : {
@@ -19023,6 +19089,12 @@
             "value" : "Añadir página web"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisa veebisait"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19126,7 +19198,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "lisatud hulknurga seosesse"
+            "value" : "lisatud hulknurksesse relatsiooni"
           }
         },
         "fr" : {
@@ -20100,6 +20172,12 @@
             "value" : "Se ha producido un error al exportar: %@"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eksportimisel tekkis viga: %@"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20187,6 +20265,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se ha producido un error al importar: %@"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importimisel tekkis viga: %@"
           }
         },
         "eu" : {
@@ -20436,6 +20520,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Área"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pindala"
           }
         },
         "hr" : {
@@ -21460,6 +21550,12 @@
             "value" : "Hay mejores imágenes de fondo para su ubicación. ¿Quiere cambiar?"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sinu asukoha jaoks on saadaval paremad aluskaardid. Kas sa sooviksid neid kasutada?"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21560,6 +21656,12 @@
             "value" : "Mejores imágenes disponibles"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Saadaval on paremad aluskaardid"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21648,6 +21750,12 @@
             "value" : "Crear una nueva misión"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Koosta uus ülesanne"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21729,6 +21837,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Edificio"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoone"
           }
         },
         "eu" : {
@@ -22242,7 +22356,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seose osaks olevat punkti ei saa kustutada"
+            "value" : "Relatsiooni osaks olevat sõlme ei saa kustutada"
           }
         },
         "fr" : {
@@ -22378,7 +22492,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ei saa kustutada seost, mis ei ole hulknurk"
+            "value" : "Ei saa kustutada relatsiooni, mis ei ole hulknurk"
           }
         },
         "fr" : {
@@ -22514,7 +22628,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Marsruudi või sarnase seose osaks olevat teed ei saa kustutada"
+            "value" : "Marsruudi või sarnase relatsiooni osaks olevat teed ei saa kustutada"
           }
         },
         "fr" : {
@@ -22774,7 +22888,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Marsruudi või sarnase seose komponenti ei saa kustutada"
+            "value" : "Marsruudi või sarnase relatsiooni komponenti ei saa kustutada"
           }
         },
         "fr" : {
@@ -23758,6 +23872,12 @@
             "value" : "Cambiar"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muuda"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24001,6 +24121,12 @@
             "value" : "Borrar todo"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eemalda kõik"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24076,6 +24202,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Borrar mosaicos de Basemap"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kustuta aluskaardi paanid"
           }
         },
         "eu" : {
@@ -24856,7 +24988,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Punktide ühendamine kahjustaks seost"
+            "value" : "Sõlmede ühendamine kahjustaks relatsiooni"
           }
         },
         "fr" : {
@@ -24970,6 +25102,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copiado"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopeeritud"
           }
         },
         "eu" : {
@@ -25732,7 +25870,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "loo seos"
+            "value" : "loo relatsioon"
           }
         },
         "fi" : {
@@ -25875,7 +26013,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loo seos"
+            "value" : "Loo relatsioon"
           }
         },
         "fi" : {
@@ -26023,7 +26161,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Loo seose liik"
+            "value" : "Loo relatsiooni liik"
           }
         },
         "fr" : {
@@ -27859,7 +27997,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "kustuta objekt seosest"
+            "value" : "kustuta objekt relatsioonist"
           }
         },
         "fi" : {
@@ -28001,7 +28139,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "kustuta seos"
+            "value" : "kustuta relatsioon"
           }
         },
         "fi" : {
@@ -28587,7 +28725,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lahuta seosest"
+            "value" : "Lahuta relatsioonist"
           }
         },
         "fi" : {
@@ -28715,6 +28853,12 @@
             "value" : "Descartar"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Loobu"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -28819,7 +28963,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Katkesta"
+            "value" : "Katkesta ühendus"
           }
         },
         "fi" : {
@@ -31237,7 +31381,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pöördumispiirangu 'kaudu' laiendamine katkestab seose"
+            "value" : "Pöördumispiirangu 'kaudu' laiendamine katkestab relatsiooni"
           }
         },
         "fr" : {
@@ -31349,7 +31493,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Marsruudi või samalaadse seose juurde kuuluva tee laiendamine võib kahjustada seost"
+            "value" : "Marsruudi või samalaadse relatsiooni juurde kuuluva tee laiendamine võib kahjustada seda relatsiooni"
           }
         },
         "fr" : {
@@ -31506,6 +31650,12 @@
             "value" : "Filtros"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrid"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -31595,6 +31745,12 @@
             "value" : "ft"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "jlg"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -31649,6 +31805,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GeoJSON"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GeoJSON"
@@ -31716,6 +31878,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geometría"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geomeetria"
           }
         },
         "hr" : {
@@ -31802,6 +31970,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX"
@@ -32150,6 +32324,12 @@
             "value" : "HealthKit"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32474,6 +32654,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Icono"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikoon"
           }
         },
         "hr" : {
@@ -32837,6 +33023,12 @@
             "value" : "Importar"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impordi"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32919,6 +33111,12 @@
             "value" : "Error al importar"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viga importimisel"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32999,6 +33197,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Importar tareas"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impordi ülesandeid"
           }
         },
         "hr" : {
@@ -33098,7 +33302,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kõrguse mõõtmiseks luba rakenduse seadetes kaamerale juurdepääs."
+            "value" : "Kõrguse mõõtmiseks luba rakenduse seadistustes kaamerale juurdepääs."
           }
         },
         "fr" : {
@@ -33228,7 +33432,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vigane URL"
+            "value" : "Vigane võrguaadress"
           }
         },
         "fi" : {
@@ -33611,6 +33815,12 @@
             "value" : "Claves"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Võtmed"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33700,6 +33910,12 @@
             "value" : "kg"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kg"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33754,6 +33970,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "km"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "km"
@@ -33822,6 +34044,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "km/h"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "km/t"
           }
         },
         "hr" : {
@@ -34690,6 +34918,12 @@
             "value" : "Línea"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Joon"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34923,7 +35157,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sisse logimine õnnestus"
+            "value" : "Sisselogimine õnnestus"
           }
         },
         "fi" : {
@@ -35065,7 +35299,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vähe mälu: puhvri tühjendamine"
+            "value" : "Vähe mälu: tühjendan puhvrit"
           }
         },
         "fr" : {
@@ -35234,6 +35468,12 @@
             "value" : "m"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "m"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -35307,7 +35547,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Posti kättetoimetamine ei ole selles seadmes võimalik"
+            "value" : "E-kirjade kättetoimetamine ei ole selles seadmes võimalik"
           }
         },
         "fr" : {
@@ -36208,7 +36448,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hulknurga seose liige"
+            "value" : "Hulknurkse relatsiooni liige"
           }
         },
         "fr" : {
@@ -36757,6 +36997,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mi"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "mi"
@@ -37404,7 +37650,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toores XML-andmete muutmine võimaldab parandada üleslaadimist takistavaid vigu.\n\nTegemist on edasijõudnute operatsiooniga, mida tuleks kasutada ainult koos põhjalike teadmistega OSMi muudatuste vormingu kohta."
+            "value" : "Toores XML-andmete muutmine võimaldab parandada üleslaadimist takistavaid vigu.\n\nTegemist on asjatundjatele mõeldud tegevusega, mida tuleks kasutada ainult koos põhjalike teadmistega OSMi muudatuste vormingu kohta."
           }
         },
         "fr" : {
@@ -38255,6 +38501,12 @@
             "value" : "mph"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mi/t"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -38479,6 +38731,12 @@
             "value" : "Nombre"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nimi"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -38572,6 +38830,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Necesita reconocimiento"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vajab kohtvaatlust"
           }
         },
         "hr" : {
@@ -41888,6 +42152,12 @@
             "value" : "Valor antiguo: %@"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vana väärtus: %@"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -42103,7 +42373,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toetatud on ainult hulknurkade seosed"
+            "value" : "Toetatud on ainult hulknurksed relatsioonid"
           }
         },
         "fr" : {
@@ -43033,7 +43303,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kleebi"
+            "value" : "Aseta"
           }
         },
         "eu" : {
@@ -43170,6 +43440,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pega el JSON para sus misiones en el campo a continuación"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aseta oma ülesannete JSON järgnevale väljale"
           }
         },
         "hr" : {
@@ -43409,14 +43685,14 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld character, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Oled asetamas %ld tähemärki, kui sildi suurim lubatud pikkus on 255"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "new",
-                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                  "state" : "translated",
+                  "value" : "Oled asetamas %ld tähemärki, kui sildi suurim lubatud pikkus on 255"
                 }
               }
             }
@@ -44061,14 +44337,14 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%ld sildi kleepimine"
+                  "state" : "translated",
+                  "value" : "%ld silt on asetamisel"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%ld sildi kleepimine"
+                  "state" : "translated",
+                  "value" : "%ld silti on asetamisel"
                 }
               }
             }
@@ -44558,6 +44834,12 @@
             "value" : "Pausar GPX"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peata GPX"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44614,6 +44896,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pausa la grabación de pistas GPX."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peata GPX-i radade salvestamine."
           }
         },
         "hr" : {
@@ -44945,6 +45233,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Punto"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sõlm"
           }
         },
         "hr" : {
@@ -45534,6 +45828,12 @@
             "value" : "Búsqueda"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ülesanne"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -45616,6 +45916,12 @@
             "value" : "Error de definición de la búsqueda"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viga ülesande määratluses"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -45696,6 +46002,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Las tareas se han importado correctamente."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ülesannete importimine õnnestus."
           }
         },
         "hr" : {
@@ -46186,7 +46498,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "seos"
+            "value" : "relatsioon"
           }
         },
         "fi" : {
@@ -46340,7 +46652,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seose atribuudid"
+            "value" : "Relatsiooni atribuudid"
           }
         },
         "fr" : {
@@ -46464,7 +46776,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seose sildid"
+            "value" : "Relatsiooni sildid"
           }
         },
         "fr" : {
@@ -46582,7 +46894,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seos: %@"
+            "value" : "Relatsioon: %@"
           }
         },
         "fi" : {
@@ -46718,7 +47030,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seosed"
+            "value" : "Relatsioonid"
           }
         },
         "fi" : {
@@ -48324,6 +48636,12 @@
             "value" : "Guardar"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvesta"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -48404,6 +48722,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Guardar o descartar los cambios"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvesta oma muudatused või loobu neist"
           }
         },
         "hr" : {
@@ -48728,6 +49052,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Selecciona el idioma que se usará para los ajustes preestablecidos. El resto del contenido de la aplicación usará tu idioma predeterminado."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vali kaardi eelseadistuste keel. Muus osas kasutab sinu rakendus sinu vaikimisi keelt."
           }
         },
         "hr" : {
@@ -49868,6 +50198,12 @@
             "value" : "Lo sentimos, se produjo un error al cargar el archivo %@"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vabandust, %@ faili laadimisel tekkis viga"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -50490,6 +50826,12 @@
             "value" : "Iniciar GPX"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käivita GPX"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -50546,6 +50888,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Empieza a grabar pistas GPX."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alusta GPX-i radade salvestamist."
           }
         },
         "hr" : {
@@ -50621,7 +50969,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Peata"
+            "value" : "Lõpeta"
           }
         },
         "fi" : {
@@ -50748,6 +51096,12 @@
             "value" : "Detener GPX"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lõpeta GPX"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -50804,6 +51158,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detener la grabación de pistas GPX."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lõpeta GPX-i radade salvestamine."
           }
         },
         "hr" : {
@@ -51754,7 +52114,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Punktidel on vanemate seostes vastuolulised rollid"
+            "value" : "Sõlmedel on ülemrelatsioonides vastuolulised rollid"
           }
         },
         "fr" : {
@@ -52468,7 +52828,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Tee kuulub seosesse, mis ei ole täielikult alla laetud"
+            "value" : "Tee kuulub relatsiooni, mis ei ole täielikult alla laaditud"
           }
         },
         "fr" : {
@@ -53303,6 +53663,12 @@
             "value" : "Esta funcionalidad solo está disponible en iOS 15 o posterior"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "See funktsionaalsus on saadaval alates iOS-i versioonist 15"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53377,6 +53743,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Esta página le permite diseñar misiones con criterios más específicos que la página normal del Constructor de misiones."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sellel lehel saad koostad ülesandeid paju detailsemate tingimuste alusel, kui tavapärases Ülesannete koostaja lehel."
           }
         },
         "hr" : {
@@ -53470,7 +53842,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Seosesse teise liikme lisamiseks 'vajuta pikalt' lisataval teel"
+            "value" : "Relatsiooni järgmise liikme lisamiseks „vajuta pikalt“ lisataval teel"
           }
         },
         "fr" : {
@@ -55720,7 +56092,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "värskenda seose liikmeid"
+            "value" : "uuenda relatsiooni liikmeid"
           }
         },
         "fr" : {
@@ -58001,6 +58373,12 @@
             "value" : "sí"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jah"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -58215,7 +58593,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saad navigeerida seose liikme juurde ainult siis, kui see on juba alla laetud.\nNeed liikmed on tähistatud tähisega '>'."
+            "value" : "Saad liikuda relatsiooni liikme juurde ainult siis, kui ta on juba alla laaditud.\nNeed liikmed on tähistatud tähisega '>'."
           }
         },
         "fr" : {
@@ -58445,7 +58823,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Praeguse objekti muudatused tuleb ennem selle seotud seose redigeerimist salvestada või tühistada"
+            "value" : "Praeguse objekti muudatused tuleb enne sellega seotud relatsiooni muutmist salvestada või tühistada"
           }
         },
         "fr" : {
@@ -58703,14 +59081,14 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "Oled üles laadinud %ld muudatuste komplekti selle Go Map!!i versiooniga.\n\nHinda seda rakendust?"
+                  "state" : "translated",
+                  "value" : "Oled üles laadinud %ld muudatuskogumi selle Go Map!!i versiooniga.\n\nKas soovid hinnata seda rakendust?"
                 }
               },
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Oled üles laadinud %ld muudatuste komplekti selle Go Map!!i versiooniga.\n\nHinda seda rakendust?"
+                  "value" : "Oled üles laadinud %ld muudatuskogumit selle Go Map!!i versiooniga.\n\nKas soovid hinnata seda rakendust?"
                 }
               }
             }

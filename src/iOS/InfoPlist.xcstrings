@@ -903,6 +903,12 @@
             "value" : "Las rutas de tus entrenamientos se pueden importar como rutas GPX."
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sinu treeringute marsruudid on imporditavad GPX-i radadena."
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -973,6 +979,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La información sanitaria nunca se actualiza."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tervisealane teave pole kunagi uuendatud."
           }
         },
         "hr" : {
@@ -1061,8 +1073,8 @@
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Autoriõigus 2012-2021 Bryce Cogswell"
+            "state" : "translated",
+            "value" : "Autoriõigused 2012-2021 Bryce Cogswell"
           }
         },
         "fr" : {

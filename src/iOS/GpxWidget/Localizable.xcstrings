@@ -21,6 +21,12 @@
             "value" : "%@"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -85,6 +91,12 @@
             "value" : "Puntos %lld GPX"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld GPX-i punkti"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -141,6 +153,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld puntos"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld punkti"
           }
         },
         "hr" : {
@@ -201,6 +219,12 @@
             "value" : "GPX pausado"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peata GPX"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -259,6 +283,12 @@
             "value" : "Pausa la grabación de pistas GPX."
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peata GPX-i radade salvestamine."
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -315,6 +345,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Iniciar GPX"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Käivita GPX"
           }
         },
         "eu" : {
@@ -381,6 +417,12 @@
             "value" : "Empezar a grabar pistas GPX."
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alusta GPX-i radade salvestamist."
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -443,6 +485,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Parar"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peata"
           }
         },
         "eu" : {
@@ -509,6 +557,12 @@
             "value" : "Parar GPX"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lõpeta GPX"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -571,6 +625,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detener la grabación de pistas GPX."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lõpeta GPX-i radade salvestamine."
           }
         },
         "hr" : {

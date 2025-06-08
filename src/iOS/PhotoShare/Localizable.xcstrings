@@ -36,7 +36,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Andmete töötlemine..."
+            "value" : "Töötlen andmeid..."
           }
         },
         "fi" : {
@@ -161,7 +161,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "URL sisu ei tuvastatav."
+            "value" : "Võrguaadressi sisu ei tuvastatav."
           }
         },
         "fi" : {

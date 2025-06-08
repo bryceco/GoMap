@@ -29,6 +29,12 @@
             "value" : "widgetgpx"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidget"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -101,6 +107,12 @@
             "value" : "GpxWidgetExtension"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidgetExtension"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -165,6 +177,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Derechos de autor © 2024 Bryce Cogswell. Todos los derechos reservados."
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Autoriõigused © 2024 Bryce Cogswell. Kõik õigused on kaitstud."
           }
         },
         "hr" : {

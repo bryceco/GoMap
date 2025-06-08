@@ -479,6 +479,12 @@
             "value" : "Comentario"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kommenteeri"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -731,6 +737,12 @@
             "value" : "Atribución a Bing"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viitamine Bingile"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -854,7 +866,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saada"
+            "value" : "Laadi üles"
           }
         },
         "eu" : {
@@ -1295,6 +1307,12 @@
             "value" : "66,6 FPS"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1425,6 +1443,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "El comentario del conjunto de cambios va aquí"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sisesta muudatuskogumi kommentaar siia"
           }
         },
         "eu" : {
@@ -3173,6 +3197,12 @@
             "value" : "Comentar & Resolver"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kommenteeri ja märgi lahendatuks"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3521,6 +3551,12 @@
             "value" : "Etiqueta"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silt"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3848,7 +3884,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Leia asukoht"
+            "value" : "Otsi asukohta"
           }
         },
         "eu" : {
@@ -4319,6 +4355,12 @@
             "value" : "17-06-2014 17:54 UTC"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4497,6 +4539,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Título"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pealkiri"
           }
         },
         "eu" : {

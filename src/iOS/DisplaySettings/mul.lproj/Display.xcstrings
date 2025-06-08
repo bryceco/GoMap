@@ -707,6 +707,12 @@
             "value" : "Mapnik"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1721,6 +1727,12 @@
             "value" : "Basemap"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aluskaart"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2283,6 +2295,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rutas de HealthKit:"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKiti marsruudid:"
           }
         },
         "hr" : {
@@ -3593,6 +3611,12 @@
             "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3984,6 +4008,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12:00:00"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "12:00:00"
@@ -7019,6 +7049,12 @@
             "value" : "(TMS)"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(TMS)"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8177,6 +8213,12 @@
             "value" : "Superposiciones de datos"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Andmete ülekatted"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8241,6 +8283,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Misiones"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ülesanded"
           }
         },
         "eu" : {
@@ -9137,6 +9185,12 @@
             "value" : "Notas y correcciones"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Märkused ja Parandust ootavad kohad"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9707,6 +9761,12 @@
             "value" : "Solo Basemap"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vaid aluskaart"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9777,6 +9837,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Título"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pealkiri"
           }
         },
         "eu" : {
@@ -10155,6 +10221,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Importar"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impordi"
           }
         },
         "hr" : {
@@ -11772,6 +11844,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12/22/20, 7:55 PM"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "12/22/20, 7:55 PM"

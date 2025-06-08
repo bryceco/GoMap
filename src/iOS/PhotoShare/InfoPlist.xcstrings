@@ -29,6 +29,12 @@
             "value" : "Go Map!!"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -102,6 +108,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PhotoShare"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PhotoShare"

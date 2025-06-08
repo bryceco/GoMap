@@ -647,6 +647,12 @@
             "value" : "🔽"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔽"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -908,7 +914,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Saada"
+            "value" : "Laadi üles"
           }
         },
         "eu" : {
@@ -1208,7 +1214,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "küsitlus, Bing jne."
+            "value" : "kohtvaatlus, Bing jne."
           }
         },
         "eu" : {
@@ -1345,8 +1351,8 @@
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "E-kiri"
+            "state" : "translated",
+            "value" : "Ekspordi"
           }
         },
         "fi" : {
@@ -1467,6 +1473,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Describe your changes... "
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirjelda oma muudatusi... "
           }
         },
         "zh-Hant" : {
