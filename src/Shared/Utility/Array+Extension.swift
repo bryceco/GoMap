@@ -9,10 +9,9 @@
 import Foundation
 
 extension Array where Element: Equatable {
-
 	// Collapse consecutive duplicated items in the array into a single item
 	func removingDuplicatedItems() -> AnyIterator<Element> {
-		var iterator = self.makeIterator()
+		var iterator = makeIterator()
 		var previousElement: Element?
 
 		return AnyIterator {
