@@ -13,7 +13,7 @@ final class Colors {
 	static func cssColorForColorName(_ string: String) -> UIColor? {
 		guard string.count > 0 else { return nil }
 
-		var hex: UInt64 = 0
+		let hex: UInt64
 		let bits: UInt64
 
 		if string.hasPrefix("#") {
@@ -23,10 +23,13 @@ final class Colors {
 			default: return nil
 			}
 			let scanner = Scanner(string: string)
-
-			guard scanner.scanString("#", into: nil),
-			      scanner.scanHexInt64(&hex),
-			      scanner.isAtEnd else { return nil }
+			guard scanner.scanString("#") != nil,
+			      let tempHex = scanner.scanUInt64(representation: .hexadecimal),
+			      scanner.isAtEnd
+			else {
+				return nil
+			}
+			hex = tempHex
 		} else {
 			switch string {
 			case "aliceblue": hex = 0xF0F8FF

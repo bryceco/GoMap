@@ -237,7 +237,7 @@ class QuestList {
 				},
 				acceptsValue: {
 					let scanner = Scanner(string: $0)
-					return scanner.scanInt(nil) || scanner.scanString("none", into: nil)
+					return scanner.scanInt() != nil || scanner.scanString("none") != nil
 				})
 
 			let addPhoneNumber = QuestInstance(

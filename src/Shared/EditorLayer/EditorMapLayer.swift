@@ -753,24 +753,24 @@ final class EditorMapLayer: CALayer {
 							var height = 0.0
 							if let value = object.tags["height"] {
 								// height in meters?
-								var v1: Double = 0
-								var v2: Double = 0
 								let scanner = Scanner(string: value)
-								if scanner.scanDouble(&v1) {
-									scanner.scanCharacters(from: CharacterSet.whitespacesAndNewlines, into: nil)
-									if scanner.scanString("'", into: nil) {
+								if let v1 = scanner.scanDouble() {
+									_ = scanner.scanCharacters(from: CharacterSet.whitespacesAndNewlines)
+									if scanner.scanString("'") != nil {
 										// feet
-										if scanner.scanDouble(&v2) {
-											if scanner.scanString("\"", into: nil) {
+										var v2: Double = 0.0
+										if let temp = scanner.scanDouble() {
+											v2 = temp
+											if scanner.scanString("\"") != nil {
 												// inches
 											} else {
 												// malformed
 											}
 										}
 										height = (v1 * 12 + v2) * 0.0254 // meters/inch
-									} else if scanner.scanString("ft", into: nil) {
+									} else if scanner.scanString("ft") != nil {
 										height = v1 * 0.3048 // meters/foot
-									} else if scanner.scanString("yd", into: nil) {
+									} else if scanner.scanString("yd") != nil {
 										height = v1 * 0.9144 // meters/yard
 									}
 								}

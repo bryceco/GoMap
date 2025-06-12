@@ -36,13 +36,11 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
 		}
 
 		while true {
-			var first = Double()
-			var last = Double()
-			if !scanner.scanDouble(&first) {
+			guard let first = scanner.scanDouble() else {
 				return []
 			}
-			if scanner.scanString("..", into: nil) {
-				if !scanner.scanDouble(&last) {
+			if scanner.scanString("..") != nil {
+				guard let last = scanner.scanDouble() else {
 					return []
 				}
 				list.append([first, last])
@@ -52,7 +50,7 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
 			if scanner.isAtEnd {
 				return list
 			}
-			if !scanner.scanString(",", into: nil) {
+			if scanner.scanString(",") != nil {
 				return []
 			}
 		}

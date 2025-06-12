@@ -12,7 +12,7 @@ extension Scanner {
 	func scanAnyCharacter(from string: String) -> String? {
 		for ch in string {
 			let chs = String(ch)
-			if scanString(chs, into: nil) {
+			if scanString(chs) != nil {
 				return chs
 			}
 		}
@@ -39,23 +39,24 @@ class LocationParser {
 
 	private static func scanDegreesMinutesSeconds(scanner: Scanner) -> Double? {
 		// Parse degrees, minutes, seconds:
-		var degrees = 0
-		var minutes = 0
-		var seconds = 0.0
-		guard scanner.scanInt(&degrees), // Degrees (integer),
-		      scanner.scanString("°", into: nil), // followed by °,
-		      scanner.scanInt(&minutes), // minutes (integer)
+		guard let degrees = scanner.scanInt(), // Degrees (integer),
+		      scanner.scanString("°") != nil, // followed by °,
+		      let minutes = scanner.scanInt(), // minutes (integer)
 		      scanner.scanAnyCharacter(from: "'′") != nil // followed by '
-		else { return nil }
+		else {
+			return nil
+		}
 		// optional seconds
-		let pos = scanner.scanLocation
-		if scanner.scanDouble(&seconds), // seconds (floating point),
+		let seconds: Double
+		let index = scanner.currentIndex
+		if let tempSeconds = scanner.scanDouble(), // seconds (floating point),
 		   scanner.scanAnyCharacter(from: "\"″") != nil // followed by "
 		{
+			seconds = tempSeconds
 			// got seconds too
 		} else {
 			seconds = 0.0
-			scanner.scanLocation = pos
+			scanner.currentIndex = index
 		}
 
 		let value = Double(abs(degrees)) + Double(minutes) / 60.0 + seconds / 3600.0
@@ -136,32 +137,28 @@ class LocationParser {
 		                   sLat: String, lat: Double)]()
 
 		while true {
-			scanner.scanUpToCharacters(from: digits, into: nil)
+			_ = scanner.scanUpToCharacters(from: digits)
 			if scanner.isAtEnd {
 				break
 			}
-			let pos = scanner.scanLocation
-			var sLat: NSString?
-			var sLon: NSString?
-			if scanner.scanCharacters(from: floats, into: &sLat),
-			   let sLat = sLat,
-			   let lat = Double(sLat as String),
+			let pos = scanner.currentIndex
+			if let sLat = scanner.scanCharacters(from: floats),
+			   let lat = Double(sLat),
 			   lat > -90,
 			   lat < 90,
-			   scanner.scanCharacters(from: comma, into: nil),
-			   scanner.scanCharacters(from: floats, into: &sLon),
-			   let sLon = sLon,
-			   let lon = Double(sLon as String),
+			   scanner.scanCharacters(from: comma) != nil,
+			   let sLon = scanner.scanCharacters(from: floats),
+			   let lon = Double(sLon),
 			   lon >= -180,
 			   lon <= 180
 			{
-				candidates.append((sLon as String, lon, sLat as String, lat))
+				candidates.append((sLon, lon, sLat, lat))
 			}
-			if scanner.scanLocation == pos {
-				scanner.scanLocation = pos + 1
+			if scanner.currentIndex == pos {
+				scanner.currentIndex = scanner.string.index(after: pos)
 			} else {
-				scanner.scanLocation = pos
-				scanner.scanCharacters(from: floats, into: nil)
+				scanner.currentIndex = pos
+				_ = scanner.scanCharacters(from: floats)
 			}
 		}
 		if candidates.isEmpty {
@@ -190,16 +187,14 @@ class LocationParser {
 
 		// geo:47.75538,-122.15979?z=18
 		if components.scheme == "geo" {
-			var lat: Double = 0
-			var lon: Double = 0
-			var zoom: Double = 0
 			let scanner = Scanner(string: components.path)
-			guard scanner.scanDouble(&lat),
-			      scanner.scanString(",", into: nil),
-			      scanner.scanDouble(&lon)
+			guard let lat = scanner.scanDouble(),
+			      scanner.scanString(",") != nil,
+			      let lon = scanner.scanDouble()
 			else {
 				return nil
 			}
+			var zoom: Double = 0
 			if let z = components.queryItems?.first(where: { $0.name == "z" })?.value,
 			   let z2 = Double(z)
 			{
@@ -224,11 +219,9 @@ class LocationParser {
 				case "center":
 					// scan center
 					let scanner = Scanner(string: queryItem.value ?? "")
-					var pLat = 0.0
-					var pLon = 0.0
-					if scanner.scanDouble(&pLat),
-					   scanner.scanString(",", into: nil),
-					   scanner.scanDouble(&pLon),
+					if let pLat = scanner.scanDouble(),
+					   scanner.scanString(",") != nil,
+					   let pLon = scanner.scanDouble(),
 					   scanner.isAtEnd
 					{
 						lat = pLat
@@ -275,11 +268,10 @@ class LocationParser {
 		   	$0.name == "ll" || $0.name == "coordinate"
 		   })?.value
 		{
-			var lat = 0.0, lon = 0.0
 			let scanner = Scanner(string: latLon)
-			if scanner.scanDouble(&lat),
-			   scanner.scanString(",", into: nil),
-			   scanner.scanDouble(&lon)
+			if let lat = scanner.scanDouble(),
+			   scanner.scanString(",") != nil,
+			   let lon = scanner.scanDouble()
 			{
 				return MapLocation(longitude: lon,
 				                   latitude: lat,
@@ -336,12 +328,11 @@ class LocationParser {
 				let name = (path as NSString).lastPathComponent
 				if name.hasPrefix("@") {
 					let scanner = Scanner(string: String(name.dropFirst()))
-					var lat = 0.0, lon = 0.0, zoom = 0.0
-					if scanner.scanDouble(&lat),
-					   scanner.scanString(",", into: nil),
-					   scanner.scanDouble(&lon),
-					   scanner.scanString(",", into: nil),
-					   scanner.scanDouble(&zoom)
+					if let lat = scanner.scanDouble(),
+					   let _ = scanner.scanString(","),
+					   let lon = scanner.scanDouble(),
+					   let _ = scanner.scanString(","),
+					   let zoom = scanner.scanDouble()
 					{
 						return MapLocation(longitude: lon,
 						                   latitude: lat,
@@ -413,18 +404,14 @@ class LocationParser {
 		if let hash = string.firstIndex(of: "#") {
 			string = String(string[..<hash])
 		}
-		var objIdent: NSString?
-		var objType: NSString?
 		let delim = CharacterSet(charactersIn: ":/,. -")
 		let scanner = Scanner(string: String(string.reversed()))
 		scanner.charactersToBeSkipped = nil
-		if scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objIdent),
-		   let objIdent = objIdent,
+		if let objIdent = scanner.scanCharacters(from: CharacterSet.alphanumerics),
 		   let objIdent2 = Int64(String((objIdent as String).reversed())),
-		   scanner.scanCharacters(from: delim, into: nil),
-		   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
-		   let objType = objType,
-		   let objType2 = try? OSM_TYPE(string: String((objType as String).reversed()))
+		   let _ = scanner.scanCharacters(from: delim),
+		   let objType = scanner.scanCharacters(from: CharacterSet.alphanumerics),
+		   let objType2 = try? OSM_TYPE(string: String(objType.reversed()))
 		{
 			return (objType2, objIdent2)
 		}
@@ -568,3 +555,4 @@ class LocationParser {
 		return nil
 	}
 }
+
