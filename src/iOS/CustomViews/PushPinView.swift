@@ -83,7 +83,15 @@ final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDeleg
 
 		moveButton = CALayer()
 		moveButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-		moveButton.contents = UIImage(named: "move.png")!.cgImage
+		let moveImage = UIImage(systemName: "arrow.up.and.down.and.arrow.left.and.right")!
+			.withTintColor(.white, renderingMode: .alwaysOriginal)
+		let format = UIGraphicsImageRendererFormat()
+		format.scale = UIScreen.main.scale
+		let renderer = UIGraphicsImageRenderer(size: moveImage.size, format: format)
+		let tintedImage = renderer.image { _ in
+			moveImage.draw(in: CGRect(origin: .zero, size: moveImage.size))
+		}
+		moveButton.contents = tintedImage.cgImage
 
 		placeholderLayer = CALayer()
 

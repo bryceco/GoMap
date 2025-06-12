@@ -475,11 +475,7 @@ class PresetValueTextField: AutocompleteTextField, PanororamaxDelegate {
 			return nil
 		}
 		let button = UIButton(type: .system)
-		button.layer.borderWidth = 2.0
-		button.layer.borderColor = UIColor.systemBlue.cgColor
-		button.layer.cornerRadius = 15.0
-		button.setImage(UIImage(named: "camera"), for: .normal)
-
+		button.setImage(UIImage(systemName: "camera"), for: .normal)
 		button.addTarget(self, action: #selector(openPanoramaxViewController(_:)), for: .touchUpInside)
 		return button
 	}
