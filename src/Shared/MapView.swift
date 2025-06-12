@@ -84,6 +84,17 @@ enum EDIT_ACTION: Int {
 		case .CREATE_RELATION: return NSLocalizedString("Create Relation", comment: "Edit action")
 		}
 	}
+	func actionIconName() -> String {
+		switch self {
+		case .PASTETAGS: return "document.on.clipboard"
+		case .EDITTAGS: return "pencil"
+		case .ADDNOTE: return "note.text"
+		case .DELETE: return "trash"
+		case .RESTRICT: return "nosign"
+		case .MORE: return "ellipsis"
+		default: return ""
+		}
+	}
 }
 
 private enum ZLAYER: CGFloat {
