@@ -332,13 +332,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				} else {
 					button.tintColor = UIColor.systemBlue
 				}
-				if button == mapView.addNodeButton {
-					// resize images on button to be smaller
-					button.imageEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
-				} else {
-					// resize images on button to be smaller
-					button.imageEdgeInsets = UIEdgeInsets(top: 9, left: 9, bottom: 9, right: 9)
-				}
+				button.setImage(image?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 24)), for: .normal)
 			}
 
 			// normal background color
@@ -663,8 +657,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			mapView.gpsState = state
 
 			// update GPS icon
-			let imageName = (mapView.gpsState == GPS_STATE.NONE) ? "location2" : "location.fill"
-			var image = UIImage(named: imageName)
+			let imageName = (mapView.gpsState == GPS_STATE.NONE) ? "location" : "location.fill"
+			var image = UIImage(systemName: imageName)
 			image = image?.withRenderingMode(.alwaysTemplate)
 			locationButton.setImage(image, for: .normal)
 		}
