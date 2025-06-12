@@ -135,32 +135,27 @@ class ExternalGPS: NSObject, StreamDelegate {
 			if line.hasPrefix("PGLL") {
 				// lat/lon data
 				let scanner = Scanner(string: line)
-				var lat: NSString? = ""
-				var lon: NSString? = ""
-				var NS: NSString? = ""
-				var EW: NSString? = ""
-				var time: NSString? = ""
-				var checksum: Int32 = -1
-				scanner.scanString("PGLL", into: nil)
-				scanner.scanString(",", into: nil)
 
-				scanner.scanUpTo(",", into: &lat)
-				scanner.scanString(",", into: nil)
-				scanner.scanUpTo(",", into: &NS)
-				scanner.scanString(",", into: nil)
+				_ = scanner.scanString("PGLL")
+				_ = scanner.scanString(",")
 
-				scanner.scanUpTo(",", into: &lon)
-				scanner.scanString(",", into: nil)
-				scanner.scanUpTo(",", into: &EW)
-				scanner.scanString(",", into: nil)
+				let lat = scanner.scanUpToString(",")
+				_ = scanner.scanString(",")
+				let NS = scanner.scanUpToString(",")
+				_ = scanner.scanString(",")
 
-				scanner.scanUpTo(",", into: &time)
-				scanner.scanString(",", into: nil)
+				let lon = scanner.scanUpToString(",")
+				_ = scanner.scanString(",")
+				let EW = scanner.scanUpToString(",") ?? ""
+				_ = scanner.scanString(",")
 
-				scanner.scanUpTo("*", into: nil) // skip void/active marker
-				scanner.scanString("*", into: nil)
+				_ = scanner.scanUpToString(",") // time
+				_ = scanner.scanString(",")
 
-				scanner.scanInt32(&checksum)
+				_ = scanner.scanUpToString("*") // skip void/active marker
+				_ = scanner.scanString("*")
+
+				_ = scanner.scanInt32() // checksum
 
 				var dot = (lat as NSString?)?.range(of: ".").location ?? 0
 				var dLat = (Double((lat as NSString?)?.substring(to: dot - 2) ?? "") ?? 0.0) +
