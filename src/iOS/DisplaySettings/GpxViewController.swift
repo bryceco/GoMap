@@ -395,7 +395,7 @@ class GpxViewController: UITableViewController {
 			cell.uploadButton.setImage(nil, for: .normal)
 			cell.uploadButton.setTitle("\u{2714}", for: .normal)
 		} else {
-			let image = UIImage(named: "702-share")
+			let image = UIImage(systemName: "square.and.arrow.up")
 			cell.uploadButton.setImage(image, for: .normal)
 			cell.uploadButton.setTitle(nil, for: .normal)
 		}
