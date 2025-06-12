@@ -831,22 +831,17 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				if retries > 0 && response.hasPrefix("Version mismatch") {
 					// update the bad element and retry
 					DLog("Upload error: \(response)")
-					var localVersion = 0
-					var serverVersion = 0
-					var objType: NSString? = ""
-					var objId: OsmIdentifier = 0
 					// "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld"
 					let scanner = Scanner(string: response)
-					if scanner.scanString("Version mismatch: Provided", into: nil),
-					   scanner.scanInt(&localVersion),
-					   scanner.scanString(", server had:", into: nil),
-					   scanner.scanInt(&serverVersion),
-					   scanner.scanString("of", into: nil),
-					   scanner.scanCharacters(from: CharacterSet.alphanumerics, into: &objType),
-					   scanner.scanInt64(&objId),
-					   let objType = objType
+					if let _ = scanner.scanString("Version mismatch: Provided"),
+					   let localVersion = scanner.scanInt(),
+					   let _ = scanner.scanString(", server had:"),
+					   let serverVersion = scanner.scanInt(),
+					   let _ = scanner.scanString("of"),
+					   let objType = scanner.scanCharacters(from: CharacterSet.alphanumerics),
+					   let objId = scanner.scanInt64()
 					{
-						let objType = (objType as String).lowercased()
+						let objType = objType.lowercased()
 						var url3 = OSM_SERVER.apiURL + "api/0.6/\(objType)/\(objId)"
 						if objType == "way" || objType == "relation" {
 							url3 = url3 + "/full"
