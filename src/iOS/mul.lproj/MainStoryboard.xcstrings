@@ -1555,6 +1555,18 @@
         }
       }
     },
+    "DPC-1t-zLY.title" : {
+      "comment" : "Class = \"UIBarButtonItem\"; title = \"Tags\"; ObjectID = \"DPC-1t-zLY\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Tags"
+          }
+        }
+      }
+    },
     "E22-sL-sNt.accessibilityHint" : {
       "comment" : "Class = \"UIButton\"; accessibilityHint = \"Reorient map north\"; ObjectID = \"E22-sL-sNt\";",
       "extractionState" : "extracted_with_value",
@@ -3093,6 +3105,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "放大後編輯"
+          }
+        }
+      }
+    },
+    "NfS-7f-Fpm.title" : {
+      "comment" : "Class = \"UIBarButtonItem\"; title = \"Delete\"; ObjectID = \"NfS-7f-Fpm\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Delete"
           }
         }
       }
@@ -4651,6 +4675,18 @@
         }
       }
     },
+    "wNP-jU-BWI.title" : {
+      "comment" : "Class = \"UIBarButtonItem\"; title = \"More...\"; ObjectID = \"wNP-jU-BWI\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "More..."
+          }
+        }
+      }
+    },
     "xw9-Ro-Fai.placeholder" : {
       "comment" : "Class = \"UISearchBar\"; placeholder = \"Niagara Falls\"; ObjectID = \"xw9-Ro-Fai\";",
       "extractionState" : "extracted_with_value",
@@ -4827,7 +4863,7 @@
     },
     "zrW-uc-hfQ.segmentTitles[0]" : {
       "comment" : "Class = \"UISegmentedControl\"; zrW-uc-hfQ.segmentTitles[0] = \"Tags\"; ObjectID = \"zrW-uc-hfQ\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5001,7 +5037,7 @@
     },
     "zrW-uc-hfQ.segmentTitles[1]" : {
       "comment" : "Class = \"UISegmentedControl\"; zrW-uc-hfQ.segmentTitles[1] = \"Delete\"; ObjectID = \"zrW-uc-hfQ\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5175,7 +5211,7 @@
     },
     "zrW-uc-hfQ.segmentTitles[2]" : {
       "comment" : "Class = \"UISegmentedControl\"; zrW-uc-hfQ.segmentTitles[2] = \"More...\"; ObjectID = \"zrW-uc-hfQ\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

@@ -169,7 +169,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	// MARK: Notifications
 
-	override func viewDidLayoutSubviews() {
+	override func viewWillLayoutSubviews() {
 		// Set button shadows, colors, etc.
 		// Need to do this after layout to propery support dynamic text
 		setButtonAppearances()
@@ -301,7 +301,24 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			displayButton,
 			searchButton
 		]
+
 		for view in buttons {
+			if #available(iOS 26.0, *) {
+				switch view {
+				case let button as UIButton:
+					var config = UIButton.Configuration.glass()
+					config.image = button.currentImage
+					button.configuration = config
+					button.backgroundColor = nil
+				case let toolbar as UIToolbar:
+					var appearance = UIToolbarAppearance()
+					toolbar.standardAppearance = appearance
+				default:
+					break
+				}
+				continue
+			}
+
 			// corners
 			if view == mapView.compassButton || view == mapView.editControl {
 				// these buttons take care of themselves
@@ -344,6 +361,12 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			// normal background color
 			makeButtonNormal(view)
 
+			if #available(iOS 26.0, *),
+			   let button = view as? UIButton
+			{
+				button.configuration = .glass()
+			}
+
 			// background selection color
 			if let button = view as? UIButton {
 				button.addTarget(self, action: #selector(makeButtonHighlight(_:)), for: .touchDown)
@@ -384,7 +407,11 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 #if targetEnvironment(macCatalyst)
 // This messes up the button styling on macOS
 #else
-		if #available(iOS 13.0, *) {
+		if #available(iOS 26.0, *),
+		   button is UIButton
+		{
+			// don't modify glass
+		} else if #available(iOS 13.0, *) {
 			button.backgroundColor = UIColor.secondarySystemBackground
 		} else {
 			button.backgroundColor = UIColor.lightGray
@@ -396,7 +423,11 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 #if targetEnvironment(macCatalyst)
 // This messes up the button styling on macOS
 #else
-		if #available(iOS 13.0, *) {
+		if #available(iOS 26.0, *),
+		   button is UIButton
+		{
+			// don't modify glass
+		} else if #available(iOS 13.0, *) {
 			button.backgroundColor = UIColor.systemBackground
 		} else {
 			button.backgroundColor = UIColor.white
@@ -663,10 +694,17 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			mapView.gpsState = state
 
 			// update GPS icon
-			let imageName = (mapView.gpsState == GPS_STATE.NONE) ? "location2" : "location.fill"
-			var image = UIImage(named: imageName)
-			image = image?.withRenderingMode(.alwaysTemplate)
-			locationButton.setImage(image, for: .normal)
+			let imageName = (mapView.gpsState == GPS_STATE.NONE) ? "location" : "location.fill"
+			var image = UIImage(systemName: imageName)
+			if #available(iOS 26.0, *) {
+				locationButton.configuration?.image = image
+				locationButton.setImage(image, for: .normal)
+				locationButton.tintColor = .systemBlue
+				locationButton.configuration?.baseForegroundColor = .systemBlue
+			} else {
+				image = image?.withRenderingMode(.alwaysTemplate)
+				locationButton.setImage(image, for: .normal)
+			}
 		}
 	}
 
