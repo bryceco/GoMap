@@ -305,7 +305,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		// show OSM wiki page
 		guard let key = text1.text else { return }
 		let languageCode = PresetLanguages.preferredLanguageCode()
-		let progress = UIActivityIndicatorView(style: .gray)
+		let progress = UIActivityIndicatorView(style: .medium)
 		progress.frame = infoButton.bounds
 		infoButton.addSubview(progress)
 		infoButton.isEnabled = false

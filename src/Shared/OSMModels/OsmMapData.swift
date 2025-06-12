@@ -841,6 +841,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					   let objType = scanner.scanCharacters(from: CharacterSet.alphanumerics),
 					   let objId = scanner.scanInt64()
 					{
+						print("Updating object from version \(localVersion) to \(serverVersion)")
 						let objType = objType.lowercased()
 						var url3 = OSM_SERVER.apiURL + "api/0.6/\(objType)/\(objId)"
 						if objType == "way" || objType == "relation" {
