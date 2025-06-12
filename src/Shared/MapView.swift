@@ -84,6 +84,17 @@ enum EDIT_ACTION: Int {
 		case .CREATE_RELATION: return NSLocalizedString("Create Relation", comment: "Edit action")
 		}
 	}
+	func actionIconName() -> String {
+		switch self {
+		case .PASTETAGS: return "document.on.clipboard"
+		case .EDITTAGS: return "pencil"
+		case .ADDNOTE: return "note.text"
+		case .DELETE: return "trash"
+		case .RESTRICT: return "nosign"
+		case .MORE: return "ellipsis"
+		default: return ""
+		}
+	}
 }
 
 private enum ZLAYER: CGFloat {
@@ -165,7 +176,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	@IBOutlet var addNodeButton: UIButton!
 	@IBOutlet var rulerView: RulerView!
 	@IBOutlet var progressIndicator: UIActivityIndicatorView!
-	@IBOutlet var editControl: UISegmentedControl!
+	@IBOutlet var editControl: UIToolbar!
 	@IBOutlet var aerialAlignmentButton: UIButton!
 	@IBOutlet var dPadView: DPadView!
 
@@ -717,13 +728,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// set up action button
 		editControl.isHidden = true
-		editControl.isSelected = false
-		editControl.selectedSegmentIndex = Int(UISegmentedControl.noSegment)
-		editControl.setTitleTextAttributes(
-			[
-				NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)
-			],
-			for: .normal)
 		editControl.layer.zPosition = ZLAYER.TOOLBAR.rawValue
 		editControl.layer.cornerRadius = 4.0
 #if targetEnvironment(macCatalyst)
@@ -2099,21 +2103,23 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					editControlActions = [.EDITTAGS, .PASTETAGS, .DELETE, .MORE]
 				}
 			}
-			editControl.removeAllSegments()
-			for action in editControlActions {
-				let title: String = action.actionTitle(abbreviated: true)
-				editControl.insertSegment(withTitle: title,
-				                          at: editControl.numberOfSegments,
-				                          animated: false)
+
+			let items = editControlActions.map { action in
+				UIBarButtonItem(// image: UIImage(systemName: action.actionIconName()),
+								title: action.actionTitle(abbreviated: true),
+				                style: .plain,
+				                target: self,
+								action: #selector(editControlAction(_:)))
 			}
-			// mark segment labels as adjustsFontSizeToFitWidth
-			for segment in editControl.subviews {
-				for label in segment.subviews {
-					guard let label = label as? UILabel else {
-						continue
-					}
-					label.adjustsFontSizeToFitWidth = true
-				}
+			editControl.items = items
+
+			// set color and font of items
+			for item in editControl.items! {
+				let attr: [NSAttributedString.Key: Any] = [
+					.foregroundColor: UIColor.white,
+					.font: UIFont.preferredFont(forTextStyle: .headline)
+				]
+				item.setTitleTextAttributes(attr, for: .normal)
 			}
 		}
 	}
@@ -2142,15 +2148,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// compute location for action sheet to originate
 		var button = editControl.bounds
-		let segmentWidth = button.size.width /
-			CGFloat(editControl.numberOfSegments) // hack because we can't get the frame for an individual segment
+		let segmentWidth = button.size
+			.width / CGFloat(editControl.items!.count) // hack because we can't get the frame for an individual segment
 		button.origin.x += button.size.width - segmentWidth
 		button.size.width = segmentWidth
 		actionSheet.popoverPresentationController?.sourceView = editControl
 		actionSheet.popoverPresentationController?.sourceRect = button
 	}
 
-	@IBAction func editControlAction(_ sender: Any) {
+	@objc func editControlAction(_ sender: Any) {
 		// get the selected button: has to be done before modifying the node/way selection
 		guard let segmentedControl = sender as? UISegmentedControl else { return }
 		let segment = segmentedControl.selectedSegmentIndex
@@ -3057,8 +3063,9 @@ extension MapView: EditorMapLayerOwner {
 			break
 		case .editBar:
 			var button = editControl.bounds
-			let segmentWidth = button.size.width
-				/ CGFloat(editControl.numberOfSegments) // hack because we can't get the frame for an individual segment
+			let segmentWidth = button.size
+				.width /
+				CGFloat(editControl.items!.count) // hack because we can't get the frame for an individual segment
 			button.origin.x += button.size.width - 2 * segmentWidth
 			button.size.width = segmentWidth
 			alert.popoverPresentationController?.sourceView = editControl
