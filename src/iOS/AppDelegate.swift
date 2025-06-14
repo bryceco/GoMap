@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return UIApplication.shared.delegate as! AppDelegate
 	}
 
-	var window: UIWindow?
 	weak var mapView: MapView!
 	private(set) var isAppUpgrade = false
 
@@ -48,6 +47,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		NSKeyedUnarchiver.setClass(GpxTrack.classForKeyedArchiver(), forClassName: "GpxTrack")
 		NSKeyedUnarchiver.setClass(GpxPoint.classForKeyedArchiver(), forClassName: "GpxPoint")
+	}
+
+	func application(_ application: UIApplication,
+					 configurationForConnecting connectingSceneSession: UISceneSession,
+					 options: UIScene.ConnectionOptions) -> UISceneConfiguration
+	{
+		return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
 	}
 
 	func application(

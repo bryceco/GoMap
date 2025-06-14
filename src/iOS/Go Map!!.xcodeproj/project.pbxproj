@@ -41,6 +41,7 @@
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
 		022B2FDB2718CCAC00AB4C28 /* MapboxLocator.secret in Sources */ = {isa = PBXBuildFile; fileRef = 022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */; };
 		022BF8792C30C25300E07528 /* AnyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BF8782C30C25300E07528 /* AnyJSON.swift */; };
+		02323E632DFE28A200AB665E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02323E622DFE28A200AB665E /* SceneDelegate.swift */; };
 		023320A22BE07B2000E3311A /* DataOverlayLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023320A12BE07B2000E3311A /* DataOverlayLayer.swift */; };
 		023320A42BE1DB9900E3311A /* DPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023320A32BE1DB9900E3311A /* DPadView.swift */; };
 		0235349B294A9BDD00ED5BBE /* MostRecentlyUsed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */; };
@@ -369,6 +370,7 @@
 		0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
 		022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MapboxLocator.secret; sourceTree = "<group>"; };
 		022BF8782C30C25300E07528 /* AnyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyJSON.swift; sourceTree = "<group>"; };
+		02323E622DFE28A200AB665E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		023320A12BE07B2000E3311A /* DataOverlayLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataOverlayLayer.swift; sourceTree = "<group>"; };
 		023320A32BE1DB9900E3311A /* DPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPadView.swift; sourceTree = "<group>"; };
 		0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostRecentlyUsed.swift; sourceTree = "<group>"; };
@@ -804,6 +806,7 @@
 				02A3598F2704E51700101369 /* POI */,
 				028F504619BA2F460093C423 /* presets */,
 				02CB523C299097C3007F758D /* Quests */,
+				02323E622DFE28A200AB665E /* SceneDelegate.swift */,
 				0244399529CA9A02009FC2D0 /* Settings */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
@@ -1617,6 +1620,7 @@
 				029853B72C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift in Sources */,
 				02771D712BFC15C300FE9B79 /* UserFileList.swift in Sources */,
 				0266DE862655A21F007A502E /* Superview.swift in Sources */,
+				02323E632DFE28A200AB665E /* SceneDelegate.swift in Sources */,
 				02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */,
 				02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */,
 				B287A89A2BBC64F70050A15D /* Style.swift in Sources */,
