@@ -327,16 +327,20 @@ final class EditorMapLayer: CALayer {
 		fadingOutSet = []
 
 #if DEBUG
-		weakly.removeAll(where: { $0.obj == nil })
+		if style == .hard {
+			weakly.removeAll(where: { $0.obj == nil })
 
-		if let presented = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController,
-		   let selection = (presented as? POITabBarController)?.selection
-		{
-			print("Holding reference to: \(selection)")
-		}
-		if isUnderDebugger() {
-			// if there were dirty objects then they'll still be in mapData
-			assert(weakly.count == mapData.nodeCount() + mapData.wayCount() + mapData.relationCount())
+			if let presented = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController,
+			   let selection = (presented as? POITabBarController)?.selection
+			{
+				print("Holding reference to: \(selection)")
+			}
+			if isUnderDebugger() {
+				// if there were dirty objects then they'll still be in mapData
+				assert(weakly.count == mapData.nodeCount() + mapData.wayCount() + mapData.relationCount())
+			}
+		} else {
+			// undo manager still holds references
 		}
 #endif
 
