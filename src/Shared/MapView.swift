@@ -982,7 +982,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		crossHairs.position = bounds.center()
 
-		statusBarBackground.isHidden = UIApplication.shared.isStatusBarHidden
+		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+		statusBarBackground.isHidden = windowScene?.statusBarManager?.isStatusBarHidden ?? false
 	}
 
 	override var bounds: CGRect {
@@ -1651,13 +1652,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func heading(for clHeading: CLHeading) -> Double {
 		var heading = clHeading.trueHeading * .pi / 180
-		switch UIApplication.shared.statusBarOrientation {
+		switch (UIApplication.shared.connectedScenes.first as! UIWindowScene).interfaceOrientation {
 		case .portraitUpsideDown:
 			heading += .pi
 		case .landscapeLeft:
-			heading += .pi / 2
-		case .landscapeRight:
 			heading -= .pi / 2
+		case .landscapeRight:
+			heading += .pi / 2
 		case .portrait:
 			fallthrough
 		default:
