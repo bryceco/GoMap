@@ -82,9 +82,17 @@ final class PresetsDatabase {
 		let startTime = Date()
 
 		// get translations for current language
-		let file = "translations/" + code + ".json"
-		let trans = Self.jsonForFile(file) as! [String: [String: Any]]
-		let jsonTranslation = (trans[code]?["presets"] as! [String: [String: Any]]?) ?? [:]
+		var trans = Self.jsonForFile("translations/\(code).json") as! [String: [String: Any]]
+		trans = trans[code] as! [String: [String: Any]]
+		if let dash = code.firstIndex(of: "-") {
+			// If the language is a code like "en-US" we want to combine the "en" and "en-US" translations
+			let baseCode = String(code.prefix(upTo: dash))
+			var transBase = Self.jsonForFile("translations/\(baseCode).json") as! [String: [String: Any]]
+			transBase = transBase[baseCode] as! [String: [String: Any]]
+			trans = Self.Translate(trans, transBase) as! [String: [String: Any]]
+		}
+
+		let jsonTranslation = (trans["presets"] as! [String: [String: Any]]?) ?? [:]
 
 		// get localized common words
 		let fieldTrans = jsonTranslation["fields"] as! [String: [String: Any]]? ?? [:]
