@@ -934,7 +934,7 @@
         <scene sceneID="11t-cg-Ot4">
             <objects>
                 <navigationController id="FaM-5m-E92" userLabel="All Tags Nav" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="All Tags" image="710-folder.png" id="19J-sp-UTX"/>
+                    <tabBarItem key="tabBarItem" title="All Tags" image="folder" catalog="system" id="19J-sp-UTX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="itI-bf-xph">
                         <rect key="frame" x="0.0" y="118" width="393" height="54"/>
@@ -2119,9 +2119,9 @@
         <segue reference="g2g-Jn-Tdv"/>
     </inferredMetricsTieBreakers>
     <resources>
-        <image name="710-folder.png" width="28" height="24"/>
         <image name="982-food-toolbar.png" width="22" height="18"/>
         <image name="eye" catalog="system" width="128" height="79"/>
+        <image name="folder" catalog="system" width="128" height="96"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
