@@ -330,7 +330,16 @@ final class EditorMapLayer: CALayer {
 		if style == .hard {
 			weakly.removeAll(where: { $0.obj == nil })
 
-			if let presented = UIApplication.shared.keyWindow?.rootViewController?.presentedViewController,
+#if targetEnvironment(macCatalyst)
+			// macCatalyst does not use scenes in the same way
+			let keyWindow = UIApplication.shared.windows.first { $0.isKeyWindow }
+#else
+			let keyWindow = UIApplication.shared.connectedScenes
+				.compactMap { $0 as? UIWindowScene }
+				.flatMap { $0.windows }
+				.first { $0.isKeyWindow }
+#endif
+			if let presented = keyWindow!.rootViewController?.presentedViewController,
 			   let selection = (presented as? POITabBarController)?.selection
 			{
 				print("Holding reference to: \(selection)")
@@ -1757,3 +1766,4 @@ final class EditorMapLayer: CALayer {
 		fatalError()
 	}
 }
+
