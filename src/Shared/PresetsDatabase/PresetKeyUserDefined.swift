@@ -92,7 +92,7 @@ class PresetKeyUserDefinedList: Codable {
 		} else {
 			// Legacy method of storing data
 			do {
-				let path = PresetKeyUserDefinedList.archivePath()
+				let path = PresetKeyUserDefinedList.legacyArchivePath()
 				let data = try Data(contentsOf: URL(fileURLWithPath: path))
 				let classList = [NSArray.self,
 				                 NSMutableString.self,
@@ -129,8 +129,8 @@ class PresetKeyUserDefinedList: Codable {
 		list.remove(at: index)
 	}
 
-	private class func archivePath() -> String {
-		return ArchivePath.customPresets.path()
+	private class func legacyArchivePath() -> String {
+		return ArchivePath.legacyCustomPresets.path()
 	}
 
 	// MARK: Codable
