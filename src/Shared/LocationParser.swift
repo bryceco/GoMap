@@ -555,4 +555,3 @@ class LocationParser {
 		return nil
 	}
 }
-
