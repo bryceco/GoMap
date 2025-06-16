@@ -771,7 +771,7 @@ final class EditorMapLayer: CALayer {
 									_ = scanner.scanCharacters(from: CharacterSet.whitespacesAndNewlines)
 									if scanner.scanString("'") != nil {
 										// feet
-										var v2: Double = 0.0
+										var v2 = 0.0
 										if let temp = scanner.scanDouble() {
 											v2 = temp
 											if scanner.scanString("\"") != nil {
@@ -1766,4 +1766,3 @@ final class EditorMapLayer: CALayer {
 		fatalError()
 	}
 }
-

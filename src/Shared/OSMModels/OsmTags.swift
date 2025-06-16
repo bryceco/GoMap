@@ -160,7 +160,7 @@ final class OsmTags {
 			let scanner = Scanner(string: url)
 			if scanner.scanString("https://") != nil || scanner.scanString("http://") != nil,
 			   scanner.scanString("www.wikidata.org/wiki/") != nil
-				|| scanner.scanString("m.wikidata.org/wiki/") != nil,
+			   || scanner.scanString("m.wikidata.org/wiki/") != nil,
 			   let pageName = scanner.scanUpToString("/"),
 			   scanner.isAtEnd,
 			   pageName.count > 0
