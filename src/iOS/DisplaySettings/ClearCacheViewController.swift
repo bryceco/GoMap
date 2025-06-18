@@ -82,7 +82,7 @@ class ClearCacheViewController: UITableViewController {
 				objectCount)
 		} else {
 			cell.detailLabel.text = NSLocalizedString("computing size...", comment: "")
-			DispatchQueue.global(qos: .default).async(execute: {
+			Task {
 				var size = 0
 				var count = 0
 				for obj in object {
@@ -90,13 +90,13 @@ class ClearCacheViewController: UITableViewController {
 					size += tSize
 					count += tCount
 				}
-				DispatchQueue.main.async(execute: {
+				await MainActor.run {
 					cell.detailLabel.text = String.localizedStringWithFormat(
 						NSLocalizedString("%.2f MB, %ld files", comment: ""),
 						Double(size) / (1024 * 1024),
 						count)
-				})
-			})
+				}
+			}
 		}
 	}
 
