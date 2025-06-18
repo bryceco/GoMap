@@ -51,24 +51,27 @@ final class AccountInfoTableViewController: UITableViewController {
 		activityIndicator.startAnimating()
 		refreshAccountButton.isHidden = true
 
-		OSM_SERVER.oAuth2?.getUserDetails { [weak self] dict in
-			guard let strongSelf = self else { return }
+		Task {
+			let dict = try? await OSM_SERVER.oAuth2?.getUserDetails()
+			await MainActor.run {
+				self.activityIndicator.stopAnimating()
+				self.refreshAccountButton.isHidden = false
 
-			strongSelf.activityIndicator.stopAnimating()
-			strongSelf.refreshAccountButton.isHidden = false
+				if let dict {
+					if let name = dict["display_name"] as? String {
+						self.appDelegate.userName = name
+						self.usernameLabel.text = name
+					}
 
-			if let dict {
-				if let name = dict["display_name"] as? String {
-					strongSelf.appDelegate.userName = name
-					strongSelf.usernameLabel.text = name
+					if let changesets = dict["changesets"] as? [String: Any],
+					   let count = changesets["count"] as? Int64
+					{
+						self.changesetsLabel.text = "\(count)"
+					}
+
+				} else {
+					self.presentBadLoginDialog()
 				}
-
-				if let changesets = dict["changesets"] as? [String: Any], let count = changesets["count"] as? Int64 {
-					strongSelf.changesetsLabel.text = "\(count)"
-				}
-
-			} else {
-				strongSelf.presentBadLoginDialog()
 			}
 		}
 	}

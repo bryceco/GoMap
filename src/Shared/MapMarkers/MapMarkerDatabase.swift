@@ -122,20 +122,20 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 			box.origin.x + box.size.width,
 			box.origin.y + box.size.height)
 		guard let url1 = URL(string: url) else { return }
-		URLSession.shared.data(with: url1, completionHandler: { [self] result in
-			if case let .success(data) = result,
+		Task {
+			if let data = try? await URLSession.shared.data(with: url1),
 			   let gpxTrack = try? GpxTrack(xmlData: data)
 			{
-				DispatchQueue.main.async(execute: { [self] in
+				await MainActor.run {
 					for point in gpxTrack.wayPoints {
 						if let note = KeepRightMarker(gpxWaypoint: point, mapData: mapData, ignorable: self) {
 							addOrUpdate(marker: note)
 						}
 					}
 					completion()
-				})
+				}
 			}
-		})
+		}
 	}
 
 	// MARK: update markers
@@ -226,34 +226,33 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 
 extension MapMarkerDatabase {
 	func addNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
-		let url = OSM_SERVER.apiURL +
-			"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
-		if let url1 = URL(string: url) {
-			URLSession.shared.data(with: url1, completionHandler: { [self] result in
-				guard case let .success(data) = result,
-				      let xmlText = String(data: data, encoding: .utf8),
-				      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
-				else { return }
+		Task {
+			let url = OSM_SERVER.apiURL +
+				"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
+			guard let url1 = URL(string: url),
+			      let data = try? await URLSession.shared.data(with: url1),
+			      let xmlText = String(data: data, encoding: .utf8),
+			      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
+			else {
+				return
+			}
 
-				var newNotes: [OsmNoteMarker] = []
-				for noteElement in (try? xmlDoc.rootElement()?.nodes(forXPath: "./note")) ?? [] {
-					guard let noteElement = noteElement as? DDXMLElement else {
-						continue
-					}
-					if let note = OsmNoteMarker(noteXml: noteElement) {
-						newNotes.append(note)
-					}
+			let notes = (try? xmlDoc.rootElement()?.nodes(forXPath: "./note")) ?? []
+			let newNotes: [OsmNoteMarker] = notes.compactMap({ noteElement in
+				guard let noteElement = noteElement as? DDXMLElement,
+				      let note = OsmNoteMarker(noteXml: noteElement)
+				else {
+					return nil
 				}
-
-				DispatchQueue.main.async(execute: { [self] in
-					// add downloaded notes
-					for note in newNotes {
-						addOrUpdate(marker: note)
-					}
-
-					completion()
-				})
+				return note
 			})
+			await MainActor.run {
+				// add downloaded notes
+				for note in newNotes {
+					addOrUpdate(marker: note)
+				}
+				completion()
+			}
 		}
 	}
 
