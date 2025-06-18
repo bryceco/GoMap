@@ -11,7 +11,6 @@ import Foundation
 enum UrlSessionError: LocalizedError {
 	case badStatusCode(Int, String)
 	case missingResponse
-	case noData
 
 	public var errorDescription: String? {
 		switch self {
@@ -21,50 +20,48 @@ enum UrlSessionError: LocalizedError {
 			default: return "Server returned status \(rc): \(text)"
 			}
 		case .missingResponse: return "UrlSessionError.missingResponse"
-		case .noData: return "UrlSessionError.noData"
+		}
+	}
+}
+
+enum URLError2: Error {
+	case invalidURL(String)
+
+	var localizedDescription: String {
+		switch self {
+		case let .invalidURL(urlString):
+			return "Invalid URL: \(urlString)"
 		}
 	}
 }
 
 extension URLSession {
 	// Wraps up all the various failure conditions in a single result
-	func data(with request: URLRequest, completionHandler: @escaping (Result<Data, Error>) -> Void) {
-		let task = URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
-			if let error = error {
-				completionHandler(.failure(error))
-				return
+	func data(with request: URLRequest) async throws -> Data {
+		let (data, response) = try await URLSession.shared.data(for: request)
+		guard let httpResponse = response as? HTTPURLResponse
+		else {
+			throw UrlSessionError.missingResponse
+		}
+		guard httpResponse.statusCode >= 200, httpResponse.statusCode < 300
+		else {
+			// The server might provide additional information in the payload.
+			// We could potentially look at httpResponse.allHeaderFields or
+			// httpResponse.value(forHTTPHeaderField: "Content-Type") to
+			// determine how to decode the payload.
+			var message = ""
+			if data.count > 0 {
+				message = String(decoding: data, as: UTF8.self)
+			} else {
+				message = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
 			}
-			guard let httpResponse = response as? HTTPURLResponse
-			else {
-				completionHandler(.failure(UrlSessionError.missingResponse))
-				return
-			}
-			guard httpResponse.statusCode >= 200, httpResponse.statusCode < 300
-			else {
-				// The server might provide additional information in the payload.
-				// We could potentially look at httpResponse.allHeaderFields or
-				// httpResponse.value(forHTTPHeaderField: "Content-Type") to
-				// determine how to decode the payload.
-				var message = ""
-				if let data = data, data.count > 0 {
-					message = String(decoding: data, as: UTF8.self)
-				} else {
-					message = HTTPURLResponse.localizedString(forStatusCode: httpResponse.statusCode)
-				}
-				completionHandler(.failure(UrlSessionError.badStatusCode(httpResponse.statusCode, message)))
-				return
-			}
-			guard let data = data else {
-				completionHandler(.failure(UrlSessionError.noData))
-				return
-			}
-			completionHandler(.success(data))
-		})
-		task.resume()
+			throw UrlSessionError.badStatusCode(httpResponse.statusCode, message)
+		}
+		return data
 	}
 
-	func data(with url: URL, completionHandler: @escaping (Result<Data, Error>) -> Void) {
+	func data(with url: URL) async throws -> Data {
 		let request = URLRequest(url: url)
-		URLSession.shared.data(with: request, completionHandler: completionHandler)
+		return try await URLSession.shared.data(with: request)
 	}
 }

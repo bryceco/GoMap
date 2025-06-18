@@ -148,13 +148,9 @@ class PanoramaxServer {
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.httpBody = jsonData
 
-		URLSession.shared.data(with: request) { result in
-			switch result {
-			case let .failure(error):
-				DispatchQueue.main.async {
-					callback(.failure(error))
-				}
-			case let .success(data):
+		Task {
+			do {
+				let data = try await URLSession.shared.data(with: request)
 				guard
 					let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
 					let uploadSetID = json["id"] as? String
@@ -164,8 +160,12 @@ class PanoramaxServer {
 					}
 					return
 				}
-				DispatchQueue.main.async {
+				await MainActor.run {
 					callback(.success(uploadSetID))
+				}
+			} catch {
+				await MainActor.run {
+					callback(.failure(error))
 				}
 			}
 		}
@@ -215,23 +215,23 @@ class PanoramaxServer {
 		body.append("--\(boundary)--\r\n".data(using: .utf8)!)
 		request.httpBody = body
 
-		URLSession.shared.data(with: request) { result in
-			switch result {
-			case let .success(data):
+		Task {
+			do {
+				let data = try await URLSession.shared.data(with: request)
 				guard let json = try? JSONSerialization.jsonObject(with: data, options: []),
 				      let json = json as? [String: Any],
 				      let ident = json["picture_id"] as? String
 				else {
-					DispatchQueue.main.async {
+					await MainActor.run {
 						callback(.failure(NSError(domain: "Bad JSON", code: 1)))
 					}
 					return
 				}
-				DispatchQueue.main.async {
+				await MainActor.run {
 					callback(.success(ident))
 				}
-			case let .failure(error):
-				DispatchQueue.main.async {
+			} catch {
+				await MainActor.run {
 					callback(.failure(error))
 				}
 			}

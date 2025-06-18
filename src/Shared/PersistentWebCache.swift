@@ -158,7 +158,7 @@ final class PersistentWebCache<T: AnyObject> {
 			return size >= 0
 		}
 
-		DispatchQueue.global(qos: .default).async(execute: { [self] in
+		Task(priority: .medium) {
 			// check disk cache
 			let fileName = PersistentWebCache.encodeKey(forFilesystem: cacheKey)
 			let filePath = cacheDirectory.appendingPathComponent(fileName)
@@ -170,17 +170,23 @@ final class PersistentWebCache<T: AnyObject> {
 					_ = processData(.failure(WebCacheError.urlFunctionFailure))
 					return
 				}
-				URLSession.shared.data(with: url, completionHandler: { result in
-					if processData(result),
-					   let data = try? result.get()
-					{
-						DispatchQueue.global(qos: .default).async(execute: {
-							(data as NSData).write(to: filePath, atomically: true)
-						})
+
+				let result: Result<Data, Error>
+				do {
+					let data = try await URLSession.shared.data(with: url)
+					result = .success(data)
+				} catch {
+					result = .failure(error)
+				}
+				if processData(result),
+				   let data = try? result.get()
+				{
+					Task(priority: .medium) {
+						(data as NSData).write(to: filePath, atomically: true)
 					}
-				})
+				}
 			}
-		})
+		}
 		return nil
 	}
 }

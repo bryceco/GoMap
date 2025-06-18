@@ -113,11 +113,18 @@ final class MercatorTileLayer: CALayer {
 			zoomLevel)
 
 		if let url = URL(string: url) {
-			URLSession.shared.data(with: url, completionHandler: { result in
-				DispatchQueue.main.async(execute: {
-					callback(result)
-				})
-			})
+			Task {
+				do {
+					let data = try await URLSession.shared.data(with: url)
+					await MainActor.run {
+						callback(.success(data))
+					}
+				} catch {
+					await MainActor.run {
+						callback(.failure(error))
+					}
+				}
+			}
 		}
 	}
 

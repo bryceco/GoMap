@@ -233,20 +233,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			   let gpxUrl = String(data: gpxUrlData, encoding: .utf8),
 			   let gpxUrl = URL(string: gpxUrl)
 			{
-				URLSession.shared.data(with: gpxUrl) { result in
-					DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [self] in
-						switch result {
-						case let .success(data):
+				Task {
+					do {
+						let data = try await URLSession.shared.data(with: gpxUrl)
+						try await Task.sleep(nanoseconds: 100_000000)
+						await MainActor.run {
 							do {
 								try mapView.gpxLayer.loadGPXData(data, center: true)
 								mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 							} catch {
 								displayImportError(error, filetype: localizedGPX)
 							}
-						case let .failure(error):
+						}
+					} catch {
+						await MainActor.run {
 							displayImportError(error, filetype: localizedGPX)
 						}
-					})
+					}
 				}
 				return true
 			}
