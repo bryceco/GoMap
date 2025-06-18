@@ -551,18 +551,7 @@ final class TileServer: Equatable, Codable {
 	}
 
 	static func scaleAttribution(icon: UIImage, toHeight height: CGFloat) -> UIImage {
-		guard abs(icon.size.height - height) > 0.1 else {
-			return icon
-		}
-		let scale = icon.size.height / height
-		var size = icon.size
-		size.height /= scale
-		size.width /= scale
-		UIGraphicsBeginImageContext(size)
-		icon.draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
-		let imageCopy = UIGraphicsGetImageFromCurrentImageContext()
-		UIGraphicsEndImageContext()
-		return imageCopy ?? icon
+		return icon.scaledTo(width: nil, height: height)
 	}
 
 	private var _attributionIcon: UIImage?

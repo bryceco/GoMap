@@ -8,22 +8,14 @@
 import UIKit
 
 class POIPresetValuePickerController: UITableViewController {
-	static let ImageWidth = 80
+	static let ImageWidth = 80.0
 	var key = ""
 	var presetValueList: [PresetValue] = []
 	var onSetValue: ((String) -> Void)?
 	var descriptions: [String: String] = [:]
 	var images: [String: UIImage] = [:]
 
-	let placeholderImage: UIImage = {
-		UIGraphicsBeginImageContextWithOptions(
-			CGSize(width: ImageWidth, height: ImageWidth / 2),
-			false,
-			UIScreen.main.scale)
-		let image = UIGraphicsGetImageFromCurrentImageContext()!
-		UIGraphicsEndImageContext()
-		return image
-	}()
+	let placeholderImage = UIImage().scaledTo(width: ImageWidth, height: ImageWidth / 2)
 
 	func fetchWikiImagesAndDescriptions() {
 		let languageCode = PresetLanguages.preferredPresetLanguageCode()
@@ -32,7 +24,7 @@ class POIPresetValuePickerController: UITableViewController {
 				key: key,
 				value: preset.tagValue,
 				language: languageCode,
-				imageWidth: Self.ImageWidth,
+				imageWidth: Int(Self.ImageWidth),
 				update: { meta in
 					guard let meta = meta else { return }
 					let tag = meta.key + "=" + meta.value
@@ -59,7 +51,7 @@ class POIPresetValuePickerController: UITableViewController {
 			if let iconName = preset.icon {
 				let tag = key + "=" + preset.tagValue
 				if let image = UIImage(named: iconName) {
-					let scaled = EditorMapLayer.ImageScaledToSize(image, CGFloat(Self.ImageWidth))
+					let scaled = image.scaledTo(width: CGFloat(Self.ImageWidth), height: nil)
 					images[tag] = scaled
 				}
 			}
