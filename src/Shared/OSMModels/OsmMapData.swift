@@ -686,9 +686,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 	}
 
-	func cancelCurrentDownloads() {
+	func cancelCurrentDownloads() async {
 		if DownloadThreadPool.osmPool.downloadsInProgress() > 0 {
-			DownloadThreadPool.osmPool.cancelAllDownloads()
+			await DownloadThreadPool.osmPool.cancelAllDownloads()
 		}
 	}
 
