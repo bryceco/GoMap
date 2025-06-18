@@ -39,12 +39,10 @@ final class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTask
 		return InputStream(data: data)
 	}
 
-	func cancelAllDownloads() {
-		urlSession.getAllTasks(completionHandler: { tasks in
-			for task in tasks {
-				task.cancel()
-			}
-		})
+	func cancelAllDownloads() async {
+		for task in await urlSession.allTasks {
+			task.cancel()
+		}
 	}
 
 	func downloadsInProgress() -> Int {
