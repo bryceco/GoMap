@@ -398,24 +398,8 @@ final class EditorMapLayer: CALayer {
 
 	// MARK: Common Drawing
 
-	static func ImageScaledToSize(_ image: UIImage, _ iconSize: CGFloat) -> UIImage {
-		var size = CGSize(width: Int(iconSize * UIScreen.main.scale),
-		                  height: Int(iconSize * UIScreen.main.scale))
-		let ratio = image.size.height / image.size.width
-		if ratio < 1.0 {
-			size.height *= ratio
-		} else if ratio > 1.0 {
-			size.width /= ratio
-		}
-		UIGraphicsBeginImageContext(size)
-		image.draw(in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-		let newIcon = UIGraphicsGetImageFromCurrentImageContext()!
-		UIGraphicsEndImageContext()
-		return newIcon
-	}
-
 	static func IconScaledForDisplay(_ icon: UIImage) -> UIImage {
-		return EditorMapLayer.ImageScaledToSize(icon, MinIconSizeInPixels)
+		return icon.scaledTo(width: MinIconSizeInPixels, height: MinIconSizeInPixels)
 	}
 
 	func path(for way: OsmWay) -> CGPath {
