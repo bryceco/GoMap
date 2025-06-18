@@ -73,6 +73,7 @@
 		027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027AD5D119F5A18700120654 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		027C7FDC296CCF28005C53A8 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027C7FDB296CCF28005C53A8 /* String+Ext.swift */; };
 		027CF8732BDE141700E6F03B /* DrawingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027CF8722BDE141700E6F03B /* DrawingLayer.swift */; };
+		027E36592E03645A00FEED34 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E36582E03645A00FEED34 /* UIImage+Extension.swift */; };
 		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
 		0282C4C926617E7400F2D282 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C826617E7400F2D282 /* MapView.swift */; };
 		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
@@ -407,6 +408,7 @@
 		027AD5D319F5EA7D00120654 /* libobjc.A.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libobjc.A.dylib; path = usr/lib/libobjc.A.dylib; sourceTree = SDKROOT; };
 		027C7FDB296CCF28005C53A8 /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Ext.swift"; path = "../../Shared/Utility/String+Ext.swift"; sourceTree = "<group>"; };
 		027CF8722BDE141700E6F03B /* DrawingLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingLayer.swift; sourceTree = "<group>"; };
+		027E36582E03645A00FEED34 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
 		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../Shared/MapView.swift; sourceTree = "<group>"; };
 		0287D25129947B2900BEAD9E /* QuestChooser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QuestChooser.storyboard; sourceTree = "<group>"; };
@@ -1077,6 +1079,7 @@
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
 				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
 				0266DE852655A21F007A502E /* Superview.swift */,
+				027E36582E03645A00FEED34 /* UIImage+Extension.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
 			);
 			name = Utility;
@@ -1554,6 +1557,7 @@
 				ED9649C12601C33E00EC0A60 /* AdvancedSettingsViewController.swift in Sources */,
 				C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */,
 				02CA15512824A6B40047B0E5 /* String+Ext.swift in Sources */,
+				027E36592E03645A00FEED34 /* UIImage+Extension.swift in Sources */,
 				02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */,
 				647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */,
 				027CF8732BDE141700E6F03B /* DrawingLayer.swift in Sources */,
