@@ -77,7 +77,6 @@ enum ArchivePath {
 
 	func url() -> URL {
 		switch self {
-
 		case .appDataFolder:
 			// a folder under Documents that contains edits and downloaded OSM data
 			return folderURL(urlWith(name: "appData", in: .documentDirectory))

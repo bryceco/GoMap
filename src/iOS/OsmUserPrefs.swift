@@ -41,15 +41,12 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 			callback(nil)
 			return
 		}
-		URLSession.shared.data(with: request, completionHandler: { result in
-			DispatchQueue.main.async(execute: {
-				guard let data = try? result.get() else {
-					callback(nil)
-					return
-				}
+		Task {
+			let data = try? await URLSession.shared.data(with: request)
+			DispatchQueue.main.async {
 				callback(data)
-			})
-		})
+			}
+		}
 	}
 
 	private static func allPreferences(dict callback: @escaping ([String: String]?) -> Void) {
@@ -160,7 +157,9 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 				request.httpMethod = "PUT"
 				request.httpBody = value.data(using: .utf8)
 			}
-			URLSession.shared.data(with: request, completionHandler: { _ in })
+			Task {
+				_ = try? await URLSession.shared.data(with: request)
+			}
 		}
 		oldPreferenceKeys = dict.compactMap { $0.key.hasPrefix(self.PREFIX) && !$0.value.isEmpty ? $0.key : nil }
 

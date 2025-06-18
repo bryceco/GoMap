@@ -181,7 +181,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		result = OsmDownloadData()
 	}
 
-	func parseStream(_ stream: InputStream) -> Result<OsmDownloadData, Error> {
+	func parseStream(_ stream: InputStream) async throws -> OsmDownloadData {
 		defer {
 			stream.close()
 		}
@@ -196,38 +196,23 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 
 		let ok = parser.parse()
 		if let error = parseError {
-			return .failure(error)
+			throw error
 		} else if !ok {
-			return .failure(NSError(domain: "OsmDownloader", code: 1))
+			throw NSError(domain: "OsmDownloader", code: 1)
 		}
-		return .success(result)
+		return result
 	}
 }
 
 enum OsmDownloader {
 	// http://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap
-	static func osmData(forUrl url: String,
-	                    completion: @escaping (_ r: Result<OsmDownloadData, Error>) -> Void)
-	{
-		DownloadThreadPool.osmPool.stream(forUrl: url, callback: { result in
-			switch result {
-			case let .success(stream):
-				if let error = stream.streamError {
-					DispatchQueue.main.async(execute: {
-						completion(.failure(error))
-					})
-					return
-				}
-				let parser = OsmDownloadParser()
-				let result = parser.parseStream(stream)
-				DispatchQueue.main.async(execute: {
-					completion(result)
-				})
-			case let .failure(error):
-				DispatchQueue.main.async(execute: {
-					completion(.failure(error))
-				})
-			}
-		})
+	static func osmData(forUrl url: String) async throws -> OsmDownloadData {
+		let stream = try await DownloadThreadPool.osmPool.stream(forUrl: url)
+		if let error = stream.streamError {
+			throw error
+		}
+		let parser = OsmDownloadParser()
+		let result = try await parser.parseStream(stream)
+		return result
 	}
 }

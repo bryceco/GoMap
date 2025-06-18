@@ -153,7 +153,7 @@ class GpxViewController: UITableViewController {
 		present(progress, animated: true)
 
 		// let progress window display before we submit work
-		DispatchQueue.main.async(execute: {
+		Task { @MainActor in
 			let url = OSM_SERVER.apiURL + "api/0.6/gpx/create"
 
 			guard var request = OSM_SERVER.oAuth2?.urlRequest(string: url) else { return }
@@ -192,12 +192,12 @@ class GpxViewController: UITableViewController {
 			request.httpBody = body.data(using: .utf8)
 			request.setValue(String(format: "%ld", body.count), forHTTPHeaderField: "Content-Length")
 
-			URLSession.shared.data(with: request, completionHandler: { result in
-				DispatchQueue.main.async(execute: {
-					progress.dismiss(animated: true)
+			Task {
+				do {
+					let _ = try await URLSession.shared.data(with: request)
+					await MainActor.run {
+						progress.dismiss(animated: true)
 
-					switch result {
-					case .success:
 						let success = UIAlertController(
 							title: NSLocalizedString("GPX Upload Complete", comment: ""),
 							message: nil,
@@ -211,7 +211,11 @@ class GpxViewController: UITableViewController {
 						let gpxLayer = AppDelegate.shared.mapView.gpxLayer
 						gpxLayer.markTrackUploaded(track)
 						self.tableView?.reloadData()
-					case let .failure(error):
+					}
+				} catch {
+					await MainActor.run {
+						progress.dismiss(animated: true)
+
 						let failure = UIAlertController(
 							title: NSLocalizedString("GPX Upload Failed", comment: ""),
 							message: "\(error.localizedDescription)",
@@ -221,9 +225,9 @@ class GpxViewController: UITableViewController {
 						                                handler: nil))
 						self.present(failure, animated: true)
 					}
-				})
-			})
-		})
+				}
+			}
+		}
 	}
 
 	override func viewDidLoad() {

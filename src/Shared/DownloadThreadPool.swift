@@ -25,7 +25,7 @@ final class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTask
 
 	static let osmPool = DownloadThreadPool()
 
-	func stream(forUrl url: String, callback: @escaping (_ result: Result<InputStream, Error>) -> Void) {
+	func stream(forUrl url: String) async throws -> InputStream {
 		let url1 = URL(string: url)!
 		var request = URLRequest(url: url1)
 		request.httpMethod = "GET"
@@ -33,17 +33,10 @@ final class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTask
 		request.cachePolicy = .reloadIgnoringLocalCacheData
 
 		inProgress.increment()
+		defer { inProgress.decrement() }
 
-		urlSession.data(with: request, completionHandler: { [self] result in
-			inProgress.decrement()
-			switch result {
-			case let .success(data):
-				let inputStream = InputStream(data: data)
-				callback(.success(inputStream))
-			case let .failure(error):
-				callback(.failure(error))
-			}
-		})
+		let data = try await urlSession.data(with: request)
+		return InputStream(data: data)
 	}
 
 	func cancelAllDownloads() {

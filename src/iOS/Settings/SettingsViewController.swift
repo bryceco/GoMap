@@ -42,18 +42,19 @@ class SettingsViewController: UITableViewController, MFMailComposeViewController
 		if let userName = appDelegate.userName {
 			username.text = userName
 		} else {
-			OSM_SERVER.oAuth2?.getUserDetails(callback: { dict in
-				if let dict = dict,
-				   let name = dict["display_name"] as? String
-				{
-					self.username.text = name
-					appDelegate.userName = name
-				} else {
-					self.username.text = NSLocalizedString("<unknown>", comment: "unknown user name")
-				}
+			Task {
+				let dict = try? await OSM_SERVER.oAuth2?.getUserDetails()
+				await MainActor.run {
+					if let name = dict?["display_name"] as? String {
+						self.username.text = name
+						appDelegate.userName = name
+					} else {
+						self.username.text = NSLocalizedString("<unknown>", comment: "unknown user name")
+					}
 
-				self.tableView.reloadData()
-			})
+					self.tableView.reloadData()
+				}
+			}
 		}
 	}
 

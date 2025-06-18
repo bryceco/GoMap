@@ -105,6 +105,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	// MARK: - Table view delegate
 
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		tableView.deselectRow(at: indexPath, animated: true)
 		if showingHistory {
 			// history item
 			searchBar.text = historyArray.items[indexPath.row]
@@ -147,22 +148,25 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		if objType != .NODE {
 			url += "/full"
 		}
-		OsmDownloader.osmData(forUrl: url, completion: { result in
-			DispatchQueue.main.async {
-				self.activityIndicator.stopAnimating()
-				switch result {
-				case let .success(data):
+		Task {
+			do {
+				let data = try await OsmDownloader.osmData(forUrl: url)
+				await MainActor.run {
+					self.activityIndicator.stopAnimating()
 					if let node = data.nodes.first {
 						self.updateHistory(with: "\(objType.string) \(objIdent)")
 						self.jumpTo(lat: node.latLon.lat, lon: node.latLon.lon, zoom: nil)
 					} else {
 						self.presentErrorMessage()
 					}
-				case let .failure(error):
+				}
+			} catch {
+				await MainActor.run {
+					self.activityIndicator.stopAnimating()
 					self.presentErrorMessage(error)
 				}
 			}
-		})
+		}
 		return true
 	}
 
@@ -231,36 +235,39 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		}
 
 		let lang = PresetLanguages.preferredLanguageCode()
-		if let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
-		   let url =
-		   URL(string: "\(OSM_SERVER.nominatimUrl)search?q=\(text)&format=json&limit=50&accept-language=\(lang)")
-		{
-			activityIndicator.startAnimating()
-
-			URLSession.shared.data(with: url, completionHandler: { [self] result in
-				DispatchQueue.main.async(execute: { [self] in
-
-					activityIndicator.stopAnimating()
-
-					switch result {
-					case let .success(data):
-						resultsArray = (try? JSONDecoder().decode([NominatimResult].self, from: data)) ?? []
-						tableView.reloadData()
-
-						if resultsArray.count > 0 {
-							updateHistory(with: string)
-						} else {
-							presentErrorMessage()
-						}
-					case let .failure(error):
-						presentErrorMessage(error)
-					}
-				})
-			})
+		guard let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
+		      let url =
+		      URL(string: "\(OSM_SERVER.nominatimUrl)search?q=\(text)&format=json&limit=50&accept-language=\(lang)")
+		else {
+			return
 		}
-		// flag that we're no longer showing history and remove all items
-		showingHistory = false
-		tableView.reloadData()
+		activityIndicator.startAnimating()
+
+		Task {
+			defer {
+				activityIndicator.stopAnimating()
+			}
+			do {
+				let data = try await URLSession.shared.data(with: url)
+				await MainActor.run {
+					resultsArray = (try? JSONDecoder().decode([NominatimResult].self, from: data)) ?? []
+					tableView.reloadData()
+
+					if resultsArray.count > 0 {
+						updateHistory(with: string)
+						// flag that we're no longer showing history and remove all items
+						showingHistory = false
+						tableView.reloadData()
+					} else {
+						presentErrorMessage()
+					}
+				}
+			} catch {
+				await MainActor.run {
+					presentErrorMessage(error)
+				}
+			}
+		}
 	}
 
 	func presentErrorMessage(_ error: Error? = nil) {

@@ -651,29 +651,38 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			let url = OSM_SERVER.apiURL +
 				"api/0.6/map?bbox=\(rc.origin.x),\(rc.origin.y),\(rc.origin.x + rc.size.width),\(rc.origin.y + rc.size.height)"
 
-			OsmDownloader.osmData(forUrl: url, completion: { result in
-				let didGetData: Bool
-				switch result {
-				case let .success(data):
-					// merge data
-					print("Downloaded \(data.nodes.count + data.ways.count + data.relations.count) objects")
+			Task {
+				let result: Result<OsmDownloadData, Error>
+				do {
+					let data = try await OsmDownloader.osmData(forUrl: url)
+					result = .success(data)
+				} catch {
+					result = .failure(error)
+				}
+				await MainActor.run {
+					let didGetData: Bool
+					switch result {
+					case let .success(data):
+						// merge data
+						print("Downloaded \(data.nodes.count + data.ways.count + data.relations.count) objects")
+						try? self.merge(data, savingToDatabase: true)
+						didGetData = true
+						didChange(nil) // data was updated
+					case let .failure(error):
+						didGetData = false
+						didChange(error) // error fetching data
+					}
 
-					try? self.merge(data, savingToDatabase: true)
-					didGetData = true
-					didChange(nil) // data was updated
-				case let .failure(error):
-					didGetData = false
-					didChange(error) // error fetching data
-				}
-				for quadBox in query.quadList {
-					self.region.updateDownloadStatus(quadBox, success: didGetData)
-				}
-				progress.progressDecrement()
+					for quadBox in query.quadList {
+						self.region.updateDownloadStatus(quadBox, success: didGetData)
+					}
+					progress.progressDecrement()
 
 #if DEBUG
-				AppDelegate.shared.mapView.quadDownloadLayer?.setNeedsLayout()
+					AppDelegate.shared.mapView.quadDownloadLayer?.setNeedsLayout()
 #endif
-			})
+				}
+			}
 		}
 	}
 
@@ -847,20 +856,24 @@ final class OsmMapData: NSObject, NSSecureCoding {
 						if objType == "way" || objType == "relation" {
 							url3 = url3 + "/full"
 						}
-						OsmDownloader.osmData(forUrl: url3, completion: { result in
-							switch result {
-							case let .success(data):
-								// update the bad element
-								try? self.merge(data, savingToDatabase: true)
-								// try again:
-								self.generateXMLandUploadChangeset(
-									changesetID,
-									retries: retries - 1,
-									completion: completion)
-							case let .failure(error):
-								completion(error)
+						Task {
+							do {
+								let data = try await OsmDownloader.osmData(forUrl: url3)
+								await MainActor.run {
+									// update the bad element
+									try? self.merge(data, savingToDatabase: true)
+									// try again:
+									self.generateXMLandUploadChangeset(
+										changesetID,
+										retries: retries - 1,
+										completion: completion)
+								}
+							} catch {
+								await MainActor.run {
+									completion(error)
+								}
 							}
-						})
+						}
 						return
 					}
 				}
@@ -1028,11 +1041,18 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 		request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
 
-		URLSession.shared.data(with: request, completionHandler: { result in
-			DispatchQueue.main.async(execute: {
+		Task {
+			let result: Result<Data, Error>
+			do {
+				let data = try await URLSession.shared.data(with: request)
+				result = .success(data)
+			} catch {
+				result = .failure(error)
+			}
+			await MainActor.run {
 				completion(result)
-			})
-		})
+			}
+		}
 	}
 
 	enum OsmServerError: LocalizedError {
