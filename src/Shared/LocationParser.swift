@@ -428,25 +428,26 @@ class LocationParser {
 			return false
 		}
 
-		// First, resolve the shortened URL
-		let api_key = GoogleToken
-		resolveGoogleShortURL(url: url) { resolvedURL in
-			guard let resolvedURL = resolvedURL else {
+		Task {
+			// First, resolve the shortened URL
+			guard let resolvedURL = await resolveGoogleShortURL(url: url) else {
 				callback(nil)
 				return
 			}
 
 			// Extract the ftid value and construct the new URL
+			let api_key = GoogleToken
 			if let latLong = extractLatLongFromGoogleURL(resolvedURL) {
 				callback(latLong)
 			} else if let ftidValue = parseSecondPartOfGoogleFTID(from: resolvedURL),
 			          let newURL = URL(string:
 			          	"https://maps.googleapis.com/maps/api/place/details/json?key=\(api_key)&cid=\(ftidValue)")
 			{
-				print(newURL.absoluteString)
-				fetchGoogleLocationDetails(url: newURL) { location in
-					callback(location)
+				guard let location = try? await fetchGoogleLocationDetails(url: newURL) else {
+					callback(nil)
+					return
 				}
+				callback(location)
 			} else {
 				callback(nil)
 			}
@@ -475,22 +476,12 @@ class LocationParser {
 		return nil
 	}
 
-	static func fetchGoogleLocationDetails(url: URL, completion: @escaping (MapLocation?) -> Void) {
-		URLSession.shared.dataTask(with: url) { data, _, error in
-			guard let data = data, error == nil else {
-				completion(nil)
-				return
-			}
-
-			do {
-				let response = try JSONDecoder().decode(ApiResponse.self, from: data)
-				let location = response.result.geometry.location
-				let mapLocation = MapLocation(longitude: location.lng, latitude: location.lat)
-				completion(mapLocation)
-			} catch {
-				completion(nil)
-			}
-		}.resume()
+	static func fetchGoogleLocationDetails(url: URL) async throws -> MapLocation {
+		let (data,_) = try await URLSession.shared.data(from: url)
+		let response = try JSONDecoder().decode(ApiResponse.self, from: data)
+		let location = response.result.geometry.location
+		let mapLocation = MapLocation(longitude: location.lng, latitude: location.lat)
+		return mapLocation
 	}
 
 	struct ApiResponse: Codable {
@@ -511,13 +502,13 @@ class LocationParser {
 	}
 
 	// Helper function to resolve a shortened URL
-	static func resolveGoogleShortURL(url: URL, completion: @escaping (URL?) -> Void) {
+	static func resolveGoogleShortURL(url: URL) async -> URL? {
 		var request = URLRequest(url: url)
 		request.httpMethod = "GET" // Changed from HEAD to GET
-		let task = URLSession.shared.dataTask(with: request) { _, response, _ in
-			completion((response as? HTTPURLResponse)?.url)
+		guard let (_,response) = try? await URLSession.shared.data(for: request) else {
+			return nil
 		}
-		task.resume()
+		return (response as? HTTPURLResponse)?.url
 	}
 
 	func parseSecondPartOfGoogleFTID(from url: URL) -> String? {
