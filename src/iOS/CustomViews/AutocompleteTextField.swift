@@ -170,32 +170,32 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 				// cell doesn't always scroll to the same place, so give it a moment before we add the completion table
 				DispatchQueue.main.async(execute: {
 					// add completion table to tableview
-					let rect = self.frameForCompletionTableView()
-					self.completionTableView = UITableView(frame: rect, style: .plain)
-
-					var backgroundColor = UIColor(white: 0.88, alpha: 1.0)
+					let backgroundColor: UIColor
 					if #available(iOS 13.0, *) {
 						backgroundColor = UIColor.systemBackground
-					}
-					self.completionTableView?.backgroundColor = backgroundColor
-					self.completionTableView?.separatorColor = UIColor(white: 0.7, alpha: 1.0)
-					self.completionTableView?.dataSource = self
-					self.completionTableView?.delegate = self
-					if let view = self.completionTableView {
-						tableView.addSubview(view)
+					} else {
+						backgroundColor = UIColor(white: 0.88, alpha: 1.0)
 					}
 
-					self.gradientLayer = CAGradientLayer()
-					self.gradientLayer?.colors = [
+					let rect = self.frameForCompletionTableView()
+					let view = UITableView(frame: rect, style: .plain)
+					view.backgroundColor = backgroundColor
+					view.separatorColor = UIColor(white: 0.7, alpha: 1.0)
+					view.dataSource = self
+					view.delegate = self
+					tableView.addSubview(view)
+					self.completionTableView = view
+
+					let layer = CAGradientLayer()
+					layer.colors = [
 						UIColor(white: 0.0, alpha: 0.6).cgColor,
 						UIColor(white: 0.0, alpha: 0.0).cgColor
 					]
 					var rcGradient = rect
 					rcGradient.size.height = AutocompleteTextField.GradientHeight
-					self.gradientLayer?.frame = rcGradient
-					if let layer = self.gradientLayer {
-						tableView.layer.addSublayer(layer)
-					}
+					layer.frame = rcGradient
+					tableView.layer.addSublayer(layer)
+					self.gradientLayer = layer
 				})
 			}
 			completionTableView?.reloadData()

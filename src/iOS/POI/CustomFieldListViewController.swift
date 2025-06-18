@@ -97,8 +97,7 @@ class CustomFieldListViewController: UITableViewController {
 	// MARK: - Navigation
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-		let controller = segue.destination as? UITableViewController
-		let c = controller as? CustomFieldController
+		let controller = segue.destination as? CustomFieldController
 		let cell = sender as? UITableViewCell
 		var indexPath: IndexPath?
 		if let cell = cell {
@@ -107,10 +106,10 @@ class CustomFieldListViewController: UITableViewController {
 		let row = indexPath?.row ?? 0
 		if row < (customFields?.list.count ?? 0) {
 			// existing item is being edited
-			c?.customField = customFields?.list[row]
+			controller?.customField = customFields?.list[row]
 		}
 
-		c?.completion = { preset in
+		controller?.completion = { preset in
 			if let preset = preset {
 				if row >= (self.customFields?.list.count ?? 0) {
 					self.customFields?.addPreset(preset, atIndex: self.customFields?.list.count ?? 0)

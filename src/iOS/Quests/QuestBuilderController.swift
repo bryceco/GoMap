@@ -171,16 +171,15 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 			let deferred = UIDeferredMenuElement.uncached { [weak self] completion in
 				guard let self = self else { return }
 				let featureList = featureList()
-				let items: [UIAction] = self.availableFeatures
-					.map {
-						feature in UIAction(title: "\(feature.name)", handler: { _ in
-							let newFeature = (feature.name, feature.featureID)
-							if !featureList.contains(where: { $0.ident == newFeature.1 }) {
-								addFeature(newFeature)
-							}
-							featureView.reloadData()
-						})
-					}
+				let items: [UIAction] = self.availableFeatures.map {
+					feature in UIAction(title: "\(feature.name)", handler: { _ in
+						let newFeature = (feature.name, feature.featureID)
+						if !featureList.contains(where: { $0.ident == newFeature.1 }) {
+							addFeature(newFeature)
+						}
+						featureView.reloadData()
+					})
+				}
 				completion(items)
 			}
 			button.menu = UIMenu(children: [
