@@ -477,7 +477,7 @@ class LocationParser {
 	}
 
 	static func fetchGoogleLocationDetails(url: URL) async throws -> MapLocation {
-		let (data,_) = try await URLSession.shared.data(from: url)
+		let (data, _) = try await URLSession.shared.data(from: url)
 		let response = try JSONDecoder().decode(ApiResponse.self, from: data)
 		let location = response.result.geometry.location
 		let mapLocation = MapLocation(longitude: location.lng, latitude: location.lat)
@@ -505,7 +505,7 @@ class LocationParser {
 	static func resolveGoogleShortURL(url: URL) async -> URL? {
 		var request = URLRequest(url: url)
 		request.httpMethod = "GET" // Changed from HEAD to GET
-		guard let (_,response) = try? await URLSession.shared.data(for: request) else {
+		guard let (_, response) = try? await URLSession.shared.data(for: request) else {
 			return nil
 		}
 		return (response as? HTTPURLResponse)?.url

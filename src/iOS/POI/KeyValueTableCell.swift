@@ -311,21 +311,22 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		infoButton.isEnabled = false
 		infoButton.titleLabel?.layer.opacity = 0.0
 		progress.startAnimating()
-		WikiPage.shared.bestWikiPage(forKey: key,
-		                             value: value,
-		                             language: languageCode)
-		{ [weak self] url in
-			guard let self = self else { return }
-			progress.removeFromSuperview()
-			self.infoButton.isEnabled = true
-			self.infoButton.titleLabel?.layer.opacity = 1.0
-			if let url = url,
-			   let owner = self.keyValueCellOwner,
-			   owner.view.window != nil
-			{
-				let viewController = SFSafariViewController(url: url)
-				owner.childViewPresented = true
-				owner.present(viewController, animated: true)
+		Task {
+			let url = await WikiPage.shared.bestWikiPage(forKey: key,
+			                                             value: value,
+			                                             language: languageCode)
+			await MainActor.run {
+				progress.removeFromSuperview()
+				self.infoButton.isEnabled = true
+				self.infoButton.titleLabel?.layer.opacity = 1.0
+				if let url = url,
+				   let owner = self.keyValueCellOwner,
+				   owner.view.window != nil
+				{
+					let viewController = SFSafariViewController(url: url)
+					owner.childViewPresented = true
+					owner.present(viewController, animated: true)
+				}
 			}
 		}
 	}
