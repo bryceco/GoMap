@@ -117,7 +117,7 @@ class OAuth2 {
 
 	// Once the user responds to the Safari popup the application is invoked and
 	// the app delegate calls this function
-	func redirectHandler(url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) {
+	func redirectHandler(url: URL) {
 		defer {
 			safariVC?.dismiss(animated: true)
 			safariVC = nil
