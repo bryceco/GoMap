@@ -49,26 +49,21 @@ class WikiPage {
 		return code.lowercased()
 	}
 
-	private func ifUrlExists(_ url: URL, completion: @escaping (_ exists: Bool) -> Void) {
+	private func ifUrlExists(_ url: URL) async -> Bool {
 		let request = NSMutableURLRequest(url: url)
 		request.httpMethod = "HEAD"
 		request.cachePolicy = .returnCacheDataElseLoad
-		let task = URLSession.shared.downloadTask(
-			with: request as URLRequest,
-			completionHandler: { _, response, error in
-				var exists = false
-				if error == nil {
-					let httpResponse = response as? HTTPURLResponse
-					switch httpResponse?.statusCode {
-					case 200, 301, 302:
-						exists = true
-					default:
-						break
-					}
-				}
-				completion(exists)
-			})
-		task.resume()
+		if let (_, response) = try? await URLSession.shared.data(for: request as URLRequest),
+		   let httpResponse = response as? HTTPURLResponse
+		{
+			switch httpResponse.statusCode {
+			case 200, 301, 302:
+				return true
+			default:
+				break
+			}
+		}
+		return false
 	}
 
 	private func encodedTag(_ tag: String) -> String {
@@ -78,8 +73,7 @@ class WikiPage {
 	func bestWikiPage(
 		forKey tagKey: String,
 		value tagValue: String,
-		language: String,
-		completion: @escaping (_ url: URL?) -> Void)
+		language: String) async -> URL?
 	{
 		let language = wikiPageTitleLanguageFor(languageCode: language)
 		let tagKey = encodedTag(tagKey)
@@ -96,37 +90,34 @@ class WikiPage {
 			pageList.append("Key:\(tagKey)")
 		}
 
+		let baseURL = URL(string: "https://wiki.openstreetmap.org/wiki/")!
 		var urlDict: [String: URL] = [:]
 
-		DispatchQueue.global(qos: .default).async(execute: { [self] in
-
-			let group = DispatchGroup()
-			let baseURL = URL(string: "https://wiki.openstreetmap.org/wiki/")!
-
+		await withTaskGroup(of: (String, URL)?.self) { group in
 			for page in pageList {
-				let url = baseURL.appendingPathComponent(page)
-				group.enter()
-				ifUrlExists(url, completion: { exists in
+				group.addTask {
+					let url = baseURL.appendingPathComponent(page)
+					let exists = await self.ifUrlExists(url)
 					if exists {
-						DispatchQueue.main.async(execute: {
-							urlDict[page] = url
-						})
-					}
-					group.leave()
-				})
-			}
-			_ = group.wait(timeout: DispatchTime.distantFuture)
-
-			DispatchQueue.main.async(execute: {
-				for page in pageList {
-					if let url = urlDict[page] {
-						completion(url)
-						return
+						return (page, url)
+					} else {
+						return nil
 					}
 				}
-				completion(nil)
-			})
-		})
+			}
+			for await page in group {
+				if let page {
+					urlDict[page.0] = page.1
+				}
+			}
+		}
+
+		for page in pageList {
+			if let url = urlDict[page] {
+				return url
+			}
+		}
+		return nil
 	}
 
 	private class KeyValueDescription {
