@@ -401,17 +401,18 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		else { return }
 
 		let languageCode = PresetLanguages.preferredLanguageCode()
-		WikiPage.shared.bestWikiPage(
-			forKey: key,
-			value: value,
-			language: languageCode)
-		{ url in
-				DispatchQueue.main.async {
-					if let url = url {
-						self.openSafariWith(url: url)
-					}
-				}
+		Task {
+			guard let url = await WikiPage.shared.bestWikiPage(
+				forKey: key,
+				value: value,
+				language: languageCode)
+			else {
+				return
 			}
+			await MainActor.run {
+				self.openSafariWith(url: url)
+			}
+		}
 	}
 
 	// MARK: PresetValueTextFieldOwner
