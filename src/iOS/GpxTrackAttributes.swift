@@ -48,8 +48,8 @@ struct GpxTrackAttributes: ActivityAttributes {
 
 @available(iOS 16.1, *)
 struct PauseGpxTrackIntent: LiveActivityIntent {
-	static var title: LocalizedStringResource = "Pause GPX"
-	static var description = IntentDescription("Pause recording GPX tracks.")
+	static let title: LocalizedStringResource = "Pause GPX"
+	static let description = IntentDescription("Pause recording GPX tracks.")
 
 	public init() {}
 
@@ -63,8 +63,8 @@ struct PauseGpxTrackIntent: LiveActivityIntent {
 
 @available(iOS 16.1, *)
 struct StopGpxTrackIntent: LiveActivityIntent {
-	static var title: LocalizedStringResource = "Stop GPX"
-	static var description = IntentDescription("Stop recording GPX tracks.")
+	static let title: LocalizedStringResource = "Stop GPX"
+	static let description = IntentDescription("Stop recording GPX tracks.")
 
 	public init() {}
 
@@ -78,8 +78,8 @@ struct StopGpxTrackIntent: LiveActivityIntent {
 
 @available(iOS 16.1, *)
 struct StartGpxTrackIntent: LiveActivityIntent {
-	static var title: LocalizedStringResource = "Start GPX"
-	static var description = IntentDescription("Start recording GPX tracks.")
+	static let title: LocalizedStringResource = "Start GPX"
+	static let description = IntentDescription("Start recording GPX tracks.")
 
 	public init() {}
 
