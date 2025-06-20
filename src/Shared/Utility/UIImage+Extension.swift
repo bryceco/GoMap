@@ -25,7 +25,7 @@ extension UIImage {
 			newSize,
 			false,
 			UIScreen.main.scale)
-		draw(in: CGRect(x: 0.0, y: 0.0, width: size.width, height: size.height))
+		draw(in: CGRect(x: 0.0, y: 0.0, width: newSize.width, height: newSize.height))
 		let imageCopy = UIGraphicsGetImageFromCurrentImageContext()!
 		UIGraphicsEndImageContext()
 		return imageCopy
