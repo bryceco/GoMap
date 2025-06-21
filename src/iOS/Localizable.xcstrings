@@ -20354,6 +20354,7 @@
       }
     },
     "An unknown error occurred fetching metadata" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

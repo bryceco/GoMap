@@ -62,70 +62,71 @@ class BingMetadataViewController: UIViewController {
 			zoomLevel = aerialService.maxZoom
 		}
 
-		appDelegate.mapView.aerialLayer.metadata({ result in
-			self.activityIndicator.stopAnimating()
+		Task {
+			do {
+				let data = try await appDelegate.mapView.aerialLayer.metadata()
+				await MainActor.run {
+					self.activityIndicator.stopAnimating()
 
-			guard let result = result else {
-				self.textView.text = NSLocalizedString("An unknown error occurred fetching metadata", comment: "")
-				return
-			}
-			switch result {
-			case let .success(data):
-				var attrList: [String] = []
+					var attrList: [String] = []
 
-				let welcome: Welcome?
-				do {
-					welcome = try JSONDecoder().decode(Welcome.self, from: data)
-				} catch {
-					print("error = \(error)")
-					welcome = nil
-				}
+					let welcome: Welcome?
+					do {
+						welcome = try JSONDecoder().decode(Welcome.self, from: data)
+					} catch {
+						print("error = \(error)")
+						welcome = nil
+					}
 
-				for resourceSet in welcome?.resourceSets ?? [] {
-					for resource in resourceSet.resources {
-						for provider in resource.imageryProviders ?? [] {
-							var attribution = provider.attribution
-							for area in provider.coverageAreas {
-								guard area.bbox.count == 4 else { continue }
-								var rect = OSMRect(origin: OSMPoint(x: area.bbox[1],
-								                                    y: area.bbox[0]),
-								                   size: OSMSize(width: area.bbox[3],
-								                                 height: area.bbox[2]))
-								rect.size.width -= rect.origin.x
-								rect.size.height -= rect.origin.y
-								if zoomLevel >= area.zoomMin,
-								   zoomLevel <= area.zoomMax,
-								   viewRect.intersectsRect(rect)
-								{
-									if let vintageStart = resource.vintageStart,
-									   let vintageEnd = resource.vintageEnd
+					for resourceSet in welcome?.resourceSets ?? [] {
+						for resource in resourceSet.resources {
+							for provider in resource.imageryProviders ?? [] {
+								var attribution = provider.attribution
+								for area in provider.coverageAreas {
+									guard area.bbox.count == 4 else { continue }
+									var rect = OSMRect(origin: OSMPoint(x: area.bbox[1],
+									                                    y: area.bbox[0]),
+									                   size: OSMSize(width: area.bbox[3],
+									                                 height: area.bbox[2]))
+									rect.size.width -= rect.origin.x
+									rect.size.height -= rect.origin.y
+									if zoomLevel >= area.zoomMin,
+									   zoomLevel <= area.zoomMax,
+									   viewRect.intersectsRect(rect)
 									{
-										attribution = "\(attribution)\n\(vintageStart) - \(vintageEnd)"
+										if let vintageStart = resource.vintageStart,
+										   let vintageEnd = resource.vintageEnd
+										{
+											attribution = "\(attribution)\n\(vintageStart) - \(vintageEnd)"
+										}
+										attrList.append(attribution)
 									}
-									attrList.append(attribution)
 								}
 							}
 						}
 					}
+
+					attrList.sort(by: { obj1, obj2 in
+						let isMS1 = obj1.contains("Microsoft") ? 0 : 1
+						let isMS2 = obj2.contains("Microsoft") ? 0 : 1
+						if isMS1 != isMS2 { return isMS1 < isMS2 }
+						return obj1 < obj2
+					})
+
+					let text = attrList.joined(separator: "\n\n")
+					self.textView.text = String.localizedStringWithFormat(
+						NSLocalizedString("Background imagery %@", comment: "identifies current aerial imagery"),
+						"") + "\n\n" + text
 				}
-
-				attrList.sort(by: { obj1, obj2 in
-					let isMS1 = obj1.contains("Microsoft") ? 0 : 1
-					let isMS2 = obj2.contains("Microsoft") ? 0 : 1
-					if isMS1 != isMS2 { return isMS1 < isMS2 }
-					return obj1 < obj2
-				})
-
-				let text = attrList.joined(separator: "\n\n")
-				self.textView.text = String.localizedStringWithFormat(
-					NSLocalizedString("Background imagery %@", comment: "identifies current aerial imagery"),
-					"") + "\n\n" + text
-			case let .failure(error):
-				self.textView.text = String.localizedStringWithFormat(
-					NSLocalizedString("Error fetching metadata: %@", comment: ""),
-					"\(error.localizedDescription)")
+			} catch {
+				await MainActor.run {
+					self.activityIndicator.stopAnimating()
+					self.textView.text = String.localizedStringWithFormat(
+						NSLocalizedString("Error fetching metadata: %@", comment: ""),
+						"\(error.localizedDescription)")
+				}
 			}
-		})
+		}
 	}
 
 	@IBAction func cancel(_ sender: Any) {

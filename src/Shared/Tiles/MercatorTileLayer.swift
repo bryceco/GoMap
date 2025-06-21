@@ -18,6 +18,7 @@ import UIKit
 	return m
 }
 
+@MainActor
 final class MercatorTileLayer: CALayer {
 	private var webCache: PersistentWebCache<UIImage>?
 	private var layerDict: [String: CALayer] = [:] // map of tiles currently displayed
@@ -93,13 +94,14 @@ final class MercatorTileLayer: CALayer {
 		return tileServer.roundZoomUp ? Int(ceil(mapView.mapTransform.zoom())) : Int(floor(mapView.mapTransform.zoom()))
 	}
 
-	func metadata(_ callback: @escaping (Result<Data, Error>?) -> Void) {
+	func metadata() async throws -> Data {
 		guard let metadataUrl = tileServer.metadataUrl else {
-			callback(nil)
-			return
+			throw URLError(.resourceUnavailable)
 		}
 
-		let rc = mapView.screenLatLonRect()
+		let rc = await MainActor.run {
+			mapView.screenLatLonRect()
+		}
 
 		var zoomLevel = self.zoomLevel()
 		if zoomLevel > 21 {
@@ -112,20 +114,10 @@ final class MercatorTileLayer: CALayer {
 			rc.origin.x + rc.size.width / 2,
 			zoomLevel)
 
-		if let url = URL(string: url) {
-			Task {
-				do {
-					let data = try await URLSession.shared.data(with: url)
-					await MainActor.run {
-						callback(.success(data))
-					}
-				} catch {
-					await MainActor.run {
-						callback(.failure(error))
-					}
-				}
-			}
+		guard let url = URL(string: url) else {
+			throw URLError(.badURL)
 		}
+		return try await URLSession.shared.data(with: url)
 	}
 
 	func updateDarkMode() {
@@ -486,7 +478,7 @@ extension MercatorTileLayer: TilesProvider {
 	}
 }
 
-extension MercatorTileLayer: DiskCacheSizeProtocol {
+extension MercatorTileLayer: @MainActor DiskCacheSizeProtocol {
 	func getDiskCacheSize() -> (size: Int, count: Int) {
 		return webCache!.getDiskCacheSize()
 	}
