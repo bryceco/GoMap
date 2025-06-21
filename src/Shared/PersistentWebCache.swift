@@ -82,7 +82,7 @@ final class PersistentWebCache<T: AnyObject> {
 	}
 
 	private func removeObjectsAsyncOlderThan(_ expiration: Date) {
-		DispatchQueue.global(qos: .background).async(execute: { [self] in
+		Task(priority: .background) {
 			for url in fileList(withAttributes: [.contentModificationDateKey]) {
 				if let date = try? url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate,
 				   date < expiration
@@ -90,7 +90,7 @@ final class PersistentWebCache<T: AnyObject> {
 					try? FileManager.default.removeItem(at: url)
 				}
 			}
-		})
+		}
 	}
 
 	func getDiskCacheSize() -> (size: Int, count: Int) {
@@ -108,6 +108,15 @@ final class PersistentWebCache<T: AnyObject> {
 		return (size, count)
 	}
 
+	/// Call this function to retrieve an object with a specified cacheKey, downloading and caching the object if it doesn't exist.
+	/// If the object already exists in the memory cache it will be returned synchronously.
+	/// If the object is not in memory:
+	/// - nil will be returned synchronously
+	/// - it will looked for in the disk cache asynchronously, and if found converted from Data to the appropriate return type by objectForData()
+	/// If the object is not on disk:
+	/// - the URL for the object is calculated by fallbackURL() and
+	/// - the object is downloaded and stored on disk, converted to type T via objectForData(), and returned via completion()
+	/// If the object is not available on disk or at the URL an error is returned via completion()
 	func object(
 		withKey cacheKey: String,
 		fallbackURL urlFunction: @escaping () -> URL?,

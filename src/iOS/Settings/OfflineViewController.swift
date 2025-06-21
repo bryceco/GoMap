@@ -46,9 +46,9 @@ class OfflineViewController: UITableViewController {
 		for cell in [aerialCell!, basemapCell!] {
 			cell.activityView.startAnimating()
 			cell.button.isEnabled = false
-			DispatchQueue.global(qos: .userInitiated).async {
+			Task {
 				let tiles = cell.tileLayer!.allTilesIntersecting(mapRect: rect)
-				DispatchQueue.main.async {
+				await MainActor.run {
 					cell.tileList = tiles
 					cell.detailLabel.text = String.localizedStringWithFormat(
 						NSLocalizedString("%lu tiles needed", comment: ""),
@@ -123,6 +123,7 @@ class OfflineViewController: UITableViewController {
 	}
 }
 
+@MainActor
 protocol TilesProvider {
 	var mapView: MapView { get }
 	func currentTiles() -> [String]
