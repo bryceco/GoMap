@@ -267,6 +267,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// overlays
 	private(set) lazy var locatorLayer = MercatorTileLayer(mapView: self)
 
+	@MainActor
 	enum LayerOrView: Equatable {
 		case otherLayer(CALayer)
 		case tileLayer(MercatorTileLayer)
