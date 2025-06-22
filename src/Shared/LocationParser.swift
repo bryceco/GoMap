@@ -436,18 +436,14 @@ class LocationParser {
 			}
 
 			// Extract the ftid value and construct the new URL
-			let api_key = GoogleToken
 			if let latLong = extractLatLongFromGoogleURL(resolvedURL) {
 				callback(latLong)
-			} else if let ftidValue = parseSecondPartOfGoogleFTID(from: resolvedURL),
-			          let newURL = URL(string:
-			          	"https://maps.googleapis.com/maps/api/place/details/json?key=\(api_key)&cid=\(ftidValue)")
+			} else if let ftid = googleFTID(from: resolvedURL),
+					  let url = URL(string: "https://www.google.com/maps?ftid=\(ftid)"),
+					  let resolvedURL = await resolveGoogleShortURL(url: url),
+					  let latLong = extractLatLongFromGoogleURL(resolvedURL)
 			{
-				guard let location = try? await fetchGoogleLocationDetails(url: newURL) else {
-					callback(nil)
-					return
-				}
-				callback(location)
+				callback(latLong)
 			} else {
 				callback(nil)
 			}
@@ -476,8 +472,15 @@ class LocationParser {
 		return nil
 	}
 
-	static func fetchGoogleLocationDetails(url: URL) async throws -> MapLocation {
-		let (data, _) = try await URLSession.shared.data(from: url)
+	static func fetchGoogleLocationDetails(ftid: String) async throws -> MapLocation {
+		let url = URL(string: "https://places.googleapis.com/v1/places/\(ftid)")!
+		var request = URLRequest(url: url)
+		request.allHTTPHeaderFields = ["Accept": "application/json",
+									   "X-Goog-Api-Key": GoogleToken,
+									   "X-Goog-FieldMask": "displayName,formattedAddress"]
+		let (data, _) = try await URLSession.shared.data(for: request)
+		let text = String(data: data, encoding: .utf8)!
+		print("\(text)")
 		let response = try JSONDecoder().decode(ApiResponse.self, from: data)
 		let location = response.result.geometry.location
 		let mapLocation = MapLocation(longitude: location.lng, latitude: location.lat)
@@ -511,38 +514,14 @@ class LocationParser {
 		return (response as? HTTPURLResponse)?.url
 	}
 
-	func parseSecondPartOfGoogleFTID(from url: URL) -> String? {
-		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-		      let queryItems = components.queryItems
-		else {
-			return nil
-		}
-
-		if let ftid = queryItems.first(where: { $0.name == "ftid" })?.value,
-		   let range = ftid.range(of: ":")
-		{
-			let secondPart = ftid[range.upperBound...]
-			return String(secondPart)
-		}
-		print("Trying to parse FTID Failed")
-		return nil
-	}
-
 	// Helper function to extract the ftid parameter from a URL
-	static func parseSecondPartOfGoogleFTID(from url: URL) -> String? {
+	static func googleFTID(from url: URL) -> String? {
 		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
-		      let queryItems = components.queryItems
+		      let queryItems = components.queryItems,
+			  let ftid = queryItems.first(where: { $0.name == "ftid" })?.value
 		else {
 			return nil
 		}
-
-		if let ftid = queryItems.first(where: { $0.name == "ftid" })?.value,
-		   let range = ftid.range(of: ":")
-		{
-			let secondPart = ftid[range.upperBound...]
-			return String(secondPart)
-		}
-
-		return nil
+		return ftid
 	}
 }
