@@ -930,7 +930,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				self.layer.addSublayer(layer)
 			}
 		}
-		layoutSubviews()
+		setNeedsLayout()
 	}
 
 	func save() {
