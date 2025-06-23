@@ -311,7 +311,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 					button.configuration = config
 					button.backgroundColor = nil
 				case let toolbar as UIToolbar:
-					var appearance = UIToolbarAppearance()
+					let appearance = UIToolbarAppearance()
 					toolbar.standardAppearance = appearance
 				default:
 					break
