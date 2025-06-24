@@ -1778,7 +1778,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			let nodes = way.nodes
 			for index in nodes.indices.dropLast() {
 				if nodes[index].ident == nodes[index + 1].ident {
-					print("Duplicate nodes: node \(nodes[index].ident) in way \(nodes[index].ident) (\(index),\(index+1) of \(nodes.count))")
+					print(
+						"Duplicate nodes: node \(nodes[index].ident) in way \(nodes[index].ident) (\(index),\(index + 1) of \(nodes.count))")
 				}
 			}
 		}
