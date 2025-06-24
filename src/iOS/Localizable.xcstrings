@@ -51707,6 +51707,9 @@
         }
       }
     },
+    "Take Photo" : {
+
+    },
     "The + button can be positioned on either the left or right side of the screen" : {
       "localizations" : {
         "ar" : {
@@ -56459,6 +56462,9 @@
           }
         }
       }
+    },
+    "Upload Photo" : {
+      "comment" : "Text displayed in an action sheet when the user wants to upload a photograph from their photo library."
     },
     "Upload to OSM" : {
       "localizations" : {
