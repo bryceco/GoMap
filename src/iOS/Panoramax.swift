@@ -312,14 +312,14 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
     @IBAction
     func captureAndUploadPhotograph(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Take Photo", comment: ""), style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Take New Photo", comment: ""), style: .default, handler: { _ in
             let vc = UIImagePickerController()
             vc.sourceType = .camera
             vc.allowsEditing = false
             vc.delegate = self
             self.present(vc, animated: true)
         }))
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Upload Photo", comment: ""), style: .default, handler: { _ in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Choose Existing Photo", comment: ""), style: .default, handler: { _ in
             let vc = UIImagePickerController()
             vc.sourceType = .photoLibrary
             vc.allowsEditing = false
