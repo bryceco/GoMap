@@ -24101,6 +24101,17 @@
         }
       }
     },
+    "Choose Existing Photo" : {
+      "comment" : "Text displayed in an action sheet when the user wants to upload a photograph from their photo library.",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose Existing Photo"
+          }
+        }
+      }
+    },
     "Clear All" : {
       "localizations" : {
         "cs" : {
@@ -51706,6 +51717,9 @@
           }
         }
       }
+    },
+    "Take New Photo" : {
+
     },
     "The + button can be positioned on either the left or right side of the screen" : {
       "localizations" : {

@@ -124,7 +124,7 @@ class PanoramaxServer {
 	}
 
 	func createUploadSet(title: String,
-	                     callback: @escaping @MainActor(Result<String, Error>) -> Void)
+	                     callback: @escaping @MainActor (Result<String, Error>) -> Void)
 	{
 		let url = serverURL.appendingPathComponent("api/upload_sets")
 
@@ -176,7 +176,7 @@ class PanoramaxServer {
 	              name: String,
 	              location: LatLon,
 	              date: Date,
-	              callback: @escaping @MainActor(Result<String, Error>) -> Void)
+	              callback: @escaping @MainActor (Result<String, Error>) -> Void)
 	{
 		let url = serverURL.appendingPathComponent("api/upload_sets/\(photoSet)/files")
 		var request = URLRequest(url: url)
@@ -311,11 +311,37 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 
 	@IBAction
 	func captureAndUploadPhotograph(_ sender: Any) {
-		let vc = UIImagePickerController()
-		vc.sourceType = .camera
-		vc.allowsEditing = false
-		vc.delegate = self
-		present(vc, animated: true)
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Take New Photo", comment: ""),
+			style: .default,
+			handler: { _ in
+				let vc = UIImagePickerController()
+				vc.sourceType = .camera
+				vc.allowsEditing = false
+				vc.delegate = self
+				self.present(vc, animated: true)
+			}))
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Choose Existing Photo", comment: ""),
+			style: .default,
+			handler: { _ in
+				let vc = UIImagePickerController()
+				vc.sourceType = .photoLibrary
+				vc.allowsEditing = false
+				vc.delegate = self
+				self.present(vc, animated: true)
+			}))
+		alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
+		// For iPad, action sheets must anchor to a button
+		if let popover = alert.popoverPresentationController, let button = sender as? UIView {
+			popover.sourceView = button
+			popover.sourceRect = button.bounds
+		} else {
+			alert.popoverPresentationController?.sourceView = view
+			alert.popoverPresentationController?.sourceRect = view.bounds
+		}
+		present(alert, animated: true)
 	}
 
 	// UIImagePickerController delegate function
