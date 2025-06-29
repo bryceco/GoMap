@@ -8,6 +8,17 @@
 
 import Foundation
 
+/// Hardcoded mapping for Wikidata Q-codes as region identifiers. Only Q46 (EU) is currently supported.
+private let Q46_EU_COUNTRY_CODES: Set<String> = [
+	"AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT",
+	"NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE"
+]
+
+extension String {
+	var isQ46EU: Bool { caseInsensitiveCompare("Q46") == .orderedSame }
+	var isQCode: Bool { uppercased().starts(with: "Q") && Int(dropFirst()) != nil }
+}
+
 struct LocationSet {
 	enum LocationEntry {
 		struct LatLonRadius {
@@ -57,6 +68,13 @@ struct LocationSet {
 			case .world:
 				return true
 			case let .region(region):
+				if region.isQ46EU {
+					// Special case: Q46 = EU; accept any EU country code
+					return Q46_EU_COUNTRY_CODES.contains(countryCode.uppercased())
+				} else if region.isQCode {
+					print(
+						"[LocationSet] Warning: Preset region uses unrecognized Q-code \(region), not supported except for Q46 (EU)")
+				}
 				return region.caseInsensitiveCompare(countryCode) == .orderedSame
 			default:
 				return false
@@ -68,6 +86,12 @@ struct LocationSet {
 			case .world:
 				return true
 			case let .region(region):
+				if region.isQ46EU {
+					return mapViewRegion.regions.contains(where: { Q46_EU_COUNTRY_CODES.contains($0.uppercased()) })
+				} else if region.isQCode {
+					print(
+						"[LocationSet] Warning: Preset region uses unrecognized Q-code \(region), not supported except for Q46 (EU)")
+				}
 				return mapViewRegion.regions.contains(region)
 			case let .geojson(geoName):
 				if let geojson = PresetsDatabase.shared.nsiGeoJson[geoName],
