@@ -61,16 +61,6 @@ public struct CountryCoderRegion {
 		}
 		path.close()
 	}
-
-	fileprivate static func geometryAsBezier(_ geometry: [[[[Double]]]]) -> UIBezierPath {
-		let path = UIBezierPath()
-		for outer in geometry {
-			for loop in outer {
-				addPoints(loop, to: path)
-			}
-		}
-		return path
-	}
 }
 
 public final class CountryCoder {
@@ -88,10 +78,6 @@ public final class CountryCoder {
 			let type: String
 			let properties: Properties
 			let geometry: GeoJSONGeometry?
-		}
-		struct Geometry: Decodable {
-			let type: String
-			let coordinates: [[[[Double]]]]
 		}
 		struct Properties: Decodable {
 			let wikidata, nameEn: String

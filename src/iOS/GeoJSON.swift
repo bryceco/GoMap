@@ -213,7 +213,8 @@ struct GeoJSONGeometry: Codable {
 			self = .geometryCollection(points: geomList)
 		}
 
-		// This init is used by TileServerList, where the JSON is already decoded
+		// This init is used by TileServerList, where the JSON is already decoded.
+		// Also used by CountryCoder
 		init(json: [String: Any]) throws {
 			guard
 				let type = json["type"] as? String,
