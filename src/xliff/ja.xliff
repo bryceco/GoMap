@@ -514,7 +514,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
-        <target state="translated">http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
+        <target state="translated">http://{スイッチ:a,b,c}.tile.org/{z}/{x}/{y}.png
  </target>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
