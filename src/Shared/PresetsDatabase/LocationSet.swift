@@ -35,14 +35,15 @@ struct LocationSet {
 				} else if s.hasSuffix(".geojson") {
 					self = .geojson(s)
 				} else {
-					self = .region(s)
+					self = .region(s.lowercased())
 				}
 			case let n as [NSNumber]:
 				if n.count == 2 {
 					self = .latLonRadius(LatLonRadius(lat: n[1].doubleValue, lon: n[0].doubleValue, radius: 25000))
 				} else if n.count == 3 {
 					self =
-						.latLonRadius(LatLonRadius(lat: n[1].doubleValue, lon: n[0].doubleValue,
+						.latLonRadius(LatLonRadius(lat: n[1].doubleValue,
+												   lon: n[0].doubleValue,
 						                           radius: n[2].doubleValue))
 				} else {
 					fatalError()
