@@ -911,6 +911,12 @@
             "value" : "Quercus "
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quercus "
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -939,6 +945,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "võti"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キー"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ключ"
           }
         },
         "zh-Hant" : {
@@ -1595,6 +1613,18 @@
             "value" : "broadleaved "
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "broadleaved "
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "broadleaved "
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2027,6 +2057,12 @@
             "value" : "Lisa uus"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規追加"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2201,6 +2237,12 @@
             "value" : "Ala"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エリア"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2223,6 +2265,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nupp"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
           }
         },
         "ru" : {
@@ -2403,6 +2451,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Custom Features"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタムフィーチャ"
           }
         },
         "zh-Hant" : {
@@ -3239,6 +3293,12 @@
             "value" : "Vertex"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "頂点"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3267,6 +3327,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nupp"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
           }
         },
         "ru" : {
@@ -3590,6 +3656,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "tree "
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "tree "
           }
         },
@@ -4073,6 +4145,12 @@
             "value" : "Punkt"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ポイント"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4095,6 +4173,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
           }
         },
         "ru" : {
@@ -4358,6 +4442,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Oak"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Oak"
           }
         },
@@ -5495,6 +5585,18 @@
             "value" : "leaf_type"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "leaf_type"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "leaf_type"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6365,6 +6467,18 @@
             "value" : "genus:en"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus:en"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus:en"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6381,6 +6495,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Custom Feature"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタムフィーチャ"
           }
         },
         "zh-Hant" : {
@@ -7007,6 +7127,12 @@
             "value" : "key"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キー"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7415,6 +7541,12 @@
             "value" : "value "
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "値 "
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7436,6 +7568,18 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "natural"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "natural"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "natural"
           }
         },
@@ -8411,6 +8555,12 @@
             "value" : "Custom Features"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタムフィーチャ"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8426,6 +8576,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "Oak Tree"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "Oak Tree"
           }
         },
@@ -8744,6 +8900,18 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "genus"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "genus"
           }
         },
@@ -9077,6 +9245,12 @@
             "value" : "Selle objekti valimisel lisatavad sildid."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "この地物の選択時に追加できるタグ。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9095,6 +9269,12 @@
             "value" : "Feature Tags"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地物のタグ"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9111,6 +9291,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Feature type:"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "地物の種類:"
           }
         },
         "zh-Hant" : {
@@ -9479,6 +9665,12 @@
             "value" : "Nimi"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Name"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9641,6 +9833,12 @@
             "value" : "value "
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "値 "
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9669,6 +9867,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tagasi"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "戻る"
           }
         },
         "ru" : {
@@ -10583,6 +10787,12 @@
             "value" : "Line"
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライン"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10611,6 +10821,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nupp"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ボタン"
           }
         },
         "ru" : {
@@ -10791,6 +11007,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pealkiri"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "タイトル"
           }
         },
         "zh-Hant" : {
@@ -11147,6 +11369,18 @@
             "value" : "value "
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "値 "
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "value "
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11319,6 +11553,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "key"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キー"
           }
         },
         "ru" : {
@@ -11499,6 +11739,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Katkesta"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "キャンセル"
           }
         },
         "ru" : {

@@ -1502,6 +1502,11 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="new">Changeset</target>
         <note>OSM changeset identifier</note>
       </trans-unit>
+      <trans-unit id="Choose Existing Photo" xml:space="preserve">
+        <source>Choose Existing Photo</source>
+        <target state="translated">Choose Existing Photo</target>
+        <note>Text displayed in an action sheet when the user wants to upload a photograph from their photo library.</note>
+      </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
         <target state="new">Clear All</target>
@@ -2447,6 +2452,11 @@ Title for sharing options</note>
         <source>Tags</source>
         <target state="new">Tags</target>
         <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Take New Photo" xml:space="preserve">
+        <source>Take New Photo</source>
+        <target state="new">Take New Photo</target>
+        <note/>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>

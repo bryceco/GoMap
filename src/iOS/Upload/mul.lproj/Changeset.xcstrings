@@ -1481,6 +1481,18 @@
             "value" : "Kirjelda oma muudatusi... "
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "変更内容を記述... "
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опишите ваши изменения... "
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",

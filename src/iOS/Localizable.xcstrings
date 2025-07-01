@@ -18508,10 +18508,22 @@
     "Add Panoramax Photo" : {
       "comment" : "A type of quest",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panoramax-Foto hinzufügen"
+          }
+        },
         "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisa Panoramaxi foto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panoramaxの写真を追加"
           }
         },
         "ru" : {
@@ -26803,6 +26815,12 @@
     "Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." : {
       "comment" : "POI editor presets",
       "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "独自のタグの組み合わせを使用して独自のカスタムフィーチャを定義すると、特殊なタイプのオブジェクトをすばやく追加できます。これらはよくあるタグで検索できます。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -49077,6 +49095,12 @@
             "value" : "Odaberi jezik za predodređene postavke. Drugi sadržaj aplikacije koristit će tvoj standardni jezik."
           }
         },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プリセットに使用する言語を選択します。他のアプリコンテンツでは、デフォルトの言語が使用されます。"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -58564,6 +58588,12 @@
     "You can define custom fields for presets. A field is a single key/value pair associated with a feature." : {
       "comment" : "POI editor presets",
       "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "プリセットのカスタムフィールドを定義できます。フィールドは、機能に関連付けられた単一のキーと値のペアです。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",

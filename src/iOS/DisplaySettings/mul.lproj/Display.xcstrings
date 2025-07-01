@@ -3632,7 +3632,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
+            "value" : "http://{スイッチ:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
           }
         },
         "mr" : {
