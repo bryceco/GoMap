@@ -2064,7 +2064,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
-        <target state="translated">請提供一個可以辨識本任務的符號（支援 emoji）：</target>
+        <target state="translated">請提供一個可以辨識本任務的單字符號（表情符號或 Unicode 字符）：</target>
         <note/>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
