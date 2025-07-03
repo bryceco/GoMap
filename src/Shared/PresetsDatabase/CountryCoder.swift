@@ -42,25 +42,6 @@ public struct CountryCoderRegion {
 		if let s = wikidata { list.append(s) }
 		list.append(contentsOf: aliases)
 	}
-
-	private static func addPoints(_ points: [[Double]], to path: UIBezierPath) {
-		var first = true
-		for pt in points {
-			if pt.count != 2 {
-				continue
-			}
-			let lon = pt[0]
-			let lat = pt[1]
-			let cgPoint = CGPoint(x: lon, y: lat)
-			if first {
-				path.move(to: cgPoint)
-				first = false
-			} else {
-				path.addLine(to: cgPoint)
-			}
-		}
-		path.close()
-	}
 }
 
 public final class CountryCoder {
