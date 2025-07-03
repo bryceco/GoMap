@@ -1399,6 +1399,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Choose Existing Photo" xml:space="preserve">
         <source>Choose Existing Photo</source>
+        <target state="translated">選擇一張現有照片</target>
         <note>Text displayed in an action sheet when the user wants to upload a photograph from their photo library.</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
@@ -2093,7 +2094,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
-        <target state="translated">請提供一個可以辨識本任務的符號（支援 emoji）：</target>
+        <target state="translated">請提供一個可以辨識本任務的符號（表情符號或 Unicode 字符）：</target>
         <note/>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
@@ -2339,6 +2340,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
+        <target state="translated">拍攝一張全新照片</target>
         <note/>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
