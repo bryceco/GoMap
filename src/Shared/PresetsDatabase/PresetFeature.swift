@@ -303,15 +303,19 @@ class PresetFeature: CustomDebugStringConvertible {
 		case namePrefix = 10
 		case aliasPrefix = 9
 		case termPrefix = 8
-		case featureIdPrefix = 7
 
-		case nameInternal = 6
-		case aliasInternal = 5
-		case termInternal = 4
+		case nameInternal = 7
+		case aliasInternal = 6
+		case termInternal = 5
+
+		case featureIdPrefix = 4
 		case featureIdInternal = 3
 	}
 
 	func matchesSearchText(_ searchText: String?, geometry: GEOMETRY) -> Int? {
+		if self.featureID == "tourism/attraction" {
+			print("\(self)")
+		}
 		guard let searchText = searchText else {
 			return nil
 		}
