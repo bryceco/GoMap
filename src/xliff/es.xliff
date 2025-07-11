@@ -246,7 +246,7 @@
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target state="translated">Trazas GPX</target>
+        <target state="translated">Trayectos GPX</target>
         <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
       </trans-unit>
       <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
@@ -276,7 +276,7 @@
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
         <source>Rail Features</source>
-        <target state="translated">Características del Tren</target>
+        <target state="translated">Características ferroviarias</target>
         <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
@@ -301,7 +301,7 @@
       </trans-unit>
       <trans-unit id="8iI-nH-O9H.title" xml:space="preserve">
         <source>Basemap</source>
-        <target state="translated">Basemap</target>
+        <target state="translated">Mapa de base</target>
         <note>Class = "UINavigationItem"; title = "Basemap"; ObjectID = "8iI-nH-O9H";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
@@ -346,7 +346,7 @@
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
-        <target state="translated">Características de potencia</target>
+        <target state="translated">Características de energía</target>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
@@ -401,7 +401,7 @@
       </trans-unit>
       <trans-unit id="RK2-Uw-eHM.text" xml:space="preserve">
         <source>Basemap only</source>
-        <target state="translated">Solo Basemap</target>
+        <target state="translated">Solo mapa de base</target>
         <note>Class = "UILabel"; text = "Basemap only"; ObjectID = "RK2-Uw-eHM";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
@@ -439,17 +439,17 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
         <source>Map Rotation</source>
-        <target state="needs-review-l10n">Activar giro</target>
+        <target state="translated">Giro del mapa</target>
         <note>Class = "UILabel"; text = "Map Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
-        <target state="translated">Eliminar trazas tras:</target>
+        <target state="translated">Eliminar trayectos tras:</target>
         <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
       </trans-unit>
       <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target state="translated">Trazas GPX</target>
+        <target state="translated">Trayectos GPX</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
@@ -499,7 +499,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="cpv-m2-oDm.headerTitle" xml:space="preserve">
         <source>Friendly Name</source>
-        <target state="translated">Nombre amigable</target>
+        <target state="translated">Nombre descriptivo</target>
         <note>Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm";</note>
       </trans-unit>
       <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
@@ -782,12 +782,12 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
-        <target state="translated">GPX pausado</target>
+        <target state="translated">Pausar GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
-        <target state="translated">Pausa la grabación de pistas GPX.</target>
+        <target state="translated">Pausar la grabación de trayectos GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
@@ -797,22 +797,22 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
-        <target state="translated">Empezar a grabar pistas GPX.</target>
+        <target state="translated">Empezar a grabar trayectos GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
-        <target state="translated">Parar</target>
+        <target state="translated">Detener</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
-        <target state="translated">Parar GPX</target>
+        <target state="translated">Detener GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
-        <target state="translated">Detener la grabación de pistas GPX.</target>
+        <target state="translated">Dejar de grabar trayectos GPX.</target>
         <note/>
       </trans-unit>
     </body>
@@ -2337,12 +2337,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
-        <target state="translated">Selecciona una carretera que se aproxime a la intersección</target>
+        <target state="translated">Seleccione una carretera que se aproxime a la intersección</target>
         <note/>
       </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
         <source>Select the language used for Presets. Other app content will use your default language.</source>
-        <target state="translated">Selecciona el idioma que se usará para los ajustes preestablecidos. El resto del contenido de la aplicación usará tu idioma predeterminado.</target>
+        <target state="translated">Seleccione el idioma que se usará para las preconfiguraciones. El resto del contenido de la aplicación usará su idioma predeterminado.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
@@ -2413,7 +2413,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
-        <target state="translated">Empieza a grabar pistas GPX.</target>
+        <target state="translated">Comenzar a grabar trayectos GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
@@ -2428,7 +2428,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
-        <target state="translated">Detener la grabación de pistas GPX.</target>
+        <target state="translated">Dejar de grabar trayectos GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
@@ -2528,7 +2528,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
-        <target state="translated">Esta aplicación aún no admite la edición de restricciones de giro sin un nodo como miembro "vía"</target>
+        <target state="translated">Esta aplicación aún no admite la edición de restricciones de giro sin un nodo como miembro «vía»</target>
         <note/>
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
