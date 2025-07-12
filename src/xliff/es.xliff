@@ -371,7 +371,7 @@
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target state="translated">Las trazas GPX que grabe o descargue se eliminan automáticamente después de:</target>
+        <target state="translated">Los trayectos GPX que grabe o descargue se eliminarán automáticamente tras:</target>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
@@ -623,7 +623,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
-        <target state="translated">Configurar trazas GPX</target>
+        <target state="translated">Configurar trayectos GPX</target>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
@@ -895,7 +895,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
         <source>Always on location tracking allows the app to record GPX files when inactive.</source>
-        <target state="translated">Permitir siempre los servicios de ubicación permite que la aplicación registre archivos GPX incluso cuando está inactiva.</target>
+        <target state="translated">Permitir siempre los servicios de ubicación permite que la aplicación grabe archivos GPX incluso cuando está inactiva.</target>
         <note>Privacy - Location Always and When In Use Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
@@ -1231,7 +1231,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
-        <target state="translated">Una traza GPX registra su trayectoria mientras recorre un camino o sendero</target>
+        <target state="translated">Un traza GPX registra su trayectoria mientras recorre un camino o sendero</target>
         <note/>
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
@@ -1579,7 +1579,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
-        <target state="translated">Traza actual</target>
+        <target state="translated">Trayecto actual</target>
         <note>current GPX track</note>
       </trans-unit>
       <trans-unit id="Database error" xml:space="preserve">
@@ -2032,7 +2032,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
-        <target state="translated">No hay ninguna traza activa</target>
+        <target state="translated">No hay ningún trayecto activo</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
@@ -2177,7 +2177,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
-        <target state="translated">Pausa la grabación de pistas GPX.</target>
+        <target state="translated">Pausa la grabación de trayectos GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
@@ -2202,7 +2202,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
-        <target state="translated">Trazas anteriores</target>
+        <target state="translated">Trayectos anteriores</target>
         <note>previous GPX track</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
