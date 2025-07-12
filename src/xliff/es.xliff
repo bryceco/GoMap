@@ -1231,12 +1231,12 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
-        <target state="translated">Un traza GPX registra su trayectoria mientras recorre un camino o sendero</target>
+        <target state="translated">Una traza GPX registra su trayectoria mientras recorre un camino o sendero</target>
         <note/>
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
         <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
-        <target state="translated">Todas tus tareas personalizadas se copian al portapapeles en formato JSON. Puedes pegarlo en cualquier lugar y guardarlo o enviarlo a otras personas.</target>
+        <target state="translated">Se han copiado en el portapapeles todas las misiones personalizadas en formato JSON. Puede pegarlas en algún sitio para guardarlas o enviárselas a otra persona.</target>
         <note/>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
