@@ -27,57 +27,125 @@ func widgetStopGPS() {
 struct GpxWidgetLiveActivity: Widget {
 	var body: some WidgetConfiguration {
 		ActivityConfiguration(for: GpxTrackAttributes.self) { context in
-			// Lock screen/banner UI goes here
-			HStack {
-				Spacer()
-				VStack(alignment: .leading) {
-					Text(context.state.startTime.formatted(date: .omitted, time: .shortened))
-					Text("\(context.state.durationHMS)")
-						.contentTransition(.numericText())
-					Text("\(context.state.pointCount) points")
-						.contentTransition(.numericText())
-				}
-				.foregroundStyle(.white)
-				Spacer()
-				Image("AppIcon")
-					.cornerRadius(8)
+			// MARK: Lock Screen UI
 
-				if context.state.status == .running {
-					Spacer()
-					Button(intent: StopGpxTrackIntent()) {
-						Text("Stop")
+			Group {
+				HStack(alignment: .center) {
+					Image("AppIconTransparent")
+						.resizable()
+						.aspectRatio(contentMode: .fit)
+					VStack(alignment: .leading) {
+						Text("Go Map!!")
+						Text("GPX Trace")
+							.foregroundStyle(.secondary)
 					}
-					.background(Color.green)
-					.foregroundStyle(.red)
-					.clipShape(Capsule())
 					Spacer()
+					if context.state.status == .running {
+						Button(intent: StopGpxTrackIntent()) {
+							Text("\(Image(systemName: "stop.circle")) Stop")
+								.font(.callout)
+						}
+						.tint(.red)
+						.clipShape(Capsule())
+					}
 				}
+				.frame(height: 30)
+				.padding(.vertical)
+				.font(.caption)
+				HStack {
+					Image(systemName: "point.bottomleft.forward.to.point.topright.scurvepath")
+						.dynamicTypeSize(.xxLarge)
+					VStack(alignment: .leading) {
+						Text("Points")
+							.font(.caption)
+							.foregroundStyle(.secondary)
+						Text("\(context.state.pointCount)")
+							.contentTransition(.numericText())
+							.font(.largeTitle)
+					}
+					Spacer()
+					VStack(alignment: .trailing) {
+						Text("Duration")
+							.font(.caption)
+							.foregroundStyle(.secondary)
+						Text(context.state.durationHMS)
+							.contentTransition(.numericText())
+							.font(.largeTitle)
+					}
+					Image(systemName: "stopwatch")
+						.dynamicTypeSize(.xxLarge)
+				}
+				.padding(.bottom, 5)
+				Text("Started at \(context.state.startTime.formatted(date: .omitted, time: .shortened))")
+					.foregroundStyle(.secondary)
+					.font(.footnote)
+					.padding(.bottom, 5)
 			}
-			.activityBackgroundTint(Color.green)
-			.activitySystemActionForegroundColor(Color.black)
+			.padding()
 		} dynamicIsland: { context in
+			// MARK: Dynamic Island (Expanded)
+
 			DynamicIsland {
-				// Expanded UI goes here.  Compose the expanded UI through
-				// various regions, like leading/trailing/center/bottom
 				DynamicIslandExpandedRegion(.leading) {
-					Text("\(context.state.pointCount) GPX points")
+					HStack {
+						Image(systemName: "point.bottomleft.forward.to.point.topright.scurvepath")
+							.dynamicTypeSize(.xxLarge)
+						VStack(alignment: .leading) {
+							Text("Points")
+								.font(.caption)
+								.foregroundStyle(.secondary)
+							Text("\(context.state.pointCount)")
+								.contentTransition(.numericText())
+								.font(.largeTitle)
+								.minimumScaleFactor(0.5)
+								.lineLimit(1)
+								.truncationMode(.tail)
+						}
+					}
+					.padding(.top)
 				}
 				DynamicIslandExpandedRegion(.trailing) {
-					Text("\(context.state.durationHMS)")
+					HStack {
+						VStack(alignment: .trailing) {
+							Text("Duration")
+								.font(.caption)
+								.foregroundStyle(.secondary)
+							Text(context.state.durationHMS)
+								.contentTransition(.numericText())
+								.font(.largeTitle)
+								.minimumScaleFactor(0.5)
+								.lineLimit(1)
+								.truncationMode(.tail)
+						}
+						Image(systemName: "stopwatch")
+							.dynamicTypeSize(.xxLarge)
+					}
+					.padding(.top)
 				}
 				DynamicIslandExpandedRegion(.center) {
-					Image("AppIcon")
+					VStack {
+						Text("Go Map!!")
+						Text("GPX Trace")
+							.foregroundStyle(.secondary)
+						Text(
+							"\(Image(systemName: "info.circle")) \(context.state.startTime.formatted(date: .omitted, time: .shortened))")
+							.foregroundStyle(.secondary)
+					}
+					.font(.caption)
 				}
-			} compactLeading: {
-				Image("AppIcon")
-					.resizable()
-					.aspectRatio(contentMode: .fill)
+			}
+
+			// MARK: Dynamic Island (Compact)
+
+			compactLeading: {
+				Text(
+					"\(Image(systemName: "point.bottomleft.forward.to.point.topright.scurvepath")) \(context.state.pointCount)")
 			} compactTrailing: {
-				Text("\(context.state.durationHMS)")
+				Text("\(context.state.durationHMS) \(Image(systemName: "stopwatch"))")
 			} minimal: {
-				Image("AppIcon")
+				Image("AppIconTransparent")
 					.resizable()
-					.aspectRatio(contentMode: .fill)
+					.aspectRatio(contentMode: .fit)
 			}
 		}
 	}
