@@ -124,7 +124,7 @@ class PanoramaxServer {
 	}
 
 	func createUploadSet(title: String,
-	                     callback: @escaping @MainActor (Result<String, Error>) -> Void)
+	                     callback: @escaping @MainActor(Result<String, Error>) -> Void)
 	{
 		let url = serverURL.appendingPathComponent("api/upload_sets")
 
@@ -176,7 +176,7 @@ class PanoramaxServer {
 	              name: String,
 	              location: LatLon,
 	              date: Date,
-	              callback: @escaping @MainActor (Result<String, Error>) -> Void)
+	              callback: @escaping @MainActor(Result<String, Error>) -> Void)
 	{
 		let url = serverURL.appendingPathComponent("api/upload_sets/\(photoSet)/files")
 		var request = URLRequest(url: url)
