@@ -313,9 +313,6 @@ class PresetFeature: CustomDebugStringConvertible {
 	}
 
 	func matchesSearchText(_ searchText: String?, geometry: GEOMETRY) -> Int? {
-		if self.featureID == "tourism/attraction" {
-			print("\(self)")
-		}
 		guard let searchText = searchText else {
 			return nil
 		}
