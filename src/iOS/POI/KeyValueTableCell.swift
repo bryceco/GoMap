@@ -126,8 +126,8 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 			let item2 = c.secondItem === textField ? textView : c.secondItem
 			if item1 === textView || item2 === textView {
 				NSLayoutConstraint(item: item1 as Any, attribute: c.firstAttribute, relatedBy: c.relation,
-								   toItem: item2, attribute: c.secondAttribute, multiplier: c.multiplier,
-								   constant: c.constant).isActive = true
+				                   toItem: item2, attribute: c.secondAttribute, multiplier: c.multiplier,
+				                   constant: c.constant).isActive = true
 			}
 		}
 		// Add constraints to force cell to grow vertically when textView expands
@@ -198,9 +198,9 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 	// This function is shared between All Tags and Common Tags
 	static func shouldChangeTag(origText: String,
-								charactersIn remove: NSRange,
-								replacementString insert: String,
-								warningVC: UIViewController?) -> Bool
+	                            charactersIn remove: NSRange,
+	                            replacementString insert: String,
+	                            warningVC: UIViewController?) -> Bool
 	{
 		let MAX_LENGTH = 255
 		let newLength = origText.count - remove.length + insert.count
@@ -212,25 +212,25 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 			let message = String.localizedStringWithFormat(
 				NSLocalizedString("Pasting %ld characters, maximum tag length is 255", comment: ""), insert.count)
 			let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""),
-										  message: message,
-										  preferredStyle: .alert)
+			                              message: message,
+			                              preferredStyle: .alert)
 			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-										  style: .default,
-										  handler: nil))
+			                              style: .default,
+			                              handler: nil))
 			vc.present(alert, animated: true)
 		}
 		return allowed
 	}
 
 	@objc func textField(_ textField: UITextField,
-						 shouldChangeCharactersIn remove: NSRange,
-						 replacementString insert: String) -> Bool
+	                     shouldChangeCharactersIn remove: NSRange,
+	                     replacementString insert: String) -> Bool
 	{
 		guard let origText = textField.text else { return false }
 		return Self.shouldChangeTag(origText: origText,
-									charactersIn: remove,
-									replacementString: insert,
-									warningVC: keyValueCellOwner)
+		                            charactersIn: remove,
+		                            replacementString: insert,
+		                            warningVC: keyValueCellOwner)
 	}
 
 	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
@@ -306,9 +306,9 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		let mapView = AppDelegate.shared.mapView!
 		let geometry = mapView.editorLayer.selectedPrimary?.geometry() ?? .POINT
 		let feature = PresetsDatabase.shared.presetFeatureMatching(tags: [key: value],
-																   geometry: geometry,
-																   location: mapView.currentRegion,
-																   includeNSI: false)
+		                                                           geometry: geometry,
+		                                                           location: mapView.currentRegion,
+		                                                           includeNSI: false)
 		let featureName: String?
 		if let feature = feature,
 		   feature.tags.count > 0 // not degenerate like point, line, etc.
@@ -327,7 +327,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		infoButton.titleLabel?.alpha = 0
 		spinner.startAnimating()
 
-		func showPopup(title: String?, description: String?) {
+		func showPopup(title: String?, description: String?, wikiPageTitle: String?) {
 			spinner.removeFromSuperview()
 			infoButton.isEnabled = true
 			infoButton.titleLabel?.alpha = 1
@@ -343,7 +343,12 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 					preferredStyle: .alert)
 				alert.addAction(.init(title: "Done", style: .cancel, handler: nil))
 				alert.addAction(.init(title: "Read more on the Wiki", style: .default) { _ in
-					self.openSafari()
+					if let wikiPageTitle {
+						let url = WikiPage.shared.urlFor(pageTitle: wikiPageTitle)
+						self.openSafariWith(url: url)
+					} else {
+						self.openSafari()
+					}
 				})
 				owner.present(alert, animated: true)
 			} else {
@@ -353,23 +358,33 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 		let languageCode = PresetLanguages.preferredLanguageCode()
 		if let wikiData = WikiPage.shared.wikiDataFor(key: key,
-													  value: value,
-													  language: languageCode,
-													  imageWidth: 24,
-													  update: { wikiData in
-														showPopup(
-															title: featureName,
-															description: wikiData?.description)
-													  })
+		                                              value: value,
+		                                              language: languageCode,
+		                                              imageWidth: 24,
+		                                              update: { wikiData in
+		                                              	showPopup(
+		                                              		title: featureName,
+		                                              		description: wikiData?.description,
+		                                              		wikiPageTitle: wikiData?.pageTitle)
+		                                              })
 		{
-			showPopup(title: featureName, description: wikiData.description)
+			showPopup(title: featureName,
+			          description: wikiData.description,
+			          wikiPageTitle: wikiData.pageTitle)
 		}
+	}
+
+	private func openSafariWith(url: URL) {
+		guard let keyValueCellOwner else { return }
+		let vc = SFSafariViewController(url: url)
+		keyValueCellOwner.childViewPresented = true
+		keyValueCellOwner.present(vc, animated: true)
 	}
 
 	private func openSafari() {
 		guard !key.isEmpty,
-			  let owner = keyValueCellOwner,
-			  owner.view.window != nil
+		      let owner = keyValueCellOwner,
+		      owner.view.window != nil
 		else { return }
 
 		let languageCode = PresetLanguages.preferredLanguageCode()
@@ -380,9 +395,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		{ url in
 				DispatchQueue.main.async {
 					if let url = url {
-						let vc = SFSafariViewController(url: url)
-						owner.childViewPresented = true
-						owner.present(vc, animated: true)
+						self.openSafariWith(url: url)
 					}
 				}
 			}
@@ -467,7 +480,7 @@ class KeyValueTableSection {
 
 	func keyValueEditingEnded(for pair: KeyValueTableCell) -> KeyValue? {
 		guard let tableView = tableView,
-			  let indexPath = tableView.indexPath(for: pair)
+		      let indexPath = tableView.indexPath(for: pair)
 		else { return nil }
 
 		let kv = (k: pair.key, v: pair.value)
