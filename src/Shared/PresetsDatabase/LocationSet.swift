@@ -41,10 +41,9 @@ struct LocationSet {
 				if n.count == 2 {
 					self = .latLonRadius(LatLonRadius(lat: n[1].doubleValue, lon: n[0].doubleValue, radius: 25000))
 				} else if n.count == 3 {
-					self =
-						.latLonRadius(LatLonRadius(lat: n[1].doubleValue,
-												   lon: n[0].doubleValue,
-						                           radius: n[2].doubleValue))
+					self = .latLonRadius(LatLonRadius(lat: n[1].doubleValue,
+					                                  lon: n[0].doubleValue,
+					                                  radius: n[2].doubleValue))
 				} else {
 					fatalError()
 				}

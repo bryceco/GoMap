@@ -27,6 +27,7 @@ func widgetStopGPS() {
 struct GpxWidgetLiveActivity: Widget {
 	var body: some WidgetConfiguration {
 		ActivityConfiguration(for: GpxTrackAttributes.self) { context in
+
 			// MARK: Lock Screen UI
 
 			Group {
@@ -83,6 +84,7 @@ struct GpxWidgetLiveActivity: Widget {
 			}
 			.padding()
 		} dynamicIsland: { context in
+
 			// MARK: Dynamic Island (Expanded)
 
 			DynamicIsland {
