@@ -169,10 +169,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				geometry: geometry,
 				location: AppDelegate.shared.mapView.currentRegion,
 				includeNSI: true)
-			if currentFeature === selectedFeature {
-//				computeExtraTags()
-//				return
-			}
 			currentFeature = selectedFeature
 
 			if let feature = selectedFeature {
@@ -196,6 +192,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 					weakself.tableView.reloadData()
 				}
 			})
+			computeExtraTags()
 		}
 
 		tableView.reloadData()
@@ -830,5 +827,15 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	var keyValueDict: [String: String] {
 		return (tabBarController as! POITabBarController).keyValueDict
+	}
+
+	// Called when user pastes a set of tags
+	func pasteTags(_ tags: [String: String]) {
+		for (k, v) in tags {
+			updateTagDict(withValue: v, forKey: k)
+		}
+		// the feature type might have changed, so recompute everything
+		selectedFeature = nil
+		updatePresets()
 	}
 }

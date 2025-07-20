@@ -133,8 +133,8 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	// return nil if unchanged, else row to set focus
 	func updateWithRecomendations(forFeature forceReload: Bool) -> Int? {
-		let tabController = tabBarController as? POITabBarController
-		let geometry = tabController?.selection?.geometry() ?? GEOMETRY.POINT
+		let tabController = tabBarController as! POITabBarController
+		let geometry = tabController.selection?.geometry() ?? GEOMETRY.POINT
 		let dict = tags.keyValueDictionary()
 		let newFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: dict,
@@ -169,8 +169,13 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 				list.append((key, ""))
 			}
 		}
-		tags.setRaw(list)
+		tags.setWithoutSorting(list)
 		tableView.reloadData()
+
+		saveButton.isEnabled = tabController.isTagDictChanged()
+		if #available(iOS 13.0, *) {
+			tabBarController?.isModalInPresentation = saveButton.isEnabled
+		}
 
 		return nextRow
 	}
@@ -185,11 +190,6 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		tags.set(tabController.keyValueDict.map { ($0.key, $0.value) })
 
 		_ = updateWithRecomendations(forFeature: true)
-
-		saveButton.isEnabled = tabController.isTagDictChanged()
-		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = saveButton.isEnabled
-		}
 	}
 
 	func saveState() {
@@ -250,10 +250,6 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		                                                                    geometry: geometry,
 		                                                                    location: location)
 		_ = updateWithRecomendations(forFeature: true)
-		saveButton.isEnabled = tabController.isTagDictChanged()
-		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = saveButton.isEnabled
-		}
 	}
 
 	// MARK: - Table view data source
@@ -403,6 +399,17 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	func keyValueEditingEnded(for kvCell: KeyValueTableCell) {
 		_ = tags.keyValueEditingEnded(for: kvCell)
 		saveState()
+	}
+
+	// Called when user pastes a set of tags
+	func pasteTags(_ tags: [String: String]) {
+		var dict = self.tags.keyValueDictionary()
+		for (k, v) in tags {
+			dict[k] = v
+		}
+		self.tags.set(dict.map { (k: $0.key, v: $0.value) })
+
+		_ = updateWithRecomendations(forFeature: true)
 	}
 
 	func tab(toNext forward: Bool) {

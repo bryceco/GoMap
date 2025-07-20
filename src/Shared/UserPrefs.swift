@@ -66,7 +66,6 @@ final class UserPrefs {
 	let hoursRecognizerLanguage = Pref<String>(key: "HoursRecognizerLanguage", ubiquitous: true)
 
 	let poiTabIndex = Pref<Int>(key: "POITabIndex", ubiquitous: true)
-	let copyPasteTags = Pref<[String: String]>(key: "copyPasteTags", ubiquitous: true)
 	let currentRegion = Pref<Data>(key: "CurrentRegion")
 
 	// Next OSM ID
