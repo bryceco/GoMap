@@ -348,4 +348,33 @@ final class OsmTags {
 			return nil
 		}
 	}
+
+	static func stringForTags(_ tags: [String: String]) -> String {
+		let text = tags.map { "\($0.key)=\($0.value)\n" }.joined()
+		return text
+	}
+
+	static func tagsForString(_ text: String) -> [String: String]? {
+		var result: [String: String] = [:]
+		let lines = text.split(separator: "\n")
+		for line in lines {
+			if line.trimmingCharacters(in: .whitespaces).isEmpty {
+				continue
+			}
+			let parts = line.split(separator: "=", maxSplits: 1)
+			guard parts.count == 2 else {
+				return nil
+			}
+			let k = parts[0].trimmingCharacters(in: .whitespaces)
+			let v = parts[1].trimmingCharacters(in: .whitespaces)
+			if k != k.lowercased() {
+				return nil
+			}
+			result[k] = v
+		}
+		if result.count == 0 {
+			return nil
+		}
+		return result
+	}
 }

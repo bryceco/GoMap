@@ -40,6 +40,7 @@ protocol KeyValueTableCellOwner: UITableViewController {
 	var currentTextField: UITextField? { get set }
 	func keyValueEditingChanged(for kv: KeyValueTableCell)
 	func keyValueEditingEnded(for kv: KeyValueTableCell)
+	func pasteTags(_: [String: String])
 	var keyValueDict: [String: String] { get }
 }
 
@@ -200,8 +201,20 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 	static func shouldChangeTag(origText: String,
 	                            charactersIn remove: NSRange,
 	                            replacementString insert: String,
-	                            warningVC: UIViewController?) -> Bool
+	                            warningVC: KeyValueTableCellOwner?) -> Bool
 	{
+		// Check whether they are pasting a set of tags
+		// Note the inserted string has newlines converted to spaces.
+		if let pb = UIPasteboard.general.string?.trimmingCharacters(in: .whitespacesAndNewlines),
+		   insert.trimmingCharacters(in: .whitespaces) == pb.replacingOccurrences(of: "\n", with: " ")
+		   .trimmingCharacters(in: .whitespaces),
+		   let tags = OsmTags.tagsForString(pb),
+		   tags.count > 0
+		{
+			warningVC?.pasteTags(tags)
+			return false
+		}
+
 		let MAX_LENGTH = 255
 		let newLength = origText.count - remove.length + insert.count
 		let allowed = newLength <= MAX_LENGTH || insert == "\n"
@@ -380,7 +393,7 @@ class KeyValueTableSection {
 		return dict
 	}
 
-	func setRaw(_ values: [KeyValue]) {
+	func setWithoutSorting(_ values: [KeyValue]) {
 		tags = values
 	}
 
