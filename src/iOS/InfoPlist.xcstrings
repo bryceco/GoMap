@@ -1206,7 +1206,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Permitir siempre los servicios de ubicación permite que la aplicación registre archivos GPX incluso cuando está inactiva."
+            "value" : "Permitir siempre los servicios de ubicación permite que la aplicación grabe archivos GPX incluso cuando está inactiva."
           }
         },
         "et" : {

@@ -1277,6 +1277,18 @@
       "comment" : "Class = \"UILabel\"; text = \"66.6 FPS\"; ObjectID = \"9t5-wq-j1u\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1373,7 +1385,25 @@
             "value" : "66.6 BPS"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
+        "nn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
         "oc" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
+        "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "66.6 FPS"
@@ -1385,7 +1415,19 @@
             "value" : "66.6 FPS"
           }
         },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
+        "si" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "66.6 FPS"
@@ -1397,7 +1439,25 @@
             "value" : "66.6 எஃப்.பி.எச்"
           }
         },
+        "tzm" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "66.6 FPS"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "66.6 FPS"
@@ -3194,7 +3254,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Comentar & Resolver"
+            "value" : "Comentar y resolver"
           }
         },
         "et" : {
@@ -3283,8 +3343,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Resolver"
+            "state" : "translated",
+            "value" : "Comentar y resolver"
           }
         },
         "et" : {
@@ -4214,7 +4274,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Especifica un nombre (\"Nueva York\"), una URL u otro texto que contenga coordenadas lat/lon, o una referencia a un objeto OSM (\"camino 51014987\"):"
+            "value" : "Especifique un nombre («Nueva York»), un URL u otro texto que contenga coordenadas lat/lon, o una referencia a un objeto OSM («vía 51014987»):"
           }
         },
         "et" : {

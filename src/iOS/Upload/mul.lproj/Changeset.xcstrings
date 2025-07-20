@@ -1469,10 +1469,22 @@
       "comment" : "Class = \"UILabel\"; text = \"Describe your changes... \"; ObjectID = \"xNB-pJ-M20\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popište vaše změny… "
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Describe your changes... "
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Describa sus cambios… "
           }
         },
         "et" : {
@@ -1491,6 +1503,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Опишите ваши изменения... "
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "உங்கள் மாற்றங்களை விவரிக்கவும் ... "
           }
         },
         "zh-Hant" : {

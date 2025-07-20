@@ -4233,7 +4233,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@nodes@"
+            "value" : "%1$#@மீட்டர்கள்@, %2$#@முனைகள்@"
           },
           "substitutions" : {
             "meters" : {
@@ -5906,7 +5906,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@megabytes@ , %#@files@"
+            "value" : "%1$#@மெகாபைடுகள்@, %2$#@கோப்புகள்@"
           },
           "substitutions" : {
             "files" : {
@@ -9206,7 +9206,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@nodes@"
+            "value" : "%1$#@மீட்டர்கள்@, %2$#@முனைகள்@"
           },
           "substitutions" : {
             "meters" : {
@@ -10879,7 +10879,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@points@"
+            "value" : "%1$#@மீட்டர்கள்@, %2$#@புள்ளிகள்@"
           },
           "substitutions" : {
             "meters" : {
@@ -13134,7 +13134,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@points@, %#@waypoints@"
+            "value" : "%1$#@மீட்டர்@, %2$#@புள்ளிகள்@, %3$#@வழித்தடங்கள்@"
           },
           "substitutions" : {
             "meters" : {
@@ -16809,7 +16809,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "& lt; தெரியாத & gt;"
+            "value" : "<தெரியாத>"
           }
         },
         "uk" : {
@@ -16980,7 +16980,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Todas tus tareas personalizadas se copian al portapapeles en formato JSON. Puedes pegarlo en cualquier lugar y guardarlo o enviarlo a otras personas."
+            "value" : "Se han copiado en el portapapeles todas las misiones personalizadas en formato JSON. Puede pegarlas en algún sitio para guardarlas o enviárselas a otra persona."
           }
         },
         "hr" : {
@@ -18508,10 +18508,22 @@
     "Add Panoramax Photo" : {
       "comment" : "A type of quest",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat Panoramax snímek"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Panoramax-Foto hinzufügen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir foto de Panoramax"
           }
         },
         "et" : {
@@ -18530,6 +18542,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Добавить панораму"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பனோரமாக்ச் புகைப்படத்தைச் சேர்க்கவும்"
           }
         },
         "zh-Hant" : {
@@ -24117,10 +24135,46 @@
     "Choose Existing Photo" : {
       "comment" : "Text displayed in an action sheet when the user wants to upload a photograph from their photo library.",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vybrat již existující snímek"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Choose Existing Photo"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elegir foto existente"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "既存の写真を選択してください"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இருக்கும் புகைப்படத்தைத் தேர்வுசெய்க"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择一张现有照片"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇一張現有照片"
           }
         }
       }
@@ -26582,7 +26636,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Traza actual"
+            "value" : "Trayecto actual"
           }
         },
         "et" : {
@@ -26816,10 +26870,28 @@
     "Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." : {
       "comment" : "POI editor presets",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nastave si vlastní funkce s unikátními kombinacemi značek pro rychlé přidávání speciální typů objektů. Vyhledat je můžete mezi běžnými značkami."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Defina sus propias características personalizadas con combinaciones de etiquetas únicas para añadir rápidamente tipos especiales de objetos. Estos se pueden buscar en Etiquetas comunes."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "独自のタグの組み合わせを使用して独自のカスタムフィーチャを定義すると、特殊なタイプのオブジェクトをすばやく追加できます。これらはよくあるタグで検索できます。"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "சிறப்பு வகை பொருள்களை விரைவாகச் சேர்க்க தனித்துவமான குறிச்சொல் சேர்க்கைகளுடன் உங்கள் சொந்த தனிப்பயன் அம்சங்களை வரையறுக்கவும். பொதுவான குறிச்சொற்களில் இவை தேடப்படலாம்."
           }
         },
         "zh-Hant" : {
@@ -32084,7 +32156,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Subida del GPX completada"
+            "value" : "Se completó la carga del GPX"
           }
         },
         "et" : {
@@ -32220,7 +32292,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fallo la subida de GPX"
+            "value" : "Falló la carga del GPX"
           }
         },
         "et" : {
@@ -39463,7 +39535,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No hay ninguna traza activa"
+            "value" : "No hay ningún trayecto activo"
           }
         },
         "et" : {
@@ -44925,7 +44997,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pausa la grabación de pistas GPX."
+            "value" : "Pausa la grabación de trayectos GPX."
           }
         },
         "et" : {
@@ -45511,7 +45583,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trazas anteriores"
+            "value" : "Trayectos anteriores"
           }
         },
         "et" : {
@@ -45680,16 +45752,22 @@
             "value" : "Вкажіть один символ (емодзі чи символ юнікоду) щоб ідентифікувати цей квест:"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请提供一个可以辨识本任务的单字符号（表情符号或 Unicode 字符）："
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "請提供一個可以辨識本任務的符號（支援 emoji）："
+            "value" : "請提供一個可以辨識本任務的單字符號（表情符號或 Unicode 字符）："
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "請提供一個可以辨識本任務的符號（支援 emoji）："
+            "value" : "請提供一個可以辨識本任務的單字符號（表情符號或 Unicode 字符）："
           }
         }
       }
@@ -48845,7 +48923,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selecciona una carretera que se aproxime a la intersección"
+            "value" : "Seleccione una carretera que se aproxime a la intersección"
           }
         },
         "et" : {
@@ -49081,7 +49159,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Selecciona el idioma que se usará para los ajustes preestablecidos. El resto del contenido de la aplicación usará tu idioma predeterminado."
+            "value" : "Seleccione el idioma que se usará para las preconfiguraciones. El resto del contenido de la aplicación usará su idioma predeterminado."
           }
         },
         "et" : {
@@ -50923,7 +51001,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Empieza a grabar pistas GPX."
+            "value" : "Comenzar a grabar trayectos GPX."
           }
         },
         "et" : {
@@ -51193,7 +51271,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Detener la grabación de pistas GPX."
+            "value" : "Dejar de grabar trayectos GPX."
           }
         },
         "et" : {
@@ -51744,7 +51822,44 @@
       }
     },
     "Take New Photo" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pořídit nový snímek"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hacer foto nueva"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新しい写真を撮る"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "புதிய புகைப்படம் எடு"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拍摄一张新照片"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拍攝一張全新照片"
+          }
+        }
+      }
     },
     "The + button can be positioned on either the left or right side of the screen" : {
       "localizations" : {
@@ -53499,7 +53614,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Esta aplicación aún no admite la edición de restricciones de giro sin un nodo como miembro \"vía\""
+            "value" : "Esta aplicación aún no admite la edición de restricciones de giro sin un nodo como miembro «vía»"
           }
         },
         "et" : {
@@ -58163,7 +58278,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "¿Cómo se llama esta búsqueda? Es mejor escribirlo en forma de una acción como \"Añadir superficie\":"
+            "value" : "¿Cómo se llama esta búsqueda? Es mejor escribirlo en forma de una acción como «Añadir superficie»:"
           }
         },
         "hr" : {
@@ -58589,10 +58704,28 @@
     "You can define custom fields for presets. A field is a single key/value pair associated with a feature." : {
       "comment" : "POI editor presets",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Můžete si nastavit vlastní pole předvoleb. Pole tvoří pár: značka a hodnota, vztahující se k funkci."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Puede definir campos personalizados para las preconfiguraciones. Un campo es un par clave/valor asociado a una característica."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "プリセットのカスタムフィールドを定義できます。フィールドは、機能に関連付けられた単一のキーと値のペアです。"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "முன்னமைவுகளுக்கான தனிப்பயன் புலங்களை நீங்கள் வரையறுக்கலாம். ஒரு புலம் என்பது ஒரு அம்சத்துடன் தொடர்புடைய ஒற்றை விசை/மதிப்பு இணை."
           }
         },
         "zh-Hant" : {

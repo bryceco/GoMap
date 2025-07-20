@@ -923,6 +923,12 @@
             "value" : "Quercus "
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "குவர்கச் "
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -935,6 +941,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"6zU-bk-hWw\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klíč"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -957,6 +969,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ключ"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "விசை"
           }
         },
         "zh-Hant" : {
@@ -1625,6 +1643,12 @@
             "value" : "broadleaved "
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "அகலமான "
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2045,10 +2069,22 @@
       "comment" : "Class = \"UILabel\"; text = \"Add New\"; ObjectID = \"bF4-TU-MTA\"; Note = \"Add user-defined tagging preset\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat novou"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Add New"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Añadir nuevo"
           }
         },
         "et" : {
@@ -2061,6 +2097,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新規追加"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "புதியதைச் சேர்க்கவும்"
           }
         },
         "zh-Hant" : {
@@ -2231,6 +2273,12 @@
             "value" : "Area"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Área"
+          }
+        },
         "et" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2241,6 +2289,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "エリア"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பகுதி"
           }
         },
         "zh-Hant" : {
@@ -2261,6 +2315,12 @@
             "value" : "Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón"
+          }
+        },
         "et" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2277,6 +2337,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Кнопка"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பொத்தான்"
           }
         },
         "zh-Hant" : {
@@ -2447,16 +2513,34 @@
       "comment" : "Class = \"UINavigationItem\"; title = \"Custom Features\"; ObjectID = \"cNV-jf-zYM\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vlastní funkce"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Custom Features"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Características personalizadas"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "カスタムフィーチャ"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தனிப்பயன் நற்பொருத்தங்கள்"
           }
         },
         "zh-Hant" : {
@@ -3293,6 +3377,12 @@
             "value" : "Vertex"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vértice"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3303,6 +3393,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вертекс"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வெர்டெக்ச்"
           }
         },
         "zh-Hant" : {
@@ -3323,6 +3419,12 @@
             "value" : "Button"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón"
+          }
+        },
         "et" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3339,6 +3441,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Кнопка"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பொத்தான்"
           }
         },
         "zh-Hant" : {
@@ -3659,6 +3767,12 @@
             "value" : "tree "
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "árbol "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3669,6 +3783,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "tree "
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மரம் "
           }
         },
         "zh-Hant" : {
@@ -4133,10 +4253,22 @@
       "comment" : "Class = \"UIButton\"; configuration.title = \"Point\"; ObjectID = \"fdT-wh-QoF\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bod"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Point"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punto"
           }
         },
         "et" : {
@@ -4157,6 +4289,12 @@
             "value" : "Точка"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "புள்ளியம்"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4169,10 +4307,22 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"fdT-wh-QoF\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón"
           }
         },
         "ja" : {
@@ -4185,6 +4335,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Кнопка"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பொத்தான்"
           }
         },
         "zh-Hant" : {
@@ -4457,6 +4613,12 @@
             "value" : "Дуб"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஓக்"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4707,6 +4869,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Пользовательские предустановки"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தனிப்பயன் புலங்கள்"
           }
         },
         "uk" : {
@@ -5579,6 +5747,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"leaf_type\"; ObjectID = \"j2j-qT-aHG\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "leaf_type"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -5595,6 +5769,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "leaf_type"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இலை_ வகை"
           }
         },
         "zh-Hant" : {
@@ -6479,6 +6659,12 @@
             "value" : "genus:en"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வகை: இல்"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6491,16 +6677,34 @@
       "comment" : "Class = \"UINavigationItem\"; title = \"Custom Feature\"; ObjectID = \"Lhz-HA-Q6j\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vlastní funkce"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Custom Feature"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Característica personalizada"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "カスタムフィーチャ"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தனிப்பயன் நற்பொருத்தம்"
           }
         },
         "zh-Hant" : {
@@ -7121,6 +7325,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"MU8-ia-Kco\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klíč"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -7137,6 +7347,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ключ"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "விசை"
           }
         },
         "zh-Hant" : {
@@ -7553,6 +7769,12 @@
             "value" : "значение "
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு "
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7581,6 +7803,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "natural"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இயற்கை"
           }
         },
         "zh-Hant" : {
@@ -8219,6 +8447,12 @@
             "value" : "Пользовательская предустановка"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தனிப்பயன் புலம்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8513,6 +8747,12 @@
             "value" : "Настроить предустановки"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தனிப்பயன் புலங்கள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8549,16 +8789,34 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Custom Features\"; ObjectID = \"pNE-0W-9Qa\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vlastní funkce"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Custom Features"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Características personalizadas"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "カスタムフィーチャ"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தனிப்பயன் நற்பொருத்தங்கள்"
           }
         },
         "zh-Hant" : {
@@ -8589,6 +8847,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дуб"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ஓக் மரம்"
           }
         },
         "zh-Hant" : {
@@ -8861,6 +9125,12 @@
             "value" : "Название предустановки"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "புலம் பெயர்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -8913,6 +9183,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "genus"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இனம்"
           }
         },
         "zh-Hant" : {
@@ -9233,10 +9509,22 @@
       "comment" : "Class = \"UITableViewSection\"; footerTitle = \"Tags to add when selecting this feature.\"; ObjectID = \"Ruw-WB-IgL\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Značky pro přidání při výběru této funkce."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Tags to add when selecting this feature."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etiquetas para añadir al seleccionar la característica."
           }
         },
         "et" : {
@@ -9251,6 +9539,12 @@
             "value" : "この地物の選択時に追加できるタグ。"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "இந்த அம்சத்தைத் தேர்ந்தெடுக்கும்போது சேர்க்க வேண்டிய குறிச்சொற்கள்."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9263,16 +9557,34 @@
       "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Feature Tags\"; ObjectID = \"Ruw-WB-IgL\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Značky funkce"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Feature Tags"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etiquetas de característica"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "地物のタグ"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "அம்ச குறிச்சொற்கள்"
           }
         },
         "zh-Hant" : {
@@ -9293,10 +9605,22 @@
             "value" : "Feature type:"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tipo de característica:"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "地物の種類:"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "அம்ச வகை:"
           }
         },
         "zh-Hant" : {
@@ -9653,10 +9977,22 @@
       "comment" : "Class = \"UILabel\"; text = \"Name\"; ObjectID = \"TJk-hO-Ejc\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Název"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Name"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nombre"
           }
         },
         "et" : {
@@ -9675,6 +10011,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Название"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பெயர்"
           }
         },
         "zh-Hant" : {
@@ -9833,6 +10175,12 @@
             "value" : "value "
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "valor "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9843,6 +10191,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "значение "
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு "
           }
         },
         "zh-Hant" : {
@@ -9857,10 +10211,22 @@
       "comment" : "Class = \"UIBarButtonItem\"; title = \"Back\"; ObjectID = \"UJ1-oM-H4Z\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zpět"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Back"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Atrás"
           }
         },
         "et" : {
@@ -9879,6 +10245,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Назад"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பின்"
           }
         },
         "zh-Hant" : {
@@ -10781,10 +11153,22 @@
       "comment" : "Class = \"UIButton\"; configuration.title = \"Line\"; ObjectID = \"WjA-Nb-uzp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Linie"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Line"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Línea"
           }
         },
         "ja" : {
@@ -10799,6 +11183,12 @@
             "value" : "Линия"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வரி"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10811,10 +11201,22 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"WjA-Nb-uzp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Botón"
           }
         },
         "et" : {
@@ -10833,6 +11235,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Кнопка"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பொத்தான்"
           }
         },
         "zh-Hant" : {
@@ -10997,10 +11405,22 @@
       "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"WXF-5S-E8m\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Název"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Title"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Título"
           }
         },
         "et" : {
@@ -11013,6 +11433,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "タイトル"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "தலைப்பு"
           }
         },
         "zh-Hant" : {
@@ -11369,6 +11795,12 @@
             "value" : "value "
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "valor "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11379,6 +11811,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "value "
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "மதிப்பு "
           }
         },
         "zh-Hant" : {
@@ -11549,10 +11987,22 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"ZNr-2O-LuN\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klíč"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "key"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "clave"
           }
         },
         "ja" : {
@@ -11565,6 +12015,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ключ"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "விசை"
           }
         },
         "zh-Hant" : {
@@ -11729,10 +12185,22 @@
       "comment" : "Class = \"UIBarButtonItem\"; title = \"Cancel\"; ObjectID = \"zqH-07-JEp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrušit"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Cancel"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cancelar"
           }
         },
         "et" : {
@@ -11751,6 +12219,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отменить"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ரத்துசெய்"
           }
         },
         "zh-Hant" : {

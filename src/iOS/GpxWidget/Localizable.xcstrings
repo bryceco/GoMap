@@ -2,6 +2,7 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -129,7 +130,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GPX pausado"
+            "value" : "Pausar GPX"
           }
         },
         "et" : {
@@ -193,7 +194,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pausa la grabación de pistas GPX."
+            "value" : "Pausar la grabación de trayectos GPX."
           }
         },
         "et" : {
@@ -331,7 +332,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Empezar a grabar pistas GPX."
+            "value" : "Empezar a grabar trayectos GPX."
           }
         },
         "et" : {
@@ -405,7 +406,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Parar GPX"
+            "value" : "Detener GPX"
           }
         },
         "et" : {
@@ -475,7 +476,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Detener la grabación de pistas GPX."
+            "value" : "Dejar de grabar trayectos GPX."
           }
         },
         "et" : {
