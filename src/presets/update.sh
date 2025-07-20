@@ -49,4 +49,7 @@ for lang in ${languages[*]}; do
     curl -fLsS $DIST/translations/$lang.min.json > translations/$lang.json
 done
 
+# en-US shouldn't exist:
+/bin/rm translations/en-US.json
+
 git add translations/*.json
