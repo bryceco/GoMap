@@ -2828,7 +2828,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Autoriõigused © 2012-2024 Bryce Cogswell.\nKõik õigused kaitstud.\n\nOpenStreetMapi andmed on litsentseeritud Open Data Commons Open Database License (ODbL) alusel:\nhttps://www.openstreetmap.com/copyright\n\nBingi aerofotode autoriõigused kuuluvad Microsoftile ja selle tarnijatele:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapboxi aerofotode autoriõigused kuuluvad Mapboxile ja selle tarnijatele: https://www.mapbox.com/tos.\n\nXML-parsimine Robbie Hansoni KissXMLi abil:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF-parsingu kood Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nKaardi ikoonid on teinud SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nMuud ikoonid Glyphishi poolt:\nhttp://glyphish.com\n"
+            "value" : "Autoriõigused © 2012-2024 Bryce Cogswell.\nKõik õigused kaitstud.\n\nOpenStreetMapi andmed on litsentseeritud Open Data Commons Open Database License (ODbL) alusel:\nhttps://www.openstreetmap.com/copyright\n\nBingi aerofotode autoriõigused kuuluvad Microsoftile ja selle tarnijatele:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapboxi aerofotode autoriõigused kuuluvad Mapboxile ja selle tarnijatele: https://www.mapbox.com/tos.\n\nXML-parsimine Robbie Hansoni KissXMLi abil:\nhttps://github.com/robbiehanson/KissXML\n\nKaardi ikoonid on teinud SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nMuud ikoonid Glyphishi poolt:\nhttp://glyphish.com\n"
           }
         },
         "fr" : {

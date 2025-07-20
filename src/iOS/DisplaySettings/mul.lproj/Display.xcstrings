@@ -38,7 +38,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trazas GPX"
+            "value" : "Trayectos GPX"
           }
         },
         "et" : {
@@ -1130,7 +1130,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Características del Tren"
+            "value" : "Características ferroviarias"
           }
         },
         "et" : {
@@ -1724,7 +1724,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Basemap"
+            "value" : "Mapa de base"
           }
         },
         "et" : {
@@ -2846,7 +2846,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nombre amigable"
+            "value" : "Nombre descriptivo"
           }
         },
         "et" : {
@@ -6932,7 +6932,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Características de potencia"
+            "value" : "Características de energía"
           }
         },
         "et" : {
@@ -7733,6 +7733,12 @@
             "value" : "Фильтры"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பொருள் வடிப்பான்கள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -7802,7 +7808,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Las trazas GPX que grabe o descargue se eliminan automáticamente después de:"
+            "value" : "Los trayectos GPX que grabe o descargue se eliminarán automáticamente tras:"
           }
         },
         "et" : {
@@ -8708,7 +8714,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configurar trazas GPX"
+            "value" : "Configurar trayectos GPX"
           }
         },
         "et" : {
@@ -9758,7 +9764,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Solo Basemap"
+            "value" : "Solo mapa de base"
           }
         },
         "et" : {
@@ -12109,8 +12115,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Activar giro"
+            "state" : "translated",
+            "value" : "Giro del mapa"
           }
         },
         "et" : {
@@ -12183,6 +12189,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Вращение карты"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வரைபட சுழற்சி"
           }
         },
         "uk" : {
@@ -12572,7 +12584,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Eliminar trazas tras:"
+            "value" : "Eliminar trayectos tras:"
           }
         },
         "et" : {
@@ -13046,7 +13058,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Trazas GPX"
+            "value" : "Trayectos GPX"
           }
         },
         "et" : {

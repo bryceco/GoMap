@@ -697,13 +697,33 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>%@</source>
         <note/>
       </trans-unit>
-      <trans-unit id="%lld GPX points" xml:space="preserve">
-        <source>%lld GPX points</source>
+      <trans-unit id="%@ %@" xml:space="preserve">
+        <source>%1$@ %2$@</source>
         <note/>
       </trans-unit>
-      <trans-unit id="%lld points" xml:space="preserve">
-        <source>%lld points</source>
+      <trans-unit id="%@ %lld" xml:space="preserve">
+        <source>%1$@ %2$lld</source>
+        <note from="auto-generated">A compact leading view for a dynamic island.</note>
+      </trans-unit>
+      <trans-unit id="%@ Stop" xml:space="preserve">
+        <source>%@ Stop</source>
         <note/>
+      </trans-unit>
+      <trans-unit id="%lld" xml:space="preserve">
+        <source>%lld</source>
+        <note from="auto-generated">A label displaying the number of points recorded in a GPX track.</note>
+      </trans-unit>
+      <trans-unit id="Duration" xml:space="preserve">
+        <source>Duration</source>
+        <note from="auto-generated">A caption displayed underneath the duration of a track.</note>
+      </trans-unit>
+      <trans-unit id="GPX Trace" xml:space="preserve">
+        <source>GPX Trace</source>
+        <note from="auto-generated">A caption displayed below the name of the app.</note>
+      </trans-unit>
+      <trans-unit id="Go Map!!" xml:space="preserve">
+        <source>Go Map!!</source>
+        <note from="auto-generated">A label displayed on the lock screen/banner UI of the widget</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
@@ -713,6 +733,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Pause recording GPX tracks.</source>
         <note/>
       </trans-unit>
+      <trans-unit id="Points" xml:space="preserve">
+        <source>Points</source>
+        <note from="auto-generated">A unit displayed underneath the number of GPX points recorded.</note>
+      </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
         <note/>
@@ -721,9 +745,9 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Start recording GPX tracks.</source>
         <note/>
       </trans-unit>
-      <trans-unit id="Stop" xml:space="preserve">
-        <source>Stop</source>
-        <note/>
+      <trans-unit id="Started at %@" xml:space="preserve">
+        <source>Started at %@</source>
+        <note from="auto-generated">A subheading displaying when the user started tracking.</note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
