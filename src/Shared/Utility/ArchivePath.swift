@@ -113,14 +113,14 @@ enum ArchivePath {
 			               ])
 
 		case .mapMarkerIgnoreList:
-			return urlWith(name: "mapMarkerIgnoreList.archive",
+			return urlWith(name: "mapMarkerIgnoreList.json",
 			               in: Self.appDataFolder.url(),
 			               legacy: [
 			               	urlWith(name: "mapMarkerIgnoreList", in: .libraryDirectory)
 			               ])
 
 		case .osmDataArchive:
-			return urlWith(name: "edits.archive",
+			return urlWith(name: "user_edits.archive",
 			               in: Self.appDataFolder.url(),
 			               legacy: [
 			               	urlWith(name: "OSM Downloaded Data.archive", in: .libraryDirectory, bundleID: true),
@@ -137,7 +137,7 @@ enum ArchivePath {
 			               ])
 
 		case .tagInfo:
-			return urlWith(name: "tagInfo.plist",
+			return urlWith(name: "tagInfo_cache.plist",
 			               in: Self.appDataFolder.url(),
 			               legacy: [
 			               	urlWith(name: "tagInfo.plist", in: .libraryDirectory, bundleID: true)

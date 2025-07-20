@@ -43,13 +43,6 @@ class TagInfo {
 			let data = try Data(contentsOf: path)
 			return try PropertyListDecoder().decode(CacheType.self, from: data)
 		} catch {
-			if (error as NSError).domain == NSCocoaErrorDomain,
-			   (error as NSError).code == NSFileReadNoSuchFileError
-			{
-				// not found, so ignore
-			} else {
-				print("\(error)")
-			}
 			return [:]
 		}
 	}
@@ -117,8 +110,12 @@ class TagInfo {
 			taginfoCache[cacheKey] = ResultType(date: Date(), result: []) // mark as in-transit
 			Self.taginfoFor(key: key, searchKeys: searchKeys, update: { result in
 				self.taginfoCache[cacheKey] = ResultType(date: Date(), result: result)
-				self.save()
 				update()
+				DispatchQueue.global(qos: .utility).async {
+					DispatchQueue.main.async {
+						self.save()
+					}
+				}
 			})
 		}
 		return cached?.result ?? []

@@ -44,37 +44,44 @@ final class MapMarkerIgnoreList: MapMarkerIgnoreListProtocol, Codable {
 	}
 
 	private func readIgnoreList() -> [String: IgnoreReason] {
-		do {
-			let path = ArchivePath.mapMarkerIgnoreList.url()
-			let data = try Data(contentsOf: path)
-			let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
-			var list = unarchiver.decodeDecodable(IgnoreDict.self, forKey: NSKeyedArchiveRootObjectKey) ?? [:]
-
-			// filter out ignored items that expired
-			let now = Date()
-			list = list.filter({
-				switch $0.value {
-				case .userRequest:
-					return true
-				case let .userRequestUntil(date):
-					return date > now
-				}
-			})
-			return list
-		} catch {
-			if (error as NSError).code != NSFileReadNoSuchFileError {
-				print("\(error)")
-			}
+		let path = ArchivePath.mapMarkerIgnoreList.url()
+		guard let data = try? Data(contentsOf: path) else {
 			return [:]
 		}
+		var list: IgnoreDict
+
+		// try to read as JSON
+		if let json = try? JSONDecoder().decode(IgnoreDict.self, from: data) {
+			list = json
+		} else {
+			// Legacy: read as archive
+			do {
+				let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
+				list = unarchiver.decodeDecodable(IgnoreDict.self, forKey: NSKeyedArchiveRootObjectKey) ?? [:]
+			} catch {
+				return [:]
+			}
+		}
+
+		// filter out ignored items that expired
+		let now = Date()
+		list = list.filter({
+			switch $0.value {
+			case .userRequest:
+				return true
+			case let .userRequestUntil(date):
+				return date > now
+			}
+		})
+
+		return list
 	}
 
 	private func writeIgnoreList() {
 		do {
-			let archiver = NSKeyedArchiver(requiringSecureCoding: true)
 			let path = ArchivePath.mapMarkerIgnoreList.url()
-			try archiver.encodeEncodable(ignoreList, forKey: NSKeyedArchiveRootObjectKey)
-			try archiver.encodedData.write(to: path)
+			let jsonData = try JSONEncoder().encode(ignoreList)
+			try jsonData.write(to: path)
 		} catch {
 			print("\(error)")
 		}
