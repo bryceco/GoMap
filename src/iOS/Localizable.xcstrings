@@ -4233,7 +4233,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@மீட்டர்கள்@, %2$#@முனைகள்@"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -5906,7 +5906,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@மெகாபைடுகள்@, %2$#@கோப்புகள்@"
+            "value" : "%#@megabytes@, %#@files@"
           },
           "substitutions" : {
             "files" : {
@@ -9206,7 +9206,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@மீட்டர்கள்@, %2$#@முனைகள்@"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -10879,7 +10879,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@மீட்டர்கள்@, %2$#@புள்ளிகள்@"
+            "value" : "%#@meters@, %#@points@"
           },
           "substitutions" : {
             "meters" : {
@@ -13134,7 +13134,7 @@
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@மீட்டர்@, %2$#@புள்ளிகள்@, %3$#@வழித்தடங்கள்@"
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
