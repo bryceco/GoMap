@@ -71,6 +71,8 @@ class PresetValueTextField: AutocompleteTextField, PanororamaxDelegate {
 		autocorrectionType = .no
 		autocapitalizationType = .none
 		returnKeyType = .done
+		smartDashesType = .no
+		smartQuotesType = .no
 
 		if let preset = presetKey ?? owner.allPresetKeys.first(where: { key == $0.tagKey }) {
 			autocapitalizationType = preset.autocapitalizationType
