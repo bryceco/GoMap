@@ -344,6 +344,7 @@
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Object Filters</source>
+        <target state="translated">பொருள் வடிப்பான்கள்</target>
         <note>Class = "UILabel"; text = "Object Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
@@ -426,6 +427,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
         <source>Map Rotation</source>
+        <target state="translated">வரைபட சுழற்சி</target>
         <note>Class = "UILabel"; text = "Map Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
@@ -965,7 +967,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@மீட்டர்கள்@, %2$#@முனைகள்@</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
@@ -990,7 +992,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$#@megabytes@ , %2$#@files@</source>
-        <target state="translated">%1$#@megabytes@ , %2$#@files@</target>
+        <target state="translated">%1$#@மெகாபைடுகள்@, %2$#@கோப்புகள்@</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.one" xml:space="preserve">
@@ -1045,7 +1047,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@மீட்டர்கள்@, %2$#@முனைகள்@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
@@ -1070,12 +1072,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
-        <target state="translated">%1$#@meters@, %2$#@points@</target>
+        <target state="translated">%1$#@மீட்டர்கள்@, %2$#@புள்ளிகள்@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
+        <target state="translated">%1$#@மீட்டர்@, %2$#@புள்ளிகள்@, %3$#@வழித்தடங்கள்@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
@@ -1212,7 +1214,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="&lt;unknown&gt;" xml:space="preserve">
         <source>&lt;unknown&gt;</source>
-        <target state="translated">&amp; lt; தெரியாத &amp; gt;</target>
+        <target state="translated">&lt;தெரியாத&gt;</target>
         <note>unknown user name</note>
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
@@ -1257,6 +1259,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Add Panoramax Photo" xml:space="preserve">
         <source>Add Panoramax Photo</source>
+        <target state="translated">பனோரமாக்ச் புகைப்படத்தைச் சேர்க்கவும்</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
@@ -1487,6 +1490,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Choose Existing Photo" xml:space="preserve">
         <source>Choose Existing Photo</source>
+        <target state="translated">இருக்கும் புகைப்படத்தைத் தேர்வுசெய்க</target>
         <note>Text displayed in an action sheet when the user wants to upload a photograph from their photo library.</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
@@ -1573,6 +1577,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." xml:space="preserve">
         <source>Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</source>
+        <target state="translated">சிறப்பு வகை பொருள்களை விரைவாகச் சேர்க்க தனித்துவமான குறிச்சொல் சேர்க்கைகளுடன் உங்கள் சொந்த தனிப்பயன் அம்சங்களை வரையறுக்கவும். பொதுவான குறிச்சொற்களில் இவை தேடப்படலாம்.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -2436,6 +2441,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
+        <target state="translated">புதிய புகைப்படம் எடு</target>
         <note/>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
@@ -2708,6 +2714,7 @@ To continue press Commit once again, otherwise press Cancel.</source>
       </trans-unit>
       <trans-unit id="You can define custom fields for presets. A field is a single key/value pair associated with a feature." xml:space="preserve">
         <source>You can define custom fields for presets. A field is a single key/value pair associated with a feature.</source>
+        <target state="translated">முன்னமைவுகளுக்கான தனிப்பயன் புலங்களை நீங்கள் வரையறுக்கலாம். ஒரு புலம் என்பது ஒரு அம்சத்துடன் தொடர்புடைய ஒற்றை விசை/மதிப்பு இணை.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
@@ -3061,10 +3068,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve">
         <source>Quercus </source>
+        <target state="translated">குவர்கச் </target>
         <note>Class = "UITextField"; placeholder = "Quercus "; ObjectID = "6yC-L7-V38"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">விசை</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "6zU-bk-hWw";</note>
       </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
@@ -3089,6 +3098,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve">
         <source>broadleaved </source>
+        <target state="translated">அகலமான </target>
         <note>Class = "UITextField"; placeholder = "broadleaved "; ObjectID = "AAx-p2-Mzh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
@@ -3102,10 +3112,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="CBg-8X-VJp.configuration.title" xml:space="preserve">
         <source>Area</source>
+        <target state="translated">பகுதி</target>
         <note>Class = "UIButton"; configuration.title = "Area"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CBg-8X-VJp.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">பொத்தான்</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
@@ -3125,10 +3137,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="DhX-ri-fx9.configuration.title" xml:space="preserve">
         <source>Vertex</source>
+        <target state="translated">வெர்டெக்ச்</target>
         <note>Class = "UIButton"; configuration.title = "Vertex"; ObjectID = "DhX-ri-fx9";</note>
       </trans-unit>
       <trans-unit id="DhX-ri-fx9.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">பொத்தான்</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "DhX-ri-fx9";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
@@ -3152,6 +3166,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
         <source>Custom Fields</source>
+        <target state="translated">தனிப்பயன் புலங்கள்</target>
         <note>Class = "UINavigationItem"; title = "Custom Fields"; ObjectID = "GIO-W7-q5U";</note>
       </trans-unit>
       <trans-unit id="Hgu-iP-FnG.title" xml:space="preserve">
@@ -3176,18 +3191,22 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Lhz-HA-Q6j.title" xml:space="preserve">
         <source>Custom Feature</source>
+        <target state="translated">தனிப்பயன் நற்பொருத்தம்</target>
         <note>Class = "UINavigationItem"; title = "Custom Feature"; ObjectID = "Lhz-HA-Q6j";</note>
       </trans-unit>
       <trans-unit id="MU8-ia-Kco.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">விசை</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "MU8-ia-Kco";</note>
       </trans-unit>
       <trans-unit id="Nxm-fU-1eX.placeholder" xml:space="preserve">
         <source>natural</source>
+        <target state="translated">இயற்கை</target>
         <note>Class = "UITextField"; placeholder = "natural"; ObjectID = "Nxm-fU-1eX";</note>
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
         <source>Custom Field</source>
+        <target state="translated">தனிப்பயன் புலம்</target>
         <note>Class = "UINavigationItem"; title = "Custom Field"; ObjectID = "OND-s7-I6f";</note>
       </trans-unit>
       <trans-unit id="P3A-5n-1Iq.text" xml:space="preserve">
@@ -3197,6 +3216,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
         <source>Field Name</source>
+        <target state="translated">புலம் பெயர்</target>
         <note>Class = "UITableViewSection"; headerTitle = "Field Name"; ObjectID = "QDv-7w-nbx";</note>
       </trans-unit>
       <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
@@ -3211,14 +3231,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.footerTitle" xml:space="preserve">
         <source>Tags to add when selecting this feature.</source>
+        <target state="translated">இந்த அம்சத்தைத் தேர்ந்தெடுக்கும்போது சேர்க்க வேண்டிய குறிச்சொற்கள்.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Tags to add when selecting this feature."; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.headerTitle" xml:space="preserve">
         <source>Feature Tags</source>
+        <target state="translated">அம்ச குறிச்சொற்கள்</target>
         <note>Class = "UITableViewSection"; headerTitle = "Feature Tags"; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">பெயர்</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "TJk-hO-Ejc";</note>
       </trans-unit>
       <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
@@ -3227,6 +3250,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="UJ1-oM-H4Z.title" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">பின்</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "UJ1-oM-H4Z";</note>
       </trans-unit>
       <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
@@ -3240,6 +3264,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="WXF-5S-E8m.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">தலைப்பு</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "WXF-5S-E8m";</note>
       </trans-unit>
       <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
@@ -3253,10 +3278,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.configuration.title" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">வரி</target>
         <note>Class = "UIButton"; configuration.title = "Line"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">பொத்தான்</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
@@ -3278,6 +3305,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ZNr-2O-LuN.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">விசை</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "ZNr-2O-LuN";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -3295,6 +3323,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="bF4-TU-MTA.text" xml:space="preserve">
         <source>Add New</source>
+        <target state="translated">புதியதைச் சேர்க்கவும்</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "bF4-TU-MTA"; Note = "Add user-defined tagging preset";</note>
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
@@ -3304,6 +3333,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="cNV-jf-zYM.title" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">தனிப்பயன் நற்பொருத்தங்கள்</target>
         <note>Class = "UINavigationItem"; title = "Custom Features"; ObjectID = "cNV-jf-zYM";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
@@ -3331,6 +3361,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve">
         <source>tree </source>
+        <target state="translated">மரம் </target>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
@@ -3340,10 +3371,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.configuration.title" xml:space="preserve">
         <source>Point</source>
+        <target state="translated">புள்ளியம்</target>
         <note>Class = "UIButton"; configuration.title = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">பொத்தான்</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
@@ -3352,6 +3385,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve">
         <source>Oak</source>
+        <target state="translated">ஓக்</target>
         <note>Class = "UITextField"; placeholder = "Oak"; ObjectID = "ftg-j1-Ep9"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -3379,6 +3413,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="j2j-qT-aHG.placeholder" xml:space="preserve">
         <source>leaf_type</source>
+        <target state="translated">இலை_ வகை</target>
         <note>Class = "UITextField"; placeholder = "leaf_type"; ObjectID = "j2j-qT-aHG";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
@@ -3397,6 +3432,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="l2k-lT-vHS.placeholder" xml:space="preserve">
         <source>genus:en</source>
+        <target state="translated">வகை: இல்</target>
         <note>Class = "UITextField"; placeholder = "genus:en"; ObjectID = "l2k-lT-vHS";</note>
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
@@ -3436,6 +3472,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">மதிப்பு </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
@@ -3458,14 +3495,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="pHA-2B-6DC.normalTitle" xml:space="preserve">
         <source>Custom Fields</source>
+        <target state="translated">தனிப்பயன் புலங்கள்</target>
         <note>Class = "UIButton"; normalTitle = "Custom Fields"; ObjectID = "pHA-2B-6DC";</note>
       </trans-unit>
       <trans-unit id="pNE-0W-9Qa.normalTitle" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">தனிப்பயன் நற்பொருத்தங்கள்</target>
         <note>Class = "UIButton"; normalTitle = "Custom Features"; ObjectID = "pNE-0W-9Qa";</note>
       </trans-unit>
       <trans-unit id="pqN-F1-JGm.placeholder" xml:space="preserve">
         <source>Oak Tree</source>
+        <target state="translated">ஓக் மரம்</target>
         <note>Class = "UITextField"; placeholder = "Oak Tree"; ObjectID = "pqN-F1-JGm";</note>
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
@@ -3475,10 +3515,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="qTY-bY-Dwe.placeholder" xml:space="preserve">
         <source>genus</source>
+        <target state="translated">இனம்</target>
         <note>Class = "UITextField"; placeholder = "genus"; ObjectID = "qTY-bY-Dwe";</note>
       </trans-unit>
       <trans-unit id="sGi-dQ-1v0.text" xml:space="preserve">
         <source>Feature type:</source>
+        <target state="translated">அம்ச வகை:</target>
         <note>Class = "UILabel"; text = "Feature type:"; ObjectID = "sGi-dQ-1v0";</note>
       </trans-unit>
       <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve">
@@ -3496,6 +3538,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">மதிப்பு </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
@@ -3514,6 +3557,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">மதிப்பு </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
@@ -3528,6 +3572,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="zqH-07-JEp.title" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">ரத்துசெய்</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "zqH-07-JEp";</note>
       </trans-unit>
     </body>
@@ -3965,6 +4010,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="xNB-pJ-M20.text" xml:space="preserve">
         <source>Describe your changes... </source>
+        <target state="translated">உங்கள் மாற்றங்களை விவரிக்கவும் ... </target>
         <note>Class = "UILabel"; text = "Describe your changes... "; ObjectID = "xNB-pJ-M20";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">

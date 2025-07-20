@@ -52,6 +52,7 @@
       </trans-unit>
       <trans-unit id="9t5-wq-j1u.text" xml:space="preserve">
         <source>66.6 FPS</source>
+        <target state="translated">66.6 FPS</target>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
       <trans-unit id="DFj-Vi-kBz.normalTitle" xml:space="preserve">

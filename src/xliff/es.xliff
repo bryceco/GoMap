@@ -107,12 +107,12 @@
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.configuration.title" xml:space="preserve">
         <source>Comment &amp; Resolve</source>
-        <target state="translated">Comentar &amp; Resolver</target>
+        <target state="translated">Comentar y resolver</target>
         <note>Class = "UIButton"; configuration.title = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Comment &amp; Resolve</source>
-        <target state="needs-review-l10n">Resolver</target>
+        <target state="translated">Comentar y resolver</target>
         <note>Class = "UIButton"; normalTitle = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
@@ -127,7 +127,7 @@
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
-        <target state="translated">Especifica un nombre ("Nueva York"), una URL u otro texto que contenga coordenadas lat/lon, o una referencia a un objeto OSM ("camino 51014987"):</target>
+        <target state="translated">Especifique un nombre («Nueva York»), un URL u otro texto que contenga coordenadas lat/lon, o una referencia a un objeto OSM («vía 51014987»):</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
       <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
@@ -246,7 +246,7 @@
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target state="translated">Trazas GPX</target>
+        <target state="translated">Trayectos GPX</target>
         <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
       </trans-unit>
       <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
@@ -276,7 +276,7 @@
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
         <source>Rail Features</source>
-        <target state="translated">Características del Tren</target>
+        <target state="translated">Características ferroviarias</target>
         <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
@@ -301,7 +301,7 @@
       </trans-unit>
       <trans-unit id="8iI-nH-O9H.title" xml:space="preserve">
         <source>Basemap</source>
-        <target state="translated">Basemap</target>
+        <target state="translated">Mapa de base</target>
         <note>Class = "UINavigationItem"; title = "Basemap"; ObjectID = "8iI-nH-O9H";</note>
       </trans-unit>
       <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
@@ -346,7 +346,7 @@
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
-        <target state="translated">Características de potencia</target>
+        <target state="translated">Características de energía</target>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
@@ -371,7 +371,7 @@
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
-        <target state="translated">Las trazas GPX que grabe o descargue se eliminan automáticamente después de:</target>
+        <target state="translated">Los trayectos GPX que grabe o descargue se eliminarán automáticamente tras:</target>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
@@ -401,7 +401,7 @@
       </trans-unit>
       <trans-unit id="RK2-Uw-eHM.text" xml:space="preserve">
         <source>Basemap only</source>
-        <target state="translated">Solo Basemap</target>
+        <target state="translated">Solo mapa de base</target>
         <note>Class = "UILabel"; text = "Basemap only"; ObjectID = "RK2-Uw-eHM";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
@@ -439,17 +439,17 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="VUR-wT-knn.text" xml:space="preserve">
         <source>Map Rotation</source>
-        <target state="needs-review-l10n">Activar giro</target>
+        <target state="translated">Giro del mapa</target>
         <note>Class = "UILabel"; text = "Map Rotation"; ObjectID = "VUR-wT-knn";</note>
       </trans-unit>
       <trans-unit id="WnI-tY-WWa.text" xml:space="preserve">
         <source>Delete tracks after:</source>
-        <target state="translated">Eliminar trazas tras:</target>
+        <target state="translated">Eliminar trayectos tras:</target>
         <note>Class = "UILabel"; text = "Delete tracks after:"; ObjectID = "WnI-tY-WWa";</note>
       </trans-unit>
       <trans-unit id="Z8C-Ef-iJE.title" xml:space="preserve">
         <source>GPX Tracks</source>
-        <target state="translated">Trazas GPX</target>
+        <target state="translated">Trayectos GPX</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
       <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
@@ -499,7 +499,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="cpv-m2-oDm.headerTitle" xml:space="preserve">
         <source>Friendly Name</source>
-        <target state="translated">Nombre amigable</target>
+        <target state="translated">Nombre descriptivo</target>
         <note>Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm";</note>
       </trans-unit>
       <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
@@ -623,7 +623,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
         <source>Configure GPX Tracks</source>
-        <target state="translated">Configurar trazas GPX</target>
+        <target state="translated">Configurar trayectos GPX</target>
         <note>Class = "UINavigationItem"; title = "Configure GPX Tracks"; ObjectID = "oSD-0y-Vt0";</note>
       </trans-unit>
       <trans-unit id="pQK-9y-t4z.text" xml:space="preserve">
@@ -782,12 +782,12 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
-        <target state="translated">GPX pausado</target>
+        <target state="translated">Pausar GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
-        <target state="translated">Pausa la grabación de pistas GPX.</target>
+        <target state="translated">Pausar la grabación de trayectos GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
@@ -797,22 +797,22 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
-        <target state="translated">Empezar a grabar pistas GPX.</target>
+        <target state="translated">Empezar a grabar trayectos GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
-        <target state="translated">Parar</target>
+        <target state="translated">Detener</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
-        <target state="translated">Parar GPX</target>
+        <target state="translated">Detener GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
-        <target state="translated">Detener la grabación de pistas GPX.</target>
+        <target state="translated">Dejar de grabar trayectos GPX.</target>
         <note/>
       </trans-unit>
     </body>
@@ -895,7 +895,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="NSLocationAlwaysAndWhenInUseUsageDescription" xml:space="preserve">
         <source>Always on location tracking allows the app to record GPX files when inactive.</source>
-        <target state="translated">Permitir siempre los servicios de ubicación permite que la aplicación registre archivos GPX incluso cuando está inactiva.</target>
+        <target state="translated">Permitir siempre los servicios de ubicación permite que la aplicación grabe archivos GPX incluso cuando está inactiva.</target>
         <note>Privacy - Location Always and When In Use Usage Description</note>
       </trans-unit>
       <trans-unit id="NSLocationAlwaysUsageDescription" xml:space="preserve">
@@ -1236,7 +1236,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
         <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
-        <target state="translated">Todas tus tareas personalizadas se copian al portapapeles en formato JSON. Puedes pegarlo en cualquier lugar y guardarlo o enviarlo a otras personas.</target>
+        <target state="translated">Se han copiado en el portapapeles todas las misiones personalizadas en formato JSON. Puede pegarlas en algún sitio para guardarlas o enviárselas a otra persona.</target>
         <note/>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
@@ -1271,6 +1271,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="Add Panoramax Photo" xml:space="preserve">
         <source>Add Panoramax Photo</source>
+        <target state="translated">Añadir foto de Panoramax</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
@@ -1501,6 +1502,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Choose Existing Photo" xml:space="preserve">
         <source>Choose Existing Photo</source>
+        <target state="translated">Elegir foto existente</target>
         <note>Text displayed in an action sheet when the user wants to upload a photograph from their photo library.</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
@@ -1577,7 +1579,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
-        <target state="translated">Traza actual</target>
+        <target state="translated">Trayecto actual</target>
         <note>current GPX track</note>
       </trans-unit>
       <trans-unit id="Database error" xml:space="preserve">
@@ -1587,6 +1589,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." xml:space="preserve">
         <source>Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</source>
+        <target state="translated">Defina sus propias características personalizadas con combinaciones de etiquetas únicas para añadir rápidamente tipos especiales de objetos. Estos se pueden buscar en Etiquetas comunes.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -1737,12 +1740,12 @@ Error: %@</target>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
-        <target state="translated">Subida del GPX completada</target>
+        <target state="translated">Se completó la carga del GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
-        <target state="translated">Fallo la subida de GPX</target>
+        <target state="translated">Falló la carga del GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="GeoJSON" xml:space="preserve">
@@ -2029,7 +2032,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
-        <target state="translated">No hay ninguna traza activa</target>
+        <target state="translated">No hay ningún trayecto activo</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
@@ -2174,7 +2177,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
-        <target state="translated">Pausa la grabación de pistas GPX.</target>
+        <target state="translated">Pausa la grabación de trayectos GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
@@ -2199,7 +2202,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
-        <target state="translated">Trazas anteriores</target>
+        <target state="translated">Trayectos anteriores</target>
         <note>previous GPX track</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
@@ -2334,12 +2337,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
-        <target state="translated">Selecciona una carretera que se aproxime a la intersección</target>
+        <target state="translated">Seleccione una carretera que se aproxime a la intersección</target>
         <note/>
       </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
         <source>Select the language used for Presets. Other app content will use your default language.</source>
-        <target state="translated">Selecciona el idioma que se usará para los ajustes preestablecidos. El resto del contenido de la aplicación usará tu idioma predeterminado.</target>
+        <target state="translated">Seleccione el idioma que se usará para las preconfiguraciones. El resto del contenido de la aplicación usará su idioma predeterminado.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
@@ -2410,7 +2413,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
-        <target state="translated">Empieza a grabar pistas GPX.</target>
+        <target state="translated">Comenzar a grabar trayectos GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
@@ -2425,7 +2428,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
-        <target state="translated">Detener la grabación de pistas GPX.</target>
+        <target state="translated">Dejar de grabar trayectos GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
@@ -2450,6 +2453,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
+        <target state="translated">Hacer foto nueva</target>
         <note/>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
@@ -2524,7 +2528,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
-        <target state="translated">Esta aplicación aún no admite la edición de restricciones de giro sin un nodo como miembro "vía"</target>
+        <target state="translated">Esta aplicación aún no admite la edición de restricciones de giro sin un nodo como miembro «vía»</target>
         <note/>
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
@@ -2698,7 +2702,7 @@ Selecciona la carretera desde la que se aproxima a la intersección y, a continu
       </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
         <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
-        <target state="translated">¿Cómo se llama esta búsqueda? Es mejor escribirlo en forma de una acción como "Añadir superficie":</target>
+        <target state="translated">¿Cómo se llama esta búsqueda? Es mejor escribirlo en forma de una acción como «Añadir superficie»:</target>
         <note/>
       </trans-unit>
       <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
@@ -2722,6 +2726,7 @@ Para continuar, pulse en Confirmar una vez más; de lo contrario, pulse en Cance
       </trans-unit>
       <trans-unit id="You can define custom fields for presets. A field is a single key/value pair associated with a feature." xml:space="preserve">
         <source>You can define custom fields for presets. A field is a single key/value pair associated with a feature.</source>
+        <target state="translated">Puede definir campos personalizados para las preconfiguraciones. Un campo es un par clave/valor asociado a una característica.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
@@ -3120,10 +3125,12 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="CBg-8X-VJp.configuration.title" xml:space="preserve">
         <source>Area</source>
+        <target state="translated">Área</target>
         <note>Class = "UIButton"; configuration.title = "Area"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CBg-8X-VJp.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Botón</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
@@ -3143,10 +3150,12 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="DhX-ri-fx9.configuration.title" xml:space="preserve">
         <source>Vertex</source>
+        <target state="translated">Vértice</target>
         <note>Class = "UIButton"; configuration.title = "Vertex"; ObjectID = "DhX-ri-fx9";</note>
       </trans-unit>
       <trans-unit id="DhX-ri-fx9.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Botón</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "DhX-ri-fx9";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
@@ -3196,6 +3205,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="Lhz-HA-Q6j.title" xml:space="preserve">
         <source>Custom Feature</source>
+        <target state="translated">Característica personalizada</target>
         <note>Class = "UINavigationItem"; title = "Custom Feature"; ObjectID = "Lhz-HA-Q6j";</note>
       </trans-unit>
       <trans-unit id="MU8-ia-Kco.placeholder" xml:space="preserve">
@@ -3233,14 +3243,17 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.footerTitle" xml:space="preserve">
         <source>Tags to add when selecting this feature.</source>
+        <target state="translated">Etiquetas para añadir al seleccionar la característica.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Tags to add when selecting this feature."; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.headerTitle" xml:space="preserve">
         <source>Feature Tags</source>
+        <target state="translated">Etiquetas de característica</target>
         <note>Class = "UITableViewSection"; headerTitle = "Feature Tags"; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">Nombre</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "TJk-hO-Ejc";</note>
       </trans-unit>
       <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
@@ -3250,6 +3263,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="UJ1-oM-H4Z.title" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Atrás</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "UJ1-oM-H4Z";</note>
       </trans-unit>
       <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
@@ -3264,6 +3278,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="WXF-5S-E8m.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Título</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "WXF-5S-E8m";</note>
       </trans-unit>
       <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
@@ -3278,10 +3293,12 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.configuration.title" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Línea</target>
         <note>Class = "UIButton"; configuration.title = "Line"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Botón</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
@@ -3306,6 +3323,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="ZNr-2O-LuN.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">clave</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "ZNr-2O-LuN";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -3325,6 +3343,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="bF4-TU-MTA.text" xml:space="preserve">
         <source>Add New</source>
+        <target state="translated">Añadir nuevo</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "bF4-TU-MTA"; Note = "Add user-defined tagging preset";</note>
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
@@ -3334,6 +3353,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="cNV-jf-zYM.title" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">Características personalizadas</target>
         <note>Class = "UINavigationItem"; title = "Custom Features"; ObjectID = "cNV-jf-zYM";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
@@ -3363,6 +3383,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve">
         <source>tree </source>
+        <target state="translated">árbol </target>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
@@ -3372,10 +3393,12 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.configuration.title" xml:space="preserve">
         <source>Point</source>
+        <target state="translated">Punto</target>
         <note>Class = "UIButton"; configuration.title = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Botón</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
@@ -3501,6 +3524,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="pNE-0W-9Qa.normalTitle" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">Características personalizadas</target>
         <note>Class = "UIButton"; normalTitle = "Custom Features"; ObjectID = "pNE-0W-9Qa";</note>
       </trans-unit>
       <trans-unit id="pqN-F1-JGm.placeholder" xml:space="preserve">
@@ -3518,6 +3542,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="sGi-dQ-1v0.text" xml:space="preserve">
         <source>Feature type:</source>
+        <target state="translated">Tipo de característica:</target>
         <note>Class = "UILabel"; text = "Feature type:"; ObjectID = "sGi-dQ-1v0";</note>
       </trans-unit>
       <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve">
@@ -3537,6 +3562,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">valor </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
@@ -3556,6 +3582,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">valor </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
@@ -3570,6 +3597,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="zqH-07-JEp.title" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">Cancelar</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "zqH-07-JEp";</note>
       </trans-unit>
     </body>
@@ -4014,6 +4042,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="xNB-pJ-M20.text" xml:space="preserve">
         <source>Describe your changes... </source>
+        <target state="translated">Describa sus cambios… </target>
         <note>Class = "UILabel"; text = "Describe your changes... "; ObjectID = "xNB-pJ-M20";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">

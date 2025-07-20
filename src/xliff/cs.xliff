@@ -1463,6 +1463,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="Add Panoramax Photo" xml:space="preserve">
         <source>Add Panoramax Photo</source>
+        <target state="translated">Přidat Panoramax snímek</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
@@ -1693,6 +1694,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Choose Existing Photo" xml:space="preserve">
         <source>Choose Existing Photo</source>
+        <target state="translated">Vybrat již existující snímek</target>
         <note>Text displayed in an action sheet when the user wants to upload a photograph from their photo library.</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
@@ -1779,6 +1781,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." xml:space="preserve">
         <source>Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</source>
+        <target state="translated">Nastave si vlastní funkce s unikátními kombinacemi značek pro rychlé přidávání speciální typů objektů. Vyhledat je můžete mezi běžnými značkami.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -2662,6 +2665,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
+        <target state="translated">Pořídit nový snímek</target>
         <note/>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
@@ -2934,6 +2938,7 @@ Chcete-li změny skutečně odeslat, znovu klepněte na Odeslat. Jinak klepněte
       </trans-unit>
       <trans-unit id="You can define custom fields for presets. A field is a single key/value pair associated with a feature." xml:space="preserve">
         <source>You can define custom fields for presets. A field is a single key/value pair associated with a feature.</source>
+        <target state="translated">Můžete si nastavit vlastní pole předvoleb. Pole tvoří pár: značka a hodnota, vztahující se k funkci.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
@@ -3312,6 +3317,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">klíč</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "6zU-bk-hWw";</note>
       </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
@@ -3426,10 +3432,12 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="Lhz-HA-Q6j.title" xml:space="preserve">
         <source>Custom Feature</source>
+        <target state="translated">Vlastní funkce</target>
         <note>Class = "UINavigationItem"; title = "Custom Feature"; ObjectID = "Lhz-HA-Q6j";</note>
       </trans-unit>
       <trans-unit id="MU8-ia-Kco.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">klíč</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "MU8-ia-Kco";</note>
       </trans-unit>
       <trans-unit id="Nxm-fU-1eX.placeholder" xml:space="preserve">
@@ -3463,14 +3471,17 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.footerTitle" xml:space="preserve">
         <source>Tags to add when selecting this feature.</source>
+        <target state="translated">Značky pro přidání při výběru této funkce.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Tags to add when selecting this feature."; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.headerTitle" xml:space="preserve">
         <source>Feature Tags</source>
+        <target state="translated">Značky funkce</target>
         <note>Class = "UITableViewSection"; headerTitle = "Feature Tags"; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">Název</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "TJk-hO-Ejc";</note>
       </trans-unit>
       <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
@@ -3480,6 +3491,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="UJ1-oM-H4Z.title" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Zpět</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "UJ1-oM-H4Z";</note>
       </trans-unit>
       <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
@@ -3494,6 +3506,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="WXF-5S-E8m.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Název</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "WXF-5S-E8m";</note>
       </trans-unit>
       <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
@@ -3507,10 +3520,12 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.configuration.title" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Linie</target>
         <note>Class = "UIButton"; configuration.title = "Line"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Tlačítko</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
@@ -3535,6 +3550,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="ZNr-2O-LuN.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">klíč</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "ZNr-2O-LuN";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -3554,6 +3570,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="bF4-TU-MTA.text" xml:space="preserve">
         <source>Add New</source>
+        <target state="translated">Přidat novou</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "bF4-TU-MTA"; Note = "Add user-defined tagging preset";</note>
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
@@ -3563,6 +3580,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="cNV-jf-zYM.title" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">Vlastní funkce</target>
         <note>Class = "UINavigationItem"; title = "Custom Features"; ObjectID = "cNV-jf-zYM";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
@@ -3601,10 +3619,12 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.configuration.title" xml:space="preserve">
         <source>Point</source>
+        <target state="translated">Bod</target>
         <note>Class = "UIButton"; configuration.title = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Tlačítko</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
@@ -3643,6 +3663,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="j2j-qT-aHG.placeholder" xml:space="preserve">
         <source>leaf_type</source>
+        <target state="translated">leaf_type</target>
         <note>Class = "UITextField"; placeholder = "leaf_type"; ObjectID = "j2j-qT-aHG";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
@@ -3730,6 +3751,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="pNE-0W-9Qa.normalTitle" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">Vlastní funkce</target>
         <note>Class = "UIButton"; normalTitle = "Custom Features"; ObjectID = "pNE-0W-9Qa";</note>
       </trans-unit>
       <trans-unit id="pqN-F1-JGm.placeholder" xml:space="preserve">
@@ -3799,6 +3821,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="zqH-07-JEp.title" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">Zrušit</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "zqH-07-JEp";</note>
       </trans-unit>
     </body>
@@ -4243,6 +4266,7 @@ https://www.r3gi.cz
       </trans-unit>
       <trans-unit id="xNB-pJ-M20.text" xml:space="preserve">
         <source>Describe your changes... </source>
+        <target state="translated">Popište vaše změny… </target>
         <note>Class = "UILabel"; text = "Describe your changes... "; ObjectID = "xNB-pJ-M20";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
