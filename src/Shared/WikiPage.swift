@@ -70,6 +70,12 @@ class WikiPage {
 		return tag.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed) ?? ""
 	}
 
+	func urlFor(pageTitle: String) -> URL {
+		let baseURL = URL(string: "https://wiki.openstreetmap.org/wiki/")!
+		let url = baseURL.appendingPathComponent(pageTitle)
+		return url
+	}
+
 	func bestWikiPage(
 		forKey tagKey: String,
 		value tagValue: String,
@@ -123,23 +129,27 @@ class WikiPage {
 	private class KeyValueDescription {
 		let description: String
 		let imagePath: String
+		let pageTitle: String
 
-		init(description: String, imagePath: String) {
+		init(description: String, imagePath: String, pageTitle: String) {
 			self.description = description
 			self.imagePath = imagePath
+			self.pageTitle = pageTitle
 		}
 	}
 
 	struct KeyValueMetadata {
 		let key: String
 		let value: String
+		let pageTitle: String
 		let description: String
 		let imagePath: String
 		var image: UIImage?
 
-		init(key: String, value: String, description: String, imagePath: String, image: UIImage?) {
+		init(key: String, value: String, pageTitle: String, description: String, imagePath: String, image: UIImage?) {
 			self.key = key
 			self.value = value
+			self.pageTitle = pageTitle
 			self.description = description
 			self.imagePath = imagePath
 			self.image = image
@@ -159,10 +169,14 @@ class WikiPage {
 		imageCache.removeAllObjects()
 	}
 
+	private func propertyListFor(property: String, inEntity entity: [String: Any]) -> [[String: Any]]? {
+		let claims = entity["claims"] as? [String: Any]
+		return claims?[property] as? [[String: Any]]
+	}
+
 	private func valueFor(property: String, inEntity entity: [String: Any], langQID: String) -> String? {
 		guard
-			let claims = entity["claims"] as? [String: Any],
-			let propertyList = claims[property] as? [[String: Any]]
+			let propertyList = propertyListFor(property: property, inEntity: entity)
 		else { return nil }
 
 		// find the property containing the requested language
@@ -173,9 +187,6 @@ class WikiPage {
 			   let value = datavalue["value"] as? [String: Any],
 			   let languageIdent = value["id"] as? String
 			{
-				if languageIdent == langQID {
-					print("match")
-				}
 				return languageIdent == langQID
 			}
 			return false
@@ -194,6 +205,25 @@ class WikiPage {
 		}
 
 		return nil
+	}
+
+	private func valuesForP31(inEntity entity: [String: Any]) -> [String: String]? {
+		guard
+			let propertyList = propertyListFor(property: "P31", inEntity: entity)
+		else { return nil }
+
+		// extract the text for each language
+		var result: [String: String] = [:]
+		for item in propertyList {
+			guard let mainsnak = item["mainsnak"] as? [String: Any],
+			      let datavalue = mainsnak["datavalue"] as? [String: Any],
+			      let value = datavalue["value"] as? [String: Any],
+			      let language = value["language"] as? String,
+			      let text = value["text"] as? String
+			else { continue }
+			result[language] = text
+		}
+		return result
 	}
 
 	private func entity(in entities: [String: Any]?, withTitlePrefix prefixList: [String]) -> [String: Any]? {
@@ -249,10 +279,17 @@ class WikiPage {
 		if imagePath != "" {
 			imagePath = "\(imagePath)?title=Special:Redirect/file/\(imageName)&width=\(imageWidth)"
 		}
-		if description == "", imagePath == "" {
+
+		// determine the wiki page titles
+		let pageTitles = valuesForP31(inEntity: entity) ?? [:]
+		let pageTitle = pageTitles[langWiki] ?? pageTitles["en"] ?? ""
+
+		if description == "", imagePath == "", pageTitle == "" {
 			return nil
 		}
-		return KeyValueDescription(description: description, imagePath: imagePath)
+		return KeyValueDescription(description: description,
+		                           imagePath: imagePath,
+		                           pageTitle: pageTitle)
 	}
 
 	private func imageFor(meta: KeyValueMetadata,
@@ -270,6 +307,7 @@ class WikiPage {
 				guard let image = try? result.get() else { return }
 				let kv = KeyValueMetadata(key: meta.key,
 				                          value: meta.value,
+				                          pageTitle: meta.pageTitle,
 				                          description: meta.description,
 				                          imagePath: meta.imagePath,
 				                          image: image)
@@ -278,6 +316,7 @@ class WikiPage {
 		{
 			let kv = KeyValueMetadata(key: meta.key,
 			                          value: meta.value,
+			                          pageTitle: meta.pageTitle,
 			                          description: meta.description,
 			                          imagePath: meta.imagePath,
 			                          image: image)
@@ -319,6 +358,7 @@ class WikiPage {
 				}
 				let kv = KeyValueMetadata(key: key,
 				                          value: value,
+				                          pageTitle: result.pageTitle,
 				                          description: result.description,
 				                          imagePath: result.imagePath,
 				                          image: nil)
@@ -341,6 +381,7 @@ class WikiPage {
 			completion: { result in
 				let kv = KeyValueMetadata(key: key,
 				                          value: value,
+				                          pageTitle: meta.pageTitle,
 				                          description: meta.description,
 				                          imagePath: meta.imagePath,
 				                          image: try? result.get())
@@ -349,6 +390,7 @@ class WikiPage {
 		{
 			let kv = KeyValueMetadata(key: key,
 			                          value: value,
+			                          pageTitle: meta.pageTitle,
 			                          description: meta.description,
 			                          imagePath: meta.imagePath,
 			                          image: image)

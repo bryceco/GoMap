@@ -315,30 +315,100 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 	// MARK: Info button
 
 	@IBAction func infoButtonPressed(_ sender: Any?) {
-		// show OSM wiki page
-		guard let key = text1.text else { return }
-		let languageCode = PresetLanguages.preferredLanguageCode()
-		let progress = UIActivityIndicatorView(style: .medium)
-		progress.frame = infoButton.bounds
-		infoButton.addSubview(progress)
+		guard !key.isEmpty else { return }
+		let mapView = AppDelegate.shared.mapView!
+		let geometry = mapView.editorLayer.selectedPrimary?.geometry() ?? .POINT
+		let feature = PresetsDatabase.shared.presetFeatureMatching(tags: [key: value],
+		                                                           geometry: geometry,
+		                                                           location: mapView.currentRegion,
+		                                                           includeNSI: false)
+		let featureName: String?
+		if let feature = feature,
+		   feature.tags.count > 0 // not degenerate like point, line, etc.
+		{
+			featureName = feature.name
+		} else if let preset = keyValueCellOwner?.allPresetKeys.first(where: { $0.tagKey == key }) {
+			featureName = preset.name
+		} else {
+			featureName = nil
+		}
+
+		let spinner = UIActivityIndicatorView(style: .gray)
+		spinner.frame = infoButton.bounds
+		infoButton.addSubview(spinner)
 		infoButton.isEnabled = false
-		infoButton.titleLabel?.layer.opacity = 0.0
-		progress.startAnimating()
+		infoButton.titleLabel?.alpha = 0
+		spinner.startAnimating()
+
+		func showPopup(title: String?, description: String?, wikiPageTitle: String?) {
+			spinner.removeFromSuperview()
+			infoButton.isEnabled = true
+			infoButton.titleLabel?.alpha = 1
+
+			if let description,
+			   let owner = keyValueCellOwner,
+			   owner.view.window != nil
+			{
+				let tag = "\(key)=\(value.isEmpty ? "*" : value)"
+				let alert = UIAlertController(
+					title: title ?? "",
+					message: "\(tag)\n\n\(description)",
+					preferredStyle: .alert)
+				alert.addAction(.init(title: "Done", style: .cancel, handler: nil))
+				alert.addAction(.init(title: "Read more on the Wiki", style: .default) { _ in
+					if let wikiPageTitle {
+						let url = WikiPage.shared.urlFor(pageTitle: wikiPageTitle)
+						self.openSafariWith(url: url)
+					} else {
+						self.openSafari()
+					}
+				})
+				owner.present(alert, animated: true)
+			} else {
+				openSafari()
+			}
+		}
+
+		let languageCode = PresetLanguages.preferredLanguageCode()
+		if let wikiData = WikiPage.shared.wikiDataFor(key: key,
+		                                              value: value,
+		                                              language: languageCode,
+		                                              imageWidth: 24,
+		                                              update: { wikiData in
+		                                              	showPopup(
+		                                              		title: featureName,
+		                                              		description: wikiData?.description,
+		                                              		wikiPageTitle: wikiData?.pageTitle)
+		                                              })
+		{
+			showPopup(title: featureName,
+			          description: wikiData.description,
+			          wikiPageTitle: wikiData.pageTitle)
+		}
+	}
+
+	private func openSafariWith(url: URL) {
+		guard let keyValueCellOwner else { return }
+		let vc = SFSafariViewController(url: url)
+		keyValueCellOwner.childViewPresented = true
+		keyValueCellOwner.present(vc, animated: true)
+	}
+
+	private func openSafari() {
+		guard !key.isEmpty,
+		      let owner = keyValueCellOwner,
+		      owner.view.window != nil
+		else { return }
+
+		let languageCode = PresetLanguages.preferredLanguageCode()
 		Task {
-			let url = await WikiPage.shared.bestWikiPage(forKey: key,
-			                                             value: value,
-			                                             language: languageCode)
+			let url = await WikiPage.shared.bestWikiPage(
+				forKey: key,
+				value: value,
+				language: languageCode)
 			await MainActor.run {
-				progress.removeFromSuperview()
-				self.infoButton.isEnabled = true
-				self.infoButton.titleLabel?.layer.opacity = 1.0
-				if let url = url,
-				   let owner = self.keyValueCellOwner,
-				   owner.view.window != nil
-				{
-					let viewController = SFSafariViewController(url: url)
-					owner.childViewPresented = true
-					owner.present(viewController, animated: true)
+				if let url = url {
+					self.openSafariWith(url: url)
 				}
 			}
 		}
