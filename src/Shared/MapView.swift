@@ -32,9 +32,9 @@ struct MapViewOverlays: OptionSet {
 }
 
 enum GPS_STATE: Int {
-	case NONE
-	case LOCATION
-	case HEADING
+	case NONE // none
+	case LOCATION // location only
+	case HEADING // location and heading
 }
 
 enum EDIT_ACTION: Int {
@@ -1695,6 +1695,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	private var locationManagerSmoothHeading = 0.0
 	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+		guard gpsState == .HEADING else { return }
+
 		let accuracy = newHeading.headingAccuracy
 		let heading = self.heading(for: newHeading)
 
@@ -1777,6 +1779,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+		guard gpsState != .NONE else { return }
 		for location in locations {
 			locationUpdated(to: location)
 		}

@@ -145,6 +145,7 @@
 		02CBF3CD2BE86646000DE2AD /* GpxTrackAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */; };
 		02CC01D12584195E004444EF /* PresetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01D02584195E004444EF /* PresetFeature.swift */; };
 		02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01DB25843F2F004444EF /* PresetLanguages.swift */; };
+		02CC7E3D2E2EF248001CA356 /* PhotoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */; };
 		02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD9973265C65C200213AD6 /* EditorFilters.swift */; };
 		02CE3CE229909D1D00DDACE0 /* QuestSolverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB523E299097C3007F758D /* QuestSolverController.swift */; };
 		02CE3CE32990A2C800DDACE0 /* QuestSolver.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CB523D299097C3007F758D /* QuestSolver.storyboard */; };
@@ -479,6 +480,7 @@
 		02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxTrackAttributes.swift; sourceTree = "<group>"; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
+		02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCapture.swift; sourceTree = "<group>"; };
 		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFilters.swift; sourceTree = "<group>"; };
 		02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestChooserController.swift; sourceTree = "<group>"; };
 		02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneToolbar.swift; sourceTree = "<group>"; };
@@ -858,6 +860,7 @@
 				021BC2212D7625FB004631C5 /* Panoramax.storyboard */,
 				021BC21D2D6E6E05004631C5 /* Panoramax.swift */,
 				C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */,
+				02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
@@ -1637,6 +1640,7 @@
 				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
 				CD677FFA2A5FC17300F28605 /* AccountInfoTableViewController.swift in Sources */,
 				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
+				02CC7E3D2E2EF248001CA356 /* PhotoCapture.swift in Sources */,
 				02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */,
 				02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
@@ -1968,6 +1972,7 @@
 				SWIFT_ENABLE_BATCH_MODE = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Go Map!!-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2012,6 +2017,7 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_ENABLE_BATCH_MODE = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Go Map!!-Bridging-Header.h";
+				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2,6";
 				VERSIONING_SYSTEM = "apple-generic";

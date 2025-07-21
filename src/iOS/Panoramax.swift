@@ -6,7 +6,6 @@
 //  Copyright © 2025 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
 import UIKit
 @preconcurrency import WebKit
 
@@ -174,7 +173,6 @@ class PanoramaxServer {
 	func uploadTo(photoSet: String,
 	              photoData: Data,
 	              name: String,
-	              location: LatLon,
 	              date: Date,
 	              callback: @escaping @MainActor(Result<String, Error>) -> Void)
 	{
@@ -196,16 +194,6 @@ class PanoramaxServer {
 		body.append("Content-Type: application/octet-stream\r\n\r\n".data(using: .utf8)!)
 		body.append(photoData)
 		body.append("\r\n".data(using: .utf8)!)
-
-		// Add latitude
-		body.append("--\(boundary)\r\n".data(using: .utf8)!)
-		body.append("Content-Disposition: form-data; name=\"override_latitude\"\r\n\r\n".data(using: .utf8)!)
-		body.append("\(location.lat)\r\n".data(using: .utf8)!)
-
-		// Add longitude
-		body.append("--\(boundary)\r\n".data(using: .utf8)!)
-		body.append("Content-Disposition: form-data; name=\"override_longitude\"\r\n\r\n".data(using: .utf8)!)
-		body.append("\(location.lon)\r\n".data(using: .utf8)!)
 
 		// Add capture time
 		body.append("--\(boundary)\r\n".data(using: .utf8)!)
@@ -291,6 +279,27 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		if !photoID.isEmpty {
 			fetchPhotoAndMetadata()
 		}
+
+		// start location services in case user takes a photo
+		AppDelegate.shared.mapView.locationManager.startUpdatingLocation()
+		AppDelegate.shared.mapView.locationManager.startUpdatingHeading()
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		// return location services to expected state
+		if isBeingDismissed || navigationController?.isBeingDismissed == true {
+			switch AppDelegate.shared.mapView.gpsState {
+			case .NONE:
+				AppDelegate.shared.mapView.locationManager.stopUpdatingLocation()
+				AppDelegate.shared.mapView.locationManager.stopUpdatingHeading()
+			case .LOCATION:
+				AppDelegate.shared.mapView.locationManager.stopUpdatingHeading()
+			case .HEADING:
+				break
+			}
+		}
 	}
 
 	@IBAction
@@ -309,18 +318,24 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		present(webVC, animated: true)
 	}
 
+	var photoPicker: PhotoCapture!
+
 	@IBAction
 	func captureAndUploadPhotograph(_ sender: Any) {
 		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		alert.addAction(UIAlertAction(
 			title: NSLocalizedString("Take New Photo", comment: ""),
 			style: .default,
-			handler: { _ in
-				let vc = UIImagePickerController()
-				vc.sourceType = .camera
-				vc.allowsEditing = false
-				vc.delegate = self
-				self.present(vc, animated: true)
+			handler: { [self] _ in
+				photoPicker = PhotoCapture()
+				photoPicker.locationManager = AppDelegate.shared.mapView.locationManager
+				photoPicker.onCancel = {}
+				photoPicker.onError = {}
+				photoPicker.onAccept = { image, imageData in
+					self.uploadImage(image: image, imageData: imageData)
+				}
+				photoPicker.modalPresentationStyle = .fullScreen
+				self.present(photoPicker, animated: true)
 			}))
 		alert.addAction(UIAlertAction(
 			title: NSLocalizedString("Choose Existing Photo", comment: ""),
@@ -355,20 +370,16 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 	{
 		picker.dismiss(animated: true)
 
-		// get image
-		guard let image = info[.originalImage] as? UIImage
+		guard let image = info[.originalImage] as? UIImage,
+		      let imageURL = info[.imageURL] as? URL,
+		      let imageData = try? Data(contentsOf: imageURL)
 		else {
-			showError(NSError(domain: "Bad image data", code: 1))
 			return
 		}
-		uploadImage(image)
+		uploadImage(image: image, imageData: imageData)
 	}
 
-	func uploadImage(_ image: UIImage) {
-		guard let data = image.jpegData(compressionQuality: 0.9) else {
-			return
-		}
-
+	func uploadImage(image: UIImage, imageData: Data) {
 		// get date and name
 		let date = Date()
 		let formatter = DateFormatter()
@@ -405,7 +416,7 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 							// try again
 							// Without the pause the server doesn't always accept our cookie
 							DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-								self.uploadImage(image)
+								self.uploadImage(image: image, imageData: imageData)
 							}
 						case .failure:
 							break
@@ -417,9 +428,8 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 				return
 			case let .success(photoSetID):
 				self.panoramax.uploadTo(photoSet: photoSetID,
-				                        photoData: data,
+				                        photoData: imageData,
 				                        name: name,
-				                        location: self.location,
 				                        date: date,
 				                        callback: { result in
 				                        	switch result {
