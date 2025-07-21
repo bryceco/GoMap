@@ -316,10 +316,6 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 			title: NSLocalizedString("Take New Photo", comment: ""),
 			style: .default,
 			handler: { _ in
-				let mapView = AppDelegate.shared.mapView!
-				let locationStatus = mapView.locationManager.is
-				mapView.locationManager.startUpdatingLocation()
-				mapView.locationManager.startUpdatingHeading()
 				let vc = UIImagePickerController()
 				vc.sourceType = .camera
 				vc.allowsEditing = false
