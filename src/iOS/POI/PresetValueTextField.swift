@@ -507,18 +507,6 @@ class PresetValueTextField: AutocompleteTextField, PanororamaxDelegate {
 	@objc func openPanoramaxViewController(_ sender: Any?) {
 		resignFirstResponder()
 
-		// get location
-		let mapView = AppDelegate.shared.mapView!
-		let location: LatLon
-		if let object = mapView.editorLayer.selectedPrimary?.selectionPoint() {
-			location = object
-		} else if let pushPin = mapView.pushPin?.arrowPoint {
-			location = mapView.mapTransform.latLon(forScreenPoint: pushPin)
-		} else {
-			// shouldn't get here
-			return
-		}
-
 		// save our key value so we can locate the correct cell when we come back
 		panoramaxKey = key
 
@@ -526,7 +514,6 @@ class PresetValueTextField: AutocompleteTextField, PanororamaxDelegate {
 		vc.panoramax = PanoramaxServer(serverURL: URL(string: "https://panoramax.openstreetmap.fr")!)
 		vc.photoID = text ?? ""
 		vc.delegate = self
-		vc.location = location
 		owner.viewController?.present(vc, animated: true)
 	}
 }
