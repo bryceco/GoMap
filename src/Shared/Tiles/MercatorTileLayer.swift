@@ -478,8 +478,8 @@ extension MercatorTileLayer: TilesProvider {
 	}
 }
 
-extension MercatorTileLayer: @MainActor DiskCacheSizeProtocol {
-	func getDiskCacheSize() -> (size: Int, count: Int) {
+extension MercatorTileLayer: @preconcurrency DiskCacheSizeProtocol {
+	@MainActor func getDiskCacheSize() -> (size: Int, count: Int) {
 		return webCache!.getDiskCacheSize()
 	}
 }
