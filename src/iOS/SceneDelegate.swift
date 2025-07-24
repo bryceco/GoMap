@@ -49,9 +49,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	func setMapLocation(_ location: MapLocation) {
-		DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+		MainActor.runAfter(nanoseconds: 100_000000) {
 			AppDelegate.shared.mapView.centerOn(location)
-		})
+		}
 	}
 
 	func displayImportError(_ error: Error, filetype: String) {
@@ -74,23 +74,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			do {
 				data = try dataForScopedUrl(url)
 			} catch {
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+				MainActor.runAfter(nanoseconds: 100_000000) {
 					mapView.showAlert(NSLocalizedString("Invalid URL", comment: ""),
 					                  message: error.localizedDescription)
-				})
+				}
 				return false
 			}
 			switch url.pathExtension.lowercased() {
 			case "gpx":
 				// Load GPX
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [self] in
+				MainActor.runAfter(nanoseconds: 500_000000) {
 					do {
 						try mapView.gpxLayer.loadGPXData(data, center: true)
 						mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 					} catch {
-						displayImportError(error, filetype: localizedGPX)
+						self.displayImportError(error, filetype: localizedGPX)
 					}
-				})
+				}
 				return true
 			case "jpg", "jpeg", "png", "heic":
 				// image file: try to extract location of image from EXIF
@@ -107,7 +107,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				return false
 			case "geojson":
 				// Load GeoJSON into user custom data layer
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [self] in
+				MainActor.runAfter(nanoseconds: 500_000000) {
 					do {
 						let geo = try GeoJSONFile(data: data)
 						try geoJsonList.add(name: url.lastPathComponent, data: data)
@@ -116,11 +116,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 							mapView.displayDataOverlayLayer = true
 						}
 					} catch {
-						displayImportError(
+						self.displayImportError(
 							error,
 							filetype: NSLocalizedString("GeoJSON", comment: "The name of a GeoJSON file"))
 					}
-				})
+				}
 				return true
 			default:
 				return false
@@ -167,15 +167,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 			// geo: gomaposm: and arbitrary URLs containing lat/lon coordinates
 			if let parserResult = LocationParser.mapLocationFrom(url: url) {
-				DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: { [self] in
-					setMapLocation(parserResult)
-				})
+				MainActor.runAfter(nanoseconds: 100_000000) {
+					self.setMapLocation(parserResult)
+				}
 				return true
 			} else {
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+				MainActor.runAfter(nanoseconds: 100_000000) {
 					mapView.showAlert(NSLocalizedString("Invalid URL", comment: ""),
 					                  message: url.absoluteString)
-				})
+				}
 				return false
 			}
 		}

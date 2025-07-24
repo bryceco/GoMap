@@ -789,9 +789,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				isUpdate: false)
 
 			// purge old data
-			DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+			MainActor.runAfter(nanoseconds: 1000_000000) {
 				AppDelegate.shared.mapView.discardStaleData()
-			})
+			}
 		}
 
 		consistencyCheck()

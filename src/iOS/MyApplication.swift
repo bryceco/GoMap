@@ -96,10 +96,10 @@ class MyApplication: UIApplication {
 					var delta = TimeInterval(touch.timestamp - start)
 					if delta < MIN_DISPLAY_INTERVAL {
 						delta = TimeInterval(MIN_DISPLAY_INTERVAL - delta)
-						DispatchQueue.main.asyncAfter(deadline: .now() + delta, execute: {
+						MainActor.runAfter(nanoseconds: UInt64(delta * 1000_000000)) {
 							// force window to be retained until now
 							withExtendedLifetime(win) {}
-						})
+						}
 					}
 					touches.removeValue(forKey: touch)
 				}
