@@ -300,16 +300,10 @@ class PresetFeature: CustomDebugStringConvertible {
 	}
 
 	private enum PresetMatchScore: Int {
-		case namePrefix = 10
-		case aliasPrefix = 9
-		case termPrefix = 8
-
-		case nameInternal = 7
-		case aliasInternal = 6
-		case termInternal = 5
-
-		case featureIdPrefix = 4
-		case featureIdInternal = 3
+		case name = 4
+		case alias = 3
+		case term = 2
+		case featureId = 1
 	}
 
 	func matchesSearchText(_ searchText: String?, geometry: GEOMETRY) -> Int? {
@@ -319,25 +313,37 @@ class PresetFeature: CustomDebugStringConvertible {
 		if !self.geometry.contains(geometry.rawValue) {
 			return nil
 		}
-		if let range = name.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
-			return (range.lowerBound == name.startIndex
-				? PresetMatchScore.namePrefix : PresetMatchScore.nameInternal).rawValue
+
+		func scoreForMatch(base: PresetMatchScore, text: String, search: String) -> Int? {
+			guard let range = text.range(of: search, options: [.caseInsensitive, .diacriticInsensitive])
+			else { return nil }
+			// best case is it matches the prefix
+			if range.lowerBound == name.startIndex {
+				return 10 * base.rawValue + 5
+			}
+			// next best is it matches the start of a word
+			if text[text.index(before: range.lowerBound)].isWhitespace {
+				return 10 * base.rawValue
+			}
+			// it must be some random string in the middle of a word
+			return base.rawValue
+		}
+
+		if let score = scoreForMatch(base: .name, text: name, search: searchText) {
+			return score
 		}
 		for alias in aliases {
-			if let range = alias.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
-				return (range.lowerBound == alias.startIndex
-					? PresetMatchScore.aliasPrefix : PresetMatchScore.aliasInternal).rawValue
+			if let score = scoreForMatch(base: .alias, text: alias, search: searchText) {
+				return score
 			}
 		}
 		for term in terms {
-			if let range = term.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
-				return (range.lowerBound == term.startIndex
-					? PresetMatchScore.termPrefix : PresetMatchScore.termInternal).rawValue
+			if let score = scoreForMatch(base: .term, text: term, search: searchText) {
+				return score
 			}
 		}
-		if let range = featureID.range(of: searchText, options: [.caseInsensitive, .diacriticInsensitive]) {
-			return (range.lowerBound == featureID.startIndex
-				? PresetMatchScore.featureIdPrefix : PresetMatchScore.featureIdInternal).rawValue
+		if let score = scoreForMatch(base: .featureId, text: featureID, search: searchText) {
+			return score
 		}
 		return nil
 	}
