@@ -333,7 +333,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 			featureName = nil
 		}
 
-		let spinner = UIActivityIndicatorView(style: .gray)
+		let spinner = UIActivityIndicatorView(style: .medium)
 		spinner.frame = infoButton.bounds
 		infoButton.addSubview(spinner)
 		infoButton.isEnabled = false
