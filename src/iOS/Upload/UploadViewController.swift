@@ -10,6 +10,20 @@ import MessageUI
 import QuartzCore
 import UIKit
 
+func sanitizedURL(_ urlString: String) -> String {
+	let sensitiveKeys = ["token", "auth", "api_key", "access_token", "connectid", "signature"]
+
+	guard var components = URLComponents(string: urlString) else { return urlString }
+	components.queryItems = components.queryItems?.map { item in
+		if sensitiveKeys.contains(item.name.lowercased()) {
+			return URLQueryItem(name: item.name, value: "{apikey}")
+		} else {
+			return item
+		}
+	}
+	return components.url?.absoluteString ?? urlString
+}
+
 class UploadViewController: UIViewController, UITextViewDelegate {
 	var mapData: OsmMapData!
 	@IBOutlet var commentContainerView: UIView!
@@ -255,7 +269,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 			let server = appDelegate.mapView.aerialLayer.tileServer
 			if server.identifier.hasPrefix("http:") || server.identifier.hasPrefix("https:") {
 				// custom user imagery
-				imagery = server.identifier
+				imagery = sanitizedURL(server.identifier)
 			} else {
 				imagery = server.name
 			}
