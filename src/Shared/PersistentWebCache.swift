@@ -93,7 +93,7 @@ final class PersistentWebCache<T: AnyObject> {
 		}
 	}
 
-	func getDiskCacheSize() -> (size: Int, count: Int) {
+	func getDiskCacheSize() async -> (size: Int, count: Int) {
 		var count = 0
 		var size = 0
 		for url in fileList(withAttributes: [URLResourceKey.fileAllocatedSizeKey]) {

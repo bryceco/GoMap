@@ -14,7 +14,7 @@ private enum Row: Int {
 }
 
 protocol DiskCacheSizeProtocol {
-	func getDiskCacheSize() -> (size: Int, count: Int)
+	func getDiskCacheSize() async -> (size: Int, count: Int)
 }
 
 class ClearCacheViewController: UITableViewController {
@@ -86,7 +86,7 @@ class ClearCacheViewController: UITableViewController {
 				var size = 0
 				var count = 0
 				for obj in object {
-					let (tSize, tCount) = obj.getDiskCacheSize()
+					let (tSize, tCount) = await obj.getDiskCacheSize()
 					size += tSize
 					count += tCount
 				}

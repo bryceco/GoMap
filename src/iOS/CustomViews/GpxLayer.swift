@@ -281,7 +281,7 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 		})
 	}
 
-	func getDiskCacheSize() -> (size: Int, count: Int) {
+	func getDiskCacheSize() async -> (size: Int, count: Int) {
 		var size = 0
 		let dir = saveDirectory()
 		let files = (try? FileManager.default.contentsOfDirectory(atPath: dir)) ?? []

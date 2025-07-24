@@ -112,7 +112,7 @@ extension MapLibreVectorTilesView: TilesProvider {
 }
 
 extension MapLibreVectorTilesView: DiskCacheSizeProtocol {
-	func getDiskCacheSize() -> (size: Int, count: Int) {
+	func getDiskCacheSize() async -> (size: Int, count: Int) {
 		let size = Int(MLNOfflineStorage.shared.countOfBytesCompleted)
 		return (size, 1)
 	}
@@ -151,7 +151,7 @@ class MapLibreVectorTilesView: UIView, TilesProvider, DiskCacheSizeProtocol {
 
 	func purgeTileCache() {}
 
-	func getDiskCacheSize() -> (size: Int, count: Int) {
+	func getDiskCacheSize() async -> (size: Int, count: Int) {
 		return (0, 0)
 	}
 
