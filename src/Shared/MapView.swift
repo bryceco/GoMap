@@ -823,11 +823,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		} else {
 			currentRegion = CurrentRegion(latLon: LatLon(x: 0, y: 0), country: "", regions: [])
 		}
-		DispatchQueue.main.asyncAfter(deadline: .now() + 2.0,
-		                              execute: {
-		                              	self.updateCurrentRegionForLocationUsingCountryCoder()
-		                              	self.promptForBetterBackgroundImagery()
-		                              })
+		MainActor.runAfter(nanoseconds: 2000_000000) {
+			self.updateCurrentRegionForLocationUsingCountryCoder()
+			self.promptForBetterBackgroundImagery()
+		}
 
 		updateAerialAttributionButton()
 
@@ -1089,7 +1088,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			flashLabel.alpha = MAX_ALPHA
 		}
 
-		DispatchQueue.main.asyncAfter(deadline: .now() + duration, execute: {
+		MainActor.runAfter(nanoseconds: UInt64(duration * 1000_000000)) {
 			UIView.animate(withDuration: 0.35, animations: {
 				self.flashLabel.alpha = 0.0
 			}) { finished in
@@ -1097,7 +1096,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					self.flashLabel.isHidden = true
 				}
 			}
-		})
+		}
 	}
 
 	func flashMessage(title: String?, message: String) {

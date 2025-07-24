@@ -233,7 +233,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 				dismiss(animated: true)
 
 				// flash success message
-				DispatchQueue.main.asyncAfter(deadline: .now() + 0.3, execute: {
+				MainActor.runAfter(nanoseconds: 300_000000) {
 					appDelegate.mapView.editorLayer.setNeedsLayout()
 					appDelegate.mapView.flashMessage(title: nil,
 					                                 message: NSLocalizedString("Upload complete!", comment: ""),
@@ -244,7 +244,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 					editCount += 1
 					UserPrefs.shared.uploadCountPerVersion.value = editCount
 					appDelegate.mapView.ask(toRate: editCount)
-				})
+				}
 			}
 		}
 

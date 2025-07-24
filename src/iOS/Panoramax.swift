@@ -415,7 +415,7 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 						case .success:
 							// try again
 							// Without the pause the server doesn't always accept our cookie
-							DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+							MainActor.runAfter(nanoseconds: 1000_000000) {
 								self.uploadImage(image: image, imageData: imageData)
 							}
 						case .failure:

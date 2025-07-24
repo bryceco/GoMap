@@ -166,9 +166,9 @@ final class EditorMapLayer: CALayer {
 
 		if let alert = alert {
 			// this has to occur after super.init()
-			DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: {
+			MainActor.runAfter(nanoseconds: 500_000000) {
 				self.owner.presentAlert(alert: alert, location: .none)
-			})
+			}
 		}
 
 		objectFilters.onChange = { self.mapData.clearCachedProperties() }

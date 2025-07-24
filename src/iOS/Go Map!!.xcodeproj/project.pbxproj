@@ -53,6 +53,7 @@
 		024909C9267BF9F70027E531 /* MapTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909C8267BF9F70027E531 /* MapTransform.swift */; };
 		024909CB267D99190027E531 /* OsmDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CA267D99190027E531 /* OsmDownloader.swift */; };
 		024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024909CE267EADC70027E531 /* OsmXmlGenerator.swift */; };
+		024B5EC62E31A4B900258653 /* MainActor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 024B5EC52E31A4B900258653 /* MainActor+Extension.swift */; };
 		02505C5329A2EAD60078D60D /* AdvancedQuestBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5229A2EAD60078D60D /* AdvancedQuestBuilder.swift */; };
 		02505C5529A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5429A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift */; };
 		02505C5729A458A30078D60D /* QuestDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5629A458A30078D60D /* QuestDefinition.swift */; };
@@ -385,6 +386,7 @@
 		024909C8267BF9F70027E531 /* MapTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapTransform.swift; path = ../Shared/MapTransform.swift; sourceTree = "<group>"; };
 		024909CA267D99190027E531 /* OsmDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmDownloader.swift; sourceTree = "<group>"; };
 		024909CE267EADC70027E531 /* OsmXmlGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmXmlGenerator.swift; sourceTree = "<group>"; };
+		024B5EC52E31A4B900258653 /* MainActor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainActor+Extension.swift"; sourceTree = "<group>"; };
 		024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */ = {isa = PBXFileReference; lastKnownFileType = text; name = "apple-app-site-association"; path = "../apple-app-site-association"; sourceTree = "<group>"; };
 		02505C5229A2EAD60078D60D /* AdvancedQuestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedQuestBuilder.swift; sourceTree = "<group>"; };
 		02505C5429A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedQuestBuilderFilterRow.swift; sourceTree = "<group>"; };
@@ -1076,6 +1078,7 @@
 				02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */,
 				028816A02659B4A600C30EA2 /* GZip.swift */,
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
+				024B5EC52E31A4B900258653 /* MainActor+Extension.swift */,
 				0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */,
 				02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */,
 				02A59EE82981D75700B0A676 /* OAuth2.swift */,
@@ -1490,6 +1493,7 @@
 				C3D096CB263E9A1100E3B129 /* DownloadThreadPool.swift in Sources */,
 				02930750268BFB6700B2A326 /* QuadDownloadLayer.swift in Sources */,
 				C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */,
+				024B5EC62E31A4B900258653 /* MainActor+Extension.swift in Sources */,
 				ED9649D32601C4CE00EC0A60 /* AerialTileServerListViewController.swift in Sources */,
 				02C456A829C8DB410077E3FD /* TagInfo.swift in Sources */,
 				ED9649C22601C33E00EC0A60 /* TileServerEditViewController.swift in Sources */,
