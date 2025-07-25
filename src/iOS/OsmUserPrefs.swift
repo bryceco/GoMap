@@ -157,8 +157,9 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 				request.httpMethod = "PUT"
 				request.httpBody = value.data(using: .utf8)
 			}
+			let immutableRequest = request
 			Task {
-				_ = try? await URLSession.shared.data(with: request)
+				_ = try? await URLSession.shared.data(with: immutableRequest)
 			}
 		}
 		oldPreferenceKeys = dict.compactMap { $0.key.hasPrefix(self.PREFIX) && !$0.value.isEmpty ? $0.key : nil }

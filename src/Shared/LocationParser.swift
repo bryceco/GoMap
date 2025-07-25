@@ -474,10 +474,13 @@ class LocationParser {
 
 	static func fetchGoogleLocationDetails(ftid: String) async throws -> MapLocation {
 		let url = URL(string: "https://places.googleapis.com/v1/places/\(ftid)")!
-		var request = URLRequest(url: url)
-		request.allHTTPHeaderFields = ["Accept": "application/json",
-									   "X-Goog-Api-Key": GoogleToken,
-									   "X-Goog-FieldMask": "displayName,formattedAddress"]
+		let request = {
+			var request = URLRequest(url: url)
+			request.allHTTPHeaderFields = ["Accept": "application/json",
+										   "X-Goog-Api-Key": GoogleToken,
+										   "X-Goog-FieldMask": "displayName,formattedAddress"]
+			return request
+		}()
 		let (data, _) = try await URLSession.shared.data(for: request)
 		let text = String(data: data, encoding: .utf8)!
 		print("\(text)")
@@ -506,8 +509,11 @@ class LocationParser {
 
 	// Helper function to resolve a shortened URL
 	static func resolveGoogleShortURL(url: URL) async -> URL? {
-		var request = URLRequest(url: url)
-		request.httpMethod = "GET" // Changed from HEAD to GET
+		let request = {
+			var request = URLRequest(url: url)
+			request.httpMethod = "GET" // Changed from HEAD to GET
+			return request
+		}()
 		guard let (_, response) = try? await URLSession.shared.data(for: request) else {
 			return nil
 		}

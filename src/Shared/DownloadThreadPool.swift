@@ -26,11 +26,13 @@ final class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTask
 	static let osmPool = DownloadThreadPool()
 
 	func stream(forUrl url: String) async throws -> InputStream {
-		let url1 = URL(string: url)!
-		var request = URLRequest(url: url1)
-		request.httpMethod = "GET"
-		request.addValue("8bit", forHTTPHeaderField: "Content-Transfer-Encoding")
-		request.cachePolicy = .reloadIgnoringLocalCacheData
+		let request = {
+			var request = URLRequest(url: URL(string: url)!)
+			request.httpMethod = "GET"
+			request.addValue("8bit", forHTTPHeaderField: "Content-Transfer-Encoding")
+			request.cachePolicy = .reloadIgnoringLocalCacheData
+			return request
+		}()
 
 		inProgress.increment()
 		defer { inProgress.decrement() }

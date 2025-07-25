@@ -146,10 +146,11 @@ class PanoramaxServer {
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.httpBody = jsonData
+		let immutableRequest = request
 
 		Task {
 			do {
-				let data = try await URLSession.shared.data(with: request)
+				let data = try await URLSession.shared.data(with: immutableRequest)
 				guard
 					let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
 					let uploadSetID = json["id"] as? String
@@ -202,10 +203,11 @@ class PanoramaxServer {
 
 		body.append("--\(boundary)--\r\n".data(using: .utf8)!)
 		request.httpBody = body
+		let immutableRequest = request
 
 		Task {
 			do {
-				let data = try await URLSession.shared.data(with: request)
+				let data = try await URLSession.shared.data(with: immutableRequest)
 				guard let json = try? JSONSerialization.jsonObject(with: data, options: []),
 				      let json = json as? [String: Any],
 				      let ident = json["picture_id"] as? String

@@ -191,10 +191,11 @@ class GpxViewController: UITableViewController {
 			body += "\r\n--\(boundary)--\r\n"
 			request.httpBody = body.data(using: .utf8)
 			request.setValue(String(format: "%ld", body.count), forHTTPHeaderField: "Content-Length")
+			let immutableRequest = request
 
 			Task {
 				do {
-					let _ = try await URLSession.shared.data(with: request)
+					let _ = try await URLSession.shared.data(with: immutableRequest)
 					await MainActor.run {
 						progress.dismiss(animated: true)
 

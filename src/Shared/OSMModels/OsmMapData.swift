@@ -1040,11 +1040,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			request.setValue("gzip", forHTTPHeaderField: "Content-Encoding")
 		}
 		request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
+		let immutableRequest = request
 
 		Task {
 			let result: Result<Data, Error>
 			do {
-				let data = try await URLSession.shared.data(with: request)
+				let data = try await URLSession.shared.data(with: immutableRequest)
 				result = .success(data)
 			} catch {
 				result = .failure(error)

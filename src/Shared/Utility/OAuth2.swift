@@ -160,9 +160,10 @@ class OAuth2 {
 		request.allHTTPHeaderFields = [
 			"Content-Type": "application/x-www-form-urlencoded"
 		]
+		let immutableRequest = request
 		Task {
 			do {
-				let data = try await URLSession.shared.data(with: request)
+				let data = try await URLSession.shared.data(with: immutableRequest)
 				await MainActor.run {
 					do {
 						if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
