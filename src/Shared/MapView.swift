@@ -567,7 +567,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				return
 			}
 			if locating {
-				let status = CLLocationManager.authorizationStatus()
+				let status: CLAuthorizationStatus
+				if #available(iOS 14.0, *) {
+					status = locationManager.authorizationStatus
+				} else {
+					status = CLLocationManager.authorizationStatus()
+				}
 				switch status {
 				case .notDetermined:
 					// we haven't asked user before, so have iOS pop up the question
