@@ -356,7 +356,7 @@
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Object Filters</source>
-        <target state="needs-review-l10n">Activar filtros</target>
+        <target state="translated">Filtros de objetos</target>
         <note>Class = "UILabel"; text = "Object Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
@@ -586,7 +586,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
         <source>OpenStreetMap GPS Traces</source>
-        <target state="translated">Huellas GPS de OpenStreetMap</target>
+        <target state="translated">Trayectos GPS de OpenStreetMap</target>
         <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
       </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
@@ -780,6 +780,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="%@ Stop" xml:space="preserve">
         <source>%@ Stop</source>
+        <target state="translated">%@ Detener</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld" xml:space="preserve">
@@ -788,14 +789,17 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="Duration" xml:space="preserve">
         <source>Duration</source>
+        <target state="translated">Duración</target>
         <note from="auto-generated">A caption displayed underneath the duration of a track.</note>
       </trans-unit>
       <trans-unit id="GPX Trace" xml:space="preserve">
         <source>GPX Trace</source>
+        <target state="translated">Trayecto GPX</target>
         <note from="auto-generated">A caption displayed below the name of the app.</note>
       </trans-unit>
       <trans-unit id="Go Map!!" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note from="auto-generated">A label displayed on the lock screen/banner UI of the widget</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
@@ -810,6 +814,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="Points" xml:space="preserve">
         <source>Points</source>
+        <target state="translated">Puntos</target>
         <note from="auto-generated">A unit displayed underneath the number of GPX points recorded.</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
@@ -824,6 +829,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="Started at %@" xml:space="preserve">
         <source>Started at %@</source>
+        <target state="translated">Inició a las %@</target>
         <note from="auto-generated">A subheading displaying when the user started tracking.</note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
@@ -1005,22 +1011,22 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$.1f meter</source>
-        <target state="needs-review-l10n">%1$.1f</target>
+        <target state="translated">%1$.1f metro</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$.1f meters</source>
-        <target state="needs-review-l10n">%1$.1f</target>
+        <target state="translated">%1$.1f metros</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld nodo</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld nodos</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
@@ -3516,6 +3522,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">valor </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
@@ -3559,6 +3566,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="qTY-bY-Dwe.placeholder" xml:space="preserve">
         <source>genus</source>
+        <target state="translated">género</target>
         <note>Class = "UITextField"; placeholder = "genus"; ObjectID = "qTY-bY-Dwe";</note>
       </trans-unit>
       <trans-unit id="sGi-dQ-1v0.text" xml:space="preserve">
