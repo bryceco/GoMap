@@ -439,9 +439,9 @@ class LocationParser {
 			if let latLong = extractLatLongFromGoogleURL(resolvedURL) {
 				callback(latLong)
 			} else if let ftid = googleFTID(from: resolvedURL),
-					  let url = URL(string: "https://www.google.com/maps?ftid=\(ftid)"),
-					  let resolvedURL = await resolveGoogleShortURL(url: url),
-					  let latLong = extractLatLongFromGoogleURL(resolvedURL)
+			          let url = URL(string: "https://www.google.com/maps?ftid=\(ftid)"),
+			          let resolvedURL = await resolveGoogleShortURL(url: url),
+			          let latLong = extractLatLongFromGoogleURL(resolvedURL)
 			{
 				callback(latLong)
 			} else {
@@ -477,8 +477,8 @@ class LocationParser {
 		let request = {
 			var request = URLRequest(url: url)
 			request.allHTTPHeaderFields = ["Accept": "application/json",
-										   "X-Goog-Api-Key": GoogleToken,
-										   "X-Goog-FieldMask": "displayName,formattedAddress"]
+			                               "X-Goog-Api-Key": GoogleToken,
+			                               "X-Goog-FieldMask": "displayName,formattedAddress"]
 			return request
 		}()
 		let (data, _) = try await URLSession.shared.data(for: request)
@@ -524,7 +524,7 @@ class LocationParser {
 	static func googleFTID(from url: URL) -> String? {
 		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
 		      let queryItems = components.queryItems,
-			  let ftid = queryItems.first(where: { $0.name == "ftid" })?.value
+		      let ftid = queryItems.first(where: { $0.name == "ftid" })?.value
 		else {
 			return nil
 		}

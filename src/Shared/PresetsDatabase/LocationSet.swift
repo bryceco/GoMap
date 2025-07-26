@@ -63,7 +63,7 @@ struct LocationSet {
 			}
 		}
 
-		func matches(mapViewRegion: MapView.CurrentRegion) -> Bool {
+		func matches(mapViewRegion: RegionInfoForLocation) -> Bool {
 			switch self {
 			case .world:
 				return true
@@ -112,7 +112,7 @@ struct LocationSet {
 		return true
 	}
 
-	func overlaps(_ location: MapView.CurrentRegion) -> Bool {
+	func overlaps(_ location: RegionInfoForLocation) -> Bool {
 		if include.isEmpty, exclude.isEmpty {
 			return true
 		}

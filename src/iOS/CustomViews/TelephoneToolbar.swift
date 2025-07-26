@@ -10,7 +10,7 @@ import UIKit
 
 class TelephoneToolbar: UIToolbar {
 	weak var textField: UITextField!
-	let codes = AppDelegate.shared.mapView.currentRegion.callingCodes()
+	let codes = AppDelegate.shared.mapView.currentRegion.callingCodes
 
 	init(forTextField textfield: UITextField, frame: CGRect) {
 		textField = textfield

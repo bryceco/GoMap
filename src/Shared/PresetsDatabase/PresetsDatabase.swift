@@ -246,10 +246,10 @@ final class PresetsDatabase {
 	}
 
 	// Cache features in the local region to speed up searches
-	var localRegion = MapView.CurrentRegion.none
+	var localRegion = RegionInfoForLocation.none
 	var stdLocal: [PresetFeature] = []
 	var nsiLocal: [PresetFeature] = []
-	func enumeratePresetsAndNsiIn(region: MapView.CurrentRegion, using block: (_ feature: PresetFeature) -> Void) {
+	func enumeratePresetsAndNsiIn(region: RegionInfoForLocation, using block: (_ feature: PresetFeature) -> Void) {
 		if region != localRegion {
 			localRegion = region
 			stdLocal = stdFeatures.values.filter({ $0.searchable && $0.locationSet.overlaps(region) })
@@ -294,7 +294,7 @@ final class PresetsDatabase {
 
 	func presetFeatureMatching(tags objectTags: [String: String]?,
 	                           geometry: GEOMETRY?,
-	                           location: MapView.CurrentRegion,
+	                           location: RegionInfoForLocation,
 	                           includeNSI: Bool,
 	                           withPresetKey: String? = nil) -> PresetFeature?
 	{
@@ -338,7 +338,7 @@ final class PresetsDatabase {
 
 	func featuresMatchingSearchText(_ searchText: String?,
 	                                geometry: GEOMETRY,
-	                                location: MapView.CurrentRegion) -> [(PresetFeature, Int)]
+	                                location: RegionInfoForLocation) -> [(PresetFeature, Int)]
 	{
 		var list = [(PresetFeature, Int)]()
 		enumeratePresetsAndNsiIn(region: location, using: { feature in

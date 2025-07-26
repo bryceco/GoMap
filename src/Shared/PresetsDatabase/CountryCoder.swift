@@ -1,6 +1,6 @@
 import UIKit
 
-public struct CountryCoderRegion {
+private struct CountryCoderRegion {
 	let country: String? // Country code
 	let iso1A2: String? // ISO 3166-1 alpha-2 code
 	let iso1A3: String? // ISO 3166-1 alpha-3 code
@@ -47,8 +47,8 @@ public struct CountryCoderRegion {
 public final class CountryCoder {
 	public static let shared = CountryCoder()
 
-	let regionList: [CountryCoderRegion]
-	let regionDict: [String: CountryCoderRegion]
+	private let allCountryCoderRegions: [CountryCoderRegion]
+	private let regionToCountryCoderDict: [String: CountryCoderRegion]
 
 	private init() {
 		struct Welcome: Decodable {
@@ -97,7 +97,7 @@ public final class CountryCoder {
 			                                  groups: properties.groups ?? [],
 			                                  bezierPath: bezierPath))
 		}
-		regionList = regions
+		allCountryCoderRegions = regions
 
 		var dict = [String: CountryCoderRegion]()
 		for r in regions {
@@ -107,13 +107,13 @@ public final class CountryCoder {
 			if let s = r.m49 { dict[s] = r }
 			if let s = r.wikidata { dict[s] = r }
 		}
-		regionDict = dict
+		regionToCountryCoderDict = dict
 	}
 
-	func regionsAt(_ loc: LatLon) -> [CountryCoderRegion] {
+	private func regionsAt(_ loc: LatLon) -> [CountryCoderRegion] {
 		var list: [CountryCoderRegion] = []
 		let cgPoint = CGPoint(OSMPoint(loc))
-		for region in regionList {
+		for region in allCountryCoderRegions {
 			if region.boundingBox.contains(cgPoint),
 			   region.bezierPath?.contains(cgPoint) ?? false
 			{
@@ -121,13 +121,13 @@ public final class CountryCoder {
 			}
 		}
 		if let countryCode = list.first(where: { $0.country != nil })?.country,
-		   let country = regionDict[countryCode]
+		   let country = regionToCountryCoderDict[countryCode]
 		{
 			list.append(country)
 		}
 		for region in list {
 			for group in region.groups {
-				if let r = regionDict[group] {
+				if let r = regionToCountryCoderDict[group] {
 					list.append(r)
 				}
 			}
@@ -135,7 +135,12 @@ public final class CountryCoder {
 		return list
 	}
 
-	static func regionsStringsForRegions(_ list: [CountryCoderRegion]) -> [String] {
+	private func callingCodes(for regions: [String]) -> [String] {
+		let regionList = regions.compactMap({ regionToCountryCoderDict[$0] })
+		return regionList.first(where: { $0.callingCodes.count > 0 })?.callingCodes ?? []
+	}
+
+	private static func regionsStringsForRegions(_ list: [CountryCoderRegion]) -> [String] {
 		var result: [String] = []
 		for region in list {
 			region.addSynonyms(to: &result)
@@ -143,7 +148,7 @@ public final class CountryCoder {
 		return result
 	}
 
-	static func countryforRegions(_ list: [CountryCoderRegion]) -> String {
+	private static func countryforRegions(_ list: [CountryCoderRegion]) -> String {
 		if let country = list.first(where: { $0.country != nil })?.country {
 			return country
 		}
@@ -151,5 +156,40 @@ public final class CountryCoder {
 			return country
 		}
 		return ""
+	}
+}
+
+struct RegionInfoForLocation: Codable, Equatable {
+	let latLon: LatLon
+	let country: String
+	let regions: [String]
+	let callingCodes: [String]
+
+	static let none = RegionInfoForLocation(latLon: LatLon(x: 0, y: 0),
+	                                        country: "",
+	                                        regions: [],
+	                                        callingCodes: [])
+
+	func saveToUserPrefs() {
+		UserPrefs.shared.currentRegion.value = try? PropertyListEncoder().encode(self)
+	}
+
+	static func fromUserPrefs() -> Self? {
+		if let data = UserPrefs.shared.currentRegion.value {
+			return try? PropertyListDecoder().decode(RegionInfoForLocation.self, from: data)
+		}
+		return nil
+	}
+}
+
+extension CountryCoder {
+	func regionInfoFor(latLon: LatLon) -> RegionInfoForLocation {
+		let regions = CountryCoder.shared.regionsAt(latLon)
+		let country = CountryCoder.countryforRegions(regions)
+		let regionStrings = CountryCoder.regionsStringsForRegions(regions)
+		return RegionInfoForLocation(latLon: latLon,
+		                             country: country,
+		                             regions: regionStrings,
+		                             callingCodes: callingCodes(for: regionStrings))
 	}
 }

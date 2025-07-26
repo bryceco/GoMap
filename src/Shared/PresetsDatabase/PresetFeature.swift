@@ -220,7 +220,7 @@ class PresetFeature: CustomDebugStringConvertible {
 	}
 
 	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY,
-	                                 location: MapView.CurrentRegion) -> [String: String]
+	                                 location: RegionInfoForLocation) -> [String: String]
 	{
 		var tags = tags
 
@@ -349,7 +349,7 @@ class PresetFeature: CustomDebugStringConvertible {
 	}
 
 	func matchObjectTagsScore(_ objectTags: [String: String], geometry: GEOMETRY?,
-	                          location: MapView.CurrentRegion) -> Double
+	                          location: RegionInfoForLocation) -> Double
 	{
 		if let geometry = geometry,
 		   !self.geometry.contains(geometry.rawValue) ||

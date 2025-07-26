@@ -532,34 +532,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	private(set) var crossHairs: CAShapeLayer!
 
-	struct CurrentRegion: Codable, Equatable {
-		let latLon: LatLon
-		let country: String
-		let regions: [String]
-
-		static let none = CurrentRegion(latLon: LatLon(x: 0, y: 0),
-		                                country: "",
-		                                regions: [])
-
-		func saveToUserPrefs() {
-			UserPrefs.shared.currentRegion.value = try? PropertyListEncoder().encode(self)
-		}
-
-		static func fromUserPrefs() -> Self? {
-			if let data = UserPrefs.shared.currentRegion.value {
-				return try? PropertyListDecoder().decode(CurrentRegion.self, from: data)
-			}
-			return nil
-		}
-
-		func callingCodes() -> [String] {
-			let regionDict = CountryCoder.shared.regionDict
-			let regionList = regions.compactMap({ regionDict[$0] })
-			return regionList.first(where: { $0.callingCodes.count > 0 })?.callingCodes ?? []
-		}
-	}
-
-	private(set) var currentRegion: CurrentRegion
+	private(set) var currentRegion: RegionInfoForLocation
 
 	private var locating: Bool {
 		didSet {
@@ -611,7 +584,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		tileServerList = TileServerList()
 		locationBallLayer = LocationBallLayer()
 		locating = false
-		currentRegion = CurrentRegion.none
+		currentRegion = RegionInfoForLocation.none
 
 		super.init(coder: coder)
 
@@ -823,10 +796,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		displayDataOverlayLayer = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
 		enableTurnRestriction = UserPrefs.shared.mapViewEnableTurnRestriction.value ?? false
 
-		if let loc = CurrentRegion.fromUserPrefs() {
+		if let loc = RegionInfoForLocation.fromUserPrefs() {
 			currentRegion = loc
 		} else {
-			currentRegion = CurrentRegion(latLon: LatLon(x: 0, y: 0), country: "", regions: [])
+			currentRegion = RegionInfoForLocation.none
 		}
 		MainActor.runAfter(nanoseconds: 2000_000000) {
 			self.updateCurrentRegionForLocationUsingCountryCoder()
@@ -1308,10 +1281,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			return
 		}
 
-		let regions = CountryCoder.shared.regionsAt(latLon)
-		currentRegion = CurrentRegion(latLon: latLon,
-		                              country: CountryCoder.countryforRegions(regions),
-		                              regions: CountryCoder.regionsStringsForRegions(regions))
+		currentRegion = CountryCoder.shared.regionInfoFor(latLon: latLon)
 	}
 
 	func unnamedRoadLayer() -> MercatorTileLayer? {

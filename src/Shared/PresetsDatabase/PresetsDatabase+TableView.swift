@@ -25,7 +25,7 @@ extension PresetsDatabase {
 	func featuresInCategory(_ category: PresetCategory?,
 	                        matching searchText: String,
 	                        geometry: GEOMETRY,
-	                        location: MapView.CurrentRegion) -> [PresetFeature]
+	                        location: RegionInfoForLocation) -> [PresetFeature]
 	{
 		var list = [(feature: PresetFeature, score: Int)]()
 		if let category = category {
