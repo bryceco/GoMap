@@ -53,9 +53,9 @@ class DataOverlaysController: UITableViewController {
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch Section(rawValue: section) {
 		case .geojsonSection:
-			return "GeoJSON"
+			return NSLocalizedString("GeoJSON", comment: "")
 		case .predefinedSection:
-			return "Predefined"
+			return NSLocalizedString("Predefined", comment: "Items that are built into the app")
 		default:
 			return nil
 		}
@@ -106,7 +106,7 @@ class DataOverlaysController: UITableViewController {
 		   indexPath.row == geoJsonList.count
 		{
 			if #available(iOS 14.0, *) {
-				doImport()
+				doImportGeoJSON()
 			} else {
 				// Fallback on earlier versions
 			}
@@ -192,7 +192,7 @@ class DataOverlaysController: UITableViewController {
 
 extension DataOverlaysController: UIDocumentPickerDelegate {
 	@available(iOS 14.0, *)
-	func doImport() {
+	func doImportGeoJSON() {
 		guard let utType = UTType("public.geojson") else { return }
 		let picker = UIDocumentPickerViewController(forOpeningContentTypes: [utType], asCopy: true)
 		picker.delegate = self

@@ -41,6 +41,7 @@ class UserFileList {
 		}
 	}
 
+	// Saves which of the items the user has selected to be visible
 	private func savePrefs() {
 		let prefDict = list.reduce(into: [String: Bool](), { $0[$1.url.lastPathComponent] = $1.visible })
 		prefsKey.value = prefDict
