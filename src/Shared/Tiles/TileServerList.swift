@@ -26,7 +26,7 @@ final class TileServerList {
 		set { UserPrefs.shared.lastImageryDownloadDate.value = newValue }
 	}
 
-	var onChange: (() -> Void)?
+	let onChange = NotificationService<Void>()
 
 	init() {
 		Task {
@@ -39,15 +39,15 @@ final class TileServerList {
 			// and then again when an update is downloaded from the internet
 			self.load()
 			if isAsync {
-				self.onChange?()
+				self.onChange.notify(())
 			}
 		})
 
-		UserPrefs.shared.customAerialList.onChangePerform { _ in
+		UserPrefs.shared.customAerialList.onChange.subscribe(object: self, callback: { [weak self] _ in
 			// This occurs if a user added imagery on a different device and it shared to us via iCloud
-			self.load()
-			self.onChange?()
-		}
+			self?.load()
+			self?.onChange.notify(())
+		})
 	}
 
 	func builtinServers() -> [TileServer] {

@@ -104,15 +104,16 @@ class PresetKeyUserDefinedList: Codable {
 				list = []
 			}
 		}
-		UserPrefs.shared.userDefinedPresetKeys.onChangePerform { pref in
+		UserPrefs.shared.userDefinedPresetKeys.onChange.subscribe(object: self, callback: { [weak self] pref in
 			guard
+				let self = self,
 				let data = pref.value,
 				let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data)
 			else {
 				return
 			}
 			self.list = list
-		}
+		})
 	}
 
 	func save() {

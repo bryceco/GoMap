@@ -171,7 +171,9 @@ final class EditorMapLayer: CALayer {
 			}
 		}
 
-		objectFilters.onChange = { self.mapData.clearCachedProperties() }
+		objectFilters.onChange.subscribe(object: self, callback: { [weak self] in
+			self?.mapData.clearCachedProperties()
+		})
 		whiteText = true
 
 		// observe changes to screen

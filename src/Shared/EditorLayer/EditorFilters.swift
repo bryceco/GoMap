@@ -9,12 +9,12 @@
 import Foundation
 
 final class EditorFilters {
-	var onChange: (() -> Void)?
+	let onChange = NotificationService<Void>()
 
 	var enableObjectFilters = false { // turn all filters on/on
 		didSet {
 			UserPrefs.shared.editor_enableObjectFilters.value = enableObjectFilters
-			onChange?()
+			onChange.notify(())
 		}
 	}
 
@@ -36,13 +36,13 @@ final class EditorFilters {
 	var showLevelRange = "" { // range of levels for building level
 		didSet {
 			UserPrefs.shared.editor_showLevelRange.value = self.showLevelRange
-			onChange?()
+			onChange.notify(())
 		}
 	}
 
 	func save(_ pref: Pref<Bool>, _ value: Bool) {
 		pref.value = value
-		onChange?()
+		onChange.notify(())
 	}
 
 	init() {

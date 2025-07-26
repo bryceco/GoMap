@@ -44,16 +44,10 @@ class Pref<T>: PrefProtocol {
 		}
 	}
 
-	private var onChangeCallbacks: [(Pref<T>) -> Void] = []
-
-	func onChangePerform(_ callback: @escaping ((Pref<T>) -> Void)) {
-		onChangeCallbacks.append(callback)
-	}
+	let onChange = NotificationService<Pref<T>>()
 
 	func didChange() {
-		for callback in onChangeCallbacks {
-			callback(self)
-		}
+		onChange.notify(self)
 	}
 }
 

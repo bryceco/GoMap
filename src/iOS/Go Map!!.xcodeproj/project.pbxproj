@@ -193,6 +193,7 @@
 		02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */; };
 		02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */; };
 		02F6A459268AE42800F2ACE7 /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A458268AE42800F2ACE7 /* Debugger.swift */; };
+		02F72BCC2E35828100B6C76C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F72BCB2E35828100B6C76C /* NotificationService.swift */; };
 		02FC7F962D7FD6E800DC333D /* CustomFeatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC7F952D7FD6DC00DC333D /* CustomFeatureController.swift */; };
 		02FC7F982D7FD6FD00DC333D /* CustomFeatureListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */; };
 		02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */; };
@@ -527,6 +528,7 @@
 		02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+HitTest.swift"; sourceTree = "<group>"; };
 		02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Ext.swift"; sourceTree = "<group>"; };
 		02F6A458268AE42800F2ACE7 /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
+		02F72BCB2E35828100B6C76C /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		02FC7F952D7FD6DC00DC333D /* CustomFeatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeatureController.swift; sourceTree = "<group>"; };
 		02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeatureListViewController.swift; sourceTree = "<group>"; };
 		02FF1EC72BDC1E180071C96F /* OsmServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmServer.swift; sourceTree = "<group>"; };
@@ -1080,6 +1082,7 @@
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
 				024B5EC52E31A4B900258653 /* MainActor+Extension.swift */,
 				0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */,
+				02F72BCB2E35828100B6C76C /* NotificationService.swift */,
 				02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */,
 				02A59EE82981D75700B0A676 /* OAuth2.swift */,
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
@@ -1654,6 +1657,7 @@
 				0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */,
 				021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */,
 				02CB52362990801E007F758D /* QuestList.swift in Sources */,
+				02F72BCC2E35828100B6C76C /* NotificationService.swift in Sources */,
 				02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */,
 				ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */,
 				022B2FDB2718CCAC00AB4C28 /* MapboxLocator.secret in Sources */,

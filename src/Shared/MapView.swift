@@ -589,9 +589,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		super.init(coder: coder)
 
-		tileServerList.onChange = {
-			self.promptForBetterBackgroundImagery()
-		}
+		tileServerList.onChange.subscribe(object: self, callback: { [weak self] in
+			self?.promptForBetterBackgroundImagery()
+		})
 
 		layer.masksToBounds = true
 		backgroundColor = UIColor(white: 0.1, alpha: 1.0)
