@@ -94,7 +94,8 @@ final class UserPrefs {
 	let mapViewEnableBreadCrumb = Pref<Bool>(key: "mapViewEnableBreadCrumb")
 	let mapViewEnableDataOverlay = Pref<Bool>(key: "mapViewEnableDataOverlay")
 	let mapViewEnableTurnRestriction = Pref<Bool>(key: "mapViewEnableTurnRestriction")
-	let latestAerialCheckLatLon = Pref<Data>(key: "LatestAerialCheckLatLon")
+	let latestAerialCheckLatLon = Pref<LatLon.PlistType>(key: "LatestAerialCheckLatLon2")
+	let latestOverlayCheckLatLon = Pref<LatLon.PlistType>(key: "LatestOverlayCheckLatLon")
 	let maximizeFrameRate = Pref<Bool>(key: "maximizeFrameRate")
 
 	// Nominatim

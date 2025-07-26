@@ -354,6 +354,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			updateUserLocationIndicator(nil)
 			updateCurrentRegionForLocationUsingCountryCoder()
 			promptForBetterBackgroundImagery()
+			checkForChangedTileOverlayLayers()
 
 			// update pushpin location
 			if let pushpinView = pushPin,
@@ -471,7 +472,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if displayDataOverlayLayer {
 				dataOverlayLayer.setNeedsLayout()
 			}
-			updateTileOverlayLayers()
+			updateTileOverlayLayers(latLon: screenCenterLatLon())
 		}
 	}
 
@@ -796,14 +797,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		displayDataOverlayLayer = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
 		enableTurnRestriction = UserPrefs.shared.mapViewEnableTurnRestriction.value ?? false
 
-		if let loc = RegionInfoForLocation.fromUserPrefs() {
-			currentRegion = loc
-		} else {
-			currentRegion = RegionInfoForLocation.none
-		}
+		currentRegion = RegionInfoForLocation.fromUserPrefs() ?? RegionInfoForLocation.none
+
 		MainActor.runAfter(nanoseconds: 2000_000000) {
 			self.updateCurrentRegionForLocationUsingCountryCoder()
 			self.promptForBetterBackgroundImagery()
+			self.checkForChangedTileOverlayLayers()
 		}
 
 		updateAerialAttributionButton()
@@ -849,41 +848,39 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		} as! [MercatorTileLayer]
 	}
 
-	func updateTileOverlayLayers() {
-		let serverIdents = UserPrefs.shared.tileOverlaySelections.value ?? []
+	func updateTileOverlayLayers(latLon: LatLon) {
+		let overlaysIdList = UserPrefs.shared.tileOverlaySelections.value ?? []
 
 		// if they toggled display of the noname layer we need to refresh the editor layer
-		if serverIdents.contains(TileServer.noName.identifier) != useUnnamedRoadHalo() {
+		if overlaysIdList.contains(TileServer.noName.identifier) != useUnnamedRoadHalo() {
 			editorLayer.clearCachedProperties()
 		}
 
-		// remove any layers no longer displayed
-		let removals = backgroundLayers.filter { layer in
-			guard case let .tileLayer(layer) = layer,
-			      layer.tileServer.overlay
-			else {
-				return false
+		// get all overlay layers we're currently displaying
+		let overlays = backgroundLayers.compactMap {
+			if case let .tileLayer(layer) = $0, // it's a tile layer
+			   layer.tileServer.overlay // it's an overlay layer
+			{
+				return (backgroundLayer: $0, tileLayer: layer)
 			}
-			if displayDataOverlayLayer, serverIdents.contains(layer.tileServer.identifier) {
-				return false
-			}
-			return true
+			return nil
 		}
-		for layer in removals {
-			backgroundLayers.removeAll(where: { $0 == layer })
-			switch layer {
-			case let .otherLayer(layer):
-				layer.removeFromSuperlayer()
-			case let .tileLayer(layer):
-				layer.removeFromSuperlayer()
-			case let .tileView(view):
-				view.removeFromSuperview()
+
+		// remove any overlay layers no longer displayed
+		for layer in overlays {
+			if displayDataOverlayLayer,
+			   overlaysIdList.contains(layer.tileLayer.tileServer.identifier),
+			   layer.tileLayer.tileServer.coversLocation(latLon)
+			{
+				continue
 			}
+			backgroundLayers.removeAll(where: { $0 == layer.backgroundLayer })
+			layer.tileLayer.removeFromSuperlayer()
 		}
 
 		if displayDataOverlayLayer {
 			// create any overlay layers the user had enabled
-			for ident in serverIdents {
+			for ident in overlaysIdList {
 				if backgroundLayers.contains(where: {
 					guard case let .tileLayer(layer) = $0 else { return false }
 					return layer.tileServer.identifier == ident
@@ -893,9 +890,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 				guard let tileServer = tileServerList.serviceWithIdentifier(ident) else {
 					// server doesn't exist anymore
-					var list = serverIdents
+					var list = overlaysIdList
 					list.removeAll(where: { $0 == ident })
 					UserPrefs.shared.tileOverlaySelections.value = list
+					continue
+				}
+				guard tileServer.coversLocation(latLon) else {
 					continue
 				}
 
@@ -1216,6 +1216,21 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
+	private func checkForChangedTileOverlayLayers() {
+		// If the user has overlay imagery enabled that is no longer present at this location
+		// then remove it.
+		// Check if we've moved a long distance from the last check
+		let latLon = screenCenterLatLon()
+		if let plist = UserPrefs.shared.latestOverlayCheckLatLon.value,
+		   let prevLatLon = LatLon(plist),
+		   GreatCircleDistance(latLon, prevLatLon) < 10 * 1000
+		{
+			return
+		}
+		updateTileOverlayLayers(latLon: latLon)
+		UserPrefs.shared.latestOverlayCheckLatLon.value = latLon.plist
+	}
+
 	private func promptForBetterBackgroundImagery() {
 		if aerialLayer.isHidden {
 			return
@@ -1223,20 +1238,22 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// Check if we've moved a long distance from the last check
 		let latLon = screenCenterLatLon()
-		if let prevLatLonData = UserPrefs.shared.latestAerialCheckLatLon.value,
-		   let prevLatLon = try? PropertyListDecoder().decode(LatLon.self, from: prevLatLonData),
+		if let plist = UserPrefs.shared.latestAerialCheckLatLon.value,
+		   let prevLatLon = LatLon(plist),
 		   GreatCircleDistance(latLon, prevLatLon) < 10 * 1000
 		{
 			return
 		}
 
+		// check whether we need to change aerial imagery
 		if !tileServerList.currentServer.coversLocation(latLon) {
 			// current imagery layer doesn't exist at current location
 			let best = tileServerList.bestService(at: latLon) ?? tileServerList.builtinServers()[0]
 			tileServerList.currentServer = best
 			setAerialTileServer(best)
 		} else if mapTransform.zoom() < 15 {
-			// return here instead of updating last check location
+			// the user has zoomed out, so don't bother them until they zoom in.
+			// return here instead of updating last check location.
 			return
 		} else if !tileServerList.currentServer.best,
 		          tileServerList.currentServer.isGlobalImagery(),
@@ -1267,7 +1284,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			mainViewController.present(alert, animated: true)
 		}
 
-		UserPrefs.shared.latestAerialCheckLatLon.value = try? PropertyListEncoder().encode(latLon)
+		UserPrefs.shared.latestAerialCheckLatLon.value = latLon.plist
 	}
 
 	func updateCurrentRegionForLocationUsingCountryCoder() {

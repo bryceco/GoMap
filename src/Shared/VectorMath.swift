@@ -646,6 +646,19 @@ struct LatLon: Equatable, Codable {
 	@inline(__always) public static func ==(_ a: LatLon, _ b: LatLon) -> Bool {
 		return a.lon == b.lon && a.lat == b.lat
 	}
+
+	// Add PList representation
+	typealias PlistType = [Double]
+
+	init?(_ plist: PlistType) {
+		guard plist.count == 2 else { return nil }
+		lon = plist[0]
+		lat = plist[1]
+	}
+
+	var plist: PlistType {
+		[lon, lat]
+	}
 }
 
 // MARK: miscellaneous
