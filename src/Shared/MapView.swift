@@ -799,6 +799,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		currentRegion = RegionInfoForLocation.fromUserPrefs() ?? RegionInfoForLocation.none
 
+		UserPrefs.shared.tileOverlaySelections.onChange.subscribe(object: self, callback: { [weak self] _ in
+			guard let self = self else { return }
+			self.updateTileOverlayLayers(latLon: self.screenCenterLatLon())
+		})
+
 		MainActor.runAfter(nanoseconds: 2000_000000) {
 			self.updateCurrentRegionForLocationUsingCountryCoder()
 			self.promptForBetterBackgroundImagery()

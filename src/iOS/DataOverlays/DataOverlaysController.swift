@@ -115,8 +115,7 @@ class DataOverlaysController: UITableViewController {
 
 	@IBAction func didToggleSwitch(_ sender: Any) {
 		guard let cell: UserDataTableCell = (sender as? UIView)?.superviewOfType(),
-		      let indexPath = tableView.indexPath(for: cell),
-		      let mapView = AppDelegate.shared.mapView
+		      let indexPath = tableView.indexPath(for: cell)
 		else { return }
 		switch Section(rawValue: indexPath.section) {
 		case .geojsonSection:
@@ -129,7 +128,6 @@ class DataOverlaysController: UITableViewController {
 				overlaySelections.removeAll(where: { $0 == server.identifier })
 			}
 			UserPrefs.shared.tileOverlaySelections.value = overlaySelections
-			mapView.updateTileOverlayLayers(latLon: mapView.screenCenterLatLon())
 		default:
 			fatalError()
 		}

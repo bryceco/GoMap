@@ -41,6 +41,7 @@ class Pref<T>: PrefProtocol {
 			if ubiquitous {
 				NSUbiquitousKeyValueStore.default.set(newValue, forKey: key)
 			}
+			didChange()
 		}
 	}
 
