@@ -503,6 +503,8 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
+        <target state="needs-translation">http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
+ </target>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
       <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
@@ -731,6 +733,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>GpxWidget</source>
+        <target state="needs-translation">Widget GPX</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -751,22 +754,27 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
     <body>
       <trans-unit id="%@" xml:space="preserve">
         <source>%@</source>
+        <target state="translated">%@</target>
         <note/>
       </trans-unit>
       <trans-unit id="%@ %@" xml:space="preserve">
         <source>%1$@ %2$@</source>
+        <target state="needs-translation">%1$@ %2$@</target>
         <note/>
       </trans-unit>
       <trans-unit id="%@ %lld" xml:space="preserve">
         <source>%1$@ %2$lld</source>
+        <target state="needs-translation">%1$@ %2$lld</target>
         <note from="auto-generated">A compact leading view for a dynamic island.</note>
       </trans-unit>
       <trans-unit id="%@ Stop" xml:space="preserve">
         <source>%@ Stop</source>
+        <target state="translated">%@ Stop</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld" xml:space="preserve">
         <source>%lld</source>
+        <target state="translated">%lld</target>
         <note from="auto-generated">A label displaying the number of points recorded in a GPX track.</note>
       </trans-unit>
       <trans-unit id="Duration" xml:space="preserve">
@@ -786,6 +794,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
+        <target state="needs-translation">Pauser GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
@@ -795,6 +804,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="Points" xml:space="preserve">
         <source>Points</source>
+        <target state="translated">Points</target>
         <note from="auto-generated">A unit displayed underneath the number of GPX points recorded.</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
@@ -991,22 +1001,22 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$.1f meter</source>
-        <target state="needs-review-l10n">%1$.1f</target>
+        <target state="translated">%1$.1f mètre</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$.1f meters</source>
-        <target state="needs-review-l10n">%1$.1f</target>
+        <target state="translated">%1$.1f mètres</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld noeud</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld noeuds</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
@@ -1016,22 +1026,22 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.one" xml:space="preserve">
         <source>%2$ld file</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld fichier</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.other" xml:space="preserve">
         <source>%2$ld files</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld fichiers</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.one" xml:space="preserve">
         <source>%1$.2f MB</source>
-        <target state="needs-review-l10n">%1$.2f</target>
+        <target state="translated">%1$.2f Mo</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.other" xml:space="preserve">
         <source>%1$.2f MB</source>
-        <target state="needs-review-l10n">%1$.2f</target>
+        <target state="translated">%1$.2f Mo</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -1046,7 +1056,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
         <source>%ld Day</source>
-        <target state="needs-review-l10n">%ld jours</target>
+        <target state="translated">%ld jour</target>
         <note>One or more days</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.other" xml:space="preserve">
@@ -1066,7 +1076,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="translated">%1$#@mêtres@, %2$#@noeuds@</target>
+        <target state="translated">%1$#@mètres@, %2$#@noeuds@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
@@ -1131,22 +1141,22 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%1$ld mètre</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%1$ld mètres</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld point</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld points</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
@@ -1581,6 +1591,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
+        <target state="translated">Créez une ligne dans le tableau pour chaque paire clé/valeur et indiquez si les objets correspondants doivent être inclus ou exclus. Laissez la valeur vide pour indiquer que la clé n'est pas présente. Utilisez key=* pour faire correspondre n'importe quelle valeur.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
@@ -1595,6 +1606,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." xml:space="preserve">
         <source>Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</source>
+        <target state="translated">Définissez vos propres caractéristiques personnalisées à l'aide de combinaisons de balises uniques afin d'ajouter rapidement des types d'objets particuliers. Ceux-ci peuvent être recherchés dans les balises communes.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -1830,6 +1842,7 @@ Erreur : %@</target>
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
+        <target state="translated">Clés</target>
         <note>The tag keys section of a quest definition</note>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
@@ -1859,6 +1872,7 @@ Erreur : %@</target>
       </trans-unit>
       <trans-unit id="Line" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Lignes</target>
         <note>Object geometry: a way (but not an area)</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -1984,10 +1998,12 @@ Il s'agit d'une opération avancée qui ne devrait être effectuée uniquement s
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">Nom</target>
         <note/>
       </trans-unit>
       <trans-unit id="Needs Survey" xml:space="preserve">
         <source>Needs Survey</source>
+        <target state="needs-translation">À vérifier</target>
         <note>Quest for objects that aren't recently updated</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -2103,6 +2119,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Old value: %@" xml:space="preserve">
         <source>Old value: %@</source>
+        <target state="translated">Ancienne valeur : %@</target>
         <note>previous tag value</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
@@ -2189,6 +2206,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
+        <target state="needs-translation">Point</target>
         <note>Object geometry: a node</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -2203,6 +2221,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
+        <target state="translated">Fournissez un symbole d'un seul caractère (émoji ou caractère Unicode) pour identifier cette quête :</target>
         <note/>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
