@@ -446,11 +446,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	var displayDataOverlayLayer = false {
+	var displayDataOverlayLayers = false {
 		didSet {
-			dataOverlayLayer.isHidden = !displayDataOverlayLayer
+			dataOverlayLayer.isHidden = !displayDataOverlayLayers
 
-			if displayDataOverlayLayer {
+			if displayDataOverlayLayers {
 				dataOverlayLayer.setNeedsLayout()
 			}
 			updateTileOverlayLayers(latLon: screenCenterLatLon())
@@ -775,7 +775,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		enableRotation = UserPrefs.shared.mapViewEnableRotation.value ?? true
 		enableBirdsEye = UserPrefs.shared.mapViewEnableBirdsEye.value ?? false
 		displayGpxLogs = UserPrefs.shared.mapViewEnableBreadCrumb.value ?? false
-		displayDataOverlayLayer = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
+		displayDataOverlayLayers = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
 		enableTurnRestriction = UserPrefs.shared.mapViewEnableTurnRestriction.value ?? false
 
 		currentRegion = RegionInfoForLocation.fromUserPrefs() ?? RegionInfoForLocation.none
@@ -842,7 +842,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				return true // keep layer
 			}
 			// check it isn't a valid overlay for the user selection and is in current region
-			if displayDataOverlayLayer,
+			if displayDataOverlayLayers,
 			   overlaysIdList.contains(tileServer.identifier),
 			   tileServer.coversLocation(latLon)
 			{
@@ -853,7 +853,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			return false
 		}
 
-		if displayDataOverlayLayer {
+		if displayDataOverlayLayers {
 			// create any overlay layers the user had enabled
 			for ident in overlaysIdList {
 				if allLayers.contains(where: {
@@ -901,7 +901,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		UserPrefs.shared.mapViewEnableRotation.value = enableRotation
 		UserPrefs.shared.mapViewEnableBirdsEye.value = enableBirdsEye
 		UserPrefs.shared.mapViewEnableBreadCrumb.value = displayGpxLogs
-		UserPrefs.shared.mapViewEnableDataOverlay.value = displayDataOverlayLayer
+		UserPrefs.shared.mapViewEnableDataOverlay.value = displayDataOverlayLayers
 		UserPrefs.shared.mapViewEnableTurnRestriction.value = enableTurnRestriction
 		UserPrefs.shared.automaticCacheManagement.value = enableAutomaticCacheManagement
 

@@ -113,7 +113,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 						try geoJsonList.add(name: url.lastPathComponent, data: data)
 						if let loc = geo.firstPoint() {
 							mapView.centerOn(latLon: loc)
-							mapView.displayDataOverlayLayer = true
+							mapView.displayDataOverlayLayers = true
 						}
 					} catch {
 						self.displayImportError(

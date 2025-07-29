@@ -42,7 +42,7 @@ class DataOverlaysController: UITableViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-		if AppDelegate.shared.mapView.displayDataOverlayLayer {
+		if AppDelegate.shared.mapView.displayDataOverlayLayers {
 			AppDelegate.shared.mapView.dataOverlayLayer.setNeedsLayout()
 		}
 	}
