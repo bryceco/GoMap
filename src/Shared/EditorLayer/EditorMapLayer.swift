@@ -1754,3 +1754,15 @@ final class EditorMapLayer: CALayer {
 		fatalError()
 	}
 }
+
+extension EditorMapLayer: MapView.LayerOrView {
+	var tileServer: TileServer {
+		return .none
+	}
+
+	func removeFromSuper() {
+		removeFromSuperlayer()
+	}
+
+	func purgeTileCache() {}
+}

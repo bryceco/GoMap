@@ -158,3 +158,9 @@ class MapLibreVectorTilesView: UIView, TilesProvider, DiskCacheSizeProtocol {
 	func setPreferredFrameRate() {}
 }
 #endif
+
+extension MapLibreVectorTilesView: MapView.LayerOrView {
+	func removeFromSuper() {
+		removeFromSuperview()
+	}
+}

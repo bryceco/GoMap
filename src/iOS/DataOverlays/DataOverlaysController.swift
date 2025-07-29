@@ -35,6 +35,9 @@ class DataOverlaysController: UITableViewController {
 		let latLon = mapView.screenCenterLatLon()
 		overlayList = mapView.tileServerList.allServices(at: latLon, overlay: true)
 		overlaySelections = UserPrefs.shared.tileOverlaySelections.value ?? []
+
+		// Don't show edit button if there's nothing to edit
+		updateEditButton()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -42,6 +45,12 @@ class DataOverlaysController: UITableViewController {
 		if AppDelegate.shared.mapView.displayDataOverlayLayer {
 			AppDelegate.shared.mapView.dataOverlayLayer.setNeedsLayout()
 		}
+	}
+
+	func updateEditButton() {
+		// Don't show edit button if there's nothing to edit
+		let editItems = tableView(tableView, numberOfRowsInSection: Section.geojsonSection.rawValue)
+		navigationItem.rightBarButtonItem?.isEnabled = editItems > 1 // last item is "Import"
 	}
 
 	// MARK: Table view delegate
@@ -211,5 +220,6 @@ extension DataOverlaysController: UIDocumentPickerDelegate {
 			}
 		}
 		tableView.reloadData()
+		updateEditButton()
 	}
 }

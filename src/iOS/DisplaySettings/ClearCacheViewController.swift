@@ -15,6 +15,7 @@ private enum Row: Int {
 
 protocol DiskCacheSizeProtocol {
 	func getDiskCacheSize() async -> (size: Int, count: Int)
+	@MainActor func purgeTileCache()
 }
 
 class ClearCacheViewController: UITableViewController {
@@ -54,21 +55,14 @@ class ClearCacheViewController: UITableViewController {
 		let mapData = mapView.editorLayer.mapData
 
 		let title: String?
-		let object: [DiskCacheSizeProtocol]
+		let object: DiskCacheSizeProtocol?
 		switch indexPath.row {
 		case Row.osmData.rawValue:
 			title = NSLocalizedString("Clear OSM Data", comment: "Delete cached data")
-			object = []
+			object = nil
 		case Row.basemap.rawValue:
 			title = NSLocalizedString("Clear Basemap Tiles", comment: "Delete cached data")
-			switch mapView.basemapLayer {
-			case let .tileLayer(layer):
-				object = [layer]
-			case let .tileView(view):
-				object = [view]
-			default:
-				object = []
-			}
+			object = mapView.basemapLayer
 		default:
 			fatalError()
 		}
@@ -85,8 +79,7 @@ class ClearCacheViewController: UITableViewController {
 			Task {
 				var size = 0
 				var count = 0
-				for obj in object {
-					let (tSize, tCount) = await obj.getDiskCacheSize()
+				if let (tSize, tCount) = await object?.getDiskCacheSize() {
 					size += tSize
 					count += tCount
 				}
@@ -172,14 +165,7 @@ class ClearCacheViewController: UITableViewController {
 			appDelegate.mapView.editorLayer.purgeCachedData(.hard)
 			refreshAfterPurge()
 		case .basemap:
-			switch appDelegate.mapView.basemapLayer {
-			case let .tileLayer(layer):
-				layer.purgeTileCache()
-			case let .tileView(view):
-				view.purgeTileCache()
-			default:
-				break
-			}
+			appDelegate.mapView.basemapLayer.purgeTileCache()
 		}
 		dismiss(animated: true)
 	}

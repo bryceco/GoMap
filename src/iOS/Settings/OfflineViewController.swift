@@ -35,14 +35,8 @@ class OfflineViewController: UITableViewController {
 		tableView.estimatedRowHeight = 100
 		tableView.rowHeight = UITableView.automaticDimension
 		aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer
-		switch AppDelegate.shared.mapView.basemapLayer {
-		case let .tileLayer(layer):
-			basemapCell.tileLayer = layer
-		case let .tileView(view):
-			basemapCell.tileLayer = view
-		default:
-			fatalError()
-		}
+		basemapCell.tileLayer = AppDelegate.shared.mapView.basemapLayer as? TilesProvider
+
 		for cell in [aerialCell!, basemapCell!] {
 			cell.activityView.startAnimating()
 			cell.button.isEnabled = false
@@ -125,12 +119,10 @@ class OfflineViewController: UITableViewController {
 
 @MainActor
 protocol TilesProvider {
-	var mapView: MapView { get }
 	func currentTiles() -> [String]
 	func zoomLevel() -> Int
 	func maxZoom() -> Int
 	func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void)
-	func purgeTileCache()
 }
 
 extension TilesProvider {

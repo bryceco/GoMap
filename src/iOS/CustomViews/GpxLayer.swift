@@ -386,3 +386,13 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 		fatalError()
 	}
 }
+
+extension GpxLayer: MapView.LayerOrView {
+	var tileServer: TileServer {
+		return .none
+	}
+
+	func removeFromSuper() {
+		removeFromSuperlayer()
+	}
+}

@@ -55,3 +55,15 @@ final class DataOverlayLayer: DrawingLayer, DrawingLayerDelegate {
 		fatalError()
 	}
 }
+
+extension DataOverlayLayer: MapView.LayerOrView {
+	var tileServer: TileServer {
+		return .none
+	}
+
+	func removeFromSuper() {
+		removeFromSuperlayer()
+	}
+
+	func purgeTileCache() {}
+}
