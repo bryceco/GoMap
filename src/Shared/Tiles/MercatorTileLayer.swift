@@ -485,6 +485,10 @@ extension MercatorTileLayer: DiskCacheSizeProtocol {
 }
 
 extension MercatorTileLayer: MapView.LayerOrView {
+	var hasTileServer: TileServer? {
+		return tileServer
+	}
+
 	func removeFromSuper() {
 		removeFromSuperlayer()
 	}

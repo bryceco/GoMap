@@ -388,8 +388,8 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 }
 
 extension GpxLayer: MapView.LayerOrView {
-	var tileServer: TileServer {
-		return .none
+	var hasTileServer: TileServer? {
+		return nil
 	}
 
 	func removeFromSuper() {

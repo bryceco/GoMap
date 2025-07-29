@@ -215,7 +215,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		set {
 			let oldServerId = basemapServer.identifier
 			allLayers.removeAll(where: {
-				if $0.tileServer.identifier == oldServerId {
+				if $0.hasTileServer?.identifier == oldServerId {
 					$0.removeFromSuper()
 					return true
 				}
@@ -268,7 +268,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// * DataOverlays like GeoJson
 	@MainActor
 	protocol LayerOrView {
-		var tileServer: TileServer { get }
+		var hasTileServer: TileServer? { get }
 		var isHidden: Bool { get set }
 		func removeFromSuper()
 	}
@@ -835,22 +835,30 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 
 		// remove any overlay layers no longer displayed
-		for layer in allLayers where layer.tileServer != .none && layer.tileServer.overlay {
-			if displayDataOverlayLayer,
-			   overlaysIdList.contains(layer.tileServer.identifier),
-			   layer.tileServer.coversLocation(latLon)
-			{
-				continue
+		allLayers = allLayers.filter { layer in
+			// make sure it's a tile server and an overlay
+			guard let tileServer = layer.hasTileServer,
+			      tileServer.overlay
+			else {
+				return true // keep layer
 			}
-			allLayers.removeAll(where: { $0.tileServer == layer.tileServer })
+			// check it isn't a valid overlay for the user selection and is in current region
+			if displayDataOverlayLayer,
+			   overlaysIdList.contains(tileServer.identifier),
+			   tileServer.coversLocation(latLon)
+			{
+				return true // keep layer
+			}
+			// remove layer
 			layer.removeFromSuper()
+			return false
 		}
 
 		if displayDataOverlayLayer {
 			// create any overlay layers the user had enabled
 			for ident in overlaysIdList {
 				if allLayers.contains(where: {
-					$0.tileServer.identifier == ident
+					$0.hasTileServer?.identifier == ident
 				}) {
 					// already have it
 					continue
@@ -1268,7 +1276,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func unnamedRoadLayer() -> LayerOrView? {
-		return allLayers.first(where: { $0.tileServer == TileServer.noName })
+		return allLayers.first(where: { $0.hasTileServer == TileServer.noName })
 	}
 
 	// MARK: Rotate object

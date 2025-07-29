@@ -160,6 +160,10 @@ class MapLibreVectorTilesView: UIView, TilesProvider, DiskCacheSizeProtocol {
 #endif
 
 extension MapLibreVectorTilesView: MapView.LayerOrView {
+	var hasTileServer: TileServer? {
+		return tileServer
+	}
+
 	func removeFromSuper() {
 		removeFromSuperview()
 	}
