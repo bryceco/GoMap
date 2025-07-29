@@ -214,7 +214,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 		set {
 			let oldServerId = basemapServer.identifier
-			backgroundLayers.removeAll(where: {
+			allLayers.removeAll(where: {
 				if $0.tileServer.identifier == oldServerId {
 					$0.removeFromSuper()
 					return true
@@ -236,7 +236,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				self.layer.addSublayer(layer)
 				basemapLayer = layer
 			}
-			backgroundLayers.append(basemapLayer)
+			allLayers.append(basemapLayer)
 
 			UserPrefs.shared.currentBasemapSelection.value = newValue.identifier
 
@@ -272,7 +272,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		var isHidden: Bool { get set }
 		func removeFromSuper()
 	}
-	private(set) var backgroundLayers: [LayerOrView] = []
+
+	private(set) var allLayers: [LayerOrView] = []
 
 	var mapTransform = MapTransform()
 	var screenFromMapTransform: OSMTransform {
@@ -584,13 +585,13 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
 		locatorLayer.tileServer = TileServer.mapboxLocator
 		locatorLayer.isHidden = true
-		backgroundLayers.append(locatorLayer)
+		allLayers.append(locatorLayer)
 
 		aerialLayer = MercatorTileLayer(mapView: self)
 		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue
 		aerialLayer.tileServer = tileServerList.currentServer
 		aerialLayer.isHidden = true
-		backgroundLayers.append(aerialLayer)
+		allLayers.append(aerialLayer)
 
 		// self-assigning will do everything to set up the appropriate layer
 		basemapServer = basemapServer
@@ -598,15 +599,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		editorLayer = EditorMapLayer(owner: self)
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
-		backgroundLayers.append(editorLayer)
+		allLayers.append(editorLayer)
 
 		gpxLayer.zPosition = ZLAYER.GPX.rawValue
 		gpxLayer.isHidden = true
-		backgroundLayers.append(gpxLayer)
+		allLayers.append(gpxLayer)
 
 		dataOverlayLayer.zPosition = ZLAYER.DATA.rawValue
 		dataOverlayLayer.isHidden = true
-		backgroundLayers.append(dataOverlayLayer)
+		allLayers.append(dataOverlayLayer)
 
 #if DEBUG && false
 		quadDownloadLayer = QuadDownloadLayer(mapView: self)
@@ -617,7 +618,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 #endif
 
-		for bg in backgroundLayers {
+		for bg in allLayers {
 			switch bg {
 			case let view as UIView:
 				addSubview(view)
@@ -834,21 +835,21 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 
 		// remove any overlay layers no longer displayed
-		for layer in backgroundLayers where layer.tileServer != .none && layer.tileServer.overlay {
+		for layer in allLayers where layer.tileServer != .none && layer.tileServer.overlay {
 			if displayDataOverlayLayer,
 			   overlaysIdList.contains(layer.tileServer.identifier),
 			   layer.tileServer.coversLocation(latLon)
 			{
 				continue
 			}
-			backgroundLayers.removeAll(where: { $0.tileServer == layer.tileServer })
+			allLayers.removeAll(where: { $0.tileServer == layer.tileServer })
 			layer.removeFromSuper()
 		}
 
 		if displayDataOverlayLayer {
 			// create any overlay layers the user had enabled
 			for ident in overlaysIdList {
-				if backgroundLayers.contains(where: {
+				if allLayers.contains(where: {
 					$0.tileServer.identifier == ident
 				}) {
 					// already have it
@@ -869,7 +870,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				layer.zPosition = ZLAYER.GPX.rawValue
 				layer.tileServer = tileServer
 				layer.isHidden = false
-				backgroundLayers.append(layer)
+				allLayers.append(layer)
 				self.layer.addSublayer(layer)
 			}
 		}
@@ -919,7 +920,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		let bounds = self.bounds
 
 		// update bounds of layers
-		for bg in backgroundLayers {
+		for bg in allLayers {
 			switch bg {
 			case let layer as CALayer:
 				layer.frame = bounds
@@ -1267,7 +1268,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func unnamedRoadLayer() -> LayerOrView? {
-		return backgroundLayers.first(where: { $0.tileServer == TileServer.noName })
+		return allLayers.first(where: { $0.tileServer == TileServer.noName })
 	}
 
 	// MARK: Rotate object
