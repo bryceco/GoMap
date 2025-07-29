@@ -289,6 +289,7 @@ extension TileServerList {
 				print("TileServer \((try? entry.properties.name) ?? "<unknown>"): \(error)")
 			}
 		}
+		// Add noName layer as an additional supported overlay layer
 		externalAerials.append(TileServer.noName)
 		return externalAerials
 	}

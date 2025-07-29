@@ -254,7 +254,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// overlays
 	private(set) lazy var gpxLayer = GpxLayer(mapView: self)
 	private(set) lazy var locatorLayer = MercatorTileLayer(mapView: self)
-	private(set) lazy var noNameLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var dataOverlayLayer = DataOverlayLayer(mapView: self)
 	private(set) var quadDownloadLayer: QuadDownloadLayer?
 
@@ -1275,7 +1274,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		currentRegion = CountryCoder.shared.regionInfoFor(latLon: latLon)
 	}
 
-	func unnamedRoadLayer() -> LayerOrView? {
+	func noNameLayer() -> LayerOrView? {
 		return allLayers.first(where: { $0.hasTileServer == TileServer.noName })
 	}
 
@@ -1391,10 +1390,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 		quadDownloadLayer?.isHidden = editorLayer.isHidden
 
-		if var noName = unnamedRoadLayer() {
-			noName.isHidden = !editorLayer.isHidden
-		}
-		if var noName = unnamedRoadLayer() {
+		if var noName = noNameLayer() {
 			noName.isHidden = !editorLayer.isHidden
 		}
 
@@ -3004,7 +3000,7 @@ extension MapView: EditorMapLayerOwner {
 	}
 
 	func useUnnamedRoadHalo() -> Bool {
-		return unnamedRoadLayer() != nil
+		return noNameLayer() != nil
 	}
 
 	func useAutomaticCacheManagement() -> Bool {
