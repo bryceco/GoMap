@@ -5329,6 +5329,18 @@
         }
       }
     },
+    "fVu-8o-Ldq.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"fVu-8o-Ldq\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Details"
+          }
+        }
+      }
+    },
     "g2G-5j-Y4q.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"g2G-5j-Y4q\";",
       "extractionState" : "extracted_with_value",
@@ -9591,6 +9603,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "轉向限制"
+          }
+        }
+      }
+    },
+    "r78-B4-pAU.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"r78-B4-pAU\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Aerial Tiles"
           }
         }
       }

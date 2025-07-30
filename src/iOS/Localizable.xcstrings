@@ -24332,6 +24332,9 @@
         }
       }
     },
+    "Clear Data Caches" : {
+      "comment" : "Delete cached data"
+    },
     "Clear OSM Data" : {
       "comment" : "Delete cached data",
       "localizations" : {
