@@ -211,7 +211,7 @@
                                     <constraint firstAttribute="width" constant="42" id="BlX-m4-TZS"/>
                                     <constraint firstAttribute="height" constant="42" id="pqY-qY-k2m"/>
                                 </constraints>
-                                <state key="normal" image="location" catalog="system"/>
+                                <state key="normal" image="point.bottomleft.forward.to.point.topright.scurvepath" catalog="system"/>
                                 <connections>
                                     <action selector="toggleLocationButton:" destination="2" eventType="touchUpInside" id="JLZ-2W-IwT"/>
                                 </connections>
@@ -1057,10 +1057,10 @@
         <image name="bing-logo-white" width="87.666664123535156" height="19"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="icloud.and.arrow.up" catalog="system" width="128" height="117"/>
-        <image name="location" catalog="system" width="128" height="119"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="map" catalog="system" width="128" height="112"/>
         <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="point.bottomleft.forward.to.point.topright.scurvepath" catalog="system" width="117" height="128"/>
         <image name="temaki-compass" width="50" height="50"/>
         <systemColor name="darkTextColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1075,10 +1075,10 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
