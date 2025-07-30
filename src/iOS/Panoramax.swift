@@ -259,7 +259,6 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		photoView.layer.borderWidth = 2.0
 		photoView.layer.cornerRadius = 5.0
 		photoView.layer.masksToBounds = true
-		photoView.image = lighten(image: photoView.image!)
 
 		websiteButton.layer.borderWidth = 1.0
 		websiteButton.layer.borderColor = UIColor.black.cgColor
@@ -292,8 +291,16 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		locationManager.startUpdatingHeading()
 	}
 
-	override func viewWillDisappear(_ animated: Bool) {
-		super.viewWillDisappear(animated)
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+
+		// Configure the preview image
+		let size = photoView.bounds.height
+		let config = UIImage.SymbolConfiguration(pointSize: size, weight: .regular)
+		let photo = UIImage(systemName: "photo", withConfiguration: config)!
+			.withRenderingMode(.alwaysTemplate)
+		photoView.image = photo
+		photoView.tintColor = .systemBlue
 	}
 
 	@IBAction
