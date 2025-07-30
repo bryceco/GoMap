@@ -102,15 +102,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	static let appName: String = {
-		return Bundle.main.infoDictionary?["CFBundleDisplayName"] as! String
+		Bundle.main.infoDictionary?["CFBundleDisplayName"] as! String
 	}()
 
 	static let appVersion: String = {
-		return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
+		Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
 	}()
 
 	static let appBuildNumber: String = {
-		return Bundle.main.infoDictionary?["CFBundleVersion"] as! String
+		Bundle.main.infoDictionary?["CFBundleVersion"] as! String
 	}()
 
 	func applicationWillTerminate(_ application: UIApplication) {
