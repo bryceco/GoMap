@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum UrlSessionError: LocalizedError {
 	case badStatusCode(Int, String)
@@ -61,7 +62,25 @@ extension URLSession {
 	}
 
 	func data(with url: URL) async throws -> Data {
-		let request = URLRequest(url: url)
+		var request = URLRequest(url: url)
+		request.setUserAgent()
 		return try await URLSession.shared.data(with: request)
+	}
+}
+
+extension URLRequest {
+	static func appUserAgent() -> String
+	{
+		let appName = AppDelegate.shared.appName()
+		let appVersion = AppDelegate.shared.appVersion()
+		let systemVersion = UIDevice.current.systemVersion
+		let deviceModel = UIDevice.current.model
+		return "\(appName)/\(appVersion) (\(deviceModel); iOS \(systemVersion))"
+	}
+
+	static let appUserAgentString = appUserAgent()
+
+	mutating func setUserAgent() {
+		setValue(Self.appUserAgentString, forHTTPHeaderField: "User-Agent")
 	}
 }

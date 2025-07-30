@@ -37,10 +37,11 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 
 	private static func allPreferences(data callback: @escaping (Data?) -> Void) {
 		let url = OSM_SERVER.apiURL + "api/0.6/user/preferences.json"
-		guard let request = OSM_SERVER.oAuth2?.urlRequest(string: url) else {
+		guard var request = OSM_SERVER.oAuth2?.urlRequest(string: url) else {
 			callback(nil)
 			return
 		}
+		request.setUserAgent()
 		Task {
 			let data = try? await URLSession.shared.data(with: request)
 			DispatchQueue.main.async {
@@ -151,6 +152,7 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 				callback(false)
 				return
 			}
+			request.setUserAgent()
 			if value.isEmpty {
 				request.httpMethod = "DELETE"
 			} else {

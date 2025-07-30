@@ -31,6 +31,7 @@ final class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTask
 			request.httpMethod = "GET"
 			request.addValue("8bit", forHTTPHeaderField: "Content-Transfer-Encoding")
 			request.cachePolicy = .reloadIgnoringLocalCacheData
+			request.setUserAgent()
 			return request
 		}()
 

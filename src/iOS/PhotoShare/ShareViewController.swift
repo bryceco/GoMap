@@ -161,7 +161,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 						// decode as a GPX file
 						if true {
 							// try downloading the headers for the URL to see if it's "application/gpx+xml"
-							let request = NSMutableURLRequest(url: url)
+							var request = URLRequest(url: url)
 							request.httpMethod = "HEAD"
 							let task = URLSession.shared.dataTask(with: request as URLRequest) { _, response, _ in
 								if let httpResponse = response as? HTTPURLResponse,

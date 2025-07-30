@@ -36,7 +36,8 @@ class PanoramaxWebViewController: UIViewController, WKNavigationDelegate {
 		super.viewDidLoad()
 		webView.navigationDelegate = self
 
-		let request = URLRequest(url: url!)
+		var request = URLRequest(url: url!)
+		request.setUserAgent()
 		webView.load(request)
 	}
 
@@ -147,6 +148,7 @@ class PanoramaxServer {
 		request.httpMethod = "POST"
 		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 		request.httpBody = jsonData
+		request.setUserAgent()
 		let immutableRequest = request
 
 		Task {
@@ -180,6 +182,7 @@ class PanoramaxServer {
 	{
 		let url = serverURL.appendingPathComponent("api/upload_sets/\(photoSet)/files")
 		var request = URLRequest(url: url)
+		request.setUserAgent()
 		request.httpMethod = "POST"
 
 		// Create multipart/form-data boundary

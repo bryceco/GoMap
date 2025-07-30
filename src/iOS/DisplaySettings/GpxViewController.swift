@@ -157,6 +157,7 @@ class GpxViewController: UITableViewController {
 			let url = OSM_SERVER.apiURL + "api/0.6/gpx/create"
 
 			guard var request = OSM_SERVER.oAuth2?.urlRequest(string: url) else { return }
+			request.setUserAgent()
 			let boundary = "----------------------------d10f7aa230e8"
 			request.httpMethod = "POST"
 			let contentType = "multipart/form-data; boundary=\(boundary)"

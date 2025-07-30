@@ -156,6 +156,7 @@ class OAuth2 {
 			"code": code
 		])
 		var request = URLRequest(url: url)
+		request.setUserAgent()
 		request.httpMethod = "POST"
 		request.allHTTPHeaderFields = [
 			"Content-Type": "application/x-www-form-urlencoded"

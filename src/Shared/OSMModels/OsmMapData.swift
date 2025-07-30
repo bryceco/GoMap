@@ -1031,6 +1031,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			completion(.failure(OsmMapDataError.badURL(url)))
 			return
 		}
+		request.setUserAgent()
 		request.httpMethod = method
 		if let xml = xml {
 			var data = xml.xmlData(withOptions: 0)

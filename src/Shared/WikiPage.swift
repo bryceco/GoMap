@@ -50,10 +50,11 @@ class WikiPage {
 	}
 
 	private func ifUrlExists(_ url: URL) async -> Bool {
-		let request = NSMutableURLRequest(url: url)
+		var request = URLRequest(url: url)
+		request.setUserAgent()
 		request.httpMethod = "HEAD"
 		request.cachePolicy = .returnCacheDataElseLoad
-		if let (_, response) = try? await URLSession.shared.data(for: request as URLRequest),
+		if let (_, response) = try? await URLSession.shared.data(for: request),
 		   let httpResponse = response as? HTTPURLResponse
 		{
 			switch httpResponse.statusCode {
