@@ -71,8 +71,8 @@ extension URLSession {
 extension URLRequest {
 	static func appUserAgent() -> String
 	{
-		let appName = AppDelegate.shared.appName()
-		let appVersion = AppDelegate.shared.appVersion()
+		let appName = AppDelegate.appName
+		let appVersion = AppDelegate.appVersion
 		let systemVersion = UIDevice.current.systemVersion
 		let deviceModel = UIDevice.current.model
 		return "\(appName)/\(appVersion) (\(deviceModel); iOS \(systemVersion))"

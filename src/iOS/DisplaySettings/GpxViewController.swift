@@ -31,7 +31,7 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 			title: NSLocalizedString("Share", comment: "Open iOS sharing sheet"),
 			style: .default, handler: { _ in
 				let creationDate = self.gpxTrack.creationDate
-				let appName = AppDelegate.shared.appName()
+				let appName = AppDelegate.appName
 				let fileName = "\(appName) \(creationDate).gpx"
 
 				// get a copy of GPX as a string

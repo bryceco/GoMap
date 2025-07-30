@@ -1075,8 +1075,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		locale: String,
 		completion: @escaping (Result<Int64, Error>) -> Void)
 	{
-		let appDelegate = AppDelegate.shared
-		let creator = "\(appDelegate.appName()) \(appDelegate.appVersion())"
+		let creator = "\(AppDelegate.appName) \(AppDelegate.appVersion)"
 		var tags = [
 			"created_by": creator
 		]

@@ -54,7 +54,7 @@ class ContactUsViewController: UITableViewController, MFMailComposeViewControlle
 				let appDelegate = AppDelegate.shared
 				let mail = MFMailComposeViewController()
 				mail.mailComposeDelegate = self
-				mail.setSubject("\(appDelegate.appName()) \(appDelegate.appVersion()) feedback")
+				mail.setSubject("\(AppDelegate.appName) \(AppDelegate.appVersion) feedback")
 				mail.setToRecipients(["bryceco@yahoo.com"])
 				var body = "Device: \(deviceModel())\n"
 				body += "iOS version: \(UIDevice.current.systemVersion)\n"
@@ -124,11 +124,7 @@ class ContactUsViewController: UITableViewController, MFMailComposeViewControlle
 	// MARK: Private methods
 
 	private func createVersionDetailsString() -> String {
-		let appDelegate = AppDelegate.shared
-		let appName = appDelegate.appName()
-		let appVersion = appDelegate.appVersion()
-		let appBuildNumber = appDelegate.appBuildNumber()
-		return "\(appName) \(appVersion) (\(appBuildNumber))"
+		return "\(AppDelegate.appName) \(AppDelegate.appVersion) (\(AppDelegate.appBuildNumber))"
 	}
 
 	func openTestFlightURL() {

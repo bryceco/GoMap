@@ -177,11 +177,9 @@ final class OsmXmlGenerator {
 
 #if os(iOS)
 		let appDelegate = AppDelegate.shared
-		let appName = appDelegate.appName()
-		let appVersion = appDelegate.appVersion()
 		let text = """
 		<?xml version="1.0"?>\
-		<osmChange generator="\(appName) \(appVersion)" version="0.6"></osmChange>
+		<osmChange generator="\(AppDelegate.appName) \(AppDelegate.appVersion)" version="0.6"></osmChange>
 		"""
 		let doc = try! DDXMLDocument(xmlString: text, options: 0)
 		let root = doc.rootElement()!

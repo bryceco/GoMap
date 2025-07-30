@@ -84,10 +84,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// save the app version so we can detect upgrades
 		let prevVersion = UserPrefs.shared.appVersion.value
-		if prevVersion != appVersion() {
+		if prevVersion != Self.appVersion {
 			print("Upgrade!")
 			isAppUpgrade = true
-			UserPrefs.shared.appVersion.value = appVersion()
+			UserPrefs.shared.appVersion.value = Self.appVersion
 			UserPrefs.shared.uploadCountPerVersion.value = 0
 		}
 
@@ -101,17 +101,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return true
 	}
 
-	func appName() -> String {
+	static let appName: String = {
 		return Bundle.main.infoDictionary?["CFBundleDisplayName"] as! String
-	}
+	}()
 
-	func appVersion() -> String {
+	static let appVersion: String = {
 		return Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-	}
+	}()
 
-	func appBuildNumber() -> String {
+	static let appBuildNumber: String = {
 		return Bundle.main.infoDictionary?["CFBundleVersion"] as! String
-	}
+	}()
 
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground.
