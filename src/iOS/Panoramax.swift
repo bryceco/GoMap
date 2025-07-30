@@ -6,6 +6,7 @@
 //  Copyright © 2025 Bryce Cogswell. All rights reserved.
 //
 
+import CoreLocation
 import UIKit
 @preconcurrency import WebKit
 
@@ -234,6 +235,7 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 	var photoID = ""
 	var delegate: PanororamaxDelegate?
 	var location: LatLon = .zero
+	let locationManager = CLLocationManager()
 
 	@IBOutlet var photoView: UIImageView!
 	@IBOutlet var photoUser: UILabel!
@@ -283,25 +285,12 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		}
 
 		// start location services in case user takes a photo
-		AppDelegate.shared.mapView.locationManager.startUpdatingLocation()
-		AppDelegate.shared.mapView.locationManager.startUpdatingHeading()
+		locationManager.startUpdatingLocation()
+		locationManager.startUpdatingHeading()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
-
-		// return location services to expected state
-		if isBeingDismissed || navigationController?.isBeingDismissed == true {
-			switch AppDelegate.shared.mapView.gpsState {
-			case .NONE:
-				AppDelegate.shared.mapView.locationManager.stopUpdatingLocation()
-				AppDelegate.shared.mapView.locationManager.stopUpdatingHeading()
-			case .LOCATION:
-				AppDelegate.shared.mapView.locationManager.stopUpdatingHeading()
-			case .HEADING:
-				break
-			}
-		}
 	}
 
 	@IBAction
@@ -330,7 +319,7 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 			style: .default,
 			handler: { [self] _ in
 				photoPicker = PhotoCapture()
-				photoPicker.locationManager = AppDelegate.shared.mapView.locationManager
+				photoPicker.locationManager = locationManager
 				photoPicker.onCancel = {}
 				photoPicker.onError = {}
 				photoPicker.onAccept = { image, imageData in

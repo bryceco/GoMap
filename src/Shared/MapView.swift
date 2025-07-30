@@ -1651,8 +1651,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	private var locationManagerSmoothHeading = 0.0
 	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-		guard gpsState == .HEADING else { return }
-
 		let accuracy = newHeading.headingAccuracy
 		let heading = self.heading(for: newHeading)
 
@@ -1735,7 +1733,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		guard gpsState != .NONE else { return }
 		for location in locations {
 			locationUpdated(to: location)
 		}
