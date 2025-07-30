@@ -270,6 +270,9 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 			if server.identifier.hasPrefix("http:") || server.identifier.hasPrefix("https:") {
 				// custom user imagery
 				imagery = sanitizedURL(server.identifier)
+				if imagery.count > 255 {
+					imagery = String(imagery.prefix(255))
+				}
 			} else {
 				imagery = server.name
 			}
