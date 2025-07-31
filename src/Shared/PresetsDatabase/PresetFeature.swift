@@ -239,6 +239,17 @@ class PresetFeature: CustomDebugStringConvertible {
 			tags.removeValue(forKey: key)
 		}
 
+		// Find fields that belongs to presets in oldFeature and don't exist in presets in new feature
+		// and delete them. This will do things like remove the "cuisine" tag when a restaurant is
+		// retagged as a shop.
+		if let oldKeys = oldFeature?.allKeysForAllPresets(more: true) {
+			let newKeys = allKeysForAllPresets(more: true)
+			let removeKeys = Set(oldKeys).subtracting(newKeys)
+			for key in removeKeys {
+				tags.removeValue(forKey: key)
+			}
+		}
+
 		// add new feature tags
 		for (key, value) in addTags {
 			if value == "*" {
@@ -399,6 +410,15 @@ class PresetFeature: CustomDebugStringConvertible {
 			}
 		}
 		return result
+	}
+
+	func allKeysForAllPresets(more: Bool) -> [String]
+	{
+		let f1 = PresetsForFeature.fieldsFor(featureID: featureID, field: { $0.fields })
+		let f2 = more ? PresetsForFeature.fieldsFor(featureID: featureID, field: { $0.moreFields }) : []
+		let k1 = f1.flatMap { PresetsDatabase.shared.presetFields[$0]!.allKeys }
+		let k2 = f2.flatMap { PresetsDatabase.shared.presetFields[$0]!.allKeys }
+		return k1+k2
 	}
 
 	private var cachedWikiDescription: Any? = NSNull()
