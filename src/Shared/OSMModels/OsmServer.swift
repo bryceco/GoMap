@@ -10,10 +10,17 @@ import Foundation
 
 // "https://api.openstreetmap.org/"
 var OSM_SERVER: OsmServer = {
-	guard let serverUrl = UserPrefs.shared.osmServerUrl.value else {
-		return OsmServerList.first!
+	// This initialization is ugly because we want to force fetchCapabilities() to be called
+	let server = {
+		guard let serverUrl = UserPrefs.shared.osmServerUrl.value else {
+			return OsmServerList.first!
+		}
+		return OsmServer.serverForUrl(serverUrl)
+	}()
+	Task.detached {
+		await server.fetchCapabilities()
 	}
-	return OsmServer.serverForUrl(serverUrl)
+	return server
 }() {
 	didSet {
 		if oldValue.apiURL == OSM_SERVER.apiURL {
@@ -22,10 +29,13 @@ var OSM_SERVER: OsmServer = {
 		UserPrefs.shared.osmServerUrl.value = OSM_SERVER.apiURL
 		AppDelegate.shared.mapView.editorLayer.mapData.resetServer(OSM_SERVER)
 		AppDelegate.shared.userName = nil
+		Task.detached {
+			await OSM_SERVER.fetchCapabilities()
+		}
 	}
 }
 
-struct OsmServer {
+class OsmServer {
 	let fullName: String // friendly name of the server
 	let serverURL: String // e.g. www.openstreetmap.com
 	let apiURL: String // e.g. api.openstreetmap.com
@@ -53,6 +63,9 @@ struct OsmServer {
 			osmchaUrl = "https://" + osmchaHost + "/"
 		} else {
 			osmchaUrl = nil
+		}
+		Task.detached {
+			await self.fetchCapabilities()
 		}
 	}
 
@@ -105,6 +118,124 @@ struct OsmServer {
 			return server
 		}
 		return OsmServer(apiUrl: url)
+	}
+
+	// Capabilities
+
+	struct Capabilities: Codable {
+		let policy: Policy
+		let api: API
+		let copyright, version: String
+		let license, attribution: String
+		let generator: String
+	}
+
+	struct API: Codable {
+		let status: Status
+		let area: Area
+		let tracepoints: Tracepoints
+		let waynodes: Area
+		let changesets: Changesets
+		let notes: Notes
+		let timeout: Timeout
+		let version: Version
+		let relationmembers, noteArea: Area
+
+		enum CodingKeys: String, CodingKey {
+			case status, area, tracepoints, waynodes, changesets, notes, timeout, version, relationmembers
+			case noteArea = "note_area"
+		}
+	}
+
+	struct Area: Codable {
+		let maximum: Double
+	}
+
+	struct Changesets: Codable {
+		let maximumElements, defaultQueryLimit, maximumQueryLimit: Int
+
+		enum CodingKeys: String, CodingKey {
+			case maximumElements = "maximum_elements"
+			case defaultQueryLimit = "default_query_limit"
+			case maximumQueryLimit = "maximum_query_limit"
+		}
+	}
+
+	struct Notes: Codable {
+		let defaultQueryLimit, maximumQueryLimit: Int
+
+		enum CodingKeys: String, CodingKey {
+			case defaultQueryLimit = "default_query_limit"
+			case maximumQueryLimit = "maximum_query_limit"
+		}
+	}
+
+	struct Status: Codable {
+		let api, database, gpx: String
+	}
+
+	struct Timeout: Codable {
+		let seconds: Int
+	}
+
+	struct Tracepoints: Codable {
+		let perPage: Int
+
+		enum CodingKeys: String, CodingKey {
+			case perPage = "per_page"
+		}
+	}
+
+	struct Version: Codable {
+		let minimum, maximum: String
+	}
+
+	struct Policy: Codable {
+		let imagery: Imagery
+	}
+
+	struct Imagery: Codable {
+		let blacklist: [Blacklist]
+	}
+
+	struct Blacklist: Codable {
+		let regex: String
+	}
+
+	var capabilities: Capabilities?
+	var bannedUrls: [NSRegularExpression] = []
+
+	func fetchCapabilities() async {
+		do {
+			let url = URL(string: apiURL + "api/0.6/capabilities.json")!
+			let data = try await URLSession.shared.data(with: url)
+#if false
+			// print the returned data
+			guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
+			      let prettyData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted]),
+			      let prettyString = String(data: prettyData, encoding: .utf8)
+			else {
+				print("Invalid or unprintable JSON")
+				return
+			}
+			print(prettyString)
+#endif
+			let decoder = JSONDecoder()
+			capabilities = try decoder.decode(Capabilities.self, from: data)
+			bannedUrls = capabilities?.policy.imagery.blacklist.compactMap {
+				let regex = $0.regex.replacingOccurrences(of: "\\\\", with: "\\")
+				return try? NSRegularExpression(pattern: regex, options: [.caseInsensitive])
+			} ?? []
+		} catch {
+			print("capabilities failure: \(error)")
+		}
+	}
+
+	func isBannedURL(_ url: String) -> Bool {
+		let urlRange = NSRange(location: 0, length: url.utf16.count)
+		return bannedUrls.contains(where: { regex in
+			regex.firstMatch(in: url, options: [], range: urlRange) != nil
+		})
 	}
 }
 

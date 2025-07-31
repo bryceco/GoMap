@@ -47,13 +47,6 @@ class TileServerEditViewController: UITableViewController {
 		projectionField.inputView = picker
 	}
 
-	func isBannedURL(_ url: String) -> Bool {
-		// http://www.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}
-		let regex = ".*\\.google(apis)?\\..*/(vt|kh)[\\?/].*([xyz]=.*){3}.*"
-		let range = url.range(of: regex, options: [.regularExpression, .caseInsensitive])
-		return range != nil
-	}
-
 	func trimmedName() -> String {
 		return nameField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 	}
@@ -69,7 +62,7 @@ class TileServerEditViewController: UITableViewController {
 			return
 		}
 
-		if isBannedURL(url) {
+		if OSM_SERVER.isBannedURL(url) {
 			return
 		}
 
@@ -112,7 +105,7 @@ class TileServerEditViewController: UITableViewController {
 		if !trimmedName().isEmpty,
 		   let url = urlField.text,
 		   url.count > 0,
-		   !isBannedURL(url)
+		   !OSM_SERVER.isBannedURL(url)
 		{
 			allowed = true
 		}
