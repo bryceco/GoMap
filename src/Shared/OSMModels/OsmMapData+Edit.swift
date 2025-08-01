@@ -1085,8 +1085,8 @@ extension OsmMapData {
 		loc = otherWay.nodes.firstIndex(of: selectedNode) ?? 0
 		_ = try canAddNode(to: otherWay, at: loc > 0 ? loc : loc + 1)
 
-		let newTags = OsmTags.Merge(ourTags: selectedWay.tags, otherTags: otherWay.tags, allowConflicts: false)
-		if newTags == nil {
+		guard let newTags = OsmTags.Merge(ourTags: selectedWay.tags, otherTags: otherWay.tags, allowConflicts: false)
+		else {
 			// tag conflict
 			throw EditError.text(NSLocalizedString("The ways contain incompatible tags", comment: ""))
 		}
@@ -1129,7 +1129,7 @@ extension OsmMapData {
 			}
 
 			// join tags
-			setTags(newTags!, for: selectedWay)
+			setTags(newTags, for: selectedWay)
 
 			deleteWayUnsafe(otherWay)
 			updateParentMultipolygonRelationRoles(for: selectedWay)
