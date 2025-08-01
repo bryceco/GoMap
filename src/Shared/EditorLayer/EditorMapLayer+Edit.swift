@@ -748,24 +748,25 @@ extension EditorMapLayer {
 				selectedRelation = newObject.isRelation()
 				owner.placePushpinForSelection(at: nil)
 			case .ROTATE:
-				if selectedWay == nil, !(selectedRelation?.isMultipolygon() ?? false) {
+				guard selectedWay != nil || (selectedRelation?.isMultipolygon() ?? false) else {
 					throw EditError.text(NSLocalizedString("Only ways/multipolygons can be rotated", comment: ""))
-				} else {
-					owner.startObjectRotation()
 				}
+				owner.startObjectRotation()
 			case .RECTANGULARIZE:
-				guard let selectedWay = selectedWay else { return }
-				if selectedWay.ident >= 0, !owner.screenLatLonRect().containsRect(selectedWay.boundingBox) {
+				guard let way = selectedWay else { return }
+				if way.ident >= 0, !owner.screenLatLonRect().containsRect(way.boundingBox) {
 					throw EditError.text(NSLocalizedString("The selected way must be completely visible",
 					                                       comment: "")) // avoid bugs where nodes are deleted from other objects
 				}
-				let rect = try mapData.canOrthogonalizeWay(self.selectedWay!)
+				let rect = try mapData.canOrthogonalizeWay(way)
 				rect()
 			case .REVERSE:
 				let reverse = try mapData.canReverse(selectedWay!)
 				reverse()
 			case .JOIN:
-				guard let way = selectedWay, let node = selectedNode else { break }
+				guard let way = selectedWay,
+				      let node = selectedNode
+				else { return }
 				let join = try mapData.canJoin(way, at: node)
 				selectedWay = join()
 			case .DISCONNECT:
