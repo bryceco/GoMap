@@ -165,7 +165,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	@IBOutlet var addNodeButton: UIButton!
 	@IBOutlet var rulerView: RulerView!
 	@IBOutlet var progressIndicator: UIActivityIndicatorView!
-	@IBOutlet var editControl: UISegmentedControl!
+	@IBOutlet var editControl: CustomSegmentedControl!
 	@IBOutlet var aerialAlignmentButton: UIButton!
 	@IBOutlet var dPadView: DPadView!
 
@@ -678,15 +678,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// set up action button
 		editControl.isHidden = true
-		editControl.isSelected = false
-		editControl.selectedSegmentIndex = Int(UISegmentedControl.noSegment)
-		editControl.setTitleTextAttributes(
-			[
-				NSAttributedString.Key.font: UIFont.preferredFont(forTextStyle: .headline)
-			],
-			for: .normal)
 		editControl.layer.zPosition = ZLAYER.TOOLBAR.rawValue
-		editControl.layer.cornerRadius = 4.0
+		editControl.layer.cornerRadius = 8.0
+		editControl.layer.masksToBounds = true
 #if targetEnvironment(macCatalyst)
 		// We add a constraint in the storyboard to make the edit control buttons taller
 		// so they're easier to push, but on Mac the constraints doesn't work correctly
@@ -714,9 +708,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			action: #selector(plusButtonLongPressHandler(_:)))
 		addNodeButtonLongPressGestureRecognizer?.minimumPressDuration = 0.001
 		addNodeButtonLongPressGestureRecognizer?.delegate = self
-		if let addNodeButtonLongPressGestureRecognizer = addNodeButtonLongPressGestureRecognizer {
-			addNodeButton.addGestureRecognizer(addNodeButtonLongPressGestureRecognizer)
-		}
+		addNodeButton.addGestureRecognizer(addNodeButtonLongPressGestureRecognizer!)
 
 		if #available(iOS 13.4, macCatalyst 13.4, *) {
 			// pan gesture to recognize mouse-wheel scrolling (zoom) on iPad and Mac Catalyst
@@ -2005,7 +1997,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	/// Offers the option to either merge tags or replace them with the copied tags.
 	/// - Parameter sender: nil
 	override func paste(_ sender: Any?) {
-		editorLayer.pasteTags()
+		editorLayer.pasteTags(string: nil)
 	}
 
 	override func delete(_ sender: Any?) {
@@ -2038,11 +2030,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		if show {
 			if editorLayer.selectedPrimary == nil {
 				// brand new node
-				if editorLayer.canPasteTags() {
-					editControlActions = [.EDITTAGS, .ADDNOTE, .PASTETAGS]
-				} else {
-					editControlActions = [.EDITTAGS, .ADDNOTE]
-				}
+				editControlActions = [.EDITTAGS, .ADDNOTE, .PASTETAGS]
 			} else {
 				if let relation = editorLayer.selectedPrimary?.isRelation() {
 					if relation.isRestriction() {
@@ -2056,22 +2044,41 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					editControlActions = [.EDITTAGS, .PASTETAGS, .DELETE, .MORE]
 				}
 			}
-			editControl.removeAllSegments()
-			for action in editControlActions {
-				let title: String = action.actionTitle(abbreviated: true)
-				editControl.insertSegment(withTitle: title,
-				                          at: editControl.numberOfSegments,
-				                          animated: false)
-			}
-			// mark segment labels as adjustsFontSizeToFitWidth
-			for segment in editControl.subviews {
-				for label in segment.subviews {
-					guard let label = label as? UILabel else {
-						continue
+
+			func editControlForAction(_ action: EDIT_ACTION) -> UIControl {
+				let backgroundColor = UIColor.systemBackground
+				let foregroundColor = UIColor.label
+				if action == .PASTETAGS,
+				   #available(iOS 16.0, *)
+				{
+					let configuration = UIPasteControl.Configuration()
+					configuration.baseBackgroundColor = backgroundColor
+					configuration.baseForegroundColor = foregroundColor
+					configuration.cornerStyle = .dynamic
+					configuration.displayMode = .labelOnly
+					let pasteButton = UIPasteControl(configuration: configuration)
+					pasteButton.target = editorLayer
+					return pasteButton
+				} else {
+					let title = action.actionTitle(abbreviated: true)
+					let button = ButtonClosure(type: .system)
+					button.setTitle(title, for: .normal)
+					button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+					button.backgroundColor = backgroundColor
+					button.setTitleColor(foregroundColor, for: .normal)
+					button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
+					button.layer.cornerRadius = editControl.layer.cornerRadius
+					button.layer.masksToBounds = true
+					button.onTap = { [weak self] _ in
+						self?.editorLayer.performEdit(action)
 					}
-					label.adjustsFontSizeToFitWidth = true
+					return button
 				}
 			}
+			let actions: [UIControl] = editControlActions.map {
+				editControlForAction($0)
+			}
+			editControl.controls = actions
 		}
 	}
 
@@ -2098,24 +2105,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		mainViewController.present(actionSheet, animated: true)
 
 		// compute location for action sheet to originate
-		var button = editControl.bounds
-		let segmentWidth = button.size.width /
-			CGFloat(editControl.numberOfSegments) // hack because we can't get the frame for an individual segment
-		button.origin.x += button.size.width - segmentWidth
-		button.size.width = segmentWidth
-		actionSheet.popoverPresentationController?.sourceView = editControl
-		actionSheet.popoverPresentationController?.sourceRect = button
-	}
-
-	@IBAction func editControlAction(_ sender: Any) {
-		// get the selected button: has to be done before modifying the node/way selection
-		guard let segmentedControl = sender as? UISegmentedControl else { return }
-		let segment = segmentedControl.selectedSegmentIndex
-		if segment >= 0, segment < editControlActions.count {
-			let action = editControlActions[segment]
-			editorLayer.performEdit(action)
-		}
-		segmentedControl.selectedSegmentIndex = UISegmentedControl.noSegment
+		let button = editControl.controls.last!
+		actionSheet.popoverPresentationController?.sourceView = button
+		actionSheet.popoverPresentationController?.sourceRect = button.bounds
 	}
 
 	@IBAction func presentTagEditor(_ sender: Any?) {
@@ -3013,13 +3005,9 @@ extension MapView: EditorMapLayerOwner {
 		case .none:
 			break
 		case .editBar:
-			var button = editControl.bounds
-			let segmentWidth = button.size.width
-				/ CGFloat(editControl.numberOfSegments) // hack because we can't get the frame for an individual segment
-			button.origin.x += button.size.width - 2 * segmentWidth
-			button.size.width = segmentWidth
-			alert.popoverPresentationController?.sourceView = editControl
-			alert.popoverPresentationController?.sourceRect = button
+			let button = editControl.controls.first!
+			alert.popoverPresentationController?.sourceView = button
+			alert.popoverPresentationController?.sourceRect = button.bounds
 		case let .rect(rc):
 			alert.popoverPresentationController?.sourceView = self
 			alert.popoverPresentationController?.sourceRect = rc

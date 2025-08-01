@@ -412,13 +412,12 @@ class PresetFeature: CustomDebugStringConvertible {
 		return result
 	}
 
-	func allKeysForAllPresets(more: Bool) -> [String]
-	{
+	func allKeysForAllPresets(more: Bool) -> [String] {
 		let f1 = PresetsForFeature.fieldsFor(featureID: featureID, field: { $0.fields })
 		let f2 = more ? PresetsForFeature.fieldsFor(featureID: featureID, field: { $0.moreFields }) : []
 		let k1 = f1.flatMap { PresetsDatabase.shared.presetFields[$0]!.allKeys }
 		let k2 = f2.flatMap { PresetsDatabase.shared.presetFields[$0]!.allKeys }
-		return k1+k2
+		return k1 + k2
 	}
 
 	private var cachedWikiDescription: Any? = NSNull()

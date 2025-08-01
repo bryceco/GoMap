@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import UniformTypeIdentifiers
 
 extension EditorMapLayer {
 	func undo() {
@@ -24,6 +25,7 @@ extension EditorMapLayer {
 
 	private var copyPasteTags: [String: String] {
 		get {
+			// This will generate a user prompt on iOS 16 or later:
 			if let text = UIPasteboard.general.string,
 			   let dict = OsmTags.tagsForString(text)
 			{
@@ -47,34 +49,43 @@ extension EditorMapLayer {
 		return copyPasteTags.count > 0
 	}
 
-	private func pasteTagsMerge(_ object: OsmBaseObject) {
+	private func pasteTagsMerge(_ object: OsmBaseObject, tags: [String: String]) {
 		// Merge tags
-		let newTags = OsmTags.Merge(ourTags: object.tags, otherTags: copyPasteTags, allowConflicts: true)!
+		let newTags = OsmTags.Merge(ourTags: object.tags, otherTags: tags, allowConflicts: true)!
 		mapData.setTags(newTags, for: object)
 		setNeedsLayout()
 		owner.didUpdateObject()
 	}
 
-	private func pasteTagsReplace(_ object: OsmBaseObject) {
+	private func pasteTagsReplace(_ object: OsmBaseObject, tags: [String: String]) {
 		// Replace all tags
-		mapData.setTags(copyPasteTags, for: object)
+		mapData.setTags(tags, for: object)
 		setNeedsLayout()
 		owner.didUpdateObject()
 	}
 
 	/// Offers the option to either merge tags or replace them with the copied tags.
-	func pasteTags() {
-		let copyPasteTags = self.copyPasteTags
-		guard let selectedPrimary = selectedPrimary else { return }
-		guard copyPasteTags.count > 0 else {
+	func pasteTags(string: String?) {
+		let pastedTags: [String: String]
+		if let string {
+			pastedTags = OsmTags.tagsForString(string) ?? [:]
+		} else {
+			pastedTags = copyPasteTags
+		}
+		guard pastedTags.count > 0 else {
 			owner.showAlert(NSLocalizedString("No tags to paste", comment: ""), message: nil)
 			return
 		}
+		if selectedPrimary == nil {
+			// pasting to brand new object, so we need to create it first
+			setTagsForCurrentObject([:])
+		}
+		guard let selectedPrimary = selectedPrimary else { return }
 
 		if selectedPrimary.tags.count > 0 {
 			let question = String.localizedStringWithFormat(
 				NSLocalizedString("Pasting %ld tag(s)", comment: ""),
-				copyPasteTags.count)
+				pastedTags.count)
 			let alertPaste = UIAlertController(
 				title: NSLocalizedString("Paste", comment: ""),
 				message: question,
@@ -84,16 +95,16 @@ extension EditorMapLayer {
 			                                   handler: nil))
 			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""),
 			                                   style: .default, handler: { [self] _ in
-			                                   	self.pasteTagsMerge(selectedPrimary)
+			                                   	self.pasteTagsMerge(selectedPrimary, tags: pastedTags)
 			                                   }))
 			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""),
 			                                   style: .default,
 			                                   handler: { [self] _ in
-			                                   	self.pasteTagsReplace(selectedPrimary)
+			                                   	self.pasteTagsReplace(selectedPrimary, tags: pastedTags)
 			                                   }))
 			owner.presentAlert(alert: alertPaste, location: .none)
 		} else {
-			pasteTagsReplace(selectedPrimary)
+			pasteTagsReplace(selectedPrimary, tags: pastedTags)
 		}
 	}
 
@@ -627,8 +638,9 @@ extension EditorMapLayer {
 				let split = selectedWay.isClosed() ||
 					(selectedNode != selectedWay.nodes[0] && selectedNode != selectedWay.nodes.last)
 				let join = parentWays.count > 1
-				let restriction = owner.useTurnRestrictions() && self.selectedWay?.tags["highway"] != nil && parentWays
-					.count > 1
+				let restriction = owner.useTurnRestrictions()
+					&& self.selectedWay?.tags["highway"] != nil
+					&& parentWays.count > 1
 
 				actionList = [.COPYTAGS]
 
@@ -711,11 +723,7 @@ extension EditorMapLayer {
 					}
 				}
 			case .PASTETAGS:
-				if selectedPrimary == nil {
-					// pasting to brand new object, so we need to create it first
-					setTagsForCurrentObject([:])
-				}
-				pasteTags()
+				pasteTags(string: nil)
 			case .DUPLICATE:
 				guard let primary = selectedPrimary,
 				      let pushpinView = owner.pushpinView()
@@ -1145,6 +1153,39 @@ extension EditorMapLayer {
 		case let .failure(error):
 			if case let .text(text) = error {
 				owner.showAlert(NSLocalizedString("Can't extend way", comment: ""), message: text)
+			}
+		}
+	}
+}
+
+// We can set EditorMapLayer to be the target of a UIPasteControl.
+// This conformance allows the control to properly present it's state
+// and to activate a paste operation.
+@available(iOS 14.0, *)
+extension EditorMapLayer: UIPasteConfigurationSupporting {
+	var pasteConfiguration: UIPasteConfiguration? {
+		get {
+			UIPasteConfiguration(acceptableTypeIdentifiers: [UTType.text.identifier])
+		}
+		set {}
+	}
+
+	func canPaste(_ itemProviders: [NSItemProvider]) -> Bool {
+		let can = itemProviders.contains { $0.hasItemConformingToTypeIdentifier(UTType.text.identifier) }
+		return can
+	}
+
+	func paste(itemProviders: [NSItemProvider]) {
+		for item in itemProviders {
+			if item.canLoadObject(ofClass: String.self) {
+				_ = item.loadObject(ofClass: String.self) { [weak self] text, _ in
+					if let text {
+						DispatchQueue.main.async {
+							self?.pasteTags(string: text)
+						}
+					}
+				}
+				break
 			}
 		}
 	}

@@ -4887,7 +4887,7 @@
     },
     "zrW-uc-hfQ.segmentTitles[0]" : {
       "comment" : "Class = \"UISegmentedControl\"; zrW-uc-hfQ.segmentTitles[0] = \"Tags\"; ObjectID = \"zrW-uc-hfQ\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5061,7 +5061,7 @@
     },
     "zrW-uc-hfQ.segmentTitles[1]" : {
       "comment" : "Class = \"UISegmentedControl\"; zrW-uc-hfQ.segmentTitles[1] = \"Delete\"; ObjectID = \"zrW-uc-hfQ\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5235,7 +5235,7 @@
     },
     "zrW-uc-hfQ.segmentTitles[2]" : {
       "comment" : "Class = \"UISegmentedControl\"; zrW-uc-hfQ.segmentTitles[2] = \"More...\"; ObjectID = \"zrW-uc-hfQ\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
