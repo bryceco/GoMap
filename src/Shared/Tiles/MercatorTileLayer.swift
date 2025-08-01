@@ -391,7 +391,9 @@ final class MercatorTileLayer: CALayer {
 					minZoom: max(zoomLevel - 6, 1),
 					zoomLevel: zoomLevel,
 					completion: { [self] error in
-						if let error = error {
+						if let error = error,
+						   self.tileServer != TileServer.mapboxLocator
+						{
 							mapView.presentError(title: tileServer.name, error: error, flash: true)
 						}
 						mapView.progressDecrement()
