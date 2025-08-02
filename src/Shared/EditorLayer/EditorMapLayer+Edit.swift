@@ -44,7 +44,9 @@ extension EditorMapLayer {
 	}
 
 	func canPasteTags() -> Bool {
-		return copyPasteTags.count > 0
+		// We used to test the pasteboard to see if there's anything to paste,
+		// but now it throws an access prompt to the user so just return true.
+		return true
 	}
 
 	private func pasteTagsMerge(_ object: OsmBaseObject) {

@@ -23,6 +23,12 @@ class TextPairTableCell: UITableViewCell {
 			|| state.contains(.showingDeleteConfirmation)
 	}
 
+	override func resignFirstResponder() -> Bool {
+		text1.resignFirstResponder()
+		text2.resignFirstResponder()
+		return super.resignFirstResponder()
+	}
+
 	override func willTransition(to state: UITableViewCell.StateMask) {
 		// don't allow editing text while deleting
 		if shouldResignFirstResponder(forState: state) {
@@ -206,8 +212,8 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		// Check whether they are pasting a set of tags
 		// Note the inserted string has newlines converted to spaces.
 		if let pb = UIPasteboard.general.string?.trimmingCharacters(in: .whitespacesAndNewlines),
-		   insert.trimmingCharacters(in: .whitespaces) == pb.replacingOccurrences(of: "\n", with: " ")
-		   .trimmingCharacters(in: .whitespaces),
+		   insert.trimmingCharacters(in: .whitespaces)
+		   == pb.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: .whitespaces),
 		   let tags = OsmTags.tagsForString(pb),
 		   tags.count > 0
 		{

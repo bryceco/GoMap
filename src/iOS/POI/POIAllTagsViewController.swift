@@ -403,6 +403,10 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	// Called when user pastes a set of tags
 	func pasteTags(_ tags: [String: String]) {
+		tableView.visibleCells.forEach {
+			_ = ($0 as? KeyValueTableCell)?.resignFirstResponder()
+		}
+
 		var dict = self.tags.keyValueDictionary()
 		for (k, v) in tags {
 			dict[k] = v
