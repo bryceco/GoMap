@@ -1592,7 +1592,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	func updateUserLocationIndicator(_ location: CLLocation?) {
 		if !locationBallLayer.isHidden {
 			// set new position
-			guard let location = location ?? locationManager.location else { return }
+			guard let location = location ?? locationManager.location,
+			      location.horizontalAccuracy >= 0,
+			      location.horizontalAccuracy < 1000
+			else {
+				return
+			}
 			let coord = LatLon(location.coordinate)
 			var point = mapTransform.screenPoint(forLatLon: coord, birdsEye: true)
 			point = mapTransform.wrappedScreenPoint(point, screenBounds: bounds)
