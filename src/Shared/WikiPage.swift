@@ -163,7 +163,6 @@ class WikiPage {
 	private let imageCache = PersistentWebCache<UIImage>(name: "wikiImageStore",
 	                                                     memorySize: 10_000000,
 	                                                     daysToKeep: 45.0)
-	private let equals = "=".addingPercentEncoding(withAllowedCharacters: CharacterSet.alphanumerics) ?? ""
 
 	func resetCache() {
 		descriptionCache.removeAllObjects()
@@ -334,26 +333,37 @@ class WikiPage {
 		let meta = descriptionCache.object(
 			withKey: language + ":" + key + "=" + value,
 			fallbackURL: {
+				var comps = URLComponents(string: "https://wiki.openstreetmap.org/w/api.php")!
+				var titles: [String] = []
+				titles.append("Key:" + key)
+				if value != "" {
+					titles.append("Tag:" + key + "=" + value)
+				}
 				let otherLang = self.wikiLanguageCodeFor(languageCode: language)
-				let languages = otherLang == "" ? "en" : ("en%7C" + otherLang)
-				let tagTitle = value == ""
-					? "Key:" + self.encodedTag(key)
-					: "Tag:" + self.encodedTag(key) + self.equals + self.encodedTag(value)
-				let langTitle = otherLang != "" ? "%7CLocale:" + otherLang : ""
-				let path = "https://wiki.openstreetmap.org/w/api.php?" +
-					["action=wbgetentities",
-					 "sites=wiki",
-					 ("titles=" + tagTitle + langTitle).replacingOccurrences(of: "_", with: "%20"),
-					 "languages=" + languages.replacingOccurrences(of: "_", with: "%20"),
-					 "format=json"]
-					.joined(separator: "&")
-				return URL(string: path)
+				let languages = otherLang == "" ? ["en"] : [otherLang, "en"]
+				if otherLang != "" {
+					titles.append("Locale:" + otherLang)
+				}
+				comps.queryItems = [
+					URLQueryItem(name: "action", value: "wbgetentities"),
+					URLQueryItem(name: "sites", value: "wiki"),
+					URLQueryItem(name: "titles", value: titles
+						.map { $0.replacingOccurrences(of: "_", with: " ") }
+						.joined(separator: "|")),
+					URLQueryItem(name: "languages", value: languages
+						.map { $0.replacingOccurrences(of: "_", with: " ") }
+						.joined(separator: "|")),
+					URLQueryItem(name: "format", value: "json")
+				]
+				return comps.url ?? URL(string: "")
 			},
 			objectForData: { data in
 				self.descriptionForJson(data: data, language: language, imageWidth: imageWidth)
 			},
 			completion: { result in
-				guard let result = try? result.get() else {
+				guard let result = try? result.get(),
+				      result.description != ""
+				else {
 					update(nil)
 					return
 				}
