@@ -1,5 +1,7 @@
 #!/bin/bash
 
+../precheck_git.sh || exit 1
+
 if [ -z "$WEBLATE_TOKEN" ]; then
 	echo "WEBLATE_TOKEN is not set"
 	exit
