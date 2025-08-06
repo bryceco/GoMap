@@ -21,7 +21,7 @@ jobs:
         
       - uses: swift-actions/setup-swift@v2
         with:
-          swift-version: '6.0'
+          swift-version: '5.10'
     
       - name: Get swift version
         run: swift --version
