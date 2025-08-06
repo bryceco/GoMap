@@ -47,7 +47,7 @@ final class EditorFilters {
 
 	init() {
 		let prefs = UserPrefs.shared
-		enableObjectFilters = prefs.editor_enableObjectFilters.value ?? true
+		enableObjectFilters = prefs.editor_enableObjectFilters.value ?? false
 		showLevel = prefs.editor_showLevel.value ?? true
 		showLevelRange = prefs.editor_showLevelRange.value ?? ""
 		showPoints = prefs.editor_showPoints.value ?? true
