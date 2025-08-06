@@ -8,6 +8,12 @@
 
 #import "UndoAction.h"
 
+static inline void DbgAssert(bool condition) {
+#if DEBUG
+	assert(condition);
+#endif
+}
+
 @implementation UndoAction
 
 +(BOOL)supportsSecureCoding
@@ -22,13 +28,14 @@
 		_target = target;
 		_selector = NSStringFromSelector(selector);
 		_objects = objects;
+		DbgAssert( _target && _selector && _objects );
 	}
 	return self;
 }
 
-
 - (void)encodeWithCoder:(NSCoder *)coder
 {
+	DbgAssert( _target && _selector && _objects );
 	[coder encodeObject:_target		forKey:@"target"];
 	[coder encodeObject:_selector  	forKey:@"selector"];
 	[coder encodeObject:_objects   	forKey:@"objects"];
