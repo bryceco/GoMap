@@ -46,7 +46,9 @@ final class PresetLanguages {
 	}
 
 	class func preferredPresetLanguageCode() -> String {
-		if let code = UserPrefs.shared.preferredLanguage.value {
+		if let code = UserPrefs.shared.preferredLanguage.value,
+		   PresetLanguages.languageCodeList.contains(code)
+		{
 			return code
 		}
 		let matches = Bundle.preferredLocalizations(from: PresetLanguages.languageCodeList,
