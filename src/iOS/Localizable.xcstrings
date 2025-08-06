@@ -3428,8 +3428,8 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@meters@ mètres, %#@nodes@ nœuds"
+            "state" : "translated",
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -5101,8 +5101,8 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@megabytes@ Mo, %#@files@ fichiers"
+            "state" : "translated",
+            "value" : "%#@megabytes@, %#@files@"
           },
           "substitutions" : {
             "files" : {
@@ -8402,7 +8402,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@mètres@, %2$#@noeuds@"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -10074,8 +10074,8 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@meters@ mètres, %#@points@ points"
+            "state" : "translated",
+            "value" : "%#@meters@, %#@points@"
           },
           "substitutions" : {
             "meters" : {
@@ -11988,7 +11988,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@mètres@, %#@points@, %3$#@points de tracé@"
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
@@ -14131,7 +14131,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@routes@ importées,\n%2$#@doublons@ sautés"
+            "value" : "%#@routes@ importées,\n%2$#@ duplicates@ sautés"
           },
           "substitutions" : {
             "duplicates" : {
