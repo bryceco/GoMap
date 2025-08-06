@@ -1475,6 +1475,12 @@
             "value" : "Popište vaše změny… "
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beschreibe deine Änderungen... "
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1509,6 +1515,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "உங்கள் மாற்றங்களை விவரிக்கவும் ... "
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опишіть свої зміни... "
           }
         },
         "zh-Hant" : {

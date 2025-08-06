@@ -909,6 +909,12 @@
             "value" : "Sinu treeringute marsruudid on imporditavad GPX-i radadena."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les tracés de vos entraînements peuvent être importés comme des tracés GPX."
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -985,6 +991,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tervisealane teave pole kunagi uuendatud."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les informations de santé ne sont jamais mises à jour."
           }
         },
         "hr" : {

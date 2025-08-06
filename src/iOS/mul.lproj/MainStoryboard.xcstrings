@@ -491,6 +491,12 @@
             "value" : "Oharra"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commentaire"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -519,6 +525,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "கருத்து"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Коментар"
           }
         },
         "zh-Hant" : {
@@ -741,6 +753,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Viitamine Bingile"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Attribution Bing"
           }
         },
         "hr" : {
@@ -1515,6 +1533,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aldaketa-multzoaren komentarioa hemen"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Le commentaire sur les changements va ici"
           }
         },
         "hr" : {
@@ -3269,6 +3293,12 @@
             "value" : "Komentatu ta zuzendu"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Commenter & Résoudre"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3297,6 +3327,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "கருத்து & தீர்க்க"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Коментар & Вирішити"
           }
         },
         "zh-Hant" : {
@@ -4464,6 +4500,12 @@
           }
         },
         "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2014-06-17 17:54 UTC"

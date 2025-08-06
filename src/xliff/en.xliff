@@ -559,6 +559,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="new">Aerial Tiles</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
       </trans-unit>
+      <trans-unit id="fVu-8o-Ldq.text" xml:space="preserve">
+        <source>Details</source>
+        <target state="new">Details</target>
+        <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
+      </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
         <source>Details</source>
         <target state="new">Details</target>
@@ -645,6 +650,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Turn Restrictions</source>
         <target state="new">Turn Restrictions</target>
         <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
+      </trans-unit>
+      <trans-unit id="r78-B4-pAU.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <target state="new">Aerial Tiles</target>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "r78-B4-pAU";</note>
       </trans-unit>
       <trans-unit id="rWF-4C-sRA.text" xml:space="preserve">
         <source>Title</source>
@@ -1547,6 +1557,11 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="new">Clear Basemap Tiles</target>
         <note>Delete cached data</note>
       </trans-unit>
+      <trans-unit id="Clear Data Caches" xml:space="preserve">
+        <source>Clear Data Caches</source>
+        <target state="new">Clear Data Caches</target>
+        <note>Delete cached data</note>
+      </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
         <source>Clear OSM Data</source>
         <target state="new">Clear OSM Data</target>
@@ -2226,6 +2241,11 @@ Never delete old tracks</note>
         <source>Point</source>
         <target state="new">Point</target>
         <note>Object geometry: a node</note>
+      </trans-unit>
+      <trans-unit id="Predefined" xml:space="preserve">
+        <source>Predefined</source>
+        <target state="new">Predefined</target>
+        <note>Items that are built into the app</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>

@@ -185,6 +185,12 @@
             "value" : "Autoriõigused © 2024 Bryce Cogswell. Kõik õigused on kaitstud."
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2024 Bryce Cogswell. Tous droits réservés."
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",

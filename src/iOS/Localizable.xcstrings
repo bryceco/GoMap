@@ -3267,14 +3267,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg metro"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg metros"
                     }
                   }
                 }
@@ -3287,14 +3287,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg nodo"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg nodos"
                     }
                   }
                 }
@@ -3439,14 +3439,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg mètre"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg mètres"
                     }
                   }
                 }
@@ -3459,14 +3459,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg noeud"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg noeuds"
                     }
                   }
                 }
@@ -5112,14 +5112,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg fichier"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg fichiers"
                     }
                   }
                 }
@@ -5132,14 +5132,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg Mo"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg Mo"
                     }
                   }
                 }
@@ -6768,8 +6768,8 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%ld jours"
+                  "state" : "translated",
+                  "value" : "%ld jour"
                 }
               },
               "other" : {
@@ -8401,8 +8401,8 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@nodes@"
+            "state" : "translated",
+            "value" : "%1$#@mètres@, %2$#@noeuds@"
           },
           "substitutions" : {
             "meters" : {
@@ -8412,14 +8412,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meter"
+                      "state" : "translated",
+                      "value" : "%arg mètres"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg mètres"
                     }
                   }
                 }
@@ -8432,14 +8432,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg node"
+                      "state" : "translated",
+                      "value" : "%arg noeuds"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg noeuds"
                     }
                   }
                 }
@@ -9301,8 +9301,8 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@nodes@"
+            "state" : "translated",
+            "value" : "%1$#@метрів@, %2$#@вузли@"
           },
           "substitutions" : {
             "meters" : {
@@ -10085,14 +10085,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg mètre"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg mètres"
                     }
                   }
                 }
@@ -10105,14 +10105,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg point"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg points"
                     }
                   }
                 }
@@ -11987,8 +11987,8 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@points@, %#@waypoints@"
+            "state" : "translated",
+            "value" : "%1$#@mètres@, %#@points@, %3$#@points de tracé@"
           },
           "substitutions" : {
             "meters" : {
@@ -11998,14 +11998,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld meter"
+                      "state" : "translated",
+                      "value" : "%ld mètre"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld meters"
+                      "state" : "translated",
+                      "value" : "%ld mètres"
                     }
                   }
                 }
@@ -12038,14 +12038,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld waypoint"
+                      "state" : "translated",
+                      "value" : "%ld point de tracé"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld waypoints"
+                      "state" : "translated",
+                      "value" : "%ld points de tracé"
                     }
                   }
                 }
@@ -13269,8 +13269,8 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@points@, %#@waypoints@"
+            "state" : "translated",
+            "value" : "%1$#@метрів@, %2$#@бали@, %3$#@точки маршруту@"
           },
           "substitutions" : {
             "meters" : {
@@ -14130,8 +14130,8 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+            "state" : "translated",
+            "value" : "%#@routes@ importées,\n%2$#@doublons@ sautés"
           },
           "substitutions" : {
             "duplicates" : {
@@ -14141,14 +14141,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicate"
+                      "state" : "translated",
+                      "value" : "%arg doublon"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg doublons"
                     }
                   }
                 }
@@ -14161,14 +14161,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new route"
+                      "state" : "translated",
+                      "value" : "%arg nouvelle route"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg nouvelle routes"
                     }
                   }
                 }
@@ -15030,8 +15030,8 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+            "state" : "translated",
+            "value" : "%1$#@маршрути@ імпортовані,\n%2$#@дублікати@ пропущено"
           },
           "substitutions" : {
             "duplicates" : {
@@ -16472,13 +16472,13 @@
               "few" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Потрібно %lu тайлів"
+                  "value" : "Потрібно %lu плиток"
                 }
               },
               "many" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Потрібно %lu тайлів"
+                  "value" : "Потрібно %lu тайли"
                 }
               },
               "one" : {
@@ -16490,7 +16490,7 @@
               "other" : {
                 "stringUnit" : {
                   "state" : "translated",
-                  "value" : "Потрібно %lu тайлів"
+                  "value" : "Потрібно %lu тайли"
                 }
               }
             }
@@ -16981,6 +16981,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se han copiado en el portapapeles todas las misiones personalizadas en formato JSON. Puede pegarlas en algún sitio para guardarlas o enviárselas a otra persona."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une copie de toutes les quêtes d’utilisateur a été copié en format JSON sur le presse-papiers."
           }
         },
         "hr" : {
@@ -17516,6 +17522,12 @@
             "value" : "Eraikuntza mota gehitu"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter le type de bâtiment"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17609,6 +17621,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisa maantee pinnakate"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter le type de surface d’autoroute"
           }
         },
         "hr" : {
@@ -18282,6 +18300,12 @@
             "value" : "Lisa tööajad"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter les heures d’ouverture"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18532,6 +18556,12 @@
             "value" : "Lisa Panoramaxi foto"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter une photo Panoramax"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18548,6 +18578,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பனோரமாக்ச் புகைப்படத்தைச் சேர்க்கவும்"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Додати фото Panoramax"
           }
         },
         "zh-Hant" : {
@@ -18583,6 +18619,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisa parkimise tüüp"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter le type de parking"
           }
         },
         "hr" : {
@@ -18686,6 +18728,12 @@
             "value" : "Lisa kõnnitee pinnakate"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter le type de surface de trottoir"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18787,6 +18835,12 @@
             "value" : "Lisa kiiruspiirang"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter la limite de vitesse"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18880,6 +18934,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisa telefoninumber"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter le numéro de téléphone"
           }
         },
         "hr" : {
@@ -19123,6 +19183,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lisa veebisait"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajouter le site web"
           }
         },
         "hr" : {
@@ -19643,6 +19709,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Creador de misiones avanzado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créateur de quêtes avancé"
           }
         },
         "hr" : {
@@ -20214,6 +20286,12 @@
             "value" : "Huts bat igorriz: %@"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une erreur est survenue pendant l’export: %@"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20307,6 +20385,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Huts bat kargatuz: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une erreur est survenue pendant l’importation: %@"
           }
         },
         "hr" : {
@@ -20557,6 +20641,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pindala"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Superficie"
           }
         },
         "hr" : {
@@ -21593,6 +21683,12 @@
             "value" : "Parempilaatuinen taustakuva on saatavilla sijainnillesi. Vaihdetaanko siihen?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une meilleure image de fond est disponible pour votre localisation. Voulez-vous changer vers cette dernière?"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21693,6 +21789,12 @@
             "value" : "Saadaval on paremad aluskaardid"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meilleure image de fond disponible"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21785,6 +21887,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Koosta uus ülesanne"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créer une nouvelle quête"
           }
         },
         "hr" : {
@@ -21880,6 +21988,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eraikuntza"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bâtiment"
           }
         },
         "hr" : {
@@ -23915,6 +24029,12 @@
             "value" : "Aldatu"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changer"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24141,6 +24261,12 @@
             "value" : "Vybrat již existující snímek"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wähle ein vorhandenes Foto aus"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24153,6 +24279,12 @@
             "value" : "Elegir foto existente"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisir une photo existante"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24163,6 +24295,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "இருக்கும் புகைப்படத்தைத் தேர்வுசெய்க"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вибрати існуюче фото"
           }
         },
         "zh-Hans" : {
@@ -24209,6 +24347,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ezabatu dena"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout effacer"
           }
         },
         "hr" : {
@@ -24292,6 +24436,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Basemap laukiak hustu"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effacer les tuiles de carte de base"
           }
         },
         "hr" : {
@@ -25197,6 +25347,12 @@
             "value" : "Kopiatua"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copié"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25716,6 +25872,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Crea una fila en la tabla para cada par de clave/valor y si los objetos coincidentes deben incluirse o excluirse. Deja el valor vacío para indicar que la clave no está presente. Utilice clave=* para que coincida cualquier valor."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créez une ligne dans le tableau pour chaque paire clé/valeur et indiquez si les objets correspondants doivent être inclus ou exclus. Laissez la valeur vide pour indiquer que la clé n'est pas présente. Utilisez key=* pour faire correspondre n'importe quelle valeur."
           }
         },
         "hr" : {
@@ -26879,10 +27041,22 @@
             "value" : "Nastave si vlastní funkce s unikátními kombinacemi značek pro rychlé přidávání speciální typů objektů. Vyhledat je můžete mezi běžnými značkami."
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Definiere deine eigenen Funktionen mit einzigartigen Tag-Kombinationen, um schnell spezielle Objekttypen hinzuzufügen. Diese kannst du dann unter „Allgemeine Tags” suchen."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Defina sus propias características personalizadas con combinaciones de etiquetas únicas para añadir rápidamente tipos especiales de objetos. Estos se pueden buscar en Etiquetas comunes."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Définissez vos propres caractéristiques personnalisées à l'aide de combinaisons de balises uniques afin d'ajouter rapidement des types d'objets particuliers. Ceux-ci peuvent être recherchés dans les balises communes."
           }
         },
         "ja" : {
@@ -26895,6 +27069,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "சிறப்பு வகை பொருள்களை விரைவாகச் சேர்க்க தனித்துவமான குறிச்சொல் சேர்க்கைகளுடன் உங்கள் சொந்த தனிப்பயன் அம்சங்களை வரையறுக்கவும். பொதுவான குறிச்சொற்களில் இவை தேடப்படலாம்."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Визначте власні функції за допомогою унікальних комбінацій тегів, щоб швидко додавати спеціальні типи об’єктів. Їх можна шукати в розділі «Спільні теги»."
           }
         },
         "zh-Hant" : {
@@ -28968,6 +29148,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Baztertu"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abandonner"
           }
         },
         "hr" : {
@@ -31696,6 +31882,12 @@
             "value" : "Extraer nodo"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Extraire le noeud"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -31759,6 +31951,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Filtrid"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtres"
           }
         },
         "hr" : {
@@ -31991,6 +32189,12 @@
             "value" : "Geomeetria"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Géométrie"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32081,6 +32285,12 @@
           }
         },
         "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX"
+          }
+        },
+        "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX"
@@ -32435,6 +32645,12 @@
             "value" : "HealthKit"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kit Santé"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32765,6 +32981,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ikoon"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Icône"
           }
         },
         "hr" : {
@@ -33134,6 +33356,12 @@
             "value" : "Impordi"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importer"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33222,6 +33450,12 @@
             "value" : "Viga importimisel"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur d’importation"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33308,6 +33542,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impordi ülesandeid"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importer des quêtes"
           }
         },
         "hr" : {
@@ -33930,6 +34170,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gakoak"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clés"
           }
         },
         "hr" : {
@@ -35027,6 +35273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Joon"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lignes"
           }
         },
         "hr" : {
@@ -38848,6 +39100,12 @@
             "value" : "Izena"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nom"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40675,7 +40933,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Точка"
+            "value" : "Вузол"
           }
         },
         "vi" : {
@@ -42267,6 +42525,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Balore zaharra: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ancienne valeur : %@"
           }
         },
         "hr" : {
@@ -45708,6 +45972,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Proporciona un símbolo de un solo carácter (emoji o carácter unicode) para identificar esta búsqueda:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fournissez un symbole d'un seul caractère (émoji ou caractère Unicode) pour identifier cette quête :"
           }
         },
         "hr" : {
@@ -49198,6 +49468,12 @@
             "value" : "முன்னமைவுகளுக்கு பயன்படுத்தப்படும் மொழியைத் தேர்ந்தெடுக்கவும். பிற பயன்பாட்டு உள்ளடக்கம் உங்கள் இயல்புநிலை மொழியைப் பயன்படுத்தும்."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Виберіть мову, яка використовуватиметься для пресетів. Інший вміст програми використовуватиме мову за замовчуванням."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51835,6 +52111,12 @@
             "value" : "Pořídit nový snímek"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neues Foto machen"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51851,6 +52133,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "புதிய புகைப்படம் எடு"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зробити нове фото"
           }
         },
         "zh-Hans" : {
@@ -55671,7 +55959,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Скасувати"
+            "value" : "Відмінити"
           }
         },
         "vi" : {
@@ -58716,6 +59004,12 @@
             "value" : "Můžete si nastavit vlastní pole předvoleb. Pole tvoří pár: značka a hodnota, vztahující se k funkci."
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Du kannst eigene Felder für Voreinstellungen festlegen. Ein Feld ist ein einzelnes Schlüssel/Wert-Paar, das mit einer Funktion verbunden ist."
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -58732,6 +59026,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "முன்னமைவுகளுக்கான தனிப்பயன் புலங்களை நீங்கள் வரையறுக்கலாம். ஒரு புலம் என்பது ஒரு அம்சத்துடன் தொடர்புடைய ஒற்றை விசை/மதிப்பு இணை."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ви можете визначити власні поля для пресетів. Поле — це окрема пара ключ/значення, пов’язана з функцією."
           }
         },
         "zh-Hant" : {

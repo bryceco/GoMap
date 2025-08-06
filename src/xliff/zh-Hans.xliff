@@ -504,6 +504,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Aerial Tiles</source>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
       </trans-unit>
+      <trans-unit id="fVu-8o-Ldq.text" xml:space="preserve">
+        <source>Details</source>
+        <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
+      </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
         <source>Details</source>
         <target state="translated">详情</target>
@@ -583,6 +587,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Turn Restrictions</source>
         <target state="translated">转向限制</target>
         <note>Class = "UILabel"; text = "Turn Restrictions"; ObjectID = "r6a-cT-Ufa";</note>
+      </trans-unit>
+      <trans-unit id="r78-B4-pAU.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "r78-B4-pAU";</note>
       </trans-unit>
       <trans-unit id="rWF-4C-sRA.text" xml:space="preserve">
         <source>Title</source>
@@ -1325,6 +1333,10 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Clear Basemap Tiles</source>
         <note>Delete cached data</note>
       </trans-unit>
+      <trans-unit id="Clear Data Caches" xml:space="preserve">
+        <source>Clear Data Caches</source>
+        <note>Delete cached data</note>
+      </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
         <source>Clear OSM Data</source>
         <target state="translated">清除OSM数据</target>
@@ -1951,6 +1963,10 @@ Never delete old tracks</note>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
         <note>Object geometry: a node</note>
+      </trans-unit>
+      <trans-unit id="Predefined" xml:space="preserve">
+        <source>Predefined</source>
+        <note>Items that are built into the app</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>

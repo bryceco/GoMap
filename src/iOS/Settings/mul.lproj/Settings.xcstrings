@@ -2881,8 +2881,8 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Авторські права © 2012—2023 Брайс Коґсвелл. \nВсі права застережено.\n\nДані OpenStreetMap доступні під ліцензією Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nПрава на аерофотознімки Bing належать компанії Microsoft та її постачальникам:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nПрава на аерофотознімки Mapbox належать компанії Mapbox та її постачальникам: https://www.mapbox.com/tos\n\nXML-зчитувач надано проєктом Роббі Генсона KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nКод для зчитування EXIF — Авторські права © 2010—2015 Маянк Лагірі\nhttps://github.com/mayanklahiri/easyexif\n\nПіктограми мапи від SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nІнші піктограми від Glyphish:\nhttp://glyphish.com\n"
+            "state" : "translated",
+            "value" : "Авторське право © 2012-2024 Брайс Когсвелл. \nВсі права захищені.\n\nДані OpenStreetMap ліцензовані відповідно до ліцензії Open Database Commons Open License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nАвторське право на аерофотознімки Bing належить Microsoft та її постачальникам:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nАвторське право на аерофотознімки Mapbox належать Mapbox та його постачальникам: https://www.mapbox.com/tos\n\nРозбір XML надано KissXML від Роббі Хансона:\nhttps://github.com/robbiehanson/KissXML\n\nПіктограми карти від SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nІнші іконки від Glyphish:\nhttp://glyphish.com\n"
           }
         },
         "zh-Hant" : {

@@ -1739,6 +1739,12 @@
             "value" : "Basemap"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couche de carte de base"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3554,7 +3560,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Збирати у фоновому режимі"
+            "value" : "Збирати у фоновому режимі:"
           }
         },
         "vi" : {
@@ -6632,7 +6638,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Huellas GPS de OpenStreetMap"
+            "value" : "Trayectos GPS de OpenStreetMap"
           }
         },
         "et" : {
@@ -7663,8 +7669,8 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Activar filtros"
+            "state" : "translated",
+            "value" : "Filtros de objetos"
           }
         },
         "et" : {
@@ -8237,6 +8243,12 @@
             "value" : "Andmete ülekatted"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couche de données"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8313,6 +8325,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bilaketak"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quêtes"
           }
         },
         "hr" : {
@@ -9215,6 +9233,12 @@
             "value" : "Ohar eta zuzentzekoak"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notes et « Corrigez-moi »"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9803,6 +9827,12 @@
             "value" : "Basemap bakarrik"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Couche de base seulement"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9879,6 +9909,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Titulu"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titre"
           }
         },
         "hr" : {
@@ -10257,6 +10293,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impordi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importer"
           }
         },
         "hr" : {
