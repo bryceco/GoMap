@@ -30,6 +30,7 @@
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.configuration.title" xml:space="preserve">
         <source>Comment</source>
+        <target state="translated">Коментар</target>
         <note>Class = "UIButton"; configuration.title = "Comment"; ObjectID = "2g1-vb-Cjc"; Note = "Add a comment for a Note";</note>
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
@@ -102,6 +103,7 @@
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.configuration.title" xml:space="preserve">
         <source>Comment &amp; Resolve</source>
+        <target state="translated">Коментар &amp; Вирішити</target>
         <note>Class = "UIButton"; configuration.title = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
@@ -164,6 +166,7 @@
       </trans-unit>
       <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
         <source>2014-06-17 17:54 UTC</source>
+        <target state="translated">2014-06-17 17:54 UTC</target>
         <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
       </trans-unit>
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
@@ -304,7 +307,7 @@
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
         <source>Collect in background:</source>
-        <target state="translated">Збирати у фоновому режимі</target>
+        <target state="translated">Збирати у фоновому режимі:</target>
         <note>Class = "UILabel"; text = "Collect in background:"; ObjectID = "DmO-dW-3Fh";</note>
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
@@ -760,30 +763,37 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%@ %@" xml:space="preserve">
         <source>%1$@ %2$@</source>
+        <target state="translated">%1$@ %2$@</target>
         <note/>
       </trans-unit>
       <trans-unit id="%@ %lld" xml:space="preserve">
         <source>%1$@ %2$lld</source>
+        <target state="translated">%1$@ %2$lld</target>
         <note from="auto-generated">A compact leading view for a dynamic island.</note>
       </trans-unit>
       <trans-unit id="%@ Stop" xml:space="preserve">
         <source>%@ Stop</source>
+        <target state="translated">%@ Стій</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld" xml:space="preserve">
         <source>%lld</source>
+        <target state="translated">%lld</target>
         <note from="auto-generated">A label displaying the number of points recorded in a GPX track.</note>
       </trans-unit>
       <trans-unit id="Duration" xml:space="preserve">
         <source>Duration</source>
+        <target state="translated">Тривалість</target>
         <note from="auto-generated">A caption displayed underneath the duration of a track.</note>
       </trans-unit>
       <trans-unit id="GPX Trace" xml:space="preserve">
         <source>GPX Trace</source>
+        <target state="translated">GPX-трек</target>
         <note from="auto-generated">A caption displayed below the name of the app.</note>
       </trans-unit>
       <trans-unit id="Go Map!!" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note from="auto-generated">A label displayed on the lock screen/banner UI of the widget</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
@@ -798,6 +808,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Points" xml:space="preserve">
         <source>Points</source>
+        <target state="translated">Очки</target>
         <note from="auto-generated">A unit displayed underneath the number of GPX points recorded.</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
@@ -812,6 +823,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Started at %@" xml:space="preserve">
         <source>Started at %@</source>
+        <target state="translated">Початок о %@</target>
         <note from="auto-generated">A subheading displaying when the user started tracking.</note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
@@ -1156,7 +1168,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="new">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@метрів@, %2$#@вузли@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.few" xml:space="preserve">
@@ -1206,7 +1218,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="new">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
+        <target state="translated">%1$#@метрів@, %2$#@бали@, %3$#@точки маршруту@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.few" xml:space="preserve">
@@ -1312,8 +1324,8 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
-        <target state="new">%1$#@routes@ imported,
-%2$#@duplicates@ skipped</target>
+        <target state="translated">%1$#@маршрути@ імпортовані,
+%2$#@дублікати@ пропущено</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.few" xml:space="preserve">
@@ -1378,12 +1390,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.few" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="translated">Потрібно %lu тайлів</target>
+        <target state="translated">Потрібно %lu плиток</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.many" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="translated">Потрібно %lu тайлів</target>
+        <target state="translated">Потрібно %lu тайли</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.one" xml:space="preserve">
@@ -1393,7 +1405,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.other" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="translated">Потрібно %lu тайлів</target>
+        <target state="translated">Потрібно %lu тайли</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
@@ -1478,6 +1490,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Add Panoramax Photo" xml:space="preserve">
         <source>Add Panoramax Photo</source>
+        <target state="translated">Додати фото Panoramax</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
@@ -1708,6 +1721,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Choose Existing Photo" xml:space="preserve">
         <source>Choose Existing Photo</source>
+        <target state="translated">Вибрати існуюче фото</target>
         <note>Text displayed in an action sheet when the user wants to upload a photograph from their photo library.</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
@@ -1794,6 +1808,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." xml:space="preserve">
         <source>Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</source>
+        <target state="translated">Визначте власні функції за допомогою унікальних комбінацій тегів, щоб швидко додавати спеціальні типи об’єктів. Їх можна шукати в розділі «Спільні теги».</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -2251,7 +2266,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
         <source>Node</source>
-        <target state="translated">Точка</target>
+        <target state="translated">Вузол</target>
         <note/>
       </trans-unit>
       <trans-unit id="Node Attributes" xml:space="preserve">
@@ -2566,6 +2581,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
         <source>Select the language used for Presets. Other app content will use your default language.</source>
+        <target state="translated">Виберіть мову, яка використовуватиметься для пресетів. Інший вміст програми використовуватиме мову за замовчуванням.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
@@ -2676,6 +2692,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
+        <target state="translated">Зробити нове фото</target>
         <note/>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
@@ -2839,7 +2856,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Undo" xml:space="preserve">
         <source>Undo</source>
-        <target state="translated">Скасувати</target>
+        <target state="translated">Відмінити</target>
         <note/>
       </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
@@ -2948,6 +2965,7 @@ To continue press Commit once again, otherwise press Cancel.</source>
       </trans-unit>
       <trans-unit id="You can define custom fields for presets. A field is a single key/value pair associated with a feature." xml:space="preserve">
         <source>You can define custom fields for presets. A field is a single key/value pair associated with a feature.</source>
+        <target state="translated">Ви можете визначити власні поля для пресетів. Поле — це окрема пара ключ/значення, пов’язана з функцією.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
@@ -3319,10 +3337,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve">
         <source>Quercus </source>
+        <target state="translated">Quercus </target>
         <note>Class = "UITextField"; placeholder = "Quercus "; ObjectID = "6yC-L7-V38"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">ключ</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "6zU-bk-hWw";</note>
       </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
@@ -3347,6 +3367,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve">
         <source>broadleaved </source>
+        <target state="translated">широколистяний </target>
         <note>Class = "UITextField"; placeholder = "broadleaved "; ObjectID = "AAx-p2-Mzh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
@@ -3360,10 +3381,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="CBg-8X-VJp.configuration.title" xml:space="preserve">
         <source>Area</source>
+        <target state="translated">Площа</target>
         <note>Class = "UIButton"; configuration.title = "Area"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CBg-8X-VJp.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Кнопка</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
@@ -3383,10 +3406,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="DhX-ri-fx9.configuration.title" xml:space="preserve">
         <source>Vertex</source>
+        <target state="translated">Вершина</target>
         <note>Class = "UIButton"; configuration.title = "Vertex"; ObjectID = "DhX-ri-fx9";</note>
       </trans-unit>
       <trans-unit id="DhX-ri-fx9.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Кнопка</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "DhX-ri-fx9";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
@@ -3435,14 +3460,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Lhz-HA-Q6j.title" xml:space="preserve">
         <source>Custom Feature</source>
+        <target state="translated">Спеціальна функція</target>
         <note>Class = "UINavigationItem"; title = "Custom Feature"; ObjectID = "Lhz-HA-Q6j";</note>
       </trans-unit>
       <trans-unit id="MU8-ia-Kco.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">ключ</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "MU8-ia-Kco";</note>
       </trans-unit>
       <trans-unit id="Nxm-fU-1eX.placeholder" xml:space="preserve">
         <source>natural</source>
+        <target state="translated">природний</target>
         <note>Class = "UITextField"; placeholder = "natural"; ObjectID = "Nxm-fU-1eX";</note>
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
@@ -3472,14 +3500,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.footerTitle" xml:space="preserve">
         <source>Tags to add when selecting this feature.</source>
+        <target state="translated">Теги, які потрібно додати під час вибору цієї функції.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Tags to add when selecting this feature."; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.headerTitle" xml:space="preserve">
         <source>Feature Tags</source>
+        <target state="translated">Теги функцій</target>
         <note>Class = "UITableViewSection"; headerTitle = "Feature Tags"; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">Ім'я</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "TJk-hO-Ejc";</note>
       </trans-unit>
       <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
@@ -3488,6 +3519,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="UJ1-oM-H4Z.title" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Назад</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "UJ1-oM-H4Z";</note>
       </trans-unit>
       <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
@@ -3501,6 +3533,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="WXF-5S-E8m.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Назви</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "WXF-5S-E8m";</note>
       </trans-unit>
       <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
@@ -3514,10 +3547,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.configuration.title" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Лінія</target>
         <note>Class = "UIButton"; configuration.title = "Line"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Кнопка</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
@@ -3539,6 +3574,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ZNr-2O-LuN.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">ключ</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "ZNr-2O-LuN";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -3556,6 +3592,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="bF4-TU-MTA.text" xml:space="preserve">
         <source>Add New</source>
+        <target state="translated">Додати нове</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "bF4-TU-MTA"; Note = "Add user-defined tagging preset";</note>
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
@@ -3565,6 +3602,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="cNV-jf-zYM.title" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">Користувацькі функції</target>
         <note>Class = "UINavigationItem"; title = "Custom Features"; ObjectID = "cNV-jf-zYM";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
@@ -3592,6 +3630,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve">
         <source>tree </source>
+        <target state="translated">дерево </target>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
@@ -3601,10 +3640,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.configuration.title" xml:space="preserve">
         <source>Point</source>
+        <target state="translated">Точка</target>
         <note>Class = "UIButton"; configuration.title = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Кнопка</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
@@ -3613,6 +3654,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve">
         <source>Oak</source>
+        <target state="translated">Oak</target>
         <note>Class = "UITextField"; placeholder = "Oak"; ObjectID = "ftg-j1-Ep9"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -3640,6 +3682,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="j2j-qT-aHG.placeholder" xml:space="preserve">
         <source>leaf_type</source>
+        <target state="translated">тип_листка</target>
         <note>Class = "UITextField"; placeholder = "leaf_type"; ObjectID = "j2j-qT-aHG";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
@@ -3658,6 +3701,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="l2k-lT-vHS.placeholder" xml:space="preserve">
         <source>genus:en</source>
+        <target state="translated">рід:en</target>
         <note>Class = "UITextField"; placeholder = "genus:en"; ObjectID = "l2k-lT-vHS";</note>
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
@@ -3697,6 +3741,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">value </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
@@ -3724,10 +3769,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="pNE-0W-9Qa.normalTitle" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">Користувацькі функції</target>
         <note>Class = "UIButton"; normalTitle = "Custom Features"; ObjectID = "pNE-0W-9Qa";</note>
       </trans-unit>
       <trans-unit id="pqN-F1-JGm.placeholder" xml:space="preserve">
         <source>Oak Tree</source>
+        <target state="translated">Дерево Oak</target>
         <note>Class = "UITextField"; placeholder = "Oak Tree"; ObjectID = "pqN-F1-JGm";</note>
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
@@ -3737,10 +3784,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="qTY-bY-Dwe.placeholder" xml:space="preserve">
         <source>genus</source>
+        <target state="translated">рід</target>
         <note>Class = "UITextField"; placeholder = "genus"; ObjectID = "qTY-bY-Dwe";</note>
       </trans-unit>
       <trans-unit id="sGi-dQ-1v0.text" xml:space="preserve">
         <source>Feature type:</source>
+        <target state="translated">Тип функції:</target>
         <note>Class = "UILabel"; text = "Feature type:"; ObjectID = "sGi-dQ-1v0";</note>
       </trans-unit>
       <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve">
@@ -3758,6 +3807,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">value </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
@@ -3776,6 +3826,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">value </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
@@ -3790,6 +3841,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="zqH-07-JEp.title" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">Скасувати</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "zqH-07-JEp";</note>
       </trans-unit>
     </body>
@@ -3915,27 +3967,24 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
-        <target state="needs-review-l10n">Авторські права © 2012—2023 Брайс Коґсвелл. 
-Всі права застережено.
+        <target state="translated">Авторське право © 2012-2024 Брайс Когсвелл. 
+Всі права захищені.
 
-Дані OpenStreetMap доступні під ліцензією Open Data Commons Open Database License (ODbL):
+Дані OpenStreetMap ліцензовані відповідно до ліцензії Open Database Commons Open License (ODbL):
 https://www.openstreetmap.com/copyright
 
-Права на аерофотознімки Bing належать компанії Microsoft та її постачальникам:
+Авторське право на аерофотознімки Bing належить Microsoft та її постачальникам:
 https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
 
-Права на аерофотознімки Mapbox належать компанії Mapbox та її постачальникам: https://www.mapbox.com/tos
+Авторське право на аерофотознімки Mapbox належать Mapbox та його постачальникам: https://www.mapbox.com/tos
 
-XML-зчитувач надано проєктом Роббі Генсона KissXML:
+Розбір XML надано KissXML від Роббі Хансона:
 https://github.com/robbiehanson/KissXML
 
-Код для зчитування EXIF — Авторські права © 2010—2015 Маянк Лагірі
-https://github.com/mayanklahiri/easyexif
-
-Піктограми мапи від SJJB:
+Піктограми карти від SJJB:
 http://www.sjjb.co.uk/mapicons
 
-Інші піктограми від Glyphish:
+Інші іконки від Glyphish:
 http://glyphish.com
 </target>
         <note>Class = "UITextView"; text = "Copyright © 2012-2024 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
@@ -4230,6 +4279,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="xNB-pJ-M20.text" xml:space="preserve">
         <source>Describe your changes... </source>
+        <target state="translated">Опишіть свої зміни... </target>
         <note>Class = "UILabel"; text = "Describe your changes... "; ObjectID = "xNB-pJ-M20";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
