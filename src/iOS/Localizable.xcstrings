@@ -9302,7 +9302,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@метрів@, %2$#@вузли@"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -13270,7 +13270,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@метрів@, %2$#@бали@, %3$#@точки маршруту@"
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
@@ -14131,7 +14131,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@routes@ importées,\n%2$#@ duplicates@ sautés"
+            "value" : "%#@routes@ importées,\n%#@duplicates@ sautés"
           },
           "substitutions" : {
             "duplicates" : {
@@ -15031,7 +15031,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@маршрути@ імпортовані,\n%2$#@дублікати@ пропущено"
+            "value" : "%#@routes@ імпортовані,\n%#@duplicates@ пропущено"
           },
           "substitutions" : {
             "duplicates" : {
