@@ -32,8 +32,10 @@ jobs:
           xcodebuild test \
             -scheme GoMapTests \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2' \
-            -allowProvisioningUpdates 
+            -allowProvisioningUpdates \
+            OTHER_SWIFT_FLAGS="-Xfrontend -strict-concurrency=minimal"
           xcodebuild test \
             -scheme GoMapUITests \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=18.2' \
-            -allowProvisioningUpdates 
+            -allowProvisioningUpdates \
+            OTHER_SWIFT_FLAGS="-Xfrontend -strict-concurrency=minimal"
