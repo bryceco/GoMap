@@ -41,7 +41,7 @@ final class PresetsDatabase {
 		return try? JSONSerialization.jsonObject(with: data, options: [])
 	}
 
-	private class func Translate(_ orig: Any, _ translation: Any?) -> Any {
+	private class func MergeTranslations(into orig: Any, from translation: Any?) -> Any {
 		guard let translation = translation as? [String: Any] else {
 			return orig
 		}
@@ -54,7 +54,7 @@ final class PresetsDatabase {
 				newDict[key] = obj
 				newDict["strings"] = translation[key]
 			} else {
-				newDict[key] = Translate(obj, translation[key])
+				newDict[key] = MergeTranslations(into: obj, from: translation[key])
 			}
 		}
 
@@ -89,7 +89,7 @@ final class PresetsDatabase {
 			let baseCode = String(code.prefix(upTo: dash))
 			var transBase = Self.jsonForFile("translations/\(baseCode).json") as! [String: [String: Any]]
 			transBase = transBase[baseCode] as! [String: [String: Any]]
-			trans = Self.Translate(trans, transBase) as! [String: [String: Any]]
+			trans = Self.MergeTranslations(into: trans, from: transBase) as! [String: [String: Any]]
 		}
 
 		let jsonTranslation = (trans["presets"] as! [String: [String: Any]]?) ?? [:]
@@ -104,10 +104,10 @@ final class PresetsDatabase {
 		let readTime = Date()
 
 		// get presets files
-		presetDefaults = Self.Translate(Self.jsonForFile("preset_defaults.json")!,
-		                                jsonTranslation["defaults"]) as! [String: [String]]
-		presetFields = (Self.Translate(Self.jsonForFile("fields.json")!,
-		                               jsonTranslation["fields"]) as! [String: Any])
+		presetDefaults = Self.MergeTranslations(into: Self.jsonForFile("preset_defaults.json")!,
+		                                        from: jsonTranslation["defaults"]) as! [String: [String]]
+		presetFields = (Self.MergeTranslations(into: Self.jsonForFile("fields.json")!,
+		                                       from: jsonTranslation["fields"]) as! [String: Any])
 			.compactMapValues({ PresetField(withJson: $0 as! [String: Any]) })
 
 		// address formats
@@ -115,16 +115,16 @@ final class PresetsDatabase {
 			.map({ PresetAddressFormat(withJson: $0 as! [String: Any]) })
 
 		// initialize presets and index them
-		let presets = (Self.Translate(Self.jsonForFile("presets.json")!,
-		                              jsonTranslation["presets"]) as! [String: Any])
+		let presets = (Self.MergeTranslations(into: Self.jsonForFile("presets.json")!,
+		                                      from: jsonTranslation["presets"]) as! [String: Any])
 			.compactMapValuesWithKeys({ k, v in
 				PresetFeature(withID: k, jsonDict: v as! [String: Any], isNSI: false)
 			})
 		stdFeatures = presets
 		stdFeatureIndex = Self.buildTagIndex([stdFeatures], basePresets: stdFeatures)
 
-		presetCategories = (Self.Translate(Self.jsonForFile("preset_categories.json")!,
-		                                   jsonTranslation["categories"]) as! [String: Any])
+		presetCategories = (Self.MergeTranslations(into: Self.jsonForFile("preset_categories.json")!,
+		                                           from: jsonTranslation["categories"]) as! [String: Any])
 			.mapValuesWithKeys({ k, v in PresetCategory(withID: k, json: v, presets: presets) })
 
 		// name suggestion index
