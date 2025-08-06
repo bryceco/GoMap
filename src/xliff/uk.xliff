@@ -1176,7 +1176,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="translated">%1$#@метрів@, %2$#@вузли@</target>
+        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.few" xml:space="preserve">
@@ -1226,7 +1226,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="translated">%1$#@метрів@, %2$#@бали@, %3$#@точки маршруту@</target>
+        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.few" xml:space="preserve">
@@ -1332,8 +1332,8 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
-        <target state="translated">%1$#@маршрути@ імпортовані,
-%2$#@дублікати@ пропущено</target>
+        <target state="translated">%1$#@routes@ імпортовані,
+%2$#@duplicates@ пропущено</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.few" xml:space="preserve">
