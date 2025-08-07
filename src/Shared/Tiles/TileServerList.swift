@@ -8,12 +8,6 @@
 
 import UIKit
 
-enum TypeCastError: Error {
-	case invalidType
-	case unexpectedNil
-	case invalidEnum
-}
-
 final class TileServerList {
 	private var userDefinedList: [TileServer] = [] // user-defined tile servers
 	private var downloadedList: [TileServer] = []

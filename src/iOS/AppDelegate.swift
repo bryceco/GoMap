@@ -9,6 +9,19 @@
 import UIKit
 import UserNotifications
 
+func showInternalError(_ error: Error, context: String?) {
+	Task { @MainActor in
+		let message = """
+		\(String(describing: error))
+		\(context ?? "")
+
+		Please send a screen shot of this message to the developer
+		"""
+		AppDelegate.shared.mapView.showAlert("Internal error",
+		                                     message: message)
+	}
+}
+
 @objcMembers
 class AppDelegate: UIResponder, UIApplicationDelegate {
 	class var shared: AppDelegate {

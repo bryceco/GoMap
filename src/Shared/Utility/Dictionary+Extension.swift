@@ -10,20 +10,20 @@ import Foundation
 
 extension Dictionary {
 	// a version of mapValues that also lets the transform inspect the key
-	func mapValuesWithKeys<T>(_ transform: (_ key: Key, _ value: Value) -> T) -> [Key: T] {
+	func mapValuesWithKeys<T>(_ transform: (_ key: Key, _ value: Value) throws -> T) rethrows -> [Key: T] {
 		var result = [Key: T]()
 		result.reserveCapacity(count)
 		for (key, val) in self {
-			result[key] = transform(key, val)
+			result[key] = try transform(key, val)
 		}
 		return result
 	}
 
-	func compactMapValuesWithKeys<T>(_ transform: (_ key: Key, _ value: Value) -> T?) -> [Key: T] {
+	func compactMapValuesWithKeys<T>(_ transform: (_ key: Key, _ value: Value) throws -> T?) rethrows -> [Key: T] {
 		var result = [Key: T]()
 		result.reserveCapacity(count)
 		for (key, val) in self {
-			if let t = transform(key, val) {
+			if let t = try transform(key, val) {
 				result[key] = t
 			}
 		}

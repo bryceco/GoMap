@@ -227,7 +227,7 @@ class OsmServer {
 				return try? NSRegularExpression(pattern: regex, options: [.caseInsensitive])
 			} ?? []
 		} catch {
-			print("\(self.fullName) capabilities: \(error.localizedDescription)")
+			print("\(fullName) capabilities: \(error.localizedDescription)")
 		}
 	}
 

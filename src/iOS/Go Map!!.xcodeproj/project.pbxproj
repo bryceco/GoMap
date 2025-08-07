@@ -62,6 +62,7 @@
 		02505C5929A52EA80078D60D /* QuestDefinitionWithFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */; };
 		02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */; };
 		025CCA12271244B800074726 /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 025CCA11271244B800074726 /* KissXML */; };
+		025F004F2E453002003A68FA /* TypeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025F004E2E453002003A68FA /* TypeCast.swift */; };
 		0260E05F2BE30D4700975570 /* CompassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0260E05E2BE30D4700975570 /* CompassButton.swift */; };
 		0266DE862655A21F007A502E /* Superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266DE852655A21F007A502E /* Superview.swift */; };
 		02696CD52B8EF19400AB70B6 /* HealthKitRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */; };
@@ -400,6 +401,7 @@
 		02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFeatures.swift; sourceTree = "<group>"; };
 		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "../POI-Icons"; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
+		025F004E2E453002003A68FA /* TypeCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCast.swift; sourceTree = "<group>"; };
 		0260E05E2BE30D4700975570 /* CompassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassButton.swift; sourceTree = "<group>"; };
 		0266DE852655A21F007A502E /* Superview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Superview.swift; sourceTree = "<group>"; };
 		02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HealthKitRoutes.swift; path = ../Shared/HealthKitRoutes.swift; sourceTree = "<group>"; };
@@ -1094,6 +1096,7 @@
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
 				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
 				0266DE852655A21F007A502E /* Superview.swift */,
+				025F004E2E453002003A68FA /* TypeCast.swift */,
 				02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
 			);
@@ -1658,6 +1661,7 @@
 				02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */,
 				02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
+				025F004F2E453002003A68FA /* TypeCast.swift in Sources */,
 				02CE3CE52990A8CE00DDACE0 /* QuestChooserController.swift in Sources */,
 				024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */,
 				0202C6002E3C348400649F26 /* ButtonClosure.swift in Sources */,

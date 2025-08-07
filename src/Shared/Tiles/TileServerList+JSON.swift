@@ -8,14 +8,6 @@
 
 import UIKit
 
-infix operator -->: AssignmentPrecedence
-func --> <T>(lhs: Any?, rhs: T.Type) throws -> T {
-	guard let lhs = lhs as? T else {
-		throw TypeCastError.invalidType
-	}
-	return lhs
-}
-
 extension TileServerList {
 	static let MapBoxLocatorId = "mapbox_locator_overlay"
 	static let MapBoxLayerId = "Mapbox"
