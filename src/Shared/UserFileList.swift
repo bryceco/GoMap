@@ -11,7 +11,7 @@ import Foundation
 let geoJsonList = UserFileList(prefsKey: UserPrefs.shared.geoJsonFileList,
                                archiveKey: .geoJSONs)
 
-class UserFileList {
+class UserFileList: Sequence {
 	struct Entry {
 		let url: URL
 		var visible: Bool
@@ -21,6 +21,10 @@ class UserFileList {
 	let prefsKey: Pref<[String: Bool]>
 
 	private var list: [Entry] = []
+
+	func makeIterator() -> IndexingIterator<[Entry]> {
+		return list.makeIterator()
+	}
 
 	func visible() -> [URL] {
 		return list.compactMap { $0.visible ? $0.url : nil }

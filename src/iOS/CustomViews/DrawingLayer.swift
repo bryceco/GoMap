@@ -121,7 +121,8 @@ private class PathShapeLayer: CAShapeLayer {
 }
 
 protocol DrawingLayerDelegate {
-	func geojsonData() -> [(GeoJSONGeometry, UIColor)]
+	typealias OverlayData = (geom: GeoJSONGeometry, color: UIColor, properties: Any?)
+	func geojsonData() -> [OverlayData]
 }
 
 // A layer that draws things stored in GeoJSON formats.
@@ -181,11 +182,11 @@ class DrawingLayer: CALayer {
 		}
 
 		// get list of GeoJSON structs
-		let geomList = geojsonDelegate?.geojsonData() ?? []
+		let geomList = geojsonDelegate?.geojsonData().filter { !$0.geom.geometryPoints.isPoint() } ?? []
 
 		// compute what's new and what's old
 		var newDict: [UUID: PathShapeLayer] = [:]
-		for (geom, color) in geomList {
+		for (geom, color, _) in geomList {
 			if let layer = layerDict.removeValue(forKey: geom.uuid) {
 				// Layer already exists
 				layer.color = color
@@ -214,14 +215,13 @@ class DrawingLayer: CALayer {
 			layer.path = layer.shapePaths[scale]
 
 			// configure the layer for presentation
-			guard let pt = layer.props.position else { return }
+			guard let pt = layer.props.position else { continue }
 			let pt2 = OSMPoint(mapView.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false))
 
 			// rotate and scale
-			var t = CGAffineTransform(translationX: CGFloat(pt2.x - pt.x), y: CGFloat(pt2.y - pt.y))
-			t = t.scaledBy(x: CGFloat(tScale), y: CGFloat(tScale))
-			t = t.rotated(by: CGFloat(tRotation))
-
+			let t = CGAffineTransform(translationX: CGFloat(pt2.x - pt.x), y: CGFloat(pt2.y - pt.y))
+				.scaledBy(x: CGFloat(tScale), y: CGFloat(tScale))
+				.rotated(by: CGFloat(tRotation))
 			layer.setAffineTransform(t)
 
 			layer.lineWidth = layer.props.lineWidth / CGFloat(tScale)

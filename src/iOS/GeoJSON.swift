@@ -134,6 +134,13 @@ struct GeoJSONGeometry: Codable {
 			case geometries
 		}
 
+		func isPoint() -> Bool {
+			if case .point = self {
+				return true
+			}
+			return false
+		}
+
 		// This is called when parsing NSI geojsons, CountryCoder, etc
 		init(from decoder: Decoder) throws {
 			do {

@@ -809,7 +809,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 
 			// get notes
-			updateMapMarkersFromServer(withDelay: 0, including: [])
+			updateMapMarkersFromServer(withDelay: 1.0, including: [])
 		}
 	}
 
@@ -2477,12 +2477,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			if displayGpxLogs {
 				including.insert(.gpx)
 			}
+			if displayDataOverlayLayers {
+				including.insert(.geojson)
+			}
 		} else if !viewOverlayMask.contains(.QUESTS) {
 			including.remove(.quest)
 		}
 
-		mapMarkerDatabase.updateRegion(screenLatLonRect(),
-		                               withDelay: delay,
+		mapMarkerDatabase.updateRegion(withDelay: delay,
 		                               mapData: editorLayer.mapData,
 		                               including: including,
 		                               completion: {
