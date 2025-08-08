@@ -26,7 +26,7 @@ final class DataOverlayLayer: DrawingLayer, DrawingLayerDelegate {
 		for url in previous.subtracting(current) {
 			allCustom.removeValue(forKey: url)
 		}
-		for url in geoJsonList.visible() {
+		for url in current {
 			if allCustom[url] == nil {
 				do {
 					allCustom[url] = try GeoJSONFile(url: url)
