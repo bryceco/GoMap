@@ -9,6 +9,7 @@
 import Foundation
 
 enum AnyJSON: Hashable, Codable {
+	case null
 	case string(String)
 	case double(Double)
 	case bool(Bool)
@@ -17,6 +18,7 @@ enum AnyJSON: Hashable, Codable {
 
 	public var value: Any {
 		switch self {
+		case .null: return NSNull()
 		case let .string(value): return value
 		case let .double(value): return value
 		case let .bool(value): return value
@@ -28,6 +30,7 @@ enum AnyJSON: Hashable, Codable {
 	public func encode(to encoder: Encoder) throws {
 		var container = encoder.singleValueContainer()
 		switch self {
+		case .null: try container.encodeNil()
 		case let .string(value): try container.encode(value)
 		case let .double(value): try container.encode(value)
 		case let .bool(value): try container.encode(value)
@@ -38,7 +41,9 @@ enum AnyJSON: Hashable, Codable {
 
 	public init(from decoder: Decoder) throws {
 		let container = try decoder.singleValueContainer()
-		if let value = try? container.decode(String.self) {
+		if container.decodeNil() {
+			self = .null
+		} else if let value = try? container.decode(String.self) {
 			self = .string(value)
 		} else if let value = try? container.decode(Double.self) {
 			self = .double(value)
