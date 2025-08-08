@@ -1785,7 +1785,7 @@
     },
     "8S7-Kw-QHF.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Details\"; ObjectID = \"8S7-Kw-QHF\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

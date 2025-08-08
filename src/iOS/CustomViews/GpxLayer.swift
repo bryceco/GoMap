@@ -359,8 +359,11 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 	}
 
 	// Load a GPX trace from an external source
-	func loadGPXData(_ data: Data, center: Bool) throws {
+	func loadGPXData(_ data: Data, name: String, center: Bool) throws {
 		let newTrack = try GpxTrack(xmlData: data)
+		if name != "" {
+			newTrack.name = name
+		}
 		addGPX(track: newTrack, center: center)
 	}
 

@@ -85,7 +85,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				// Load GPX
 				MainActor.runAfter(nanoseconds: 500_000000) {
 					do {
-						try mapView.gpxLayer.loadGPXData(data, center: true)
+						try mapView.gpxLayer.loadGPXData(data, name: url.lastPathComponent, center: true)
 						mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 					} catch {
 						self.displayImportError(error, filetype: localizedGPX)
@@ -150,7 +150,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 						try await Task.sleep(nanoseconds: 100_000000)
 						await MainActor.run {
 							do {
-								try mapView.gpxLayer.loadGPXData(data, center: true)
+								try mapView.gpxLayer.loadGPXData(data, name: "", center: true)
 								mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 							} catch {
 								displayImportError(error, filetype: localizedGPX)

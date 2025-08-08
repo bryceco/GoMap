@@ -33363,6 +33363,9 @@
         }
       }
     },
+    "Import GPX" : {
+      "comment" : "GPX track"
+    },
     "Import Quests" : {
       "localizations" : {
         "cs" : {
