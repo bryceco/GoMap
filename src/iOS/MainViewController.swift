@@ -26,6 +26,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	@IBOutlet var mapView: MapView!
 	@IBOutlet var locationButton: UIButton!
+	@IBOutlet var centerOnGPSButton: UIButton!
 
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
@@ -154,7 +155,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		makeMovableButtons()
 #endif
 
-		// this is necessary because we need the frame to be set on the view before we set the previous lat/lon for the view
+		// this is necessary because we need the frame to be set on the view before we set the previous lat/lon for the
+		// view
 		mapView.viewDidAppear()
 	}
 
@@ -327,10 +329,23 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			{
 				let image = button.currentImage?.withRenderingMode(.alwaysTemplate)
 				button.setImage(image, for: .normal)
-				if #available(iOS 13.0, *) {
-					button.tintColor = UIColor.link
+				if button == locationButton {
+					switch mapView.gpsState {
+					case .LOCATION, .HEADING:
+						button.tintColor = UIColor.red
+					default:
+						if #available(iOS 13.0, *) {
+							button.tintColor = UIColor.link
+						} else {
+							button.tintColor = UIColor.systemBlue
+						}
+					}
 				} else {
-					button.tintColor = UIColor.systemBlue
+					if #available(iOS 13.0, *) {
+						button.tintColor = UIColor.link
+					} else {
+						button.tintColor = UIColor.systemBlue
+					}
 				}
 				button.setImage(image?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 24)), for: .normal)
 			}
@@ -430,7 +445,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	func makeMovableButtons() {
 		let buttons = [
-			//		_mapView.editControl,
+			//        _mapView.editControl,
 			undoRedoView,
 			locationButton,
 			searchButton,
@@ -441,7 +456,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			mapView.compassButton,
 			mapView.helpButton,
 			mapView.centerOnGPSButton
-			//		_mapView.rulerView,
+			//        _mapView.rulerView,
 		]
 		// remove layout constraints
 		for button in buttons {
@@ -657,10 +672,25 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			mapView.gpsState = state
 
 			// update GPS icon
-			let imageName = (mapView.gpsState == GPS_STATE.NONE) ? "location" : "location.fill"
+			let imageName = (mapView.gpsState == GPS_STATE.NONE) ?
+				"point.bottomleft.forward.to.point.topright.scurvepath" : "point.bottomleft.forward.to.point.topright.scurvepath.fill"
 			var image = UIImage(systemName: imageName)
 			image = image?.withRenderingMode(.alwaysTemplate)
 			locationButton.setImage(image, for: .normal)
+
+#if !targetEnvironment(macCatalyst)
+			if imageName == "point.bottomleft.forward.to.point.topright.scurvepath.fill" {
+				startLocationButtonPulse()
+				locationButton.tintColor = UIColor.red
+			} else {
+				stopLocationButtonPulse()
+				if #available(iOS 13.0, *) {
+					locationButton.tintColor = UIColor.link
+				} else {
+					locationButton.tintColor = UIColor.systemBlue
+				}
+			}
+#endif
 		}
 	}
 
@@ -702,6 +732,25 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			vc.note = sender as? OsmNoteMarker
 			vc.mapView = mapView
 		}
+	}
+
+	// MARK: - Location Button Pulse Animation
+
+	private func startLocationButtonPulse() {
+		guard let imageLayer = locationButton.imageView?.layer else { return }
+		guard imageLayer.animation(forKey: "pulse") == nil else { return }
+		let pulse = CABasicAnimation(keyPath: "opacity")
+		pulse.fromValue = 1.0
+		pulse.toValue = 0.3
+		pulse.duration = 0.6
+		pulse.timingFunction = CAMediaTimingFunction(name: .easeInEaseOut)
+		pulse.autoreverses = true
+		pulse.repeatCount = .infinity
+		imageLayer.add(pulse, forKey: "pulse")
+	}
+
+	private func stopLocationButtonPulse() {
+		locationButton.imageView?.layer.removeAnimation(forKey: "pulse")
 	}
 }
 
