@@ -10,9 +10,13 @@ import Foundation
 
 // A GeoJSON point with attached properties
 final class GeoJsonMarker: MapMarker {
-	let properties: [String: Any]
+	let properties: AnyJSON
 
-	init(with latLon: LatLon, properties: [String: Any]) {
+	var description: String {
+		return properties.prettyPrinted()
+	}
+
+	init(with latLon: LatLon, properties: AnyJSON) {
 		self.properties = properties
 		super.init(latLon: latLon)
 	}

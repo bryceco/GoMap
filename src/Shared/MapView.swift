@@ -2580,19 +2580,33 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			placePushpin(at: point, object: object)
 		}
 
-		if (marker is WayPointMarker) || (marker is KeepRightMarker) {
-			let comment = (marker as? WayPointMarker)?.description ?? (marker as? KeepRightMarker)?.description ?? ""
-			let title = marker is WayPointMarker ? "Waypoint" : "Keep Right"
+		if (marker is WayPointMarker) || (marker is KeepRightMarker) || (marker is GeoJsonMarker) {
+			let comment: String
+			let title: String
+			switch marker {
+			case let marker as WayPointMarker:
+				title = "Waypoint"
+				comment = marker.description
+			case let marker as GeoJsonMarker:
+				title = "GeoJSON"
+				comment = marker.description
+			case let marker as KeepRightMarker:
+				title = "Keep Right"
+				comment = marker.description
+			default:
+				title = ""
+				comment = ""
+			}
 
 			// use regular alertview
-			let alertKeepRight = UIAlertController(title: title, message: comment, preferredStyle: .alert)
-			alertKeepRight.addAction(
+			let alert = UIAlertController(title: title, message: comment, preferredStyle: .alert)
+			alert.addAction(
 				UIAlertAction(title: NSLocalizedString("OK", comment: ""),
 				              style: .cancel,
 				              handler: { _ in
 				              }))
 			if let marker = marker as? KeepRightMarker {
-				alertKeepRight.addAction(
+				alert.addAction(
 					UIAlertAction(title: NSLocalizedString("Ignore", comment: ""),
 					              style: .default,
 					              handler: { [self] _ in
@@ -2604,7 +2618,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					              	removePin()
 					              }))
 			}
-			mainViewController.present(alertKeepRight, animated: true)
+			mainViewController.present(alert, animated: true)
 		} else if let object = object {
 			// Fixme marker or Quest marker
 			if !editorLayer.isHidden {

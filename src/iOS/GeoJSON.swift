@@ -41,12 +41,12 @@ struct GeoJSONFeature: Decodable {
 	let type: String // e.g. "Feature"
 	let id: String? // String or Number
 	let geometry: GeoJSONGeometry?
-	let properties: Any?
+	let properties: AnyJSON?
 
 	init(type: String,
 	     id: String?,
 	     geometry: GeoJSONGeometry?,
-	     properties: Any?)
+	     properties: AnyJSON?)
 	{
 		self.type = type
 		self.id = id
@@ -70,7 +70,7 @@ struct GeoJSONFeature: Decodable {
 			id = "\(num)"
 		}
 		geometry = try container.decodeIfPresent(GeoJSONGeometry.self, forKey: .geometry)
-		properties = try container.decodeIfPresent(AnyJSON.self, forKey: .properties)?.value
+		properties = try container.decodeIfPresent(AnyJSON.self, forKey: .properties)
 	}
 }
 

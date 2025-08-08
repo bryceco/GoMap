@@ -121,7 +121,7 @@ private class PathShapeLayer: CAShapeLayer {
 }
 
 protocol DrawingLayerDelegate {
-	typealias OverlayData = (geom: GeoJSONGeometry, color: UIColor, properties: Any?)
+	typealias OverlayData = (geom: GeoJSONGeometry, color: UIColor, properties: AnyJSON?)
 	func geojsonData() -> [OverlayData]
 }
 

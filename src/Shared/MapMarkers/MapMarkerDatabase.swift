@@ -114,31 +114,12 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		for feature in visible {
 			if case let .point(latLon) = feature.geom.geometryPoints,
 			   box.containsPoint(OSMPoint(latLon)),
-			   let properties = feature.properties as? [String: Any]
+			   let properties = feature.properties
 			{
 				let marker = GeoJsonMarker(with: latLon, properties: properties)
 				addOrUpdate(marker: marker)
 			}
 		}
-	}
-
-	func addGeoJSONPoints() {
-		/*
-//		DispatchQueue.main.async(execute: { [self] in
-		// let list = AppDelegate.shared.mapView.dataOverlayLayer.geojsonData()
-		for entry in geoJsonList {
-			if entry.visible {
-				let feature = entry.
-				if case .point(let latLon) = feature.geom.geometryPoints,
-				   let properties = feature.properties as? [String: Any]
-				{
-					let marker = GeoJsonMarker(with: latLon, properties: properties)
-					addOrUpdate(marker: marker)
-				}
-			}
-		}
-//		})
-		 */
 	}
 
 	func addKeepRight(forRegion box: OSMRect, mapData: OsmMapData, completion: @escaping () -> Void) {

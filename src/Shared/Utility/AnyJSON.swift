@@ -60,3 +60,33 @@ enum AnyJSON: Hashable, Codable {
 		}
 	}
 }
+
+extension AnyJSON {
+	func prettyPrinted(indentLevel: Int = 0) -> String {
+		let indent = String(repeating: "    ", count: indentLevel)
+		let nextIndent = String(repeating: "    ", count: indentLevel + 1)
+
+		switch self {
+		case .null:
+			return "null"
+		case let .string(value):
+			return "\"\(value)\""
+		case let .double(value):
+			return String(value)
+		case let .bool(value):
+			return String(value)
+		case let .array(values):
+			if values.isEmpty { return "[]" }
+			let items = values.map { "\(nextIndent)\($0.prettyPrinted(indentLevel: indentLevel + 1))" }
+			return "[\n" + items.joined(separator: ",\n") + "\n\(indent)]"
+		case let .dictionary(dict):
+			if dict.isEmpty { return "{}" }
+			let items = dict.map {
+				let key = "\"\($0.key)\""
+				let value = $0.value.prettyPrinted(indentLevel: indentLevel + 1)
+				return "\(nextIndent)\(key): \(value)"
+			}
+			return "{\n" + items.joined(separator: ",\n") + "\n\(indent)}"
+		}
+	}
+}
