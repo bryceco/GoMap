@@ -13,6 +13,7 @@ import UIKit
 // * FIXME
 // * Notes
 // * GPX Waypoint
+// * GeoJSON point
 // * KeepRight
 
 class MapMarker {

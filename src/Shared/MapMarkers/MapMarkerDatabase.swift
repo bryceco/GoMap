@@ -112,6 +112,25 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		})
 	}
 
+	func addGeoJSONPoints() {
+		/*
+//		DispatchQueue.main.async(execute: { [self] in
+		// let list = AppDelegate.shared.mapView.dataOverlayLayer.geojsonData()
+		for entry in geoJsonList {
+			if entry.visible {
+				let feature = entry.
+				if case .point(let latLon) = feature.geom.geometryPoints,
+				   let properties = feature.properties as? [String: Any]
+				{
+					let marker = GeoJsonMarker(with: latLon, properties: properties)
+					addOrUpdate(marker: marker)
+				}
+			}
+		}
+//		})
+		 */
+	}
+
 	func addKeepRight(forRegion box: OSMRect, mapData: OsmMapData, completion: @escaping () -> Void) {
 		let template =
 			"https://keepright.at/export.php?format=gpx&ch=0,30,40,70,90,100,110,120,130,150,160,180,191,192,193,194,195,196,197,198,201,202,203,204,205,206,207,208,210,220,231,232,270,281,282,283,284,285,291,292,293,294,295,296,297,298,311,312,313,320,350,370,380,401,402,411,412,413&left=%f&bottom=%f&right=%f&top=%f"

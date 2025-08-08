@@ -41,6 +41,7 @@
 		02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02263CDE2677F93A002BA72F /* QuadBox.swift */; };
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
 		0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */; };
+		0229A8012E458C2100EB65E4 /* GeoJsonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0229A8002E458C2100EB65E4 /* GeoJsonMarker.swift */; };
 		022B2FDB2718CCAC00AB4C28 /* MapboxLocator.secret in Sources */ = {isa = PBXBuildFile; fileRef = 022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */; };
 		022BF8792C30C25300E07528 /* AnyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022BF8782C30C25300E07528 /* AnyJSON.swift */; };
 		023320A22BE07B2000E3311A /* DataOverlayLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 023320A12BE07B2000E3311A /* DataOverlayLayer.swift */; };
@@ -377,6 +378,7 @@
 		02263CDE2677F93A002BA72F /* QuadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadBox.swift; sourceTree = "<group>"; };
 		0226B770268300C9005DB9E2 /* Data+Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Wrapper.swift"; sourceTree = "<group>"; };
 		0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
+		0229A8002E458C2100EB65E4 /* GeoJsonMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJsonMarker.swift; sourceTree = "<group>"; };
 		022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MapboxLocator.secret; sourceTree = "<group>"; };
 		022BF8782C30C25300E07528 /* AnyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyJSON.swift; sourceTree = "<group>"; };
 		023320A12BE07B2000E3311A /* DataOverlayLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataOverlayLayer.swift; sourceTree = "<group>"; };
@@ -931,6 +933,7 @@
 				02C8C56626F44728003B0122 /* OsmNoteMarker.swift */,
 				02CB523329907832007F758D /* QuestMarker.swift */,
 				02C8C56C26F4479A003B0122 /* WayPointMarker.swift */,
+				0229A8002E458C2100EB65E4 /* GeoJsonMarker.swift */,
 			);
 			name = MapMarkers;
 			path = ../Shared/MapMarkers;
@@ -1615,6 +1618,7 @@
 				02F3F8432B96CDA600ECB99F /* MapLibreVectorTilesView.swift in Sources */,
 				02034743266C2CB9000A7C3D /* MapMarkerDatabase.swift in Sources */,
 				C3FA9249263FF95B000A2A99 /* LocationParser.swift in Sources */,
+				0229A8012E458C2100EB65E4 /* GeoJsonMarker.swift in Sources */,
 				02CB523429907832007F758D /* QuestMarker.swift in Sources */,
 				ED56E5EB26028B5F000B368C /* GpxConfigureViewController.swift in Sources */,
 				02EA1C6C2663398C00A0F827 /* TileQuadKey.swift in Sources */,

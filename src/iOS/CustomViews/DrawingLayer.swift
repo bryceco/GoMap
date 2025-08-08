@@ -121,7 +121,8 @@ private class PathShapeLayer: CAShapeLayer {
 }
 
 protocol DrawingLayerDelegate {
-	func geojsonData() -> [(GeoJSONGeometry, UIColor)]
+	typealias OverlayData = (geom: GeoJSONGeometry, color: UIColor, properties: Any?)
+	func geojsonData() -> [OverlayData]
 }
 
 // A layer that draws things stored in GeoJSON formats.
@@ -185,7 +186,7 @@ class DrawingLayer: CALayer {
 
 		// compute what's new and what's old
 		var newDict: [UUID: PathShapeLayer] = [:]
-		for (geom, color) in geomList {
+		for (geom, color, _) in geomList {
 			if let layer = layerDict.removeValue(forKey: geom.uuid) {
 				// Layer already exists
 				layer.color = color
