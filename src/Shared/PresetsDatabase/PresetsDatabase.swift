@@ -333,7 +333,8 @@ final class PresetsDatabase {
 	                           geometry: GEOMETRY?,
 	                           location: RegionInfoForLocation,
 	                           includeNSI: Bool,
-	                           withPresetKey: String? = nil) -> PresetFeature?
+	                           withPresetKey: String? = nil,
+	                           ignoringCustomFeatures: Bool = false) -> PresetFeature?
 	{
 		guard let objectTags = objectTags else { return nil }
 

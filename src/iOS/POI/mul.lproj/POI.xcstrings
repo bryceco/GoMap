@@ -9841,6 +9841,18 @@
         }
       }
     },
+    "ScT-zG-GwL.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object.\"; ObjectID = \"ScT-zG-GwL\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object."
+          }
+        }
+      }
+    },
     "sGi-dQ-1v0.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Feature type:\"; ObjectID = \"sGi-dQ-1v0\";",
       "extractionState" : "extracted_with_value",

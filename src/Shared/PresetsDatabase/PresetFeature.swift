@@ -219,10 +219,26 @@ class PresetFeature: CustomDebugStringConvertible {
 		return _iconScaled24
 	}
 
-	func objectTagsUpdatedForFeature(_ tags: [String: String], geometry: GEOMETRY,
+	func objectTagsUpdatedForFeature(_ tags: [String: String],
+	                                 geometry: GEOMETRY,
 	                                 location: RegionInfoForLocation) -> [String: String]
 	{
 		var tags = tags
+
+		if self is CustomFeature,
+		   let baseFeature = PresetsDatabase.shared.presetFeatureMatching(tags: self.tags,
+		                                                                  geometry: geometry,
+		                                                                  location: location,
+		                                                                  includeNSI: false,
+		                                                                  ignoringCustomFeatures: true),
+		   baseFeature.tags.isEmpty
+		{
+			// Our custom feature is not a specialization of a preset feature, so merge tags rather than replacing
+			for (k, v) in self.tags {
+				tags[k] = v
+			}
+			return tags
+		}
 
 		let oldFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: tags,
@@ -239,6 +255,7 @@ class PresetFeature: CustomDebugStringConvertible {
 			tags.removeValue(forKey: key)
 		}
 
+#if false
 		// Find fields that belongs to presets in oldFeature and don't exist in presets in new feature
 		// and delete them. This will do things like remove the "cuisine" tag when a restaurant is
 		// retagged as a shop.
@@ -249,6 +266,7 @@ class PresetFeature: CustomDebugStringConvertible {
 				tags.removeValue(forKey: key)
 			}
 		}
+#endif
 
 		// add new feature tags
 		for (key, value) in addTags {

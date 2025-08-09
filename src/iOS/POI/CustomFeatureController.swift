@@ -96,6 +96,9 @@ class CustomFeatureController: UITableViewController, UITextFieldDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = 44 // or any reasonable default
+
 		// If we aren't modifying an existing feature then create a new one
 		if customFeature == nil {
 			customFeature = CustomFeature(featureID: "user-" + UUID().uuidString,
@@ -166,17 +169,20 @@ class CustomFeatureController: UITableViewController, UITextFieldDelegate {
 		} else {
 			navigationItem.rightBarButtonItem?.isEnabled = false
 		}
+		let db = PresetsDatabase.shared
 		if let geom = geom.first,
 		   let geom = GEOMETRY(rawValue: geom),
-		   let impliedFeature = PresetsDatabase.shared.presetFeatureMatching(
-		   	tags: tags,
-		   	geometry: geom,
-		   	location: AppDelegate.shared.mapView.currentRegion,
-		   	includeNSI: false)
+		   let impliedFeature = db.presetFeatureMatching(tags: tags,
+		                                                 geometry: geom,
+		                                                 location: AppDelegate.shared.mapView.currentRegion,
+		                                                 includeNSI: false),
+		   !impliedFeature.tags.isEmpty
 		{
 			featureType.text = impliedFeature.name
+			featureType.textColor = .label
 		} else {
-			featureType.text = ""
+			featureType.text = NSLocalizedString("No match", comment: "No value available")
+			featureType.textColor = .secondaryLabel
 		}
 	}
 
