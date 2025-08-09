@@ -552,6 +552,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="fVu-8o-Ldq.text" xml:space="preserve">
         <source>Details</source>
+        <target state="translated">Деталі</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
@@ -571,7 +572,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="gre-3S-iPA.text" xml:space="preserve">
         <source>Detail</source>
-        <target state="translated">Деталі</target>
+        <target state="translated">Деталь</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "gre-3S-iPA";</note>
       </trans-unit>
       <trans-unit id="h1O-06-ApF.text" xml:space="preserve">
@@ -643,6 +644,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="r78-B4-pAU.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target state="translated">Повітряні плитки</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "r78-B4-pAU";</note>
       </trans-unit>
       <trans-unit id="rWF-4C-sRA.text" xml:space="preserve">
@@ -1744,6 +1746,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Clear Data Caches" xml:space="preserve">
         <source>Clear Data Caches</source>
+        <target state="translated">Очистити кеш даних</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
@@ -2448,6 +2451,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Predefined" xml:space="preserve">
         <source>Predefined</source>
+        <target state="translated">Попередньо визначено</target>
         <note>Items that are built into the app</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -3924,7 +3928,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="6Lj-wh-z9f.text" xml:space="preserve">
         <source>Detail</source>
-        <target state="translated">Деталі</target>
+        <target state="translated">Деталь</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "6Lj-wh-z9f";</note>
       </trans-unit>
       <trans-unit id="7it-6c-BVW.headerTitle" xml:space="preserve">
@@ -4055,7 +4059,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Mus-SG-1Sz.text" xml:space="preserve">
         <source>Detail</source>
-        <target state="translated">Деталі</target>
+        <target state="translated">Деталь</target>
         <note>Class = "UILabel"; text = "Detail"; ObjectID = "Mus-SG-1Sz";</note>
       </trans-unit>
       <trans-unit id="O6E-f1-A1k.title" xml:space="preserve">
