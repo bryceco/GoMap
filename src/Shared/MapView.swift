@@ -2605,6 +2605,23 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				              style: .cancel,
 				              handler: { _ in
 				              }))
+			if let marker = marker as? GeoJsonMarker {
+				// display JSON associated with marker
+				let textView = UITextView()
+				textView.text = marker.description
+				textView.font = UIFont.preferredFont(forTextStyle: .footnote)
+				textView.isEditable = false
+				textView.isScrollEnabled = true
+				alert.view.addSubview(textView)
+
+				textView.translatesAutoresizingMaskIntoConstraints = false
+				NSLayoutConstraint.activate([
+					textView.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
+					textView.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -8),
+					textView.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 50),
+					textView.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -45)
+				])
+			}
 			if let marker = marker as? KeepRightMarker {
 				alert.addAction(
 					UIAlertAction(title: NSLocalizedString("Ignore", comment: ""),

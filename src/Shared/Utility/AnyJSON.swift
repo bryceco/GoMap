@@ -62,9 +62,10 @@ enum AnyJSON: Hashable, Codable {
 }
 
 extension AnyJSON {
-	func prettyPrinted(indentLevel: Int = 0) -> String {
-		let indent = String(repeating: "    ", count: indentLevel)
-		let nextIndent = String(repeating: "    ", count: indentLevel + 1)
+	func prettyPrinted(tabWidth: Int, indentLevel: Int = 0) -> String {
+		let tab = String(repeating: " ", count: tabWidth)
+		let indent = String(repeating: tab, count: indentLevel)
+		let nextIndent = String(repeating: tab, count: indentLevel + 1)
 
 		switch self {
 		case .null:
@@ -77,16 +78,17 @@ extension AnyJSON {
 			return String(value)
 		case let .array(values):
 			if values.isEmpty { return "[]" }
-			let items = values.map { "\(nextIndent)\($0.prettyPrinted(indentLevel: indentLevel + 1))" }
+			let items = values
+				.map { "\(nextIndent)\($0.prettyPrinted(tabWidth: tabWidth, indentLevel: indentLevel + 1))" }
 			return "[\n" + items.joined(separator: ",\n") + "\n\(indent)]"
 		case let .dictionary(dict):
 			if dict.isEmpty { return "{}" }
 			let items = dict.map {
 				let key = "\"\($0.key)\""
-				let value = $0.value.prettyPrinted(indentLevel: indentLevel + 1)
+				let value = $0.value.prettyPrinted(tabWidth: tabWidth, indentLevel: indentLevel + 1)
 				return "\(nextIndent)\(key): \(value)"
 			}
-			return "{\n" + items.joined(separator: ",\n") + "\n\(indent)}"
+			return "{\n" + items.sorted().joined(separator: ",\n") + "\n\(indent)}"
 		}
 	}
 }

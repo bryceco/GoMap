@@ -13,7 +13,7 @@ final class GeoJsonMarker: MapMarker {
 	let properties: AnyJSON
 
 	var description: String {
-		return properties.prettyPrinted()
+		return properties.prettyPrinted(tabWidth: 2)
 	}
 
 	init(with latLon: LatLon, properties: AnyJSON) {
