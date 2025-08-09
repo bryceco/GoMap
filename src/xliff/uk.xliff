@@ -2029,6 +2029,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Import GPX" xml:space="preserve">
         <source>Import GPX</source>
+        <target state="translated">Імпорт GPX</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
@@ -2270,6 +2271,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No match" xml:space="preserve">
         <source>No match</source>
+        <target state="translated">Немає збігу</target>
         <note>No value available</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
@@ -3533,6 +3535,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ScT-zG-GwL.text" xml:space="preserve">
         <source>Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object.</source>
+        <target state="translated">Успадкувати стилі цієї функції. Якщо їх немає, то вибір цієї функції призведе до об'єднання (а не заміни) тегів на цільовому об'єкті.</target>
         <note>Class = "UILabel"; text = "Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object."; ObjectID = "ScT-zG-GwL";</note>
       </trans-unit>
       <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
