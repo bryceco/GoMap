@@ -24328,7 +24328,21 @@
       }
     },
     "Clear Data Caches" : {
-      "comment" : "Delete cached data"
+      "comment" : "Delete cached data",
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очистити кеш даних"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除資料暫存"
+          }
+        }
+      }
     },
     "Clear OSM Data" : {
       "comment" : "Delete cached data",
@@ -45524,7 +45538,21 @@
       }
     },
     "Predefined" : {
-      "comment" : "Items that are built into the app"
+      "comment" : "Items that are built into the app",
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Попередньо визначено"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "預先定義"
+          }
+        }
+      }
     },
     "Previous" : {
       "localizations" : {

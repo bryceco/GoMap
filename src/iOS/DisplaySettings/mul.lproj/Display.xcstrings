@@ -5344,6 +5344,18 @@
             "state" : "new",
             "value" : "Details"
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Деталі"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳情"
+          }
         }
       }
     },
@@ -6128,7 +6140,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Деталі"
+            "value" : "Деталь"
           }
         },
         "vi" : {
@@ -9639,6 +9651,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Aerial Tiles"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Повітряні плитки"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空照圖磚"
           }
         }
       }

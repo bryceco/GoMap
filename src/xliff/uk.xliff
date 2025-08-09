@@ -1583,11 +1583,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">Помилка під час імпортування: %@</target>
         <note>Show an error message</note>
       </trans-unit>
-      <trans-unit id="An unknown error occurred fetching metadata" xml:space="preserve">
-        <source>An unknown error occurred fetching metadata</source>
-        <target state="translated">Невідома помилка під час отримання метаданих</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="Area" xml:space="preserve">
         <source>Area</source>
         <target state="translated">Площа</target>
@@ -2032,6 +2027,10 @@ Error: %@</source>
         <target state="translated">Помилка імпорту</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Import GPX" xml:space="preserve">
+        <source>Import GPX</source>
+        <note>GPX track</note>
+      </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
         <source>Import Quests</source>
         <target state="translated">Імпорт квестів</target>
@@ -2268,6 +2267,10 @@ Never delete old tracks</note>
         <source>No active track</source>
         <target state="translated">Немає активного трека</target>
         <note>GPX track</note>
+      </trans-unit>
+      <trans-unit id="No match" xml:space="preserve">
+        <source>No match</source>
+        <note>No value available</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
@@ -3527,6 +3530,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Feature Tags</source>
         <target state="translated">Теги функцій</target>
         <note>Class = "UITableViewSection"; headerTitle = "Feature Tags"; ObjectID = "Ruw-WB-IgL";</note>
+      </trans-unit>
+      <trans-unit id="ScT-zG-GwL.text" xml:space="preserve">
+        <source>Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object.</source>
+        <note>Class = "UILabel"; text = "Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object."; ObjectID = "ScT-zG-GwL";</note>
       </trans-unit>
       <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
         <source>Name</source>
