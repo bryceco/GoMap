@@ -181,6 +181,11 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	}
 
 	func loadState() {
+		// Loading the state reloads the tableview, and we don't want to
+		// have an editingDidEnd() call modify the table while we're
+		// reloading it. So end all editing up front.
+		view.endEditing(true)
+
 		let tabController = tabBarController as! POITabBarController
 
 		// fetch values from tab controller
