@@ -203,6 +203,14 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		sender.resignFirstResponder()
 	}
 
+	static func isValidMultilinePaste(_ string: String) -> Bool {
+		// The user wants to paste a URL into a website field, but the URL contains '='
+		if URL(string: string) != nil {
+			return false
+		}
+		return true
+	}
+
 	// This function is shared between All Tags and Common Tags
 	static func shouldChangeTag(origText: String,
 	                            charactersIn remove: NSRange,
@@ -215,7 +223,8 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		   insert.trimmingCharacters(in: .whitespaces)
 		   == pb.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: .whitespaces),
 		   let tags = OsmTags.tagsForString(pb),
-		   tags.count > 0
+		   tags.count > 0,
+		   isValidMultilinePaste(pb)
 		{
 			warningVC?.pasteTags(tags)
 			return false
