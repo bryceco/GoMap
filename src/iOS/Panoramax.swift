@@ -16,7 +16,7 @@ private enum PanoramaxResult {
 	case cancelled
 }
 
-protocol PanororamaxDelegate: AnyObject {
+protocol PanoramaxDelegate: AnyObject {
 	func panoramaxUpdate(photoID: String)
 }
 
@@ -67,11 +67,12 @@ class PanoramaxWebViewController: UIViewController, WKNavigationDelegate {
 
 	@IBAction
 	func openSafari() {
-		if let url = webView.url {
-			if UIApplication.shared.canOpenURL(url) {
-				UIApplication.shared.open(url, options: [:], completionHandler: nil)
-			}
+		guard let url = webView.url,
+		      UIApplication.shared.canOpenURL(url)
+		else {
+			return
 		}
+		UIApplication.shared.open(url, options: [:], completionHandler: nil)
 	}
 }
 
@@ -92,14 +93,11 @@ class PanoramaxServer {
 		return components.url!
 	}
 
-	private var authCallback: ((Result<Void, Error>) -> Void)?
+	private var authContinuation: CheckedContinuation<Void, Error>?
 
 	// This pops up the Safari page asking the user for login info
-	func authorizeUser(
-		withVC vc: UIViewController,
-		onComplete callback: @escaping (Result<Void, Error>) -> Void)
-	{
-		authCallback = callback
+	@MainActor
+	func authorizeUser(withVC vc: UIViewController) async throws {
 		let url = url(withPath: "api/auth/login", with: [
 			"client_id": "mzRn5Z-X0nSptHgA3o5g30HeaaljTXfv0GMOLhmwqeo",
 			"redirect_uri": Self.redirect_uri,
@@ -114,6 +112,10 @@ class PanoramaxServer {
 		authVC?.panoramax = self
 		authVC?.url = url
 		vc.present(authVC!, animated: true)
+
+		return try await withCheckedThrowingContinuation { cont in
+			self.authContinuation = cont
+		}
 	}
 
 	// Once the user responds to the Safari popup the application is invoked and
@@ -121,12 +123,11 @@ class PanoramaxServer {
 	func authRedirectHandler(url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) {
 		authVC?.dismiss(animated: true)
 		authVC = nil
-		authCallback?(.success(()))
+		authContinuation?.resume(returning: ())
+		authContinuation = nil
 	}
 
-	func createUploadSet(title: String,
-	                     callback: @escaping @MainActor(Result<String, Error>) -> Void)
-	{
+	func createUploadSet(title: String) async throws -> String {
 		let url = serverURL.appendingPathComponent("api/upload_sets")
 
 		// Define the payload
@@ -136,12 +137,7 @@ class PanoramaxServer {
 		]
 
 		// Convert the payload to JSON data
-		guard let jsonData = try? JSONSerialization.data(withJSONObject: payload, options: []) else {
-			DispatchQueue.main.async {
-				callback(.failure(NSError(domain: "JSON error", code: 0, userInfo: nil)))
-			}
-			return
-		}
+		let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
 
 		// Create the URLRequest
 		var request = URLRequest(url: url)
@@ -151,34 +147,20 @@ class PanoramaxServer {
 		request.setUserAgent()
 		let immutableRequest = request
 
-		Task {
-			do {
-				let data = try await URLSession.shared.data(with: immutableRequest)
-				guard
-					let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-					let uploadSetID = json["id"] as? String
-				else {
-					DispatchQueue.main.async {
-						callback(.failure(NSError(domain: "JSON error", code: 0, userInfo: nil)))
-					}
-					return
-				}
-				await MainActor.run {
-					callback(.success(uploadSetID))
-				}
-			} catch {
-				await MainActor.run {
-					callback(.failure(error))
-				}
-			}
+		let data = try await URLSession.shared.data(with: immutableRequest)
+		guard
+			let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+			let uploadSetID = json["id"] as? String
+		else {
+			throw NSError(domain: "JSON error", code: 0, userInfo: nil)
 		}
+		return uploadSetID
 	}
 
 	func uploadTo(photoSet: String,
 	              photoData: Data,
 	              name: String,
-	              date: Date,
-	              callback: @escaping @MainActor(Result<String, Error>) -> Void)
+	              date: Date) async throws -> String
 	{
 		let url = serverURL.appendingPathComponent("api/upload_sets/\(photoSet)/files")
 		var request = URLRequest(url: url)
@@ -207,36 +189,22 @@ class PanoramaxServer {
 
 		body.append("--\(boundary)--\r\n".data(using: .utf8)!)
 		request.httpBody = body
-		let immutableRequest = request
 
-		Task {
-			do {
-				let data = try await URLSession.shared.data(with: immutableRequest)
-				guard let json = try? JSONSerialization.jsonObject(with: data, options: []),
-				      let json = json as? [String: Any],
-				      let ident = json["picture_id"] as? String
-				else {
-					await MainActor.run {
-						callback(.failure(NSError(domain: "Bad JSON", code: 1)))
-					}
-					return
-				}
-				await MainActor.run {
-					callback(.success(ident))
-				}
-			} catch {
-				await MainActor.run {
-					callback(.failure(error))
-				}
-			}
+		let data = try await URLSession.shared.data(with: request)
+		guard let json = try? JSONSerialization.jsonObject(with: data, options: []),
+		      let json = json as? [String: Any],
+		      let ident = json["picture_id"] as? String
+		else {
+			throw NSError(domain: "Bad JSON", code: 1)
 		}
+		return ident
 	}
 }
 
 class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	var panoramax: PanoramaxServer!
 	var photoID = ""
-	var delegate: PanororamaxDelegate?
+	var delegate: PanoramaxDelegate?
 	var location: LatLon = .zero
 	let locationManager = CLLocationManager()
 
@@ -333,7 +301,9 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 				photoPicker.onCancel = {}
 				photoPicker.onError = {}
 				photoPicker.onAccept = { image, imageData in
-					self.uploadImage(image: image, imageData: imageData)
+					Task {
+						try await self.uploadImage(image: image, imageData: imageData)
+					}
 				}
 				photoPicker.modalPresentationStyle = .fullScreen
 				self.present(photoPicker, animated: true)
@@ -377,122 +347,106 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		else {
 			return
 		}
-		uploadImage(image: image, imageData: imageData)
+		Task {
+			try await uploadImage(image: image, imageData: imageData)
+		}
 	}
 
-	func uploadImage(image: UIImage, imageData: Data) {
+	@MainActor
+	func uploadImage(image: UIImage, imageData: Data) async throws {
 		// get date and name
 		let date = Date()
 		let formatter = DateFormatter()
 		formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 		let name = formatter.string(from: date) + ".jpg"
 
-		progress.startAnimating()
-		captureButton.isEnabled = false
-
-		let uploadResult: (PanoramaxResult) -> Void = { result in
-			self.progress.stopAnimating()
-			self.progress.isHidden = true
-			self.captureButton.isEnabled = true
-			switch result {
-			case let .error(error):
+		Task {
+			progress.startAnimating()
+			captureButton.isEnabled = false
+			defer {
+				self.progress.stopAnimating()
+				self.progress.isHidden = true
+				self.captureButton.isEnabled = true
+			}
+			do {
+				var photoSetID: String
+				do {
+					photoSetID = try await panoramax.createUploadSet(title: "Go Map!! photo")
+				} catch {
+					if case let .badStatusCode(code, _) = error as? UrlSessionError,
+					   code == 401
+					{
+						try await self.panoramax.authorizeUser(withVC: self)
+						// try again
+						// Without the pause the server doesn't always accept our cookie
+						try await Task.sleep(nanoseconds: 100_000000)
+						try await self.uploadImage(image: image, imageData: imageData)
+						return
+					}
+					throw error
+				}
+				self.photoID = try await self.panoramax.uploadTo(photoSet: photoSetID,
+				                                                 photoData: imageData,
+				                                                 name: name,
+				                                                 date: date)
+				self.photoView.image = image
+				self.photoDate.text = Self.formattedTimestamp(date: date)
+				self.photoUser.text = AppDelegate.shared.userName
+				self.delegate?.panoramaxUpdate(photoID: photoID)
+			} catch {
 				self.showError(error)
-			case let .success(ident):
-				// update image
-				self.delegate?.panoramaxUpdate(photoID: ident)
-			case .cancelled:
-				break
 			}
 		}
-
-		panoramax.createUploadSet(title: "Go Map!! photo", callback: { result in
-			switch result {
-			case let .failure(error):
-				if case let .badStatusCode(code, _) = error as? UrlSessionError,
-				   code == 401
-				{
-					self.panoramax.authorizeUser(withVC: self, onComplete: { result in
-						switch result {
-						case .success:
-							// try again
-							// Without the pause the server doesn't always accept our cookie
-							MainActor.runAfter(nanoseconds: 1000_000000) {
-								self.uploadImage(image: image, imageData: imageData)
-							}
-						case .failure:
-							break
-						}
-					})
-					return
-				}
-				uploadResult(.error(error))
-				return
-			case let .success(photoSetID):
-				self.panoramax.uploadTo(photoSet: photoSetID,
-				                        photoData: imageData,
-				                        name: name,
-				                        date: date,
-				                        callback: { result in
-				                        	switch result {
-				                        	case let .failure(error):
-				                        		uploadResult(.error(error))
-				                        	case let .success(photoID):
-				                        		self.photoView.image = image
-				                        		self.photoDate.text = Self.formattedTimestamp(date: date)
-				                        		self.photoUser.text = AppDelegate.shared.userName
-				                        		uploadResult(.success(photoID))
-				                        	}
-				                        })
-			}
-		})
 	}
 
 	func fetchPhotoAndMetadata() {
-		// fetch photo and metadata from panoramax
 		progress.startAnimating()
-		let group = DispatchGroup()
 
-		group.enter()
-		DispatchQueue.global(qos: .userInitiated).async {
-			// When fetching photos we use the Panoramax meta-catalog:
-			let url1 = URL(string: "https://api.panoramax.xyz/api/pictures/\(self.photoID)/sd.jpg")!
-			let url2 = self.panoramax.serverURL.appendingPathComponent("api/pictures/\(self.photoID)/sd.jpg")
-			let data = (try? Data(contentsOf: url1))
-				?? (try? Data(contentsOf: url2))
-			DispatchQueue.main.async {
-				if let data {
-					self.photoView.image = UIImage(data: data)
+		let url1Photo = URL(string: "https://api.panoramax.xyz/api/pictures/\(photoID)/sd.jpg")!
+		let url2Photo = panoramax.serverURL.appendingPathComponent("api/pictures/\(photoID)/sd.jpg")
+
+		let url1Meta = URL(string: "https://api.panoramax.xyz/api/search?ids=\(photoID)")!
+		let url2Meta = URL(string: panoramax.serverURL.absoluteString + "/api/search?ids=\(photoID)")!
+
+		Task {
+			async let photoTask: Void = {
+				let data = (try? Data(contentsOf: url1Photo)) ?? (try? Data(contentsOf: url2Photo))
+				await MainActor.run {
+					if let data {
+						self.photoView.image = UIImage(data: data)
+					}
 				}
-				group.leave()
-			}
-		}
+			}()
 
-		group.enter()
-		DispatchQueue.global(qos: .userInitiated).async {
-			// When fetching photos we use the Panoramax meta-catalog:
-			let url1 = URL(string: "https://api.panoramax.xyz/api/search?ids=\(self.photoID)")!
-			let url2 = URL(string: self.panoramax.serverURL.absoluteString + "/api/search?ids=\(self.photoID)")!
-			if let meta = self.fetchUserMetadata(url: url1)
-				?? self.fetchUserMetadata(url: url2)
-			{
-				DispatchQueue.main.async {
-					self.photoUser.text = meta.name ?? ""
-					self.photoDate.text = meta.date ?? ""
-					group.leave()
+			async let metaTask: Void = {
+				var meta = try? await self.fetchUserMetadata(url: url1Meta)
+				if meta == nil {
+					meta = try? await self.fetchUserMetadata(url: url2Meta)
 				}
-			} else {
-				group.leave()
-			}
-		}
+				if let meta {
+					await MainActor.run {
+						self.photoUser.text = meta.name ?? ""
+						self.photoDate.text = meta.date ?? ""
+					}
+				} else {
+					await MainActor.run {
+						self.photoUser.text = NSLocalizedString("Photo not available",
+						                                        comment: "")
+					}
+				}
+			}()
 
-		// do this when preceding async tasks finish:
-		group.notify(queue: .main) {
-			self.progress.stopAnimating()
-			self.progress.isHidden = true
+			// Wait for both tasks to finish
+			_ = await(photoTask, metaTask)
+
+			await MainActor.run {
+				self.progress.stopAnimating()
+				self.progress.isHidden = true
+			}
 		}
 	}
 
-	func fetchUserMetadata(url: URL) -> (name: String?, date: String?)? {
+	func fetchUserMetadata(url: URL) async throws -> (name: String?, date: String?)? {
 		// Lots more metadata is present, but this is all we need:
 		struct Welcome: Decodable {
 			let features: [Feature]
@@ -508,16 +462,8 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		struct Provider: Decodable {
 			let name: String
 		}
-		let data: Data
-		do {
-			data = try Data(contentsOf: url)
-		} catch {
-			return nil
-		}
-		guard let welcome = try? JSONDecoder().decode(Welcome.self, from: data)
-		else {
-			return nil
-		}
+		let data = try Data(contentsOf: url)
+		let welcome = try JSONDecoder().decode(Welcome.self, from: data)
 		let metaName = welcome.features.first?.providers.first?.name
 		let metaDate: String?
 		if let date = welcome.features.first?.properties.datetime,
@@ -531,6 +477,7 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		return (metaName, metaDate)
 	}
 
+	@MainActor
 	func showError(_ error: Error) {
 		let alertError = UIAlertController(title: "Error",
 		                                   message: error.localizedDescription,
@@ -540,6 +487,7 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		present(alertError, animated: true)
 	}
 
+	@MainActor
 	private class func formattedTimestamp(date: Date) -> String {
 		let formatter = DateFormatter()
 		formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

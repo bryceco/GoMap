@@ -17,7 +17,7 @@ protocol PresetValueTextFieldOwner: AnyObject {
 	func valueChanged(for textField: PresetValueTextField, ended: Bool)
 }
 
-class PresetValueTextField: AutocompleteTextField, PanororamaxDelegate {
+class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 	weak var owner: PresetValueTextFieldOwner!
 	var defaultInputAccessoryView: UIView?
 
