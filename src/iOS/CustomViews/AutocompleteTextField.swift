@@ -282,26 +282,10 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		}
 	}
 
-	static func isValidMultilinePaste(_ string: String) -> Bool {
-		// The user wants to paste a URL into a website field, but the URL contains '='
-		if let url = URLComponents(string: string),
-		   url.scheme != nil,
-		   url.host != nil
-		{
-			return false
-		}
-
-		return true
-	}
-
 	override func paste(_ sender: Any?) {
 		// Check whether they are pasting a set of tags
-		// Note the inserted string has newlines converted to spaces.
 		if let pb = UIPasteboard.general.string?.trimmingCharacters(in: .whitespacesAndNewlines),
-		   let tags = OsmTags.tagsForString(pb),
-		   tags.count > 0,
-		   tags.keys.allSatisfy({ $0.range(of: "^[a-z_:]+$", options: .regularExpression) != nil }),
-		   Self.isValidMultilinePaste(pb)
+		   let tags = OsmTags.tagsForString(pb)
 		{
 			// try to find an ancestor that we can notify
 			var view: UIView? = self
@@ -313,6 +297,8 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 				view = view?.superview
 			}
 		}
+
+		// Do a regular paste
 		super.paste(sender)
 	}
 

@@ -372,9 +372,30 @@ final class OsmTags {
 			}
 			result[k] = v
 		}
-		if result.count == 0 {
+
+		func isValidMultilinePaste(_ string: String) -> Bool {
+			// The user wants to paste a URL into a website field, but the URL contains '='
+			if let url = URLComponents(string: string),
+			   url.scheme != nil,
+			   url.host != nil
+			{
+				return false
+			}
+
+			return true
+		}
+
+		// Sanity checks:
+		guard
+			result.count > 0,
+			result.keys.allSatisfy({ $0.count < 256 }),
+			result.values.allSatisfy({ $0.count < 256 }),
+			result.keys.allSatisfy({ $0.range(of: "^[a-z_:]+$", options: .regularExpression) != nil }),
+			isValidMultilinePaste(text)
+		else {
 			return nil
 		}
+
 		return result
 	}
 }
