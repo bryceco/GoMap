@@ -2209,6 +2209,10 @@ Never delete old tracks</note>
         <target state="translated">செயலைச் செய்யுங்கள்</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Photo not available" xml:space="preserve">
+        <source>Photo not available</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
         <target state="translated">தயவுசெய்து காத்திருங்கள்</target>

@@ -33378,7 +33378,27 @@
       }
     },
     "Import GPX" : {
-      "comment" : "GPX track"
+      "comment" : "GPX track",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX importieren"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Імпорт GPX"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "匯入 GPX"
+          }
+        }
+      }
     },
     "Import Quests" : {
       "localizations" : {
@@ -40027,7 +40047,27 @@
       }
     },
     "No match" : {
-      "comment" : "No value available"
+      "comment" : "No value available",
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Übereinstimmung"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Немає збігу"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沒有相符"
+          }
+        }
+      }
     },
     "No results found" : {
       "localizations" : {
@@ -45543,6 +45583,12 @@
     "Predefined" : {
       "comment" : "Items that are built into the app",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vordefiniert"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -45825,7 +45871,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "上一個航跡"
+            "value" : "之前的航跡"
           }
         },
         "zh-Hant-HK" : {

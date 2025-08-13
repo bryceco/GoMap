@@ -5339,6 +5339,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"fVu-8o-Ldq\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -9647,6 +9653,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"r78-B4-pAU\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luftbildkacheln"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -12764,7 +12776,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在這之後刪除航跡："
+            "value" : "多久刪除航跡："
           }
         },
         "zh-Hant-HK" : {

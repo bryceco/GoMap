@@ -3920,7 +3920,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "憑證"
+            "value" : "登入"
           }
         },
         "zh-Hant-HK" : {
@@ -6104,7 +6104,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "離線使用的前置作業"
+            "value" : "離線使用"
           }
         },
         "zh-Hant-HK" : {
@@ -7202,7 +7202,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "離線使用的前置作業"
+            "value" : "離線使用"
           }
         },
         "zh-Hant-HK" : {

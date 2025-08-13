@@ -2433,6 +2433,10 @@ Never delete old tracks</note>
         <target state="translated">Provést akci</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Photo not available" xml:space="preserve">
+        <source>Photo not available</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
         <target state="translated">Prosím čekejte</target>

@@ -557,6 +557,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="fVu-8o-Ldq.text" xml:space="preserve">
         <source>Details</source>
+        <target state="translated">Details</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
@@ -648,6 +649,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="r78-B4-pAU.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target state="translated">Luftbildkacheln</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "r78-B4-pAU";</note>
       </trans-unit>
       <trans-unit id="rWF-4C-sRA.text" xml:space="preserve">
@@ -781,6 +783,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="%@ %lld" xml:space="preserve">
         <source>%1$@ %2$lld</source>
+        <target state="translated">%1$@ %2$lld</target>
         <note from="auto-generated">A compact leading view for a dynamic island.</note>
       </trans-unit>
       <trans-unit id="%@ Stop" xml:space="preserve">
@@ -835,6 +838,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="Started at %@" xml:space="preserve">
         <source>Started at %@</source>
+        <target state="translated">Gestartet um %@</target>
         <note from="auto-generated">A subheading displaying when the user started tracking.</note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
@@ -1831,6 +1835,7 @@ Error: %@</target>
       </trans-unit>
       <trans-unit id="Import GPX" xml:space="preserve">
         <source>Import GPX</source>
+        <target state="translated">GPX importieren</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
@@ -2072,6 +2077,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No match" xml:space="preserve">
         <source>No match</source>
+        <target state="translated">Keine Übereinstimmung</target>
         <note>No value available</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
@@ -2224,6 +2230,10 @@ Never delete old tracks</note>
         <target state="translated">Aktion ausführen</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Photo not available" xml:space="preserve">
+        <source>Photo not available</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
         <target state="translated">Bitte warten</target>
@@ -2236,6 +2246,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Predefined" xml:space="preserve">
         <source>Predefined</source>
+        <target state="translated">Vordefiniert</target>
         <note>Items that are built into the app</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -3130,6 +3141,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">Schlüssel</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "6zU-bk-hWw";</note>
       </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
@@ -3254,6 +3266,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="MU8-ia-Kco.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">Schlüssel</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "MU8-ia-Kco";</note>
       </trans-unit>
       <trans-unit id="Nxm-fU-1eX.placeholder" xml:space="preserve">
@@ -3371,6 +3384,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="ZNr-2O-LuN.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">Schlüssel</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "ZNr-2O-LuN";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -3430,6 +3444,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve">
         <source>tree </source>
+        <target state="translated">Baum </target>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
@@ -3484,6 +3499,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="j2j-qT-aHG.placeholder" xml:space="preserve">
         <source>leaf_type</source>
+        <target state="translated">Blattart</target>
         <note>Class = "UITextField"; placeholder = "leaf_type"; ObjectID = "j2j-qT-aHG";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
@@ -3542,6 +3558,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">Wert </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
@@ -3609,6 +3626,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">Wert </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
@@ -3628,6 +3646,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">Wert </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
