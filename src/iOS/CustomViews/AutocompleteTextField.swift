@@ -286,6 +286,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		{
 			return false
 		}
+
 		return true
 	}
 
@@ -295,6 +296,7 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		if let pb = UIPasteboard.general.string?.trimmingCharacters(in: .whitespacesAndNewlines),
 		   let tags = OsmTags.tagsForString(pb),
 		   tags.count > 0,
+		   tags.keys.allSatisfy({ $0.range(of: "^[a-z_:]+$", options: .regularExpression) != nil }),
 		   Self.isValidMultilinePaste(pb)
 		{
 			// try to find an ancestor that we can notify
