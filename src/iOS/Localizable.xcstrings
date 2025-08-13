@@ -45353,7 +45353,14 @@
       }
     },
     "Photo not available" : {
-
+      "localizations" : {
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фото недоступне"
+          }
+        }
+      }
     },
     "Please wait" : {
       "localizations" : {
