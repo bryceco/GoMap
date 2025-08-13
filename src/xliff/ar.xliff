@@ -2571,6 +2571,10 @@ Never delete old tracks</note>
         <target state="translated">تنفيذ الإجراء</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Photo not available" xml:space="preserve">
+        <source>Photo not available</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
         <target state="translated">يرجى الانتظار</target>

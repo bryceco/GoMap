@@ -953,6 +953,12 @@
             "value" : "klíč"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlüssel"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -3857,6 +3863,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"tree \"; ObjectID = \"eN0-0z-hUp\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Baum "
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -5891,6 +5903,12 @@
             "value" : "leaf_type"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Blattart"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -7493,6 +7511,12 @@
             "value" : "klíč"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlüssel"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -7919,6 +7943,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"value \"; ObjectID = \"nrU-9j-jfm\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wert "
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -9850,6 +9880,18 @@
             "state" : "new",
             "value" : "Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object."
           }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Успадкувати стилі цієї функції. Якщо їх немає, то вибір цієї функції призведе до об'єднання (а не заміни) тегів на цільовому об'єкті."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "將套用這個圖徵的預設組合，如果沒有預設組合則選取圖徵的標籤將會合併到目標物件（而非取代）。"
+          }
         }
       }
     },
@@ -10445,6 +10487,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"value \"; ObjectID = \"u2W-Xt-qyS\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wert "
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -12119,6 +12167,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"value \"; ObjectID = \"xRb-oM-jei\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wert "
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -12327,6 +12381,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "klíč"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schlüssel"
           }
         },
         "en" : {
