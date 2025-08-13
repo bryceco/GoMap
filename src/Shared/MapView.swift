@@ -1615,17 +1615,19 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	func heading(for clHeading: CLHeading) -> Double {
 		var heading = clHeading.trueHeading * .pi / 180
-		switch (UIApplication.shared.connectedScenes.first as! UIWindowScene).interfaceOrientation {
-		case .portraitUpsideDown:
-			heading += .pi
-		case .landscapeLeft:
-			heading -= .pi / 2
-		case .landscapeRight:
-			heading += .pi / 2
-		case .portrait:
-			fallthrough
-		default:
-			break
+		if let scene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first {
+			switch scene.interfaceOrientation {
+			case .portraitUpsideDown:
+				heading += .pi
+			case .landscapeLeft:
+				heading -= .pi / 2
+			case .landscapeRight:
+				heading += .pi / 2
+			case .portrait:
+				fallthrough
+			default:
+				break
+			}
 		}
 		return heading
 	}
