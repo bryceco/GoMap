@@ -203,33 +203,12 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		sender.resignFirstResponder()
 	}
 
-	static func isValidMultilinePaste(_ string: String) -> Bool {
-		// The user wants to paste a URL into a website field, but the URL contains '='
-		if URL(string: string) != nil {
-			return false
-		}
-		return true
-	}
-
 	// This function is shared between All Tags and Common Tags
 	static func shouldChangeTag(origText: String,
 	                            charactersIn remove: NSRange,
 	                            replacementString insert: String,
 	                            warningVC: KeyValueTableCellOwner?) -> Bool
 	{
-		// Check whether they are pasting a set of tags
-		// Note the inserted string has newlines converted to spaces.
-		if let pb = UIPasteboard.general.string?.trimmingCharacters(in: .whitespacesAndNewlines),
-		   insert.trimmingCharacters(in: .whitespaces)
-		   == pb.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: .whitespaces),
-		   let tags = OsmTags.tagsForString(pb),
-		   tags.count > 0,
-		   isValidMultilinePaste(pb)
-		{
-			warningVC?.pasteTags(tags)
-			return false
-		}
-
 		let MAX_LENGTH = 255
 		let newLength = origText.count - remove.length + insert.count
 		let allowed = newLength <= MAX_LENGTH || insert == "\n"
