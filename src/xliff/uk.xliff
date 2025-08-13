@@ -2446,6 +2446,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
+        <target state="translated">Фото недоступне</target>
         <note/>
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
