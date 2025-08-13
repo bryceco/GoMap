@@ -239,9 +239,13 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		let cellIdentifier = "Cell"
 		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
 			?? UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
-
 		cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-		cell.textLabel?.text = filteredCompletions[indexPath.row]
+		// shouldn't need this check but we got an out-of-range crash report
+		if indexPath.row < filteredCompletions.count {
+			cell.textLabel?.text = filteredCompletions[indexPath.row]
+		} else {
+			cell.textLabel?.text = ""
+		}
 		return cell
 	}
 
