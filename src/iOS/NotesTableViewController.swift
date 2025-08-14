@@ -34,6 +34,12 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		let shareButton = UIBarButtonItem(barButtonSystemItem: .action,
+		                                  target: self,
+		                                  action: #selector(shareTapped(_:)))
+		navigationItem.rightBarButtonItem = shareButton
+		updateShareButton()
+
 		tableView.estimatedRowHeight = 100
 		tableView.rowHeight = UITableView.automaticDimension
 
@@ -45,6 +51,10 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+	}
+
+	func updateShareButton() {
+		navigationItem.rightBarButtonItem?.isEnabled = note.comments.count > 0
 	}
 
 	// MARK: - Table view data source
@@ -158,6 +168,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 			switch result {
 			case let .success(newNote):
 				note = newNote
+				updateShareButton()
 				DispatchQueue.main.async(execute: { [self] in
 					done(nil)
 					// remove note markers that are now resolved
@@ -207,6 +218,15 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		safariViewController.modalPresentationStyle = .pageSheet
 		safariViewController.popoverPresentationController?.sourceView = view
 		present(safariViewController, animated: true)
+	}
+
+	@IBAction func shareTapped(_ sender: Any?) {
+		guard note.comments.count > 0 else { return }
+		let urlString = OSM_SERVER.serverURL + "note/\(note.noteId)"
+		guard let url = URL(string: urlString) else { return }
+		let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+		activityVC.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+		present(activityVC, animated: true)
 	}
 
 	@IBAction func done(_ sender: Any?) {
