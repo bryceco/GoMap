@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24093.7" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24053.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -149,6 +149,7 @@
                                 <rect key="frame" x="327.33333333333331" y="133" width="65.666666666666686" height="34.333333333333343"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Done">
                                     <fontDescription key="titleFontDescription" style="UICTFontTextStyleHeadline"/>
+                                    <color key="baseForegroundColor" systemColor="systemBlueColor"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="done:" destination="aZ2-Vw-zLE" eventType="touchUpInside" id="1ny-8R-rLH"/>
@@ -175,8 +176,8 @@
                             <constraint firstItem="Hd5-Oz-btw" firstAttribute="centerY" secondItem="9YD-c3-CaM" secondAttribute="centerY" id="S3P-fv-HKa"/>
                             <constraint firstItem="CBj-ZO-6oS" firstAttribute="bottom" secondItem="afo-5Q-2Ie" secondAttribute="bottom" constant="24.333333333333371" id="UfZ-lu-ITu"/>
                             <constraint firstItem="58h-7V-zny" firstAttribute="top" secondItem="kQK-pl-MGI" secondAttribute="bottom" constant="8" symbolic="YES" id="fx6-S2-KOx"/>
-                            <constraint firstItem="CBj-ZO-6oS" firstAttribute="trailing" secondItem="Hd5-Oz-btw" secondAttribute="trailing" id="ib9-4G-00h"/>
                             <constraint firstItem="CBj-ZO-6oS" firstAttribute="trailing" secondItem="kQK-pl-MGI" secondAttribute="trailing" constant="16" id="lHc-eL-E7z"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Hd5-Oz-btw" secondAttribute="trailing" constant="-16" id="nQu-mO-F2l"/>
                             <constraint firstItem="afo-5Q-2Ie" firstAttribute="top" secondItem="58h-7V-zny" secondAttribute="bottom" constant="8" symbolic="YES" id="tR3-RH-2ZU"/>
                             <constraint firstItem="CBj-ZO-6oS" firstAttribute="trailing" secondItem="58h-7V-zny" secondAttribute="trailing" constant="20" id="u1o-jI-UaR"/>
                         </constraints>
@@ -201,6 +202,9 @@
         <image name="safari" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
