@@ -430,7 +430,7 @@ class LocationParser {
 
 		Task {
 			// First, resolve the shortened URL
-			guard let resolvedURL = await resolveGoogleShortURL(url: url) else {
+			guard let resolvedURL = await resolveShortenedURL(url: url)?.url else {
 				callback(nil)
 				return
 			}
@@ -440,7 +440,7 @@ class LocationParser {
 				callback(latLong)
 			} else if let ftid = googleFTID(from: resolvedURL),
 			          let url = URL(string: "https://www.google.com/maps?ftid=\(ftid)"),
-			          let resolvedURL = await resolveGoogleShortURL(url: url),
+			          let resolvedURL = await resolveShortenedURL(url: url)?.url,
 			          let latLong = extractLatLongFromGoogleURL(resolvedURL)
 			{
 				callback(latLong)
@@ -508,16 +508,16 @@ class LocationParser {
 	}
 
 	// Helper function to resolve a shortened URL
-	static func resolveGoogleShortURL(url: URL) async -> URL? {
+	static func resolveShortenedURL(url: URL, method: String = "GET") async -> HTTPURLResponse? {
 		let request = {
 			var request = URLRequest(url: url)
-			request.httpMethod = "GET" // Changed from HEAD to GET
+			request.httpMethod = method // Apple Maps doesn't give us a redirect URL when using HEAD
 			return request
 		}()
 		guard let (_, response) = try? await URLSession.shared.data(for: request) else {
 			return nil
 		}
-		return (response as? HTTPURLResponse)?.url
+		return response as? HTTPURLResponse
 	}
 
 	// Helper function to extract the ftid parameter from a URL
