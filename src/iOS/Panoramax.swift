@@ -291,43 +291,23 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 
 	@IBAction
 	func captureAndUploadPhotograph(_ sender: Any) {
-		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-		alert.addAction(UIAlertAction(
-			title: NSLocalizedString("Take New Photo", comment: ""),
-			style: .default,
-			handler: { [self] _ in
-				photoPicker = PhotoCapture()
-				photoPicker.locationManager = locationManager
-				photoPicker.onCancel = {}
-				photoPicker.onError = {}
-				photoPicker.onAccept = { image, imageData in
-					Task {
-						try await self.uploadImage(image: image, imageData: imageData)
-					}
-				}
-				photoPicker.modalPresentationStyle = .fullScreen
-				self.present(photoPicker, animated: true)
-			}))
-		alert.addAction(UIAlertAction(
-			title: NSLocalizedString("Choose Existing Photo", comment: ""),
-			style: .default,
-			handler: { _ in
-				let vc = UIImagePickerController()
-				vc.sourceType = .photoLibrary
-				vc.allowsEditing = false
-				vc.delegate = self
-				self.present(vc, animated: true)
-			}))
-		alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel, handler: nil))
-		// For iPad, action sheets must anchor to a button
-		if let popover = alert.popoverPresentationController, let button = sender as? UIView {
-			popover.sourceView = button
-			popover.sourceRect = button.bounds
-		} else {
-			alert.popoverPresentationController?.sourceView = view
-			alert.popoverPresentationController?.sourceRect = view.bounds
+		_ = [
+			// leaving these here for future use, since translators already translated them
+			NSLocalizedString("Take New Photo", comment: ""),
+			NSLocalizedString("Choose Existing Photo",
+			                  comment: "Text displayed in an action sheet when the user wants to upload a photograph from their photo library.")
+		]
+		photoPicker = PhotoCapture()
+		photoPicker.locationManager = locationManager
+		photoPicker.onCancel = {}
+		photoPicker.onError = {}
+		photoPicker.onAccept = { image, imageData in
+			Task {
+				try await self.uploadImage(image: image, imageData: imageData)
+			}
 		}
-		present(alert, animated: true)
+		photoPicker.modalPresentationStyle = .fullScreen
+		present(photoPicker, animated: true)
 	}
 
 	// UIImagePickerController delegate function
