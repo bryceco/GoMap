@@ -38,12 +38,12 @@ enum GPS_STATE: Int {
 }
 
 enum EDIT_ACTION: Int {
-	// used by edit control:
+	// used by edit toolbar:
 	case EDITTAGS
 	case ADDNOTE
 	case DELETE
 	case MORE
-	// used for action sheet edits:
+	// used for More... action sheet edits:
 	case SPLIT
 	case RECTANGULARIZE
 	case STRAIGHTEN
@@ -2058,6 +2058,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				if action == .PASTETAGS,
 				   #available(iOS 16.0, *)
 				{
+					// Special case for paste that accesses the clipboard
 					let configuration = UIPasteControl.Configuration()
 					configuration.baseBackgroundColor = backgroundColor
 					configuration.baseForegroundColor = foregroundColor
