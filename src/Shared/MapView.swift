@@ -60,28 +60,46 @@ enum EDIT_ACTION: Int {
 	case CREATE_RELATION
 
 	/// Localized names of edit actions
-	func actionTitle(abbreviated: Bool = false) -> String {
+	func actionTitle(abbreviated: Bool = false) -> (label: String, image: UIImage?) {
 		switch self {
-		case .SPLIT: return NSLocalizedString("Split", comment: "Edit action")
-		case .RECTANGULARIZE: return NSLocalizedString("Make Rectangular", comment: "Edit action")
-		case .STRAIGHTEN: return NSLocalizedString("Straighten", comment: "Edit action")
-		case .REVERSE: return NSLocalizedString("Reverse", comment: "Edit action")
-		case .DUPLICATE: return NSLocalizedString("Duplicate", comment: "Edit action")
-		case .ROTATE: return NSLocalizedString("Rotate", comment: "Edit action")
-		case .CIRCULARIZE: return NSLocalizedString("Make Circular", comment: "Edit action")
-		case .JOIN: return NSLocalizedString("Join", comment: "Edit action")
-		case .DISCONNECT: return NSLocalizedString("Disconnect", comment: "Edit action")
-		case .EXTRACTNODE: return NSLocalizedString("Extract Node", comment: "Edit action")
-		case .COPYTAGS: return NSLocalizedString("Copy Tags", comment: "Edit action")
-		case .PASTETAGS: return NSLocalizedString("Paste", comment: "Edit action")
-		case .EDITTAGS: return NSLocalizedString("Tags", comment: "Edit action")
-		case .ADDNOTE: return NSLocalizedString("Add Note", comment: "Edit action")
-		case .DELETE: return NSLocalizedString("Delete", comment: "Edit action")
-		case .MORE: return NSLocalizedString("More...", comment: "Edit action")
-		case .RESTRICT: return abbreviated
-			? NSLocalizedString("Restrict", comment: "Edit action")
-			: NSLocalizedString("Turn Restrictions", comment: "Edit action")
-		case .CREATE_RELATION: return NSLocalizedString("Create Relation", comment: "Edit action")
+		case .ADDNOTE: return (NSLocalizedString("Add Note", comment: "Edit action"),
+		                       UIImage(systemName: "note.text.badge.plus"))
+		case .CIRCULARIZE: return (NSLocalizedString("Make Circular", comment: "Edit action"),
+		                           UIImage(systemName: "circle"))
+		case .COPYTAGS: return (NSLocalizedString("Copy Tags", comment: "Edit action"),
+		                        UIImage(systemName: "doc.on.doc"))
+		case .CREATE_RELATION: return (NSLocalizedString("Create Relation", comment: "Edit action"),
+		                               UIImage(systemName: "link.badge.plus"))
+		case .DELETE: return (NSLocalizedString("Delete", comment: "Edit action"),
+		                      UIImage(systemName: "trash"))
+		case .DISCONNECT: return (NSLocalizedString("Disconnect", comment: "Edit action"),
+		                          UIImage(systemName: "scissors"))
+		case .DUPLICATE: return (NSLocalizedString("Duplicate", comment: "Edit action"),
+		                         UIImage(systemName: "plus.rectangle.on.rectangle"))
+		case .EDITTAGS: return (NSLocalizedString("Tags", comment: "Edit action"),
+		                        UIImage(systemName: "square.and.pencil"))
+		case .EXTRACTNODE: return (NSLocalizedString("Extract Node", comment: "Edit action"),
+		                           UIImage(systemName: "tray.and.arrow.up"))
+		case .JOIN: return (NSLocalizedString("Join", comment: "Edit action"),
+		                    UIImage(systemName: "arrow.merge"))
+		case .MORE: return (NSLocalizedString("More...", comment: "Edit action"),
+		                    UIImage(systemName: "line.3.horizontal"))
+		case .PASTETAGS: return (NSLocalizedString("Paste", comment: "Edit action"),
+		                         UIImage(systemName: "doc.on.clipboard"))
+		case .RECTANGULARIZE: return (NSLocalizedString("Make Rectangular", comment: "Edit action"),
+		                              UIImage(systemName: "rectangle"))
+		case .REVERSE: return (NSLocalizedString("Reverse", comment: "Edit action"),
+		                       UIImage(systemName: "arrow.left.arrow.right"))
+		case .RESTRICT: return (abbreviated
+				? NSLocalizedString("Restrict", comment: "Edit action")
+				: NSLocalizedString("Turn Restrictions", comment: "Edit action"),
+				UIImage(systemName: "nosign"))
+		case .ROTATE: return (NSLocalizedString("Rotate", comment: "Edit action"),
+		                      UIImage(systemName: "arrow.clockwise"))
+		case .SPLIT: return (NSLocalizedString("Split", comment: "Edit action"),
+		                     UIImage(systemName: "arrow.branch")!)
+		case .STRAIGHTEN: return (NSLocalizedString("Straighten", comment: "Edit action"),
+		                          UIImage(systemName: "line.diagonal"))
 		}
 	}
 }
@@ -165,7 +183,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	@IBOutlet var addNodeButton: UIButton!
 	@IBOutlet var rulerView: RulerView!
 	@IBOutlet var progressIndicator: UIActivityIndicatorView!
-	@IBOutlet var editControl: CustomSegmentedControl!
+	@IBOutlet var editToolbar: CustomSegmentedControl!
 	@IBOutlet var aerialAlignmentButton: UIButton!
 	@IBOutlet var dPadView: DPadView!
 
@@ -677,10 +695,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		//    _rulerView.layer.zPosition = Z_RULER;
 
 		// set up action button
-		editControl.isHidden = true
-		editControl.layer.zPosition = ZLAYER.TOOLBAR.rawValue
-		editControl.layer.cornerRadius = 8.0
-		editControl.layer.masksToBounds = true
+		editToolbar.isHidden = true
+		editToolbar.layer.zPosition = ZLAYER.TOOLBAR.rawValue
+		editToolbar.layer.cornerRadius = 8.0
+		editToolbar.layer.masksToBounds = true
 #if targetEnvironment(macCatalyst)
 		// We add a constraint in the storyboard to make the edit control buttons taller
 		// so they're easier to push, but on Mac the constraints doesn't work correctly
@@ -2033,7 +2051,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	// show/hide edit control based on selection
 	func updateEditControl() {
 		let show = pushPin != nil || editorLayer.selectedPrimary != nil
-		editControl.isHidden = !show
+		editToolbar.isHidden = !show
 		if show {
 			if editorLayer.selectedPrimary == nil {
 				// brand new node
@@ -2052,7 +2070,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 			}
 
-			func editControlForAction(_ action: EDIT_ACTION) -> UIControl {
+			func editToolbarItemForAction(_ action: EDIT_ACTION) -> UIControl {
 				let backgroundColor = UIColor.systemBackground
 				let foregroundColor = UIColor.label
 				if action == .PASTETAGS,
@@ -2068,14 +2086,14 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					pasteButton.target = editorLayer
 					return pasteButton
 				} else {
-					let title = action.actionTitle(abbreviated: true)
+					let titleIcon = action.actionTitle(abbreviated: true)
 					let button = ButtonClosure(type: .system)
-					button.setTitle(title, for: .normal)
+					button.setTitle(titleIcon.label, for: .normal)
 					button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
 					button.backgroundColor = backgroundColor
 					button.setTitleColor(foregroundColor, for: .normal)
 					button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
-					button.layer.cornerRadius = editControl.layer.cornerRadius
+					button.layer.cornerRadius = editToolbar.layer.cornerRadius
 					button.layer.masksToBounds = true
 					button.onTap = { [weak self] _ in
 						self?.editorLayer.performEdit(action)
@@ -2084,9 +2102,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 			}
 			let actions: [UIControl] = editControlActions.map {
-				editControlForAction($0)
+				editToolbarItemForAction($0)
 			}
-			editControl.controls = actions
+			editToolbar.controls = actions
 		}
 	}
 
@@ -2097,25 +2115,25 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			return
 		}
 
-		let actionSheet = UIAlertController(
-			title: NSLocalizedString("Perform Action", comment: ""),
-			message: nil,
-			preferredStyle: .actionSheet)
+		let actionSheet = CustomAlertController(title: nil, message: nil)
 		for value in actionList {
-			let title = value.actionTitle()
-			actionSheet.addAction(UIAlertAction(title: title, style: .default, handler: { [self] _ in
-				editorLayer.performEdit(value)
-			}))
+			let titleIcon = value.actionTitle()
+			actionSheet.addAction(title: titleIcon.label,
+			                      image: titleIcon.image,
+			                      handler: {
+			                      	self.editorLayer.performEdit(value)
+			                      })
 		}
-		actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-		                                    style: .cancel,
-		                                    handler: nil))
+		actionSheet.addAction(title: NSLocalizedString("Cancel", comment: ""),
+		                      image: nil,
+		                      isCancel: true,
+		                      handler: nil)
 		mainViewController.present(actionSheet, animated: true)
 
 		// compute location for action sheet to originate
-		let button = editControl.controls.last!
-		actionSheet.popoverPresentationController?.sourceView = button
-		actionSheet.popoverPresentationController?.sourceRect = button.bounds
+		let trigger = editToolbar.controls.last!
+		actionSheet.popoverPresentationController?.sourceView = trigger
+		actionSheet.popoverPresentationController?.sourceRect = trigger.bounds
 	}
 
 	@IBAction func presentTagEditor(_ sender: Any?) {
@@ -3046,7 +3064,7 @@ extension MapView: EditorMapLayerOwner {
 		case .none:
 			break
 		case .editBar:
-			let button = editControl.controls.first!
+			let button = editToolbar.controls.first!
 			alert.popoverPresentationController?.sourceView = button
 			alert.popoverPresentationController?.sourceRect = button.bounds
 		case let .rect(rc):

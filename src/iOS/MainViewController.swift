@@ -285,7 +285,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		// it needs to be idempotent.
 		let buttons: [UIView] = [
 			// these aren't actually buttons, but they get similar tinting and shadows
-			mapView.editControl,
+			mapView.editToolbar,
 			undoRedoView,
 			// these are buttons
 			locationButton,
@@ -303,7 +303,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		]
 		for view in buttons {
 			// corners
-			if view == mapView.compassButton || view == mapView.editControl {
+			if view == mapView.compassButton || view == mapView.editToolbar {
 				// these buttons take care of themselves
 			} else if view == mapView.helpButton || view == mapView.addNodeButton {
 				// The button is a circle.

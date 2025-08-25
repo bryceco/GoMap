@@ -45217,6 +45217,7 @@
       }
     },
     "Perform Action" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
