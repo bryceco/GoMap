@@ -48,7 +48,9 @@ class Pref<T>: PrefProtocol {
 	let onChange = NotificationService<Pref<T>>()
 
 	func didChange() {
-		onChange.notify(self)
+		DispatchQueue.main.async {
+			self.onChange.notify(self)
+		}
 	}
 }
 

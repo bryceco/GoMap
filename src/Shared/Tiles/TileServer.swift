@@ -704,3 +704,9 @@ final class TileServer: Equatable, Codable {
 		return URL(string: url)
 	}
 }
+
+extension TileServer: CustomDebugStringConvertible {
+	public var debugDescription: String {
+		return "TileServer(\(name))"
+	}
+}
