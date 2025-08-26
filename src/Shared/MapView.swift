@@ -716,6 +716,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		editToolbar.layer.zPosition = ZLAYER.TOOLBAR.rawValue
 		editToolbar.layer.cornerRadius = 8.0
 		editToolbar.layer.masksToBounds = true
+		if #available(iOS 26.0, *) {
+			// using liquid glass
+			editToolbar.backgroundColor = nil
+		}
 #if targetEnvironment(macCatalyst)
 		// We add a constraint in the storyboard to make the edit control buttons taller
 		// so they're easier to push, but on Mac the constraints doesn't work correctly
@@ -1017,6 +1021,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			let gap = icon != nil && service.attributionString.count > 0 ? " " : ""
 			aerialServiceLogo.setImage(icon, for: .normal)
 			aerialServiceLogo.setTitle(gap + service.attributionString, for: .normal)
+
+			if #available(iOS 26.0, *) {
+				// glass appearance
+				var config = UIButton.Configuration.glass()
+				config.image = icon
+				aerialServiceLogo.configuration = config
+				aerialServiceLogo.backgroundColor = nil
+				aerialServiceLogo.setTitleColor(nil, for: .normal)
+			}
 		}
 	}
 
@@ -2070,6 +2083,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	func updateEditControl() {
 		let show = pushPin != nil || editorLayer.selectedPrimary != nil
 		editToolbar.isHidden = !show
+		rulerView.isHidden = show
 		if show {
 			if editorLayer.selectedPrimary == nil {
 				// brand new node
@@ -2098,7 +2112,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					let configuration = UIPasteControl.Configuration()
 					configuration.baseBackgroundColor = backgroundColor
 					configuration.baseForegroundColor = foregroundColor
-					configuration.cornerStyle = .dynamic
+					if #available(iOS 26.0, *) {
+						configuration.cornerStyle = .capsule
+					} else {
+						configuration.cornerStyle = .dynamic
+					}
 					configuration.displayMode = .labelOnly
 					let pasteButton = UIPasteControl(configuration: configuration)
 					pasteButton.target = editorLayer
@@ -2106,6 +2124,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					pasteButton.setContentCompressionResistancePriority(.required, for: .vertical)
 					pasteButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 					pasteButton.setContentHuggingPriority(.required, for: .vertical)
+					if #available(iOS 26.0, *) {
+						// closer to glass transparency
+						pasteButton.alpha = 0.75
+					}
 					return pasteButton
 				} else {
 					let titleIcon = action.actionTitle(abbreviated: true)
@@ -2120,6 +2142,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					button.layer.masksToBounds = true
 					button.setContentHuggingPriority(.defaultLow, for: .vertical)
 					button.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+					if #available(iOS 26.0, *) {
+						button.configuration = .glass()
+					} else {
+						button.backgroundColor = backgroundColor
+					}
 					button.onTap = { [weak self] _ in
 						self?.editorLayer.performEdit(action)
 					}

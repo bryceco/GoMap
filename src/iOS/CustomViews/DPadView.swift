@@ -93,7 +93,6 @@ class DPadView: UIView {
 		let plusLayer = CAShapeLayer()
 		plusLayer.path = plusPath.cgPath
 		plusLayer.fillColor = UIColor.lightGray.cgColor
-		MainViewController.applyButtonShadow(layer: plusLayer)
 		plusLayer.shadowPath = plusPath.cgPath
 		plusLayer.strokeColor = UIColor.white.withAlphaComponent(0.5).cgColor
 		plusLayer.lineWidth = 1
