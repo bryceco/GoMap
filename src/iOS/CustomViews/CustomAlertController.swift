@@ -54,13 +54,21 @@ class CustomAlertController: UIViewController {
 		alertStack.translatesAutoresizingMaskIntoConstraints = false
 		view.addSubview(alertStack)
 
-		NSLayoutConstraint.activate([
-			alertStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
-
-			alertStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-			alertStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
-		])
-
+		if traitCollection.horizontalSizeClass == .compact {
+			// iPhone
+			NSLayoutConstraint.activate([
+				alertStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -40),
+				alertStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+				alertStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+			])
+		} else {
+			// iPad
+			NSLayoutConstraint.activate([
+				alertStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+				alertStack.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+				alertStack.widthAnchor.constraint(equalToConstant: 320)
+			])
+		}
 		// Main content view
 		let contentView = UIView()
 		contentView.backgroundColor = .systemBackground
@@ -131,8 +139,6 @@ class CustomAlertController: UIViewController {
 				action.handler?()
 			}
 			buttonsStack.addArrangedSubview(button)
-
-//			button.backgroundColor = .cyan
 
 			let separator = UIView()
 			separator.backgroundColor = UIColor.systemGray4
