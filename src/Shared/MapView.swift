@@ -85,7 +85,7 @@ enum EDIT_ACTION: Int {
 		case .MORE: return (NSLocalizedString("More...", comment: "Edit action"),
 		                    UIImage(systemName: "line.3.horizontal"))
 		case .PASTETAGS: return (NSLocalizedString("Paste", comment: "Edit action"),
-		                         UIImage(systemName: "doc.on.clipboard"))
+		                         UIImage(systemName: "document.on.clipboard"))
 		case .RECTANGULARIZE: return (NSLocalizedString("Make Rectangular", comment: "Edit action"),
 		                              UIImage(systemName: "rectangle"))
 		case .REVERSE: return (NSLocalizedString("Reverse", comment: "Edit action"),
@@ -699,6 +699,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		editToolbar.layer.zPosition = ZLAYER.TOOLBAR.rawValue
 		editToolbar.layer.cornerRadius = 8.0
 		editToolbar.layer.masksToBounds = true
+		if #available(iOS 26.0, *) {
+			// using liquid glass
+			editToolbar.backgroundColor = nil
+		}
 #if targetEnvironment(macCatalyst)
 		// We add a constraint in the storyboard to make the edit control buttons taller
 		// so they're easier to push, but on Mac the constraints doesn't work correctly
@@ -999,6 +1003,15 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			let gap = icon != nil && service.attributionString.count > 0 ? " " : ""
 			aerialServiceLogo.setImage(icon, for: .normal)
 			aerialServiceLogo.setTitle(gap + service.attributionString, for: .normal)
+
+			if #available(iOS 26.0, *) {
+				// glass appearance
+				var config = UIButton.Configuration.glass()
+				config.image = icon
+				aerialServiceLogo.configuration = config
+				aerialServiceLogo.backgroundColor = nil
+				aerialServiceLogo.setTitleColor(nil, for: .normal)
+			}
 		}
 	}
 
@@ -2052,6 +2065,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	func updateEditControl() {
 		let show = pushPin != nil || editorLayer.selectedPrimary != nil
 		editToolbar.isHidden = !show
+		rulerView.isHidden = show
 		if show {
 			if editorLayer.selectedPrimary == nil {
 				// brand new node
@@ -2080,21 +2094,33 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					let configuration = UIPasteControl.Configuration()
 					configuration.baseBackgroundColor = backgroundColor
 					configuration.baseForegroundColor = foregroundColor
-					configuration.cornerStyle = .dynamic
+					if #available(iOS 26.0, *) {
+						configuration.cornerStyle = .capsule
+					} else {
+						configuration.cornerStyle = .dynamic
+					}
 					configuration.displayMode = .labelOnly
 					let pasteButton = UIPasteControl(configuration: configuration)
 					pasteButton.target = editorLayer
+					if #available(iOS 26.0, *) {
+						// closer to glass transparency
+						pasteButton.alpha = 0.75
+					}
 					return pasteButton
 				} else {
 					let titleIcon = action.actionTitle(abbreviated: true)
 					let button = ButtonClosure(type: .system)
 					button.setTitle(titleIcon.label, for: .normal)
 					button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
-					button.backgroundColor = backgroundColor
 					button.setTitleColor(foregroundColor, for: .normal)
 					button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
 					button.layer.cornerRadius = editToolbar.layer.cornerRadius
 					button.layer.masksToBounds = true
+					if #available(iOS 26.0, *) {
+						button.configuration = .glass()
+					} else {
+						button.backgroundColor = backgroundColor
+					}
 					button.onTap = { [weak self] _ in
 						self?.editorLayer.performEdit(action)
 					}
