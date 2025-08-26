@@ -807,7 +807,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	// These are needed to satisfy requirements as KeyValueTableCell owner
 	var allPresetKeys: [PresetKey] { allPresets?.allPresetKeys() ?? [] }
-	var childViewPresented = false
 	var currentTextField: UITextField?
 
 	func keyValueEditingChanged(for kv: KeyValueTableCell) {

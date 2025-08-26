@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SafariServices
 import UIKit
 
 class WikiPage {
@@ -408,5 +409,115 @@ class WikiPage {
 			return kv
 		}
 		return nil
+	}
+}
+
+extension WikiPage {
+	func pressed(infoButton: UIButton?, in parentVC: UIViewController?, key: String, value: String) {
+		guard !key.isEmpty,
+		      let infoButton,
+		      let parentVC
+		else {
+			return
+		}
+		let mapView = AppDelegate.shared.mapView
+		let geometry = mapView?.editorLayer.selectedPrimary?.geometry() ?? .POINT
+		let feature = PresetsDatabase.shared.presetFeatureMatching(tags: [key: value],
+		                                                           geometry: geometry,
+		                                                           location: mapView?.currentRegion ?? .none,
+		                                                           includeNSI: false)
+		let featureName: String?
+		if let feature = feature,
+		   feature.tags.count > 0 // not degenerate like point, line, etc.
+		{
+			featureName = feature.name
+		} else {
+			let allPresets = PresetsForFeature(withFeature: feature,
+			                                   objectTags: [key: value],
+			                                   geometry: geometry,
+			                                   update: nil)
+			if let preset = allPresets.allPresetKeys().first(where: { $0.tagKey == key }) {
+				featureName = preset.name
+			} else {
+				featureName = nil
+			}
+		}
+
+		let spinner = UIActivityIndicatorView(style: .medium)
+		spinner.frame = infoButton.bounds
+		infoButton.addSubview(spinner)
+		infoButton.isEnabled = false
+		infoButton.titleLabel?.alpha = 0
+		spinner.startAnimating()
+
+		func showPopup(title: String?, description: String?, wikiPageTitle: String?) {
+			spinner.removeFromSuperview()
+			infoButton.isEnabled = true
+			infoButton.titleLabel?.alpha = 1
+
+			if let description,
+			   parentVC.view.window != nil
+			{
+				let tag = "\(key)=\(value.isEmpty ? "*" : value)"
+				let alert = UIAlertController(
+					title: title ?? "",
+					message: "\(tag)\n\n\(description)",
+					preferredStyle: .alert)
+				alert.addAction(.init(title: "Done", style: .cancel, handler: nil))
+				alert.addAction(.init(title: "Read more on the Wiki", style: .default) { _ in
+					if let wikiPageTitle {
+						let url = self.urlFor(pageTitle: wikiPageTitle)
+						self.openSafariWith(parentVC: parentVC, url: url)
+					} else {
+						self.openSafari(parentVC: parentVC, key: key, value: value)
+					}
+				})
+				parentVC.present(alert, animated: true)
+			} else {
+				openSafari(parentVC: parentVC, key: key, value: value)
+			}
+		}
+
+		let languageCode = PresetLanguages.preferredLanguageCode()
+		if let wikiData = WikiPage.shared.wikiDataFor(key: key,
+		                                              value: value,
+		                                              language: languageCode,
+		                                              imageWidth: 24,
+		                                              update: { wikiData in
+		                                              	showPopup(
+		                                              		title: featureName,
+		                                              		description: wikiData?.description,
+		                                              		wikiPageTitle: wikiData?.pageTitle)
+		                                              })
+		{
+			showPopup(title: featureName,
+			          description: wikiData.description,
+			          wikiPageTitle: wikiData.pageTitle)
+		}
+	}
+
+	private func openSafari(parentVC: UIViewController, key: String, value: String) {
+		guard !key.isEmpty,
+		      parentVC.view.window != nil
+		else { return }
+
+		let languageCode = PresetLanguages.preferredLanguageCode()
+		Task {
+			guard let url = await WikiPage.shared.bestWikiPage(
+				forKey: key,
+				value: value,
+				language: languageCode)
+			else {
+				return
+			}
+			await MainActor.run {
+				self.openSafariWith(parentVC: parentVC, url: url)
+			}
+		}
+	}
+
+	private func openSafariWith(parentVC: UIViewController, url: URL) {
+		let vc = SFSafariViewController(url: url)
+		parentVC.present(vc, animated: true)
 	}
 }

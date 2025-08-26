@@ -11,7 +11,6 @@ import UIKit
 
 protocol PresetValueTextFieldOwner: AnyObject {
 	var allPresetKeys: [PresetKey] { get }
-	var childViewPresented: Bool { get set }
 	var viewController: UIViewController? { get }
 	var keyValueDict: [String: String] { get }
 	func valueChanged(for textField: PresetValueTextField, ended: Bool)
@@ -312,7 +311,6 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 			})
 		resignFirstResponder()
 		guard let viewController = owner.viewController else { return }
-		owner.childViewPresented = true
 		viewController.present(directionViewController, animated: true)
 	}
 
@@ -345,7 +343,6 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		}
 		resignFirstResponder()
 		viewController.present(vc, animated: true)
-		owner.childViewPresented = true
 	}
 
 	private func getHeightButton() -> UIView? {

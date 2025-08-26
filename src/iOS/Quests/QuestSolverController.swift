@@ -317,7 +317,6 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 	// MARK: PresetValueTextFieldOwner
 
 	var allPresetKeys: [PresetKey] { presetKeys.compactMap { $0 } }
-	var childViewPresented = false
 	var viewController: UIViewController? { self }
 	func valueChanged(for textField: PresetValueTextField, ended: Bool) {
 		let okay = questMarker.quest.accepts(tagValue: textField.text ?? "")
@@ -370,5 +369,18 @@ extension QuestSolverController {
 		}
 #endif
 #endif
+	}
+
+	@IBAction func infoButtonPressed(_ sender: Any?) {
+		guard
+			let button = sender as? UIButton,
+			let cell: QuestSolverTextEntryCell = button.superviewOfType()
+		else {
+			return
+		}
+		WikiPage.shared.pressed(infoButton: button,
+		                        in: self,
+		                        key: cell.textField?.key ?? "",
+		                        value: cell.textField?.text ?? "")
 	}
 }

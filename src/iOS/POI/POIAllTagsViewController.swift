@@ -76,7 +76,6 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	private var relations: [OsmRelation] = []
 	private var members: [OsmMember] = []
 	@IBOutlet var saveButton: UIBarButtonItem!
-	internal var childViewPresented = false
 	private var currentFeature: PresetFeature?
 	internal var currentTextField: UITextField?
 	private var prevNextToolbar: UIToolbar!
@@ -204,11 +203,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		if childViewPresented {
-			childViewPresented = false
-		} else {
-			loadState()
-		}
+		loadState()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
