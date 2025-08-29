@@ -317,13 +317,19 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 					var config = UIButton.Configuration.plain()
 					config.background = Self.defaultGlassBackground
 					config.image = button.currentImage
-					if button == mapView.helpButton || button == mapView.addNodeButton {
+					config.title = button.titleLabel?.text
+					switch button {
+					case mapView.aerialAlignmentButton:
+						config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+						config.background.cornerRadius = 6
+					case mapView.helpButton, mapView.addNodeButton:
 						// The button is a circle.
 						config.background.cornerRadius = button.bounds.width / 2
-					}
-					if button == undoButton || button == redoButton {
+					case undoButton, redoButton:
 						// the view behind them is glass, so let it show through
 						config.background = UIBackgroundConfiguration.clear()
+					default:
+						break
 					}
 					button.configuration = config
 				case let toolbar as UIToolbar:
