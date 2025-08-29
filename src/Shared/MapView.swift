@@ -1019,17 +1019,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		aerialServiceLogo.isHidden = aerialLayer.isHidden || (service.attributionString.isEmpty && icon == nil)
 		if !aerialServiceLogo.isHidden {
 			let gap = icon != nil && service.attributionString.count > 0 ? " " : ""
+			let title = gap + service.attributionString
 			aerialServiceLogo.setImage(icon, for: .normal)
-			aerialServiceLogo.setTitle(gap + service.attributionString, for: .normal)
-
-			if #available(iOS 26.0, *) {
-				// glass appearance
-				var config = UIButton.Configuration.glass()
-				config.image = icon
-				aerialServiceLogo.configuration = config
-				aerialServiceLogo.backgroundColor = nil
-				aerialServiceLogo.setTitleColor(nil, for: .normal)
-			}
+			aerialServiceLogo.setTitle(title, for: .normal)
 		}
 	}
 
