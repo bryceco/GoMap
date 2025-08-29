@@ -242,7 +242,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 			if newValue.isVector {
 				let view = MapLibreVectorTilesView(mapView: self, tileServer: newValue)
-				view.styleURL = URL(string: newValue.url)!
 				view.layer.zPosition = ZLAYER.BASEMAP.rawValue
 				insertSubview(view, at: 0) // place at bottom so MapMarkers are above it
 				basemapLayer = view
