@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="1tR-eI-DSh.configuration.title" xml:space="preserve">
@@ -203,7 +203,7 @@
   </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -232,7 +232,7 @@
   </file>
   <file original="DisplaySettings/Base.lproj/Display.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -746,7 +746,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
   </file>
   <file original="GpxWidget/InfoPlist.xcstrings" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -768,18 +768,18 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
   </file>
   <file original="GpxWidget/Localizable.xcstrings" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="%@" xml:space="preserve">
         <source>%@</source>
         <target state="translated">%@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="%@ %@" xml:space="preserve">
         <source>%1$@ %2$@</source>
         <target state="translated">%1$@ %2$@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="%@ %lld" xml:space="preserve">
         <source>%1$@ %2$lld</source>
@@ -789,7 +789,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       <trans-unit id="%@ Stop" xml:space="preserve">
         <source>%@ Stop</source>
         <target state="translated">%@ Stopp</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="%lld" xml:space="preserve">
         <source>%lld</source>
@@ -814,12 +814,12 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
         <target state="translated">GPX pausieren</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
         <target state="translated">Aufzeichnung von GPX-Tracks pausieren.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Points" xml:space="preserve">
         <source>Points</source>
@@ -829,12 +829,12 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
         <target state="translated">GPX starten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
         <target state="translated">Aufzeichnung von GPX-Tracks starten.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Started at %@" xml:space="preserve">
         <source>Started at %@</source>
@@ -844,18 +844,18 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
         <target state="translated">GPX stoppen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
         <target state="translated">Aufzeichnung von GPX-Tracks beenden.</target>
-        <note/>
+        <note></note>
       </trans-unit>
     </body>
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -882,7 +882,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
   </file>
   <file original="InfoPlist.xcstrings" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -891,7 +891,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
-        <source/>
+        <source></source>
         <note>Get Info string</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -902,7 +902,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
         <source>GPS Exchange Format (GPX)</source>
         <target state="translated">GPS Exchange Format (GPX)</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
         <source>Connect to external Bluetooth GPS devices</source>
@@ -953,60 +953,60 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
   </file>
   <file original="Localizable.xcstrings" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="" xml:space="preserve">
-        <source/>
-        <note/>
+        <source></source>
+        <note></note>
       </trans-unit>
       <trans-unit id="&#9;Relation " xml:space="preserve">
         <source>	Relation </source>
         <target state="translated">	Relation </target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="&#9;Way " xml:space="preserve">
         <source>	Way </source>
         <target state="translated">	Weg </target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d member)
 </source>
         <target state="needs-review-l10n"> (%d Mitglieder)
 </target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d members)
 </source>
         <target state="translated"> (%d Mitglieder)
 </target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d node)
 </source>
         <target state="needs-review-l10n"> (%d Knoten)
 </target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d nodes)
 </source>
         <target state="translated"> (%d Knoten)
 </target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
         <source> (node)</source>
         <target state="translated"> (Knoten)</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
         <target state="translated"> (Weg)</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m²</source>
@@ -1066,7 +1066,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
         <target state="translated">%@ (Relation)</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
@@ -1228,27 +1228,27 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target state="translated">(neues Objekt)</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
         <target state="translated">(Knoten in Weg)</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
         <source>(node)</source>
         <target state="translated">(Knoten)</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="(relation %@)" xml:space="preserve">
         <source>(relation %@)</source>
         <target state="translated">(Relation %@)</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
         <target state="translated">(Weg)</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
@@ -1268,22 +1268,22 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
         <target state="translated">Ein GPX-Track zeichnet deinen Weg auf, während du dich eine Straße oder einen Pfad entlang bewegst</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
         <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
         <target state="translated">Eine Kopie aller benutzerdefinierten Quests wurde im JSON-Format in die Zwischenablage kopiert. Sie können sie irgendwo einfügen, um eine Kopie zu behalten, oder sie an jemand anderen senden.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
         <target state="translated">Eine Relation, zu der dieser Knoten gehört, ist nicht vollständig heruntergeladen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
         <target state="translated">Akzeptieren</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Add Building Type" xml:space="preserve">
         <source>Add Building Type</source>
@@ -1348,37 +1348,37 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
         <target state="translated">Weg zu Multipolygon hinzufügen?</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
         <source>Adding members:</source>
         <target state="translated">Mitglieder hinzufügen:</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Additional imagery" xml:space="preserve">
         <source>Additional imagery</source>
         <target state="translated">Zusätzliche Luftbilder</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Advanced Quest Builder" xml:space="preserve">
         <source>Advanced Quest Builder</source>
         <target state="translated">Erweiterter Quest-Builder</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
         <target state="translated">Nur Luftbild</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
         <target state="translated">Alle Attribute</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
         <target state="translated">Alle Auswahlmöglichkeiten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
         <source>An error occured while exporting: %@</source>
@@ -1399,7 +1399,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
         <target state="translated">Achtung</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
@@ -1424,22 +1424,22 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
         <target state="translated">Login fehlgeschlagen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
         <target state="translated">Für Ihren Standort ist besseres Bildmaterial verfügbar. Möchten Sie darauf umsteigen?</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
         <target state="translated">Besseres Bildmaterial verfügbar</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Build a New Quest" xml:space="preserve">
         <source>Build a New Quest</source>
         <target state="translated">Neuen Quest erstellen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Building" xml:space="preserve">
         <source>Building</source>
@@ -1449,67 +1449,67 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
         <target state="translated">Cachegrößen-Warnung</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
         <target state="translated">Cache gekürzt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
         <target state="translated">Kann nur Wege zu Multipolygonen hinzufügen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
         <source>Can't delete node that is part of a relation</source>
         <target state="translated">Kann Knoten, der Teil einer Relation ist, nicht löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
         <source>Can't delete relation that is not a multipolygon</source>
         <target state="translated">Kann Relation, die kein Multipolygon ist, nicht löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
         <source>Can't delete way that is part of a Route or similar relation</source>
         <target state="translated">Kann Weg, der Teil einer Route oder ähnlichen Relation ist, nicht löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Can't extend way" xml:space="preserve">
         <source>Can't extend way</source>
         <target state="translated">Kann Weg nicht verlängern</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
         <source>Can't remove Turn Restriction 'via' node</source>
         <target state="translated">Kann 'Via'-Knoten der Abbiegebeschränkung nicht löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
         <target state="translated">Kann Abbiegebeschränkuns-Knoten, der 'Von'/'Zu' mit 'Via' verbindet, nicht löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
         <source>Can't remove Turn Restriction to/from way</source>
         <target state="translated">Kann Von/Zu-Weg der Abbiegebeschränkung nicht löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
         <source>Can't remove component of a Route or similar relation</source>
         <target state="translated">Komponente einer Route oder ähnlichen Relation kann nicht entfernt werden</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
         <target state="translated">Kann Knoten in 'Via'-Weg der Abbiegebeschränkung nicht löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
         <source>Cancel</source>
         <target state="translated">Abbrechen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
@@ -1519,12 +1519,12 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
         <source>Cannot connect an inner way to an outer way</source>
         <target state="translated">Kann inneren Weg nicht mit äußerem Weg verbinden</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Change" xml:space="preserve">
         <source>Change</source>
         <target state="translated">Wechseln</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
         <source>Changeset</source>
@@ -1539,7 +1539,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
         <target state="translated">Alles löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
         <source>Clear Basemap Tiles</source>
@@ -1548,6 +1548,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Clear Data Caches" xml:space="preserve">
         <source>Clear Data Caches</source>
+        <target state="translated">Daten- Zwischenspeicher löschen</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
@@ -1558,22 +1559,22 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
         <target state="translated">Hochladen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
         <target state="translated">Konfigurieren</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Confirm move" xml:space="preserve">
         <source>Confirm move</source>
         <target state="translated">Bewegung bestätigen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
         <target state="translated">Diese Knoten zu verbinden würde eine Relation beschädigen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Copied" xml:space="preserve">
         <source>Copied</source>
@@ -1588,14 +1589,14 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
         <source>Could not duplicate object</source>
         <target state="translated">Konnte Objekt nicht duplizieren</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Create&#10;" xml:space="preserve">
         <source>Create
 </source>
         <target state="translated">Erstellen
 </target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Create Relation" xml:space="preserve">
         <source>Create Relation</source>
@@ -1605,12 +1606,12 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Create Relation Type" xml:space="preserve">
         <source>Create Relation Type</source>
         <target state="translated">Erstelle Relations-Typ</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
         <target state="translated">Erstellen Sie in der Tabelle eine Zeile für jedes Schlüssel/Wert-Paar und geben Sie an, ob übereinstimmende Objekte einbezogen oder ausgeschlossen werden sollen. Lassen Sie den Wert leer, um anzuzeigen, dass der Schlüssel nicht vorhanden ist. Verwenden Sie key=*, um einen beliebigen Wert zu finden.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
@@ -1620,7 +1621,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Database error" xml:space="preserve">
         <source>Database error</source>
         <target state="translated">Datenbankfehler</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." xml:space="preserve">
         <source>Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</source>
@@ -1637,7 +1638,7 @@ Object geometry: a closed way or multipolygon)</note>
 </source>
         <target state="translated">Löschen
 </target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
@@ -1647,17 +1648,17 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Delete completely" xml:space="preserve">
         <source>Delete completely</source>
         <target state="translated">Vollständig löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Delete failed" xml:space="preserve">
         <source>Delete failed</source>
         <target state="translated">Löschen fehlgeschlagen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
         <source>Detach from relation</source>
         <target state="translated">Von Relation trennen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Discard" xml:space="preserve">
         <source>Discard</source>
@@ -1672,7 +1673,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Display options" xml:space="preserve">
         <source>Display options</source>
         <target state="translated">Optionen anzeigen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
@@ -1682,7 +1683,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Done" xml:space="preserve">
         <source>Done</source>
         <target state="translated">Fertig</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
@@ -1692,32 +1693,32 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Edit" xml:space="preserve">
         <source>Edit</source>
         <target state="translated">Bearbeiten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Edit XML" xml:space="preserve">
         <source>Edit XML</source>
         <target state="translated">XML bearbeiten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
         <target state="translated">Beschränkungen bearbeiten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
         <source>Editing layer not visible</source>
         <target state="translated">Bearbeitungsebene nicht sichtbar</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Editor only" xml:space="preserve">
         <source>Editor only</source>
         <target state="translated">Nur Editor</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
         <source>Editor with Aerial</source>
         <target state="translated">Editor mit Luftbild</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
         <source>Ensure Location Services is enabled and you have granted this application access.
@@ -1726,12 +1727,12 @@ Error: %@</source>
         <target state="translated">Stelle sicher, dass Ortungsdienste aktiviert sind und du dieser Anwendung Zugriff erlaubt hast
 
 Error: %@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Ensure the editor view is visible and displays objects in the local area" xml:space="preserve">
         <source>Ensure the editor view is visible and displays objects in the local area</source>
         <target state="translated">Stelle sicher, dass die Bearbeitungsansicht sichtbar ist und Objekte im lokalen Gebiet anzeigt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
         <source>Error</source>
@@ -1741,22 +1742,22 @@ Error: %@</target>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
         <target state="translated">Fehler beim Verbinden mit Weg</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
         <source>Error fetching metadata: %@</source>
         <target state="translated">Fehler beim Abrufen von Metadaten: %@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
         <target state="translated">Ein 'Via' in einer Abbiegebeschränkung zu verlängern wird die Relation zerstören</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">
         <source>Extending a way which belongs to a Route or similar relation may damage the relation</source>
         <target state="translated">Einen Weg zu verlängern, der zu einer Route oder ähnlichen Relation gehört, könnte die Relation beschädigen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Extract Node" xml:space="preserve">
         <source>Extract Node</source>
@@ -1776,12 +1777,12 @@ Error: %@</target>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
         <target state="translated">GPX Hochladen abgeschlossen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
         <target state="translated">GPX Hochladen fehlgeschlagen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="GeoJSON" xml:space="preserve">
         <source>GeoJSON</source>
@@ -1791,7 +1792,7 @@ Error: %@</target>
       <trans-unit id="Geometry" xml:space="preserve">
         <source>Geometry</source>
         <target state="translated">Geometrie</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
         <source>HealthKit</source>
@@ -1811,7 +1812,7 @@ Error: %@</target>
       <trans-unit id="Icon" xml:space="preserve">
         <source>Icon</source>
         <target state="translated">Symbol</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
@@ -1821,17 +1822,17 @@ Error: %@</target>
       <trans-unit id="Ignore" xml:space="preserve">
         <source>Ignore</source>
         <target state="translated">Ignorieren</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Import" xml:space="preserve">
         <source>Import</source>
         <target state="translated">Import</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Import Error" xml:space="preserve">
         <source>Import Error</source>
         <target state="translated">Importfehler</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Import GPX" xml:space="preserve">
         <source>Import GPX</source>
@@ -1841,17 +1842,17 @@ Error: %@</target>
       <trans-unit id="Import Quests" xml:space="preserve">
         <source>Import Quests</source>
         <target state="translated">Quests importieren</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
         <source>In order to measure height, please enable camera access in the app's settings.</source>
         <target state="translated">Um Höhe zu messen, aktiviere bitte den Kamerazugriff in den App-Einstellungen.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <target state="translated">Ungültige URL</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
@@ -1861,7 +1862,7 @@ Error: %@</target>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
         <target state="translated">Verbinden würde eine Abbiegebeschränkung des Wegs ungültig machen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
@@ -1871,7 +1872,7 @@ Error: %@</target>
       <trans-unit id="Last updated %@" xml:space="preserve">
         <source>Last updated %@</source>
         <target state="translated">Zuletzt aktualisiert %@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Lat/Lon" xml:space="preserve">
         <source>Lat/Lon</source>
@@ -1881,7 +1882,7 @@ Error: %@</target>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
         <target state="translated">Links</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
@@ -1891,7 +1892,7 @@ Error: %@</target>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
         <target state="translated">Länge</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Line" xml:space="preserve">
         <source>Line</source>
@@ -1901,22 +1902,22 @@ Error: %@</target>
       <trans-unit id="Location unavailable" xml:space="preserve">
         <source>Location unavailable</source>
         <target state="translated">Standort nicht verfügbar</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
         <source>Login successful</source>
         <target state="translated">Login erfolgreich</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Low memory: clearing cache" xml:space="preserve">
         <source>Low memory: clearing cache</source>
         <target state="translated">Geringer Speicherplatz: leere Cache</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
         <source>Mail delivery is not available on this device</source>
         <target state="translated">Nachrichtenversand ist auf diesem Gerät nicht verfügbar</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Make Circular" xml:space="preserve">
         <source>Make Circular</source>
@@ -1931,12 +1932,12 @@ Error: %@</target>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
         <target state="translated">Maximale Anzahl an Nodes nach dem Verbinden ist 2000</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
         <target state="translated">Die maximale Weglänge beträgt 2000 Knoten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
@@ -1946,27 +1947,27 @@ Error: %@</target>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
         <target state="translated">Richtungsmaßnahme</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
         <target state="translated">Mitglied von Multipolygon-Relation</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Members" xml:space="preserve">
         <source>Members</source>
         <target state="translated">Mitglieder</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Merge Tags" xml:space="preserve">
         <source>Merge Tags</source>
         <target state="translated">Attribute vereinigen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Missing way to connect to" xml:space="preserve">
         <source>Missing way to connect to</source>
         <target state="translated">Weg zum Verbinden fehlt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Modified" xml:space="preserve">
         <source>Modified</source>
@@ -1976,14 +1977,14 @@ Error: %@</target>
       <trans-unit id="Modify" xml:space="preserve">
         <source>Modify</source>
         <target state="translated">Verändern</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Modify&#10;" xml:space="preserve">
         <source>Modify
 </source>
         <target state="translated">Verändern
 </target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Modifying the raw XML data allows you to correct errors that prevent uploading.&#10;&#10;It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." xml:space="preserve">
         <source>Modifying the raw XML data allows you to correct errors that prevent uploading.
@@ -1992,7 +1993,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <target state="translated">Die rohen XML-Daten zu bearbeiten, ermöglicht dir Fehler zu beheben, die das Hochladen verhindern.
 
 Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wenn du ein tiefgreifendes Verständnis des OSM-Änderungssatz Formats besitzt.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="More..." xml:space="preserve">
         <source>More...</source>
@@ -2002,27 +2003,27 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
         <target state="translated">Am Neuesten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Move" xml:space="preserve">
         <source>Move</source>
         <target state="translated">Bewegen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Move selected object?" xml:space="preserve">
         <source>Move selected object?</source>
         <target state="translated">Ausgewähltes Objekt bewegen?</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
         <target state="translated">Multipolygon</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
         <source>Name</source>
         <target state="translated">Name</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Needs Survey" xml:space="preserve">
         <source>Needs Survey</source>
@@ -2032,7 +2033,7 @@ Es ist eine fortgeschrittene Operation, die nur durchgeführt werden sollte, wen
       <trans-unit id="Network error" xml:space="preserve">
         <source>Network error</source>
         <target state="translated">Netzwerkfehler</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Never" xml:space="preserve">
         <source>Never</source>
@@ -2043,7 +2044,7 @@ Never delete old tracks</note>
       <trans-unit id="Next" xml:space="preserve">
         <source>Next</source>
         <target state="translated">Nächstes</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
@@ -2053,22 +2054,22 @@ Never delete old tracks</note>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
         <target state="translated">Linksabbiegen verboten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
         <target state="translated">Rechtsabbiegen verboten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
         <source>No Straight On restriction</source>
         <target state="translated">Geradeausfahren verboten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="No U-Turn restriction" xml:space="preserve">
         <source>No U-Turn restriction</source>
         <target state="translated">Umkehrverbot</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
@@ -2083,37 +2084,37 @@ Never delete old tracks</note>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
         <target state="translated">Keine Ergebnisse gefunden</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="No tags to paste" xml:space="preserve">
         <source>No tags to paste</source>
         <target state="translated">Keine Attribute zum Einfügen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
         <source>Node</source>
         <target state="translated">Knoten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Node Attributes" xml:space="preserve">
         <source>Node Attributes</source>
         <target state="translated">Knoten-Attribute</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Node Tags" xml:space="preserve">
         <source>Node Tags</source>
         <target state="translated">Knoten-Tags</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
         <source>Node is not an element of way</source>
         <target state="translated">Knoten ist kein Element von Weg</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
         <target state="translated">Der Knoten muss der erste oder letzte Knoten des Wegs sein</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
         <source>Not found</source>
@@ -2128,22 +2129,22 @@ Never delete old tracks</note>
       <trans-unit id="Nothing to upload, no changes have been made." xml:space="preserve">
         <source>Nothing to upload, no changes have been made.</source>
         <target state="translated">Nichts zum Hochladen, keine Änderungen wurden durchgeführt.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Number of recent items to display" xml:space="preserve">
         <source>Number of recent items to display</source>
         <target state="translated">Zahl anzuzeigender kürzlich geänderter Elemente</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="OK" xml:space="preserve">
         <source>OK</source>
         <target state="translated">OK</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
         <target state="translated">Objekt verändert</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Old value: %@" xml:space="preserve">
         <source>Old value: %@</source>
@@ -2153,27 +2154,27 @@ Never delete old tracks</note>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
         <target state="translated">Nur Linksabbiegen erlaubt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Only Right Turn restriction" xml:space="preserve">
         <source>Only Right Turn restriction</source>
         <target state="translated">Nur Rechtsabbiegen erlaubt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Only Straight On restriction" xml:space="preserve">
         <source>Only Straight On restriction</source>
         <target state="translated">Nur Geradeausfahren erlaubt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
         <source>Only multipolygon relations are supported</source>
         <target state="translated">Nur Multipolygon-Relationen werden unterstützt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
         <target state="translated">Nur Wege/Multipolygone können gedreht werden</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
         <source>Open Settings</source>
@@ -2183,7 +2184,7 @@ Never delete old tracks</note>
       <trans-unit id="Open URL" xml:space="preserve">
         <source>Open URL</source>
         <target state="translated">URL öffnen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Paste" xml:space="preserve">
         <source>Paste</source>
@@ -2193,51 +2194,52 @@ Never delete old tracks</note>
       <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
         <source>Paste the JSON for your quests into the field below</source>
         <target state="translated">Fügen Sie den JSON-Code für Ihre Quests in das Feld unten ein</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
         <source>Pasting %ld character, maximum tag length is 255</source>
         <target state="translated">%ld Zeichen einfügen, maximal 255 Zeichen zulässig</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
         <target state="translated">%ld Zeichen einfügen, maximal 255 Zeichen zulässig</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
         <source>Pasting %ld tag</source>
         <target state="translated">%ld Tag einfügen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
         <source>Pasting %ld tags</source>
         <target state="translated">%ld Tags einfügen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
         <target state="translated">GPX pausieren</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
         <target state="translated">Aufzeichnung von GPX-Tracks pausieren.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Perform Action" xml:space="preserve">
         <source>Perform Action</source>
         <target state="translated">Aktion ausführen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
-        <note/>
+        <target state="translated">Foto nicht verfügbar</target>
+        <note></note>
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
         <target state="translated">Bitte warten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
@@ -2252,7 +2254,7 @@ Never delete old tracks</note>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
         <target state="translated">Vorherige</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
@@ -2262,7 +2264,7 @@ Never delete old tracks</note>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
         <target state="translated">Geben Sie ein Einzelzeichensymbol (Emoji oder Unicode-Zeichen) an, um diesen Quest zu identifizieren:</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
@@ -2277,17 +2279,17 @@ Never delete old tracks</note>
       <trans-unit id="Quest Definition Error" xml:space="preserve">
         <source>Quest Definition Error</source>
         <target state="translated">Quest-Definitionsfehler</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Quests were imported successfully." xml:space="preserve">
         <source>Quests were imported successfully.</source>
         <target state="translated">Die Quests wurden erfolgreich importiert.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
         <target state="translated">Die Bewertung der App hilft anderen Kartierern, sie zu entdecken und erhöht die Sichtbarkeit von OpenStreetMap.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
@@ -2297,42 +2299,42 @@ Never delete old tracks</note>
       <trans-unit id="Redo" xml:space="preserve">
         <source>Redo</source>
         <target state="translated">Wiederherstellen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Relation Attributes" xml:space="preserve">
         <source>Relation Attributes</source>
         <target state="translated">Relations-Attribute</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Relation Tags" xml:space="preserve">
         <source>Relation Tags</source>
         <target state="translated">Relations-Tags</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
         <source>Relation: %@</source>
         <target state="translated">Relation: %@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Relations" xml:space="preserve">
         <source>Relations</source>
         <target state="translated">Relationen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
         <target state="translated">Attribute ersetzen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 3 nodes</source>
         <target state="translated">Benötigt einen geschlossenen Weg mit mindestens 3 Knoten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 4 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 4 nodes</source>
         <target state="translated">Benötigt einen geschlossenen Weg mit mindestens 4 Knoten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
         <source>Restrict</source>
@@ -2342,7 +2344,7 @@ Never delete old tracks</note>
       <trans-unit id="Restriction: %@" xml:space="preserve">
         <source>Restriction: %@</source>
         <target state="translated">Einschränkung: %@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Results for %@ (%@)" xml:space="preserve">
         <source>Results for %@ (%@)</source>
@@ -2362,7 +2364,7 @@ Never delete old tracks</note>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
         <target state="translated">Rechts</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -2382,27 +2384,27 @@ Never delete old tracks</note>
       <trans-unit id="Save or discard your changes" xml:space="preserve">
         <source>Save or discard your changes</source>
         <target state="translated">Speichern oder verwerfen Sie Ihre Änderungen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
         <target state="translated">Objekt auswählen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
         <target state="translated">Straße wählen, die sich der Kreuzung nähert</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
         <source>Select the language used for Presets. Other app content will use your default language.</source>
         <target state="translated">Wähle die Sprache aus, die für die Voreinstellungen verwendet wird. Andere App-Inhalte werden in deiner Standardsprache angezeigt.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
         <source>Selected object is off screen</source>
         <target state="translated">Ausgewähltes Objekt ist außerhalb des Bildschirms</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Set" xml:space="preserve">
         <source>Set</source>
@@ -2417,7 +2419,7 @@ Never delete old tracks</note>
       <trans-unit id="Settings" xml:space="preserve">
         <source>Settings</source>
         <target state="translated">Einstellungen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>
@@ -2428,12 +2430,12 @@ Title for sharing options</note>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
         <target state="translated">Zuletzt verwendete Elemente anzeigen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
         <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
         <target state="translated">Beim Versuch, Ihre Daten wiederherzustellen, ist etwas schief gelaufen. Alle ausstehenden Änderungen sind verloren gegangen. Es tut uns leid.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the %@ file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the %@ file</source>
@@ -2453,7 +2455,7 @@ Title for sharing options</note>
       <trans-unit id="Standard imagery" xml:space="preserve">
         <source>Standard imagery</source>
         <target state="translated">Standardbilder</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Start" xml:space="preserve">
         <source>Start</source>
@@ -2463,27 +2465,27 @@ Title for sharing options</note>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
         <target state="translated">GPX starten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
         <target state="translated">Aufzeichnung von GPX-Tracks starten.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
         <target state="translated">Stop</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
         <target state="translated">GPX stoppen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
         <target state="translated">Aufzeichnung von GPX-Tracks beenden.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
         <source>Straighten</source>
@@ -2493,12 +2495,12 @@ Title for sharing options</note>
       <trans-unit id="Success" xml:space="preserve">
         <source>Success</source>
         <target state="translated">Erfolg</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Tag Key" xml:space="preserve">
         <source>Tag Key</source>
         <target state="translated">Attributschlüssel</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
@@ -2508,127 +2510,127 @@ Title for sharing options</note>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
         <target state="translated">Neues Foto machen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
         <target state="translated">Der + Knopf kann sowohl auf der linken, als auch auf der rechten Seite des Bildschirms positioniert sein</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
         <source>The current location cannot be determined: </source>
         <target state="translated">Die aktuelle Position kann nicht bestimmt werden: </target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The merged nodes contain conflicting tags" xml:space="preserve">
         <source>The merged nodes contain conflicting tags</source>
         <target state="translated">Die zusammengeführten Knoten enthalten widersprüchliche Tags</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The nodes have conflicting roles in parent relations" xml:space="preserve">
         <source>The nodes have conflicting roles in parent relations</source>
         <target state="translated">Die Knoten haben widersprüchliche Rollen in übergeordneten Relationen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The object does not contain any tags" xml:space="preserve">
         <source>The object does not contain any tags</source>
         <target state="translated">Das Objekt enthält keine Tags</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
         <target state="translated">Die Einschränkung kann nicht entfernt werden</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
         <target state="translated">Der ausgewählte Weg muss vollständig sichtbar sein</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
         <target state="translated">Der Zielweg ist mehrdeutig</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
         <source>The turn contains an unrecognized turn restriction style. Proceeding will destroy it.</source>
         <target state="translated">Der Abbiegevorgang hat eine unbekannte Abbiegebeschränkung. Beim Fortfahren, wird diese gelöscht.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
         <target state="translated">Der Weg gehört zu einer Relation, die nicht vollständig heruntergeladen ist</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
         <source>The way is not sufficiently straight</source>
         <target state="translated">Der Weg ist nicht gerade genug</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
         <source>The way must have at least 2 nodes</source>
         <target state="translated">Der Weg muss mindestens 2 Knoten besitzen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
         <source>The ways contain incompatible tags</source>
         <target state="translated">Die Wege enthalten inkompatible Attribute</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
         <source>This action requires GPS to be turned on</source>
         <target state="translated">Diese Aktion erfordert, dass GPS eingeschalten ist</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
         <target state="translated">Die App unterstützt noch nicht die Bearbeitung von Abbiegebeschränkungen ohne einen Knoten als 'via' Mitglied</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
         <source>This device is not able to provide heading data.</source>
         <target state="translated">Dieses Gerät ist nicht in der Lage, Bewegungsdaten zu übermitteln.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="This feature is only available on iOS 15 or later" xml:space="preserve">
         <source>This feature is only available on iOS 15 or later</source>
         <target state="translated">Diese Funktion ist nur in iOS 15 oder höher verfügbar</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
         <source>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</source>
         <target state="translated">Auf dieser Seite können Sie Quests mit spezifischeren Kriterien entwerfen als auf der normalen Quest-Builder Seite.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
         <target state="translated">Um ein anderes Mitglied zur Relation hinzuzufügen, halte den Weg der hinzugefügt werden soll lange gedrückt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
         <source>Travel ALLOWED from %@ to %@</source>
         <target state="translated">Fahrt ERLAUBT von %1$@ bis %2$@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Travel ONLY from %@ to %@" xml:space="preserve">
         <source>Travel ONLY from %@ to %@</source>
         <target state="translated">Fahrt NUR von %1$@ nach %2$@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Travel PROHIBITED from %@ to %@" xml:space="preserve">
         <source>Travel PROHIBITED from %@ to %@</source>
         <target state="translated">Fahrt VERBOTEN von %1$@ bis %2$@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Travel from %@" xml:space="preserve">
         <source>Travel from %@</source>
         <target state="translated">Fahrt von %@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
         <target state="translated">Schalte Ortungsdienste ein, um %@ zu erlauben, deine Position zu bestimmen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
@@ -2642,7 +2644,7 @@ Select the highway from which you are approaching the intersection, then tap an 
         <target state="translated">Abbiegebeschränkungen geben an, in welche Straßen Sie abbiegen dürfen, wenn Sie aus einer bestimmten Richtung auf eine Kreuzung zufahren.
 
 Wählen Sie die Straße, von der aus Sie sich der Kreuzung nähern, und tippen Sie dann auf einen Pfeil, um auszuwählen, ob die Zielstraße eine zulässige Richtung ist.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Type" xml:space="preserve">
         <source>Type</source>
@@ -2652,12 +2654,12 @@ Wählen Sie die Straße, von der aus Sie sich der Kreuzung nähern, und tippen S
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
         <source>U-Turn from %@ allowed</source>
         <target state="translated">Umkehren von %@ erlaubt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ prohibited" xml:space="preserve">
         <source>U-Turn from %@ prohibited</source>
         <target state="translated">Umkehren von %@ verboten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="UID" xml:space="preserve">
         <source>UID</source>
@@ -2667,12 +2669,12 @@ Wählen Sie die Straße, von der aus Sie sich der Kreuzung nähern, und tippen S
       <trans-unit id="Unable to upload changes" xml:space="preserve">
         <source>Unable to upload changes</source>
         <target state="translated">Kann Änderungen nicht hochladen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Undo" xml:space="preserve">
         <source>Undo</source>
         <target state="translated">Rückgängig</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
         <source>Unknown role</source>
@@ -2682,7 +2684,7 @@ Wählen Sie die Straße, von der aus Sie sich der Kreuzung nähern, und tippen S
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
         <target state="translated">Nicht unterstützer Abbiegebeschränkungs-Typ</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
         <source>Update</source>
@@ -2702,22 +2704,22 @@ Wählen Sie die Straße, von der aus Sie sich der Kreuzung nähern, und tippen S
       <trans-unit id="Upload complete!" xml:space="preserve">
         <source>Upload complete!</source>
         <target state="translated">Hochladen abgeschlossen!</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
         <source>Upload to OSM</source>
         <target state="translated">Zu OSM hochladen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Upload your changes" xml:space="preserve">
         <source>Upload your changes</source>
         <target state="translated">Änderungen hochladen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Uploading GPX..." xml:space="preserve">
         <source>Uploading GPX...</source>
         <target state="translated">GPX hochladen...</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
         <source>User</source>
@@ -2727,7 +2729,7 @@ Wählen Sie die Straße, von der aus Sie sich der Kreuzung nähern, und tippen S
       <trans-unit id="User-defined imagery" xml:space="preserve">
         <source>User-defined imagery</source>
         <target state="translated">Benutzerdefiniertes Bildmaterial</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Version" xml:space="preserve">
         <source>Version</source>
@@ -2742,32 +2744,32 @@ Wählen Sie die Straße, von der aus Sie sich der Kreuzung nähern, und tippen S
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
         <target state="translated">Warnung</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Way Attributes" xml:space="preserve">
         <source>Way Attributes</source>
         <target state="translated">Weg-Attribute</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Way Tags" xml:space="preserve">
         <source>Way Tags</source>
         <target state="translated">Weg-Tags</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
         <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
         <target state="translated">Wie lautet der Name dieses Quests? Am besten wird dies in Form einer Aktion wie "Oberfläche hinzufügen" beschrieben:</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
         <source>What tag key is modified by this quest?</source>
         <target state="translated">Welcher Attributschlüssel wird durch diesen Quest verändert?</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="What types of objects does this quest apply to?" xml:space="preserve">
         <source>What types of objects does this quest apply to?</source>
         <target state="translated">Auf welche Objekte bezieht sich dieser Quest?</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
         <source>You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.
@@ -2776,7 +2778,7 @@ To continue press Commit once again, otherwise press Cancel.</source>
         <target state="translated">Du bist gerade dabei, Änderungen an der live-geschalteten OpenStreetMap Datenbank zu machen. Die Änderungen werden für jeden auf der Welt sichtbar.
 
 Zum Fortfahren drücke noch einmal Hochladen, sonst drücke Abbrechen.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="You can define custom fields for presets. A field is a single key/value pair associated with a feature." xml:space="preserve">
         <source>You can define custom fields for presets. A field is a single key/value pair associated with a feature.</source>
@@ -2788,17 +2790,17 @@ Zum Fortfahren drücke noch einmal Hochladen, sonst drücke Abbrechen.</target>
 These members are marked with '&gt;'.</source>
         <target state="translated">Sie können nur zu einem Relationsmitglied navigieren, wenn es bereits heruntergeladen wurde.
 Diese Mitglieder sind gekennzeichnet mit '&gt;'.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
         <source>You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.</source>
         <target state="translated">Es wurden Änderungen gemacht, welche noch nicht zum Server hochgeladen wurden. Den Cache zu leeren, würde den Verlust dieser Veränderungen bedeuten.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
         <source>You must save or discard changes to the current object before editing its associated relation</source>
         <target state="translated">Sie müssen Änderungen am aktuellen Objekt speichern oder verwerfen, bevor Sie die zugehörige Relation bearbeiten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.one" xml:space="preserve">
         <source>You've uploaded %ld changeset with this version of Go Map!!
@@ -2807,7 +2809,7 @@ Rate this app?</source>
         <target state="needs-review-l10n">Du hast %ld Änderungssätze mit dieser Version von GoMap!! hochgeladen.
 
 Diese App bewerten?</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.other" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
@@ -2816,7 +2818,7 @@ Rate this app?</source>
         <target state="translated">Du hast %ld Änderungssätze mit dieser Version von GoMap!! hochgeladen.
 
 Diese App bewerten?</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">
         <source>Your OSM data cache is getting large, which may lead to slow startup and shutdown times.
@@ -2825,92 +2827,92 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">Ihr lokaler Zwischenspeicher ist fast voll, was zu langsamen Start- und Abschaltzeiten führen kann.
 
 Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu verbessern.</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="Zoom to Edit" xml:space="preserve">
         <source>Zoom to Edit</source>
         <target state="translated">Kartenausschnitt vergrößern zum Bearbeiten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="add node to way" xml:space="preserve">
         <source>add node to way</source>
         <target state="translated">Knoten zum Weg hinzufügen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="add object to relation" xml:space="preserve">
         <source>add object to relation</source>
         <target state="translated">Objekt zur Relation hinzufügen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
         <source>added to multipolygon relation</source>
         <target state="translated">zur Multipolygon-Relation hinzugefügt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
         <source>computing size...</source>
         <target state="translated">Größe berechnen…</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="create node" xml:space="preserve">
         <source>create node</source>
         <target state="translated">Erstelle Knoten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="create relation" xml:space="preserve">
         <source>create relation</source>
         <target state="translated">Erstelle Relation</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="create turn restriction" xml:space="preserve">
         <source>create turn restriction</source>
         <target state="translated">Abbiegebeschränkung erstellen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="create way" xml:space="preserve">
         <source>create way</source>
         <target state="translated">Erstelle Weg</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="delete multipolygon" xml:space="preserve">
         <source>delete multipolygon</source>
         <target state="translated">Lösche Multiploygon</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="delete node" xml:space="preserve">
         <source>delete node</source>
         <target state="translated">Lösche Knoten</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="delete node from way" xml:space="preserve">
         <source>delete node from way</source>
         <target state="translated">Knoten vom Weg löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="delete object from relation" xml:space="preserve">
         <source>delete object from relation</source>
         <target state="translated">Objekt aus Relation entfernen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="delete relation" xml:space="preserve">
         <source>delete relation</source>
         <target state="translated">Lösche Relation</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="delete restriction" xml:space="preserve">
         <source>delete restriction</source>
         <target state="translated">Beschränkung löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="delete route" xml:space="preserve">
         <source>delete route</source>
         <target state="translated">Route löschen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="delete way" xml:space="preserve">
         <source>delete way</source>
         <target state="translated">Lösche Weg</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="duplicate" xml:space="preserve">
         <source>duplicate</source>
@@ -2955,7 +2957,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
         <target state="translated">Meter</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="mi" xml:space="preserve">
         <source>mi</source>
@@ -2965,7 +2967,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       <trans-unit id="move" xml:space="preserve">
         <source>move</source>
         <target state="translated">bewegen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="mph" xml:space="preserve">
         <source>mph</source>
@@ -2975,32 +2977,32 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       <trans-unit id="no" xml:space="preserve">
         <source>no</source>
         <target state="translated">nein</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
         <target state="translated">Knoten %@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="node %@ (in way)" xml:space="preserve">
         <source>node %@ (in way)</source>
         <target state="translated">Knoten %@ (in Weg)</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="other object" xml:space="preserve">
         <source>other object</source>
         <target state="translated">anderes Objekt</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="relation" xml:space="preserve">
         <source>relation</source>
         <target state="translated">Relation</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="set tags" xml:space="preserve">
         <source>set tags</source>
         <target state="translated">Tags setzen</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="st" xml:space="preserve">
         <source>st</source>
@@ -3015,7 +3017,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       <trans-unit id="update relation members" xml:space="preserve">
         <source>update relation members</source>
         <target state="translated">Relations-Mitglieder aktualisieren</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="vintage %@" xml:space="preserve">
         <source>vintage %@</source>
@@ -3030,18 +3032,18 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
         <target state="translated">Weg %@</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="yes" xml:space="preserve">
         <source>yes</source>
         <target state="translated">ja</target>
-        <note/>
+        <note></note>
       </trans-unit>
     </body>
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -3063,7 +3065,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
   </file>
   <file original="PhotoShare/InfoPlist.xcstrings" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -3080,13 +3082,13 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
   </file>
   <file original="PhotoShare/Localizable.xcstrings" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
         <source>Processing data...</source>
         <target state="translated">Daten verarbeiten...</target>
-        <note/>
+        <note></note>
       </trans-unit>
       <trans-unit id="The URL content isn't recognized." xml:space="preserve">
         <source>The URL content isn't recognized.</source>
@@ -3096,13 +3098,13 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
         <source>Unfortunately the selected image does not contain location information.</source>
         <target state="translated">Leider enthält das ausgewählte Bild keine Standortdaten.</target>
-        <note/>
+        <note></note>
       </trans-unit>
     </body>
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -3310,6 +3312,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="ScT-zG-GwL.text" xml:space="preserve">
         <source>Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object.</source>
+        <target state="translated">Die Voreinstellungen dieser Funktion übernehmen. Wenn keine vorhanden sind, werden die Tags beim Auswählen dieser Funktion mit dem Zielobjekt zusammengeführt (nicht ersetzt).</target>
         <note>Class = "UILabel"; text = "Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object."; ObjectID = "ScT-zG-GwL";</note>
       </trans-unit>
       <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
@@ -3607,6 +3610,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
       </trans-unit>
       <trans-unit id="sGi-dQ-1v0.text" xml:space="preserve">
         <source>Feature type:</source>
+        <target state="translated">Feature-Typ:</target>
         <note>Class = "UILabel"; text = "Feature type:"; ObjectID = "sGi-dQ-1v0";</note>
       </trans-unit>
       <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve">
@@ -3668,7 +3672,7 @@ Leeren sie den Zwischenspeicher (unter Anzeigeeinstellungen), um die Leistung zu
   </file>
   <file original="Settings/Base.lproj/Settings.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -4048,7 +4052,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="de" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"></tool>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
