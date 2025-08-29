@@ -716,9 +716,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		editToolbar.layer.zPosition = ZLAYER.TOOLBAR.rawValue
 		editToolbar.layer.cornerRadius = 8.0
 		editToolbar.layer.masksToBounds = true
-		if #available(iOS 26.0, *) {
+		if false, #available(iOS 26.0, *) {
 			// using liquid glass
 			editToolbar.backgroundColor = nil
+			editToolbar.effectView.effect = UIGlassEffect(style: .regular)
 		}
 #if targetEnvironment(macCatalyst)
 		// We add a constraint in the storyboard to make the edit control buttons taller
@@ -2105,7 +2106,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					configuration.baseBackgroundColor = backgroundColor
 					configuration.baseForegroundColor = foregroundColor
 					if #available(iOS 26.0, *) {
-						configuration.cornerStyle = .capsule
+						configuration.cornerStyle = .dynamic
 					} else {
 						configuration.cornerStyle = .dynamic
 					}

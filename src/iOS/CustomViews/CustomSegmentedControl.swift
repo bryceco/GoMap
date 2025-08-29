@@ -9,6 +9,7 @@
 import UIKit
 
 final class CustomSegmentedControl: UIControl {
+	public let effectView: UIVisualEffectView
 	private let stackView = UIStackView()
 
 	public var controls: [UIView] {
@@ -21,29 +22,40 @@ final class CustomSegmentedControl: UIControl {
 	}
 
 	override init(frame: CGRect) {
+		effectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
 		super.init(frame: frame)
-		setupStackView()
+		setupViewHierarchy()
 	}
 
 	required init?(coder: NSCoder) {
+		effectView = UIVisualEffectView(effect: UIBlurEffect(style: .systemMaterial))
 		super.init(coder: coder)
-		setupStackView()
+		setupViewHierarchy()
 	}
 
-	private func setupStackView() {
+	private func setupViewHierarchy() {
+		effectView.translatesAutoresizingMaskIntoConstraints = false
+		addSubview(effectView)
+
+		NSLayoutConstraint.activate([
+			effectView.leadingAnchor.constraint(equalTo: leadingAnchor),
+			effectView.trailingAnchor.constraint(equalTo: trailingAnchor),
+			effectView.topAnchor.constraint(equalTo: topAnchor),
+			effectView.bottomAnchor.constraint(equalTo: bottomAnchor)
+		])
+
 		stackView.axis = .horizontal
 		stackView.alignment = .center
 		stackView.isLayoutMarginsRelativeArrangement = true
 		stackView.distribution = .fill
 		stackView.translatesAutoresizingMaskIntoConstraints = false
 
-		addSubview(stackView)
-
+		effectView.contentView.addSubview(stackView)
 		NSLayoutConstraint.activate([
-			stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-			stackView.topAnchor.constraint(equalTo: topAnchor),
-			stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
+			stackView.leadingAnchor.constraint(equalTo: effectView.contentView.leadingAnchor),
+			stackView.trailingAnchor.constraint(equalTo: effectView.contentView.trailingAnchor),
+			stackView.topAnchor.constraint(equalTo: effectView.contentView.topAnchor),
+			stackView.bottomAnchor.constraint(equalTo: effectView.contentView.bottomAnchor)
 		])
 	}
 
@@ -52,9 +64,6 @@ final class CustomSegmentedControl: UIControl {
 			stackView.removeArrangedSubview($0)
 			$0.removeFromSuperview()
 		}
-
-		for control in controls {
-			stackView.addArrangedSubview(control)
-		}
+		controls.forEach(stackView.addArrangedSubview)
 	}
 }

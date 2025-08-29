@@ -272,14 +272,43 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	// MARK: Button configuration
 
 	@available(iOS 26.0, *)
-	static let defaultGlassBackground: UIBackgroundConfiguration = {
-		var background = UIBackgroundConfiguration.clear()
+	static let clearGlassButtonConfig: UIButton.Configuration = {
 		var effect = UIGlassEffect(style: .clear)
 		effect.isInteractive = true
+
+		var background = UIBackgroundConfiguration.clear()
 		background.visualEffect = effect
 		background.cornerRadius = 10.0
-		return background
+		background.backgroundColor = .black.withAlphaComponent(0.30)
+		background.strokeWidth = 1.0
+		background.strokeColor = .white.withAlphaComponent(0.5)
+
+		var config = UIButton.Configuration.plain()
+		config.background = background
+		config.baseForegroundColor = .white
+
+		return config
 	}()
+
+	@available(iOS 26.0, *)
+	static let regularGlassButtonConfig: UIButton.Configuration = {
+		var effect = UIGlassEffect(style: .regular)
+		effect.isInteractive = true
+
+		var background = UIBackgroundConfiguration.clear()
+		background.visualEffect = effect
+		background.cornerRadius = 10.0
+
+		var config = UIButton.Configuration.plain()
+		config.background = background
+
+		return config
+	}()
+
+	@available(iOS 26.0, *)
+	func defaultButtonConfig() -> UIButton.Configuration {
+		return Self.clearGlassButtonConfig
+	}
 
 	func setButtonAppearances() {
 		// Update button styling
@@ -287,7 +316,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		// it needs to be idempotent.
 		let buttons: [UIView] = [
 			// these aren't actually buttons, but they get similar tinting and shadows
-			mapView.editToolbar,
 			undoRedoView,
 			// these are buttons
 			locationButton,
@@ -310,12 +338,16 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 				switch view {
 				case let effect as UIVisualEffectView:
 					// frame for undo/redo buttons
-					effect.effect = Self.defaultGlassBackground.visualEffect
-					effect.layer.cornerRadius = Self.defaultGlassBackground.cornerRadius
+					let background = defaultButtonConfig().background
+					effect.effect = background.visualEffect
+					effect.backgroundColor = background.backgroundColor
+					effect.layer.cornerRadius = background.cornerRadius
+					effect.layer.borderWidth = background.strokeWidth
+					effect.layer.borderColor = background.strokeColor?.cgColor
+					effect.layer.masksToBounds = true
 				case let button as UIButton:
 					button.backgroundColor = nil
-					var config = UIButton.Configuration.plain()
-					config.background = Self.defaultGlassBackground
+					var config = defaultButtonConfig()
 					config.image = button.currentImage
 					config.title = button.titleLabel?.text
 					switch button {
@@ -334,11 +366,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 						break
 					}
 					button.configuration = config
-				case let toolbar as UIToolbar:
-					let appearance = UIToolbarAppearance()
-					appearance.configureWithTransparentBackground()
-					appearance.backgroundEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-					toolbar.standardAppearance = appearance
 				default:
 					break
 				}
@@ -375,12 +402,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			// normal background color
 			makeButtonNormal(view)
 
-			if #available(iOS 26.0, *),
-			   let button = view as? UIButton
-			{
-				button.configuration = .glass()
-			}
-
 			// background selection color
 			if let button = view as? UIButton {
 				button.addTarget(self, action: #selector(makeButtonHighlight(_:)), for: .touchDown)
@@ -396,10 +417,6 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 					}
 				}
 			}
-		}
-
-		if #available(iOS 26.0, *) {
-			undoRedoView.backgroundColor = nil
 		}
 
 		// special handling for aerial logo button
