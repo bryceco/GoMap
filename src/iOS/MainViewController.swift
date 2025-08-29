@@ -319,6 +319,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 					config.image = button.currentImage
 					config.title = button.titleLabel?.text
 					switch button {
+					case mapView.compassButton:
+						config.background.cornerRadius = button.bounds.width / 2
 					case mapView.aerialAlignmentButton:
 						config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
 						config.background.cornerRadius = 6
