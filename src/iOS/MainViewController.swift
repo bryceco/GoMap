@@ -318,9 +318,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			// these aren't actually buttons, but they get similar tinting and shadows
 			undoRedoView,
 			// these are buttons
-			locationButton,
 			undoButton,
 			redoButton,
+			locationButton,
 			mapView.addNodeButton,
 			mapView.compassButton,
 			mapView.centerOnGPSButton,
@@ -382,6 +382,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			} else {
 				// rounded corners
 				view.layer.cornerRadius = 10.0
+				view.clipsToBounds = true
 			}
 			// image blue tint
 			if let button = view as? UIButton,
