@@ -413,6 +413,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		}
 		self.tags.set(dict.map { (k: $0.key, v: $0.value) })
 
+		saveState()
 		_ = updateWithRecomendations(forFeature: true)
 	}
 
