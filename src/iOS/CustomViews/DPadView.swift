@@ -95,26 +95,32 @@ class DPadView: UIView {
 		plusLayer.fillColor = UIColor.lightGray.cgColor
 		MainViewController.applyButtonShadow(layer: plusLayer)
 		plusLayer.shadowPath = plusPath.cgPath
+		plusLayer.strokeColor = UIColor.white.withAlphaComponent(0.5).cgColor
+		plusLayer.lineWidth = 1
 		layer.addSublayer(plusLayer)
 
 		// draw triangle buttons
 		let buttonSize = CGSize(width: (1 - 2 * plusInset) * frame.width,
 		                        height: (1 - 2 * plusInset) * frame.height)
-		let leftButton = arrowButton(frame: CGRect(origin: CGPoint(x: 0.0,
-		                                                           y: bounds.midY - plusInset * bounds.height / 2),
-		                                           size: buttonSize),
+		let leftButton = arrowButton(frame: CGRect(x: 0.0,
+		                                           y: bounds.midY - plusInset * bounds.height / 2,
+		                                           width: buttonSize.width,
+		                                           height: buttonSize.height),
 		                             dir: .left)
-		let rightButton = arrowButton(frame: CGRect(origin: CGPoint(x: bounds.maxX - buttonSize.width,
-		                                                            y: bounds.midY - plusInset * bounds.height / 2),
-		                                            size: buttonSize),
+		let rightButton = arrowButton(frame: CGRect(x: bounds.maxX - buttonSize.width,
+		                                            y: bounds.midY - plusInset * bounds.height / 2,
+		                                            width: buttonSize.width,
+		                                            height: buttonSize.height),
 		                              dir: .right)
-		let upButton = arrowButton(frame: CGRect(origin: CGPoint(x: bounds.midX - plusInset * bounds.width / 2,
-		                                                         y: 0.0),
-		                                         size: buttonSize),
+		let upButton = arrowButton(frame: CGRect(x: bounds.midX - plusInset * bounds.width / 2,
+		                                         y: 0.0,
+		                                         width: buttonSize.width,
+		                                         height: buttonSize.height),
 		                           dir: .up)
-		let downButton = arrowButton(frame: CGRect(origin: CGPoint(x: bounds.midX - plusInset * bounds.width / 2,
-		                                                           y: bounds.maxY - buttonSize.height),
-		                                           size: buttonSize),
+		let downButton = arrowButton(frame: CGRect(x: bounds.midX - plusInset * bounds.width / 2,
+		                                           y: bounds.maxY - buttonSize.height,
+		                                           width: buttonSize.width,
+		                                           height: buttonSize.height),
 		                             dir: .down)
 		for button in [leftButton, rightButton, upButton, downButton] {
 			button.addTarget(self, action: #selector(buttonPress(_:)), for: .touchUpInside)
