@@ -92,3 +92,19 @@ extension AnyJSON {
 		}
 	}
 }
+
+#if DEBUG
+func jsonAsPrettyString(_ json: Any) -> String? {
+	if let data = json as? Data {
+		guard let object = try? JSONSerialization.jsonObject(with: data)
+		else { return nil }
+		return jsonAsPrettyString(object)
+	}
+	guard let data = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]),
+		  let string = String(data: data, encoding: .utf8)
+	else {
+		return nil
+	}
+	return string
+}
+#endif
