@@ -129,7 +129,7 @@ class POIAttributesViewController: UITableViewController {
 					dateStyle: .medium,
 					timeStyle: .short)
 			case ROW.version.rawValue:
-				cell.title.text = NSLocalizedString("Version", comment: "OSM object versioh")
+				cell.title.text = NSLocalizedString("Version", comment: "OSM object version")
 				cell.value.text = "\(object.version)"
 				cell.accessoryType = object.ident > 0 ? .disclosureIndicator : .none
 			case ROW.changeset.rawValue:
