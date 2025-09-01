@@ -108,7 +108,12 @@ class POITabBarController: UITabBarController {
 	}
 
 	override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-		let tabIndex = tabBar.items!.firstIndex(of: item)!
+
+		guard
+			let tabIndex = tabBar.items?.firstIndex(of: item),
+			tabIndex != selectedIndex
+		else { return }
+
 		UserPrefs.shared.poiTabIndex.value = tabIndex
 
 		slideTabTo(tabIndex: tabIndex)
