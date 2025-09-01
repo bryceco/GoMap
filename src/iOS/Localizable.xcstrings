@@ -57532,7 +57532,7 @@
       }
     },
     "Version" : {
-      "comment" : "OSM object versioh",
+      "comment" : "OSM object version",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
