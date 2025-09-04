@@ -1,8 +1,8 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "1tR-eI-DSh.configuration.title" : {
-      "comment" : "Class = \"UIButton\"; configuration.title = \"username\"; ObjectID = \"1tR-eI-DSh\"; Note = \"Placeholder - Do not translate\";",
+    "1tR-eI-DSh.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"username\"; ObjectID = \"1tR-eI-DSh\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -51,60 +51,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用者名稱"
-          }
-        }
-      }
-    },
-    "1tR-eI-DSh.normalTitle" : {
-      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"1tR-eI-DSh\"; Note = \"Placeholder - Do not translate\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schaltfläche"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Κουμπί"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Button"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botón"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gumb"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ボタン"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按鈕"
           }
         }
       }
@@ -261,6 +207,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chỉ đường"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "获取路线"
           }
         },
         "zh-Hant" : {
@@ -445,102 +397,6 @@
         }
       }
     },
-    "2g1-vb-Cjc.configuration.title" : {
-      "comment" : "Class = \"UIButton\"; configuration.title = \"Comment\"; ObjectID = \"2g1-vb-Cjc\"; Note = \"Add a comment for a Note\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Komentář"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kommentar"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Σχόλιο"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Comment"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comentario"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kommenteeri"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oharra"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Commentaire"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dodaj komentar"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Megjegyzés"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "コメント"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Комментировать"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "கருத்து"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Коментар"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "留言"
-          }
-        }
-      }
-    },
     "2g1-vb-Cjc.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Comment\"; ObjectID = \"2g1-vb-Cjc\"; Note = \"Add a comment for a Note\";",
       "extractionState" : "extracted_with_value",
@@ -590,7 +446,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kommentaar"
+            "value" : "Kommenteeri"
           }
         },
         "eu" : {
@@ -608,13 +464,13 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Commenter"
+            "value" : "Commentaire"
           }
         },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Komentar"
+            "value" : "Dodaj komentar"
           }
         },
         "hu" : {
@@ -680,7 +536,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Комментарий"
+            "value" : "Комментировать"
           }
         },
         "ta" : {
@@ -819,6 +675,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ghi công Bing"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "必应数据来源"
           }
         },
         "zh-Hant" : {
@@ -1011,102 +873,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "上傳"
-          }
-        }
-      }
-    },
-    "9G2-Gl-CeP.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"username\"; ObjectID = \"9G2-Gl-CeP\"; Note = \"Placeholder - Do not translate\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "uživatelské jméno"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Benutzername"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "username"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nombre de usuario"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "korisničko ime"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nama pengguna"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "username"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ユーザー名"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "वापरकर्ता नाव"
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nom d’usancier"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "nome de utilizador"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "имя пользователя"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "імʼя користувача"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "帳號"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "帳號"
           }
         }
       }
@@ -1599,6 +1365,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Коментар до набору змін"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修改集注释（此处填写）"
           }
         },
         "zh-Hant" : {
@@ -3253,96 +3025,6 @@
         }
       }
     },
-    "OJ0-aO-ri1.configuration.title" : {
-      "comment" : "Class = \"UIButton\"; configuration.title = \"Comment & Resolve\"; ObjectID = \"OJ0-aO-ri1\"; Note = \"Add a comment and resolve Note\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Komentář a vyřešení"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kommentieren & Beheben"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Comment & Resolve"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Comentar y resolver"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kommenteeri ja märgi lahendatuks"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Komentatu ta zuzendu"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Commenter & Résoudre"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dodaj komentar i riješi"
-          }
-        },
-        "hu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Megjegyzés hozzáadása & jegyzet megoldása"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "コメント & 解決"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Комментировать и устранить"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "கருத்து & தீர்க்க"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Коментар & Вирішити"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "留言&解決"
-          }
-        }
-      }
-    },
     "OJ0-aO-ri1.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Comment & Resolve\"; ObjectID = \"OJ0-aO-ri1\"; Note = \"Add a comment and resolve Note\";",
       "extractionState" : "extracted_with_value",
@@ -3392,7 +3074,7 @@
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zuzendu"
+            "value" : "Komentatu ta zuzendu"
           }
         },
         "fr" : {
@@ -3743,6 +3425,12 @@
             "value" : "Nhãn"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标注"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3915,6 +3603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bing Bản đồ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "必应地图（Bing Maps）"
           }
         },
         "zh-Hant" : {
@@ -4403,6 +4097,12 @@
             "value" : "Уточніть назву (напр. «Нью Йорк»), посилання чи інший текст з координатами, або ж вкажіть обʼєкт OSM (напр. «way 51014987»):"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指定一个名称（如\"纽约\"）、一个包含经纬度坐标的URL或其他文本，或一个OSM对象引用（如\"way 51014987\"）："
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4509,6 +4209,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014年6月17日17时54分（协调世界时）"
           }
         },
         "zh-Hant" : {
@@ -4923,528 +4629,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "尼加拉瀑布"
-          }
-        }
-      }
-    },
-    "zrW-uc-hfQ.segmentTitles[0]" : {
-      "comment" : "Class = \"UISegmentedControl\"; zrW-uc-hfQ.segmentTitles[0] = \"Tags\"; ObjectID = \"zrW-uc-hfQ\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الوسوم"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الوسوم"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Značky"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Attribute"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ετικέτες"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Tags"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etiquetas"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Sildid"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ikurrak"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tagit"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Étiquettes"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Oznake"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tag-tag"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etichette"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "タグ"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "टॅग्स"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etiketter"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tags"
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etiquetas"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etiquetas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etiquetas"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Теги"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "குறிச்சொற்கள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Теґи"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Thẻ"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "标签"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "標籤"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "標籤"
-          }
-        }
-      }
-    },
-    "zrW-uc-hfQ.segmentTitles[1]" : {
-      "comment" : "Class = \"UISegmentedControl\"; zrW-uc-hfQ.segmentTitles[1] = \"Delete\"; ObjectID = \"zrW-uc-hfQ\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "حذف"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "حذف"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Smazat"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Löschen"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Διαγραφή"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Delete"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kustuta"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kendu"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Poista"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Supprimer"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Izbriši"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hapus"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Elimina"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "削除"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "पुसा"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Slett"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verwijderen"
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Escafar"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Eliminar"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apagar"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Удалить"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "நீக்கு"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Видалити"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Xóa"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "刪除"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "刪除"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "刪除"
-          }
-        }
-      }
-    },
-    "zrW-uc-hfQ.segmentTitles[2]" : {
-      "comment" : "Class = \"UISegmentedControl\"; zrW-uc-hfQ.segmentTitles[2] = \"More...\"; ObjectID = \"zrW-uc-hfQ\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "المزيد..."
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "المزيد..."
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Další…"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mehr..."
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Περισσότερα..."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "More..."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Más…"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Veel…"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gehiago..."
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lisää…"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Plus..."
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Više …"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lainnya..."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Di più..."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "続き..."
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "अधिक..."
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mer…"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Meer..."
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mai…"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mais..."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mais…"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ещё..."
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "மேலும் ..."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Більше..."
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Thêm…"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更多..."
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更多…"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更多..."
           }
         }
       }

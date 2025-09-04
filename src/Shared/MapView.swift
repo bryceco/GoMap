@@ -702,10 +702,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// We add a constraint in the storyboard to make the edit control buttons taller
 		// so they're easier to push, but on Mac the constraints doesn't work correctly
 		// and the buttons look ugly, so remove it.
-		if let height = editControl.constraints.first(where: {
+		if let height = editToolbar.constraints.first(where: {
 			$0.firstAttribute == .height && $0.constant == 43.0
 		}) {
-			editControl.removeConstraint(height)
+			editToolbar.removeConstraint(height)
 		}
 #endif
 

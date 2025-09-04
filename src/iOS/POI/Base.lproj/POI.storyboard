@@ -1710,36 +1710,40 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdT-wh-QoF">
-                                                    <rect key="frame" x="20" y="4.6666666666666679" width="63" height="35"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Point"/>
+                                                    <rect key="frame" x="20" y="6" width="37" height="32"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Point"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WjA-Nb-uzp">
-                                                    <rect key="frame" x="91" y="4.6666666666666679" width="56" height="35"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Line"/>
+                                                    <rect key="frame" x="69" y="6" width="31" height="32"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Line"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CBg-8X-VJp">
-                                                    <rect key="frame" x="155" y="4.6666666666666679" width="59.333333333333343" height="35"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Area"/>
+                                                    <rect key="frame" x="112" y="6" width="34" height="32"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Area"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DhX-ri-fx9">
-                                                    <rect key="frame" x="222.33333333333337" y="4.6666666666666679" width="73" height="35"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Vertex"/>
+                                                    <rect key="frame" x="158" y="6" width="47" height="32"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Vertex"/>
                                                 </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="CBg-8X-VJp" firstAttribute="centerY" secondItem="tQo-Iv-qKj" secondAttribute="centerY" id="2wC-Qs-EXl"/>
-                                                <constraint firstItem="WjA-Nb-uzp" firstAttribute="leading" secondItem="fdT-wh-QoF" secondAttribute="trailing" constant="8" symbolic="YES" id="3bM-0Z-E9A"/>
+                                                <constraint firstItem="WjA-Nb-uzp" firstAttribute="leading" secondItem="fdT-wh-QoF" secondAttribute="trailing" constant="12" id="3bM-0Z-E9A"/>
                                                 <constraint firstItem="fdT-wh-QoF" firstAttribute="centerY" secondItem="tQo-Iv-qKj" secondAttribute="centerY" id="C2B-05-GUo"/>
-                                                <constraint firstItem="DhX-ri-fx9" firstAttribute="leading" secondItem="CBg-8X-VJp" secondAttribute="trailing" constant="8" symbolic="YES" id="U1z-ay-bjA"/>
+                                                <constraint firstItem="DhX-ri-fx9" firstAttribute="leading" secondItem="CBg-8X-VJp" secondAttribute="trailing" constant="12" id="U1z-ay-bjA"/>
                                                 <constraint firstItem="DhX-ri-fx9" firstAttribute="centerY" secondItem="tQo-Iv-qKj" secondAttribute="centerY" id="aFk-Fs-RKy"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DhX-ri-fx9" secondAttribute="trailing" constant="20" symbolic="YES" id="alU-sB-CV2"/>
                                                 <constraint firstItem="WjA-Nb-uzp" firstAttribute="centerY" secondItem="tQo-Iv-qKj" secondAttribute="centerY" id="i2B-wv-Dkb"/>
                                                 <constraint firstItem="fdT-wh-QoF" firstAttribute="leading" secondItem="tQo-Iv-qKj" secondAttribute="leadingMargin" id="niI-o9-zde"/>
-                                                <constraint firstItem="CBg-8X-VJp" firstAttribute="leading" secondItem="WjA-Nb-uzp" secondAttribute="trailing" constant="8" symbolic="YES" id="tYz-Zf-1wt"/>
+                                                <constraint firstItem="CBg-8X-VJp" firstAttribute="leading" secondItem="WjA-Nb-uzp" secondAttribute="trailing" constant="12" id="tYz-Zf-1wt"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1750,7 +1754,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="130"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Feature type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGi-dQ-1v0">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Feature type:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sGi-dQ-1v0">
                                                     <rect key="frame" x="23.000000000000007" y="12.000000000000004" width="105.66666666666669" height="42.333333333333343"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="highlightedColor"/>

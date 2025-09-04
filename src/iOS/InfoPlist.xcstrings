@@ -170,7 +170,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Go Map!!"
+            "value" : "畅游地图!!"
           }
         },
         "zh-Hant" : {
@@ -368,7 +368,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Go Map!!"
+            "value" : "畅游地图!!"
           }
         },
         "zh-Hant" : {
@@ -534,7 +534,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "GPS Exchange Format (GPX)"
+            "value" : "GPS数据交换格式（GPX）"
           }
         },
         "zh-Hant" : {
@@ -858,7 +858,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "照相机被用于测量建筑物或物体的高度，并对标识牌上的开放时间进行文本识别。"
+            "value" : "相机用于测量建筑物或物体的高度，并识别营业时间标志文字。"
           }
         },
         "zh-Hant" : {
@@ -945,6 +945,12 @@
             "value" : "Маршрути ваших тренувань можна імпортувати як GPX-треки."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运动路线可导入为GPX路线。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1027,6 +1033,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Застосунок ніколи не змінює інформацію про здоровʼя."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "健康信息没有更新。"
           }
         },
         "zh-Hant" : {
@@ -1165,6 +1177,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Усі права застережено 2012—2023 Брайс Коґсвелл"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "版权声明‌ 布莱斯·考格斯威尔 2012-2024年"
           }
         },
         "zh-Hant" : {
@@ -1639,6 +1657,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Якщо увімкнете служби локації застосунок зможе показувати об’єкти неподалік. Так ви легко оновите чи додасте дані які збираєте."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用位置服务后，应用程序可显示您附近的物体。这使得您可以轻松更新或添加您自行调查的数据。"
           }
         },
         "zh-Hant" : {

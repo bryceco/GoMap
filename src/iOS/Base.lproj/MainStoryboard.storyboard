@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -449,7 +450,7 @@
             <objects>
                 <viewController id="S30-cU-QcE" customClass="NotesTableViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iDL-ho-g1h">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="DRB-XW-UOn">
@@ -464,10 +465,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K4Z-5c-5ee" userLabel="Comment Background">
-                                                    <rect key="frame" x="47" y="60.333333333333343" width="331" height="33.666666666666657"/>
+                                                    <rect key="frame" x="47" y="58.333333333333343" width="331" height="35.666666666666657"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="Various comments..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="PHk-s9-onx">
-                                                            <rect key="frame" x="5" y="0.0" width="321" height="33.666666666666664"/>
+                                                            <rect key="frame" x="5" y="0.0" width="321" height="35.666666666666664"/>
                                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <color key="textColor" systemColor="labelColor"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -492,9 +493,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1tR-eI-DSh" userLabel="User">
-                                                    <rect key="frame" x="12" y="29.333333333333329" width="99.666666666666671" height="35"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="username"/>
+                                                    <rect key="frame" x="12" y="29.333333333333329" width="76" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="username"/>
                                                     <attributedString key="userComments">
                                                         <fragment content="Placeholder - Do not translate"/>
                                                     </attributedString>
@@ -503,7 +505,7 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LSJ-rB-J2c">
-                                                    <rect key="frame" x="111.66666666666667" y="36.666666666666664" width="8" height="20.333333333333336"/>
+                                                    <rect key="frame" x="94" y="35.666666666666664" width="8" height="20.333333333333336"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -512,7 +514,7 @@
                                                     </attributedString>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="action" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VNE-ee-a7u">
-                                                    <rect key="frame" x="127.66666666666667" y="36.666666666666664" width="49.333333333333357" height="20.333333333333336"/>
+                                                    <rect key="frame" x="109.99999999999999" y="35.666666666666664" width="49.333333333333329" height="20.333333333333336"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -525,7 +527,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="tOO-VD-MeJ" secondAttribute="trailing" constant="12" id="34Q-Mn-rjb"/>
                                                 <constraint firstItem="1tR-eI-DSh" firstAttribute="centerY" secondItem="VNE-ee-a7u" secondAttribute="centerY" id="43E-2R-JlG"/>
                                                 <constraint firstItem="VNE-ee-a7u" firstAttribute="leading" secondItem="LSJ-rB-J2c" secondAttribute="trailing" constant="8" symbolic="YES" id="4mI-N0-aEu"/>
-                                                <constraint firstItem="LSJ-rB-J2c" firstAttribute="leading" secondItem="1tR-eI-DSh" secondAttribute="trailing" id="JkS-Ep-aGj"/>
+                                                <constraint firstItem="LSJ-rB-J2c" firstAttribute="leading" secondItem="1tR-eI-DSh" secondAttribute="trailing" constant="6" id="JkS-Ep-aGj"/>
                                                 <constraint firstItem="1tR-eI-DSh" firstAttribute="bottom" secondItem="K4Z-5c-5ee" secondAttribute="top" constant="4" id="U5H-B6-S31"/>
                                                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="VNE-ee-a7u" secondAttribute="trailing" constant="20" symbolic="YES" id="baJ-DY-bZx"/>
                                                 <constraint firstItem="1tR-eI-DSh" firstAttribute="leading" secondItem="c9J-93-JX7" secondAttribute="leading" constant="12" id="eNs-1F-LbS"/>
@@ -554,15 +556,12 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OJ0-aO-ri1">
-                                                    <rect key="frame" x="188.66666666666663" y="133.66666666666666" width="184.33333333333337" height="34.333333333333343"/>
+                                                    <rect key="frame" x="212" y="135" width="161" height="33"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" title="Comment &amp; Resolve">
                                                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     </state>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Comment &amp; Resolve">
-                                                        <fontDescription key="titleFontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    </buttonConfiguration>
                                                     <attributedString key="userComments">
                                                         <fragment content="Add a comment and resolve Note"/>
                                                     </attributedString>
@@ -571,13 +570,13 @@
                                                     </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New comment:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9hH-Ja-fKn">
-                                                    <rect key="frame" x="20" y="8.0000000000000018" width="365" height="17.666666666666671"/>
+                                                    <rect key="frame" x="20" y="8" width="365" height="19"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="onDrag" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="HeZ-95-3K1">
-                                                    <rect key="frame" x="33" y="33.666666666666657" width="331" height="90"/>
+                                                    <rect key="frame" x="33" y="35" width="331" height="90"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="90" id="YeB-Z0-JF0"/>
                                                     </constraints>
@@ -590,13 +589,10 @@
                                                     </attributedString>
                                                 </textView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2g1-vb-Cjc">
-                                                    <rect key="frame" x="78.666666666666686" y="133.66666666666666" width="102" height="34.333333333333343"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <rect key="frame" x="114" y="135" width="78" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" title="Comment"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Comment">
-                                                        <fontDescription key="titleFontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    </buttonConfiguration>
                                                     <attributedString key="userComments">
                                                         <fragment content="Add a comment for a Note"/>
                                                     </attributedString>
@@ -613,7 +609,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="2g1-vb-Cjc" secondAttribute="bottom" constant="8" id="QCN-db-FqZ"/>
                                                 <constraint firstItem="9hH-Ja-fKn" firstAttribute="leading" secondItem="Fc0-ki-3cW" secondAttribute="leadingMargin" id="SoD-4m-A9n"/>
                                                 <constraint firstItem="OJ0-aO-ri1" firstAttribute="top" secondItem="HeZ-95-3K1" secondAttribute="bottom" constant="10" id="URH-iH-0cm"/>
-                                                <constraint firstItem="OJ0-aO-ri1" firstAttribute="leading" secondItem="2g1-vb-Cjc" secondAttribute="trailing" constant="8" symbolic="YES" id="WdM-ht-TiZ"/>
+                                                <constraint firstItem="OJ0-aO-ri1" firstAttribute="leading" secondItem="2g1-vb-Cjc" secondAttribute="trailing" constant="20" id="WdM-ht-TiZ"/>
                                                 <constraint firstItem="2g1-vb-Cjc" firstAttribute="top" secondItem="HeZ-95-3K1" secondAttribute="bottom" constant="10" id="Zy2-S2-jsN"/>
                                                 <constraint firstAttribute="trailing" secondItem="9hH-Ja-fKn" secondAttribute="trailing" constant="8" id="f3f-y8-vwJ"/>
                                                 <constraint firstAttribute="trailing" secondItem="OJ0-aO-ri1" secondAttribute="trailing" constant="20" symbolic="YES" id="nBf-MM-Gqk"/>
@@ -788,7 +784,7 @@
             <objects>
                 <viewController id="DCR-m3-Qgc" customClass="BingMetadataViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleAspectFit" id="SRh-fQ-dAA">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing-logo-gray" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
@@ -852,7 +848,7 @@
             <objects>
                 <viewController title="Search for Location" id="siu-I6-IEp" userLabel="Nominatim View Controller" customClass="NominatimViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SQe-Tw-wQG">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Niagara Falls" translatesAutoresizingMaskIntoConstraints="NO" id="xw9-Ro-Fai">
@@ -1067,13 +1063,13 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

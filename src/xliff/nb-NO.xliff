@@ -5,13 +5,9 @@
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
     </header>
     <body>
-      <trans-unit id="1tR-eI-DSh.configuration.title" xml:space="preserve">
-        <source>username</source>
-        <note>Class = "UIButton"; configuration.title = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
-      </trans-unit>
       <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
-        <source>Button</source>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
+        <source>username</source>
+        <note>Class = "UIButton"; normalTitle = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
         <source>Get Directions</source>
@@ -26,10 +22,6 @@
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
         <source>Bing attribution</source>
         <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
-      </trans-unit>
-      <trans-unit id="2g1-vb-Cjc.configuration.title" xml:space="preserve">
-        <source>Comment</source>
-        <note>Class = "UIButton"; configuration.title = "Comment"; ObjectID = "2g1-vb-Cjc"; Note = "Add a comment for a Note";</note>
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
         <source>Comment</source>
@@ -96,10 +88,6 @@
         <source>Zoom to Edit</source>
         <target state="translated">Forstørr for å redigere</target>
         <note>Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG";</note>
-      </trans-unit>
-      <trans-unit id="OJ0-aO-ri1.configuration.title" xml:space="preserve">
-        <source>Comment &amp; Resolve</source>
-        <note>Class = "UIButton"; configuration.title = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Comment &amp; Resolve</source>
@@ -2991,13 +2979,9 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
         <target state="translated">Legg til ny</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; Note = "Add user-defined tagging preset";</note>
       </trans-unit>
-      <trans-unit id="CBg-8X-VJp.configuration.title" xml:space="preserve">
-        <source>Area</source>
-        <note>Class = "UIButton"; configuration.title = "Area"; ObjectID = "CBg-8X-VJp";</note>
-      </trans-unit>
       <trans-unit id="CBg-8X-VJp.normalTitle" xml:space="preserve">
-        <source>Button</source>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "CBg-8X-VJp";</note>
+        <source>Area</source>
+        <note>Class = "UIButton"; normalTitle = "Area"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
@@ -3012,13 +2996,9 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
         <source>Applies To</source>
         <note>Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
-      <trans-unit id="DhX-ri-fx9.configuration.title" xml:space="preserve">
-        <source>Vertex</source>
-        <note>Class = "UIButton"; configuration.title = "Vertex"; ObjectID = "DhX-ri-fx9";</note>
-      </trans-unit>
       <trans-unit id="DhX-ri-fx9.normalTitle" xml:space="preserve">
-        <source>Button</source>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "DhX-ri-fx9";</note>
+        <source>Vertex</source>
+        <note>Class = "UIButton"; normalTitle = "Vertex"; ObjectID = "DhX-ri-fx9";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
         <source>Key</source>
@@ -3149,13 +3129,9 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
         <target state="translated">Verdi 10</target>
         <note>Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ";</note>
       </trans-unit>
-      <trans-unit id="WjA-Nb-uzp.configuration.title" xml:space="preserve">
-        <source>Line</source>
-        <note>Class = "UIButton"; configuration.title = "Line"; ObjectID = "WjA-Nb-uzp";</note>
-      </trans-unit>
       <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
-        <source>Button</source>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "WjA-Nb-uzp";</note>
+        <source>Line</source>
+        <note>Class = "UIButton"; normalTitle = "Line"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
         <source>Value 7</source>
@@ -3242,13 +3218,9 @@ Du kan tømme det (under «Skjerminnstillinger») for å forbedre ytelsen.</targ
         <target state="translated">Attributter</target>
         <note>Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF";</note>
       </trans-unit>
-      <trans-unit id="fdT-wh-QoF.configuration.title" xml:space="preserve">
-        <source>Point</source>
-        <note>Class = "UIButton"; configuration.title = "Point"; ObjectID = "fdT-wh-QoF";</note>
-      </trans-unit>
       <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
-        <source>Button</source>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "fdT-wh-QoF";</note>
+        <source>Point</source>
+        <note>Class = "UIButton"; normalTitle = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>

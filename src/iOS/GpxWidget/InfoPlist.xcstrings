@@ -221,6 +221,12 @@
             "value" : "Авторські права © 2024 Брайс Коґсвелл. Всі права застережено."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "© 2024 Bryce Cogswell 版权所有"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",

@@ -105,20 +105,22 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8d4-oo-Jk1">
-                                            <rect key="frame" x="20" y="4.6666666666666679" width="335" height="34.333333333333329"/>
+                                            <rect key="frame" x="20" y="5.3333333333333321" width="335" height="33"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IFG-Ak-kOo">
-                                                    <rect key="frame" x="0.0" y="0.0" width="98.333333333333329" height="34.333333333333336"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Ignore"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="82.333333333333329" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Ignore"/>
                                                     <connections>
                                                         <action selector="ignoreAlways:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="c9b-Md-qPX"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Wj-nB-ieT">
-                                                    <rect key="frame" x="106.33333333333333" y="0.0" width="228.66666666666669" height="34.333333333333336"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="Ignore this session"/>
+                                                    <rect key="frame" x="90.333333333333329" y="0.0" width="244.66666666666669" height="33"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Ignore this session"/>
                                                     <connections>
                                                         <action selector="ignoreThisSession:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="NIh-UT-Jy1"/>
                                                     </connections>
@@ -141,9 +143,10 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="evO-fJ-hhD" userLabel="Open Tag Editor">
-                                            <rect key="frame" x="114.33333333333333" y="4.6666666666666679" width="146.33333333333337" height="34.333333333333329"/>
-                                            <state key="normal" title="Button"/>
-                                            <buttonConfiguration key="configuration" style="plain" title="Open Tag Editor"/>
+                                            <rect key="frame" x="126" y="5.3333333333333321" width="123" height="33"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" title="Open Tag Editor"/>
                                             <connections>
                                                 <action selector="openTagEditor:" destination="rRu-gY-Gv4" eventType="touchUpInside" id="UYm-Wt-ghy"/>
                                             </connections>
@@ -200,7 +203,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

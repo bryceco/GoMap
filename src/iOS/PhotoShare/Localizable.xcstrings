@@ -230,6 +230,12 @@
             "value" : "Не розпізнано вміст URL."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该URL内容未被识别。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -352,6 +358,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Нажаль вибране зображення не містить інформації про локацію."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "遗憾的是，所选图像不包含位置信息。"
           }
         },
         "zh-Hant" : {

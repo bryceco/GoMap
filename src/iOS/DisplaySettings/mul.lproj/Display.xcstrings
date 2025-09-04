@@ -337,180 +337,6 @@
         }
       }
     },
-    "2Ku-Lb-uCf.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"2Ku-Lb-uCf\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التفاصيل"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التفاصيل"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Podrobnosti"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Details"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalles"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Üksikasjad"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Xehetasunak"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yksityiskohdat"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Détails"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalji"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keterangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dettagli"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "तपशील"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detaljer"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per lo menut"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Szczegóły"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Подробнее"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "விவரங்கள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Деталі"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chi tiết"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "详情"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細內容"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細內容"
-          }
-        }
-      }
-    },
     "2ZY-zi-luF.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Clear Cache\"; ObjectID = \"2ZY-zi-luF\";",
       "extractionState" : "extracted_with_value",
@@ -1783,348 +1609,6 @@
         }
       }
     },
-    "8S7-Kw-QHF.normalTitle" : {
-      "comment" : "Class = \"UIButton\"; normalTitle = \"Details\"; ObjectID = \"8S7-Kw-QHF\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التفاصيل"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التفاصيل"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Podrobnosti"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Details"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalles"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Üksikasjad"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Xehetasunak"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yksityiskohdat"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Détails"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalji"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keterangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dettagli"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "तपशील"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detaljer"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per lo menut"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Szczegóły"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Подробнее"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "விவரங்கள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Деталі"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chi tiết"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "详情"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細內容"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細內容"
-          }
-        }
-      }
-    },
-    "9L3-JO-Whj.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Mapnik only\"; ObjectID = \"9L3-JO-Whj\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "فقط خريطة Mapnik (الرسمية)"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "فقط خريطة Mapnik (الرسمية)"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pouze Mapnik"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nur Mapnik"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Mapnik only"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Solo Mapnik"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ainult Mapnik"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bakarrik Mapnik"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mapnik seulement"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Samo Mapnik"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hanya Mapnik"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Solo vista mappa"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mapnikのみ"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "फक्त Mapnik"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Kun Mapnik"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Alleen Mapnik"
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mapnik solament"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tylko Mapnik"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apenas Mapnik"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Apenas Mapnik"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Только Mapnik"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "மேப்னிக் மட்டுமே"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тільки Mapnik"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chỉ Mapnik"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "只有Mapnik"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "只有 Mapnik"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "只有 Mapnik"
-          }
-        }
-      }
-    },
     "186-0W-Nrr.title" : {
       "comment" : "Class = \"UINavigationItem\"; title = \"Display\"; ObjectID = \"186-0W-Nrr\";",
       "extractionState" : "extracted_with_value",
@@ -2339,6 +1823,12 @@
             "value" : "Маршрути HealthKit:"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "运动健康路线："
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2481,6 +1971,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Go Map!! автоматично відкине старі дані, щоб збільшити швидкість роботи."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!将自动清理历史数据以优化性能。"
           }
         },
         "zh-Hant" : {
@@ -3847,150 +3343,6 @@
         }
       }
     },
-    "eFa-yZ-YZl.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"eFa-yZ-YZl\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الصور الجوية"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الصور الجوية"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Letecké snímky"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luftbild-Kacheln"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Aerial Tiles"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mosaico de imágenes aéreas"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aerofotode paanid"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zerutikako laukiak"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tuiles d'imagerie aérienne"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pločice aerofotografije"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ubin Udara"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "衛星画像タイル"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "हवाई प्रतिमा फरश्या"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flyfoto-flis"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luchtbeeldtegels"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quadrículas de imagens aéreas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quadrículas de imagens aéreas"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тайлы аэрофотосъёмки"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "வான்வழி ஓடுகள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тайли аерофото"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mảnh Không ảnh"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空照圖磚"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空照圖磚"
-          }
-        }
-      }
-    },
     "EHa-L5-Hcz.text" : {
       "comment" : "Class = \"UILabel\"; text = \"12:00:00\"; ObjectID = \"EHa-L5-Hcz\";",
       "extractionState" : "extracted_with_value",
@@ -4411,174 +3763,6 @@
         }
       }
     },
-    "EmS-9F-1qc.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"EmS-9F-1qc\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التفاصيل"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التفاصيل"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Podrobnosti"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Details"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalles"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Üksikasjad"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Xehetasunak"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yksityiskohdat"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Détails"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalji"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keterangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dettagli"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "तपशील"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detaljer"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Szczegóły"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Подробнее"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "விவரங்கள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Деталі"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chi tiết"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "详情"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細內容"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細內容"
-          }
-        }
-      }
-    },
     "eN6-SZ-99I.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Editor only\"; ObjectID = \"eN6-SZ-99I\";",
       "extractionState" : "extracted_with_value",
@@ -4723,318 +3907,6 @@
         }
       }
     },
-    "eTY-48-gab.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"eTY-48-gab\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الصور الجوية"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الصور الجوية"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Letecké snímky"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luftbild-Kacheln"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Aerial Tiles"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Fotos aéreas"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aerofotode paanid"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zerutikako laukiak"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tuiles d'imagerie aérienne"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pločice aerofotografije"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ubin Udara"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "衛星画像タイル"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "हवाई प्रतिमा फरश्या"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flyfoto-flis"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luchtbeeldtegels"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quadrículas de imagens aéreas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quadrículas de imagens aéreas"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тайлы аэрофотосъёмки"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "வான்வழி ஓடுகள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тайли аерофото"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mảnh Không ảnh"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空照圖磚"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空照圖磚"
-          }
-        }
-      }
-    },
-    "F9l-B0-puf.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"F9l-B0-puf\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التفاصيل"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التفاصيل"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Podrobnosti"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Details"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalles"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Üksikasjad"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Xehetasunak"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yksityiskohdat"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Détails"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalji"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keterangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dettagli"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "तपशील"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detaljer"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Szczegóły"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Подробнее"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "விவரங்கள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Деталі"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chi tiết"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "详情"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細內容"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細內容"
-          }
-        }
-      }
-    },
     "fFT-hv-mKl.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"fFT-hv-mKl\";",
       "extractionState" : "extracted_with_value",
@@ -5171,154 +4043,10 @@
             "value" : "Mảnh Không ảnh"
           }
         },
-        "zh-Hant" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "空照圖磚"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空照圖磚"
-          }
-        }
-      }
-    },
-    "fHH-rC-iGa.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"fHH-rC-iGa\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الصور الجوية"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الصور الجوية"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Letecké snímky"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luftbild-Kacheln"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Aerial Tiles"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Teselas aéreas"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aerofotode paanid"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zerutikako laukiak"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tuiles d'imagerie aérienne"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pločice aerofotografije"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ubin Udara"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "衛星画像タイル"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "हवाई प्रतिमा फरश्या"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flyfoto-flis"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luchtbeeldtegels"
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Teules d’imatjariá aeriana"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quadrículas de imagens aéreas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quadrículas de imagens aéreas"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тайлы аэрофотосъёмки"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "வான்வழி ஓடுகள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тайли аерофото"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mảnh Không ảnh"
+            "value" : "影像瓦片"
           }
         },
         "zh-Hant" : {
@@ -5355,6 +4083,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Деталі"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "详情"
           }
         },
         "zh-Hant" : {
@@ -5533,156 +4267,6 @@
         }
       }
     },
-    "g46-cV-NBw.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"g46-cV-NBw\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الصور الجوية"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الصور الجوية"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Letecké snímky"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luftbild-Kacheln"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Aerial Tiles"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Teselas aéreas"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aerofotode paanid"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zerutikako laukiak"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tuiles d'imagerie aérienne"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pločice aerofotografije"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ubin Udara"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "衛星画像タイル"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "हवाई प्रतिमा फरशा"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Flyfoto-flis"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Luchtbeeldtegels"
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Teules d’imatjariá aeriana"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quadrículas de imagens aéreas"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quadrículas de imagens aéreas"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тайлы аэрофотосъёмки"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "வான்வழி ஓடுகள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тайли аерофото"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mảnh Không ảnh"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空照圖磚"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "空照圖磚"
-          }
-        }
-      }
-    },
     "gdL-Os-R6R.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Points\"; ObjectID = \"gdL-Os-R6R\";",
       "extractionState" : "extracted_with_value",
@@ -5823,6 +4407,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Điểm"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点"
           }
         },
         "zh-Hant" : {
@@ -6343,132 +4933,6 @@
         }
       }
     },
-    "H3p-Ta-kIy.title" : {
-      "comment" : "Class = \"UINavigationItem\"; title = \"QA Poole No Name Tiles\"; ObjectID = \"H3p-Ta-kIy\"; Note = \"Title for Simon Poole's \\\"No name\\\" (missing name) tile overlay\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الصور المتجانبة من Poole لطبقة ضمان الجودة للعناصر التي بدون اسم"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "الصور المتجانبة من Poole لطبقة ضمان الجودة للعناصر التي بدون اسم"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Poole No Name Tiles"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Poole Objekte ohne Namen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "QA Poole No Name Tiles"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mosaicos de Poole para la capa de control de calidad para elementos sin nombre"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Poole nimetud paanid"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Izenik gabeko QA Poole laukiak"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tuiles sans nom QA Poole"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Poole No Name pločice"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Pooleの名前なしタイル"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Poole No Name फरश्या"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Poole Tegels zonder naam"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Poole No Name Tiles (ruas sem nome)"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Poole No Name Tiles (ruas sem nome)"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тайлы QA Poole No Name"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA பூல் பெயர் ஓடுகள் இல்லை"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Тайли QA Poole — Без назв"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Poole No Name 圖磚"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "QA Poole No Name 圖磚"
-          }
-        }
-      }
-    },
     "hkr-kO-jbt.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Traffic Roads\"; ObjectID = \"hkr-kO-jbt\";",
       "extractionState" : "extracted_with_value",
@@ -6615,318 +5079,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "交通道路"
-          }
-        }
-      }
-    },
-    "hMJ-yP-XJe.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"OpenStreetMap GPS Traces\"; ObjectID = \"hMJ-yP-XJe\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مسارات GPS من OSM"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "مسارات GPS من OSM"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMap GPS stopy"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMap GPS-Spuren"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "OpenStreetMap GPS Traces"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trayectos GPS de OpenStreetMap"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMap GPS jäljed"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMap GPS hatzak"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMap GPS -jäljet"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Traces GPS OpenStreetMap"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMap GPS tragovi"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jejak GPS OpenStreetMap"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tracce GPS OpenStreetMap"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMapのGPSトレース"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMap GPS अनुरेखा"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPS-spor for OpenStreetMap"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMap GPS-traces"
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Traças GPS OpenStreetMap"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trilhos de GPS do OpenStreetMap"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Trilhas de GPS OpenStreetMap"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPS-треки OpenStreetMap"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMap உலக இடம் காட்டும் அமைப்பு தடயங்கள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "GPS-треки OpenStreetMap"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OpenStreetMap GPS轨迹"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "開放街圖 GPS 航跡"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "開放街圖 GPS 航跡"
-          }
-        }
-      }
-    },
-    "hsp-Xj-TU6.text" : {
-      "comment" : "Class = \"UITextView\"; text = \"Simon Poole Map Data © OpenStreetMap contributors\\n\"; ObjectID = \"hsp-Xj-TU6\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "بيانات خريطة سيمون بول © المساهمين في خريطة الشارع المفتوحة\n"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "بيانات خريطة سيمون بول © المساهمين في خريطة الشارع المفتوحة\n"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Map Data © OpenStreetMap přispěvatelé\n"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Map Data © OpenStreetMap-Mitwirkende\n"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Simon Poole Map Data © OpenStreetMap contributors\n"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Datos cartográficos de Simon Poole © Colaboradores de OpenStreetMap\n"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole kaardiandmed © OpenStreetMapi toetajad\n"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Map Data © OpenStreetMap contributors\n"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Données carto © OpenStreetMap contributors\n"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Map Data © OpenStreetMap doprinositelji\n"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Data Peta © Kontributor OpenStreetMap\n"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Dati Mappa © OpenStreetMap contributors\n"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Map データ © OpenStreetMap 投稿者\n"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Map Data © ओपनस्ट्रीटमॅप योगदानकर्ते\n"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Map-data © OpenStreetMap-bidragsytere\n"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Map-gegevens © OpenStreetMap-bijdragers\n"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole, Dados do mapa: © contribuidores do OpenStreetMap\n"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole, Dados do mapa: © contribuidores do OpenStreetMap\n"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole Map Data © Участники OpenStreetMap\n"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "சைமன் பூல்மேப் தரவு © ஓபன்ச்ட்ரீட்மேப் பங்களிப்பாளர்கள்\n"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Саймон ПулДані мапи від © учасників OpenStreetMap\n"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole , dữ liệu bản đồ © những người đóng góp vào OpenStreetMap\n"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole 地圖資料 © 開放街圖貢獻者\n"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Simon Poole 地圖資料 © 開放街圖貢獻者\n"
           }
         }
       }
@@ -7170,6 +5322,12 @@
           }
         },
         "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(TMS)"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "(TMS)"
@@ -7473,6 +5631,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Quá khứ/Tương lai"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "历史/未来"
           }
         },
         "zh-Hant" : {
@@ -7925,6 +6089,12 @@
             "value" : "GPX-треки, записані чи підвантажені, видаляться автоматично після:"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您记录或下载的轨迹数据将下列描述的情况下自动删除："
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8213,6 +6383,12 @@
             "value" : "Nhà cung cấp Không ảnh"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "航拍数据合作伙伴"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8295,6 +6471,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Накладки з даними"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据覆盖层‌"
           }
         },
         "zh-Hant" : {
@@ -9311,6 +7493,12 @@
             "value" : "Нотатки та «фікс-мі»"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "注释与待修复项‌"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9671,6 +7859,12 @@
             "value" : "Повітряні плитки"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "影像瓦片"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9809,6 +8003,12 @@
             "value" : "Tương tác"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "交互"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9899,6 +8099,12 @@
             "value" : "Тільки базова мапа"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅显示基础地图"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9981,6 +8187,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Заголовок"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标题"
           }
         },
         "zh-Hant" : {
@@ -10124,7 +8336,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "服务道路"
+            "value" : "辅路‌"
           }
         },
         "zh-Hant" : {
@@ -10367,6 +8579,12 @@
             "value" : "Імпортувати"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10491,6 +8709,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Очистіть кеш-памʼять з даними OSM, якщо стан застосунка не синхронізується з сервером OSM. Таке може відбуватися, якщо хтось інший змінив дані, які ви саме редагуєте, або якщо надсилання одного з ваших наборів змін зривається на півдорозі, не дозволяючи вам відправити додаткові дані. \n\nПопередження: Очищення кешу з даними OSM призведе до втрати будь-яких змін, які ще не було завантажено.\n\nОчистіть кеш тайлів Mapnik або шар-накладку, щоб завантажити найновіші тайли, які показують зміни, що були внесені вами раніше. Обробка ваших наборів змін може зайняти до 24 годин."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当应用状态与OSM服务器不同步时，请清除OSM数据缓存。‌\n这种情况可能发生在：\n您正在编辑的数据被他人修改\n您的上传过程中途失败，导致无法继续上传其他数据\n警告：‌ 清除OSM缓存将导致您丢失所有未上传的更改。\n‌清除底图或叠加层瓦片缓存‌ 以下载反映您已提交更改的最新瓦片。您的更改可能需要最多24小时才能完成处理。"
           }
         },
         "zh-Hant" : {
@@ -10647,6 +8871,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Loại bỏ & Làm mới"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "丢弃并刷新"
           }
         },
         "zh-Hant" : {
@@ -11271,6 +9501,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Водні обʼєкти"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "水景"
           }
         },
         "zh-Hant" : {
@@ -12011,6 +10247,12 @@
             "value" : "22.12.20, 19:55"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12/22/20, 晚上7:55"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12165,6 +10407,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mức Thu phóng Tối đa"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最大缩放"
           }
         },
         "zh-Hant" : {
@@ -12773,6 +11021,12 @@
             "value" : "Видалити треки після:"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除指定时间后的轨迹："
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12783,174 +11037,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在這之後刪除航跡："
-          }
-        }
-      }
-    },
-    "xve-fW-qM7.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"xve-fW-qM7\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التفاصيل"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "التفاصيل"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Podrobnosti"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Details"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalles"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Üksikasjad"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Xehetasun"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yksityiskohdat"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Détails"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalji"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keterangan"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dettagli"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "तपशील"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detaljer"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        },
-        "oc" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Per lo menut"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Detalhes"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Подробнее"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "விவரங்கள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Деталі"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Chi tiết"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "详情"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細內容"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "詳細內容"
           }
         }
       }
@@ -13403,6 +11489,12 @@
             "value" : "URL TMS có các dấu hiệu {x}, {y}, và {z} hoặc URL WMS"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含{x}、{y}和{z}占位符的瓦片地图服务（TMS）URL，或网络地图服务（WMS）URL"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13551,6 +11643,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "URL mẫu của máy chủ mảnh bản đồ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "瓦片服务器链接模板"
           }
         },
         "zh-Hant" : {
@@ -13847,6 +11945,12 @@
             "value" : "Вказуючи адресу WMS також зазначте проєкцію що використовується"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "若指定WMS（网络地图服务）URL，则必须同时提供所使用的投影（坐标系）"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14005,162 +12109,6 @@
         }
       }
     },
-    "ZP1-qY-kXe.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Unnamed Roads\"; ObjectID = \"ZP1-qY-kXe\";",
-      "extractionState" : "stale",
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "طرق ليس لها اسم"
-          }
-        },
-        "ars" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "طرق ليس لها اسم"
-          }
-        },
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nepojmenované ulice"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Unbenannte Straßen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Unnamed Roads"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Caminos sin nombre"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nimetud teed"
-          }
-        },
-        "eu" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Izengabeko bideak"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Routes non-nommées"
-          }
-        },
-        "hr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Neimenovane ceste"
-          }
-        },
-        "id" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Jalan Tanpa Nama"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Strade senza nome"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "名前のない道路"
-          }
-        },
-        "mr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "अनामिक मार्ग"
-          }
-        },
-        "nb-NO" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Veier uten navn"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Wegen zonder naam"
-          }
-        },
-        "pt" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ruas sem nome"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ruas sem nome"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Дороги без названия"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "பெயரிடப்படாத சாலைகள்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Вулиці без назв"
-          }
-        },
-        "vi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Đường sá Không tên"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无名道路"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未命名道路"
-          }
-        },
-        "zh-Hant-HK" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未命名道路"
-          }
-        }
-      }
-    },
     "Zzc-4t-QhT.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"Zzc-4t-QhT\";",
       "extractionState" : "extracted_with_value",
@@ -14289,6 +12237,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mảnh Không ảnh"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "航拍影像瓦片"
           }
         },
         "zh-Hant" : {

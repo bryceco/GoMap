@@ -70,6 +70,12 @@
             "value" : "%@"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -228,6 +234,12 @@
             "value" : "Тривалість"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "期间"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -256,6 +268,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Go Map!!"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "畅游地图！！"
           }
         },
         "zh-Hant" : {
@@ -292,6 +310,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX-трек"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX 记录"
           }
         },
         "zh-Hant" : {
@@ -356,6 +380,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Призупинити GPX"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停用 GPX"
           }
         },
         "zh-Hant" : {
@@ -428,6 +458,12 @@
             "value" : "Призупинити записування треків GPX."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂停轨迹记录。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -462,6 +498,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Очки"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标记点"
           }
         },
         "zh-Hant" : {
@@ -540,6 +582,12 @@
             "value" : "Запустити GPX"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用GPX"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -616,6 +664,12 @@
             "value" : "Запустити записування треків GPX."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始轨迹记录。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -650,6 +704,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Початок о %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "记录开始于%@"
           }
         },
         "zh-Hant" : {
@@ -728,6 +788,12 @@
             "value" : "Зупинити GPX"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "终止GPX"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -796,6 +862,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зупинити записування треків GPX."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止轨迹记录。"
           }
         },
         "zh-Hant" : {

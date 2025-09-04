@@ -2305,8 +2305,8 @@
         }
       }
     },
-    "CBg-8X-VJp.configuration.title" : {
-      "comment" : "Class = \"UIButton\"; configuration.title = \"Area\"; ObjectID = \"CBg-8X-VJp\";",
+    "CBg-8X-VJp.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Area\"; ObjectID = \"CBg-8X-VJp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -2339,6 +2339,12 @@
             "value" : "エリア"
           }
         },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка"
+          }
+        },
         "ta" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2355,66 +2361,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "區域"
-          }
-        }
-      }
-    },
-    "CBg-8X-VJp.normalTitle" : {
-      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"CBg-8X-VJp\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schaltfläche"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Button"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botón"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nupp"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ボタン"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "பொத்தான்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按鈕"
           }
         }
       }
@@ -3445,8 +3391,8 @@
         }
       }
     },
-    "DhX-ri-fx9.configuration.title" : {
-      "comment" : "Class = \"UIButton\"; configuration.title = \"Vertex\"; ObjectID = \"DhX-ri-fx9\";",
+    "DhX-ri-fx9.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Vertex\"; ObjectID = \"DhX-ri-fx9\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "de" : {
@@ -3465,6 +3411,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vértice"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nupp"
           }
         },
         "ja" : {
@@ -3495,66 +3447,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "交點"
-          }
-        }
-      }
-    },
-    "DhX-ri-fx9.normalTitle" : {
-      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"DhX-ri-fx9\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schaltfläche"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Button"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botón"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nupp"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ボタン"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "பொத்தான்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按鈕"
           }
         }
       }
@@ -4363,8 +4255,8 @@
         }
       }
     },
-    "fdT-wh-QoF.configuration.title" : {
-      "comment" : "Class = \"UIButton\"; configuration.title = \"Point\"; ObjectID = \"fdT-wh-QoF\";",
+    "fdT-wh-QoF.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Point\"; ObjectID = \"fdT-wh-QoF\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -4389,12 +4281,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Punto"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Punkt"
           }
         },
         "ja" : {
@@ -4425,66 +4311,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "點"
-          }
-        }
-      }
-    },
-    "fdT-wh-QoF.normalTitle" : {
-      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"fdT-wh-QoF\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tlačítko"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schaltfläche"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Button"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botón"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ボタン"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "பொத்தான்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按鈕"
           }
         }
       }
@@ -9875,6 +9701,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object.\"; ObjectID = \"ScT-zG-GwL\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Voreinstellungen dieser Funktion übernehmen. Wenn keine vorhanden sind, werden die Tags beim Auswählen dieser Funktion mit dem Zielobjekt zusammengeführt (nicht ersetzt)."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -9885,6 +9717,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Успадкувати стилі цієї функції. Якщо їх немає, то вибір цієї функції призведе до об'єднання (а не заміни) тегів на цільовому об'єкті."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "继承此要素的预设配置。若不存在预设，则选择该功能时将标签合并（而非替换）到目标对象上。"
           }
         },
         "zh-Hant" : {
@@ -9899,6 +9737,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Feature type:\"; ObjectID = \"sGi-dQ-1v0\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feature-Typ:"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -10335,6 +10179,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ім'я"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
           }
         },
         "zh-Hant" : {
@@ -11491,8 +11341,8 @@
         }
       }
     },
-    "WjA-Nb-uzp.configuration.title" : {
-      "comment" : "Class = \"UIButton\"; configuration.title = \"Line\"; ObjectID = \"WjA-Nb-uzp\";",
+    "WjA-Nb-uzp.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Line\"; ObjectID = \"WjA-Nb-uzp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -11517,6 +11367,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Línea"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nupp"
           }
         },
         "ja" : {
@@ -11547,72 +11403,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "線條"
-          }
-        }
-      }
-    },
-    "WjA-Nb-uzp.normalTitle" : {
-      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"WjA-Nb-uzp\";",
-      "extractionState" : "extracted_with_value",
-      "localizations" : {
-        "cs" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tlačítko"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Schaltfläche"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Button"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Botón"
-          }
-        },
-        "et" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Nupp"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ボタン"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка"
-          }
-        },
-        "ta" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "பொத்தான்"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Кнопка"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "按鈕"
           }
         }
       }

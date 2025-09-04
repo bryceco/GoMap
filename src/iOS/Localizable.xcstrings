@@ -2883,6 +2883,12 @@
             "value" : "%.0f м^2"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f 平方米"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -4436,8 +4442,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@meters@ 米, %#@nodes@ 个节点"
+            "state" : "translated",
+            "value" : "即将在%#@meters@ 米后驶入%#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -9409,8 +9415,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@nodes@"
+            "state" : "translated",
+            "value" : "即将在%#@meters@%米后 驶入2$#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -9420,8 +9426,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg 米"
                     }
                   }
                 }
@@ -11082,8 +11088,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "%#@meters@ 米, %#@points@ 个点"
+            "state" : "translated",
+            "value" : "即将在%#@meters@ 米, 然后驶入%#@points@"
           },
           "substitutions" : {
             "meters" : {
@@ -11093,8 +11099,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg米"
                     }
                   }
                 }
@@ -13423,8 +13429,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@points@, %#@waypoints@"
+            "state" : "translated",
+            "value" : "距离%#@meters@, 途经%#@points@,包含 %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
@@ -13462,8 +13468,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld waypoints"
+                      "state" : "translated",
+                      "value" : "%ld 航点"
                     }
                   }
                 }
@@ -15138,8 +15144,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+            "state" : "translated",
+            "value" : "已导入%#@routes@，跳过%#@duplicates@"
           },
           "substitutions" : {
             "duplicates" : {
@@ -15149,8 +15155,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg 个重复项"
                     }
                   }
                 }
@@ -15163,8 +15169,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg 新路线"
                     }
                   }
                 }
@@ -15199,8 +15205,8 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg全新路線"
                     }
                   }
                 }
@@ -18366,6 +18372,12 @@
             "value" : "Додати години роботи"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增营业时间数据"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18586,6 +18598,12 @@
             "value" : "Додати фото Panoramax"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加全景照片"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18685,6 +18703,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Додати тип стоянки"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增停车场类型数据"
           }
         },
         "zh-Hant" : {
@@ -18792,6 +18816,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Додати поверхню тротуара"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增人行道路径数据"
           }
         },
         "zh-Hant" : {
@@ -21588,6 +21618,12 @@
             "value" : "Для цього місця доступне краще фонове зображення. Бажаєте замінити фон на кращий?"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您所在位置有更好的背景图像可用，是否要切换？"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21694,6 +21730,12 @@
             "value" : "Є кращий фоновий шар"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有更好的图像可用"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21788,6 +21830,12 @@
             "value" : "Створити новий квест"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "建立新任务"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21869,6 +21917,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Будівля"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "建筑"
           }
         },
         "zh-Hant" : {
@@ -22947,6 +23001,12 @@
             "value" : "Не можна видалити компонент маршруту чи схожого звʼязка"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法删除路由组件或类似关联关系"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23177,6 +23237,12 @@
             "value" : "Не можна видалити точку «via» зі звʼязка для обмежень маневрів"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法删除“转弯”限制的中间节点"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23293,6 +23359,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не можна видалити точку обмежень маневрів що зʼєднує «to»/«from» з «via»"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法删除连接起点/终点到中间节点的转弯限制"
           }
         },
         "zh-Hant" : {
@@ -23417,6 +23489,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не можна видалити лінію з роллю «to» або «from» якою позначене обмеження маневрів"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法删除连接道路的转弯限制"
           }
         },
         "zh-Hant" : {
@@ -23704,6 +23782,12 @@
             "value" : "Не вдалося скласти повідомлення"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法撰写消息"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23822,6 +23906,12 @@
             "value" : "Не вдалося зʼєднати лінію «inner» з лінією «outer»"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内层路径无法与外层路径连接"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23932,6 +24022,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Замінити"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更改"
           }
         },
         "zh-Hant" : {
@@ -24151,7 +24247,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "选择一张现有照片"
+            "value" : "选一张现有照片"
           }
         },
         "zh-Hant" : {
@@ -24234,6 +24330,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Почистити все"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除所有"
           }
         },
         "zh-Hant" : {
@@ -24319,6 +24421,12 @@
             "value" : "Почистити тайли базової мапи"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除底图瓦片"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24330,10 +24438,22 @@
     "Clear Data Caches" : {
       "comment" : "Delete cached data",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Daten- Zwischenspeicher löschen"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Очистити кеш даних"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除数据缓存"
           }
         },
         "zh-Hant" : {
@@ -25260,6 +25380,12 @@
             "value" : "Скопійовано"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "己复制"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25779,6 +25905,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Створіть рядок у таблиці для кожної пари ключ/значення і вкажіть, чи потрібно включати або виключати обʼєкти, що збігаються. Залиште значення порожнім, щоб вказати, що ключ відсутній. Використовуйте key=* для збігу з будь-яким значенням."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "为每个键/值对在表中创建一行，并指定匹配对象应被包含还是排除。留空值表示键不存在。使用key=*匹配任意值。"
           }
         },
         "zh-Hant" : {
@@ -26936,6 +27068,12 @@
             "value" : "Визначте власні функції за допомогою унікальних комбінацій тегів, щоб швидко додавати спеціальні типи об’єктів. Їх можна шукати в розділі «Спільні теги»."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过独特的标签组合定义自定义特征，可快速添加特殊类型对象。这些对象可在\"常用标签\"中搜索。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27368,6 +27506,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Видалити %@?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除%@？"
           }
         },
         "zh-Hant" : {
@@ -29063,6 +29207,12 @@
             "value" : "Відкинути"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "舍弃"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -29477,6 +29627,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Відстань: %1$@ ± %2$@ метрів"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "距离：%1$@ ± %2$@ 米"
           }
         },
         "zh-Hant" : {
@@ -30925,6 +31081,12 @@
             "value" : "Chắc chắn rằng Dịch vụ Định vị được kích hoạt và rằng bạn đã cấp phép truy cập cho ứng dụng này.\n\nLỗi: %@"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请确保已启用位置服务并授予本应用访问权限。\n\n错误：%@"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -31041,6 +31203,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Впевніться що режим редагування увімкнений і видно обʼєкти навколо"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请确保编辑器视图可见并显示本地区域对象"
           }
         },
         "zh-Hant" : {
@@ -31594,6 +31762,12 @@
             "value" : "Подовження лінії «via» яка бере участь у обмеженні маневрів зламає звʼязок"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "扩展转向限制中的'途经点'将破坏该关系"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -31706,6 +31880,12 @@
             "value" : "Подовження лінії що входить до маршруту чи схожого звʼязку може пошкодити звʼязок"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "扩展属于路线或关联关系的路径可能损坏该关系"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -31775,6 +31955,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Видобути точку"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提取节点"
           }
         },
         "zh-Hant" : {
@@ -31872,6 +32058,12 @@
             "value" : "Фільтри"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "筛选器"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -31941,6 +32133,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "фт"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "英尺"
           }
         },
         "zh-Hant" : {
@@ -32183,6 +32381,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX轨迹"
           }
         },
         "zh-Hant" : {
@@ -32663,6 +32867,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Висота: %1$@ ± %2$@ метрів"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "海拔：%1$@ ± %2$@ 米"
           }
         },
         "zh-Hant" : {
@@ -33363,6 +33573,12 @@
             "value" : "Помилка імпорту"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "导入出错了"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34007,6 +34223,12 @@
             "value" : "Приєднання зробить недійсним обмеження маневрів до якого входить лінія"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "连接会破坏该道路归属的转弯限制"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34179,6 +34401,12 @@
             "value" : "кг"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千克"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34242,6 +34470,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "км"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千米"
           }
         },
         "zh-Hant" : {
@@ -34337,6 +34571,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "км/г"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "千米/时"
           }
         },
         "zh-Hant" : {
@@ -35743,6 +35983,12 @@
             "value" : "м"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "米"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -36257,6 +36503,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tối đa 2.000 nốt sau khi nối liền"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "合并后的道路节点数上限为2000"
           }
         },
         "zh-Hant" : {
@@ -37275,6 +37527,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "мил"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "英里"
           }
         },
         "zh-Hant" : {
@@ -38800,6 +39058,12 @@
             "value" : "миль/г"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "英里/时"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -39632,6 +39896,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ні"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "否"
           }
         },
         "zh-Hant" : {
@@ -42595,7 +42865,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "只有左转限制"
+            "value" : "只允许左转"
           }
         },
         "zh-Hant" : {
@@ -42849,7 +43119,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "只有右转限制"
+            "value" : "只许右转"
           }
         },
         "zh-Hant" : {
@@ -42973,7 +43243,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "只有直行限制"
+            "value" : "只许直行"
           }
         },
         "zh-Hant" : {
@@ -45355,10 +45625,22 @@
     },
     "Photo not available" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto nicht verfügbar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Фото недоступне"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "照片不存在"
           }
         }
       }
@@ -50851,6 +51133,12 @@
             "value" : "кор. т"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "短吨"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51747,6 +52035,12 @@
             "value" : "Успіх"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成功"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51810,6 +52104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "т"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "吨"
           }
         },
         "zh-Hant" : {
@@ -52449,6 +52749,12 @@
             "value" : "Các nốt được gộp có thẻ mâu thuẫn"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "合并节点中存在标签冲突"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -52565,6 +52871,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Các nốt có vai trò mâu thuẫn trong các quan hệ chứa"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前路网节点在父级关系数据中存在角色定义冲突"
           }
         },
         "zh-Hant" : {
@@ -52821,6 +53133,12 @@
             "value" : "Không thể xóa hạn chế"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "该转向限制无法删除"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -52939,6 +53257,12 @@
             "value" : "Лінія яку обрали має бути цілком на видноті"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选路径必须完整显示"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53051,6 +53375,12 @@
             "value" : "Цільова лінія невизначена"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目标路径存在歧义"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53161,6 +53491,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Поворот містить нерозпізнане обмеження маневру. Якщо продовжите, знищите його."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前转向限制包含未识别样式，继续操作将导致数据丢失。"
           }
         },
         "zh-Hant" : {
@@ -53285,6 +53621,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lối thuộc quan hệ chưa được tải về hoàn toàn"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前路径所属关系数据未完整下载"
           }
         },
         "zh-Hant" : {
@@ -53417,6 +53759,12 @@
             "value" : "Lối không đủ thẳng"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前路径弯曲度不符合要求"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53539,6 +53887,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lối phải có ít nhất 2 nốt"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "路径必须包含至少2个路网节点"
           }
         },
         "zh-Hant" : {
@@ -53671,6 +54025,12 @@
             "value" : "Các lối có thẻ mâu thuẫn"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前路径包含不兼容的标签数据"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53801,6 +54161,12 @@
             "value" : "Щоб здійснити дію GPS має бути увімкненим"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本操作需开启GPS卫星定位服务"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53905,6 +54271,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Цей застосунок поки що не підтримує редагування обмежень повороту без точки з роллю «via»"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本应用暂不支持编辑无节点作为'经由点'的转向限制"
           }
         },
         "zh-Hant" : {
@@ -54013,6 +54385,12 @@
             "value" : "Цей пристрій не може надати дані про курс."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "当前设备不支持提供航向数据"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54095,6 +54473,12 @@
             "value" : "Ця функція працює лише починаючи з iOS 15"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本功能需iOS 15及以上系统支持"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54175,6 +54559,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "На цій сторінці можна створювати квести з конкретнішими критеріями, ніж на звичайній сторінці «Редактор квестів»."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本页面支持设置比常规任务构建更精确的路线条件。"
           }
         },
         "zh-Hant" : {
@@ -54287,6 +54677,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Щоб додати інший член до звʼязку «затримайте» палець на лінії яку хочете додати"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "长按待添加路线可新增关系成员"
           }
         },
         "zh-Hant" : {
@@ -54413,6 +54809,12 @@
             "value" : "CHO PHÉP đi từ %1$@ sang %2$@"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅允许从%@前往%@"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54529,6 +54931,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Đi từ %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "从%@出发"
           }
         },
         "zh-Hant" : {
@@ -54655,6 +55063,12 @@
             "value" : "CHỈ cho phép đi từ %1$@ sang %2$@"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅允许从%@前往%@"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54779,6 +55193,12 @@
             "value" : "CẤM đi từ %1$@ sang %2$@"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "禁止从%@前往%@"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54901,6 +55321,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bật Dịch vụ Định vị để Cho phép %@ Xác định Vị trí của Bạn"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请开启定位服务以使%@获取您的位置信息"
           }
         },
         "zh-Hant" : {
@@ -55132,6 +55558,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Обмеження поворотів вказують, на які дороги ви можете повернути при вʼїзді на перехрестя із заданого напрямку.\n\nВиберіть шосе, з якого ви наближаєтеся до перехрестя, а потім натисніть стрілку, щоб вказати, чи є дорога призначення дозволеним маршрутом."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "转向限制规则定义了从特定方向进入路口时可转向的道路。请选择您当前驶入路口的主干道，通过点击箭头图标切换目标道路是否允许通行。"
           }
         },
         "zh-Hant" : {
@@ -55381,6 +55813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Розворот з %@ дозволено"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允许从%@调头"
           }
         },
         "zh-Hant" : {
@@ -56157,6 +56595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kiểu hạn chế rẽ bất ngờ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不支持的转向限制类型"
           }
         },
         "zh-Hant" : {
@@ -58559,6 +59003,12 @@
             "value" : "Яка назва цього квесту? Найкраще написати її у формі дії, наприклад «Додати тип поверхні»:"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请以'添加表面'这类动作格式命名本任务"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -58639,6 +59089,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Який ключ теґа модифікується цим квестом?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本任务将修改哪个标签键？"
           }
         },
         "zh-Hant" : {
@@ -58723,6 +59179,12 @@
             "value" : "Яких саме типів обʼєктів стосується цей квест?"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本任务适用于哪些类型的对象？"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -58803,6 +59265,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "так"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "是"
           }
         },
         "zh-Hant" : {
@@ -58917,6 +59385,12 @@
             "value" : "Ви збираєтеся внести зміни до живої бази даних OpenStreetMap. Ваші зміни будуть видимі для всіх у світі.\n\nЩоб продовжити, натисніть «Здійснити зміни» ще раз, якщо передумали — натисніть «Скасувати»."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您即将修改OpenStreetMap在线生产数据库。您的更改将对全球所有用户可见。\n\n如需继续，请再次点击'提交'；否则请点击'取消'。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -58968,6 +59442,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ви можете визначити власні поля для пресетів. Поле — це окрема пара ключ/значення, пов’язана з функцією."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您可为预设项定义自定义字段。一个字段是与功能关联的单个键值对。"
           }
         },
         "zh-Hant" : {
@@ -59074,6 +59554,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ви можете перейти до члена звʼязку, лише якщо він вже завантажений.\nЦі члени позначені символом «>»."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "只有当关联成员已下载时，才能导航至该成员。\n这些成员会以'>'符号标记。"
           }
         },
         "zh-Hant" : {
@@ -59194,6 +59680,12 @@
             "value" : "Ви зробили зміни і ще не завантажили їх на сервер. Якщо очистити кеш, ці зміни будуть втрачені."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您已进行的更改尚未上传至服务器，清除缓存将导致这些更改丢失。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59310,6 +59802,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ви повинні зберегти або відкинути зміни до поточного обʼєкта, перш ніж редагувати повʼязаний з ним звʼязок"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "必须先保存或放弃当前对象的修改，才能编辑其关联关系"
           }
         },
         "zh-Hant" : {
@@ -60044,6 +60542,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Розмір кеш-памʼяті для даних OSM збільшився, тому застосунок може відкриватися й закриватися повільніше.\n\nВи можете почистити кеш-памʼять (у налаштуваннях перегляду) щоб зробити застосунок швидшим."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "您的OSM数据缓存正在增大，这可能导致启动和关闭速度变慢。\n\n建议清除缓存（位于显示设置中）以提升性能。"
           }
         },
         "zh-Hant" : {

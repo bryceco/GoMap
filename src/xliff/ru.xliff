@@ -5,15 +5,10 @@
       <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
     </header>
     <body>
-      <trans-unit id="1tR-eI-DSh.configuration.title" xml:space="preserve">
+      <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
         <source>username</source>
         <target state="translated">username</target>
-        <note>Class = "UIButton"; configuration.title = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
-      </trans-unit>
-      <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
-        <source>Button</source>
-        <target state="translated">Кнопка</target>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
+        <note>Class = "UIButton"; normalTitle = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
         <source>Get Directions</source>
@@ -30,14 +25,9 @@
         <target state="translated">Ссылка на источник Bing</target>
         <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
       </trans-unit>
-      <trans-unit id="2g1-vb-Cjc.configuration.title" xml:space="preserve">
-        <source>Comment</source>
-        <target state="translated">Комментировать</target>
-        <note>Class = "UIButton"; configuration.title = "Comment"; ObjectID = "2g1-vb-Cjc"; Note = "Add a comment for a Note";</note>
-      </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
         <source>Comment</source>
-        <target state="translated">Комментарий</target>
+        <target state="translated">Комментировать</target>
         <note>Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; Note = "Add a comment for a Note";</note>
       </trans-unit>
       <trans-unit id="7Ua-cx-BHI.title" xml:space="preserve">
@@ -104,14 +94,9 @@
         <target state="translated">Увеличьте, чтобы править</target>
         <note>Class = "UILabel"; text = "Zoom to Edit"; ObjectID = "N5Q-nV-TPG";</note>
       </trans-unit>
-      <trans-unit id="OJ0-aO-ri1.configuration.title" xml:space="preserve">
-        <source>Comment &amp; Resolve</source>
-        <target state="translated">Комментировать и устранить</target>
-        <note>Class = "UIButton"; configuration.title = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
-      </trans-unit>
       <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
         <source>Comment &amp; Resolve</source>
-        <target state="needs-review-l10n">Устранить</target>
+        <target state="needs-review-l10n">Комментировать и устранить</target>
         <note>Class = "UIButton"; normalTitle = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
       <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
@@ -3400,14 +3385,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">Добавить новый</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; Note = "Add user-defined tagging preset";</note>
       </trans-unit>
-      <trans-unit id="CBg-8X-VJp.configuration.title" xml:space="preserve">
-        <source>Area</source>
-        <note>Class = "UIButton"; configuration.title = "Area"; ObjectID = "CBg-8X-VJp";</note>
-      </trans-unit>
       <trans-unit id="CBg-8X-VJp.normalTitle" xml:space="preserve">
-        <source>Button</source>
+        <source>Area</source>
         <target state="translated">Кнопка</target>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "CBg-8X-VJp";</note>
+        <note>Class = "UIButton"; normalTitle = "Area"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
@@ -3424,15 +3405,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">Применимо к</target>
         <note>Class = "UITableViewSection"; headerTitle = "Applies To"; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
-      <trans-unit id="DhX-ri-fx9.configuration.title" xml:space="preserve">
+      <trans-unit id="DhX-ri-fx9.normalTitle" xml:space="preserve">
         <source>Vertex</source>
         <target state="translated">Вертекс</target>
-        <note>Class = "UIButton"; configuration.title = "Vertex"; ObjectID = "DhX-ri-fx9";</note>
-      </trans-unit>
-      <trans-unit id="DhX-ri-fx9.normalTitle" xml:space="preserve">
-        <source>Button</source>
-        <target state="translated">Кнопка</target>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "DhX-ri-fx9";</note>
+        <note>Class = "UIButton"; normalTitle = "Vertex"; ObjectID = "DhX-ri-fx9";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
         <source>Key</source>
@@ -3568,15 +3544,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">Значение 10</target>
         <note>Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ";</note>
       </trans-unit>
-      <trans-unit id="WjA-Nb-uzp.configuration.title" xml:space="preserve">
+      <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
         <source>Line</source>
         <target state="translated">Линия</target>
-        <note>Class = "UIButton"; configuration.title = "Line"; ObjectID = "WjA-Nb-uzp";</note>
-      </trans-unit>
-      <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
-        <source>Button</source>
-        <target state="translated">Кнопка</target>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "WjA-Nb-uzp";</note>
+        <note>Class = "UIButton"; normalTitle = "Line"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
         <source>Value 7</source>
@@ -3666,15 +3637,10 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">Атрибуты</target>
         <note>Class = "UITabBarController"; title = "Attributes"; ObjectID = "f5t-25-IXF";</note>
       </trans-unit>
-      <trans-unit id="fdT-wh-QoF.configuration.title" xml:space="preserve">
+      <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
         <source>Point</source>
         <target state="translated">Точка</target>
-        <note>Class = "UIButton"; configuration.title = "Point"; ObjectID = "fdT-wh-QoF";</note>
-      </trans-unit>
-      <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
-        <source>Button</source>
-        <target state="translated">Кнопка</target>
-        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "fdT-wh-QoF";</note>
+        <note>Class = "UIButton"; normalTitle = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
