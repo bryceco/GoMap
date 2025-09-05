@@ -8,7 +8,13 @@
 --commas inline
 --conflictmarkers reject
 --decimalgrouping 6
+--disable blankLinesAroundMark
+--disable blankLinesAtStartOfScope
 --disable preferKeyPath,trailingClosures
+--disable redundantPublic
+--disable redundantSelf
+--disable redundantStaticSelf
+--disable wrapSingleLineComments
 --elseposition same-line
 --emptybraces no-space
 --enumthreshold 0
