@@ -42,7 +42,26 @@ class CustomAlertController: UIViewController {
 		super.viewDidLoad()
 		// dim the background screen
 		view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+
+		// capture taps outside the alert to dismiss
+		let dismissTapView = UIView()
+		dismissTapView.translatesAutoresizingMaskIntoConstraints = false
+		view.insertSubview(dismissTapView, at: 0) // behind everything
+		NSLayoutConstraint.activate([
+			dismissTapView.topAnchor.constraint(equalTo: view.topAnchor),
+			dismissTapView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+			dismissTapView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			dismissTapView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+		])
+		let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissOnBackgroundTap))
+		dismissTapView.addGestureRecognizer(tapGesture)
+
+		// set up everything else
 		setupAlertView()
+	}
+
+	@objc private func dismissOnBackgroundTap() {
+		dismiss(animated: true)
 	}
 
 	private func setupAlertView() {
