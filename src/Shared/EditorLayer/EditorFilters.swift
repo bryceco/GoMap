@@ -280,6 +280,10 @@ final class EditorFilters {
 		}
 
 		let predicate: ((OsmBaseObject) -> Bool) = { [self] object in
+			// always show new/modified objects
+			if object.isModified() {
+				return true
+			}
 			if let predLevel = predLevel,
 			   !predLevel(object)
 			{
