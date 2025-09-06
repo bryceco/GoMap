@@ -47,6 +47,12 @@
             "value" : "username"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ім'я користувача"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1557,6 +1563,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Зорієнтувати мапу на північ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置北向上"
           }
         },
         "zh-Hant" : {

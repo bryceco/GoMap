@@ -33,10 +33,6 @@
         <target state="translated">رفع</target>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "7Ua-cx-BHI";</note>
       </trans-unit>
-      <trans-unit id="9G2-Gl-CeP.text" xml:space="preserve">
-        <source>username</source>
-        <note>Class = "UILabel"; text = "username"; ObjectID = "9G2-Gl-CeP"; Note = "Placeholder - Do not translate";</note>
-      </trans-unit>
       <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
         <source>New comment:</source>
         <target state="translated">تعليق جديد:</target>
@@ -157,21 +153,6 @@
         <target state="translated">شلالات نياغارا</target>
         <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
       </trans-unit>
-      <trans-unit id="zrW-uc-hfQ.segmentTitles[0]" xml:space="preserve">
-        <source>Tags</source>
-        <target state="translated">الوسوم</target>
-        <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[0] = "Tags"; ObjectID = "zrW-uc-hfQ";</note>
-      </trans-unit>
-      <trans-unit id="zrW-uc-hfQ.segmentTitles[1]" xml:space="preserve">
-        <source>Delete</source>
-        <target state="translated">حذف</target>
-        <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[1] = "Delete"; ObjectID = "zrW-uc-hfQ";</note>
-      </trans-unit>
-      <trans-unit id="zrW-uc-hfQ.segmentTitles[2]" xml:space="preserve">
-        <source>More...</source>
-        <target state="translated">المزيد...</target>
-        <note>Class = "UISegmentedControl"; zrW-uc-hfQ.segmentTitles[2] = "More..."; ObjectID = "zrW-uc-hfQ";</note>
-      </trans-unit>
     </body>
   </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="ar" datatype="plaintext">
@@ -218,11 +199,6 @@
         <target state="translated">مسارات GPX</target>
         <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
       </trans-unit>
-      <trans-unit id="2Ku-Lb-uCf.text" xml:space="preserve">
-        <source>Details</source>
-        <target state="translated">التفاصيل</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "2Ku-Lb-uCf";</note>
-      </trans-unit>
       <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
         <source>Clear Cache</source>
         <target state="translated">مسح ذاكرة التخزين المؤقت</target>
@@ -257,11 +233,6 @@
         <target state="translated">الصور الجوية</target>
         <note>Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z";</note>
       </trans-unit>
-      <trans-unit id="8S7-Kw-QHF.normalTitle" xml:space="preserve">
-        <source>Details</source>
-        <target state="translated">التفاصيل</target>
-        <note>Class = "UIButton"; normalTitle = "Details"; ObjectID = "8S7-Kw-QHF";</note>
-      </trans-unit>
       <trans-unit id="8es-4f-sj3.headerTitle" xml:space="preserve">
         <source>Overlays</source>
         <target state="translated">طبقات إضافية علوية</target>
@@ -270,11 +241,6 @@
       <trans-unit id="8iI-nH-O9H.title" xml:space="preserve">
         <source>Basemap</source>
         <note>Class = "UINavigationItem"; title = "Basemap"; ObjectID = "8iI-nH-O9H";</note>
-      </trans-unit>
-      <trans-unit id="9L3-JO-Whj.text" xml:space="preserve">
-        <source>Mapnik only</source>
-        <target state="translated">فقط خريطة Mapnik (الرسمية)</target>
-        <note>Class = "UILabel"; text = "Mapnik only"; ObjectID = "9L3-JO-Whj";</note>
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
         <source>Display</source>
@@ -290,25 +256,10 @@
         <source>12:00:00</source>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
-      <trans-unit id="EmS-9F-1qc.text" xml:space="preserve">
-        <source>Details</source>
-        <target state="translated">التفاصيل</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "EmS-9F-1qc";</note>
-      </trans-unit>
-      <trans-unit id="F9l-B0-puf.text" xml:space="preserve">
-        <source>Details</source>
-        <target state="translated">التفاصيل</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "F9l-B0-puf";</note>
-      </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
         <source>Details</source>
         <target state="translated">التفاصيل</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X";</note>
-      </trans-unit>
-      <trans-unit id="H3p-Ta-kIy.title" xml:space="preserve">
-        <source>QA Poole No Name Tiles</source>
-        <target state="translated">الصور المتجانبة من Poole لطبقة ضمان الجودة للعناصر التي بدون اسم</target>
-        <note>Class = "UINavigationItem"; title = "QA Poole No Name Tiles"; ObjectID = "H3p-Ta-kIy"; Note = "Title for Simon Poole's \"No name\" (missing name) tile overlay";</note>
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
@@ -414,11 +365,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">مسارات GPX</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
-      <trans-unit id="ZP1-qY-kXe.text" xml:space="preserve">
-        <source>Unnamed Roads</source>
-        <target state="translated">طرق ليس لها اسم</target>
-        <note>Class = "UILabel"; text = "Unnamed Roads"; ObjectID = "ZP1-qY-kXe";</note>
-      </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
         <target state="translated">إذا كان تحديد عنوان WMS يجب عليك أيضا توفير الإسقاط الخاص به</target>
@@ -478,11 +424,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
  </source>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
-      <trans-unit id="eFa-yZ-YZl.text" xml:space="preserve">
-        <source>Aerial Tiles</source>
-        <target state="translated">الصور الجوية</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eFa-yZ-YZl";</note>
-      </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
         <source>Position + Button on </source>
         <target state="translated">مكان زر الإضافة + </target>
@@ -492,11 +433,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Editor only</source>
         <target state="translated">التحرير فقط</target>
         <note>Class = "UILabel"; text = "Editor only"; ObjectID = "eN6-SZ-99I";</note>
-      </trans-unit>
-      <trans-unit id="eTY-48-gab.text" xml:space="preserve">
-        <source>Aerial Tiles</source>
-        <target state="translated">الصور الجوية</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "eTY-48-gab";</note>
       </trans-unit>
       <trans-unit id="eac-Db-EaW.normalTitle" xml:space="preserve">
         <source>Bing</source>
@@ -513,11 +449,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">الصور الجوية</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fFT-hv-mKl";</note>
       </trans-unit>
-      <trans-unit id="fHH-rC-iGa.text" xml:space="preserve">
-        <source>Aerial Tiles</source>
-        <target state="translated">الصور الجوية</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "fHH-rC-iGa";</note>
-      </trans-unit>
       <trans-unit id="fVu-8o-Ldq.text" xml:space="preserve">
         <source>Details</source>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
@@ -526,11 +457,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Details</source>
         <target state="translated">التفاصيل</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
-      </trans-unit>
-      <trans-unit id="g46-cV-NBw.text" xml:space="preserve">
-        <source>Aerial Tiles</source>
-        <target state="translated">الصور الجوية</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "g46-cV-NBw";</note>
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
         <source>Points</source>
@@ -547,22 +473,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">العلامة</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "h1O-06-ApF";</note>
       </trans-unit>
-      <trans-unit id="hMJ-yP-XJe.text" xml:space="preserve">
-        <source>OpenStreetMap GPS Traces</source>
-        <target state="translated">مسارات GPS من OSM</target>
-        <note>Class = "UILabel"; text = "OpenStreetMap GPS Traces"; ObjectID = "hMJ-yP-XJe";</note>
-      </trans-unit>
       <trans-unit id="hkr-kO-jbt.text" xml:space="preserve">
         <source>Traffic Roads</source>
         <target state="translated">الطرق المرورية</target>
         <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
-      </trans-unit>
-      <trans-unit id="hsp-Xj-TU6.text" xml:space="preserve">
-        <source>Simon Poole Map Data © OpenStreetMap contributors
-</source>
-        <target state="translated">بيانات خريطة سيمون بول © المساهمين في خريطة الشارع المفتوحة
-</target>
-        <note>Class = "UITextView"; text = "Simon Poole Map Data © OpenStreetMap contributors\n"; ObjectID = "hsp-Xj-TU6";</note>
       </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
         <source>(TMS)</source>
@@ -673,11 +587,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Reset</source>
         <target state="translated">إعادة تعيين</target>
         <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
-      </trans-unit>
-      <trans-unit id="xve-fW-qM7.text" xml:space="preserve">
-        <source>Details</source>
-        <target state="translated">التفاصيل</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "xve-fW-qM7";</note>
       </trans-unit>
       <trans-unit id="yue-km-52a.text" xml:space="preserve">
         <source>Name</source>
@@ -3041,7 +2950,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       <trans-unit id="Version" xml:space="preserve">
         <source>Version</source>
         <target state="translated">الإصدار</target>
-        <note>OSM object versioh</note>
+        <note>OSM object version</note>
       </trans-unit>
       <trans-unit id="Vertex" xml:space="preserve">
         <source>Vertex</source>
@@ -4309,6 +4218,17 @@ http://glyphish.com
       <trans-unit id="zuh-G8-yy9.text" xml:space="preserve">
         <source>Slack - Discussion</source>
         <note>Class = "UILabel"; text = "Slack - Discussion"; ObjectID = "zuh-G8-yy9"; Note = "For opening the Slack app";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Turn Restrictions/Base.lproj/TurnRestrictions.storyboard" source-language="en" target-language="ar" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="16.4" build-num="16F6"/>
+    </header>
+    <body>
+      <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
+        <source>Label</source>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4";</note>
       </trans-unit>
     </body>
   </file>
