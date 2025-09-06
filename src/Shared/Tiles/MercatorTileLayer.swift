@@ -91,7 +91,15 @@ final class MercatorTileLayer: CALayer {
 	}
 
 	func zoomLevel() -> Int {
-		return tileServer.roundZoomUp ? Int(ceil(mapView.mapTransform.zoom())) : Int(floor(mapView.mapTransform.zoom()))
+		let z = mapView.mapTransform.zoom()
+		guard
+			z.isFinite,
+			z >= Double(Int.min),
+			z <= Double(Int.max)
+		else {
+			return 0
+		}
+		return tileServer.roundZoomUp ? Int(ceil(z)) : Int(floor(z))
 	}
 
 	func metadata() async throws -> Data {
