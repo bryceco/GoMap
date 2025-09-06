@@ -961,8 +961,15 @@ extension EditorMapLayer {
 		if let way = selectedWay,
 		   selectedNode == nil
 		{
-			// insert a new node into way at arrowPoint
+			// insert a new node into way at pushPin location
 			let pt = owner.mapTransform.latLon(forScreenPoint: pinPoint)
+			guard
+				way.nodes.allSatisfy({ $0.latLon != pt })
+			else {
+				// user attempted to add a node at exactly the same location as an existing node,
+				// probably by accidently tapping + too many times.
+				return .failure(EditError.text(""))
+			}
 			let segment = way.segmentClosestToPoint(pt)
 			do {
 				let add = try canAddNode(toWay: way, atIndex: segment + 1)
