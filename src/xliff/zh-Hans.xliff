@@ -54,6 +54,7 @@
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityHint" xml:space="preserve">
         <source>Reorient map north</source>
+        <target state="translated">设置北向上</target>
         <note>Class = "UIButton"; accessibilityHint = "Reorient map north"; ObjectID = "E22-sL-sNt";</note>
       </trans-unit>
       <trans-unit id="E22-sL-sNt.accessibilityLabel" xml:space="preserve">
@@ -1011,7 +1012,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="translated">即将在%1$#@meters@%米后 驶入2$#@nodes@</target>
+        <target state="needs-translation">%1$#@meters@, %2$#@nodes@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
