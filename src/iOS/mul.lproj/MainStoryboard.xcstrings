@@ -3297,7 +3297,7 @@
     },
     "qP9-Sc-sc4.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Label\"; ObjectID = \"qP9-Sc-sc4\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

@@ -2146,8 +2146,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		else { return }
 
 		let showRestrictionEditor: (() -> Void) = { [self] in
-			guard let myVc = mainViewController.storyboard?
-				.instantiateViewController(withIdentifier: "TurnRestrictController") as? TurnRestrictController
+			guard
+				let myVc = TurnRestrictController.instantiate()
 			else { return }
 			myVc.centralNode = editorLayer.selectedNode
 			myVc.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext

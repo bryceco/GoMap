@@ -37,6 +37,7 @@
 		021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADE12588474300F6E1C0 /* PresetCategory.swift */; };
 		021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADEE25884BB900F6E1C0 /* OsmTags.swift */; };
 		0220526429283498003C6AE1 /* CountryCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220526329283498003C6AE1 /* CountryCoder.swift */; };
+		022114FC2E6CDF4D00D76061 /* TurnRestrictions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 022114F92E6CDCD600D76061 /* TurnRestrictions.storyboard */; };
 		02225DA729EB3AE900859F9D /* GpxTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02225DA629EB3AE900859F9D /* GpxTrack.swift */; };
 		02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02263CDE2677F93A002BA72F /* QuadBox.swift */; };
 		0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0226B770268300C9005DB9E2 /* Data+Wrapper.swift */; };
@@ -376,6 +377,7 @@
 		021FADEE25884BB900F6E1C0 /* OsmTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmTags.swift; sourceTree = "<group>"; };
 		022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Ocean.swift"; sourceTree = "<group>"; };
 		0220526329283498003C6AE1 /* CountryCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCoder.swift; sourceTree = "<group>"; };
+		022114FA2E6CDCD600D76061 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TurnRestrictions.storyboard; sourceTree = "<group>"; };
 		02225DA629EB3AE900859F9D /* GpxTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GpxTrack.swift; path = ../Shared/GpxTrack.swift; sourceTree = "<group>"; };
 		02263CDE2677F93A002BA72F /* QuadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadBox.swift; sourceTree = "<group>"; };
 		0226B770268300C9005DB9E2 /* Data+Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Wrapper.swift"; sourceTree = "<group>"; };
@@ -692,6 +694,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		022114FB2E6CDCF800D76061 /* Turn Restrictions */ = {
+			isa = PBXGroup;
+			children = (
+				C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */,
+				C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */,
+				022114F92E6CDCD600D76061 /* TurnRestrictions.storyboard */,
+			);
+			path = "Turn Restrictions";
+			sourceTree = "<group>";
+		};
 		0244399529CA9A02009FC2D0 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,7 +816,6 @@
 		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
 			isa = PBXGroup;
 			children = (
-				02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */,
 				C3D096AB263D48F700E3B129 /* AppDelegate.swift */,
 				ED56E5B226026541000B368C /* BingMetadataViewController.swift */,
 				02F0297A2BFAFF2E002F7956 /* DataOverlays */,
@@ -827,10 +838,11 @@
 				02A3598F2704E51700101369 /* POI */,
 				028F504619BA2F460093C423 /* presets */,
 				02CB523C299097C3007F758D /* Quests */,
+				02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */,
 				0244399529CA9A02009FC2D0 /* Settings */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
-				C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */,
+				022114FB2E6CDCF800D76061 /* Turn Restrictions */,
 				647C150D24268DB7008A9366 /* Upload */,
 			);
 			name = "Go Map!";
@@ -880,7 +892,6 @@
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
-				C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */,
 				02771D702BFC15C300FE9B79 /* UserFileList.swift */,
 				02092ECE29E32DD40095042B /* UserPrefs.swift */,
 				02F5329C267AD2B20088DF41 /* Utility */,
@@ -1448,6 +1459,7 @@
 				021BC2222D7625FB004631C5 /* Panoramax.storyboard in Resources */,
 				02EA545E2AB7CCA4004688F9 /* Localizable.xcstrings in Resources */,
 				027AB500250E9C9B00C404CD /* Height.storyboard in Resources */,
+				022114FC2E6CDF4D00D76061 /* TurnRestrictions.storyboard in Resources */,
 				0287D25229947B2900BEAD9E /* QuestChooser.storyboard in Resources */,
 				023B892B19C148790060CDB5 /* Images.xcassets in Resources */,
 				02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */,
@@ -1764,6 +1776,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		022114F92E6CDCD600D76061 /* TurnRestrictions.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				022114FA2E6CDCD600D76061 /* Base */,
+			);
+			name = TurnRestrictions.storyboard;
+			sourceTree = "<group>";
+		};
 		0246A78326A4AA3A00941A44 /* DirectionViewController.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

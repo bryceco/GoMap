@@ -28,6 +28,12 @@ class TurnRestrictController: UIViewController {
 	@IBOutlet var detailText: UILabel!
 	var centralNode: OsmNode! // the central node
 
+	static func instantiate() -> TurnRestrictController? {
+		let storyboard = UIStoryboard(name: "TurnRestrictions", bundle: nil)
+		let vc = storyboard.instantiateViewController(withIdentifier: "TurnRestrictController")
+		return vc as? TurnRestrictController
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		highwayViewArray = []
