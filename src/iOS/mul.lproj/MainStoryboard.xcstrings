@@ -699,7 +699,7 @@
     },
     "7Ua-cx-BHI.title" : {
       "comment" : "Class = \"UINavigationItem\"; title = \"Upload\"; ObjectID = \"7Ua-cx-BHI\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1263,7 +1263,7 @@
     },
     "ach-1A-88x.text" : {
       "comment" : "Class = \"UITextView\"; text = \"Changeset comment goes here\"; ObjectID = \"ach-1A-88x\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2109,7 +2109,7 @@
     },
     "gdu-Sf-XrE.title" : {
       "comment" : "Class = \"UIBarButtonItem\"; title = \"Commit\"; ObjectID = \"gdu-Sf-XrE\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2361,7 +2361,7 @@
     },
     "l7S-YL-RKK.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Subtitle\"; ObjectID = \"l7S-YL-RKK\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3789,7 +3789,7 @@
     },
     "stf-JU-iga.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"stf-JU-iga\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
