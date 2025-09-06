@@ -7,6 +7,7 @@
     <body>
       <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
         <source>username</source>
+        <target state="translated">ім'я користувача</target>
         <note>Class = "UIButton"; normalTitle = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
