@@ -2156,6 +2156,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			// if GPS is running don't keep moving around
 			userOverrodeLocationPosition = true
 
+			// ensure view is loaded before we access frame info
+			myVc.loadViewIfNeeded()
+
 			// scroll view so intersection stays visible
 			let rc = myVc.viewWithTitle.frame
 			let pt = pushPin.arrowPoint
