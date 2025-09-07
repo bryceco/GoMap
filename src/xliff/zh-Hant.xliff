@@ -3815,6 +3815,7 @@ http://glyphish.com
     <body>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
         <source>Label</source>
+        <target state="translated">標籤</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4";</note>
       </trans-unit>
     </body>
