@@ -2083,26 +2083,55 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					configuration.displayMode = .labelOnly
 					let pasteButton = UIPasteControl(configuration: configuration)
 					pasteButton.target = editorLayer
+					pasteButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+					pasteButton.setContentCompressionResistancePriority(.required, for: .vertical)
+					pasteButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+					pasteButton.setContentHuggingPriority(.required, for: .vertical)
 					return pasteButton
 				} else {
 					let titleIcon = action.actionTitle(abbreviated: true)
 					let button = ButtonClosure(type: .system)
+					button.translatesAutoresizingMaskIntoConstraints = false
 					button.setTitle(titleIcon.label, for: .normal)
 					button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+					button.titleLabel?.adjustsFontForContentSizeCategory = true
 					button.backgroundColor = backgroundColor
 					button.setTitleColor(foregroundColor, for: .normal)
-					button.contentEdgeInsets = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 12)
 					button.layer.cornerRadius = editToolbar.layer.cornerRadius
 					button.layer.masksToBounds = true
+					button.setContentHuggingPriority(.defaultLow, for: .vertical)
+					button.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
 					button.onTap = { [weak self] _ in
 						self?.editorLayer.performEdit(action)
 					}
 					return button
 				}
 			}
-			let actions: [UIControl] = editControlActions.map {
+			var actions: [UIView] = editControlActions.map {
 				editToolbarItemForAction($0)
 			}
+
+			// add spacers between UIButtons (but not UIPasteControl since it provides it's own space
+			var index = 0
+			while index < actions.count - 1 {
+				if actions[index] is UIButton, actions[index+1] is UIButton {
+					let spacer = UIView()
+					spacer.translatesAutoresizingMaskIntoConstraints = false
+					spacer.widthAnchor.constraint(equalToConstant: 12).isActive = true
+					actions.insert(spacer, at: index + 1)
+					index += 1 // Skip over the spacer
+				}
+				index += 1
+			}
+			let spacer1 = UIView()
+			spacer1.translatesAutoresizingMaskIntoConstraints = false
+			spacer1.widthAnchor.constraint(equalToConstant: 6).isActive = true
+			actions.insert(spacer1, at: 0)
+			let spacer2 = UIView()
+			spacer2.translatesAutoresizingMaskIntoConstraints = false
+			spacer2.widthAnchor.constraint(equalToConstant: 12).isActive = true
+			actions.append(spacer2)
+
 			editToolbar.controls = actions
 		}
 	}

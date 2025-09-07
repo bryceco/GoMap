@@ -11,9 +11,9 @@ import UIKit
 final class CustomSegmentedControl: UIControl {
 	private let stackView = UIStackView()
 
-	public var controls: [UIControl] {
+	public var controls: [UIView] {
 		get {
-			return stackView.arrangedSubviews as! [UIControl]
+			return stackView.arrangedSubviews
 		}
 		set {
 			configure(with: newValue)
@@ -32,6 +32,7 @@ final class CustomSegmentedControl: UIControl {
 
 	private func setupStackView() {
 		stackView.axis = .horizontal
+		stackView.alignment = .center
 		stackView.isLayoutMarginsRelativeArrangement = true
 		stackView.distribution = .fill
 		stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -46,7 +47,7 @@ final class CustomSegmentedControl: UIControl {
 		])
 	}
 
-	private func configure(with controls: [UIControl]) {
+	private func configure(with controls: [UIView]) {
 		stackView.arrangedSubviews.forEach {
 			stackView.removeArrangedSubview($0)
 			$0.removeFromSuperview()
