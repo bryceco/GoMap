@@ -2,168 +2,168 @@
   "sourceLanguage" : "en",
   "strings" : {
     "4vY-m2-xMW.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Position your device parallel to the direction of the object.\"; ObjectID = \"4vY-m2-xMW\";",
+      "comment" : "Class = \"UILabel\"; text = \"Point your phone in the direction the object faces.\"; ObjectID = \"4vY-m2-xMW\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "ضع جهازك موازيا لاتجاه العنصر."
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "ضع جهازك موازيا لاتجاه العنصر."
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nasměrujte své zařízení paralelně se směrem objektu."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Richte dein Gerät parallel zur Objektrichtung aus."
           }
         },
         "el" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Τοποθετήστε την συσκευή σας παράλληλα προς την κατεύθυνση του αντικειμένου."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Position your device parallel to the direction of the object."
+            "value" : "Point your phone in the direction the object faces."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Coloque el dispositivo de forma paralela a la dirección del objeto."
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Aseta seade paralleelselt objekti suunaga."
           }
         },
         "fi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Aseta laitteesi kohtisuoraan kohti objektia."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Positionnez votre appareil parallèlement à la direction de l'objet."
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Postavi uređaj paralelno sa smjerom objekta."
           }
         },
         "it" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Posiziona il tuo dispositivo parallelamente alla direzione dell''oggetto."
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "装置をオブジェクトと並行する方向に向けてください。"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "आपले उपकरण वस्तूच्या दिशेला समांतर ठेवा."
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Posisjoner din enhet i parallell med objektets retning."
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Plaats je apparaat parallel aan de richting van het object."
           }
         },
         "nn" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Plasser eininga di parallelt med retninga til objektet."
           }
         },
         "oc" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Plaçatz l’aparelh en parallèle a la drechiera de l’objècte."
           }
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Ustaw urządzenie równolegle do orientacji obiektu."
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Posicione o seu dispositivo paralelo à direção do objeto."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Posicione seu aparelho paralelo a direção do objeto."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Расположите устройство параллельно направлению движения объекта."
           }
         },
         "ta" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "உங்கள் சாதனத்தை பொருளின் திசைக்கு இணையாக வைக்கவும்."
           }
         },
         "tzm" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "ⵙⵔⵙ ⴰⵍⵍⴰⵍ ⵙ ⵓⵎⵏⴰⵡⴰⵢ ⴷ ⵓⵎⵏⵉⴷ ⵏ ⵓⵙⴽⴽⵉⵏ."
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Розташуйте пристрій паралельно до напрямку руху обʼєкта."
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "將您的設備與物體的方向平行放置。"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "將您的設備與物體的方向平行放置。"
           }
         }
