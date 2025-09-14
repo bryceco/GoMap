@@ -629,7 +629,7 @@ extension EditorMapLayer {
 	}
 
 	func editActionsAvailable() -> [EDIT_ACTION] {
-		var actionList: [EDIT_ACTION] = []
+		var actionList: [EDIT_ACTION] = (selectedPrimary?.tags.isEmpty ?? true) ? [] : [.COPYTAGS]
 		if let selectedWay = selectedWay {
 			if let selectedNode = selectedNode {
 				// node in way
@@ -644,8 +644,6 @@ extension EditorMapLayer {
 				let restriction = owner.useTurnRestrictions()
 					&& self.selectedWay?.tags["highway"] != nil
 					&& parentWays.count > 1
-
-				actionList = [.COPYTAGS]
 
 				if disconnect {
 					actionList.append(.DISCONNECT)
@@ -666,8 +664,7 @@ extension EditorMapLayer {
 			} else {
 				if selectedWay.isClosed() {
 					// polygon
-					actionList = [
-						.COPYTAGS,
+					actionList += [
 						.RECTANGULARIZE,
 						.CIRCULARIZE,
 						.ROTATE,
@@ -677,18 +674,18 @@ extension EditorMapLayer {
 					]
 				} else {
 					// line
-					actionList = [.COPYTAGS, .STRAIGHTEN, .REVERSE, .DUPLICATE, .CREATE_RELATION]
+					actionList += [.STRAIGHTEN, .REVERSE, .DUPLICATE, .CREATE_RELATION]
 				}
 			}
 		} else if selectedNode != nil {
 			// node
-			actionList = [.COPYTAGS, .DUPLICATE]
+			actionList += [.DUPLICATE]
 		} else if let selectedRelation = selectedRelation {
 			// relation
 			if selectedRelation.isMultipolygon() {
-				actionList = [.COPYTAGS, .ROTATE, .DUPLICATE]
+				actionList += [.ROTATE, .DUPLICATE]
 			} else {
-				actionList = [.COPYTAGS, .PASTETAGS]
+				actionList += [.PASTETAGS]
 			}
 		} else {
 			// nothing selected
