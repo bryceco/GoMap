@@ -62,44 +62,62 @@ enum EDIT_ACTION: Int {
 	/// Localized names of edit actions
 	func actionTitle(abbreviated: Bool = false) -> (label: String, image: UIImage?) {
 		switch self {
-		case .ADDNOTE: return (NSLocalizedString("Add Note", comment: "Edit action"),
-		                       UIImage(systemName: "note.text.badge.plus"))
-		case .CIRCULARIZE: return (NSLocalizedString("Make Circular", comment: "Edit action"),
-		                           UIImage(systemName: "circle"))
-		case .COPYTAGS: return (NSLocalizedString("Copy Tags", comment: "Edit action"),
-		                        UIImage(systemName: "doc.on.doc"))
-		case .CREATE_RELATION: return (NSLocalizedString("Create Relation", comment: "Edit action"),
-		                               UIImage(systemName: "link.badge.plus"))
-		case .DELETE: return (NSLocalizedString("Delete", comment: "Edit action"),
-		                      UIImage(systemName: "trash"))
-		case .DISCONNECT: return (NSLocalizedString("Disconnect", comment: "Edit action"),
-		                          UIImage(systemName: "scissors"))
-		case .DUPLICATE: return (NSLocalizedString("Duplicate", comment: "Edit action"),
-		                         UIImage(systemName: "plus.rectangle.on.rectangle"))
-		case .EDITTAGS: return (NSLocalizedString("Tags", comment: "Edit action"),
-		                        UIImage(systemName: "square.and.pencil"))
-		case .EXTRACTNODE: return (NSLocalizedString("Extract Node", comment: "Edit action"),
-		                           UIImage(systemName: "tray.and.arrow.up"))
-		case .JOIN: return (NSLocalizedString("Join", comment: "Edit action"),
-		                    UIImage(systemName: "arrow.merge"))
-		case .MORE: return (NSLocalizedString("More...", comment: "Edit action"),
-		                    UIImage(systemName: "line.3.horizontal"))
-		case .PASTETAGS: return (NSLocalizedString("Paste", comment: "Edit action"),
-		                         UIImage(systemName: "doc.on.clipboard"))
-		case .RECTANGULARIZE: return (NSLocalizedString("Make Rectangular", comment: "Edit action"),
-		                              UIImage(systemName: "rectangle"))
-		case .REVERSE: return (NSLocalizedString("Reverse", comment: "Edit action"),
-		                       UIImage(systemName: "arrow.left.arrow.right"))
-		case .RESTRICT: return (abbreviated
+		case .ADDNOTE:
+			return (NSLocalizedString("Add Note", comment: "Edit action"),
+					UIImage(systemName: "note.text.badge.plus"))
+		case .CIRCULARIZE:
+			return (NSLocalizedString("Make Circular", comment: "Edit action"),
+					UIImage(systemName: "circle"))
+		case .COPYTAGS:
+			return (NSLocalizedString("Copy Tags", comment: "Edit action"),
+					UIImage(systemName: "doc.on.doc"))
+		case .CREATE_RELATION:
+			return (NSLocalizedString("Create Relation", comment: "Edit action"),
+					UIImage(systemName: "link.badge.plus"))
+		case .DELETE:
+			return (NSLocalizedString("Delete", comment: "Edit action"),
+					UIImage(systemName: "trash"))
+		case .DISCONNECT:
+			return (NSLocalizedString("Disconnect", comment: "Edit action"),
+					UIImage(systemName: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right"))
+		case .DUPLICATE:
+			return (NSLocalizedString("Duplicate", comment: "Edit action"),
+					UIImage(systemName: "plus.rectangle.on.rectangle"))
+		case .EDITTAGS:
+			return (NSLocalizedString("Tags", comment: "Edit action"),
+					UIImage(systemName: "square.and.pencil"))
+		case .EXTRACTNODE:
+			return (NSLocalizedString("Extract Node", comment: "Edit action"),
+					UIImage(systemName: "tray.and.arrow.up"))
+		case .JOIN:
+			return (NSLocalizedString("Join", comment: "Edit action"),
+					UIImage(systemName: "arrow.merge"))
+		case .MORE:
+			return (NSLocalizedString("More...", comment: "Edit action"),
+					UIImage(systemName: "line.3.horizontal"))
+		case .PASTETAGS:
+			return (NSLocalizedString("Paste", comment: "Edit action"),
+					UIImage(systemName: "doc.on.clipboard"))
+		case .RECTANGULARIZE:
+			return (NSLocalizedString("Make Rectangular", comment: "Edit action"),
+					UIImage(systemName: "rectangle"))
+		case .REVERSE:
+			return (NSLocalizedString("Reverse", comment: "Edit action"),
+					UIImage(systemName: "arrow.left.arrow.right"))
+		case .RESTRICT:
+			return (abbreviated
 				? NSLocalizedString("Restrict", comment: "Edit action")
 				: NSLocalizedString("Turn Restrictions", comment: "Edit action"),
 				UIImage(systemName: "nosign"))
-		case .ROTATE: return (NSLocalizedString("Rotate", comment: "Edit action"),
-		                      UIImage(systemName: "arrow.clockwise"))
-		case .SPLIT: return (NSLocalizedString("Split", comment: "Edit action"),
-		                     UIImage(systemName: "arrow.branch")!)
-		case .STRAIGHTEN: return (NSLocalizedString("Straighten", comment: "Edit action"),
-		                          UIImage(systemName: "line.diagonal"))
+		case .ROTATE:
+			return (NSLocalizedString("Rotate", comment: "Edit action"),
+					UIImage(systemName: "arrow.clockwise"))
+		case .SPLIT:
+			return (NSLocalizedString("Split", comment: "Edit action"),
+					UIImage(systemName: "scissors")!)
+		case .STRAIGHTEN:
+			return (NSLocalizedString("Straighten", comment: "Edit action"),
+					UIImage(systemName: "line.diagonal"))
 		}
 	}
 }
