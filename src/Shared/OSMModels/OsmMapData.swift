@@ -998,16 +998,17 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 
 		assert(newVersion > 0)
-		object.serverUpdate(version: newVersion)
-		object.serverUpdate(changeset: changeset)
-		object.serverUpdate(timestamp: timestamp)
+		object.serverUpdate(ident: newId,
+							version: newVersion,
+							changeset: changeset,
+							timestamp: timestamp,
+							user: AppDelegate.shared.userName)
 		sqlUpdate[object] = true // mark for insertion
 
 		if oldId != newId {
 			// replace placeholder object with new server provided identity
 			assert(oldId < 0 && newId > 0)
 			dictionary.removeValue(forKey: object.ident)
-			object.serverUpdate(ident: newId)
 			dictionary[object.ident] = object
 		} else {
 			assert(oldId > 0)

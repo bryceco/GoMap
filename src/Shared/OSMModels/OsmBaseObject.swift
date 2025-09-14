@@ -457,21 +457,21 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	// MARK: Update properties with refreshed data from server
 
-	func serverUpdate(version: Int) {
-		self.version = version
-	}
-
-	func serverUpdate(changeset: OsmIdentifier) {
-		self.changeset = changeset
-	}
-
-	func serverUpdate(ident: OsmIdentifier) {
-		assert(self.ident < 0 && ident > 0)
+	func serverUpdate(ident: OsmIdentifier,
+					  version: Int,
+					  changeset: OsmIdentifier,
+					  timestamp: Date,
+					  user: String?)
+	{
+		DbgAssert((self.ident < 0 && ident > 0) || self.ident == ident)
 		self.ident = ident
-	}
-
-	func serverUpdate(timestamp: Date) {
+		self.version = version
+		self.changeset = changeset
 		setTimestamp(timestamp, undo: nil)
+		if let user {
+			self.user = user
+			self.uid = 0 // we don't know it
+		}
 	}
 
 	func serverUpdate(with newerVersion: OsmBaseObject) {
