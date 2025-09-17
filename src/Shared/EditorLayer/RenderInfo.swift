@@ -179,14 +179,16 @@ final class RenderInfo {
 			case ("highway", "service"): priority = 13
 			case ("highway", "bus_guideway"): priority = 12
 			case ("highway", "track"): priority = 11
-			case ("highway", "pedestrian"): priority = 10
+			case ("building", _): priority = 10
+			// below here are pedestrian oriented
 			case ("highway", "cycleway"): priority = 9
+			case ("highway", "pedestrian"): priority = 8
 			case ("highway", "path"): priority = 8
+			case ("highway", "footway"): priority = 8
+			case ("highway", "steps"): priority = 8
 			case ("highway", "bridleway"): priority = 7
-			case ("highway", "footway"): priority = 6
-			case ("highway", "steps"): priority = 5
-			case ("highway", "construction"): priority = 4
-			case ("highway", "proposed"): priority = 3
+			case ("highway", "construction"): priority = 5
+			case ("highway", "proposed"): priority = 4
 			case ("highway", _): priority = 3
 			default:
 				if isAddressPoint {
@@ -198,9 +200,9 @@ final class RenderInfo {
 		}
 
 		let bonus: Int
-		if object.isWay() != nil || ((object.isRelation()?.isMultipolygon()) ?? false) {
+		if (object is OsmWay) || ((object as? OsmRelation)?.isMultipolygon() ?? false) {
 			bonus = 2
-		} else if object.isRelation() != nil {
+		} else if object is OsmRelation {
 			bonus = 1
 		} else {
 			bonus = 0
