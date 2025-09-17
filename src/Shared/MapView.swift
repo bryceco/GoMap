@@ -64,46 +64,46 @@ enum EDIT_ACTION: Int {
 		switch self {
 		case .ADDNOTE:
 			return (NSLocalizedString("Add Note", comment: "Edit action"),
-					UIImage(systemName: "note.text.badge.plus"))
+			        UIImage(systemName: "note.text.badge.plus"))
 		case .CIRCULARIZE:
 			return (NSLocalizedString("Make Circular", comment: "Edit action"),
-					UIImage(systemName: "circle"))
+			        UIImage(systemName: "circle"))
 		case .COPYTAGS:
 			return (NSLocalizedString("Copy Tags", comment: "Edit action"),
-					UIImage(systemName: "doc.on.doc"))
+			        UIImage(systemName: "doc.on.doc"))
 		case .CREATE_RELATION:
 			return (NSLocalizedString("Create Relation", comment: "Edit action"),
-					UIImage(systemName: "link.badge.plus"))
+			        UIImage(systemName: "link.badge.plus"))
 		case .DELETE:
 			return (NSLocalizedString("Delete", comment: "Edit action"),
-					UIImage(systemName: "trash"))
+			        UIImage(systemName: "trash"))
 		case .DISCONNECT:
 			return (NSLocalizedString("Disconnect", comment: "Edit action"),
-					UIImage(systemName: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right"))
+			        UIImage(systemName: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right"))
 		case .DUPLICATE:
 			return (NSLocalizedString("Duplicate", comment: "Edit action"),
-					UIImage(systemName: "plus.rectangle.on.rectangle"))
+			        UIImage(systemName: "plus.rectangle.on.rectangle"))
 		case .EDITTAGS:
 			return (NSLocalizedString("Tags", comment: "Edit action"),
-					UIImage(systemName: "square.and.pencil"))
+			        UIImage(systemName: "square.and.pencil"))
 		case .EXTRACTNODE:
 			return (NSLocalizedString("Extract Node", comment: "Edit action"),
-					UIImage(systemName: "tray.and.arrow.up"))
+			        UIImage(systemName: "tray.and.arrow.up"))
 		case .JOIN:
 			return (NSLocalizedString("Join", comment: "Edit action"),
-					UIImage(systemName: "arrow.merge"))
+			        UIImage(systemName: "arrow.merge"))
 		case .MORE:
 			return (NSLocalizedString("More...", comment: "Edit action"),
-					UIImage(systemName: "line.3.horizontal"))
+			        UIImage(systemName: "line.3.horizontal"))
 		case .PASTETAGS:
 			return (NSLocalizedString("Paste", comment: "Edit action"),
-					UIImage(systemName: "doc.on.clipboard"))
+			        UIImage(systemName: "doc.on.clipboard"))
 		case .RECTANGULARIZE:
 			return (NSLocalizedString("Make Rectangular", comment: "Edit action"),
-					UIImage(systemName: "rectangle"))
+			        UIImage(systemName: "rectangle"))
 		case .REVERSE:
 			return (NSLocalizedString("Reverse", comment: "Edit action"),
-					UIImage(systemName: "arrow.left.arrow.right"))
+			        UIImage(systemName: "arrow.left.arrow.right"))
 		case .RESTRICT:
 			return (abbreviated
 				? NSLocalizedString("Restrict", comment: "Edit action")
@@ -111,13 +111,13 @@ enum EDIT_ACTION: Int {
 				UIImage(systemName: "nosign"))
 		case .ROTATE:
 			return (NSLocalizedString("Rotate", comment: "Edit action"),
-					UIImage(systemName: "arrow.clockwise"))
+			        UIImage(systemName: "arrow.clockwise"))
 		case .SPLIT:
 			return (NSLocalizedString("Split", comment: "Edit action"),
-					UIImage(systemName: "scissors")!)
+			        UIImage(systemName: "scissors")!)
 		case .STRAIGHTEN:
 			return (NSLocalizedString("Straighten", comment: "Edit action"),
-					UIImage(systemName: "line.diagonal"))
+			        UIImage(systemName: "line.diagonal"))
 		}
 	}
 }
@@ -781,8 +781,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		// Set gradient on status bar blur so blurring is more pronounced towards the top
 		let gradientLayer = CAGradientLayer()
 		gradientLayer.frame = statusBarBackground.bounds
-		gradientLayer.colors = [UIColor.clear.cgColor, UIColor.black.cgColor] // Clear at bottom, black at top
-		gradientLayer.locations = [0.0, 1.0] // Gradual transition
+		gradientLayer.colors = [UIColor.black.withAlphaComponent(0.0).cgColor,
+		                        UIColor.black.cgColor] // Clear at bottom, black at top
+		gradientLayer.locations = [0.5, 1.0] // Gradual transition
 		gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0) // Start at bottom
 		gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0) // End at top
 		statusBarBackground.layer.mask = gradientLayer
@@ -2132,7 +2133,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			// add spacers between UIButtons (but not UIPasteControl since it provides it's own space
 			var index = 0
 			while index < actions.count - 1 {
-				if actions[index] is UIButton, actions[index+1] is UIButton {
+				if actions[index] is UIButton, actions[index + 1] is UIButton {
 					let spacer = UIView()
 					spacer.translatesAutoresizingMaskIntoConstraints = false
 					spacer.widthAnchor.constraint(equalToConstant: 12).isActive = true
@@ -2300,7 +2301,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				if let object = object {
 					self.editorLayer.dragFinish(object: object, isRotate: isRotate)
 				}
-
 			case .began:
 				if let pos = self.pushPin?.arrowPoint {
 					self.editorLayer.dragBegin(from: pos.minus(CGPoint(x: dx, y: dy)))
@@ -2928,7 +2928,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				}
 				self.tapAndDragSelections = nil
 			}
-
 		case .changed:
 			userOverrodeLocationZoom = true
 
