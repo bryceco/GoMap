@@ -111,20 +111,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			// otherwise it just returns
 			UserPrefs.shared.copyUserDefaultsToUbiquitousStore()
 		}
+
+		// access the current OSM server to force capabilities download
+		_ = OSM_SERVER
 		return true
 	}
 
-	static let appName: String = {
-		Bundle.main.infoDictionary?["CFBundleDisplayName"] as! String
-	}()
+	static let appName: String = Bundle.main.infoDictionary?["CFBundleDisplayName"] as! String
 
-	static let appVersion: String = {
-		Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-	}()
+	static let appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
 
-	static let appBuildNumber: String = {
-		Bundle.main.infoDictionary?["CFBundleVersion"] as! String
-	}()
+	static let appBuildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
 
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground.

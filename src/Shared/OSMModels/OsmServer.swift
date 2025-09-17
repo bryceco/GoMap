@@ -1,5 +1,5 @@
 //
-//  OSMServer.swift
+//  OsmServer.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 4/26/24.
@@ -63,9 +63,6 @@ class OsmServer {
 			osmchaUrl = "https://" + osmchaHost + "/"
 		} else {
 			osmchaUrl = nil
-		}
-		Task.detached {
-			await self.fetchCapabilities()
 		}
 	}
 
@@ -209,17 +206,6 @@ class OsmServer {
 		do {
 			let url = URL(string: apiURL + "api/0.6/capabilities.json")!
 			let data = try await URLSession.shared.data(with: url)
-#if false
-			// print the returned data
-			guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
-			      let prettyData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted]),
-			      let prettyString = String(data: prettyData, encoding: .utf8)
-			else {
-				print("Invalid or unprintable JSON")
-				return
-			}
-			print(prettyString)
-#endif
 			let decoder = JSONDecoder()
 			capabilities = try decoder.decode(Capabilities.self, from: data)
 			bannedUrls = capabilities?.policy.imagery.blacklist.compactMap {
