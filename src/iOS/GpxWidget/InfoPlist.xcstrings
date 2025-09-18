@@ -47,6 +47,12 @@
             "value" : "GpxWidget"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidget"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -158,7 +164,7 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copyright © 2024 Bryce Cogswell. Všechna práva vyhrazena."
+            "value" : "Copyright © 2025 Bryce Cogswell. Všechna práva vyhrazena."
           }
         },
         "de" : {
@@ -195,6 +201,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Autorska prava © 2024. Bryce Cogswell. Sva prava pridržana."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Bryce Cogswell. Tutti i diritti riservati."
           }
         },
         "ja" : {

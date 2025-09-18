@@ -921,6 +921,12 @@
             "value" : "Rute tvojih treninga mogu se uvesti kao GPX rute."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I percorsi dei tuoi allenamenti possono essere importati come percorsi GPX."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",

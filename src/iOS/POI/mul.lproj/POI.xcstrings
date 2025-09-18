@@ -2309,6 +2309,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Area\"; ObjectID = \"CBg-8X-VJp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plocha"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9701,6 +9707,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object.\"; ObjectID = \"ScT-zG-GwL\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdědit předvolby této funkce. Pokud nejsou žádné, vybraní této funkce sloučí (nenahradí) značky s cílovým objektem."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9737,6 +9749,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Feature type:\"; ObjectID = \"sGi-dQ-1v0\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Typ funkce:"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",

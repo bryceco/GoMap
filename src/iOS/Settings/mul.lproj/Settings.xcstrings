@@ -893,6 +893,12 @@
             "value" : "Maksimiraj broj sličica u sekundi"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Massimizza FPS"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1239,6 +1245,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odaberi server ako želiš uređivati podatke koji se nalaze na alternativnom OSM serveru."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selezionare un server se si desidera modificare i dati che si trovano su un server OSM alternativo."
           }
         },
         "ja" : {
@@ -2083,8 +2095,8 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Lingua"
+            "state" : "translated",
+            "value" : "Lingua Preimpostata"
           }
         },
         "ja" : {
@@ -2199,6 +2211,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktivira > 60 sličica u sekundi"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abilita > 60 FPS"
           }
         },
         "ja" : {
@@ -9177,6 +9195,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Slack – Diskusija"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Discussioni su Slack"
           }
         },
         "ja" : {

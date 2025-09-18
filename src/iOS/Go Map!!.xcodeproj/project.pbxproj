@@ -405,6 +405,7 @@
 		02505C5629A458A30078D60D /* QuestDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinition.swift; sourceTree = "<group>"; };
 		02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFilters.swift; sourceTree = "<group>"; };
 		02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFeatures.swift; sourceTree = "<group>"; };
+		0250C8DF2E7CBD7700192893 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/TurnRestrictions.xcstrings; sourceTree = "<group>"; };
 		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "../POI-Icons"; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		025F004E2E453002003A68FA /* TypeCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCast.swift; sourceTree = "<group>"; };
@@ -1780,6 +1781,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				022114FA2E6CDCD600D76061 /* Base */,
+				0250C8DF2E7CBD7700192893 /* mul */,
 			);
 			name = TurnRestrictions.storyboard;
 			sourceTree = "<group>";

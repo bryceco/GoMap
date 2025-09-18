@@ -24438,6 +24438,12 @@
     "Clear Data Caches" : {
       "comment" : "Delete cached data",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vyčistit data v mezipaměti"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -29165,6 +29171,12 @@
             "value" : "Odbaci"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Scarta"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33596,6 +33608,12 @@
     "Import GPX" : {
       "comment" : "GPX track",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importovat GPX"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40319,6 +40337,12 @@
     "No match" : {
       "comment" : "No value available",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Žádná shoda"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -45625,6 +45649,12 @@
     },
     "Photo not available" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotka je nedostupná"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -45873,6 +45903,12 @@
     "Predefined" : {
       "comment" : "Items that are built into the app",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přednastaveno"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -49666,6 +49702,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odaberi jezik za predodređene postavke. Drugi sadržaj aplikacije koristit će tvoj standardni jezik."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seleziona la lingua utilizzata per i preset. Gli altri contenuti dell'app utilizzeranno la tua lingua predefinita."
           }
         },
         "ja" : {

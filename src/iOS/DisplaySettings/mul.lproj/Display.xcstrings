@@ -1577,6 +1577,12 @@
             "value" : "Osnovna karta"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mappabase"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4067,6 +4073,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"fVu-8o-Ldq\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Podrobnosti"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4077,6 +4089,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Details"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dettagli"
           }
         },
         "uk" : {
@@ -7841,6 +7859,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"r78-B4-pAU\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Letecké snímky"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7851,6 +7875,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Aerial Tiles"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Riquadri Aerei"
           }
         },
         "uk" : {
@@ -8163,6 +8193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Naslov"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titolo"
           }
         },
         "ja" : {
@@ -8553,6 +8589,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uvoz"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importa"
           }
         },
         "ja" : {
@@ -9441,6 +9483,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fitur Air"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elementi idrici"
           }
         },
         "ja" : {

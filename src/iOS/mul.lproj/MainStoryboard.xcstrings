@@ -35,6 +35,12 @@
             "value" : "korisničko ime"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "username"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
