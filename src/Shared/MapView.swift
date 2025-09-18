@@ -2101,11 +2101,16 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					configuration.cornerStyle = .dynamic
 					configuration.displayMode = .labelOnly
 					let pasteButton = UIPasteControl(configuration: configuration)
+					pasteButton.translatesAutoresizingMaskIntoConstraints = false
 					pasteButton.target = editorLayer
 					pasteButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 					pasteButton.setContentCompressionResistancePriority(.required, for: .vertical)
 					pasteButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 					pasteButton.setContentHuggingPriority(.required, for: .vertical)
+					NSLayoutConstraint.activate([
+						pasteButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 44),
+						pasteButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44)
+					])
 					return pasteButton
 				} else {
 					let titleIcon = action.actionTitle(abbreviated: true)
