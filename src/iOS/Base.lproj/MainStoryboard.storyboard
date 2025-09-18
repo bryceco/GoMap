@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24123.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24127" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="2">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -465,7 +465,7 @@
             <objects>
                 <viewController id="S30-cU-QcE" customClass="NotesTableViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iDL-ho-g1h">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="DRB-XW-UOn">
@@ -708,7 +708,7 @@
             <objects>
                 <viewController id="DCR-m3-Qgc" customClass="BingMetadataViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleAspectFit" id="SRh-fQ-dAA">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing-logo-gray" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
@@ -772,7 +772,7 @@
             <objects>
                 <viewController title="Search for Location" id="siu-I6-IEp" userLabel="Nominatim View Controller" customClass="NominatimViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="SQe-Tw-wQG">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Niagara Falls" translatesAutoresizingMaskIntoConstraints="NO" id="xw9-Ro-Fai">
@@ -906,9 +906,6 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray2Color">
             <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

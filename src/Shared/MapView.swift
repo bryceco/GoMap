@@ -716,11 +716,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		editToolbar.layer.zPosition = ZLAYER.TOOLBAR.rawValue
 		editToolbar.layer.cornerRadius = 8.0
 		editToolbar.layer.masksToBounds = true
-		if false, #available(iOS 26.0, *) {
-			// using liquid glass
-			editToolbar.backgroundColor = nil
-			editToolbar.effectView.effect = UIGlassEffect(style: .regular)
-		}
 #if targetEnvironment(macCatalyst)
 		// We add a constraint in the storyboard to make the edit control buttons taller
 		// so they're easier to push, but on Mac the constraints doesn't work correctly
@@ -2078,6 +2073,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		editToolbar.isHidden = !show
 		rulerView.isHidden = show
 		if show {
+			let backgroundColor = UIColor.systemBackground
+			let foregroundColor = UIColor.label
+			editToolbar.backgroundColor = backgroundColor
 			if editorLayer.selectedPrimary == nil {
 				// brand new node
 				editControlActions = [.EDITTAGS, .ADDNOTE, .PASTETAGS]
@@ -2096,8 +2094,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 
 			func editToolbarItemForAction(_ action: EDIT_ACTION) -> UIControl {
-				let backgroundColor = UIColor.systemBackground
-				let foregroundColor = UIColor.label
 				if action == .PASTETAGS,
 				   #available(iOS 16.0, *)
 				{
@@ -2117,10 +2113,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					pasteButton.setContentCompressionResistancePriority(.required, for: .vertical)
 					pasteButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 					pasteButton.setContentHuggingPriority(.required, for: .vertical)
-					if #available(iOS 26.0, *) {
-						// closer to glass transparency
-						pasteButton.alpha = 0.75
-					}
 					return pasteButton
 				} else {
 					let titleIcon = action.actionTitle(abbreviated: true)
@@ -2135,11 +2127,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					button.layer.masksToBounds = true
 					button.setContentHuggingPriority(.defaultLow, for: .vertical)
 					button.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
-					if #available(iOS 26.0, *) {
-						button.configuration = .glass()
-					} else {
-						button.backgroundColor = backgroundColor
-					}
+					button.backgroundColor = backgroundColor
 					button.onTap = { [weak self] _ in
 						self?.editorLayer.performEdit(action)
 					}
