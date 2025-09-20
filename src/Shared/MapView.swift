@@ -2107,10 +2107,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					pasteButton.setContentCompressionResistancePriority(.required, for: .vertical)
 					pasteButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 					pasteButton.setContentHuggingPriority(.required, for: .vertical)
-					NSLayoutConstraint.activate([
-						pasteButton.widthAnchor.constraint(greaterThanOrEqualToConstant: 44),
-						pasteButton.heightAnchor.constraint(greaterThanOrEqualToConstant: 44)
-					])
 					return pasteButton
 				} else {
 					let titleIcon = action.actionTitle(abbreviated: true)

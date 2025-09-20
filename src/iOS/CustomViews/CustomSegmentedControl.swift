@@ -8,12 +8,11 @@
 
 import UIKit
 
-final class CustomSegmentedControl: UIControl {
-	private let stackView = UIStackView()
+final class CustomSegmentedControl: UIStackView {
 
 	public var controls: [UIView] {
 		get {
-			return stackView.arrangedSubviews
+			return arrangedSubviews
 		}
 		set {
 			configure(with: newValue)
@@ -25,36 +24,29 @@ final class CustomSegmentedControl: UIControl {
 		setupStackView()
 	}
 
-	required init?(coder: NSCoder) {
+	required init(coder: NSCoder) {
 		super.init(coder: coder)
 		setupStackView()
 	}
 
 	private func setupStackView() {
-		stackView.axis = .horizontal
-		stackView.alignment = .center
-		stackView.isLayoutMarginsRelativeArrangement = true
-		stackView.distribution = .fill
-		stackView.translatesAutoresizingMaskIntoConstraints = false
-
-		addSubview(stackView)
-
-		NSLayoutConstraint.activate([
-			stackView.leadingAnchor.constraint(equalTo: leadingAnchor),
-			stackView.trailingAnchor.constraint(equalTo: trailingAnchor),
-			stackView.topAnchor.constraint(equalTo: topAnchor),
-			stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
-		])
+		axis = .horizontal
+		alignment = .center
+		isLayoutMarginsRelativeArrangement = true
+		distribution = .fill
+		translatesAutoresizingMaskIntoConstraints = false
 	}
 
 	private func configure(with controls: [UIView]) {
-		stackView.arrangedSubviews.forEach {
-			stackView.removeArrangedSubview($0)
-			$0.removeFromSuperview()
+		for arrangedSubview in arrangedSubviews {
+			removeArrangedSubview(arrangedSubview)
+			arrangedSubview.removeFromSuperview()
 		}
 
 		for control in controls {
-			stackView.addArrangedSubview(control)
+			addArrangedSubview(control)
 		}
+
+		invalidateIntrinsicContentSize()
 	}
 }
