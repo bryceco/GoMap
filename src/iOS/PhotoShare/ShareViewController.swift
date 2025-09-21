@@ -83,6 +83,9 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 		var found = false
 		for item in extensionContext?.inputItems ?? [] {
 			for provider in (item as? NSExtensionItem)?.attachments ?? [] {
+				if found {
+					break
+				}
 				if provider.hasItemConformingToTypeIdentifier("public.image") {
 					// A photo
 					found = true
@@ -112,16 +115,16 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 				} else if provider.hasItemConformingToTypeIdentifier("com.apple.mapkit.map-item") {
 					// An MKMapItem. There should also be a URL we can use instead.
 				} else if provider.hasItemConformingToTypeIdentifier("public.plain-text") {
-					// Not used, here for future reference
+					found = true
 					provider.loadItem(forTypeIdentifier: "public.plain-text", options: nil) { text, _ in
 						if let text = text as? String {
-							print("plain-text = \(text)")
+							self.commonPlainTextHandler(for: text)
 						} else if let data = text as? Data,
 						          let text = String(data: data, encoding: .utf8)
 						{
-							print("plain-text = \(text)")
+							self.commonPlainTextHandler(for: text)
 						} else {
-							print("plain-text = unknown")
+							self.setUnrecognizedText()
 						}
 					}
 				} else if provider.hasItemConformingToTypeIdentifier("public.url") {
@@ -141,69 +144,92 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 							self.setUnrecognizedText()
 							return
 						}
-
-						Task {
-							guard let httpResponse = await LocationParser.resolveShortenedURL(url: url),
-							      let url = httpResponse.url
-							else {
-								await self.setUnrecognizedText()
-								return
-							}
-
-							// decode as a location URL
-							if let loc = LocationParser.mapLocationFrom(url: url) {
-								DispatchQueue.main.async {
-									self.location = CLLocationCoordinate2D(latitude: loc.latitude,
-									                                       longitude: loc.longitude)
-									self.zoom = loc.zoom
-									self.buttonOK.isEnabled = true
-									self.buttonPressOK()
-								}
-								return
-							}
-
-							if LocationParser.isGoogleMapsRedirect(urlString: url.absoluteString, callback: { loc in
-								DispatchQueue.main.async {
-									guard let loc = loc else {
-										self.setUnrecognizedText()
-										return
-									}
-									self.location = CLLocationCoordinate2D(latitude: loc.latitude,
-									                                       longitude: loc.longitude)
-									self.zoom = loc.zoom
-									self.buttonOK.isEnabled = true
-									self.buttonPressOK()
-								}
-							}) {
-								return
-							}
-
-							// check if it is a GPX file
-							if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String,
-							   contentType == "application/gpx+xml"
-							{
-								DispatchQueue.main.async {
-									// pass the original url to the app which will download it
-									let url: String = url.absoluteString.data(using: .utf8)!
-										.base64EncodedString()
-									let app = URL(string: "gomaposm://?gpxurl=\(url)")!
-									self.openApp(withUrl: app)
-									self.extensionContext!.completeRequest(
-										returningItems: [],
-										completionHandler: nil)
-								}
-								return
-							}
-
-							// not recognized
-							await self.setUnrecognizedText()
-						}
+						self.commonUrlHandler(for: url)
 					}
 				}
 			}
 		}
 		if !found {
-			extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+			buttonCancel()
+		}
+	}
+
+	func extractURLs(from text: String) -> [URL] {
+		let types: NSTextCheckingResult.CheckingType = .link
+		guard let detector = try? NSDataDetector(types: types.rawValue) else { return [] }
+
+		let matches = detector.matches(in: text, options: [], range: NSRange(text.startIndex..., in: text))
+		return matches.compactMap { match in
+			guard let range = Range(match.range, in: text) else { return nil }
+			return URL(string: String(text[range]))
+		}
+	}
+
+	func commonPlainTextHandler(for text: String) {
+		guard let url = extractURLs(from: text).first(where: { $0.scheme == "http" || $0.scheme == "https" })
+		else {
+			setUnrecognizedText()
+			return
+		}
+		commonUrlHandler(for: url)
+	}
+
+	func commonUrlHandler(for url: URL) {
+		Task {
+			guard let httpResponse = await LocationParser.resolveShortenedURL(url: url),
+			      let url = httpResponse.url
+			else {
+				self.setUnrecognizedText()
+				return
+			}
+
+			// decode as a location URL
+			if let loc = LocationParser.mapLocationFrom(url: url) {
+				DispatchQueue.main.async {
+					self.location = CLLocationCoordinate2D(latitude: loc.latitude,
+					                                       longitude: loc.longitude)
+					self.zoom = loc.zoom
+					self.buttonOK.isEnabled = true
+					self.buttonPressOK()
+				}
+				return
+			}
+
+			if LocationParser.isGoogleMapsRedirect(urlString: url.absoluteString, callback: { loc in
+				DispatchQueue.main.async {
+					guard let loc = loc else {
+						self.setUnrecognizedText()
+						return
+					}
+					self.location = CLLocationCoordinate2D(latitude: loc.latitude,
+					                                       longitude: loc.longitude)
+					self.zoom = loc.zoom
+					self.buttonOK.isEnabled = true
+					self.buttonPressOK()
+				}
+			}) {
+				return
+			}
+
+			// check if it is a GPX file
+			if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String,
+			   contentType == "application/gpx+xml"
+			{
+				DispatchQueue.main.async {
+					// pass the original url to the app which will download it
+					let url: String = url.absoluteString.data(using: .utf8)!
+						.base64EncodedString()
+					let app = URL(string: "gomaposm://?gpxurl=\(url)")!
+					self.openApp(withUrl: app)
+					self.extensionContext!.completeRequest(
+						returningItems: [],
+						completionHandler: nil)
+				}
+				return
+			}
+
+			// not recognized
+			self.setUnrecognizedText()
 		}
 	}
 
@@ -224,17 +250,18 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 	}
 
 	@IBAction func buttonPressOK() {
-		guard let coord = location else { return }
-		var string = "gomaposm://?center=\(coord.latitude),\(coord.longitude)&direction=\(direction)"
-		if let zoom = zoom {
-			string += "&zoom=\(zoom)"
+		if let coord = location {
+			var string = "gomaposm://?center=\(coord.latitude),\(coord.longitude)&direction=\(direction)"
+			if let zoom = zoom {
+				string += "&zoom=\(zoom)"
+			}
+			let openURL = URL(string: string)!
+			openApp(withUrl: openURL)
 		}
-		let app = URL(string: string)!
-		openApp(withUrl: app)
-		extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+		extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
 	}
 
 	@IBAction func buttonCancel() {
-		extensionContext!.completeRequest(returningItems: [], completionHandler: nil)
+		extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
 	}
 }

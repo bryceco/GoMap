@@ -100,7 +100,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				   let dict = exif as? [String: Any]
 				{
 					// Unfortunately this doesn't include the Lat/Lon.
-					// One option is to use a library like https://code.google.com/archive/p/iphone-exif/
 					print("\(dict)")
 					return false
 				}

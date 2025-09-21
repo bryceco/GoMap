@@ -76,7 +76,7 @@ class LocationParser {
 		else { return nil }
 		let firstDir2 = scanNSEW(scanner: scanner)
 
-		let _ = scanner.scanAnyCharacter(from: "+,")
+		_ = scanner.scanAnyCharacter(from: "+,")
 
 		let secondDir1 = scanNSEW(scanner: scanner)
 		guard let second = scanDegreesMinutesSeconds(scanner: scanner)
@@ -282,7 +282,7 @@ class LocationParser {
 
 		// parse as an Organic Maps shared link
 		// See https://github.com/organicmaps/organicmaps/blob/e27bad2e3b53590208a3b3d5bf18dd226fefc7ad/ge0/parser.cpp#L55
-		if components.host == "omaps.app",
+		if components.host == "omaps.app" || components.host == "comaps.at",
 		   let base64 = components.path.components(separatedBy: "/").dropFirst().first,
 		   base64.count == 10
 		{
