@@ -138,9 +138,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			}
 
 			if components.scheme == "gomaposm",
-			   let base64 = components.queryItems?.first(where: { $0.name == "gpxurl" })?.value,
-			   let gpxUrlData = Data(base64Encoded: base64, options: []),
-			   let gpxUrl = String(data: gpxUrlData, encoding: .utf8),
+			   let encoded = components.queryItems?.first(where: { $0.name == "gpxurl" })?.value,
+			   let gpxUrl = encoded.removingPercentEncoding,
 			   let gpxUrl = URL(string: gpxUrl)
 			{
 				Task {

@@ -203,7 +203,7 @@ class ShareViewController: UIViewController, URLSessionTaskDelegate {
 		// check if it is a GPX file
 		if let contentType = httpResponse.allHeaderFields["Content-Type"] as? String,
 		   contentType == "application/gpx+xml",
-		   let url = url.absoluteString.data(using: .utf8)?.base64EncodedString(),
+		   let url = url.absoluteString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
 		   let appURL = URL(string: "gomaposm://?gpxurl=\(url)")
 		{
 			// pass the original url to the app which will download it
