@@ -451,6 +451,17 @@ class LocationParser {
 		return true
 	}
 
+	static func isGoogleMapsRedirectAsync(urlString: String) async -> MapLocation? {
+		await withCheckedContinuation { continuation in
+			guard isGoogleMapsRedirect(urlString: urlString, callback: { location in
+				continuation.resume(returning: location)
+			}) else {
+				continuation.resume(returning: nil)
+				return
+			}
+		}
+	}
+
 	static func extractLatLongFromGoogleURL(_ url: URL) -> MapLocation? {
 		guard let components = URLComponents(url: url, resolvingAgainstBaseURL: true),
 		      let queryItems = components.queryItems
