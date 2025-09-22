@@ -1015,8 +1015,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		aerialServiceLogo.isHidden = aerialLayer.isHidden || (service.attributionString.isEmpty && icon == nil)
 		if !aerialServiceLogo.isHidden {
 			let gap = icon != nil && service.attributionString.count > 0 ? " " : ""
+			let title = gap + service.attributionString
 			aerialServiceLogo.setImage(icon, for: .normal)
-			aerialServiceLogo.setTitle(gap + service.attributionString, for: .normal)
+			aerialServiceLogo.setTitle(title, for: .normal)
 		}
 	}
 
@@ -2070,7 +2071,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	func updateEditControl() {
 		let show = pushPin != nil || editorLayer.selectedPrimary != nil
 		editToolbar.isHidden = !show
+		rulerView.isHidden = show
 		if show {
+			let backgroundColor = UIColor.systemBackground
+			let foregroundColor = UIColor.label
+			editToolbar.backgroundColor = backgroundColor
 			if editorLayer.selectedPrimary == nil {
 				// brand new node
 				editControlActions = [.EDITTAGS, .ADDNOTE, .PASTETAGS]
@@ -2089,8 +2094,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			}
 
 			func editToolbarItemForAction(_ action: EDIT_ACTION) -> UIControl {
-				let backgroundColor = UIColor.systemBackground
-				let foregroundColor = UIColor.label
 				if action == .PASTETAGS,
 				   #available(iOS 16.0, *)
 				{
@@ -2121,6 +2124,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 					button.layer.masksToBounds = true
 					button.setContentHuggingPriority(.defaultLow, for: .vertical)
 					button.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+					button.backgroundColor = backgroundColor
 					button.onTap = { [weak self] _ in
 						self?.editorLayer.performEdit(action)
 					}
@@ -2242,8 +2246,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				                              	showRestrictionEditor()
 				                              }))
 				alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-											  style: .cancel,
-											  handler: nil))
+				                              style: .cancel,
+				                              handler: nil))
 				mainViewController.present(alert, animated: true)
 			} else {
 				showRestrictionEditor()

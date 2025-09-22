@@ -15,13 +15,15 @@ enum MainViewButtonLayout: Int {
 	case buttonsOnRight
 }
 
+let UseGlassButtons = true
+
 class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate,
 	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate, UIAdaptivePresentationControllerDelegate
 {
 	@IBOutlet var uploadButton: UIButton!
 	@IBOutlet var undoButton: UIButton!
 	@IBOutlet var redoButton: UIButton!
-	@IBOutlet var undoRedoView: UIView!
+	@IBOutlet var undoRedoView: UIVisualEffectView!
 	@IBOutlet var searchButton: UIButton!
 
 	@IBOutlet var mapView: MapView!
@@ -171,7 +173,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	override func viewDidLayoutSubviews() {
 		// Set button shadows, colors, etc.
-		// Need to do this after layout to propery support dynamic text
+		// Need to do this after layout to properly support dynamic text
 		setButtonAppearances()
 	}
 
@@ -271,12 +273,43 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	// MARK: Button configuration
 
-	class func applyButtonShadow(layer: CALayer) {
-		layer.shadowColor = UIColor.black.cgColor
-		layer.shadowOffset = CGSize(width: 0, height: 0)
-		layer.shadowRadius = 4
-		layer.shadowOpacity = 0.5
-		layer.masksToBounds = false
+	@available(iOS 26.0, *)
+	static let clearGlassButtonConfig: UIButton.Configuration = {
+		var effect = UIGlassEffect(style: .clear)
+		effect.isInteractive = true
+
+		var background = UIBackgroundConfiguration.clear()
+		background.visualEffect = effect
+		background.cornerRadius = 10.0
+		background.backgroundColor = .black.withAlphaComponent(0.30)
+		background.strokeWidth = 1.0
+		background.strokeColor = .white.withAlphaComponent(0.5)
+
+		var config = UIButton.Configuration.plain()
+		config.background = background
+		config.baseForegroundColor = .white
+
+		return config
+	}()
+
+	@available(iOS 26.0, *)
+	static let regularGlassButtonConfig: UIButton.Configuration = {
+		var effect = UIGlassEffect(style: .regular)
+		effect.isInteractive = true
+
+		var background = UIBackgroundConfiguration.clear()
+		background.visualEffect = effect
+		background.cornerRadius = 10.0
+
+		var config = UIButton.Configuration.plain()
+		config.background = background
+
+		return config
+	}()
+
+	@available(iOS 26.0, *)
+	func defaultButtonConfig() -> UIButton.Configuration {
+		return Self.clearGlassButtonConfig
 	}
 
 	func setButtonAppearances() {
@@ -285,12 +318,11 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		// it needs to be idempotent.
 		let buttons: [UIView] = [
 			// these aren't actually buttons, but they get similar tinting and shadows
-			mapView.editToolbar,
 			undoRedoView,
 			// these are buttons
-			locationButton,
 			undoButton,
 			redoButton,
+			locationButton,
 			mapView.addNodeButton,
 			mapView.compassButton,
 			mapView.centerOnGPSButton,
@@ -301,7 +333,49 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			displayButton,
 			searchButton
 		]
+
 		for view in buttons {
+			if UseGlassButtons,
+			   #available(iOS 26.0, macOS 26.0,*)
+			{
+				// use glass styles in iOS 26
+				switch view {
+				case let effect as UIVisualEffectView:
+					// frame for undo/redo buttons
+					let background = defaultButtonConfig().background
+					effect.effect = background.visualEffect
+					effect.backgroundColor = background.backgroundColor
+					effect.layer.cornerRadius = background.cornerRadius
+					effect.layer.borderWidth = background.strokeWidth
+					effect.layer.borderColor = background.strokeColor?.cgColor
+					effect.layer.masksToBounds = true
+				case let button as UIButton:
+					button.backgroundColor = nil
+					var config = defaultButtonConfig()
+					config.image = button.currentImage
+					config.title = button.titleLabel?.text
+					switch button {
+					case mapView.compassButton:
+						config.background.cornerRadius = button.bounds.width / 2
+					case mapView.aerialAlignmentButton:
+						config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+						config.background.cornerRadius = 6
+					case mapView.helpButton, mapView.addNodeButton:
+						// The button is a circle.
+						config.background.cornerRadius = button.bounds.width / 2
+					case undoButton, redoButton:
+						// the view behind them is glass, so let it show through
+						config.background = UIBackgroundConfiguration.clear()
+					default:
+						break
+					}
+					button.configuration = config
+				default:
+					break
+				}
+				continue
+			}
+
 			// corners
 			if view == mapView.compassButton || view == mapView.editToolbar {
 				// these buttons take care of themselves
@@ -312,12 +386,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			} else {
 				// rounded corners
 				view.layer.cornerRadius = 10.0
-			}
-			// shadow
-			if view.superview != undoRedoView {
-				Self.applyButtonShadow(layer: view.layer)
-				view.layer.shadowPath = UIBezierPath(roundedRect: view.bounds,
-				                                     cornerRadius: view.layer.cornerRadius).cgPath
+				view.clipsToBounds = true
 			}
 			// image blue tint
 			if let button = view as? UIButton,
@@ -378,7 +447,12 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 #if targetEnvironment(macCatalyst)
 // This messes up the button styling on macOS
 #else
-		if #available(iOS 13.0, *) {
+		if UseGlassButtons,
+		   #available(iOS 26.0, *),
+		   button is UIButton
+		{
+			// don't modify glass
+		} else if #available(iOS 13.0, *) {
 			button.backgroundColor = UIColor.secondarySystemBackground
 		} else {
 			button.backgroundColor = UIColor.lightGray
@@ -390,18 +464,18 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 #if targetEnvironment(macCatalyst)
 // This messes up the button styling on macOS
 #else
-		if #available(iOS 13.0, *) {
+		if UseGlassButtons,
+		   #available(iOS 26.0, *),
+		   button is UIButton
+		{
+			// don't modify glass
+		} else if #available(iOS 13.0, *) {
 			button.backgroundColor = UIColor.systemBackground
 		} else {
 			button.backgroundColor = UIColor.white
 		}
 		if button == mapView.aerialAlignmentButton {
 			button.backgroundColor = button.backgroundColor?.withAlphaComponent(0.4)
-			// shadows don't work correctly with semi-transparent views
-			// see https://ikyle.me/blog/2020/calayer-external-only-shadow for a workaround
-			button.layer.shadowColor = nil
-			button.layer.shadowRadius = 0
-			button.layer.shadowOpacity = 0.0
 		}
 #endif
 	}
@@ -659,8 +733,17 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			// update GPS icon
 			let imageName = (mapView.gpsState == GPS_STATE.NONE) ? "location" : "location.fill"
 			var image = UIImage(systemName: imageName)
-			image = image?.withRenderingMode(.alwaysTemplate)
-			locationButton.setImage(image, for: .normal)
+			if UseGlassButtons,
+			   #available(iOS 26.0, *)
+			{
+				locationButton.configuration?.image = image
+				locationButton.setImage(image, for: .normal)
+				locationButton.tintColor = .systemBlue
+				locationButton.configuration?.baseForegroundColor = .systemBlue
+			} else {
+				image = image?.withRenderingMode(.alwaysTemplate)
+				locationButton.setImage(image, for: .normal)
+			}
 		}
 	}
 

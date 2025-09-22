@@ -9,7 +9,6 @@
 import UIKit
 
 final class CustomSegmentedControl: UIStackView {
-
 	public var controls: [UIView] {
 		get {
 			return arrangedSubviews
@@ -35,6 +34,9 @@ final class CustomSegmentedControl: UIStackView {
 		isLayoutMarginsRelativeArrangement = true
 		distribution = .fill
 		translatesAutoresizingMaskIntoConstraints = false
+
+		isLayoutMarginsRelativeArrangement = true
+		layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
 	}
 
 	private func configure(with controls: [UIView]) {
