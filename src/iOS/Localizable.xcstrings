@@ -9416,7 +9416,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "即将在%#@meters@%米后 驶入2$#@nodes@"
+            "value" : "即将在%#@meters@%米后 驶入%#@nodes@"
           },
           "substitutions" : {
             "meters" : {
