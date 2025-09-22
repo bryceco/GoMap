@@ -129,10 +129,6 @@ extension EditorMapLayer {
 	}
 
 	static func ClipLineToRect(p1: CGPoint, p2: CGPoint, rect: CGRect) -> [CGPoint] {
-		if p1.x.isInfinite || p2.x.isInfinite {
-			return []
-		}
-
 		let top = rect.origin.y
 		let bottom = rect.origin.y + rect.size.height
 		let left = rect.origin.x
@@ -416,6 +412,9 @@ extension EditorMapLayer {
 
 		// Delete loops with a degenerate number of nodes. These are typically data errors:
 		screenWays = screenWays.filter { $0.points.count >= 4 || $0.points[0] != $0.points.last! }
+
+		// Delete ways with invalid points
+		screenWays = screenWays.filter { $0.points.allSatisfy { $0.x.isFinite && $0.y.isFinite }}
 
 		// ensure that closed outer ways are clockwise and inner are counter-clockwise
 		for index in screenWays.indices {
