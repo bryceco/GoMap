@@ -2194,7 +2194,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		      let pushPin = pushPin
 		else { return }
 
-		let showRestrictionEditor: (() -> Void) = { [self] in
+		func showRestrictionEditor() {
 			guard
 				let myVc = TurnRestrictController.instantiate()
 			else { return }
@@ -2216,7 +2216,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 
 		// check if this is a fancy relation type we don't support well
-		let restrictionEditWarning: ((OsmNode?) -> Void) = { [self] viaNode in
+		func restrictionEditWarning(viaNode: OsmNode?) {
 			var warn = false
 			if let parentRelations = viaNode?.parentRelations {
 				for relation in parentRelations {
@@ -2241,10 +2241,9 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				                              handler: { _ in
 				                              	showRestrictionEditor()
 				                              }))
-				alert
-					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-					                         style: .cancel,
-					                         handler: nil))
+				alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+											  style: .cancel,
+											  handler: nil))
 				mainViewController.present(alert, animated: true)
 			} else {
 				showRestrictionEditor()
@@ -2253,11 +2252,11 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		// if we currently have a relation selected then select the via node instead
 
-		if let relation = selectedPrimary.isRelation() {
-			let fromWay = relation.member(byRole: "from")?.obj?.isWay()
-			let viaNode = relation.member(byRole: "via")?.obj?.isNode()
-
-			if viaNode == nil {
+		if let relation = selectedPrimary as? OsmRelation {
+			let fromWay = relation.member(byRole: "from")?.obj as? OsmWay
+			guard
+				let viaNode = relation.member(byRole: "via")?.obj as? OsmNode
+			else {
 				// not supported yet
 				showAlert(
 					NSLocalizedString("Unsupported turn restriction type", comment: ""),
@@ -2271,10 +2270,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			editorLayer.selectedNode = viaNode
 			if editorLayer.selectedNode != nil {
 				placePushpinForSelection()
-				restrictionEditWarning(editorLayer.selectedNode)
+				restrictionEditWarning(viaNode: editorLayer.selectedNode)
 			}
 		} else if selectedPrimary.isNode() != nil {
-			restrictionEditWarning(editorLayer.selectedNode)
+			restrictionEditWarning(viaNode: editorLayer.selectedNode)
 		}
 	}
 
