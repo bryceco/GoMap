@@ -33,6 +33,11 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 			let center = mapView.mapTransform.latLon(forScreenPoint: mapView.mapTransform.center)
 			let zoom = mapView.mapTransform.zoom() - 1.0
 			let dir = (360.0 + mapView.mapTransform.rotation() * 180 / .pi).remainder(dividingBy: 360.0)
+			guard
+				center.lat.isFinite,
+				center.lon.isFinite,
+				zoom.isFinite
+			else { return }
 
 			self.setCenter(CLLocationCoordinate2D(latitude: center.lat, longitude: center.lon),
 			               zoomLevel: zoom,
@@ -121,6 +126,7 @@ extension MapLibreVectorTilesView: DiskCacheSizeProtocol {
 
 // Create a minimal dummy implementation that asserts if used
 import UIKit
+
 class MapLibreVectorTilesView: UIView, TilesProvider, DiskCacheSizeProtocol {
 	var mapView: MapView
 	let tileServer: TileServer
