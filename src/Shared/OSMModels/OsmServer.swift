@@ -87,7 +87,7 @@ class OsmServer {
 			}
 		}
 		// This won't work but there's nothing we can do about it
-		return URL(string: serverURL)!
+		return URL(string: serverURL) ?? URL(string: "https://example.com/error")!
 	}
 
 	static func serverNameCanonicalized(_ hostname: String) -> String {
