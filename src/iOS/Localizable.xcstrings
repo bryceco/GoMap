@@ -9416,7 +9416,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "即将在%#@meters@%米后 驶入%#@nodes@"
+            "value" : "即将在%#@meters@%米后 驶入2$#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -24220,6 +24220,12 @@
             "value" : "Elegir foto existente"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vali olemasolev foto"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24448,6 +24454,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Daten- Zwischenspeicher löschen"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kustuta puhverdatud andmed"
           }
         },
         "uk" : {
@@ -33620,6 +33632,12 @@
             "value" : "GPX importieren"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impordi GPX-andmed"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40349,6 +40367,12 @@
             "value" : "Keine Übereinstimmung"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vastet pole"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -45524,6 +45548,12 @@
             "value" : "Foto nicht verfügbar"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotot pole saadaval"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -45776,6 +45806,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vordefiniert"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eelmääratletud"
           }
         },
         "uk" : {
@@ -52262,6 +52298,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hacer foto nueva"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pildista"
           }
         },
         "ja" : {

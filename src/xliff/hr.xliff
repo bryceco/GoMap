@@ -2213,11 +2213,6 @@ Never delete old tracks</note>
         <target state="translated">Zaustavi snimanje GPX staza.</target>
         <note/>
       </trans-unit>
-      <trans-unit id="Perform Action" xml:space="preserve">
-        <source>Perform Action</source>
-        <target state="translated">Izvedi radnju</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
         <note/>

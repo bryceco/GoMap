@@ -887,6 +887,12 @@
             "value" : "Maximizar FPS"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kasuta maksimaalset FPS-i"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1907,6 +1913,12 @@
             "value" : "api.openstreetmap.org"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "api.openstreetmap.org"
+          }
+        },
         "eu" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2205,6 +2217,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activar > 60 FPS"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lülitab > 60 FPS sisse"
           }
         },
         "hr" : {
@@ -3594,6 +3612,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -7410,6 +7434,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"

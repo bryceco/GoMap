@@ -4091,6 +4091,12 @@
             "value" : "Details"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Üksikasjad"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7875,6 +7881,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Aerial Tiles"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aerofotode paanid"
           }
         },
         "it" : {

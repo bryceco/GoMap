@@ -1955,11 +1955,6 @@ Never delete old tracks</note>
         <source>Pause recording GPX tracks.</source>
         <note/>
       </trans-unit>
-      <trans-unit id="Perform Action" xml:space="preserve">
-        <source>Perform Action</source>
-        <target state="translated">Esegui l'azione</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
         <note/>

@@ -2010,11 +2010,6 @@ Never delete old tracks</note>
         <target state="translated">暫停記錄 GPX 軌跡。</target>
         <note/>
       </trans-unit>
-      <trans-unit id="Perform Action" xml:space="preserve">
-        <source>Perform Action</source>
-        <target state="translated">繼續執行</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
         <target state="translated">照片不存在</target>

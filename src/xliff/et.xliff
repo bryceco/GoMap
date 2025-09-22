@@ -2099,11 +2099,6 @@ Never delete old tracks</note>
         <target state="translated">Peata GPX-i radade salvestamine.</target>
         <note/>
       </trans-unit>
-      <trans-unit id="Perform Action" xml:space="preserve">
-        <source>Perform Action</source>
-        <target state="translated">Teosta tegevus</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
         <target state="translated">Fotot pole saadaval</target>

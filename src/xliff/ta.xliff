@@ -2099,11 +2099,6 @@ Never delete old tracks</note>
         <target state="translated">சிபிஎக்ச் தடங்களை பதிவு செய்தல்.</target>
         <note/>
       </trans-unit>
-      <trans-unit id="Perform Action" xml:space="preserve">
-        <source>Perform Action</source>
-        <target state="translated">செயலைச் செய்யுங்கள்</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
         <note/>

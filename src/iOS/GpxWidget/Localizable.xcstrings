@@ -104,6 +104,12 @@
             "value" : "%1$@ %2$@"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -134,6 +140,12 @@
             "value" : "%1$@ %2$lld"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$lld"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -160,6 +172,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ Detener"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Lõpeta"
           }
         },
         "fr" : {
@@ -193,6 +211,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
@@ -238,6 +262,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Duración"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kestus"
           }
         },
         "fr" : {
@@ -288,6 +318,12 @@
             "value" : "Go Map!!"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -328,6 +364,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Trayecto GPX"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX-i rada"
           }
         },
         "fr" : {
@@ -534,6 +576,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Puntos"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salvestatud punkte"
           }
         },
         "fr" : {
@@ -752,6 +800,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Inició a las %@"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Algusega %@"
           }
         },
         "fr" : {

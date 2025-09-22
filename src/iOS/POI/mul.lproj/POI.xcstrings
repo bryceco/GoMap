@@ -6641,6 +6641,12 @@
             "value" : "genus:en"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus:en"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7560,6 +7566,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
+        "et" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"
@@ -8903,6 +8915,12 @@
             "value" : "Oak Tree"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tammepuu"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9249,6 +9267,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "género"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "liik"
           }
         },
         "ja" : {
@@ -9771,6 +9795,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tipo de característica:"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teenuse tüüp:"
           }
         },
         "ja" : {

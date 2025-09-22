@@ -2125,11 +2125,6 @@ Never delete old tracks</note>
         <target state="new">Pause recording GPX tracks.</target>
         <note/>
       </trans-unit>
-      <trans-unit id="Perform Action" xml:space="preserve">
-        <source>Perform Action</source>
-        <target state="new">Perform Action</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
         <target state="new">Photo not available</target>

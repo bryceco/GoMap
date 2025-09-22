@@ -1999,11 +1999,6 @@ Never delete old tracks</note>
         <target state="translated">GPX経路の記録を停止</target>
         <note/>
       </trans-unit>
-      <trans-unit id="Perform Action" xml:space="preserve">
-        <source>Perform Action</source>
-        <target state="translated">操作を実行</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
         <note/>

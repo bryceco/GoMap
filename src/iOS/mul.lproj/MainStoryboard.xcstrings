@@ -29,6 +29,12 @@
             "value" : "nombre de usuario"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kasutajanimi"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",

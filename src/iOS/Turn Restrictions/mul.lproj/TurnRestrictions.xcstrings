@@ -17,6 +17,12 @@
             "value" : "Label"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Silt"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",

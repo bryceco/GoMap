@@ -2334,11 +2334,6 @@ Never delete old tracks</note>
         <target state="translated">Призупинити записування GPX-треків.</target>
         <note/>
       </trans-unit>
-      <trans-unit id="Perform Action" xml:space="preserve">
-        <source>Perform Action</source>
-        <target state="translated">Здійснити дію</target>
-        <note/>
-      </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
         <target state="translated">Фото недоступне</target>
