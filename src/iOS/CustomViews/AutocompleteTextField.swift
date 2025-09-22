@@ -161,8 +161,11 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 				let indexPath = tableView.indexPath(for: cell)!
 				tableView.scrollToRow(at: indexPath, at: .top, animated: false)
 
-				if #available(iOS 15.0, *) {
-					// iOS handles scrolling differently and disabling it causes visual glitches
+				if #available(iOS 15, *),
+				   ProcessInfo.processInfo.operatingSystemVersion.majorVersion < 26
+				{
+					// iOS 15 ..< iOS 26, handles scrolling differently and disabling it causes visual glitches
+					tableView.isScrollEnabled = true
 				} else {
 					tableView.isScrollEnabled = false
 				}
