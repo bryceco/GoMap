@@ -201,6 +201,7 @@
 		02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */; };
 		02F6A459268AE42800F2ACE7 /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A458268AE42800F2ACE7 /* Debugger.swift */; };
 		02F72BCC2E35828100B6C76C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F72BCB2E35828100B6C76C /* NotificationService.swift */; };
+		02FBDB5D2E873D9200A70CEF /* StatusBarGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FBDB5C2E873D9200A70CEF /* StatusBarGradient.swift */; };
 		02FC7F962D7FD6E800DC333D /* CustomFeatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC7F952D7FD6DC00DC333D /* CustomFeatureController.swift */; };
 		02FC7F982D7FD6FD00DC333D /* CustomFeatureListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */; };
 		02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */; };
@@ -544,6 +545,7 @@
 		02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Ext.swift"; sourceTree = "<group>"; };
 		02F6A458268AE42800F2ACE7 /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		02F72BCB2E35828100B6C76C /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		02FBDB5C2E873D9200A70CEF /* StatusBarGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarGradient.swift; sourceTree = "<group>"; };
 		02FC7F952D7FD6DC00DC333D /* CustomFeatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeatureController.swift; sourceTree = "<group>"; };
 		02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeatureListViewController.swift; sourceTree = "<group>"; };
 		02FF1EC72BDC1E180071C96F /* OsmServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmServer.swift; sourceTree = "<group>"; };
@@ -924,6 +926,7 @@
 				0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */,
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
 				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
+				02FBDB5C2E873D9200A70CEF /* StatusBarGradient.swift */,
 				02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */,
 				028C51E525CB7A23004A88F7 /* TristateButton.swift */,
 			);
@@ -1687,6 +1690,7 @@
 				02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,
 				025F004F2E453002003A68FA /* TypeCast.swift in Sources */,
+				02FBDB5D2E873D9200A70CEF /* StatusBarGradient.swift in Sources */,
 				02CE3CE52990A8CE00DDACE0 /* QuestChooserController.swift in Sources */,
 				024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */,
 				0202C6002E3C348400649F26 /* ButtonClosure.swift in Sources */,

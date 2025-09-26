@@ -593,7 +593,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 	}
 
-	@IBOutlet private var statusBarBackground: UIVisualEffectView!
+	@IBOutlet private var statusBarBackground: StatusBarGradient!
 
 	// MARK: initialization
 
@@ -777,16 +777,6 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		superview!.addSubview(magnifyingGlass)
 		magnifyingGlass.setPosition(.topLeft, animated: false)
 		magnifyingGlass.isHidden = true
-
-		// Set gradient on status bar blur so blurring is more pronounced towards the top
-		let gradientLayer = CAGradientLayer()
-		gradientLayer.frame = statusBarBackground.bounds
-		gradientLayer.colors = [UIColor.black.withAlphaComponent(0.0).cgColor,
-		                        UIColor.black.cgColor] // Clear at bottom, black at top
-		gradientLayer.locations = [0.5, 1.0] // Gradual transition
-		gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0) // Start at bottom
-		gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0) // End at top
-		statusBarBackground.layer.mask = gradientLayer
 
 		// Support zoom via tap and drag
 		tapAndDragGesture = TapAndDragGesture(target: self, action: #selector(handleTapAndDragGesture(_:)))
