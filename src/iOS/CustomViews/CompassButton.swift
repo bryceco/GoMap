@@ -13,7 +13,10 @@ class CompassButton: UIButton {
 		contentMode = .center
 		setImage(nil, for: .normal)
 		backgroundColor = UIColor.white
-		compass(withRadius: bounds.size.width / 2)
+
+		layer.addSublayer(north)
+		layer.addSublayer(south)
+		layer.addSublayer(pivot)
 	}
 
 	override init(frame: CGRect) {
@@ -26,12 +29,20 @@ class CompassButton: UIButton {
 		commonInit()
 	}
 
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		compass(withRadius: bounds.size.width / 2)
+	}
+
+	let north = CAShapeLayer()
+	let south = CAShapeLayer()
+	let pivot = CALayer()
+
 	func compass(withRadius radius: CGFloat) {
 		let needleWidth = round(radius / 5)
 		layer.bounds = CGRect(x: 0, y: 0, width: 2 * radius, height: 2 * radius)
 		layer.cornerRadius = radius
 		do {
-			let north = CAShapeLayer()
 			let path = UIBezierPath()
 			path.move(to: CGPoint(x: -needleWidth, y: 0))
 			path.addLine(to: CGPoint(x: needleWidth, y: 0))
@@ -40,10 +51,8 @@ class CompassButton: UIButton {
 			north.path = path.cgPath
 			north.fillColor = UIColor.systemRed.cgColor
 			north.position = CGPoint(x: radius, y: radius)
-			layer.addSublayer(north)
 		}
 		do {
-			let south = CAShapeLayer()
 			let path = UIBezierPath()
 			path.move(to: CGPoint(x: -needleWidth, y: 0))
 			path.addLine(to: CGPoint(x: needleWidth, y: 0))
@@ -52,10 +61,8 @@ class CompassButton: UIButton {
 			south.path = path.cgPath
 			south.fillColor = UIColor.lightGray.cgColor
 			south.position = CGPoint(x: radius, y: radius)
-			layer.addSublayer(south)
 		}
 		do {
-			let pivot = CALayer()
 			pivot.bounds = CGRect(
 				x: radius - needleWidth / 2,
 				y: radius - needleWidth / 2,
@@ -65,7 +72,6 @@ class CompassButton: UIButton {
 			pivot.borderColor = UIColor.black.cgColor
 			pivot.cornerRadius = needleWidth / 2
 			pivot.position = CGPoint(x: radius, y: radius)
-			layer.addSublayer(pivot)
 		}
 	}
 
