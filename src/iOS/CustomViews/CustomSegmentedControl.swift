@@ -31,7 +31,6 @@ final class CustomSegmentedControl: UIStackView {
 	private func setupStackView() {
 		axis = .horizontal
 		alignment = .center
-		isLayoutMarginsRelativeArrangement = true
 		distribution = .fill
 		translatesAutoresizingMaskIntoConstraints = false
 
