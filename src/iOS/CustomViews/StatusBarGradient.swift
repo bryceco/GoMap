@@ -13,6 +13,7 @@ class StatusBarGradient: UIVisualEffectView {
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
+		self.backgroundColor = .clear
 		self.effect = UIBlurEffect(style: .regular)
 	}
 
