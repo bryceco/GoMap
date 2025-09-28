@@ -293,7 +293,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		for view in buttons {
 			if #available(iOS 26.0, macOS 26.0,*) {
 				// use glass styles in iOS 26
-				var config = UIButton.Configuration.prominentGlass()
+				var config: UIButton.Configuration = view == locationButton ? .prominentGlass() : .glass()
 				config.cornerStyle = .capsule
 
 				view.overrideUserInterfaceStyle = .dark
@@ -332,6 +332,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 					config.title = button.titleLabel?.text
 					button.configuration = config
 
+					// Adjust sizes of buttons to make them a little larger
 					if button != mapView.helpButton,
 					   button != mapView.aerialAlignmentButton,
 					   button != mapView.addNodeButton
