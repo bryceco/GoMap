@@ -123,12 +123,15 @@ class ClearCacheViewController: UITableViewController {
 				appDelegate.mapView.mapMarkerDatabase.removeAll()
 				appDelegate.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: [])
 			}
-			if appDelegate.mapView.editorLayer.mapData.changesetAsXml() != nil {
+			if appDelegate.mapView.editorLayer.mapData.changesetAsXml() != nil
+				|| isUnderDebugger()
+			{
 				alert.addAction(UIAlertAction(
 					title: NSLocalizedString("Purge", comment: "Discard editing changes when resetting OSM data cache"),
-					style: .default,
+					style: .destructive,
 					handler: { _ in
 						appDelegate.mapView.editorLayer.purgeCachedData(.hard)
+						refreshAfterPurge()
 						self.navigationController?.popViewController(animated: true)
 					}))
 			}
@@ -149,15 +152,6 @@ class ClearCacheViewController: UITableViewController {
 					style: .destructive,
 					handler: { _ in
 						_ = appDelegate.mapView.editorLayer.mapData.discardStaleData(maxObjects: 1000, maxAge: 5 * 60)
-						refreshAfterPurge()
-						self.navigationController?.popViewController(animated: true)
-					}))
-				// Regular purge
-				alert.addAction(UIAlertAction(
-					title: "Debug: Purge Hard ignoring modifications",
-					style: .destructive,
-					handler: { _ in
-						appDelegate.mapView.editorLayer.purgeCachedData(.hard)
 						refreshAfterPurge()
 						self.navigationController?.popViewController(animated: true)
 					}))
