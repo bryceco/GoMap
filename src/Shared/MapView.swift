@@ -2078,6 +2078,39 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 #endif
 
+	// UIPasteControl stops initializing itself correctly after the app has been in the
+	// background several hours, so to get around this we instantiate UIPasteControl once
+	// and reuse the same button as needed. We need light and dark versions of it because
+	// the control doesn't update it's appearance dynamically when switching between modes.
+	static func pasteButtonWith(style: UIUserInterfaceStyle) -> UIControl? {
+		// Special case for paste button that accesses the clipboard
+		if #available(iOS 16.0, *) {
+			let trait = UITraitCollection(userInterfaceStyle: style)
+			let bgColor = MapView.editToolbarBackgroundColor.resolvedColor(with: trait)
+			let fgColor = MapView.editToolbarForegroundColor.resolvedColor(with: trait)
+
+			let configuration = UIPasteControl.Configuration()
+			configuration.baseBackgroundColor = bgColor
+			configuration.baseForegroundColor = fgColor
+			configuration.cornerStyle = .dynamic
+			configuration.displayMode = .labelOnly
+			let pasteButton = UIPasteControl(configuration: configuration)
+			pasteButton.translatesAutoresizingMaskIntoConstraints = false
+			pasteButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+			pasteButton.setContentCompressionResistancePriority(.required, for: .vertical)
+			pasteButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+			pasteButton.setContentHuggingPriority(.required, for: .vertical)
+			return pasteButton
+		} else {
+			return nil
+		}
+	}
+
+	static let editToolbarBackgroundColor = UIColor.systemBackground
+	static let editToolbarForegroundColor = UIColor.label
+	let editToolbarPasteButtonLight: UIView? = pasteButtonWith(style: .light)
+	let editToolbarPasteButtonDark: UIView? = pasteButtonWith(style: .dark)
+
 	// show/hide edit control based on selection
 	func updateEditControl() {
 		let show = pushPin != nil || editorLayer.selectedPrimary != nil
@@ -2109,18 +2142,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				   #available(iOS 16.0, *)
 				{
 					// Special case for paste that accesses the clipboard
-					let configuration = UIPasteControl.Configuration()
-					configuration.baseBackgroundColor = backgroundColor
-					configuration.baseForegroundColor = foregroundColor
-					configuration.cornerStyle = .dynamic
-					configuration.displayMode = .labelOnly
-					let pasteButton = UIPasteControl(configuration: configuration)
-					pasteButton.translatesAutoresizingMaskIntoConstraints = false
+					let pasteButton = traitCollection.userInterfaceStyle == .light
+						? editToolbarPasteButtonLight as! UIPasteControl
+						: editToolbarPasteButtonDark as! UIPasteControl
 					pasteButton.target = editorLayer
-					pasteButton.setContentCompressionResistancePriority(.required, for: .horizontal)
-					pasteButton.setContentCompressionResistancePriority(.required, for: .vertical)
-					pasteButton.setContentHuggingPriority(.defaultHigh, for: .horizontal)
-					pasteButton.setContentHuggingPriority(.required, for: .vertical)
 					return pasteButton
 				} else {
 					let titleIcon = action.actionTitle(abbreviated: true)
