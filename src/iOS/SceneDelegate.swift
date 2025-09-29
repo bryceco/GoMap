@@ -65,6 +65,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		                                     message: message)
 	}
 
+	func displayImageLocationStatus(success: Bool) {
+		let message: String
+		if success {
+			message = NSLocalizedString("Location updated to the location and orientation stored in the photo.",
+			                            comment: "")
+		} else {
+			message = NSLocalizedString("The selected image file does not contain location information.",
+			                            comment: "")
+		}
+		AppDelegate.shared.mapView.showAlert(NSLocalizedString("Open Image File", comment: ""),
+		                                     message: message)
+	}
+
 	func openUrl(_ url: URL) -> Bool {
 		let localizedGPX = NSLocalizedString("GPX", comment: "The name of a GPX file")
 		let mapView = AppDelegate.shared.mapView!
@@ -92,18 +105,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 					}
 				}
 				return true
-			case "jpg", "jpeg", "png", "heic":
+			case "jpg", "jpeg", "png", "gif", "bmp", "tiff", "tif", "heic", "heif", "webp", "ico", "raw", "svg":
 				// image file: try to extract location of image from EXIF
-				if let sourceRef: CGImageSource = CGImageSourceCreateWithData(data as CFData, nil),
-				   let properties = CGImageSourceCopyPropertiesAtIndex(sourceRef, 0, nil) as? [AnyHashable: Any],
-				   let exif = properties[kCGImagePropertyExifDictionary],
-				   let dict = exif as? [String: Any]
-				{
-					// Unfortunately this doesn't include the Lat/Lon.
-					print("\(dict)")
+				guard
+					let exif = EXIFInfo(url: url)
+				else {
+					MainActor.runAfter(nanoseconds: 100_000000) {
+						self.displayImageLocationStatus(success: false)
+					}
 					return false
 				}
-				return false
+				MainActor.runAfter(nanoseconds: 100_000000) {
+					let loc = MapLocation(exif: exif)
+					self.setMapLocation(loc)
+					self.displayImageLocationStatus(success: true)
+				}
+				return true
 			case "geojson":
 				// Load GeoJSON into user custom data layer
 				MainActor.runAfter(nanoseconds: 500_000000) {

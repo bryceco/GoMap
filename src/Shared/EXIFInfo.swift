@@ -1,5 +1,5 @@
 //
-//  EXIF.swift
+//  EXIFInfo.swift
 //  PhotoShare
 //
 //  Created by Bryce Cogswell on 3/23/23.
@@ -10,6 +10,7 @@ import Foundation
 import ImageIO
 
 public struct EXIFInfo {
+	var x: MapLocation?
 	let latitude: Double
 	let longitude: Double
 	let altitude: Double?

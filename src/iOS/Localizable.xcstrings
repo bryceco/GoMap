@@ -35637,6 +35637,9 @@
         }
       }
     },
+    "Location updated to the location and orientation stored in the photo." : {
+
+    },
     "Login successful" : {
       "localizations" : {
         "ar" : {
@@ -43425,6 +43428,9 @@
           }
         }
       }
+    },
+    "Open Image File" : {
+
     },
     "Open Settings" : {
       "comment" : "Open the iOS Settings app",
@@ -53099,6 +53105,9 @@
           }
         }
       }
+    },
+    "The selected image file does not contain location information." : {
+
     },
     "The selected way must be completely visible" : {
       "localizations" : {

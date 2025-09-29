@@ -147,11 +147,32 @@ let DefaultHitTestRadius: CGFloat = 10.0
 let DragConnectHitTestRadius = (DefaultHitTestRadius * 0.6)
 
 struct MapLocation {
-	var longitude = 0.0
-	var latitude = 0.0
-	var zoom = 0.0
-	var direction = 0.0 // degrees clockwise from north
-	var viewState: MapViewState? = nil
+	var longitude: Double
+	var latitude: Double
+	var zoom: Double
+	var direction: Double // degrees clockwise from north
+	var viewState: MapViewState?
+
+	init(longitude: Double,
+	     latitude: Double,
+	     zoom: Double = 0,
+	     direction: Double = 0,
+	     viewState: MapViewState? = nil)
+	{
+		self.longitude = longitude
+		self.latitude = latitude
+		self.zoom = zoom
+		self.direction = direction
+		self.viewState = viewState
+	}
+
+	init(exif: EXIFInfo) {
+		longitude = exif.longitude
+		latitude = exif.latitude
+		direction = exif.direction ?? 0.0
+		zoom = 0
+		viewState = nil
+	}
 }
 
 protocol MapViewProgress {
