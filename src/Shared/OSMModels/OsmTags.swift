@@ -358,40 +358,42 @@ final class OsmTags {
 		var result: [String: String] = [:]
 		let lines = text.split(separator: "\n")
 		for line in lines {
+			// ignore lines with only whitespace
 			if line.trimmingCharacters(in: .whitespaces).isEmpty {
 				continue
 			}
+			// divide line by '=', but allow RHS to contain '=' (happens in URLs)
 			let parts = line.split(separator: "=", maxSplits: 1)
 			guard parts.count == 2 else {
 				return nil
 			}
-			let k = parts[0].trimmingCharacters(in: .whitespaces)
-			let v = parts[1].trimmingCharacters(in: .whitespaces)
-			if k != k.lowercased() {
-				return nil
-			}
+			let k = String(parts[0])
+			let v = String(parts[1])
 			result[k] = v
 		}
 
-		func isValidMultilinePaste(_ string: String) -> Bool {
-			// The user wants to paste a URL into a website field, but the URL contains '='
+		// This function detects strings that look like a key/value pair, but in fact is just a regular value
+		func isFakeKeyValuePaste(_ string: String) -> Bool {
+			// It's a URL that contains '='
 			if let url = URLComponents(string: string),
 			   url.scheme != nil,
 			   url.host != nil
 			{
-				return false
+				return true
 			}
 
-			return true
+			return false
 		}
 
 		// Sanity checks:
 		guard
 			result.count > 0,
-			result.keys.allSatisfy({ $0.count < 256 }),
-			result.values.allSatisfy({ $0.count < 256 }),
-			result.keys.allSatisfy({ $0.range(of: "^[a-z_:]+$", options: .regularExpression) != nil }),
-			isValidMultilinePaste(text)
+			result.keys.allSatisfy({ !$0.isEmpty && $0.count < 256 }),
+			result.values.allSatisfy({ !$0.isEmpty && $0.count < 256 }),
+			result.keys.allSatisfy({ $0.range(of: "^[a-zA-Z0-9_:-]+$", options: .regularExpression) != nil }),
+			result.keys.allSatisfy({ $0.first?.isLetter == true || $0.first?.isNumber == true }),
+			result.values.allSatisfy({ $0 == $0.trimmingCharacters(in: .whitespaces) }),
+			!isFakeKeyValuePaste(text)
 		else {
 			return nil
 		}
