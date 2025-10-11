@@ -697,6 +697,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="Go Map!!" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note from="auto-generated">A label displayed on the lock screen/banner UI of the widget</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
@@ -3257,6 +3258,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve">
         <source>Quercus </source>
+        <target state="translated">Quercus </target>
         <note>Class = "UITextField"; placeholder = "Quercus "; ObjectID = "6yC-L7-V38"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
@@ -3286,6 +3288,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve">
         <source>broadleaved </source>
+        <target state="translated">broadleaved </target>
         <note>Class = "UITextField"; placeholder = "broadleaved "; ObjectID = "AAx-p2-Mzh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
@@ -3379,6 +3382,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="Nxm-fU-1eX.placeholder" xml:space="preserve">
         <source>natural</source>
+        <target state="translated">natural</target>
         <note>Class = "UITextField"; placeholder = "natural"; ObjectID = "Nxm-fU-1eX";</note>
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
@@ -3547,6 +3551,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve">
         <source>tree </source>
+        <target state="translated">tree </target>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
@@ -3566,6 +3571,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve">
         <source>Oak</source>
+        <target state="translated">Oak</target>
         <note>Class = "UITextField"; placeholder = "Oak"; ObjectID = "ftg-j1-Ep9"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -3615,6 +3621,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="l2k-lT-vHS.placeholder" xml:space="preserve">
         <source>genus:en</source>
+        <target state="translated">genus:en</target>
         <note>Class = "UITextField"; placeholder = "genus:en"; ObjectID = "l2k-lT-vHS";</note>
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
@@ -3688,6 +3695,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="pqN-F1-JGm.placeholder" xml:space="preserve">
         <source>Oak Tree</source>
+        <target state="translated">Dub letní</target>
         <note>Class = "UITextField"; placeholder = "Oak Tree"; ObjectID = "pqN-F1-JGm";</note>
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
@@ -3697,6 +3705,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
       </trans-unit>
       <trans-unit id="qTY-bY-Dwe.placeholder" xml:space="preserve">
         <source>genus</source>
+        <target state="translated">genus</target>
         <note>Class = "UITextField"; placeholder = "genus"; ObjectID = "qTY-bY-Dwe";</note>
       </trans-unit>
       <trans-unit id="sGi-dQ-1v0.text" xml:space="preserve">
