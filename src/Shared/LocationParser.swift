@@ -523,6 +523,8 @@ class LocationParser {
 		let request = {
 			var request = URLRequest(url: url)
 			request.httpMethod = method // Apple Maps doesn't give us a redirect URL when using HEAD
+			let userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0.1 Safari/605.1.15"
+			request.setValue(userAgent, forHTTPHeaderField: "User-Agent")
 			return request
 		}()
 		guard let (_, response) = try? await URLSession.shared.data(for: request) else {
