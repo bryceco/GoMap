@@ -106,8 +106,10 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 	// This is called when the user selects a new age limit for tracks.
 	func trimTracksOlderThan(_ date: Date) {
 		while let track = previousTracks.last {
-			let point = track.points[0]
-			if let timestamp1 = point.timestamp {
+			let point = track.points.first ?? track.wayPoints.first
+			if let point,
+			   let timestamp1 = point.timestamp
+			{
 				if date.timeIntervalSince(timestamp1) > 0 {
 					// delete oldest
 					delete(track)
