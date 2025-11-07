@@ -162,7 +162,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				Task {
 					do {
 						let data = try await URLSession.shared.data(with: gpxUrl)
-						try await Task.sleep(nanoseconds: 100_000000)
+						try await Task.sleep(nanoseconds: 500_000000)
 						await MainActor.run {
 							do {
 								try mapView.gpxLayer.loadGPXData(data, name: "", center: true)
