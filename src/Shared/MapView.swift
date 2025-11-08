@@ -2691,7 +2691,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		}
 
 		if (marker is WayPointMarker) || (marker is KeepRightMarker) || (marker is GeoJsonMarker) {
-			let comment: String
+			let comment: NSAttributedString
 			let title: String
 			switch marker {
 			case let marker as WayPointMarker:
@@ -2699,51 +2699,27 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				comment = marker.description
 			case let marker as GeoJsonMarker:
 				title = "GeoJSON"
-				comment = marker.description
+				comment = NSAttributedString(string: marker.description)
 			case let marker as KeepRightMarker:
 				title = "Keep Right"
-				comment = marker.description
+				comment = NSAttributedString(string: marker.description)
 			default:
 				title = ""
-				comment = ""
+				comment = NSAttributedString(string: "")
 			}
 
-			// use regular alertview
-			let alert = UIAlertController(title: title, message: comment, preferredStyle: .alert)
-			alert.addAction(
-				UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-				              style: .cancel,
-				              handler: { _ in
-				              }))
-			if let marker = marker as? GeoJsonMarker {
-				// display JSON associated with marker
-				let textView = UITextView()
-				textView.text = marker.description
-				textView.font = UIFont.preferredFont(forTextStyle: .footnote)
-				textView.isEditable = false
-				textView.isScrollEnabled = true
-				alert.view.addSubview(textView)
-
-				textView.translatesAutoresizingMaskIntoConstraints = false
-				NSLayoutConstraint.activate([
-					textView.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 8),
-					textView.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -8),
-					textView.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 50),
-					textView.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -45)
-				])
-			}
+			let alert = AlertPopup(title: title, message: comment)
 			if let marker = marker as? KeepRightMarker {
 				alert.addAction(
-					UIAlertAction(title: NSLocalizedString("Ignore", comment: ""),
-					              style: .default,
-					              handler: { [self] _ in
-					              	// they want to hide this button from now on
-					              	marker.ignore()
-					              	editorLayer.selectedNode = nil
-					              	editorLayer.selectedWay = nil
-					              	editorLayer.selectedRelation = nil
-					              	removePin()
-					              }))
+					title: NSLocalizedString("Ignore", comment: ""),
+					handler: { [self] in
+						// they want to hide this button from now on
+						marker.ignore()
+						editorLayer.selectedNode = nil
+						editorLayer.selectedWay = nil
+						editorLayer.selectedRelation = nil
+						removePin()
+					})
 			}
 			mainViewController.present(alert, animated: true)
 		} else if let object = object {

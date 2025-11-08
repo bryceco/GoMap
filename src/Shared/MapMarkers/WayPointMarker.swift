@@ -1,5 +1,5 @@
 //
-//  WayPoint.swift
+//  WayPointMarker.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 9/16/21.
@@ -10,23 +10,26 @@ import Foundation
 
 // A GPX waypoint
 final class WayPointMarker: MapMarker {
-	let description: String
+	let description: NSAttributedString
 
-	init(with latLon: LatLon, description: String) {
+	init(with latLon: LatLon, description: NSAttributedString) {
 		self.description = description
 		super.init(latLon: latLon)
 	}
 
 	convenience init(with gpxPoint: GpxPoint) {
-		var text = gpxPoint.name
-		if let r1 = text.range(of: "<a "),
-		   let r2 = text.range(of: "\">")
+		let name: NSAttributedString
+		if let data = gpxPoint.name.data(using: .utf8),
+		   let attr = try? NSAttributedString(data: data,
+		                                      options: [.documentType: NSAttributedString.DocumentType.html,
+		                                                .characterEncoding: String.Encoding.utf8.rawValue],
+		                                      documentAttributes: nil)
 		{
-			text.removeSubrange(r1.lowerBound..<r2.upperBound)
+			name = attr
+		} else {
+			name = NSAttributedString(string: gpxPoint.name)
 		}
-		text = text.replacingOccurrences(of: "&quot;", with: "\"")
-
-		self.init(with: gpxPoint.latLon, description: text)
+		self.init(with: gpxPoint.latLon, description: name)
 	}
 
 	override var markerIdentifier: String {
