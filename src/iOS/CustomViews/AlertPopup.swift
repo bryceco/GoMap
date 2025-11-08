@@ -96,7 +96,7 @@ class AlertPopup: UIViewController {
 			blurView.layer.cornerRadius = 20
 			blurView.clipsToBounds = true
 			let tintOverlay = UIView()
-			tintOverlay.backgroundColor = UIColor.white.withAlphaComponent(0.15)
+			tintOverlay.backgroundColor = UIColor.systemBackground.withAlphaComponent(0.25)
 			tintOverlay.translatesAutoresizingMaskIntoConstraints = false
 			blurView.contentView.addSubview(tintOverlay)
 
