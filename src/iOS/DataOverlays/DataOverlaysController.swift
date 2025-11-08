@@ -1,5 +1,5 @@
 //
-//  UserDataController.swift
+//  DataOverlaysController.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 5/19/24.
@@ -111,13 +111,24 @@ class DataOverlaysController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		tableView.deselectRow(at: indexPath, animated: true)
 
-		if Section(rawValue: indexPath.section) == .geojsonSection,
-		   indexPath.row == geoJsonList.count
-		{
-			if #available(iOS 14.0, *) {
-				doImportGeoJSON()
+		if Section(rawValue: indexPath.section) == .geojsonSection {
+			if indexPath.row == geoJsonList.count {
+				// import button press
+				if #available(iOS 14.0, *) {
+					doImportGeoJSON()
+				} else {
+					// not supported due to lack of UIDocumentPickerViewController
+				}
 			} else {
-				// Fallback on earlier versions
+				// jump to the location
+				guard
+					indexPath.row < geoJsonList.count,
+					let geoJson = try? GeoJSONFile(url: geoJsonList[indexPath.row].url),
+					let latLon = geoJson.firstPoint(),
+					let mapView = AppDelegate.shared.mapView
+				else { return }
+				self.dismiss(animated: true)
+				mapView.centerOn(latLon: latLon, metersWide: 20.0)
 			}
 		}
 	}
