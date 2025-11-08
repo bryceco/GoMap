@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomAlertController: UIViewController {
+class CustomActionSheetController: UIViewController {
 	private struct Action {
 		let title: String
 		let image: UIImage?

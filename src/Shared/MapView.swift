@@ -2203,7 +2203,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			return
 		}
 
-		let actionSheet = CustomAlertController(title: nil, message: nil)
+		let actionSheet = CustomActionSheetController(title: nil, message: nil)
 		for value in actionList {
 			let titleIcon = value.actionTitle()
 			actionSheet.addAction(title: titleIcon.label,
