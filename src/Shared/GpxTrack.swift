@@ -35,11 +35,12 @@ final class GpxPoint: NSObject, NSSecureCoding {
 	}
 
 	convenience init(withXML pt: DDXMLNode) throws {
-		guard let pt = pt as? DDXMLElement,
-		      let lat2 = pt.attribute(forName: "lat")?.stringValue,
-		      let lon2 = pt.attribute(forName: "lon")?.stringValue,
-		      let lat = Double(lat2),
-		      let lon = Double(lon2)
+		guard
+			let pt = pt as? DDXMLElement,
+			let lat2 = pt.attribute(forName: "lat")?.stringValue,
+			let lon2 = pt.attribute(forName: "lon")?.stringValue,
+			let lat = Double(lat2),
+			let lon = Double(lon2)
 		else {
 			throw GpxError.badGpxFormat
 		}
@@ -95,7 +96,7 @@ final class GpxPoint: NSObject, NSSecureCoding {
 		elevation = aDecoder.decodeDouble(forKey: "ele")
 		timestamp = aDecoder.decodeObject(of: NSDate.self, forKey: "time") as? Date
 		name = aDecoder.decodeObject(forKey: "name") as? String ?? ""
-		desc = ""
+		desc = aDecoder.decodeObject(forKey: "desc") as? String ?? ""
 		extensions = []
 		super.init()
 	}
@@ -107,6 +108,7 @@ final class GpxPoint: NSObject, NSSecureCoding {
 		aCoder.encode(elevation, forKey: "ele")
 		aCoder.encode(timestamp, forKey: "time")
 		aCoder.encode(name, forKey: "name")
+		aCoder.encode(desc, forKey: "desc")
 	}
 }
 

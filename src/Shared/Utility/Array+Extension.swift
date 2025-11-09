@@ -8,8 +8,8 @@
 
 import Foundation
 
+// Collapse consecutive duplicated items in the array into a single item
 extension Array where Element: Equatable {
-	// Collapse consecutive duplicated items in the array into a single item
 	func removingDuplicatedItems() -> AnyIterator<Element> {
 		var iterator = makeIterator()
 		var previousElement: Element?
@@ -23,5 +23,21 @@ extension Array where Element: Equatable {
 			}
 			return nil
 		}
+	}
+}
+
+// Combine an array of NSAttributedString with a separator
+extension Array where Element == NSAttributedString {
+	func joined(by separator: NSAttributedString) -> NSAttributedString {
+		let result = NSMutableAttributedString()
+		for (index, attributedString) in self.enumerated() {
+			if index > 0 { result.append(separator) }
+			result.append(attributedString)
+		}
+		return result
+	}
+
+	func joined(by separator: String = "") -> NSAttributedString {
+		return self.joined(by: NSAttributedString(string: separator))
 	}
 }
