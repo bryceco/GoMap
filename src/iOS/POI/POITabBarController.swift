@@ -27,6 +27,12 @@ class POITabBarController: UITabBarController {
 		{
 			tabIndex = 0
 		}
+		if selection == nil {
+			// don't show attributes page
+			var vcList = viewControllers!
+			vcList.removeLast()
+			self.viewControllers = vcList
+		}
 		selectedIndex = tabIndex
 
 		// hide attributes tab on new objects
