@@ -201,6 +201,14 @@ class PhotoCapture: UIViewController, UIImagePickerControllerDelegate, UINavigat
 	var onCancel: (() -> Void)?
 	var onError: (() -> Void)?
 
+	override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+		return .portrait
+	}
+
+	override var shouldAutorotate: Bool {
+		return false
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
