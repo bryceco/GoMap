@@ -1403,14 +1403,12 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			editorLayer.isHidden = false
 			aerialLayer.isHidden = true
 			basemapLayer.isHidden = true
-			userInstructionLabel.isHidden = true
 			editorLayer.whiteText = true
 		case MapViewState.EDITORAERIAL:
 			aerialLayer.tileServer = tileServerList.currentServer
 			editorLayer.isHidden = false
 			aerialLayer.isHidden = false
 			basemapLayer.isHidden = true
-			userInstructionLabel.isHidden = true
 			editorLayer.whiteText = true
 			aerialAlignmentButton.isHidden = false
 		case MapViewState.AERIAL:
@@ -1418,16 +1416,17 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			editorLayer.isHidden = true
 			aerialLayer.isHidden = false
 			basemapLayer.isHidden = true
-			userInstructionLabel.isHidden = true
 		case MapViewState.BASEMAP:
 			editorLayer.isHidden = true
 			aerialLayer.isHidden = true
 			basemapLayer.isHidden = false
-			userInstructionLabel.isHidden = state != .EDITOR && state != .EDITORAERIAL
-			if !userInstructionLabel.isHidden {
-				userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
-			}
 		}
+
+		userInstructionLabel.isHidden = (state != .EDITOR && state != .EDITORAERIAL) || !zoomedOut
+		if !userInstructionLabel.isHidden {
+			userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
+		}
+
 		quadDownloadLayer?.isHidden = editorLayer.isHidden
 
 		if var noName = noNameLayer() {
