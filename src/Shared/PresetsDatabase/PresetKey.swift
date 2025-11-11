@@ -65,6 +65,15 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 
 	// This is used only for user-defined keys, call from
 	// PresetKeyUserDefined() super.init()
+	func encode(with coder: NSCoder) {
+		coder.encode(name, forKey: "name")
+		coder.encode(tagKey, forKey: "tagKey")
+		coder.encode(placeholder, forKey: "placeholder")
+		coder.encode(presetList, forKey: "presetList")
+		coder.encode(keyboardType.rawValue, forKey: "keyboardType")
+		coder.encode(autocapitalizationType.rawValue, forKey: "capitalize")
+	}
+
 	required init?(coder: NSCoder) {
 		if let name = coder.decodeObject(forKey: "name") as? String,
 		   let tagKey = coder.decodeObject(forKey: "tagKey") as? String,
@@ -88,20 +97,17 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		}
 	}
 
-	func encode(with coder: NSCoder) {
-		coder.encode(name, forKey: "name")
-		coder.encode(tagKey, forKey: "tagKey")
-		coder.encode(placeholder, forKey: "placeholder")
-		coder.encode(presetList, forKey: "presetList")
-		coder.encode(keyboardType.rawValue, forKey: "keyboardType")
-		coder.encode(autocapitalizationType.rawValue, forKey: "capitalize")
-		// coder.encode(autocorrectType.rawValue, forKey: "autocorrect")
-	}
-
 	enum CodingKeys: String, CodingKey {
 		case name
 		case tagKey
 		case presetList
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var container = encoder.container(keyedBy: CodingKeys.self)
+		try container.encode(name, forKey: .name)
+		try container.encode(tagKey, forKey: .tagKey)
+		try container.encode(presetList, forKey: .presetList)
 	}
 
 	required init(from decoder: Decoder) throws {
@@ -111,18 +117,12 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		presetList = try container.decode([PresetValue].self, forKey: .presetList)
 		type = ""
 		defaultValue = nil
-		placeholder = ""
+		placeholder = PresetKey.placeholderForPresets(presetList)
+			?? PresetsDatabase.shared.unknownForLocale
 		keyboardType = .default
 		autocapitalizationType = .none
 		autocorrectType = .no
 		super.init()
-	}
-
-	func encode(to encoder: Encoder) throws {
-		var container = encoder.container(keyedBy: CodingKeys.self)
-		try container.encode(name, forKey: .name)
-		try container.encode(tagKey, forKey: .tagKey)
-		try container.encode(presetList, forKey: .presetList)
 	}
 
 	func prettyNameForTagValue(_ value: String) -> String {
