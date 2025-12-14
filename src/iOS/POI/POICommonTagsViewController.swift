@@ -1,5 +1,5 @@
 //
-//  POIFeaturePresetsViewController.swift
+//  POICommonTagsViewController.swift
 //  Go Map!!
 //
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
@@ -365,7 +365,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		case let PresetKeyOrGroup.key(presetKey):
 			let key = presetKey.tagKey
 
-			if presetKey.type == "textarea" {
+			if presetKey.type == .textarea {
 				// special case for keys that contain large amounts of text
 				let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagArea",
 				                                         for: indexPath) as! FeaturePresetAreaCell

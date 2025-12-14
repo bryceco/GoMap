@@ -1,5 +1,5 @@
 //
-//  PresetsDatabase+Ext.swift
+//  PresetsDatabase+TableView.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/13/20.
@@ -190,6 +190,7 @@ extension PresetsDatabase {
 			let name = strings?[options[i]] ?? OsmTags.PrettyTag(String(options[i].dropFirst(prefix.count)))
 			let tag = yesNoWith(
 				label: name,
+				type: .check,
 				key: keys[i],
 				defaultValue: defaultValue,
 				placeholder: nil,
@@ -206,6 +207,7 @@ extension PresetsDatabase {
 	// a preset value with a supplied list of potential values
 	func comboWith(
 		label: String,
+		type: PresetType,
 		key: String,
 		options: [[String]],
 		strings: [String: Any]?,
@@ -235,7 +237,7 @@ extension PresetsDatabase {
 		}
 		let tag = PresetKey(
 			name: label,
-			type: "",
+			type: type,
 			tagKey: key,
 			defaultValue: defaultValue,
 			placeholder: placeholder,
@@ -249,6 +251,7 @@ extension PresetsDatabase {
 	// a yes/no preset
 	func yesNoWith(
 		label: String,
+		type: PresetType,
 		key: String,
 		defaultValue: String?,
 		placeholder: String?,
@@ -262,7 +265,7 @@ extension PresetsDatabase {
 		]
 		let tag = PresetKey(
 			name: label,
-			type: "",
+			type: type,
 			tagKey: key,
 			defaultValue: defaultValue,
 			placeholder: placeholder,
@@ -321,9 +324,10 @@ extension PresetsDatabase {
 		let label = field.label ?? OsmTags.PrettyTag(key)
 
 		switch field.type {
-		case "defaultCheck", "check", "onewayCheck":
+		case .defaultCheck, .check, .onewayCheck:
 			let tag = yesNoWith(
 				label: label,
+				type: field.type,
 				key: key,
 				defaultValue: field.defaultValue,
 				placeholder: field.placeholder,
@@ -333,9 +337,9 @@ extension PresetsDatabase {
 			let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 			return group
 
-		case "radio", "structureRadio", "manyCombo", "multiCombo":
+		case .radio, .structureRadio, .manyCombo, .multiCombo:
 			// all of these can have multiple keys
-			let isMultiCombo = field.type == "multiCombo" // uses a prefix key with multiple suffixes
+			let isMultiCombo = field.type == .multiCombo // uses a prefix key with multiple suffixes
 
 			var options = field.options
 			if options == nil {
@@ -354,6 +358,7 @@ extension PresetsDatabase {
 					let name = field.strings?[option] ?? OsmTags.PrettyTag(option)
 					let tag = yesNoWith(
 						label: name,
+						type: .check,
 						key: keys.first!,
 						defaultValue: field.defaultValue,
 						placeholder: field.placeholder,
@@ -371,6 +376,7 @@ extension PresetsDatabase {
 				// a multiple selection
 				let tag = comboWith(
 					label: label,
+					type: field.type,
 					key: key,
 					options: [options!],
 					strings: field.strings,
@@ -384,9 +390,9 @@ extension PresetsDatabase {
 				return group
 			}
 
-		case "combo", "semiCombo", "networkCombo", "typeCombo", "colour":
+		case .combo, .semiCombo, .networkCombo, .typeCombo, .colour:
 
-			if field.type == "typeCombo", ignore.contains(key) {
+			if field.type == .typeCombo, ignore.contains(key) {
 				return nil
 			}
 			let options = field.options ?? []
@@ -395,6 +401,7 @@ extension PresetsDatabase {
 				.sorted()
 			let tag = comboWith(
 				label: label,
+				type: field.type,
 				key: key,
 				options: [options, options2],
 				strings: field.strings,
@@ -407,7 +414,7 @@ extension PresetsDatabase {
 			let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 			return group
 
-		case "access", "directionalCombo": // "cycleway" is no longer used
+		case .access, .directionalCombo: // "cycleway" is no longer used
 
 			var tagList: [PresetKeyOrGroup] = []
 			let types = field.types ?? [:]
@@ -417,6 +424,7 @@ extension PresetsDatabase {
 				let name = types[key] ?? OsmTags.PrettyTag(key)
 				let tag = comboWith(
 					label: name,
+					type: field.type,
 					key: key,
 					options: [options],
 					strings: strings,
@@ -428,10 +436,10 @@ extension PresetsDatabase {
 					autocorrect: .no)
 				tagList.append(.key(tag))
 			}
-			let group = PresetGroup(name: label, tags: tagList, usesBoth: field.type == "directionalCombo")
+			let group = PresetGroup(name: label, tags: tagList, usesBoth: field.type == .directionalCombo)
 			return group
 
-		case "address":
+		case .address:
 
 			let addressPrefix = key
 			let numericFields = [
@@ -484,26 +492,26 @@ extension PresetsDatabase {
 			let group = PresetGroup(name: label, tags: addrs, usesBoth: false)
 			return group
 
-		case "text", "number", "email", "identifier", "maxweight_bridge", "textarea",
-		     "tel", "url", "roadheight", "roadspeed", "wikipedia", "wikidata", "date":
+		case .text, .number, .email, .identifier, .maxweight_bridge, .textarea,
+		     .tel, .url, .roadheight, .roadspeed, .wikipedia, .wikidata, .date:
 
 			// no presets, but we customize keyboard input
 			var keyboard: UIKeyboardType = .default
 			var capitalize: UITextAutocapitalizationType = .none
 			var autocorrect: UITextAutocorrectionType = .no
 			switch field.type {
-			case "number", "roadheight", "roadspeed", "date":
+			case .number, .roadheight, .roadspeed, .date:
 				keyboard = .numbersAndPunctuation // UIKeyboardTypeDecimalPad doesn't have Done button
-			case "tel":
+			case .tel:
 				keyboard = .phonePad
-			case "url":
+			case .url:
 				keyboard = .URL
-			case "email":
+			case .email:
 				keyboard = .emailAddress
-			case "textarea":
+			case .textarea:
 				capitalize = .sentences
 				autocorrect = .yes
-			case "text":
+			case .text:
 				switch field.key {
 				case "architect", "artist_name", "branch", "brand", "comment",
 				     "destination", "flag:name", "network", "operator", "subject":
@@ -528,11 +536,11 @@ extension PresetsDatabase {
 			let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 			return group
 
-		case "localized":
+		case .localized:
 			// used for "name" field: not implemented
 			return nil
 
-		case "restrictions":
+		case .restrictions:
 			// used for turn restrictions: not implemented
 			return nil
 

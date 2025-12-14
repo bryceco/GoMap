@@ -1,5 +1,5 @@
 //
-//  CustomPreset.swift
+//  PresetKeyUserDefined.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/13/20.
@@ -41,7 +41,7 @@ final class PresetKeyUserDefined: PresetKey {
 		self.appliesToKey = appliesToKey
 		self.appliesToValue = appliesToValue
 		super.init(name: name,
-		           type: "",
+		           type: presets.count > 0 ? .combo : .text,
 		           tagKey: key,
 		           defaultValue: nil,
 		           placeholder: placeholder,

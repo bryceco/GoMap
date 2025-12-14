@@ -30,7 +30,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 	public class var supportsSecureCoding: Bool { return true }
 
 	let name: String // name of the preset, e.g. Hours
-	let type: String // the type of value, e.g. "roadspeed"
+	let type: PresetType // the type of value, e.g. "roadspeed"
 	let tagKey: String // the key being set, e.g. opening_hours
 	let defaultValue: String?
 	let placeholder: String // placeholder text in the UITextField
@@ -41,7 +41,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 
 	init(
 		name: String,
-		type: String,
+		type: PresetType,
 		tagKey tag: String,
 		defaultValue: String?,
 		placeholder: String?,
@@ -84,7 +84,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		   	coder.decodeInteger(forKey: "capitalize"))
 		{
 			self.name = name
-			type = ""
+			type = presetList.count > 0 ? .combo : .text
 			self.tagKey = tagKey
 			self.placeholder = placeholder
 			self.presetList = presetList
@@ -115,7 +115,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		name = try container.decode(String.self, forKey: .name)
 		tagKey = try container.decode(String.self, forKey: .tagKey)
 		presetList = try container.decode([PresetValue].self, forKey: .presetList)
-		type = ""
+		type = .combo
 		defaultValue = nil
 		placeholder = PresetKey.placeholderForPresets(presetList)
 			?? PresetsDatabase.shared.unknownForLocale
@@ -153,14 +153,12 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 	}
 
 	func isYesNo() -> Bool {
-		if let presetList = presetList,
-		   presetList.count == 2,
-		   presetList[0].tagValue == "yes",
-		   presetList[1].tagValue == "no"
-		{
+		switch type {
+		case .defaultCheck, .check, .onewayCheck:
 			return true
+		default:
+			return false
 		}
-		return false
 	}
 
 	private class func placeholderForPresets(_ presets: [PresetValue]?) -> String? {

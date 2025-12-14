@@ -8,17 +8,67 @@
 
 import Foundation
 
+enum PresetType: String, Codable {
+	// Special case for the Type field, not part of id-tagging-schema
+	case featureType
+
+	// booleans
+	case check
+	case defaultCheck
+	case onewayCheck
+
+	// lists of presets
+	case radio
+	case structureRadio
+	case manyCombo
+	case multiCombo
+
+	// multiple choice
+	case combo
+	case semiCombo
+	case networkCombo
+	case typeCombo
+	case colour
+
+	// custom
+	case access
+	case directionalCombo // "cycleway" is no longer used
+	case address
+
+	// free form text
+	case text
+	case number
+	case email
+	case identifier
+	case maxweight_bridge
+	case textarea
+	case tel
+	case url
+	case roadheight
+	case roadspeed
+	case wikipedia
+	case wikidata
+	case date
+
+	case localized
+	case restrictions
+}
+
 final class PresetField: CustomDebugStringConvertible {
 	let jsonDict: [String: Any]
 
 	init?(withJson json: [String: Any]) {
 		guard json["type"] is String else { return nil }
 		jsonDict = json
+#if DEBUG
+		// validate that we don't encounter any types that aren't supported
+		_ = self.type
+#endif
 	}
 
 	var key: String? { jsonDict["key"] as! String? }
 	var keys: [String]? { jsonDict["keys"] as! [String]? }
-	var type: String { jsonDict["type"] as! String }
+	var type: PresetType { PresetType(rawValue: jsonDict["type"] as! String)! }
 	var defaultValue: String? { jsonDict["default"] as! String? }
 	var options: [String]? { jsonDict["options"] as! [String]? }
 	var autoSuggestions: Bool { (jsonDict["autoSuggestions"] as! Bool?) ?? true }

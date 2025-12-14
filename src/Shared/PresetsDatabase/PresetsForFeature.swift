@@ -148,7 +148,7 @@ final class PresetsForFeature {
 		// Always start with Type and Name
 		let typeTag = PresetKey(
 			name: NSLocalizedString("Type", comment: "The 'Type' header in Common Tags"),
-			type: "",
+			type: .featureType,
 			tagKey: "",
 			defaultValue: nil,
 			placeholder: "",
@@ -159,7 +159,7 @@ final class PresetsForFeature {
 		let nameField = PresetsDatabase.shared.presetFields["name"]!
 		let nameTag = PresetKey(
 			name: nameField.label ?? "Name",
-			type: "",
+			type: .text,
 			tagKey: "name",
 			defaultValue: nil,
 			placeholder: nameField.placeholder,
