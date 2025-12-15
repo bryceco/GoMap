@@ -24,6 +24,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		window.rootViewController = rootViewController
 		self.window = window
 		window.makeKeyAndVisible()
+
+		// open any URLs that we were passed
+		for urlContext in connectionOptions.urlContexts {
+			_ = openUrl(urlContext.url)
+		}
 	}
 
 	func dataForScopedUrl(_ url: URL) throws -> Data {
@@ -96,7 +101,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			switch url.pathExtension.lowercased() {
 			case "gpx":
 				// Load GPX
-				MainActor.runAfter(nanoseconds: 500_000000) {
+				MainActor.runAfter(nanoseconds: 100_000000) {
 					do {
 						try mapView.gpxLayer.loadGPXData(data, name: url.lastPathComponent, center: true)
 						mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
@@ -123,7 +128,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				return true
 			case "geojson":
 				// Load GeoJSON into user custom data layer
-				MainActor.runAfter(nanoseconds: 500_000000) {
+				MainActor.runAfter(nanoseconds: 100_000000) {
 					do {
 						let geo = try GeoJSONFile(data: data)
 						try geoJsonList.add(name: url.lastPathComponent, data: data)
