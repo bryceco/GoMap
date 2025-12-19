@@ -28,24 +28,27 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 
 		setPreferredFrameRate()
 
-		let transformCallback = { [weak self] in
-			guard let self = self else { return }
-			let center = mapView.mapTransform.latLon(forScreenPoint: mapView.mapTransform.center)
-			let zoom = mapView.mapTransform.zoom() - 1.0
-			let dir = (360.0 + mapView.mapTransform.rotation() * 180 / .pi).remainder(dividingBy: 360.0)
-			guard
-				center.lat.isFinite,
-				center.lon.isFinite,
-				zoom.isFinite
-			else { return }
-
-			self.setCenter(CLLocationCoordinate2D(latitude: center.lat, longitude: center.lon),
-			               zoomLevel: zoom,
-			               direction: 360 - dir,
-			               animated: false)
+		updateUsingCurrentMapTransform()
+		mapView.mapTransform.observe(by: self) { [weak self] in
+			self?.updateUsingCurrentMapTransform()
 		}
-		transformCallback()
-		mapView.mapTransform.observe(by: self, callback: transformCallback)
+	}
+
+	func updateUsingCurrentMapTransform() {
+		let center = mapView.mapTransform.latLon(forScreenPoint: mapView.mapTransform.center)
+		let zoom = mapView.mapTransform.zoom() - 1.0
+		let dir = (360.0 + mapView.mapTransform.rotation() * 180 / .pi).remainder(dividingBy: 360.0)
+		guard
+			center.lat.isFinite,
+			center.lon.isFinite,
+			zoom.isFinite
+		else { return }
+
+		self.setCenter(CLLocationCoordinate2D(latitude: center.lat,
+		                                      longitude: center.lon),
+		               zoomLevel: zoom,
+		               direction: 360 - dir,
+		               animated: false)
 	}
 
 	@available(*, unavailable)
