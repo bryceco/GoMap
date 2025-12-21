@@ -892,8 +892,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					return
 				}
 
-				guard let diffResult = diffDoc.rootElement(),
-				      diffResult.name == "diffResult"
+				guard
+					let diffResult = diffDoc.rootElement(),
+					diffResult.name == "diffResult"
 				else {
 					completion(OsmMapDataError.otherError("Upload failed: invalid server respsonse"))
 					return
@@ -965,9 +966,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	                                   retries: Int,
 	                                   completion: @escaping (_ error: Error?) -> Void)
 	{
-		guard let xmlChanges = OsmXmlGenerator.createXmlFor(nodes: nodes.values,
-		                                                    ways: ways.values,
-		                                                    relations: relations.values)
+		guard
+			let xmlChanges = OsmXmlGenerator.createXmlFor(nodes: nodes.values,
+														  ways: ways.values,
+														  relations: relations.values)
 		else {
 			completion(OsmMapDataError.badXML)
 			return
@@ -1008,7 +1010,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		if oldId != newId {
 			// replace placeholder object with new server provided identity
 			assert(oldId < 0 && newId > 0)
-			dictionary.removeValue(forKey: object.ident)
+			dictionary.removeValue(forKey: oldId)
 			dictionary[object.ident] = object
 		} else {
 			assert(oldId > 0)

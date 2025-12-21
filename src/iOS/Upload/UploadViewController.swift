@@ -164,8 +164,9 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 
 	@IBAction func commit(_ sender: Any?) {
 		let appDelegate = AppDelegate.shared
-		guard let oAuth = OSM_SERVER.oAuth2,
-		      oAuth.isAuthorized()
+		guard
+			let oAuth = OSM_SERVER.oAuth2,
+			oAuth.isAuthorized()
 		else {
 			performSegue(withIdentifier: "loginSegue", sender: self)
 			return
