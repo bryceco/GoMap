@@ -1234,8 +1234,8 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
-        <target state="translated">%1$#@треков@ импортировано,
-%2$#@дубликатов@ пропущено</target>
+        <target state="translated">%1$#@routes@ импортировано,
+%2$#@duplicates@ пропущено</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.few" xml:space="preserve">
