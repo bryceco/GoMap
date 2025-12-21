@@ -2835,6 +2835,12 @@
             "value" : "%.0f m²"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f m²"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -3493,20 +3499,20 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg metra"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg metar"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg metara"
                     }
                   }
                 }
@@ -3519,20 +3525,20 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg čvora"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg čvor"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg čvorova"
                     }
                   }
                 }
@@ -5166,20 +5172,20 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg datoteke"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg datoteka"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg datoteka"
                     }
                   }
                 }
@@ -5192,20 +5198,20 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg MB"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg MB"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg MB"
                     }
                   }
                 }
@@ -10178,7 +10184,7 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%ld točke"
+                      "value" : "%ld točaka"
                     }
                   }
                 }
@@ -14821,7 +14827,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@routes@,\n%#@duplicates@"
+            "value" : "%1$#@треков@ импортировано,\n%2$#@дубликатов@ пропущено"
           },
           "substitutions" : {
             "duplicates" : {
@@ -14844,13 +14850,13 @@
                   "one" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg дубликат пропущен"
+                      "value" : "%arg дубликат"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
-                      "value" : "%arg дубликата пропущено"
+                      "value" : "%arg дубликата"
                     }
                   }
                 }
@@ -16594,7 +16600,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "+ Posizione pulsante"
+            "value" : "Posizione pulsante +"
           }
         },
         "ja" : {
@@ -18574,6 +18580,12 @@
             "value" : "Ajouter une photo Panoramax"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj Panoramax fotografiju"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18875,6 +18887,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dodaj ograničenje brzine"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aggiungi limite di velocità"
           }
         },
         "ja" : {
@@ -24232,10 +24250,22 @@
             "value" : "Choisir une photo existante"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odaberi postojeću fotografiju"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "既存の写真を選択してください"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выберите готовую фотографию"
           }
         },
         "ta" : {
@@ -24460,6 +24490,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kustuta puhverdatud andmed"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Isprazni predmemoriju podataka"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Очистить кэш данных"
           }
         },
         "uk" : {
@@ -27068,10 +27110,22 @@
             "value" : "Définissez vos propres caractéristiques personnalisées à l'aide de combinaisons de balises uniques afin d'ajouter rapidement des types d'objets particuliers. Ceux-ci peuvent être recherchés dans les balises communes."
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Definiraj vlastite prilagođene funkcije s jedinstvenim kombinacijama oznaka za brzo dodavanje posebnih vrsta objekata. One se mogu pretraživati u „Uobičajene oznake”."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "独自のタグの組み合わせを使用して独自のカスタムフィーチャを定義すると、特殊なタイプのオブジェクトをすばやく追加できます。これらはよくあるタグで検索できます。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Создайте свои собственные объекты, чтобы быстро добавлять их. Эти объекты можно будет искать по общим тегам."
           }
         },
         "ta" : {
@@ -32753,7 +32807,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "HealthKit"
+            "value" : "Apple Здоровье"
           }
         },
         "ta" : {
@@ -33636,6 +33690,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impordi GPX-andmed"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uvezi GPX"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скачать GPX"
           }
         },
         "uk" : {
@@ -34962,7 +35028,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "lbs"
+            "value" : "фунтов"
           }
         },
         "ta" : {
@@ -35188,6 +35254,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sisi kiri"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lato sinistro"
           }
         },
         "ja" : {
@@ -40376,6 +40448,18 @@
             "value" : "Vastet pole"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nema poklapanja"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значение не найдено"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -40580,6 +40664,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tidak ada batasan Dilarang Belok Kanan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nessuna limitazione di svolta a destra"
           }
         },
         "ja" : {
@@ -43119,6 +43209,12 @@
             "value" : "Batasan Harus Belok Kanan"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo limitazione di svolta a destra"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -45517,7 +45613,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Приостановить запись GPX треков"
+            "value" : "Приостановить запись GPX треков."
           }
         },
         "ta" : {
@@ -45558,6 +45654,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fotot pole saadaval"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotografija nije dostupna"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фотография недоступна"
           }
         },
         "uk" : {
@@ -45818,6 +45926,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eelmääratletud"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unaprijed definirano"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отобразить на карте"
           }
         },
         "uk" : {
@@ -48798,6 +48918,12 @@
             "value" : "Kanan"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Destra"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -48933,6 +49059,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sisi kanan"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lato destro"
           }
         },
         "ja" : {
@@ -49624,7 +49756,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Язык пресетов тегов в редакторе"
+            "value" : "Язык пресетов тегов в редакторе. В других разделах приложения будет использоваться язык по умолчанию."
           }
         },
         "ta" : {
@@ -51478,7 +51610,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Начать записывать GPX треки"
+            "value" : "Начать записывать треки GPX."
           }
         },
         "ta" : {
@@ -51748,7 +51880,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перестать записывать GPX треки"
+            "value" : "Перестать записывать GPX треки."
           }
         },
         "ta" : {
@@ -52312,10 +52444,22 @@
             "value" : "Pildista"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snimi novu fotografiju"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "新しい写真を撮る"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сфотографируйте"
           }
         },
         "ta" : {
@@ -52398,6 +52542,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tombol + dapat diposisikan pada antara sisi kiri atau sisi kanan dari layar"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Il pulsante + può essere posizionato sul lato sinistro o destro dello schermo"
           }
         },
         "ja" : {
@@ -59382,10 +59532,22 @@
             "value" : "Puede definir campos personalizados para las preconfiguraciones. Un campo es un par clave/valor asociado a una característica."
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Možeš definirati prilagođena polja za unaprijed postavljene postavke. Polje je jedan par ključeva/vrijednosti povezan s funkcijom."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "プリセットのカスタムフィールドを定義できます。フィールドは、機能に関連付けられた単一のキーと値のペアです。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пресет это дополнительный тег с вариантами значений, который вы хотите быстро добавлять к объекту. В пресете указывается, при редактировании какого объекта (задано тоже тегом), этот дополнительный тег виден в начале списка, а также перечисляются варианты его значений."
           }
         },
         "ta" : {
@@ -60609,7 +60771,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Приблизьте, чтобы приступить к редактированию"
+            "value" : "Приблизьте для редактирования"
           }
         },
         "ta" : {

@@ -1610,7 +1610,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Подробности"
+            "value" : "Подробное описание"
           }
         },
         "ta" : {
@@ -2875,8 +2875,14 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Copyright © 2012. – 2020. Bryce Cogswell.\nSva prava pridržana.\n\nOpenStreetMap podaci licencirani su pod Open Data Commons licencom za otvorenu bazu podataka (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nAutorska prava za Bing aerofotografije drži Microsoft i njegovi dobavljači:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nAutorska prava za Mapbox aerofotografije drži Mapbox i njegovi dobavljači: https://www.mapbox.com/tos\n\nXML obrada od Robbieja Hansona KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nKod za obradu EFIX-a Copyright © 2010. – 2015. Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nIkone kartata od SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOstale ikone od Glyphish:\nhttp://glyphish.com\n"
+            "state" : "translated",
+            "value" : "Autorska prava © 2012. – 2024. Bryce Cogswell.\nSva prava pridržana.\n\nOpenStreetMap podaci licencirani su pod Open Data Commons licencom za otvorenu bazu podataka (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nAutorska prava za Bing aerofotografije drži Microsoft i njegovi dobavljači:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nAutorska prava za Mapbox aerofotografije drži Mapbox i njegovi dobavljači: https://www.mapbox.com/tos\n\nXML obrada od Robbieja Hansona KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nKod za obradu EFIX-a Copyright © 2010. – 2015. Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nIkone kartata od SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOstale ikone od Glyphish:\nhttp://glyphish.com\n"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2012-2024 Bryce Cogswell.\nTutti i diritti riservati.\n\nI dati di OpenStreetMap sono concessi in licenza con la licenza Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nImmagini aeree di Bing, copyright di Microsoft e dei suoi fornitori:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nImmagini aeree di Mapbox, copyright di Mapbox e dei suoi fornitori: https://www.mapbox.com/tos\n\nAnalisi XML per gentile concessione di KissXML di Robbie Hanson:\nhttps://github.com/robbiehanson/KissXML\n\nIcone della mappa di SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nAltre icone di Glyphish:\nhttp://glyphish.com\n"
           }
         },
         "ja" : {
@@ -6428,7 +6434,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Подробности"
+            "value" : "Подробное описание"
           }
         },
         "ta" : {

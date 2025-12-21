@@ -125,6 +125,12 @@
             "value" : "GpxWidgetExtension"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidgetExtension"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -218,7 +224,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "© 2024 Брайс Когсвелл"
+            "value" : "Авторские права © 2024 Брайс Когсвелл. Все права защищены."
           }
         },
         "ta" : {

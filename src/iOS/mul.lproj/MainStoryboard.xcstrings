@@ -56,7 +56,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "username"
+            "value" : "имя пользователя"
           }
         },
         "uk" : {
@@ -3725,6 +3725,12 @@
             "value" : "Cari Lokasi"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerca posizione"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4194,6 +4200,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2014-06-17 17:54 UTC"

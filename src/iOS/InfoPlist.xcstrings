@@ -936,7 +936,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Маршруты ваших тренировок можно импортировать как GPX."
+            "value" : "Маршруты ваших тренировок можно импортировать как треки GPX."
           }
         },
         "ta" : {
@@ -1123,6 +1123,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Hak Cipta 2012-2021 Bryce Cogswell"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright 2012-2024 Bryce Cogswell"
           }
         },
         "ja" : {

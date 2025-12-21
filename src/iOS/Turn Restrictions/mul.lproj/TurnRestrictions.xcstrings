@@ -23,6 +23,18 @@
             "value" : "Silt"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etiketa"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Метка"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",

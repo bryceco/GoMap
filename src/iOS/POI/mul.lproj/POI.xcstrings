@@ -899,6 +899,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"Quercus \"; ObjectID = \"6yC-L7-V38\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quercus "
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -906,6 +912,12 @@
           }
         },
         "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quercus "
+          }
+        },
+        "hr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Quercus "
@@ -920,7 +932,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quercus "
+            "value" : "Дуб "
           }
         },
         "ta" : {
@@ -969,6 +981,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "võti"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ključ"
           }
         },
         "ja" : {
@@ -1643,6 +1661,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"broadleaved \"; ObjectID = \"AAx-p2-Mzh\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "broadleaved "
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1655,6 +1679,12 @@
             "value" : "broadleaved "
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "širokolisno "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1664,7 +1694,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "broadleaved "
+            "value" : "широколиственный "
           }
         },
         "ta" : {
@@ -2129,10 +2159,22 @@
             "value" : "Lisa uus"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dodaj novi"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "新規追加"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить новую"
           }
         },
         "ta" : {
@@ -2337,6 +2379,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ala"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Područje"
           }
         },
         "ja" : {
@@ -2555,10 +2603,22 @@
             "value" : "Características personalizadas"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prilagođene funkcije"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "カスタムフィーチャ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Свои объекты"
           }
         },
         "ta" : {
@@ -3425,6 +3485,12 @@
             "value" : "Nupp"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Putna točka"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3761,6 +3827,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"tree \"; ObjectID = \"eN0-0z-hUp\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "tree "
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3779,6 +3851,12 @@
             "value" : "árbol "
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "stablo "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3788,7 +3866,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "tree "
+            "value" : "дерево "
           }
         },
         "ta" : {
@@ -4289,6 +4367,12 @@
             "value" : "Punto"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Točka"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4565,6 +4649,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"Oak\"; ObjectID = \"ftg-j1-Ep9\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oak"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4575,6 +4665,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Oak"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrast"
           }
         },
         "ja" : {
@@ -5747,6 +5843,12 @@
             "value" : "leaf_type"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vrsta lišća"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5756,7 +5858,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "leaf_type"
+            "value" : "тип_листа"
           }
         },
         "ta" : {
@@ -6635,6 +6737,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"genus:en\"; ObjectID = \"l2k-lT-vHS\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus:en"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -6647,6 +6755,12 @@
             "value" : "genus:en"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus:hr"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6656,7 +6770,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "genus:en"
+            "value" : "род:ru"
           }
         },
         "ta" : {
@@ -6707,10 +6821,22 @@
             "value" : "Característica personalizada"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prilagođena funkcija"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "カスタムフィーチャ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Свой объект"
           }
         },
         "ta" : {
@@ -6998,7 +7124,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Распространённые теги"
+            "value" : "Основные Теги"
           }
         },
         "ta" : {
@@ -7148,7 +7274,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Распространённые теги"
+            "value" : "Основные теги"
           }
         },
         "ta" : {
@@ -7298,7 +7424,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Наименование"
+            "value" : "Название"
           }
         },
         "ta" : {
@@ -7359,6 +7485,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "key"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ključ"
           }
         },
         "ja" : {
@@ -7805,6 +7937,12 @@
             "value" : "valor "
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vrijednost "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7841,10 +7979,22 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"natural\"; ObjectID = \"Nxm-fU-1eX\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "natural"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "natural"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "prirodno"
           }
         },
         "ja" : {
@@ -7856,7 +8006,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "natural"
+            "value" : "природный"
           }
         },
         "ta" : {
@@ -8366,7 +8516,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Наименование"
+            "value" : "Название"
           }
         },
         "ta" : {
@@ -8873,10 +9023,22 @@
             "value" : "Características personalizadas"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prilagođene funkcije"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "カスタムフィーチャ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Свои объекты"
           }
         },
         "ta" : {
@@ -8903,6 +9065,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"Oak Tree\"; ObjectID = \"pqN-F1-JGm\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dub letní"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8919,6 +9087,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tammepuu"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hrast"
           }
         },
         "ja" : {
@@ -9257,6 +9431,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"genus\"; ObjectID = \"qTY-bY-Dwe\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -9275,6 +9455,12 @@
             "value" : "liik"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9284,7 +9470,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "genus"
+            "value" : "род"
           }
         },
         "ta" : {
@@ -9647,10 +9833,22 @@
             "value" : "Selle objekti valimisel lisatavad sildid."
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oznake koje treba dodati prilikom odabira ove funkcije."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "この地物の選択時に追加できるタグ。"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Теги, которые нужно добавить к выбранному объекту."
           }
         },
         "ta" : {
@@ -9701,10 +9899,22 @@
             "value" : "Etiquetas de característica"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oznake funkcija"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "地物のタグ"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Теги объекта"
           }
         },
         "ta" : {
@@ -9747,6 +9957,18 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naslijedi unaprijed postavljene postavke ove funkcije. Ako ih nema, biranje ove funkcije će spojit (ne zamijeniti) oznake na ciljnom objektu."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Наследовать пресеты этого объекта. Если их нет, то выбранный объект будет объединён (а не заменён) с целевым объектом."
           }
         },
         "uk" : {
@@ -9803,10 +10025,22 @@
             "value" : "Teenuse tüüp:"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vrsta funkcije:"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "地物の種類:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тип объекта:"
           }
         },
         "ta" : {
@@ -10205,6 +10439,12 @@
             "value" : "Nimi"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ime"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10403,6 +10643,12 @@
             "value" : "valor "
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vrijednost "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10467,6 +10713,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tagasi"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Natrag"
           }
         },
         "ja" : {
@@ -11423,6 +11675,12 @@
             "value" : "Nupp"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Linija"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11639,10 +11897,22 @@
             "value" : "Pealkiri"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naslov"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "タイトル"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тайл"
           }
         },
         "ta" : {
@@ -12023,6 +12293,12 @@
             "value" : "valor "
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "vrijednost "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12032,7 +12308,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "value "
+            "value" : "значение "
           }
         },
         "ta" : {
@@ -12237,6 +12513,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "clave"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ključ"
           }
         },
         "ja" : {
@@ -12453,6 +12735,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Katkesta"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odustani"
           }
         },
         "ja" : {

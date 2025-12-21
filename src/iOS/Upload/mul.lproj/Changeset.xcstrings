@@ -1429,8 +1429,8 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Почта"
+            "state" : "translated",
+            "value" : "Экспортировать"
           }
         },
         "ta" : {
@@ -1497,6 +1497,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kirjelda oma muudatusi... "
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opiši svoje promjene … "
           }
         },
         "ja" : {

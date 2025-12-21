@@ -551,6 +551,12 @@
             "value" : "Mapnik"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -977,6 +983,12 @@
             "value" : "Željezničke funkcije"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caratteristiche ferroviarie"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1122,6 +1134,12 @@
           }
         },
         "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-1..3,7"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-1..3,7"
@@ -1679,6 +1697,12 @@
             "value" : "Prikaz"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visualizza"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1805,6 +1829,12 @@
             "value" : "HealthKit rute:"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rotte HealthKit:"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1814,7 +1844,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Маршруты от HealthKit"
+            "value" : "Маршруты Apple Здоровье"
           }
         },
         "ta" : {
@@ -3137,6 +3167,12 @@
             "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3396,6 +3432,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12:00:00"
+          }
+        },
+        "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "12:00:00"
@@ -3695,6 +3737,12 @@
             "value" : "Posisi + Tombol aktif "
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Posiziona  Bottone + a "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3983,6 +4031,12 @@
             "value" : "Ubin Udara"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Piastrelle aeree"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4097,10 +4151,22 @@
             "value" : "Üksikasjad"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detalji"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dettagli"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Подробности"
           }
         },
         "uk" : {
@@ -4748,7 +4814,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Подробности"
+            "value" : "Подробное описание"
           }
         },
         "ta" : {
@@ -5163,6 +5229,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Energetske funkcije"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caratteristiche di potenza"
           }
         },
         "ja" : {
@@ -6471,6 +6543,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prekrivanja podataka"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sovrapposizioni di dati"
           }
         },
         "ja" : {
@@ -7889,10 +7967,22 @@
             "value" : "Aerofotode paanid"
           }
         },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pločice aerofotografije"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Riquadri Aerei"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Тайлы аэрофотосъёмки"
           }
         },
         "uk" : {
@@ -8117,6 +8207,12 @@
             "value" : "Samo osnovna karta"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo mappa base"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8222,7 +8318,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Название"
+            "value" : "Заголовок"
           }
         },
         "ta" : {
@@ -10271,6 +10367,12 @@
             "value" : "12/22/20, 7:55 PM"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12/22/20, 7:55 PM"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11066,7 +11168,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Удалять треки после"
+            "value" : "Удалять треки через"
           }
         },
         "ta" : {
@@ -11228,7 +11330,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Наименование"
+            "value" : "Название"
           }
         },
         "ta" : {
