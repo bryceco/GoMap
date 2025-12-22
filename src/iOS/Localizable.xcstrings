@@ -14827,7 +14827,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@треков@ импортировано,\n%2$#@дубликатов@ пропущено"
+            "value" : "%#@routes@ импортировано,\n%#@duplicates@ пропущено"
           },
           "substitutions" : {
             "duplicates" : {
