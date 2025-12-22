@@ -51,6 +51,8 @@ python3 -c "$GET_LANGS")
 rm translations/*.json
 git clean -fdx translations/.) || true
 
+mkdir translations
+
 for lang in ${languages[*]}; do
 	echo $lang
     curl -fLsS $DIST/translations/$lang.min.json > translations/$lang.json
