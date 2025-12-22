@@ -108,7 +108,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		updateUndoRedoButtonState()
 		updateUploadButtonState()
 
-		weak var weakSelf = self
+		weak let weakSelf = self
 		mapView.editorLayer.mapData.addChangeCallback({
 			weakSelf?.updateUndoRedoButtonState()
 			weakSelf?.updateUploadButtonState()

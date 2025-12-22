@@ -18,7 +18,7 @@ class PresetKeyTagCase: XCTestCase {
 		let secondPreset = PresetValue(name: "Nein", details: "", icon: nil, tagValue: "no")
 
 		let tagKey = PresetKey(name: "Rückenlehne",
-		                       type: "text",
+							   type: .text,
 		                       tagKey: "backreset",
 		                       defaultValue: nil,
 		                       placeholder: placeholder,
@@ -38,7 +38,7 @@ class PresetKeyTagCase: XCTestCase {
 		let secondPreset = PresetValue(name: secondPresentName, details: "", icon: nil, tagValue: "no")
 
 		let tagKey = PresetKey(name: "Rückenlehne",
-		                       type: "text",
+							   type: .text,
 		                       tagKey: "backreset",
 		                       defaultValue: nil,
 		                       placeholder: nil,

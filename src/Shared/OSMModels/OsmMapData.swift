@@ -80,7 +80,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	func setupPeriodicSaveTimer() {
-		weak var weakSelf = self
+		weak let weakSelf = self
 		NotificationCenter.default.addObserver(
 			forName: NSNotification.Name(MyUndoManager.UndoManagerDidChangeNotification),
 			object: undoManager,
