@@ -550,7 +550,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				let radius2 = CGPoint(x: radius / mpd.x, y: radius / mpd.y)
 				let startTime = CACurrentMediaTime()
 				let periodSeconds = 2.0
-				weak var weakSelf = self
+				weak let weakSelf = self
 
 				displayLink.addName(AUTOSCROLL_DISPLAYLINK_NAME, block: {
 					guard let myself = weakSelf else { return }
@@ -1968,7 +1968,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 		let duration = 0.4
 		var prevHeading: Double = 0
-		weak var weakSelf = self
+		weak let weakSelf = self
 		DisplayLink.shared.addName(DisplayLinkHeading, block: {
 			if let myself = weakSelf {
 				var elapsedTime = CACurrentMediaTime() - startTime
@@ -2326,7 +2326,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	private func pushpinDragCallbackFor(object: OsmBaseObject) -> PushPinViewDragCallback {
-		weak var object = object
+		weak let object = object
 		return { [weak self] state, dx, dy in
 			guard let self = self else { return }
 			switch state {
