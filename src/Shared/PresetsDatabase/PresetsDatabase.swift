@@ -59,7 +59,7 @@ final class PresetsDatabase {
 		var newDict = [String: Any]()
 		for (key, obj) in orig {
 			if key == "options" {
-				newDict[key] = obj
+				newDict[key] = obj as! [String]
 				newDict["strings"] = translation[key]
 			} else {
 				newDict[key] = try MergeTranslations(into: obj, from: translation[key])
@@ -69,7 +69,12 @@ final class PresetsDatabase {
 		// need to add things that don't exist in orig
 		for (key, obj) in translation {
 			if newDict[key] == nil {
-				newDict[key] = obj
+				if key == "options" {
+					newDict[key] = Array((obj as! [String: String]).keys) as [String]
+					newDict["strings"] = obj
+				} else {
+					newDict[key] = obj
+				}
 			}
 		}
 		return newDict
