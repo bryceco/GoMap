@@ -176,7 +176,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
 			}
 
-			weak var weakself = self
+			weak let weakself = self
 			allPresets = PresetsForFeature(withFeature: selectedFeature, objectTags: dict, geometry: geometry, update: {
 				// This closure is called whenever results from TagInfo return, which
 				// may be much later, even after we've been dismissed. We need to rebuild

@@ -106,7 +106,7 @@ class HeightViewController: UIViewController {
 		coreMotion = CMMotionManager()
 		coreMotion?.deviceMotionUpdateInterval = 1.0 / 30
 		let currentQueue = OperationQueue.current
-		weak var weakSelf = self
+		weak let weakSelf = self
 		if let currentQueue = currentQueue {
 			coreMotion?.startDeviceMotionUpdates(
 				using: .xTrueNorthZVertical,
