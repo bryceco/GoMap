@@ -127,7 +127,11 @@ class PresetFeature: CustomDebugStringConvertible {
 
 	var fields: [String]? {
 		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
-		guard let fieldsWithRedirect = fieldsWithRedirect else { return nil }
+		guard
+			let fieldsWithRedirect = fieldsWithRedirect
+		else {
+			return nil
+		}
 		return fieldsWithRedirect.flatMap {
 			if $0.hasPrefix("{"), $0.hasSuffix("}") {
 				let redirect = String($0.dropFirst().dropLast())

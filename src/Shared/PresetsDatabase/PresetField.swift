@@ -101,11 +101,16 @@ final class PresetField: CustomDebugStringConvertible {
 		{
 			let redirect = String(value.dropFirst().dropLast())
 			guard
-				let newField = PresetsDatabase.shared.presetFields[redirect],
-				newField !== self
+				let newField = PresetsDatabase.shared.presetFields[redirect]
 			else {
 				print("bad preset redirect: \(redirect)")
 				return nil
+			}
+			if newField === self {
+				// The field has a redirect to itself, which is silly.
+				// But if it's a stringsCrossReference redirect then just return the
+				// value for strings (or just ignore the redirect which will give nil):
+				return jsonDict[property] as? T
 			}
 			if let newValue: T = newField.redirected(property: property) {
 				return newValue
