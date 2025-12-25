@@ -55,12 +55,23 @@ final class PresetsDatabase {
 		}
 		let orig = try cast(orig, to: [String: Any].self)
 
+		func stringsDict(for trans: Any?) -> [String: String]?
+		{
+			if let s = trans as? [String: String] {
+				return s
+			} else if let s = trans as? [String: [String: String]] {
+				return s.compactMapValues{ $0["title"] }
+			} else {
+				return nil
+			}
+		}
+
 		// both are dictionaries, so recurse on each key/value pair
 		var newDict = [String: Any]()
 		for (key, obj) in orig {
 			if key == "options" {
 				newDict[key] = obj as! [String]
-				newDict["strings"] = translation[key]
+				newDict["strings"] = stringsDict(for: translation[key])
 			} else {
 				newDict[key] = try MergeTranslations(into: obj, from: translation[key])
 			}
@@ -71,7 +82,7 @@ final class PresetsDatabase {
 			if newDict[key] == nil {
 				if key == "options" {
 					newDict[key] = Array((obj as! [String: String]).keys) as [String]
-					newDict["strings"] = obj
+					newDict["strings"] = stringsDict(for: obj)
 				} else {
 					newDict[key] = obj
 				}
