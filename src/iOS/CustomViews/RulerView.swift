@@ -1,5 +1,5 @@
 //
-//  RulerLayer.swift
+//  RulerView.swift
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 10/11/12.
@@ -28,7 +28,6 @@ func roundToEvenValue(_ value: Double) -> Double {
 class RulerView: UIView {
 	private var shapeLayer: CAShapeLayer
 	private var textLayer: CATextLayer
-	private let measurementFormatter = MeasurementFormatter()
 	private var unitType: UnitType {
 		didSet {
 			updateText()
@@ -39,10 +38,6 @@ class RulerView: UIView {
 		didSet {
 			mapView?.mapTransform.observe(by: self, callback: { self.updateText() })
 		}
-	}
-
-	enum UnitType: String {
-		case metric, imperial
 	}
 
 	required init?(coder: NSCoder) {
@@ -85,11 +80,6 @@ class RulerView: UIView {
 
 		layer.addSublayer(shapeLayer)
 		layer.addSublayer(textLayer)
-
-		measurementFormatter.unitOptions = [.providedUnit]
-		measurementFormatter.numberFormatter = NumberFormatter()
-		measurementFormatter.numberFormatter.minimumSignificantDigits = 3
-		measurementFormatter.numberFormatter.maximumSignificantDigits = 3
 
 		let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(toggleUnitType))
 		addGestureRecognizer(tapGestureRecognizer)
@@ -135,25 +125,7 @@ class RulerView: UIView {
 		let left = convert(CGPoint(x: bounds.minX, y: bounds.minY), to: mapView)
 		let right = convert(CGPoint(x: bounds.maxX, y: bounds.minY), to: mapView)
 		let rulerLength = mapView.distance(from: left, to: right)
-
-		var width = Measurement(value: rulerLength, unit: UnitLength.meters)
-		switch unitType {
-		case .metric:
-			if width.value >= 1000 {
-				width = width.converted(to: .kilometers)
-			} else if width.value < 1.0 {
-				width = width.converted(to: .centimeters)
-			}
-		case .imperial:
-			width = width.converted(to: .feet)
-			if width.value >= 5280 {
-				width = width.converted(to: .miles)
-			} else if width.value < 1.0 {
-				width = width.converted(to: .inches)
-			}
-		}
-
-		textLayer.string = measurementFormatter.string(from: width)
+		textLayer.string = UnitFormatter.shared.stringFor(meters: rulerLength, unitType: unitType)
 	}
 
 	@objc private func toggleUnitType() {

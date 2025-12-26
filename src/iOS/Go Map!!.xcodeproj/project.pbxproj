@@ -83,6 +83,7 @@
 		02811D6E2E3176DB00E9D889 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */; };
 		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
 		0282C4C926617E7400F2D282 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C826617E7400F2D282 /* MapView.swift */; };
+		028365C92EFDFF1E002B9E34 /* UnitFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028365C82EFDFC22002B9E34 /* UnitFormatter.swift */; };
 		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
 		0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */; };
 		0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D1263EA7E100E3B129 /* LayerProperties.swift */; };
@@ -428,6 +429,7 @@
 		02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
 		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../Shared/MapView.swift; sourceTree = "<group>"; };
+		028365C82EFDFC22002B9E34 /* UnitFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UnitFormatter.swift; path = ../Shared/Utility/UnitFormatter.swift; sourceTree = SOURCE_ROOT; };
 		0287D25129947B2900BEAD9E /* QuestChooser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QuestChooser.storyboard; sourceTree = "<group>"; };
 		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmMapData+Edit.swift"; sourceTree = "<group>"; };
 		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmMapData.swift; sourceTree = "<group>"; };
@@ -1112,6 +1114,7 @@
 				025F004E2E453002003A68FA /* TypeCast.swift */,
 				02EF13C22E5D041800418CA4 /* UIFont+Ext.swift */,
 				02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */,
+				028365C82EFDFC22002B9E34 /* UnitFormatter.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
 			);
 			name = Utility;
@@ -1501,6 +1504,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				028365C92EFDFF1E002B9E34 /* UnitFormatter.swift in Sources */,
 				02E9ABC02BA151AA00F0EF69 /* GoogleMaps.secret in Sources */,
 				021BC21E2D6E6E0E004631C5 /* Panoramax.swift in Sources */,
 				020798012994706000D3C654 /* QuestBuilderController.swift in Sources */,

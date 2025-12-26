@@ -13,6 +13,18 @@ private struct NominatimResult: Decodable {
 	let osm_id: Int?
 	let boundingbox: [String]
 	let display_name: String
+
+	var latLon: LatLon? {
+		let box = boundingbox.compactMap { Double($0) }
+		guard box.count == 4 else { return nil }
+		let lat1 = box[0]
+		let lat2 = box[1]
+		let lon1 = box[2]
+		let lon2 = box[3]
+		let lat = (lat1 + lat2) / 2
+		let lon = (lon1 + lon2) / 2
+		return LatLon(latitude: lat, longitude: lon)
+	}
 }
 
 class NominatimViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
@@ -62,19 +74,30 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		return UITableView.automaticDimension
 	}
 
-	static let tableViewCellIdentifier = "Cell"
-
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(
-			withIdentifier: NominatimViewController.tableViewCellIdentifier,
-			for: indexPath)
 
 		if showingHistory {
+			let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryCell",
+			                                         for: indexPath)
 			cell.textLabel?.text = historyArray.items[indexPath.row]
+			return cell
 		} else {
-			cell.textLabel?.text = resultsArray[indexPath.row].display_name
+			let cell = tableView.dequeueReusableCell(withIdentifier: "ResultCell",
+			                                         for: indexPath)
+			let result = resultsArray[indexPath.row]
+			let subtitle: String
+			if let latLon = result.latLon {
+				// compute distance
+				let dist = GreatCircleDistance(latLon,
+				                               AppDelegate.shared.mapView.screenCenterLatLon())
+				subtitle = UnitFormatter.shared.stringFor(meters: dist)
+			} else {
+				subtitle = ""
+			}
+			cell.textLabel?.text = result.display_name
+			cell.detailTextLabel?.text = subtitle
+			return cell
 		}
-		return cell
 	}
 
 	@IBAction func cancel(_ sender: Any) {
@@ -123,16 +146,8 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			return
 		}
 
-		let box = result.boundingbox.compactMap { Double($0) }
-		if box.count == 4 {
-			let lat1 = box[0]
-			let lat2 = box[1]
-			let lon1 = box[2]
-			let lon2 = box[3]
-			let lat = (lat1 + lat2) / 2
-			let lon = (lon1 + lon2) / 2
-
-			jumpTo(lat: lat, lon: lon, zoom: nil)
+		if let latLon = result.latLon {
+			jumpTo(lat: latLon.lat, lon: latLon.lon, zoom: nil)
 		}
 	}
 
@@ -234,10 +249,10 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			return
 		}
 
-		let lang = PresetLanguages.preferredLanguageCode()
-		guard let text = string.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed),
-		      let url =
-		      URL(string: "\(OSM_SERVER.nominatimUrl)search?q=\(text)&format=json&limit=50&accept-language=\(lang)")
+		guard
+			let url = nominatimSearchURL(query: string,
+			                             lang: PresetLanguages.preferredLanguageCode(),
+			                             latLon: AppDelegate.shared.mapView.screenCenterLatLon())
 		else {
 			return
 		}
@@ -278,5 +293,18 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		                              style: .cancel,
 		                              handler: nil))
 		present(alert, animated: true)
+	}
+
+	func nominatimSearchURL(query string: String, lang: String, latLon: LatLon) -> URL? {
+		var components = URLComponents(string: OSM_SERVER.nominatimUrl + "search")
+		components?.queryItems = [
+			URLQueryItem(name: "q", value: string),
+			URLQueryItem(name: "format", value: "json"),
+			URLQueryItem(name: "limit", value: "50"),
+			URLQueryItem(name: "accept-language", value: lang),
+			URLQueryItem(name: "lat", value: String(latLon.lat)),
+			URLQueryItem(name: "lon", value: String(latLon.lon))
+		]
+		return components?.url
 	}
 }

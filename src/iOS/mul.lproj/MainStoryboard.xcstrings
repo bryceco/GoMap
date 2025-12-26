@@ -4352,7 +4352,7 @@
       }
     },
     "vRO-Aj-Sdr.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"vRO-Aj-Sdr\";",
+      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"vRO-Aj-Sdr\"; Note = \"Placeholder - do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
@@ -4491,6 +4491,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "標題"
+          }
+        }
+      }
+    },
+    "vwW-V6-kvw.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"vwW-V6-kvw\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Title"
           }
         }
       }
