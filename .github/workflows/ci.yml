@@ -16,6 +16,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Select newest Xcode
+        run: |
+          LATEST=$(ls /Applications | grep Xcode_ | sort -V | tail -n 1)
+          echo "Using $LATEST"
+          sudo xcode-select -s "/Applications/$LATEST/Contents/Developer"
+
       - name: Get swift version
         run: |
           ls /Applications
