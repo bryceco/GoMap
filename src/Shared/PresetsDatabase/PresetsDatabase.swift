@@ -55,6 +55,17 @@ final class PresetsDatabase {
 		}
 		let orig = try cast(orig, to: [String: Any].self)
 
+		func optionsArray(for opt: Any?) -> [String]?
+		{
+			if let s = opt as? [String] {
+				return s
+			} else if let s = opt as? [String: String] {
+				return Array(s.keys)
+			} else {
+				return nil
+			}
+		}
+
 		func stringsDict(for trans: Any?) -> [String: String]?
 		{
 			if let s = trans as? [String: String] {
@@ -70,7 +81,7 @@ final class PresetsDatabase {
 		var newDict = [String: Any]()
 		for (key, obj) in orig {
 			if key == "options" {
-				newDict[key] = obj as! [String]
+				newDict[key] = optionsArray(for: obj)
 				newDict["strings"] = stringsDict(for: translation[key])
 			} else {
 				newDict[key] = try MergeTranslations(into: obj, from: translation[key])
@@ -81,7 +92,7 @@ final class PresetsDatabase {
 		for (key, obj) in translation {
 			if newDict[key] == nil {
 				if key == "options" {
-					newDict[key] = Array((obj as! [String: String]).keys) as [String]
+					newDict[key] = optionsArray(for: obj)
 					newDict["strings"] = stringsDict(for: obj)
 				} else {
 					newDict[key] = obj
@@ -137,7 +148,7 @@ final class PresetsDatabase {
 
 		// get localized common words
 		let fieldTrans = try cast(jsonTranslation["fields"], to: [String: [String: Any]]?.self) ?? [:]
-		let yesNoDict = try cast(fieldTrans["internet_access"]?["options"], to: [String: String]?.self)
+		let yesNoDict = try cast(fieldTrans["internet_access"]?["strings"], to: [String: String]?.self)
 		yesForLocale = yesNoDict?["yes"] ?? "Yes"
 		noForLocale = yesNoDict?["no"] ?? "No"
 		unknownForLocale = try cast(fieldTrans["opening_hours"]?["placeholder"], to: String?.self) ?? "???"
