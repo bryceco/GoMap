@@ -234,7 +234,7 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		websiteButton.setTitle("", for: .normal)
 
 		captureButton.setTitle("", for: .normal)
-		let tintedImage = captureButton.imageView!.image!.withRenderingMode(.alwaysTemplate)
+		let tintedImage = captureButton.image(for: .normal)!.withRenderingMode(.alwaysTemplate)
 		captureButton.setImage(tintedImage, for: .normal)
 		captureButton.tintColor = .systemBlue
 
