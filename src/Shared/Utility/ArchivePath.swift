@@ -40,6 +40,12 @@ enum ArchivePath {
 			let bundleName = Bundle.main.bundleIdentifier!
 			url = url.appendingPathComponent(bundleName, isDirectory: true)
 		}
+#if targetEnvironment(macCatalyst)
+		// On Mac we want our data to be inside an app-specific folder
+		if folder == .documentDirectory {
+			url = url.appendingPathComponent(AppDelegate.bundleName)
+		}
+#endif
 		url = url.appendingPathComponent(name, isDirectory: false)
 		return url
 	}
