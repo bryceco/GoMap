@@ -332,6 +332,11 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 					config.title = button.titleLabel?.text
 					button.configuration = config
 
+#if targetEnvironment(macCatalyst)
+					// adjust look of buttons on MacCatalyst
+					button.preferredBehavioralStyle = .pad
+#endif
+
 					// Adjust sizes of buttons to make them a little larger
 					if button != mapView.helpButton,
 					   button != mapView.aerialAlignmentButton,
