@@ -265,10 +265,14 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 			value.hasPrefix("http://") ||
 			value.hasPrefix("https://")
 		{
-			let button = UIButton(type: .system)
+			let button = UIButton(type: .custom)
+#if targetEnvironment(macCatalyst)
+// button doesn't get styling because it doesn't fit
+#else
 			button.layer.borderWidth = 2.0
 			button.layer.borderColor = UIColor.systemBlue.cgColor
 			button.layer.cornerRadius = 15.0
+#endif
 			button.setTitle("🔗", for: .normal)
 
 			button.addTarget(self, action: #selector(openWebsite(_:)), for: .touchUpInside)
@@ -474,7 +478,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		if #available(iOS 13.0, *),
 		   OsmTags.isKey(key, variantOf: "panoramax")
 		{
-			let button = UIButton(type: .system)
+			let button = UIButton(type: .custom)
 			button.setImage(UIImage(systemName: "camera"), for: .normal)
 			button.addTarget(self, action: #selector(openPanoramaxViewController(_:)), for: .touchUpInside)
 			return button
