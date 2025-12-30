@@ -709,6 +709,10 @@ func GreatCircleDistance(_ p1: LatLon, _ p2: LatLon) -> Double {
 	return meters
 }
 
+func GreatCircleDistance(_ p1: CLLocationCoordinate2D, _ p2: CLLocationCoordinate2D) -> Double {
+	return GreatCircleDistance(LatLon(p1), LatLon(p2))
+}
+
 // area of a closed polygon (first and last points repeat), and boolean if it's clockwise
 func AreaOfPolygonClockwise(_ points: [CGPoint]) -> (area: Double, clockwise: Bool)? {
 	if points.count < 4 {

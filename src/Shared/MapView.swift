@@ -610,6 +610,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 				locationManager.stopUpdatingLocation()
 				locationManager.stopUpdatingHeading()
 				locationBallLayer.isHidden = true
+				currentLocation = CLLocation()
 			}
 		}
 	}
@@ -1639,9 +1640,10 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	func updateUserLocationIndicator(_ location: CLLocation?) {
 		if !locationBallLayer.isHidden {
 			// set new position
-			guard let location = location ?? locationManager.location,
-			      location.horizontalAccuracy >= 0,
-			      location.horizontalAccuracy < 1000
+			guard
+				let location = location ?? locationManager.location,
+				location.horizontalAccuracy >= 0,
+				location.horizontalAccuracy < 1000
 			else {
 				return
 			}
@@ -1721,25 +1723,23 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 	}
 
 	@objc func locationUpdated(to newLocation: CLLocation) {
-		if gpsState == .NONE {
+		guard gpsState != .NONE else {
 			// sometimes we get a notification after turning off notifications
 			DLog("discard location notification")
 			return
 		}
 
-		if newLocation.timestamp < Date(timeIntervalSinceNow: -10.0) {
+		guard newLocation.timestamp >= Date(timeIntervalSinceNow: -10.0) else {
 			// its old data
 			DLog("discard old GPS data: \(newLocation.timestamp), \(Date())\n")
 			return
 		}
 
-		// check if we moved an appreciable distance
-		let p1 = LatLon(newLocation.coordinate)
-		let p2 = LatLon(currentLocation.coordinate)
-		let delta = GreatCircleDistance(p1, p2)
-		if !locationBallLayer.isHidden, delta < 0.1,
-		   abs(newLocation.horizontalAccuracy - currentLocation.horizontalAccuracy) < 1.0
-		{
+		guard
+			GreatCircleDistance(newLocation.coordinate, currentLocation.coordinate) >= 0.1 ||
+			abs(newLocation.horizontalAccuracy - currentLocation.horizontalAccuracy) >= 1.0
+		else {
+			// didn't move far, and the accuracy didn't change either, so ignore it
 			return
 		}
 		currentLocation = newLocation
