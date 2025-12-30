@@ -468,15 +468,19 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 
 	var panoramaxKey: String?
 	private func getPhotographButton() -> UIView? {
-		guard #available(iOS 13.0, *),
-		      OsmTags.isKey(key, variantOf: "panoramax")
-		else {
-			return nil
+#if targetEnvironment(macCatalyst)
+		return nil // camera not available
+#else
+		if #available(iOS 13.0, *),
+		   OsmTags.isKey(key, variantOf: "panoramax")
+		{
+			let button = UIButton(type: .system)
+			button.setImage(UIImage(systemName: "camera"), for: .normal)
+			button.addTarget(self, action: #selector(openPanoramaxViewController(_:)), for: .touchUpInside)
+			return button
 		}
-		let button = UIButton(type: .system)
-		button.setImage(UIImage(systemName: "camera"), for: .normal)
-		button.addTarget(self, action: #selector(openPanoramaxViewController(_:)), for: .touchUpInside)
-		return button
+		return nil
+#endif
 	}
 
 	func panoramaxUpdate(photoID: String) {
