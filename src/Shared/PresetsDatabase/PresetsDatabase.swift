@@ -60,7 +60,8 @@ final class PresetsDatabase {
 		// get presets files
 		presetDefaults = try cast(Self.jsonForFile("preset_defaults.json"), to: [String: [String]].self)
 		presetFields = try cast(Self.jsonForFile("fields.json"), to: [String: Any].self)
-			.compactMapValues({ try PresetField(withJson: cast($0, to: [String: Any].self)) })
+			.compactMapValuesWithKeys({ k,v in
+				try PresetField(identifier: k, json: cast(v, to: [String: Any].self)) })
 
 		// address formats
 		presetAddressFormats = try cast(Self.jsonForFile("address_formats.json"), to: [Any].self)

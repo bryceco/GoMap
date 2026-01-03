@@ -55,10 +55,12 @@ enum PresetType: String, Codable {
 }
 
 final class PresetField: CustomDebugStringConvertible {
+	let identifier: String
 	let jsonDict: [String: Any]
 
-	init?(withJson json: [String: Any]) {
+	init?(identifier: String, json: [String: Any]) {
 		guard json["type"] is String else { return nil }
+		self.identifier = identifier
 		jsonDict = json
 #if DEBUG
 		// validate that we don't encounter any types that aren't supported
@@ -84,11 +86,34 @@ final class PresetField: CustomDebugStringConvertible {
 	var locationSet: LocationSet? { LocationSet(withJson: jsonDict["locationSet"]) }
 
 	// localizable strings
-	var placeholder: String? { redirected(property: "placeholder") as String? }
-	var placeholders: [String: Any]? { jsonDict["placeholders"] as! [String: Any]? }
-	var label: String? { redirected(property: "label") as String? }
-	var strings: [String: String]? { redirected(property: "strings") as [String: String]? }
-	var types: [String: String]? { jsonDict["types"] as! [String: String]? }
+	var label: String? {
+		return PresetTranslations.shared.label(for: crossRef(for: "label"))
+	}
+	var placeholder: String? {
+		return PresetTranslations.shared.placeholder(for: crossRef(for: "placeholder"))
+	}
+	var placeholders: [String: String]? {
+		return PresetTranslations.shared.placeholders(for: crossRef(for: "placeholders"))
+	}
+	var strings: [String: String]? { // rename to options
+		return PresetTranslations.shared.options(for: crossRef(for: "stringsCrossReference"))
+	}
+	var types: [String: String]? { // rename to options
+		return PresetTranslations.shared.types(for: crossRef(for: "stringsCrossReference"))
+	}
+
+	func crossRef(for property: String) -> PresetField {
+		if let value = jsonDict[property],
+		   let value = value as? String,
+		   value.hasPrefix("{"),
+		   value.hasSuffix("}"),
+		   let newField = PresetsDatabase.shared.presetFields[String(value.dropFirst().dropLast())],
+		   newField !== self
+		{
+			return newField
+		}
+		return self
+	}
 
 	// Some field values can have a redirect to a different field using a {other_field} notation
 	func redirected<T>(property: String) -> T? {
