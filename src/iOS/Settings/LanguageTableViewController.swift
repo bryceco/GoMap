@@ -79,7 +79,7 @@ class LanguageTableViewController: UITableViewController {
 
 		self.tableView.reloadData()
 
-		try? PresetsDatabase.shared.setLanguage(PresetLanguages.preferredPresetLanguageCode())
+		try? PresetTranslations.shared.setLanguage(PresetLanguages.preferredPresetLanguageCode())
 		AppDelegate.shared.mapView.refreshPushpinText()
 	}
 }

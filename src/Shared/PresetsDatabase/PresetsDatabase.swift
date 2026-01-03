@@ -13,7 +13,7 @@ final class PresetsDatabase {
 		let langCode = PresetLanguages.preferredPresetLanguageCode()
 		do {
 			let database = try PresetsDatabase()
-			try database.setLanguage(langCode)
+			try PresetTranslations.shared.setLanguage(langCode)
 			return database
 		} catch {
 			showInternalError(error, context: "langCode = \(langCode)")
@@ -36,7 +36,7 @@ final class PresetsDatabase {
 		return bundle.appendingPathComponent("presets").appendingPathComponent(file)
 	}
 
-	private class func dataForFile(_ file: String) throws -> Data {
+	class func dataForFile(_ file: String) throws -> Data {
 		let path = try Self.pathForFile(file)
 		return try Data(contentsOf: path)
 	}
@@ -51,58 +51,25 @@ final class PresetsDatabase {
 	let presetCategories: [String: PresetCategory] // map a top-level category ("building") to a set of specific features ("building/retail")
 	let presetFields: [String: PresetField] // possible values for a preset key ("oneway=")
 
-	var yesForLocale: String
-	var noForLocale: String
-	var unknownForLocale: String
-
-	let translations = PresetTranslations()
-
 	lazy var taginfoCache = TagInfo()
-
-	var languages: [String] = []
-	func setLanguage(_ code: String) throws {
-		// choose the set of translations we'll use
-		if let dash = code.firstIndex(of: "-") {
-			// If the language is a code like "en-US" we want to use both the "en" and "en-US" translations
-			let baseCode = String(code.prefix(upTo: dash))
-			languages = Array([code, baseCode, "en"].removingDuplicatedItems())
-		} else {
-			languages = Array([code, "en"].removingDuplicatedItems())
-		}
-
-		// ensure data files are loaded for them
-		for lang in languages where !translations.languages.keys.contains(lang) {
-			let data = try Self.dataForFile("translations/\(code).json")
-			try translations.addTranslation(from: data)
-		}
-
-		// get localized common words
-		yesForLocale = languages.compactMap{ translations.languages[$0]?.presets?.fields["internet_access"]?.options?["yes"]?.title }.first ?? "Yes"
-		noForLocale = languages.compactMap{ translations.languages[$0]?.presets?.fields["internet_access"]?.options?["no"]?.title }.first ?? "No"
-		unknownForLocale = languages.compactMap{ translations.languages[$0]?.presets?.fields["opening_hours"]?.placeholder }.first ?? "Unknown"
-	}
 
 	init() throws {
 		let startTime = Date()
 		let readTime = Date()
 
-		yesForLocale = "Yes"
-		noForLocale = "No"
-		unknownForLocale = "Unknown"
-
 		// get presets files
 		presetDefaults = try cast(Self.jsonForFile("preset_defaults.json"), to: [String: [String]].self)
 		presetFields = try cast(Self.jsonForFile("fields.json"), to: [String: Any].self)
-			.compactMapValues({ PresetField(withJson: try cast($0, to: [String: Any].self)) })
+			.compactMapValues({ try PresetField(withJson: cast($0, to: [String: Any].self)) })
 
 		// address formats
 		presetAddressFormats = try cast(Self.jsonForFile("address_formats.json"), to: [Any].self)
-			.map({ PresetAddressFormat(withJson: try cast($0, to: [String: Any].self)) })
+			.map({ try PresetAddressFormat(withJson: cast($0, to: [String: Any].self)) })
 
 		// initialize presets and index them
 		let presets = try cast(Self.jsonForFile("presets.json"), to: [String: Any].self)
 			.compactMapValuesWithKeys({ k, v in
-				PresetFeature(withID: k, jsonDict: try cast(v, to: [String: Any].self), isNSI: false)
+				try PresetFeature(withID: k, jsonDict: cast(v, to: [String: Any].self), isNSI: false)
 			})
 		stdFeatures = presets
 		stdFeatureIndex = Self.buildTagIndex([stdFeatures], basePresets: stdFeatures)
@@ -132,9 +99,9 @@ final class PresetsDatabase {
 					let nsiPresets = try cast(nsiDict["presets"], to: [String: Any].self)
 						.mapValuesWithKeys({ k, v in
 							guard
-								let p = PresetFeature(withID: k,
-								                      jsonDict: try cast(v, to: [String: Any].self),
-								                      isNSI: true)
+								let p = try PresetFeature(withID: k,
+								                          jsonDict: cast(v, to: [String: Any].self),
+								                          isNSI: true)
 							else {
 								throw ContextualError("nil preset")
 							}
@@ -351,23 +318,23 @@ final class PresetsDatabase {
 	func testAllPresetFields() {
 		// Verify all fields can be read in all languages
 		for langCode in PresetLanguages.languageCodeList {
-				do {
-					try setLanguage(langCode)
-					for (name, field) in self.presetFields {
-						var geometry = GEOMETRY.LINE
-						if let geom = field.geometry {
-							geometry = GEOMETRY(rawValue: geom[0])!
-						}
-						_ = self.presetGroupForField(fieldName: name,
-														   objectTags: [:],
-														   geometry: geometry,
-						                                countryCode: "us",
-						                                ignore: [],
-						                                update: nil)
+			do {
+				try PresetTranslations.shared.setLanguage(langCode)
+				for (name, field) in self.presetFields {
+					var geometry = GEOMETRY.LINE
+					if let geom = field.geometry {
+						geometry = GEOMETRY(rawValue: geom[0])!
 					}
-				} catch {
-					fatalError("\(error)")
+					_ = self.presetGroupForField(fieldName: name,
+					                             objectTags: [:],
+					                             geometry: geometry,
+					                             countryCode: "us",
+					                             ignore: [],
+					                             update: nil)
 				}
+			} catch {
+				fatalError("\(error)")
+			}
 		}
 	}
 #endif

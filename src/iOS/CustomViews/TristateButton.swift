@@ -47,8 +47,8 @@ class TristateButton: UISegmentedControl {
 
 class TristateYesNoButton: TristateButton {
 	required init() {
-		super.init(withLeftText: PresetsDatabase.shared.noForLocale,
-		           rightText: PresetsDatabase.shared.yesForLocale)
+		super.init(withLeftText: PresetTranslations.shared.noForLocale,
+		           rightText: PresetTranslations.shared.yesForLocale)
 	}
 
 	@available(*, unavailable)

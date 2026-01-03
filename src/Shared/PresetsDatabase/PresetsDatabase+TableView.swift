@@ -260,8 +260,8 @@ extension PresetsDatabase {
 		autocorrect: UITextAutocorrectionType) -> PresetKey
 	{
 		let presets = [
-			PresetValue(name: Self.shared.yesForLocale, details: nil, icon: nil, tagValue: "yes"),
-			PresetValue(name: Self.shared.noForLocale, details: nil, icon: nil, tagValue: "no")
+			PresetValue(name: PresetTranslations.shared.yesForLocale, details: nil, icon: nil, tagValue: "yes"),
+			PresetValue(name: PresetTranslations.shared.noForLocale, details: nil, icon: nil, tagValue: "no")
 		]
 		let tag = PresetKey(
 			name: label,

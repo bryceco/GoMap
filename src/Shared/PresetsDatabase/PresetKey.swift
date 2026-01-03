@@ -55,7 +55,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		tagKey = tag
 		self.placeholder = placeholder
 			?? PresetKey.placeholderForPresets(presets)
-			?? PresetsDatabase.shared.unknownForLocale
+			?? PresetTranslations.shared.unknownForLocale
 		keyboardType = keyboard
 		autocapitalizationType = capitalize
 		autocorrectType = autocorrect
@@ -118,7 +118,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		type = .combo
 		defaultValue = nil
 		placeholder = PresetKey.placeholderForPresets(presetList)
-			?? PresetsDatabase.shared.unknownForLocale
+			?? PresetTranslations.shared.unknownForLocale
 		keyboardType = .default
 		autocapitalizationType = .none
 		autocorrectType = .no
