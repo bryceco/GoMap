@@ -8,11 +8,14 @@
 
 import Swift
 
-class PresetTranslation: Codable {
-	let languages: [String: Language]
+class PresetTranslations: Codable {
+	var languages: [String: Language] = [:]
 
-	init(from data: Data) throws {
-		self.languages = try JSONDecoder().decode([String: Language].self, from: data)
+	func addTranslation(from data: Data) throws {
+		let trans = try JSONDecoder().decode([String: Language].self, from: data)
+		for (key,value) in trans {
+			languages[key] = value
+		}
 	}
 
 	func asPrettyJSON() -> String {
@@ -45,6 +48,12 @@ class PresetTranslation: Codable {
 		}
 		case shortText(String)
 		case longText(TitleDescription)
+		var title: String? {
+			switch self {
+				case .shortText(let string): return string
+				case .longText(let strings): return strings.title
+			}
+		}
 		init(from decoder: Decoder) throws {
 			let container = try decoder.singleValueContainer()
 			if let strings = try? container.decode(TitleDescription.self) {

@@ -9,20 +9,17 @@
 import Foundation
 
 final class PresetsDatabase {
-	static var shared = {
+	static let shared = {
 		let langCode = PresetLanguages.preferredPresetLanguageCode()
 		do {
-			return try PresetsDatabase(withLanguageCode: langCode)
+			let database = try PresetsDatabase()
+			try database.setLanguage(langCode)
+			return database
 		} catch {
 			showInternalError(error, context: "langCode = \(langCode)")
-			return PresetsDatabase()
+			fatalError()
 		}
 	}()
-
-	class func reload(withLanguageCode code: String) throws {
-		// called when language changes
-		shared = try PresetsDatabase(withLanguageCode: code)
-	}
 
 	// these map a FeatureID to a feature
 	var stdFeatures: [String: PresetFeature] // only generic presets + user custom features
@@ -49,126 +46,53 @@ final class PresetsDatabase {
 		return try JSONSerialization.jsonObject(with: data, options: [])
 	}
 
-	private class func MergeTranslations(into orig: Any, from translation: Any?) throws -> Any {
-		guard let translation = translation as? [String: Any] else {
-			return orig
-		}
-		let orig = try cast(orig, to: [String: Any].self)
-
-		func optionsArray(for opt: Any?) -> [String]?
-		{
-			if let s = opt as? [String] {
-				return s
-			} else if let s = opt as? [String: String] {
-				return Array(s.keys)
-			} else {
-				return nil
-			}
-		}
-
-		func stringsDict(for trans: Any?) -> [String: String]?
-		{
-			if let s = trans as? [String: String] {
-				return s
-			} else if let s = trans as? [String: [String: String]] {
-				return s.compactMapValues{ $0["title"] }
-			} else {
-				return nil
-			}
-		}
-
-		// both are dictionaries, so recurse on each key/value pair
-		var newDict = [String: Any]()
-		for (key, obj) in orig {
-			if key == "options" {
-				newDict[key] = optionsArray(for: obj)
-				newDict["strings"] = stringsDict(for: translation[key])
-			} else {
-				newDict[key] = try MergeTranslations(into: obj, from: translation[key])
-			}
-		}
-
-		// need to add things that don't exist in orig
-		for (key, obj) in translation {
-			if newDict[key] == nil {
-				if key == "options" {
-					newDict[key] = optionsArray(for: obj)
-					newDict["strings"] = stringsDict(for: obj)
-				} else {
-					newDict[key] = obj
-				}
-			}
-		}
-		return newDict
-	}
-
 	let presetAddressFormats: [PresetAddressFormat] // address formats for different countries
 	let presetDefaults: [String: [String]] // map a geometry to a set of features/categories
 	let presetCategories: [String: PresetCategory] // map a top-level category ("building") to a set of specific features ("building/retail")
 	let presetFields: [String: PresetField] // possible values for a preset key ("oneway=")
 
-	let yesForLocale: String
-	let noForLocale: String
-	let unknownForLocale: String
+	var yesForLocale: String
+	var noForLocale: String
+	var unknownForLocale: String
+
+	let translations = PresetTranslations()
 
 	lazy var taginfoCache = TagInfo()
 
-	init() {
-		presetAddressFormats = []
-		presetDefaults = [:]
-		presetCategories = [:]
-		presetFields = [:]
-		yesForLocale = ""
-		noForLocale = ""
-		unknownForLocale = ""
-		stdFeatures = [:]
-		nsiFeatures = [:]
-		stdFeatureIndex = [:]
-		nsiFeatureIndex = [:]
-		nsiGeoJson = [:]
-	}
-
-	init(withLanguageCode code: String, debug: Bool = true) throws {
-		let startTime = Date()
-
-		// get translations for current language
-		do {
-			let data = try Self.dataForFile("translations/\(code).json")
-			let translations = try PresetTranslation(from: data)
-			print(translations.asPrettyJSON())
-		} catch {
-			print("XXX")
-			print(error)
-		}
-		var trans = try cast(Self.jsonForFile("translations/\(code).json"), to: [String: [String: Any]].self)
-		trans = try cast(trans[code], to: [String: [String: Any]].self)
+	var languages: [String] = []
+	func setLanguage(_ code: String) throws {
+		// choose the set of translations we'll use
 		if let dash = code.firstIndex(of: "-") {
-			// If the language is a code like "en-US" we want to combine the "en" and "en-US" translations
+			// If the language is a code like "en-US" we want to use both the "en" and "en-US" translations
 			let baseCode = String(code.prefix(upTo: dash))
-			var transBase = try cast(
-				Self.jsonForFile("translations/\(baseCode).json"),
-				to: [String: [String: Any]].self)
-			transBase = try cast(transBase[baseCode], to: [String: [String: Any]].self)
-			trans = try cast(Self.MergeTranslations(into: trans, from: transBase), to: [String: [String: Any]].self)
+			languages = Array([code, baseCode, "en"].removingDuplicatedItems())
+		} else {
+			languages = Array([code, "en"].removingDuplicatedItems())
 		}
 
-		let jsonTranslation = try cast(trans["presets"], to: [String: [String: Any]]?.self) ?? [:]
+		// ensure data files are loaded for them
+		for lang in languages where !translations.languages.keys.contains(lang) {
+			let data = try Self.dataForFile("translations/\(code).json")
+			try translations.addTranslation(from: data)
+		}
 
 		// get localized common words
-		let fieldTrans = try cast(jsonTranslation["fields"], to: [String: [String: Any]]?.self) ?? [:]
-		let yesNoDict = try cast(fieldTrans["internet_access"]?["strings"], to: [String: String]?.self)
-		yesForLocale = yesNoDict?["yes"] ?? "Yes"
-		noForLocale = yesNoDict?["no"] ?? "No"
-		unknownForLocale = try cast(fieldTrans["opening_hours"]?["placeholder"], to: String?.self) ?? "???"
+		yesForLocale = languages.compactMap{ translations.languages[$0]?.presets?.fields["internet_access"]?.options?["yes"]?.title }.first ?? "Yes"
+		noForLocale = languages.compactMap{ translations.languages[$0]?.presets?.fields["internet_access"]?.options?["no"]?.title }.first ?? "No"
+		unknownForLocale = languages.compactMap{ translations.languages[$0]?.presets?.fields["opening_hours"]?.placeholder }.first ?? "Unknown"
+	}
 
+	init() throws {
+		let startTime = Date()
 		let readTime = Date()
 
+		yesForLocale = "Yes"
+		noForLocale = "No"
+		unknownForLocale = "Unknown"
+
 		// get presets files
-		presetDefaults = try cast(Self.MergeTranslations(
-			into: Self.jsonForFile("preset_defaults.json"),
-			from: jsonTranslation["defaults"]), to: [String: [String]].self)
-		presetFields = try cast(Self.MergeTranslations(into: Self.jsonForFile("fields.json"),
-		                                               from: jsonTranslation["fields"]), to: [String: Any].self)
+		presetDefaults = try cast(Self.jsonForFile("preset_defaults.json"), to: [String: [String]].self)
+		presetFields = try cast(Self.jsonForFile("fields.json"), to: [String: Any].self)
 			.compactMapValues({ PresetField(withJson: try cast($0, to: [String: Any].self)) })
 
 		// address formats
@@ -176,16 +100,14 @@ final class PresetsDatabase {
 			.map({ PresetAddressFormat(withJson: try cast($0, to: [String: Any].self)) })
 
 		// initialize presets and index them
-		let presets = try cast(Self.MergeTranslations(into: Self.jsonForFile("presets.json"),
-		                                              from: jsonTranslation["presets"]), to: [String: Any].self)
+		let presets = try cast(Self.jsonForFile("presets.json"), to: [String: Any].self)
 			.compactMapValuesWithKeys({ k, v in
 				PresetFeature(withID: k, jsonDict: try cast(v, to: [String: Any].self), isNSI: false)
 			})
 		stdFeatures = presets
 		stdFeatureIndex = Self.buildTagIndex([stdFeatures], basePresets: stdFeatures)
 
-		presetCategories = try cast(Self.MergeTranslations(into: Self.jsonForFile("preset_categories.json"),
-		                                                   from: jsonTranslation["categories"]), to: [String: Any].self)
+		presetCategories = try cast(Self.jsonForFile("preset_categories.json"), to: [String: Any].self)
 			.mapValuesWithKeys({ k, v in PresetCategory(withID: k, json: v, presets: presets) })
 
 		// name suggestion index
@@ -429,17 +351,16 @@ final class PresetsDatabase {
 	func testAllPresetFields() {
 		// Verify all fields can be read in all languages
 		for langCode in PresetLanguages.languageCodeList {
-			DispatchQueue.global(qos: .background).async {
 				do {
-					let presets = try PresetsDatabase(withLanguageCode: langCode, debug: false)
-					for (name, field) in presets.presetFields {
+					try setLanguage(langCode)
+					for (name, field) in self.presetFields {
 						var geometry = GEOMETRY.LINE
 						if let geom = field.geometry {
 							geometry = GEOMETRY(rawValue: geom[0])!
 						}
-						_ = presets.presetGroupForField(fieldName: name,
-						                                objectTags: [:],
-						                                geometry: geometry,
+						_ = self.presetGroupForField(fieldName: name,
+														   objectTags: [:],
+														   geometry: geometry,
 						                                countryCode: "us",
 						                                ignore: [],
 						                                update: nil)
@@ -447,7 +368,6 @@ final class PresetsDatabase {
 				} catch {
 					fatalError("\(error)")
 				}
-			}
 		}
 	}
 #endif
