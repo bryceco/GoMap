@@ -52,16 +52,19 @@ class PresetTranslations: Codable {
 	func label(for field: PresetField) -> String? {
 		return languageCodes.compactMap { languageDict[$0]?.presets?.fields[field.identifier]?.label }.first
 	}
+
 	func placeholder(for field: PresetField) -> String? {
 		return languageCodes.compactMap { languageDict[$0]?.presets?.fields[field.identifier]?.placeholder }.first
 	}
+
 	func placeholders(for field: PresetField) -> [String: String]? {
 		return languageCodes.compactMap { languageDict[$0]?.presets?.fields[field.identifier]?.placeholders }.first
 	}
-	func options(for field: PresetField) -> [String: String]? {
-		return languageCodes.compactMap { languageDict[$0]?.presets?.fields[field.identifier]?.options }.first?
-			.compactMapValues({ $0.title })
+
+	func options(for field: PresetField) -> [String: Option]? {
+		return languageCodes.compactMap { languageDict[$0]?.presets?.fields[field.identifier]?.options }.first
 	}
+
 	func types(for field: PresetField) -> [String: String]? {
 		return languageCodes.compactMap { languageDict[$0]?.presets?.fields[field.identifier]?.types }.first
 	}

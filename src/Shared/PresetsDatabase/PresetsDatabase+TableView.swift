@@ -177,7 +177,7 @@ extension PresetsDatabase {
 		label: String,
 		keys: [String],
 		options: [String],
-		strings: [String: String]?,
+		localizedOptions: [String: PresetTranslations.Option]?,
 		defaultValue: String?,
 		placeholder: String?,
 		keyboard: UIKeyboardType,
@@ -187,7 +187,8 @@ extension PresetsDatabase {
 		let prefix = commonPrefixOfMultiKeys(options)
 		var tags: [PresetKeyOrGroup] = []
 		for i in keys.indices {
-			let name = strings?[options[i]] ?? OsmTags.PrettyTag(String(options[i].dropFirst(prefix.count)))
+			let name = localizedOptions?[options[i]]?.title
+				?? OsmTags.PrettyTag(String(options[i].dropFirst(prefix.count)))
 			let tag = yesNoWith(
 				label: name,
 				type: .check,
@@ -206,11 +207,11 @@ extension PresetsDatabase {
 
 	// a preset value with a supplied list of potential values
 	func comboWith(
-		label: String,
+		localizedLabel: String,
 		type: PresetType,
 		key: String,
 		options: [[String]],
-		strings: [String: Any]?,
+		localizedOptions: [String: PresetTranslations.Option]?,
 		icons: [String: String]?,
 		defaultValue: String?,
 		placeholder: String?,
@@ -220,23 +221,21 @@ extension PresetsDatabase {
 	{
 		let presets: [PresetValue] = options.flatMap { optionList in
 			optionList.map { value in
-				if let strings = strings as? [String: String] {
-					let name = strings[value] ?? OsmTags.PrettyTag(value)
+				switch localizedOptions?[value] {
+				case let .longText(titleDesc):
+					let name = titleDesc.title ?? OsmTags.PrettyTag(value)
+					return PresetValue(name: name, details: titleDesc.description, icon: icons?[value], tagValue: value)
+				case let .shortText(name):
 					return PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value)
-				} else if let strings = strings as? [String: [String: String]] {
-					let info = strings[value]
-					let name = info?["title"] ?? OsmTags.PrettyTag(value)
-					let desc = info?["description"] ?? ""
-					return PresetValue(name: name, details: desc, icon: icons?[value], tagValue: value)
-				} else {
-					// print("missing strings definition: \(key)")
+				case nil:
 					let name = OsmTags.PrettyTag(value)
 					return PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value)
 				}
-			}
+			} as [PresetValue]
 		}
+
 		let tag = PresetKey(
-			name: label,
+			name: localizedLabel,
 			type: type,
 			tagKey: key,
 			defaultValue: defaultValue,
@@ -321,7 +320,7 @@ extension PresetsDatabase {
 		}
 
 		let key = field.key ?? fieldName
-		let label = field.label ?? OsmTags.PrettyTag(key)
+		let label = field.localizedLabel ?? OsmTags.PrettyTag(key)
 
 		switch field.type {
 		case .defaultCheck, .check, .onewayCheck:
@@ -330,7 +329,7 @@ extension PresetsDatabase {
 				type: field.type,
 				key: key,
 				defaultValue: field.defaultValue,
-				placeholder: field.placeholder,
+				placeholder: field.localizedPlaceholder,
 				keyboard: .default,
 				capitalize: .none,
 				autocorrect: .no)
@@ -355,34 +354,41 @@ extension PresetsDatabase {
 				let keys = (isMultiCombo ? options : field.keys) ?? []
 				guard keys.count != 1 else {
 					let option = options!.first!
-					let name = field.strings?[option] ?? OsmTags.PrettyTag(option)
+					let name = field.localizedOptions?[option]?.title ?? OsmTags.PrettyTag(option)
 					let tag = yesNoWith(
 						label: name,
 						type: .check,
 						key: keys.first!,
 						defaultValue: field.defaultValue,
-						placeholder: field.placeholder,
+						placeholder: field.localizedPlaceholder,
 						keyboard: .default,
 						capitalize: .none,
 						autocorrect: .no)
 					let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 					return group
 				}
-				let group = multiComboWith(label: label, keys: keys, options: options!, strings: field.strings,
-				                           defaultValue: field.defaultValue, placeholder: field.placeholder,
-				                           keyboard: .default, capitalize: .none, autocorrect: .no)
+				let group = multiComboWith(
+					label: label,
+					keys: keys,
+					options: options!,
+					localizedOptions: field.localizedOptions,
+					defaultValue: field.defaultValue,
+					placeholder: field.localizedPlaceholder,
+					keyboard: .default,
+					capitalize: .none,
+					autocorrect: .no)
 				return group
 			} else {
 				// a multiple selection
 				let tag = comboWith(
-					label: label,
+					localizedLabel: label,
 					type: field.type,
 					key: key,
 					options: [options!],
-					strings: field.strings,
+					localizedOptions: field.localizedOptions,
 					icons: field.icons,
 					defaultValue: field.defaultValue,
-					placeholder: field.placeholder,
+					placeholder: field.localizedPlaceholder,
 					keyboard: .default,
 					capitalize: .none,
 					autocorrect: .no)
@@ -400,14 +406,14 @@ extension PresetsDatabase {
 				.filter({ !options.contains($0) })
 				.sorted()
 			let tag = comboWith(
-				label: label,
+				localizedLabel: label,
 				type: field.type,
 				key: key,
 				options: [options, options2],
-				strings: field.strings,
+				localizedOptions: field.localizedOptions,
 				icons: field.icons,
 				defaultValue: field.defaultValue,
-				placeholder: field.placeholder,
+				placeholder: field.localizedPlaceholder,
 				keyboard: .default,
 				capitalize: .none,
 				autocorrect: .no)
@@ -418,19 +424,19 @@ extension PresetsDatabase {
 
 			var tagList: [PresetKeyOrGroup] = []
 			let types = field.types ?? [:]
-			let strings = field.strings ?? [:]
+			let localizedOptions = field.localizedOptions ?? [:]
 			let options = field.options!
 			for key in field.keys! {
 				let name = types[key] ?? OsmTags.PrettyTag(key)
 				let tag = comboWith(
-					label: name,
+					localizedLabel: name,
 					type: field.type,
 					key: key,
 					options: [options],
-					strings: strings,
+					localizedOptions: localizedOptions,
 					icons: field.icons,
 					defaultValue: field.defaultValue,
-					placeholder: field.placeholder,
+					placeholder: field.localizedPlaceholder,
 					keyboard: .default,
 					capitalize: .none,
 					autocorrect: .no)
@@ -528,7 +534,7 @@ extension PresetsDatabase {
 				type: field.type,
 				tagKey: key,
 				defaultValue: field.defaultValue,
-				placeholder: field.placeholder,
+				placeholder: field.localizedPlaceholder,
 				keyboard: keyboard,
 				capitalize: capitalize,
 				autocorrect: autocorrect,

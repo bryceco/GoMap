@@ -158,11 +158,11 @@ final class PresetsForFeature {
 			presets: nil)
 		let nameField = PresetsDatabase.shared.presetFields["name"]!
 		let nameTag = PresetKey(
-			name: nameField.label ?? "Name",
+			name: nameField.localizedLabel ?? "Name",
 			type: .text,
 			tagKey: "name",
 			defaultValue: nil,
-			placeholder: nameField.placeholder,
+			placeholder: nameField.localizedPlaceholder,
 			keyboard: UIKeyboardType.default,
 			capitalize: UITextAutocapitalizationType.words,
 			autocorrect: UITextAutocorrectionType.no,
