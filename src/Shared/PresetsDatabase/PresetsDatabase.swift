@@ -132,6 +132,14 @@ final class PresetsDatabase {
 		let startTime = Date()
 
 		// get translations for current language
+		do {
+			let data = try Self.dataForFile("translations/\(code).json")
+			let translations = try PresetTranslation(from: data)
+			print(translations.asPrettyJSON())
+		} catch {
+			print("XXX")
+			print(error)
+		}
 		var trans = try cast(Self.jsonForFile("translations/\(code).json"), to: [String: [String: Any]].self)
 		trans = try cast(trans[code], to: [String: [String: Any]].self)
 		if let dash = code.firstIndex(of: "-") {
