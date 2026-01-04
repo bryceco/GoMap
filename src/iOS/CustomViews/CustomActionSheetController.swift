@@ -67,6 +67,7 @@ class CustomActionSheetController: UIViewController {
 	private func setupAlertView() {
 		let buttonHeight = 55.0
 		let cornerRadius = 12.0
+
 		let alertStack = UIStackView()
 		alertStack.axis = .vertical
 		alertStack.spacing = 8 // distance between buttons and cancel button
@@ -88,6 +89,7 @@ class CustomActionSheetController: UIViewController {
 				alertStack.widthAnchor.constraint(equalToConstant: 320)
 			])
 		}
+
 		// Main content view
 		let contentView = UIView()
 		contentView.backgroundColor = .systemBackground
@@ -125,45 +127,88 @@ class CustomActionSheetController: UIViewController {
 
 		contentView.addSubview(headersAndButtonsStack)
 		NSLayoutConstraint.activate([
-			headersAndButtonsStack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-			headersAndButtonsStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -0),
-			headersAndButtonsStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-			headersAndButtonsStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -0)
+			headersAndButtonsStack.topAnchor.constraint(equalTo: contentView.topAnchor),
+			headersAndButtonsStack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+			headersAndButtonsStack.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			headersAndButtonsStack.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
 		])
 		alertStack.addArrangedSubview(contentView)
 
 		// Add main actions
 		actions.filter { !$0.isCancel }.forEach { action in
 			let button = ButtonClosure(type: .system)
-			button.setTitle(action.title, for: .normal)
-			button.setImage(action.image, for: .normal)
-			button.tintColor = .link
-			button.backgroundColor = .systemGroupedBackground
+			button.translatesAutoresizingMaskIntoConstraints = false
 
-			button.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout)
-			button.imageView?.contentMode = .scaleAspectFit
-			button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+			// We use our own controls for title/icon:
+			button.setTitle(nil, for: .normal)
+			button.setImage(nil, for: .normal)
 
-			button.contentHorizontalAlignment = .leading
-			button.layer.cornerRadius = cornerRadius
-			button.imageView!.translatesAutoresizingMaskIntoConstraints = false
-			button.titleLabel!.translatesAutoresizingMaskIntoConstraints = false
+			// Icon container with fixed width so titles align
+			let iconContainer = UIView()
+			iconContainer.translatesAutoresizingMaskIntoConstraints = false
 			NSLayoutConstraint.activate([
-				button.titleLabel!.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 60),
+				iconContainer.widthAnchor.constraint(equalToConstant: 44)
+			])
+
+			let iconView = UIImageView(image: action.image!.withRenderingMode(.alwaysTemplate))
+			iconView.contentMode = .scaleAspectFit
+			iconView.translatesAutoresizingMaskIntoConstraints = false
+			iconView.tintColor = .link
+
+			iconContainer.addSubview(iconView)
+			NSLayoutConstraint.activate([
+				iconView.centerXAnchor.constraint(equalTo: iconContainer.centerXAnchor),
+				iconView.centerYAnchor.constraint(equalTo: iconContainer.centerYAnchor),
+				iconView.heightAnchor.constraint(equalToConstant: 30),
+				iconView.widthAnchor.constraint(equalToConstant: 32)
+			])
+
+			// Title label we control
+			let titleLabel = UILabel()
+			titleLabel.text = action.title
+			titleLabel.font = UIFont.preferredFont(forTextStyle: .callout)
+			titleLabel.textColor = .link
+			titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+			// Horizontal stack: [iconContainer][titleLabel]
+			let stack = UIStackView(arrangedSubviews: [iconContainer, titleLabel])
+			stack.axis = .horizontal
+			stack.spacing = 8
+			stack.alignment = .center
+			stack.translatesAutoresizingMaskIntoConstraints = false
+
+			button.addSubview(stack)
+			NSLayoutConstraint.activate([
+				stack.leadingAnchor.constraint(equalTo: button.leadingAnchor, constant: 8),
+				stack.trailingAnchor.constraint(equalTo: button.trailingAnchor, constant: -12),
+				stack.topAnchor.constraint(equalTo: button.topAnchor, constant: 8),
+				stack.bottomAnchor.constraint(equalTo: button.bottomAnchor, constant: -8),
 				button.heightAnchor.constraint(equalToConstant: buttonHeight)
 			])
+
+#if targetEnvironment(macCatalyst)
+			if #available(macCatalyst 15.0, *) {
+				button.preferredBehavioralStyle = .pad
+			}
+#endif
+			button.backgroundColor = .systemGroupedBackground
+			button.layer.cornerRadius = cornerRadius
+			button.clipsToBounds = true
 
 			button.onTap = { [weak self] _ in
 				self?.dismiss(animated: true)
 				action.handler?()
 			}
+
 			buttonsStack.addArrangedSubview(button)
 
 			let separator = UIView()
 			separator.backgroundColor = UIColor.systemGray4
+			separator.translatesAutoresizingMaskIntoConstraints = false
 			separator.heightAnchor.constraint(equalToConstant: 1.0).isActive = true
 			buttonsStack.addArrangedSubview(separator)
 		}
+
 		// remove the last separator line
 		if let lastView = buttonsStack.arrangedSubviews.last {
 			buttonsStack.removeArrangedSubview(lastView)
@@ -175,15 +220,21 @@ class CustomActionSheetController: UIViewController {
 			let cancelButton = ButtonClosure(type: .system)
 			cancelButton.setTitle(cancel.title, for: .normal)
 			cancelButton.setImage(cancel.image, for: .normal)
-			cancelButton.tintColor = .link
-			cancelButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout).bold()
 			cancelButton.imageView?.contentMode = .scaleAspectFit
 			cancelButton.contentHorizontalAlignment = .center
-			cancelButton.semanticContentAttribute = .forceLeftToRight
-			cancelButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8,
-			                                            bottom: 0, right: 8)
+
 			cancelButton.backgroundColor = .systemBackground
 			cancelButton.layer.cornerRadius = cornerRadius
+#if targetEnvironment(macCatalyst)
+			if #available(macCatalyst 15.0, *) {
+				cancelButton.preferredBehavioralStyle = .pad
+			}
+#else
+			// these don't play well with setting .pad style on Mac
+			cancelButton.setTitleColor(.link, for: .normal)
+			cancelButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: .callout).bold()
+#endif
+
 			cancelButton.onTap = { [weak self] _ in
 				self?.dismiss(animated: true)
 				cancel.handler?()
@@ -192,15 +243,20 @@ class CustomActionSheetController: UIViewController {
 			alertStack.addArrangedSubview(cancelButton)
 
 			cancelButton.sizeToFit()
+			cancelButton.translatesAutoresizingMaskIntoConstraints = false
 			NSLayoutConstraint.activate([
 				cancelButton.heightAnchor.constraint(equalToConstant: buttonHeight)
 			])
 		}
-		/*
-		 alertStack.backgroundColor = .red
-		 buttonsStack.backgroundColor = .green
-		 contentView.backgroundColor = .yellow
-		 headersAndButtonsStack.backgroundColor = .blue
-		 */
 	}
+
+#if targetEnvironment(macCatalyst)
+	override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+		if presses.contains(where: { $0.key?.keyCode == .keyboardEscape }) {
+			dismiss(animated: true)
+			return
+		}
+		super.pressesBegan(presses, with: event)
+	}
+#endif
 }
