@@ -430,7 +430,7 @@ extension WikiPage {
 		if let feature = feature,
 		   feature.tags.count > 0 // not degenerate like point, line, etc.
 		{
-			featureName = feature.name
+			featureName = feature.localizedName
 		} else {
 			let allPresets = PresetsForFeature(withFeature: feature,
 			                                   objectTags: [key: value],

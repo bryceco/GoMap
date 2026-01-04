@@ -85,7 +85,7 @@ class CustomFeatureListViewController: UITableViewController {
 		if indexPath.row < customFeatures.list.count {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "backgroundCell", for: indexPath)
 			let preset = customFeatures.list[indexPath.row]
-			cell.textLabel?.text = preset.name
+			cell.textLabel?.text = preset.localizedName
 			return cell
 		} else {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "addNewCell", for: indexPath)

@@ -467,7 +467,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			let cell: SectionHeaderCell = tableView
 				.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderCell
 					.reuseIdentifier) as! SectionHeaderCell
-			cell.label.text = currentFeature?.name.uppercased() ?? "TAGS"
+			cell.label.text = currentFeature?.localizedName.uppercased() ?? "TAGS"
 			return cell
 		} else {
 			return nil

@@ -134,7 +134,7 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		if let quest = quest {
 			// if we're editing an existing quest then fill in the fields
 			let features = PresetsDatabase.shared.stdFeatures
-			chosenFeatures = quest.includeFeatures.map { (features[$0]?.name ?? $0, $0) }
+			chosenFeatures = quest.includeFeatures.map { (features[$0]?.localizedName ?? $0, $0) }
 			nameField?.text = quest.title
 			labelField?.text = quest.label
 			tagKey = quest.tagKey
@@ -172,8 +172,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 				guard let self = self else { return }
 				let featureList = featureList()
 				let items: [UIAction] = self.availableFeatures.map {
-					feature in UIAction(title: "\(feature.name)", handler: { _ in
-						let newFeature = (feature.name, feature.featureID)
+					feature in UIAction(title: "\(feature.localizedName)", handler: { _ in
+						let newFeature = (feature.localizedName, feature.featureID)
 						if !featureList.contains(where: { $0.ident == newFeature.1 }) {
 							addFeature(newFeature)
 						}
@@ -214,8 +214,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 	private func usePrimaryFeatures() {
 		let key = presetField!.title(for: .normal)!
-		availableFeatures = (primaryFeaturesForKey[key] ?? []).sorted(by: { a, b in a.name < b.name })
-		chosenFeatures = availableFeatures.map { ($0.name, $0.featureID) }
+		availableFeatures = (primaryFeaturesForKey[key] ?? []).sorted(by: { a, b in a.localizedName < b.localizedName })
+		chosenFeatures = availableFeatures.map { ($0.localizedName, $0.featureID) }
 		featuresSelectionButton?.selectedSegmentIndex = 0
 		includeFeaturesView?.reloadData()
 		includeFeaturesView?.layoutIfNeeded()
@@ -223,8 +223,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 
 	private func useAllFeatures() {
 		let key = presetField!.title(for: .normal)!
-		availableFeatures = (allFeaturesForKey[key] ?? []).sorted(by: { a, b in a.name < b.name })
-		chosenFeatures = availableFeatures.map { ($0.name, $0.featureID) }
+		availableFeatures = (allFeaturesForKey[key] ?? []).sorted(by: { a, b in a.localizedName < b.localizedName })
+		chosenFeatures = availableFeatures.map { ($0.localizedName, $0.featureID) }
 		featuresSelectionButton?.selectedSegmentIndex = 1
 		includeFeaturesView?.reloadData()
 		includeFeaturesView?.layoutIfNeeded()

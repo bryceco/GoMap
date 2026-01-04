@@ -143,7 +143,7 @@ final class PresetsForFeature {
 	     geometry: GEOMETRY,
 	     update: (() -> Void)?)
 	{
-		featureName = feature?.name ?? ""
+		featureName = feature?.localizedName ?? ""
 
 		// Always start with Type and Name
 		let typeTag = PresetKey(

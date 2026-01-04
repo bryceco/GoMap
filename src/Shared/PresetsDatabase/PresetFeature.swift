@@ -112,7 +112,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		return description
 	}
 
-	var name: String {
+	var localizedName: String {
 		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
 		var feature = self
 		while feature.nameWithRedirect.hasPrefix("{"), feature.nameWithRedirect.hasSuffix("}") {
@@ -169,12 +169,12 @@ class PresetFeature: CustomDebugStringConvertible {
 	}
 
 	func friendlyName() -> String {
-		return name
+		return localizedName
 	}
 
 	func summary() -> String? {
 		let parentID = PresetFeature.parentIDofID(featureID)
-		let result = PresetsDatabase.shared.inheritedValueOfFeature(parentID, fieldGetter: { $0.name })
+		let result = PresetsDatabase.shared.inheritedValueOfFeature(parentID, fieldGetter: { $0.localizedName })
 		return result as? String
 	}
 
@@ -350,7 +350,7 @@ class PresetFeature: CustomDebugStringConvertible {
 			guard let range = text.range(of: search, options: [.caseInsensitive, .diacriticInsensitive])
 			else { return nil }
 			// best case is it matches the prefix
-			if range.lowerBound == name.startIndex {
+			if range.lowerBound == localizedName.startIndex {
 				return 10 * base.rawValue + 5
 			}
 			// next best is it matches the start of a word
@@ -361,7 +361,7 @@ class PresetFeature: CustomDebugStringConvertible {
 			return base.rawValue
 		}
 
-		if let score = scoreForMatch(base: .name, text: name, search: searchText) {
+		if let score = scoreForMatch(base: .name, text: localizedName, search: searchText) {
 			return score
 		}
 		for alias in aliases {
