@@ -107,16 +107,18 @@ final class PresetField: CustomDebugStringConvertible {
 	}
 
 	func crossRef(for property: String) -> PresetField {
-		if let value = jsonDict[property],
-		   let value = value as? String,
-		   value.hasPrefix("{"),
-		   value.hasSuffix("}"),
-		   let newField = PresetsDatabase.shared.presetFields[String(value.dropFirst().dropLast())],
-		   newField !== self
+		var field = self
+		while
+			let value = field.jsonDict[property],
+			let value = value as? String,
+			value.hasPrefix("{"),
+			value.hasSuffix("}"),
+			let newField = PresetsDatabase.shared.presetFields[String(value.dropFirst().dropLast())],
+			newField !== self
 		{
-			return newField
+			field = newField
 		}
-		return self
+		return field
 	}
 
 	// Some field values can have a redirect to a different field using a {other_field} notation

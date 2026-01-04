@@ -114,15 +114,14 @@ class PresetFeature: CustomDebugStringConvertible {
 
 	var name: String {
 		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
-		if nameWithRedirect.hasPrefix("{"), nameWithRedirect.hasSuffix("}") {
+		var feature = self
+		while feature.nameWithRedirect.hasPrefix("{"), feature.nameWithRedirect.hasSuffix("}") {
 			let redirect = String(nameWithRedirect.dropFirst().dropLast())
 			if let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) {
-				return preset.name
+				feature = preset
 			}
-			print("bad preset redirect: \(redirect)")
-			DbgAssert(false)
 		}
-		return nameWithRedirect
+		return PresetTranslations.shared.name(for: feature) ?? feature.nameWithRedirect
 	}
 
 	var fields: [String]? {

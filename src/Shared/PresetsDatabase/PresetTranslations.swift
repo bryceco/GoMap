@@ -69,6 +69,10 @@ class PresetTranslations: Codable {
 		return languageCodes.compactMap { languageDict[$0]?.presets?.fields[field.identifier]?.types }.first
 	}
 
+	func name(for feature: PresetFeature) -> String? {
+		return languageCodes.compactMap { languageDict[$0]?.presets?.presets[feature.featureID]?.name }.first
+	}
+
 	func asPrettyJSON() -> String {
 		do {
 			let encoder = JSONEncoder()
