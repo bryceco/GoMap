@@ -532,9 +532,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
 		switch action {
 		case #selector(undo(_:)):
-			return mapView.editorLayer.mapData.canUndo()
+			return !mapView.editorLayer.isHidden && mapView.editorLayer.mapData.canUndo()
 		case #selector(redo(_:)):
-			return mapView.editorLayer.mapData.canRedo()
+			return !mapView.editorLayer.isHidden && mapView.editorLayer.mapData.canRedo()
 		case #selector(copy(_:)):
 			return mapView.editorLayer.selectedPrimary != nil
 		case #selector(paste(_:)):
