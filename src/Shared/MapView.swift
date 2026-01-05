@@ -2138,7 +2138,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 			func editToolbarItemForAction(_ action: EDIT_ACTION) -> UIControl {
 				if action == .PASTETAGS,
-				   #available(iOS 16.0, *)
+				   #available(iOS 16.0, *),
+				   !ProcessInfo.processInfo.isMacCatalystApp
 				{
 					// Special case for paste that accesses the clipboard
 					let pasteButton = traitCollection.userInterfaceStyle == .light
