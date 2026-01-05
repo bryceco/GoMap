@@ -176,6 +176,7 @@ class CustomActionSheetController: UIViewController {
 			stack.spacing = 8
 			stack.alignment = .center
 			stack.translatesAutoresizingMaskIntoConstraints = false
+			stack.isUserInteractionEnabled = false
 
 			button.addSubview(stack)
 			NSLayoutConstraint.activate([
