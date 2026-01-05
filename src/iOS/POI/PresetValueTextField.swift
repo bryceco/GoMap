@@ -350,7 +350,9 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 	}
 
 	private func getHeightButton() -> UIView? {
-		guard key == "height" else {
+		guard key == "height",
+			  !ProcessInfo.processInfo.isMacCatalystApp
+		else {
 			return nil
 		}
 		let button = UIButton(type: .contactAdd)
