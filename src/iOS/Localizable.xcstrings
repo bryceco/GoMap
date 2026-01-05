@@ -50473,6 +50473,9 @@
         }
       }
     },
+    "Settings…" : {
+      "comment" : "Settings menu item in Mac menu bar"
+    },
     "Share" : {
       "comment" : "Open iOS sharing sheet\nTitle for sharing options",
       "localizations" : {

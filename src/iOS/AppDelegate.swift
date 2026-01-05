@@ -176,4 +176,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			UIApplication.shared.open(openSettingsURL, options: [:], completionHandler: nil)
 		}
 	}
+
+#if targetEnvironment(macCatalyst)
+	override func buildMenu(with builder: UIMenuBuilder) {
+		super.buildMenu(with: builder)
+
+		// Create a Settings command with Command-, shortcut
+		let settingsCommand = UIKeyCommand(
+			title: NSLocalizedString("Settings…", comment: "Settings menu item in Mac menu bar"),
+			action: #selector(openPreferences),
+			input: ",",
+			modifierFlags: .command
+		)
+		settingsCommand.image = UIImage(systemName: "gear")
+
+		// Create a menu with the Settings command
+		let settingsMenu = UIMenu(
+			title: "",
+			image: nil,
+			identifier: .preferences,
+			options: .displayInline,
+			children: [settingsCommand]
+		)
+
+		// Insert it into the application menu
+		builder.replace(menu: .preferences, with: settingsMenu)
+	}
+
+	@objc func openPreferences() {
+		let storyboard = UIStoryboard(name: "Settings", bundle: nil)
+		guard
+			let mainVC = mapView?.mainViewController,
+			mainVC.presentedViewController == nil,
+			let vc = storyboard.instantiateInitialViewController()
+		else {
+			return
+		}
+		mainVC.present(vc, animated: true)
+	}
+#endif
 }
