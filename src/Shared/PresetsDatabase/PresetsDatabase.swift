@@ -10,20 +10,11 @@ import Foundation
 
 final class PresetsDatabase {
 	static let shared = {
-		let langCode = PresetLanguages.preferredPresetLanguageCode()
 		do {
 			let database = try PresetsDatabase()
-#if DEBUG && false
-			// test all preset languages
-			for lang in PresetLanguages.languageCodeList {
-				try PresetTranslations.shared.setLanguage(lang)
-			}
-			print(PresetTranslations.shared.languageDict.keys)
-#endif
-			try PresetTranslations.shared.setLanguage(langCode)
 			return database
 		} catch {
-			showInternalError(error, context: "langCode = \(langCode)")
+			showInternalError(error, context: nil)
 			fatalError()
 		}
 	}()

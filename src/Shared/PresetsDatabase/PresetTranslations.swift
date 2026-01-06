@@ -14,7 +14,31 @@ class PresetTranslations: Codable {
 	var noForLocale = "No"
 	var unknownForLocale = "Unknown"
 
-	static let shared = PresetTranslations()
+	static let shared = {
+		let me = PresetTranslations()
+
+		if isUnderDebugger() {
+			// test all preset languages
+			for lang in PresetLanguages.languageCodeList {
+				do {
+					try me.setLanguage(lang)
+				} catch {
+					print(error)
+					showInternalError(error, context: "Error initializing language: \(lang)")
+				}
+			}
+			print(me.languageDict.keys)
+		}
+
+		let langCode = PresetLanguages.preferredPresetLanguageCode()
+		do {
+			try me.setLanguage(langCode)
+		} catch {
+			// never returns
+			showInternalError(error, context: "Error initializing language: \(langCode)")
+		}
+		return me
+	}()
 
 	var languageCodes: [String] = []
 	func setLanguage(_ code: String) throws {
