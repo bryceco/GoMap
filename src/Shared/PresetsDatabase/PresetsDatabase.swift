@@ -118,8 +118,8 @@ final class PresetsDatabase {
 					DispatchQueue.main.async {
 						self.nsiFeatures = nsiPresets
 						self.nsiFeatureIndex = nsiIndex
-#if DEBUG && false
-						if debug, isUnderDebugger() {
+#if DEBUG
+						if isUnderDebugger() {
 							self.testAllPresetFields()
 						}
 #endif
@@ -322,26 +322,20 @@ final class PresetsDatabase {
 
 #if DEBUG
 	func testAllPresetFields() {
-		// Verify all fields can be read in all languages
-		for langCode in PresetLanguages.languageCodeList {
-			do {
-				try PresetTranslations.shared.setLanguage(langCode)
-				for (name, field) in self.presetFields {
-					var geometry = GEOMETRY.LINE
-					if let geom = field.geometry {
-						geometry = GEOMETRY(rawValue: geom[0])!
-					}
-					_ = self.presetGroupForField(fieldName: name,
-					                             objectTags: [:],
-					                             geometry: geometry,
-					                             countryCode: "us",
-					                             ignore: [],
-					                             update: nil)
-				}
-			} catch {
-				fatalError("\(error)")
+		// Verify all fields can be read
+		for (name, field) in self.presetFields {
+			var geometry = GEOMETRY.LINE
+			if let geom = field.geometry {
+				geometry = GEOMETRY(rawValue: geom[0])!
 			}
+			_ = self.presetGroupForField(fieldName: name,
+			                             objectTags: [:],
+			                             geometry: geometry,
+			                             countryCode: "us",
+			                             ignore: [],
+			                             update: nil)
 		}
+		print("All preset fields loaded")
 	}
 #endif
 }
