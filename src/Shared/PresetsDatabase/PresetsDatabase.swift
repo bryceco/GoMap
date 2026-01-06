@@ -45,7 +45,7 @@ final class PresetsDatabase {
 	}
 
 	let presetAddressFormats: [PresetAddressFormat] // address formats for different countries
-	let presetDefaults: [String: [String]] // map a geometry to a set of features/categories
+	let presetDefaults: [GEOMETRY: [String]] // map a geometry to a set of features/categories
 	let presetCategories: [String: PresetCategory] // map a top-level category ("building") to a set of specific features ("building/retail")
 	let presetFields: [String: PresetField] // possible values for a preset key ("oneway=")
 
@@ -56,8 +56,13 @@ final class PresetsDatabase {
 		let readTime = Date()
 
 		// default top-level items for an untagged geometry
-		presetDefaults = try JSONDecoder().decode([String: [String]].self,
-												  from: Self.dataForFile("preset_defaults.json"))
+		let defaults = try JSONDecoder().decode([String: [String]].self,
+		                                        from: Self.dataForFile("preset_defaults.json"))
+		presetDefaults = Dictionary(uniqueKeysWithValues:
+			defaults.compactMap { key, value in
+				guard let intKey = GEOMETRY(rawValue: key) else { return nil }
+				return (intKey, value)
+			})
 
 		presetFields = try cast(Self.jsonForFile("fields.json"), to: [String: Any].self)
 			.compactMapValuesWithKeys({ k, v in

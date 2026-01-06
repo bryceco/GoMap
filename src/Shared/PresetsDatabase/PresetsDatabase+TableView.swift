@@ -17,7 +17,7 @@ enum PresetFeatureOrCategory {
 // Methods used to generate a UITableView
 extension PresetsDatabase {
 	func featuresAndCategoriesForGeometry(_ geometry: GEOMETRY) -> [PresetFeatureOrCategory] {
-		let list = presetDefaults[geometry.rawValue]!
+		let list = presetDefaults[geometry]!
 		let featureList = featuresAndCategoriesForMemberList(memberList: list)
 		return featureList
 	}
