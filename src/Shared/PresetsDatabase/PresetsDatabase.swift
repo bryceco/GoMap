@@ -55,8 +55,10 @@ final class PresetsDatabase {
 		let startTime = Date()
 		let readTime = Date()
 
-		// get presets files
-		presetDefaults = try cast(Self.jsonForFile("preset_defaults.json"), to: [String: [String]].self)
+		// default top-level items for an untagged geometry
+		presetDefaults = try JSONDecoder().decode([String: [String]].self,
+												  from: Self.dataForFile("preset_defaults.json"))
+
 		presetFields = try cast(Self.jsonForFile("fields.json"), to: [String: Any].self)
 			.compactMapValuesWithKeys({ k, v in
 				try PresetField(identifier: k, json: cast(v, to: [String: Any].self)) })
