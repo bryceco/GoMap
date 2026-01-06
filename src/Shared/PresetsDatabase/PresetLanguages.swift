@@ -18,7 +18,9 @@ final class PresetLanguages {
 		else {
 			return []
 		}
-		var list = files.map({ $0.replacingOccurrences(of: ".json", with: "") })
+		var list = files
+			.map({ $0.replacingOccurrences(of: ".json", with: "") })
+			.filter { languageNameForCode($0) != nil } // ignore non-real languages
 		list.sort(by: { code1, code2 -> Bool in
 			let s1 = PresetLanguages.languageNameForCode(code1) ?? ""
 			let s2 = PresetLanguages.languageNameForCode(code2) ?? ""

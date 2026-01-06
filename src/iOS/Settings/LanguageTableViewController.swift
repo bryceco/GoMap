@@ -52,10 +52,10 @@ class LanguageTableViewController: UITableViewController {
 			code = PresetLanguages.languageCodeList[indexPath.row - 1]
 
 			// name in native language
-			cell.textLabel?.text = PresetLanguages.languageNameForCode(code ?? "") ?? ""
+			cell.textLabel?.text = PresetLanguages.languageNameForCode(code!) ?? code
 
 			// name in current language
-			cell.detailTextLabel?.text = PresetLanguages.localLanguageNameForCode(code ?? "") ?? ""
+			cell.detailTextLabel?.text = PresetLanguages.localLanguageNameForCode(code!) ?? code
 		}
 
 		// accessory checkmark
