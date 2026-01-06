@@ -49,6 +49,14 @@ class PresetTranslations: Codable {
 		}
 	}
 
+	func name(for category: PresetCategory) -> String? {
+		return languageCodes.compactMap { languageDict[$0]?.presets?.categories[category.categoryID]?.name }.first
+	}
+
+	func name(for feature: PresetFeature) -> String? {
+		return languageCodes.compactMap { languageDict[$0]?.presets?.presets[feature.featureID]?.name }.first
+	}
+
 	func label(for field: PresetField) -> String? {
 		return languageCodes.compactMap { languageDict[$0]?.presets?.fields[field.identifier]?.label }.first
 	}
@@ -67,10 +75,6 @@ class PresetTranslations: Codable {
 
 	func types(for field: PresetField) -> [String: String]? {
 		return languageCodes.compactMap { languageDict[$0]?.presets?.fields[field.identifier]?.types }.first
-	}
-
-	func name(for feature: PresetFeature) -> String? {
-		return languageCodes.compactMap { languageDict[$0]?.presets?.presets[feature.featureID]?.name }.first
 	}
 
 	func asPrettyJSON() -> String {
@@ -93,10 +97,40 @@ class PresetTranslations: Codable {
 		let categories: [String: Category]
 		let fields: [String: Field]
 		let presets: [String: Feature]
+
+		enum CodingKeys: String, CodingKey {
+			case categories
+			case fields
+			case presets
+		}
+
+		init(from decoder: Decoder) throws {
+			let container = try decoder.container(keyedBy: CodingKeys.self)
+			categories = try container.decode([String: Category].self, forKey: .categories)
+			fields = try container.decode([String: Field].self, forKey: .fields)
+			presets = try container.decode([String: Feature].self, forKey: .presets)
+				// FIXME: remove once id-tagging-schema is fixed
+				.compactMapValues { $0.name == nil ? nil : $0 }
+		}
 	}
 
 	struct Category: Codable {
 		let name: String
+	}
+
+	struct Feature: Codable {
+		let name: String? // FIXME: only optional because iD-tagging-schema is temporarily broken
+		let terms: String?
+		let aliases: String?
+	}
+
+	struct Field: Codable {
+		let label: String?
+		let options: [String: Option]?
+		let placeholder: String?
+		let placeholders: [String: String]? // for address field
+		let terms: String?
+		let types: [String: String]? // for access field
 	}
 
 	enum Option: Codable {
@@ -137,26 +171,5 @@ class PresetTranslations: Codable {
 				try singleValueContainer.encode(strings)
 			}
 		}
-	}
-
-	struct Field: Codable {
-		let label: String?
-		let options: [String: Option]?
-		let placeholder: String?
-		let placeholders: [String: String]? // for address field
-		let terms: String?
-		let types: [String: String]? // for access field
-	}
-
-	struct Feature: Codable {
-		let name: String
-		let terms: String?
-		let aliases: String?
-	}
-
-	struct Strings: Codable {
-		let label: String
-		let options: [String: String]?
-		let placeholder: String?
 	}
 }

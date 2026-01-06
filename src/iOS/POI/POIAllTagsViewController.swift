@@ -77,7 +77,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	private var members: [OsmMember] = []
 	@IBOutlet var saveButton: UIBarButtonItem!
 	private var currentFeature: PresetFeature?
-	internal var currentTextField: UITextField?
+	var currentTextField: UITextField?
 	private var prevNextToolbar: UIToolbar!
 
 	override func viewDidLoad() {
@@ -403,8 +403,8 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	// Called when user pastes a set of tags
 	func pasteTags(_ tags: [String: String]) {
-		tableView.visibleCells.forEach {
-			_ = ($0 as? KeyValueTableCell)?.resignFirstResponder()
+		for visibleCell in tableView.visibleCells {
+			_ = (visibleCell as? KeyValueTableCell)?.resignFirstResponder()
 		}
 
 		var dict = self.tags.keyValueDictionary()

@@ -338,7 +338,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		case featureId = 1
 	}
 
-	static private func scoreForTextCompare(base: PresetMatchScore, text: String, search: String) -> Int? {
+	private static func scoreForTextCompare(base: PresetMatchScore, text: String, search: String) -> Int? {
 		guard
 			let range = text.range(of: search, options: [.caseInsensitive, .diacriticInsensitive])
 		else {
