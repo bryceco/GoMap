@@ -141,7 +141,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			switch featureList[indexPath.row] {
 			case let .category(category):
 				let cell = tableView.dequeueReusableCell(withIdentifier: "SubCell", for: indexPath)
-				cell.textLabel?.text = PresetTranslations.shared.name(for: category) ?? category.friendlyName
+				cell.textLabel?.text = PresetTranslations.shared.name(for: category) ?? category.categoryID
+				cell.imageView?.image = category.icon
 				return cell
 			case let .feature(f):
 				feature = f
