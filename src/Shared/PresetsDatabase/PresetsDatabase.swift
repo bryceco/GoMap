@@ -62,8 +62,8 @@ final class PresetsDatabase {
 				try PresetField(identifier: k, json: cast(v, to: [String: Any].self)) })
 
 		// address formats
-		presetAddressFormats = try cast(Self.jsonForFile("address_formats.json"), to: [Any].self)
-			.map({ try PresetAddressFormat(withJson: cast($0, to: [String: Any].self)) })
+		presetAddressFormats = try JSONDecoder().decode([PresetAddressFormat].self,
+		                                                from: Self.dataForFile("address_formats.json"))
 
 		// initialize presets and index them
 		let presets = try cast(Self.jsonForFile("presets.json"), to: [String: Any].self)

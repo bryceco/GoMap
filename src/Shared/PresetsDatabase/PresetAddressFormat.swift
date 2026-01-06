@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct PresetAddressFormat {
+struct PresetAddressFormat: Decodable {
 	let countryCodes: [String]?
-	let addressKeys: [String]
+	let addressKeys: [[String]]
 
-	init(withJson json: [String: Any]) {
-		countryCodes = json["countryCodes"] as! [String]?
-		addressKeys = (json["format"] as! [[String]]).flatMap({ $0 })
+	enum CodingKeys: String, CodingKey {
+		case countryCodes
+		case addressKeys = "format"
 	}
 }

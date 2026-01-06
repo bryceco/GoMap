@@ -460,12 +460,12 @@ extension PresetsDatabase {
 			for locale in presetAddressFormats {
 				guard let countryCodes = locale.countryCodes else {
 					// default
-					keysForCountry = locale.addressKeys
+					keysForCountry = locale.addressKeys.flatMap({ $0 })
 					continue
 				}
 				if countryCodes.contains(countryCode) {
 					// country specific format
-					keysForCountry = locale.addressKeys
+					keysForCountry = locale.addressKeys.flatMap({ $0 })
 					break
 				}
 			}

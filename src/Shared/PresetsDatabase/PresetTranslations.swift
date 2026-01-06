@@ -27,7 +27,6 @@ class PresetTranslations: Codable {
 					showInternalError(error, context: "Error initializing language: \(lang)")
 				}
 			}
-			print(me.languageDict.keys)
 		}
 
 		let langCode = PresetLanguages.preferredPresetLanguageCode()
