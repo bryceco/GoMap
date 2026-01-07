@@ -189,7 +189,7 @@ extension PresetsDatabase {
 		for i in keys.indices {
 			let name = localizedOptions?[options[i]]?.title
 				?? OsmTags.PrettyTag(String(options[i].dropFirst(prefix.count)))
-			let tag = yesNoWith(
+			let tag = yesNoPresetKeyWith(
 				label: name,
 				type: .check,
 				key: keys[i],
@@ -252,7 +252,7 @@ extension PresetsDatabase {
 	}
 
 	// a yes/no preset
-	func yesNoWith(
+	func yesNoPresetKeyWith(
 		label: String,
 		type: PresetType,
 		key: String,
@@ -328,7 +328,7 @@ extension PresetsDatabase {
 
 		switch field.type {
 		case .defaultCheck, .check, .onewayCheck:
-			let tag = yesNoWith(
+			let tag = yesNoPresetKeyWith(
 				label: label,
 				type: field.type,
 				key: key,
@@ -359,7 +359,7 @@ extension PresetsDatabase {
 				guard keys.count != 1 else {
 					let option = options!.first!
 					let name = field.localizedOptions?[option]?.title ?? OsmTags.PrettyTag(option)
-					let tag = yesNoWith(
+					let tag = yesNoPresetKeyWith(
 						label: name,
 						type: .check,
 						key: keys.first!,
