@@ -163,9 +163,8 @@ class PresetFeature: CustomDebugStringConvertible {
 	}
 
 	func isGeneric() -> Bool {
-		return featureID == "point" ||
-			featureID == "line" ||
-			featureID == "area"
+		// point, line, area, relation
+		return tags.count == 0
 	}
 
 	func friendlyName() -> String {
@@ -258,7 +257,6 @@ class PresetFeature: CustomDebugStringConvertible {
 			tags.removeValue(forKey: key)
 		}
 
-#if false
 		// Find fields that belongs to presets in oldFeature and don't exist in presets in new feature
 		// and delete them. This will do things like remove the "cuisine" tag when a restaurant is
 		// retagged as a shop.
@@ -269,7 +267,6 @@ class PresetFeature: CustomDebugStringConvertible {
 				tags.removeValue(forKey: key)
 			}
 		}
-#endif
 
 		// add new feature tags
 		for (key, value) in addTags {
