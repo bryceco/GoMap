@@ -27,8 +27,8 @@ class CustomFieldController: UITableViewController {
 	@IBOutlet var value12Field: UITextField!
 	private var valueFieldList: [UITextField] = []
 
-	var customField: PresetKeyUserDefined?
-	var completion: ((_ customPreset: PresetKeyUserDefined?) -> Void)?
+	var customField: PresetDisplayKeyUserDefined?
+	var completion: ((_ customPreset: PresetDisplayKeyUserDefined?) -> Void)?
 
 	@IBAction func contentChanged(_ sender: Any) {
 		if (nameField.text?.count ?? 0) > 0, (keyField.text?.count ?? 0) > 0 {
@@ -47,19 +47,19 @@ class CustomFieldController: UITableViewController {
 		}
 		let appliesToKey = appliesToTagField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 		let appliesToVal = appliesToValueField.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-		var presets: [PresetValue] = []
+		var presetValues: [PresetDisplayValue] = []
 		for field in valueFieldList {
 			let value = field.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
 			if value != "" {
-				let preset = PresetValue(name: nil, details: nil, icon: nil, tagValue: value)
-				presets.append(preset)
+				let preset = PresetDisplayValue(name: nil, details: nil, icon: nil, tagValue: value)
+				presetValues.append(preset)
 			}
 		}
 		let keyboard: UIKeyboardType = .default
 		let capitalize: UITextAutocapitalizationType = .none
 		let autocorrect: UITextAutocorrectionType = .no
 
-		customField = PresetKeyUserDefined(
+		customField = PresetDisplayKeyUserDefined(
 			appliesToKey: appliesToKey,
 			appliesToValue: appliesToVal,
 			name: name,
@@ -68,7 +68,7 @@ class CustomFieldController: UITableViewController {
 			keyboard: keyboard,
 			capitalize: capitalize,
 			autocorrect: autocorrect,
-			presets: presets)
+			presetValues: presetValues)
 		completion?(customField)
 		navigationController?.popViewController(animated: true)
 	}
@@ -102,10 +102,10 @@ class CustomFieldController: UITableViewController {
 
 		var idx = 0
 		for textField in valueFieldList {
-			if idx >= (customField?.presetList?.count ?? 0) {
+			if idx >= (customField?.presetValues?.count ?? 0) {
 				break
 			}
-			let preset = customField?.presetList?[idx]
+			let preset = customField?.presetValues?[idx]
 			textField.text = preset?.tagValue
 			idx += 1
 		}

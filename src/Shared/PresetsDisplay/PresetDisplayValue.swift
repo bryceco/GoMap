@@ -1,5 +1,5 @@
 //
-//  PresetValue.swift
+//  PresetDisplayValue.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/12/20.
@@ -9,7 +9,7 @@
 import Foundation
 
 // A possible value for a preset key
-final class PresetValue: NSObject, NSSecureCoding, Codable {
+final class PresetDisplayValue: NSObject, NSSecureCoding, Codable {
 	static let supportsSecureCoding = true
 
 	let name: String

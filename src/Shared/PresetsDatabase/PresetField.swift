@@ -9,7 +9,8 @@
 import Foundation
 
 enum PresetType: String, Codable {
-	// Special case for the Type field, not part of id-tagging-schema
+	// Special case for the Type field, not part of id-tagging-schema.
+	// This provides us a field we can use to select a different feature.
 	case featureType
 
 	// booleans

@@ -14,38 +14,38 @@ class PresetKeyTagCase: XCTestCase {
 	func testInitWithPresetsShouldPreferThePlaceholderParameterIfProvided() {
 		let placeholder = "Lorem ipsum"
 
-		let firstPreset = PresetValue(name: "Ja", details: "", icon: nil, tagValue: "yes")
-		let secondPreset = PresetValue(name: "Nein", details: "", icon: nil, tagValue: "no")
+		let firstPreset = PresetDisplayValue(name: "Ja", details: "", icon: nil, tagValue: "yes")
+		let secondPreset = PresetDisplayValue(name: "Nein", details: "", icon: nil, tagValue: "no")
 
-		let tagKey = PresetKey(name: "Rückenlehne",
-							   type: .text,
-		                       tagKey: "backreset",
-		                       defaultValue: nil,
-		                       placeholder: placeholder,
-		                       keyboard: .default,
-		                       capitalize: .none,
-		                       autocorrect: .no,
-		                       presets: [firstPreset, secondPreset])
+		let tagKey = PresetDisplayKey(name: "Rückenlehne",
+		                              type: .text,
+		                              tagKey: "backreset",
+		                              defaultValue: nil,
+		                              placeholder: placeholder,
+		                              keyboard: .default,
+		                              capitalize: .none,
+		                              autocorrect: .no,
+		                              presets: [firstPreset, secondPreset])
 
 		XCTAssertEqual(tagKey.placeholder, placeholder)
 	}
 
 	func testInitWithPresetsShouldUseTheirNamesForPlaceholder() {
 		let firstPresetName = "Ja"
-		let firstPreset = PresetValue(name: firstPresetName, details: "", icon: nil, tagValue: "yes")
+		let firstPreset = PresetDisplayValue(name: firstPresetName, details: "", icon: nil, tagValue: "yes")
 
 		let secondPresentName = "Nein"
-		let secondPreset = PresetValue(name: secondPresentName, details: "", icon: nil, tagValue: "no")
+		let secondPreset = PresetDisplayValue(name: secondPresentName, details: "", icon: nil, tagValue: "no")
 
-		let tagKey = PresetKey(name: "Rückenlehne",
-							   type: .text,
-		                       tagKey: "backreset",
-		                       defaultValue: nil,
-		                       placeholder: nil,
-		                       keyboard: .default,
-		                       capitalize: .none,
-		                       autocorrect: .no,
-		                       presets: [firstPreset, secondPreset])
+		let tagKey = PresetDisplayKey(name: "Rückenlehne",
+		                              type: .text,
+		                              tagKey: "backreset",
+		                              defaultValue: nil,
+		                              placeholder: nil,
+		                              keyboard: .default,
+		                              capitalize: .none,
+		                              autocorrect: .no,
+		                              presets: [firstPreset, secondPreset])
 
 		XCTAssertEqual(tagKey.placeholder, "\(firstPresetName), \(secondPresentName)...")
 	}

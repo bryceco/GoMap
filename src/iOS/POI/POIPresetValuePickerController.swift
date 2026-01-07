@@ -10,7 +10,7 @@ import UIKit
 class POIPresetValuePickerController: UITableViewController {
 	static let ImageWidth = 80.0
 	var key = ""
-	var presetValueList: [PresetValue] = []
+	var presetValueList: [PresetDisplayValue] = []
 	var onSetValue: ((String) -> Void)?
 	var descriptions: [String: String] = [:]
 	var images: [String: UIImage] = [:]

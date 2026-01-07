@@ -432,10 +432,10 @@ extension WikiPage {
 		{
 			featureName = feature.localizedName
 		} else {
-			let allPresets = PresetsForFeature(withFeature: feature,
-			                                   objectTags: [key: value],
-			                                   geometry: geometry,
-			                                   update: nil)
+			let allPresets = PresetDisplayForFeature(withFeature: feature,
+			                                         objectTags: [key: value],
+			                                         geometry: geometry,
+			                                         update: nil)
 			if let preset = allPresets.allPresetKeys().first(where: { $0.tagKey == key }) {
 				featureName = preset.name
 			} else {

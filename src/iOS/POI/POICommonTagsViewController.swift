@@ -25,7 +25,7 @@ class FeaturePresetAreaCell: UITableViewCell {
 	@IBOutlet var nameLabel: UILabel!
 	@IBOutlet var valueField: UITextView!
 	@IBOutlet var isSet: UIView!
-	var presetKey: PresetKey!
+	var presetKey: PresetDisplayKey!
 
 	private static let placeholderColor: UIColor = {
 		if #available(iOS 13.0, *) {
@@ -66,14 +66,14 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	POIFeaturePickerDelegate, KeyValueTableCellOwner, PresetValueTextFieldOwner
 {
 	@IBOutlet var saveButton: UIBarButtonItem!
-	private var allPresets: PresetsForFeature? {
+	private var allPresets: PresetDisplayForFeature? {
 		didSet { computeExtraTags() }
 	}
 
 	private var selectedFeature: PresetFeature? // the feature selected by the user, not derived from tags (e.g. Address)
 	private var currentFeature: PresetFeature? // the feature that was most recently inferred from the tags
 	private var childPushed = false
-	private var drillDownGroup: PresetGroup?
+	private var drillDownGroup: PresetDisplayGroup?
 	private var firstResponderTextField: UITextField?
 	private var extraTags: KeyValueTableSection! // array of key/values not covered by presets
 
@@ -177,21 +177,25 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			}
 
 			weak let weakself = self
-			allPresets = PresetsForFeature(withFeature: selectedFeature, objectTags: dict, geometry: geometry, update: {
-				// This closure is called whenever results from TagInfo return, which
-				// may be much later, even after we've been dismissed. We need to rebuild
-				// the preset list in response.
-				if let weakself = weakself,
-				   !weakself.isEditing
-				{
-					weakself.allPresets = PresetsForFeature(
-						withFeature: weakself.currentFeature,
-						objectTags: tabController.keyValueDict,
-						geometry: geometry,
-						update: nil)
-					weakself.tableView.reloadData()
-				}
-			})
+			allPresets = PresetDisplayForFeature(
+				withFeature: selectedFeature,
+				objectTags: dict,
+				geometry: geometry,
+				update: {
+					// This closure is called whenever results from TagInfo return, which
+					// may be much later, even after we've been dismissed. We need to rebuild
+					// the preset list in response.
+					if let weakself = weakself,
+					   !weakself.isEditing
+					{
+						weakself.allPresets = PresetDisplayForFeature(
+							withFeature: weakself.currentFeature,
+							objectTags: tabController.keyValueDict,
+							geometry: geometry,
+							update: nil)
+						weakself.tableView.reloadData()
+					}
+				})
 			computeExtraTags()
 		}
 
@@ -442,7 +446,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				cell.isSet.backgroundColor = keyValueDict[presetKey.tagKey] == nil ? nil : Self.isSetHighlight
 
 				if !presetKey.isYesNo(),
-				   let presets = presetKey.presetList,
+				   let presets = presetKey.presetValues,
 				   presets.count > 0
 				{
 					// The user can select from a list of presets.
@@ -513,7 +517,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		   case let .key(presetKey) = cell.presetKey
 		{
 			dest.key = presetKey.tagKey
-			dest.presetValueList = presetKey.presetList ?? []
+			dest.presetValueList = presetKey.presetValues ?? []
 			dest.onSetValue = { [weak self] value in
 				self?.updateTagDict(withValue: value, forKey: presetKey.tagKey)
 			}
@@ -543,7 +547,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		return nil
 	}
 
-	func bothKeyFor(preset: PresetKey) -> String? {
+	func bothKeyFor(preset: PresetDisplayKey) -> String? {
 		if let index = preset.tagKey.lastIndex(of: ":") {
 			return String(preset.tagKey[..<index]) + ":both"
 		}
@@ -672,7 +676,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				let key = presetKey.tagKey
 				if PresetsDatabase.shared.eligibleForAutocomplete(key) {
 					var values = AppDelegate.shared.mapView.editorLayer.mapData.tagValues(forKey: key)
-					let values2 = presetKey.presetList?.map({ $0.tagValue }) ?? []
+					let values2 = presetKey.presetValues?.map({ $0.tagValue }) ?? []
 					values = values.union(values2)
 					let list = [String](values)
 					textField.autocompleteStrings = list
@@ -806,7 +810,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	// MARK: KeyValueTableCellOwner fields
 
 	// These are needed to satisfy requirements as KeyValueTableCell owner
-	var allPresetKeys: [PresetKey] { allPresets?.allPresetKeys() ?? [] }
+	var allPresetKeys: [PresetDisplayKey] { allPresets?.allPresetKeys() ?? [] }
 	var currentTextField: UITextField?
 
 	func keyValueEditingChanged(for kv: KeyValueTableCell) {

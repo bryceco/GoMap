@@ -29,12 +29,12 @@
 		021BC21E2D6E6E0E004631C5 /* Panoramax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021BC21D2D6E6E05004631C5 /* Panoramax.swift */; };
 		021BC2222D7625FB004631C5 /* Panoramax.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021BC2212D7625FB004631C5 /* Panoramax.storyboard */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
-		021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBA258591D000F6E1C0 /* PresetKey.swift */; };
-		021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBF258594EE00F6E1C0 /* PresetValue.swift */; };
-		021FADC52585951E00F6E1C0 /* PresetGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADC42585951E00F6E1C0 /* PresetGroup.swift */; };
-		021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADCC25873C8200F6E1C0 /* PresetsDatabase+TableView.swift */; };
-		021FADD225873CC000F6E1C0 /* PresetKeyUserDefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD125873CC000F6E1C0 /* PresetKeyUserDefined.swift */; };
-		021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */; };
+		021FADBB258591D000F6E1C0 /* PresetDisplayKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBA258591D000F6E1C0 /* PresetDisplayKey.swift */; };
+		021FADC0258594EE00F6E1C0 /* PresetDisplayValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBF258594EE00F6E1C0 /* PresetDisplayValue.swift */; };
+		021FADC52585951E00F6E1C0 /* PresetDisplayGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADC42585951E00F6E1C0 /* PresetDisplayGroup.swift */; };
+		021FADCD25873C8200F6E1C0 /* PresetsDatabase+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADCC25873C8200F6E1C0 /* PresetsDatabase+Display.swift */; };
+		021FADD225873CC000F6E1C0 /* PresetDisplayKeyUserDefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD125873CC000F6E1C0 /* PresetDisplayKeyUserDefined.swift */; };
+		021FADD725873D0100F6E1C0 /* PresetDisplayForFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADD625873D0100F6E1C0 /* PresetDisplayForFeature.swift */; };
 		021FADE22588474300F6E1C0 /* PresetCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADE12588474300F6E1C0 /* PresetCategory.swift */; };
 		021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADEE25884BB900F6E1C0 /* OsmTags.swift */; };
 		0220526429283498003C6AE1 /* CountryCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0220526329283498003C6AE1 /* CountryCoder.swift */; };
@@ -370,12 +370,12 @@
 		021BC21D2D6E6E05004631C5 /* Panoramax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panoramax.swift; sourceTree = "<group>"; };
 		021BC2212D7625FB004631C5 /* Panoramax.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Panoramax.storyboard; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		021FADBA258591D000F6E1C0 /* PresetKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKey.swift; sourceTree = "<group>"; };
-		021FADBF258594EE00F6E1C0 /* PresetValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetValue.swift; sourceTree = "<group>"; };
-		021FADC42585951E00F6E1C0 /* PresetGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetGroup.swift; sourceTree = "<group>"; };
-		021FADCC25873C8200F6E1C0 /* PresetsDatabase+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresetsDatabase+TableView.swift"; sourceTree = "<group>"; };
-		021FADD125873CC000F6E1C0 /* PresetKeyUserDefined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKeyUserDefined.swift; sourceTree = "<group>"; };
-		021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsForFeature.swift; sourceTree = "<group>"; };
+		021FADBA258591D000F6E1C0 /* PresetDisplayKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetDisplayKey.swift; sourceTree = "<group>"; };
+		021FADBF258594EE00F6E1C0 /* PresetDisplayValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetDisplayValue.swift; sourceTree = "<group>"; };
+		021FADC42585951E00F6E1C0 /* PresetDisplayGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetDisplayGroup.swift; sourceTree = "<group>"; };
+		021FADCC25873C8200F6E1C0 /* PresetsDatabase+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresetsDatabase+Display.swift"; sourceTree = "<group>"; };
+		021FADD125873CC000F6E1C0 /* PresetDisplayKeyUserDefined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetDisplayKeyUserDefined.swift; sourceTree = "<group>"; };
+		021FADD625873D0100F6E1C0 /* PresetDisplayForFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetDisplayForFeature.swift; sourceTree = "<group>"; };
 		021FADE12588474300F6E1C0 /* PresetCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetCategory.swift; sourceTree = "<group>"; };
 		021FADEE25884BB900F6E1C0 /* OsmTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmTags.swift; sourceTree = "<group>"; };
 		022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Ocean.swift"; sourceTree = "<group>"; };
@@ -887,6 +887,7 @@
 				C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */,
 				02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
+				02E9DCD72F0E34B300F372A9 /* PresetsDisplay */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
 				02771D702BFC15C300FE9B79 /* UserFileList.swift */,
@@ -1011,15 +1012,9 @@
 				021FADE12588474300F6E1C0 /* PresetCategory.swift */,
 				02CC01D02584195E004444EF /* PresetFeature.swift */,
 				02A59EDA297DE4E100B0A676 /* PresetField.swift */,
-				021FADC42585951E00F6E1C0 /* PresetGroup.swift */,
-				021FADBA258591D000F6E1C0 /* PresetKey.swift */,
-				021FADD125873CC000F6E1C0 /* PresetKeyUserDefined.swift */,
 				02CC01DB25843F2F004444EF /* PresetLanguages.swift */,
 				020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */,
-				021FADCC25873C8200F6E1C0 /* PresetsDatabase+TableView.swift */,
-				021FADD625873D0100F6E1C0 /* PresetsForFeature.swift */,
 				0262175A2F08533D00594D88 /* PresetTranslations.swift */,
-				021FADBF258594EE00F6E1C0 /* PresetValue.swift */,
 				02C456A729C8DB410077E3FD /* TagInfo.swift */,
 			);
 			name = PresetsDatabase;
@@ -1039,6 +1034,20 @@
 				027C7FDB296CCF28005C53A8 /* String+Ext.swift */,
 			);
 			path = PhotoShare;
+			sourceTree = "<group>";
+		};
+		02E9DCD72F0E34B300F372A9 /* PresetsDisplay */ = {
+			isa = PBXGroup;
+			children = (
+				021FADD625873D0100F6E1C0 /* PresetDisplayForFeature.swift */,
+				021FADC42585951E00F6E1C0 /* PresetDisplayGroup.swift */,
+				021FADBA258591D000F6E1C0 /* PresetDisplayKey.swift */,
+				021FADD125873CC000F6E1C0 /* PresetDisplayKeyUserDefined.swift */,
+				021FADBF258594EE00F6E1C0 /* PresetDisplayValue.swift */,
+				021FADCC25873C8200F6E1C0 /* PresetsDatabase+Display.swift */,
+			);
+			name = PresetsDisplay;
+			path = ../Shared/PresetsDisplay;
 			sourceTree = "<group>";
 		};
 		02F0297A2BFAFF2E002F7956 /* DataOverlays */ = {
@@ -1517,7 +1526,7 @@
 				02AEBEAF294ABE0700009163 /* KeyValueTableCell.swift in Sources */,
 				EDB2C3A62609E6E100C08293 /* LoginViewController.swift in Sources */,
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
-				021FADD225873CC000F6E1C0 /* PresetKeyUserDefined.swift in Sources */,
+				021FADD225873CC000F6E1C0 /* PresetDisplayKeyUserDefined.swift in Sources */,
 				02CBF3C82BE85829000DE2AD /* GpxTrackWidgetManager.swift in Sources */,
 				ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */,
 				026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */,
@@ -1574,7 +1583,7 @@
 				02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */,
 				02CE3CE929919FC400DDACE0 /* LocationButton.swift in Sources */,
 				EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */,
-				021FADBB258591D000F6E1C0 /* PresetKey.swift in Sources */,
+				021FADBB258591D000F6E1C0 /* PresetDisplayKey.swift in Sources */,
 				C381C30B263FE518003142BA /* PushPinView.swift in Sources */,
 				02CB2407265DB7CB00835F32 /* LevenshteinDistance.swift in Sources */,
 				C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */,
@@ -1645,7 +1654,7 @@
 				02CB523429907832007F758D /* QuestMarker.swift in Sources */,
 				ED56E5EB26028B5F000B368C /* GpxConfigureViewController.swift in Sources */,
 				02EA1C6C2663398C00A0F827 /* TileQuadKey.swift in Sources */,
-				021FADD725873D0100F6E1C0 /* PresetsForFeature.swift in Sources */,
+				021FADD725873D0100F6E1C0 /* PresetDisplayForFeature.swift in Sources */,
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				02225DA729EB3AE900859F9D /* GpxTrack.swift in Sources */,
 				02008650265B25DC008F37DD /* Database.swift in Sources */,
@@ -1658,7 +1667,7 @@
 				C3D096CF263EA0DB00E3B129 /* KeyChain.swift in Sources */,
 				ED56E5EC26028B5F000B368C /* FilterObjectsViewController.swift in Sources */,
 				C341E15C2639DF440022E983 /* NearbyMappersViewController.swift in Sources */,
-				021FADC52585951E00F6E1C0 /* PresetGroup.swift in Sources */,
+				021FADC52585951E00F6E1C0 /* PresetDisplayGroup.swift in Sources */,
 				02EF13C12E5ABF7600418CA4 /* CustomActionSheetController.swift in Sources */,
 				02C8C56526F446FD003B0122 /* MapMarker.swift in Sources */,
 				02CE3CE7299187C100DDACE0 /* TelephoneToolbar.swift in Sources */,
@@ -1677,7 +1686,7 @@
 				02CB2408265DB7CB00835F32 /* HoursRecognizer.swift in Sources */,
 				B287A89A2BBC64F70050A15D /* Style.swift in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
-				021FADCD25873C8200F6E1C0 /* PresetsDatabase+TableView.swift in Sources */,
+				021FADCD25873C8200F6E1C0 /* PresetsDatabase+Display.swift in Sources */,
 				02505C5729A458A30078D60D /* QuestDefinition.swift in Sources */,
 				0203B06429B3D62900B020DF /* OsmType.swift in Sources */,
 				02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */,
@@ -1696,7 +1705,7 @@
 				0202C6002E3C348400649F26 /* ButtonClosure.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
 				0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */,
-				021FADC0258594EE00F6E1C0 /* PresetValue.swift in Sources */,
+				021FADC0258594EE00F6E1C0 /* PresetDisplayValue.swift in Sources */,
 				02CB52362990801E007F758D /* QuestList.swift in Sources */,
 				02F72BCC2E35828100B6C76C /* NotificationService.swift in Sources */,
 				02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */,

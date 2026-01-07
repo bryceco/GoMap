@@ -1,5 +1,5 @@
 //
-//  PresetKey.swift
+//  PresetDisplayKey.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/12/20.
@@ -10,23 +10,8 @@
 import Foundation
 import UIKit
 
-#if os(iOS)
-#else
-typealias UIKeyboardType = Int
-typealias UITextAutocapitalizationType = Int
-#if !os(iOS)
-let UIKeyboardTypeDefault = 0
-let UIKeyboardTypeNumbersAndPunctuation = 1
-let UIKeyboardTypeURL = 2
-let UITextAutocapitalizationTypeNone = 0
-let UITextAutocapitalizationTypeSentences = 1
-let UITextAutocapitalizationTypeWords = 2
-#endif
-
-#endif
-
 // A key along with information about possible values
-class PresetKey: NSObject, NSSecureCoding, Codable {
+class PresetDisplayKey: NSObject, NSSecureCoding, Codable {
 	public class var supportsSecureCoding: Bool { return true }
 
 	let name: String // name of the preset, e.g. Hours
@@ -34,7 +19,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 	let tagKey: String // the key being set, e.g. opening_hours
 	let defaultValue: String?
 	let placeholder: String // placeholder text in the UITextField
-	let presetList: [PresetValue]? // array of potential values, or nil if it's free-form text
+	let presetValues: [PresetDisplayValue]? // array of potential values, or nil if it's free-form text
 	let keyboardType: UIKeyboardType
 	let autocapitalizationType: UITextAutocapitalizationType
 	let autocorrectType: UITextAutocorrectionType
@@ -48,18 +33,18 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		keyboard: UIKeyboardType,
 		capitalize: UITextAutocapitalizationType,
 		autocorrect: UITextAutocorrectionType,
-		presets: [PresetValue]?)
+		presetValues: [PresetDisplayValue]?)
 	{
 		self.name = name
 		self.type = type
 		tagKey = tag
 		self.placeholder = placeholder
-			?? PresetKey.placeholderForPresets(presets)
+			?? PresetDisplayKey.placeholderForPresets(presetValues)
 			?? PresetTranslations.shared.unknownForLocale
 		keyboardType = keyboard
 		autocapitalizationType = capitalize
 		autocorrectType = autocorrect
-		presetList = presets
+		self.presetValues = presetValues
 		self.defaultValue = defaultValue
 	}
 
@@ -69,7 +54,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		coder.encode(name, forKey: "name")
 		coder.encode(tagKey, forKey: "tagKey")
 		coder.encode(placeholder, forKey: "placeholder")
-		coder.encode(presetList, forKey: "presetList")
+		coder.encode(presetValues, forKey: "presetList")
 		coder.encode(keyboardType.rawValue, forKey: "keyboardType")
 		coder.encode(autocapitalizationType.rawValue, forKey: "capitalize")
 	}
@@ -78,7 +63,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		if let name = coder.decodeObject(forKey: "name") as? String,
 		   let tagKey = coder.decodeObject(forKey: "tagKey") as? String,
 		   let placeholder = coder.decodeObject(forKey: "placeholder") as? String,
-		   let presetList = coder.decodeObject(forKey: "presetList") as? [PresetValue],
+		   let presetList = coder.decodeObject(forKey: "presetList") as? [PresetDisplayValue],
 		   let keyboardType = UIKeyboardType(rawValue: coder.decodeInteger(forKey: "keyboardType")),
 		   let autocapitalizationType = UITextAutocapitalizationType(rawValue:
 		   	coder.decodeInteger(forKey: "capitalize"))
@@ -87,7 +72,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 			type = presetList.count > 0 ? .combo : .text
 			self.tagKey = tagKey
 			self.placeholder = placeholder
-			self.presetList = presetList
+			self.presetValues = presetList
 			self.keyboardType = keyboardType
 			self.autocapitalizationType = autocapitalizationType
 			autocorrectType = UITextAutocorrectionType.no // user can't set this
@@ -107,17 +92,17 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(name, forKey: .name)
 		try container.encode(tagKey, forKey: .tagKey)
-		try container.encode(presetList, forKey: .presetList)
+		try container.encode(presetValues, forKey: .presetList)
 	}
 
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		name = try container.decode(String.self, forKey: .name)
 		tagKey = try container.decode(String.self, forKey: .tagKey)
-		presetList = try container.decode([PresetValue].self, forKey: .presetList)
+		presetValues = try container.decode([PresetDisplayValue].self, forKey: .presetList)
 		type = .combo
 		defaultValue = nil
-		placeholder = PresetKey.placeholderForPresets(presetList)
+		placeholder = PresetDisplayKey.placeholderForPresets(presetValues)
 			?? PresetTranslations.shared.unknownForLocale
 		keyboardType = .default
 		autocapitalizationType = .none
@@ -126,7 +111,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 	}
 
 	func prettyNameForTagValue(_ value: String) -> String {
-		if let presetList = presetList {
+		if let presetList = presetValues {
 			for presetValue in presetList {
 				if presetValue.tagValue == value {
 					return presetValue.name
@@ -137,7 +122,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 	}
 
 	func tagValueForPrettyName(_ value: String) -> String {
-		if let presetList = presetList {
+		if let presetList = presetValues {
 			for presetValue in presetList {
 				let diff: ComparisonResult? = presetValue.name.compare(
 					value,
@@ -161,7 +146,7 @@ class PresetKey: NSObject, NSSecureCoding, Codable {
 		}
 	}
 
-	private class func placeholderForPresets(_ presets: [PresetValue]?) -> String? {
+	private class func placeholderForPresets(_ presets: [PresetDisplayValue]?) -> String? {
 		// use the first 3 values as the placeholder text
 		if let presets = presets,
 		   presets.count > 1

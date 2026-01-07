@@ -1,5 +1,5 @@
 //
-//  PresetsDatabase+TableView.swift
+//  PresetsDatabase+Display.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/13/20.
@@ -182,7 +182,7 @@ extension PresetsDatabase {
 		placeholder: String?,
 		keyboard: UIKeyboardType,
 		capitalize: UITextAutocapitalizationType,
-		autocorrect: UITextAutocorrectionType) -> PresetGroup
+		autocorrect: UITextAutocorrectionType) -> PresetDisplayGroup
 	{
 		let prefix = commonPrefixOfMultiKeys(options)
 		var tags: [PresetKeyOrGroup] = []
@@ -200,8 +200,8 @@ extension PresetsDatabase {
 				autocorrect: autocorrect)
 			tags.append(.key(tag))
 		}
-		let group = PresetGroup(name: label, tags: tags, isDrillDown: true, usesBoth: false)
-		let group2 = PresetGroup(name: nil, tags: [.group(group)], isDrillDown: true, usesBoth: false)
+		let group = PresetDisplayGroup(name: label, tags: tags, isDrillDown: true, usesBoth: false)
+		let group2 = PresetDisplayGroup(name: nil, tags: [.group(group)], isDrillDown: true, usesBoth: false)
 		return group2
 	}
 
@@ -217,24 +217,28 @@ extension PresetsDatabase {
 		placeholder: String?,
 		keyboard: UIKeyboardType,
 		capitalize: UITextAutocapitalizationType,
-		autocorrect: UITextAutocorrectionType) -> PresetKey
+		autocorrect: UITextAutocorrectionType) -> PresetDisplayKey
 	{
-		let presets: [PresetValue] = options.flatMap { optionList in
+		let presetValues: [PresetDisplayValue] = options.flatMap { optionList in
 			optionList.map { value in
 				switch localizedOptions?[value] {
 				case let .longText(titleDesc):
 					let name = titleDesc.title ?? OsmTags.PrettyTag(value)
-					return PresetValue(name: name, details: titleDesc.description, icon: icons?[value], tagValue: value)
+					return PresetDisplayValue(
+						name: name,
+						details: titleDesc.description,
+						icon: icons?[value],
+						tagValue: value)
 				case let .shortText(name):
-					return PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value)
+					return PresetDisplayValue(name: name, details: nil, icon: icons?[value], tagValue: value)
 				case nil:
 					let name = OsmTags.PrettyTag(value)
-					return PresetValue(name: name, details: nil, icon: icons?[value], tagValue: value)
+					return PresetDisplayValue(name: name, details: nil, icon: icons?[value], tagValue: value)
 				}
-			} as [PresetValue]
+			} as [PresetDisplayValue]
 		}
 
-		let tag = PresetKey(
+		let tag = PresetDisplayKey(
 			name: localizedLabel,
 			type: type,
 			tagKey: key,
@@ -243,7 +247,7 @@ extension PresetsDatabase {
 			keyboard: keyboard,
 			capitalize: capitalize,
 			autocorrect: autocorrect,
-			presets: presets)
+			presetValues: presetValues)
 		return tag
 	}
 
@@ -256,13 +260,13 @@ extension PresetsDatabase {
 		placeholder: String?,
 		keyboard: UIKeyboardType,
 		capitalize: UITextAutocapitalizationType,
-		autocorrect: UITextAutocorrectionType) -> PresetKey
+		autocorrect: UITextAutocorrectionType) -> PresetDisplayKey
 	{
-		let presets = [
-			PresetValue(name: PresetTranslations.shared.yesForLocale, details: nil, icon: nil, tagValue: "yes"),
-			PresetValue(name: PresetTranslations.shared.noForLocale, details: nil, icon: nil, tagValue: "no")
+		let presetValues = [
+			PresetDisplayValue(name: PresetTranslations.shared.yesForLocale, details: nil, icon: nil, tagValue: "yes"),
+			PresetDisplayValue(name: PresetTranslations.shared.noForLocale, details: nil, icon: nil, tagValue: "no")
 		]
-		let tag = PresetKey(
+		let tag = PresetDisplayKey(
 			name: label,
 			type: type,
 			tagKey: key,
@@ -271,7 +275,7 @@ extension PresetsDatabase {
 			keyboard: keyboard,
 			capitalize: capitalize,
 			autocorrect: autocorrect,
-			presets: presets)
+			presetValues: presetValues)
 		return tag
 	}
 
@@ -280,7 +284,7 @@ extension PresetsDatabase {
 	                         geometry: GEOMETRY,
 	                         countryCode: String,
 	                         ignore: [String],
-	                         update: (() -> Void)?) -> PresetGroup?
+	                         update: (() -> Void)?) -> PresetDisplayGroup?
 	{
 		let field = presetFields[fieldName]!
 
@@ -333,7 +337,7 @@ extension PresetsDatabase {
 				keyboard: .default,
 				capitalize: .none,
 				autocorrect: .no)
-			let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
+			let group = PresetDisplayGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 			return group
 
 		case .radio, .structureRadio, .manyCombo, .multiCombo:
@@ -364,7 +368,7 @@ extension PresetsDatabase {
 						keyboard: .default,
 						capitalize: .none,
 						autocorrect: .no)
-					let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
+					let group = PresetDisplayGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 					return group
 				}
 				let group = multiComboWith(
@@ -392,7 +396,7 @@ extension PresetsDatabase {
 					keyboard: .default,
 					capitalize: .none,
 					autocorrect: .no)
-				let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
+				let group = PresetDisplayGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 				return group
 			}
 
@@ -417,7 +421,7 @@ extension PresetsDatabase {
 				keyboard: .default,
 				capitalize: .none,
 				autocorrect: .no)
-			let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
+			let group = PresetDisplayGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 			return group
 
 		case .access, .directionalCombo: // "cycleway" is no longer used
@@ -442,7 +446,7 @@ extension PresetsDatabase {
 					autocorrect: .no)
 				tagList.append(.key(tag))
 			}
-			let group = PresetGroup(name: label, tags: tagList, usesBoth: field.type == .directionalCombo)
+			let group = PresetDisplayGroup(name: label, tags: tagList, usesBoth: field.type == .directionalCombo)
 			return group
 
 		case .address:
@@ -483,7 +487,7 @@ extension PresetsDatabase {
 				}
 				let keyboard: UIKeyboardType = numericFields.contains(addressKey) ? .numbersAndPunctuation : .default
 				let tagKey = "\(addressPrefix):\(addressKey)"
-				let tag = PresetKey(
+				let tag = PresetDisplayKey(
 					name: name,
 					type: field.type,
 					tagKey: tagKey,
@@ -492,10 +496,10 @@ extension PresetsDatabase {
 					keyboard: keyboard,
 					capitalize: .words,
 					autocorrect: .no,
-					presets: nil)
+					presetValues: nil)
 				addrs.append(.key(tag))
 			}
-			let group = PresetGroup(name: label, tags: addrs, usesBoth: false)
+			let group = PresetDisplayGroup(name: label, tags: addrs, usesBoth: false)
 			return group
 
 		case .text, .number, .email, .identifier, .maxweight_bridge, .textarea,
@@ -529,7 +533,7 @@ extension PresetsDatabase {
 			default:
 				break
 			}
-			let tag = PresetKey(
+			let tag = PresetDisplayKey(
 				name: label,
 				type: field.type,
 				tagKey: key,
@@ -538,8 +542,8 @@ extension PresetsDatabase {
 				keyboard: keyboard,
 				capitalize: capitalize,
 				autocorrect: autocorrect,
-				presets: nil)
-			let group = PresetGroup(name: nil, tags: [.key(tag)], usesBoth: false)
+				presetValues: nil)
+			let group = PresetDisplayGroup(name: nil, tags: [.key(tag)], usesBoth: false)
 			return group
 
 		case .localized:

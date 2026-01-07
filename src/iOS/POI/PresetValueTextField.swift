@@ -10,7 +10,7 @@ import SafariServices
 import UIKit
 
 protocol PresetValueTextFieldOwner: AnyObject {
-	var allPresetKeys: [PresetKey] { get }
+	var allPresetKeys: [PresetDisplayKey] { get }
 	var viewController: UIViewController? { get }
 	var keyValueDict: [String: String] { get }
 	func valueChanged(for textField: PresetValueTextField, ended: Bool)
@@ -28,7 +28,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		}
 	}
 
-	var presetKey: PresetKey? {
+	var presetKey: PresetDisplayKey? {
 		didSet {
 			if let preset = presetKey {
 				key = preset.tagKey
@@ -351,7 +351,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 
 	private func getHeightButton() -> UIView? {
 		guard key == "height",
-			  !ProcessInfo.processInfo.isMacCatalystApp
+		      !ProcessInfo.processInfo.isMacCatalystApp
 		else {
 			return nil
 		}

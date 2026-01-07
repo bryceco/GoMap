@@ -19,7 +19,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 	var questMarker: QuestMarker!
 	var object: OsmBaseObject!
 	var presetFeature: PresetFeature?
-	var presetKeys: [PresetKey?] = []
+	var presetKeys: [PresetDisplayKey?] = []
 	var editKeys: [String] = []
 	var onClose: (() -> Void)?
 
@@ -39,7 +39,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 		if presetKeys.count == 1,
 		   let presetKey = presetKeys[0]
 		{
-			if (presetKey.presetList?.count ?? 0) < 2 || isOpeningHours(presetKey.tagKey) {
+			if (presetKey.presetValues?.count ?? 0) < 2 || isOpeningHours(presetKey.tagKey) {
 				// set text cell to first responder
 				if let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)),
 				   let cell2 = cell as? QuestSolverTextEntryCell
@@ -51,7 +51,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 	}
 
 	func refreshPresetKey() -> Bool {
-		let presets = PresetsForFeature(
+		let presets = PresetDisplayForFeature(
 			withFeature: presetFeature,
 			objectTags: object.tags,
 			geometry: object.geometry(),
@@ -129,7 +129,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 				cell.textField?.resignFirstResponder()
 				tags[editKeys[keyIndex]] = cell.textField?.text
 			} else if let index = tableView.indexPathsForSelectedRows?.first(where: { $0.section == section }),
-			          let text = presetKeys[keyIndex]?.presetList?[index.row].tagValue
+			          let text = presetKeys[keyIndex]?.presetValues?[index.row].tagValue
 			{
 				// user selected a preset
 				tags[editKeys[keyIndex]] = text
@@ -232,7 +232,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 			return NUMBER_OF_FOOTERS
 		default:
 			if let presetKey = presetKeys[section - 1],
-			   let answerCount = presetKey.presetList?.count,
+			   let answerCount = presetKey.presetValues?.count,
 			   answerCount >= 2,
 			   !presetKey.isYesNo(),
 			   !isOpeningHours(key: presetKey)
@@ -285,7 +285,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 			if indexPath.row < tableView.numberOfRows(inSection: indexPath.section) - 1 {
 				// A selection among a combo of possible values
 				let presetKey = presetKeys[indexPath.section - 1]
-				let presetValue = presetKey?.presetList?[indexPath.row]
+				let presetValue = presetKey?.presetValues?[indexPath.row]
 				let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTagValue", for: indexPath)
 				cell.textLabel?.text = presetValue?.name ?? ""
 				if let value = object.tags[editKeys[indexPath.section - 1]],
@@ -316,7 +316,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 	// MARK: PresetValueTextFieldOwner
 
-	var allPresetKeys: [PresetKey] { presetKeys.compactMap { $0 } }
+	var allPresetKeys: [PresetDisplayKey] { presetKeys.compactMap { $0 } }
 	var viewController: UIViewController? { self }
 	func valueChanged(for textField: PresetValueTextField, ended: Bool) {
 		let okay = questMarker.quest.accepts(tagValue: textField.text ?? "")
@@ -335,7 +335,7 @@ extension QuestSolverController {
 		return OsmTags.isKey(key, variantOf: "opening_hours")
 	}
 
-	func isOpeningHours(key: PresetKey) -> Bool {
+	func isOpeningHours(key: PresetDisplayKey) -> Bool {
 #if !targetEnvironment(macCatalyst)
 #if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
 		if #available(iOS 14.0, *) {

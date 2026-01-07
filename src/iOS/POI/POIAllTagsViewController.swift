@@ -71,7 +71,7 @@ private class SectionHeaderCell: UITableViewHeaderFooterView {
 }
 
 class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate, KeyValueTableCellOwner {
-	var allPresetKeys: [PresetKey] = []
+	var allPresetKeys: [PresetDisplayKey] = []
 	private var tags: KeyValueTableSection!
 	private var relations: [OsmRelation] = []
 	private var members: [OsmMember] = []
@@ -156,10 +156,10 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 		// add placeholder keys
 		if let newFeature = currentFeature {
-			let presets = PresetsForFeature(withFeature: newFeature,
-			                                objectTags: dict,
-			                                geometry: geometry,
-			                                update: nil)
+			let presets = PresetDisplayForFeature(withFeature: newFeature,
+			                                      objectTags: dict,
+			                                      geometry: geometry,
+			                                      update: nil)
 			allPresetKeys = presets.allPresetKeys()
 			let newKeys: Set<String> = Set(allPresetKeys.map({ $0.tagKey }).filter({ $0 != "" }))
 				.subtracting(tags.allTags.map { $0.k })

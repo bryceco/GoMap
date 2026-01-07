@@ -53,10 +53,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		NSKeyedUnarchiver.setClass(OsmMapData.classForKeyedArchiver(), forClassName: "OsmMapData")
 
-		NSKeyedUnarchiver.setClass(PresetKeyUserDefined.classForKeyedArchiver(), forClassName: "CustomPreset")
-		NSKeyedUnarchiver.setClass(PresetValue.classForKeyedArchiver(), forClassName: "PresetValue")
-		NSKeyedUnarchiver.setClass(PresetKey.classForKeyedArchiver(), forClassName: "CommonTagKey")
-		NSKeyedUnarchiver.setClass(PresetValue.classForKeyedArchiver(), forClassName: "CommonTagValue")
+		NSKeyedUnarchiver.setClass(PresetDisplayKeyUserDefined.classForKeyedArchiver(), forClassName: "CustomPreset")
+		NSKeyedUnarchiver.setClass(PresetDisplayValue.classForKeyedArchiver(), forClassName: "PresetValue")
+		NSKeyedUnarchiver.setClass(PresetDisplayKey.classForKeyedArchiver(), forClassName: "CommonTagKey")
+		NSKeyedUnarchiver.setClass(PresetDisplayValue.classForKeyedArchiver(), forClassName: "CommonTagValue")
 
 		NSKeyedUnarchiver.setClass(GpxTrack.classForKeyedArchiver(), forClassName: "GpxTrack")
 		NSKeyedUnarchiver.setClass(GpxPoint.classForKeyedArchiver(), forClassName: "GpxPoint")
@@ -186,8 +186,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			title: NSLocalizedString("Settings…", comment: "Settings menu item in Mac menu bar"),
 			action: #selector(openPreferences),
 			input: ",",
-			modifierFlags: .command
-		)
+			modifierFlags: .command)
 		settingsCommand.image = UIImage(systemName: "gear")
 
 		// Create a menu with the Settings command
@@ -196,8 +195,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			image: nil,
 			identifier: .preferences,
 			options: .displayInline,
-			children: [settingsCommand]
-		)
+			children: [settingsCommand])
 
 		// Insert it into the application menu
 		builder.replace(menu: .preferences, with: settingsMenu)

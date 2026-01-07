@@ -1,5 +1,5 @@
 //
-//  PresetsForFeature.swift
+//  PresetDisplayForFeature.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/13/20.
@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 // All presets for a feature, for presentation in Common Tags table view
-final class PresetsForFeature {
+final class PresetDisplayForFeature {
 	let featureName: String
-	private(set) var sectionList: [PresetGroup]
+	private(set) var sectionList: [PresetDisplayGroup]
 
-	private class func forEachPresetKeyInGroup(_ group: PresetKeyOrGroup, closure: (PresetKey) -> Void) {
+	private class func forEachPresetKeyInGroup(_ group: PresetKeyOrGroup, closure: (PresetDisplayKey) -> Void) {
 		switch group {
 		case let .group(subgroup):
 			for g in subgroup.presetKeys {
@@ -25,7 +25,7 @@ final class PresetsForFeature {
 		}
 	}
 
-	func forEachPresetKey(_ closure: (PresetKey) -> Void) {
+	func forEachPresetKey(_ closure: (PresetDisplayKey) -> Void) {
 		for section in sectionList {
 			for g in section.presetKeys {
 				Self.forEachPresetKeyInGroup(g, closure: closure)
@@ -33,8 +33,8 @@ final class PresetsForFeature {
 		}
 	}
 
-	func allPresetKeys() -> [PresetKey] {
-		var list: [PresetKey] = []
+	func allPresetKeys() -> [PresetDisplayKey] {
+		var list: [PresetDisplayKey] = []
 		forEachPresetKey({ list.append($0) })
 		return list
 	}
@@ -108,7 +108,7 @@ final class PresetsForFeature {
 			if group.name == nil || group.isDrillDown, sectionList.count > 1 {
 				var prev = sectionList.last!
 				if prev.name == nil {
-					prev = PresetGroup(fromMerger: prev, with: group, sort: sort)
+					prev = PresetDisplayGroup(fromMerger: prev, with: group, sort: sort)
 					sectionList.removeLast()
 					sectionList.append(prev)
 					continue
@@ -127,7 +127,7 @@ final class PresetsForFeature {
 		dupSet: inout Set<String>,
 		update: (() -> Void)?)
 	{
-		let fields = PresetsForFeature.fieldsFor(featureID: featureID, field: fieldGetter)
+		let fields = PresetDisplayForFeature.fieldsFor(featureID: featureID, field: fieldGetter)
 		addPresetsForFieldNames(
 			fields: fields,
 			sort: false,
@@ -146,7 +146,7 @@ final class PresetsForFeature {
 		featureName = feature?.localizedName ?? ""
 
 		// Always start with Type and Name
-		let typeTag = PresetKey(
+		let typeTag = PresetDisplayKey(
 			name: NSLocalizedString("Type", comment: "The 'Type' header in Common Tags"),
 			type: .featureType,
 			tagKey: "",
@@ -155,9 +155,9 @@ final class PresetsForFeature {
 			keyboard: UIKeyboardType.default,
 			capitalize: UITextAutocapitalizationType.none,
 			autocorrect: UITextAutocorrectionType.no,
-			presets: nil)
+			presetValues: nil)
 		let nameField = PresetsDatabase.shared.presetFields["name"]!
-		let nameTag = PresetKey(
+		let nameTag = PresetDisplayKey(
 			name: nameField.localizedLabel ?? "Name",
 			type: .text,
 			tagKey: "name",
@@ -166,8 +166,8 @@ final class PresetsForFeature {
 			keyboard: UIKeyboardType.default,
 			capitalize: UITextAutocapitalizationType.words,
 			autocorrect: UITextAutocorrectionType.no,
-			presets: nil)
-		let typeGroup = PresetGroup(name: "Type", tags: [.key(typeTag), .key(nameTag)], usesBoth: false)
+			presetValues: nil)
+		let typeGroup = PresetDisplayGroup(name: "Type", tags: [.key(typeTag), .key(nameTag)], usesBoth: false)
 		sectionList = [typeGroup]
 
 		// Add user-defined presets
@@ -187,7 +187,7 @@ final class PresetsForFeature {
 			customGroup.append(.key(custom))
 		}
 		if customGroup.count != 0 {
-			let group = PresetGroup(name: nil, tags: customGroup, usesBoth: false)
+			let group = PresetDisplayGroup(name: nil, tags: customGroup, usesBoth: false)
 			sectionList.append(group)
 		}
 
@@ -208,12 +208,12 @@ final class PresetsForFeature {
 			update: update)
 
 		// Create a break between the common items and the rare items
-		sectionList.append(PresetGroup(name: nil,
-		                               tags: [PresetKeyOrGroup](),
-		                               usesBoth: false))
+		sectionList.append(PresetDisplayGroup(name: nil,
+		                                      tags: [PresetKeyOrGroup](),
+		                                      usesBoth: false))
 
 		// add moreFields fields
-		let fields = PresetsForFeature.fieldsFor(featureID: feature.featureID, field: { f in f.moreFields })
+		let fields = PresetDisplayForFeature.fieldsFor(featureID: feature.featureID, field: { f in f.moreFields })
 		addPresetsForFieldNames(
 			fields: fields,
 			sort: false,
@@ -224,9 +224,9 @@ final class PresetsForFeature {
 			update: update)
 
 		// Create a break before universal items
-		sectionList.append(PresetGroup(name: nil,
-		                               tags: [PresetKeyOrGroup](),
-		                               usesBoth: false))
+		sectionList.append(PresetDisplayGroup(name: nil,
+		                                      tags: [PresetKeyOrGroup](),
+		                                      usesBoth: false))
 
 		// add universal fields
 		let uni = PresetsDatabase.shared.presetFields.compactMap({ k, v in v.universal ? k : nil })

@@ -40,7 +40,7 @@ class TextPairTableCell: UITableViewCell {
 }
 
 protocol KeyValueTableCellOwner: UITableViewController {
-	var allPresetKeys: [PresetKey] { get }
+	var allPresetKeys: [PresetDisplayKey] { get }
 	var currentTextField: UITextField? { get set }
 	func keyValueEditingChanged(for kv: KeyValueTableCell)
 	func keyValueEditingEnded(for kv: KeyValueTableCell)
@@ -312,7 +312,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 	// MARK: PresetValueTextFieldOwner
 
-	var allPresetKeys: [PresetKey] { return keyValueCellOwner?.allPresetKeys ?? [] }
+	var allPresetKeys: [PresetDisplayKey] { return keyValueCellOwner?.allPresetKeys ?? [] }
 
 	var viewController: UIViewController? { return keyValueCellOwner }
 	func valueChanged(for textField: PresetValueTextField, ended: Bool) {

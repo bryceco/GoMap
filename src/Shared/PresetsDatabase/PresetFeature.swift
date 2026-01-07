@@ -419,7 +419,7 @@ class PresetFeature: CustomDebugStringConvertible {
 
 	func defaultValuesForGeometry(_ geometry: GEOMETRY) -> [String: String] {
 		var result: [String: String] = [:]
-		let fields = PresetsForFeature.fieldsFor(featureID: featureID, field: { f in f.fields })
+		let fields = PresetDisplayForFeature.fieldsFor(featureID: featureID, field: { f in f.fields })
 		for fieldName in fields {
 			if let field = PresetsDatabase.shared.presetFields[fieldName],
 			   let key = field.key,
@@ -434,8 +434,8 @@ class PresetFeature: CustomDebugStringConvertible {
 	}
 
 	func allKeysForAllPresets(more: Bool) -> [String] {
-		let f1 = PresetsForFeature.fieldsFor(featureID: featureID, field: { $0.fields })
-		let f2 = more ? PresetsForFeature.fieldsFor(featureID: featureID, field: { $0.moreFields }) : []
+		let f1 = PresetDisplayForFeature.fieldsFor(featureID: featureID, field: { $0.fields })
+		let f2 = more ? PresetDisplayForFeature.fieldsFor(featureID: featureID, field: { $0.moreFields }) : []
 		let k1 = f1.flatMap { PresetsDatabase.shared.presetFields[$0]!.allKeys }
 		let k2 = f2.flatMap { PresetsDatabase.shared.presetFields[$0]!.allKeys }
 		return k1 + k2

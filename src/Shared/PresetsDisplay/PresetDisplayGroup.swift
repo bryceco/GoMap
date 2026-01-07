@@ -1,5 +1,5 @@
 //
-//  PresetGroup.swift
+//  PresetDisplayGroup.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/12/20.
@@ -9,10 +9,10 @@
 import Foundation
 
 enum PresetKeyOrGroup {
-	case key(PresetKey)
-	case group(PresetGroup)
+	case key(PresetDisplayKey)
+	case group(PresetDisplayGroup)
 
-	func flattenedPresets() -> [PresetKey] {
+	func flattenedPresets() -> [PresetDisplayKey] {
 		switch self {
 		case let .key(presetKey):
 			return [presetKey]
@@ -24,7 +24,7 @@ enum PresetKeyOrGroup {
 
 // A group of related tags, such as address tags, organized for display purposes
 // A group becomes a Section in UITableView
-final class PresetGroup {
+final class PresetDisplayGroup {
 	let name: String? // e.g. Address
 	let presetKeys: [PresetKeyOrGroup]
 	let isDrillDown: Bool
@@ -37,7 +37,7 @@ final class PresetGroup {
 		self.usesBoth = usesBoth
 	}
 
-	convenience init(fromMerger p1: PresetGroup, with p2: PresetGroup, sort: Bool) {
+	convenience init(fromMerger p1: PresetDisplayGroup, with p2: PresetDisplayGroup, sort: Bool) {
 		var list = p1.presetKeys + p2.presetKeys
 		if sort {
 			list.sort(by: { a, b in
@@ -68,7 +68,7 @@ final class PresetGroup {
 		var summary = ""
 		for preset in presetKeys {
 			if case let .key(preset) = preset,
-			   let values = preset.presetList,
+			   let values = preset.presetValues,
 			   values.count == 2,
 			   values[0].tagValue == "yes",
 			   values[1].tagValue == "no"

@@ -1,5 +1,5 @@
 //
-//  PresetKeyUserDefined.swift
+//  PresetDisplayKeyUserDefined.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/13/20.
@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 // A preset the user defined as a custom field
-final class PresetKeyUserDefined: PresetKey {
+final class PresetDisplayKeyUserDefined: PresetDisplayKey {
 	override public class var supportsSecureCoding: Bool { return true }
 
 	let appliesToKey: String // "" if not used
@@ -36,19 +36,19 @@ final class PresetKeyUserDefined: PresetKey {
 	     keyboard: UIKeyboardType,
 	     capitalize: UITextAutocapitalizationType,
 	     autocorrect: UITextAutocorrectionType,
-	     presets: [PresetValue])
+	     presetValues: [PresetDisplayValue])
 	{
 		self.appliesToKey = appliesToKey
 		self.appliesToValue = appliesToValue
 		super.init(name: name,
-		           type: presets.count > 0 ? .combo : .text,
+		           type: presetValues.count > 0 ? .combo : .text,
 		           tagKey: key,
 		           defaultValue: nil,
 		           placeholder: placeholder,
 		           keyboard: keyboard,
 		           capitalize: capitalize,
 		           autocorrect: autocorrect,
-		           presets: presets)
+		           presetValues: presetValues)
 	}
 
 	override func encode(with coder: NSCoder) {
@@ -80,13 +80,13 @@ final class PresetKeyUserDefined: PresetKey {
 }
 
 class PresetKeyUserDefinedList: Codable {
-	private(set) var list: [PresetKeyUserDefined] = []
+	private(set) var list: [PresetDisplayKeyUserDefined] = []
 	public static let shared = PresetKeyUserDefinedList()
 
 	init() {
 		// First try reading from UserPrefs
 		if let data = UserPrefs.shared.userDefinedPresetKeys.value,
-		   let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data)
+		   let list = try? JSONDecoder().decode([PresetDisplayKeyUserDefined].self, from: data)
 		{
 			self.list = list
 		} else {
@@ -96,10 +96,10 @@ class PresetKeyUserDefinedList: Codable {
 				let data = try Data(contentsOf: URL(fileURLWithPath: path))
 				let classList = [NSArray.self,
 				                 NSMutableString.self,
-				                 PresetKeyUserDefined.self,
-				                 PresetValue.self]
+				                 PresetDisplayKeyUserDefined.self,
+				                 PresetDisplayValue.self]
 				list = try NSKeyedUnarchiver.unarchivedObject(ofClasses: classList, from: data)
-					as? [PresetKeyUserDefined] ?? []
+					as? [PresetDisplayKeyUserDefined] ?? []
 			} catch {
 				list = []
 			}
@@ -108,7 +108,7 @@ class PresetKeyUserDefinedList: Codable {
 			guard
 				let self = self,
 				let data = pref.value,
-				let list = try? JSONDecoder().decode([PresetKeyUserDefined].self, from: data)
+				let list = try? JSONDecoder().decode([PresetDisplayKeyUserDefined].self, from: data)
 			else {
 				return
 			}
@@ -122,7 +122,7 @@ class PresetKeyUserDefinedList: Codable {
 		}
 	}
 
-	func addPreset(_ preset: PresetKeyUserDefined, atIndex index: Int) {
+	func addPreset(_ preset: PresetDisplayKeyUserDefined, atIndex index: Int) {
 		list.insert(preset, at: index)
 	}
 
@@ -142,7 +142,7 @@ class PresetKeyUserDefinedList: Codable {
 
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		list = try container.decode([PresetKeyUserDefined].self, forKey: .list)
+		list = try container.decode([PresetDisplayKeyUserDefined].self, forKey: .list)
 	}
 
 	func encode(to encoder: Encoder) throws {
