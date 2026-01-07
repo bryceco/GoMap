@@ -570,6 +570,8 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 
 	private(set) var crossHairs: CAShapeLayer!
 
+	// This contains the user's general vicinity. Although it contains a lat/lon it only
+	// gets updated if the user moves a large distance.
 	private(set) var currentRegion: RegionInfoForLocation
 
 	private var locating: Bool {

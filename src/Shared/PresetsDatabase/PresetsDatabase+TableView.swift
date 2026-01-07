@@ -66,9 +66,9 @@ extension PresetsDatabase {
 		for field in presetFields.values {
 			set.formUnion(field.allKeys)
 		}
-		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
+		for feature in PresetsDatabase.shared.stdFeatures.values {
 			set.formUnion(feature.tags.keys)
-		})
+		}
 		// these are additionl tags that people might want (e.g. for autocomplete)
 		set.formUnion(Set([
 			"official_name",
@@ -92,24 +92,24 @@ extension PresetsDatabase {
 				set.formUnion(list)
 			}
 		}
-		Self.shared.enumeratePresetsUsingBlock({ feature in
+		for feature in PresetsDatabase.shared.stdFeatures.values {
 			if let value = feature.tags[key] {
 				set.insert(value)
 			}
-		})
+		}
 		set.remove("*")
 		return set
 	}
 
 	static let allFeatureKeysSet: Set<String> = {
 		var set = Set<String>()
-		PresetsDatabase.shared.enumeratePresetsUsingBlock({ feature in
+		for feature in PresetsDatabase.shared.stdFeatures.values {
 			var key = feature.featureID
 			if let range = key.range(of: "/") {
 				key = String(key.prefix(upTo: range.lowerBound))
 			}
 			set.insert(key)
-		})
+		}
 		return set
 	}()
 

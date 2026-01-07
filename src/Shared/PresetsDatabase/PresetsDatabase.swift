@@ -191,13 +191,6 @@ final class PresetsDatabase {
 		return tagIndex
 	}
 
-	// enumerate contents of database
-	func enumeratePresetsUsingBlock(_ block: (_ feature: PresetFeature) -> Void) {
-		for v in stdFeatures.values {
-			block(v)
-		}
-	}
-
 	func insertCustomFeatures(_ features: [CustomFeature]) {
 		// remove all exising features
 		let removals = stdFeatures.compactMap { $0.value is CustomFeature ? $0.key : nil }
@@ -218,6 +211,7 @@ final class PresetsDatabase {
 	var nsiLocal: [PresetFeature] = []
 	func enumeratePresetsAndNsiIn(region: RegionInfoForLocation, using block: (_ feature: PresetFeature) -> Void) {
 		if region != localRegion {
+			// update cache with the current region
 			localRegion = region
 			stdLocal = stdFeatures.values.filter({ $0.searchable && $0.locationSet.overlaps(region) })
 			nsiLocal = nsiFeatures.values.filter({ $0.searchable && $0.locationSet.overlaps(region) })
