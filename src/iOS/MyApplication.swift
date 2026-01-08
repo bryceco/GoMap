@@ -66,7 +66,8 @@ class MyApplication: UIApplication {
 
 			switch touch.phase {
 			case .began:
-				let win = UIWindow(frame: rect(forTouchPosition: pos))
+				let win = UIWindow(windowScene: window.windowScene!)
+				win.frame = rect(forTouchPosition: pos)
 
 				touches[touch] = (win, touch.timestamp)
 				win.windowLevel = .statusBar
