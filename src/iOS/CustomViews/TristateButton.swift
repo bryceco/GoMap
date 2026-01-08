@@ -60,15 +60,31 @@ class TristateYesNoButton: TristateButton {
 		super.init(frame: frame)
 	}
 
+	let tagValues = ["no", nil, "yes"]
+	var alternateYesValue: String?
+
+	func setTagValueFor(yes value: String) {
+		alternateYesValue = value
+	}
+
 	override func stringForSelection() -> String? {
-		return ["no", nil, "yes"][selectedSegmentIndex]
+		if let alternateYesValue,
+		   selectedSegmentIndex == 2
+		{
+			return alternateYesValue
+		}
+		return tagValues[selectedSegmentIndex]
 	}
 
 	override func setSelection(forString value: String) {
-		if OsmTags.isOsmBooleanFalse(value) {
-			super.selectedSegmentIndex = 0
+		if let alternateYesValue,
+		   alternateYesValue == value
+		{
+			super.selectedSegmentIndex = 2
 		} else if OsmTags.isOsmBooleanTrue(value) {
 			super.selectedSegmentIndex = 2
+		} else if OsmTags.isOsmBooleanFalse(value) {
+			super.selectedSegmentIndex = 0
 		} else {
 			super.selectedSegmentIndex = 1
 		}

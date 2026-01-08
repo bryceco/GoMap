@@ -373,6 +373,12 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 			return nil
 		}
 		let button = TristateYesNoButton()
+		if let values = presetKey.presetValues,
+		   let value = values.first?.tagValue
+		{
+			// it's a defaultCheck button, which sets a specific tag value instead of "yes"
+			button.setTagValueFor(yes: value)
+		}
 		var value = presetKey.tagValueForPrettyName(text ?? "")
 		let isCulvert = presetKey.tagKey == "tunnel" && keyValueDict["waterway"] != nil && value == "culvert"
 		if isCulvert {

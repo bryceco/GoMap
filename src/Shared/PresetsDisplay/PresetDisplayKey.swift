@@ -17,7 +17,7 @@ class PresetDisplayKey: NSObject, NSSecureCoding, Codable {
 	let name: String // name of the preset, e.g. Hours
 	let type: PresetType // the type of value, e.g. "roadspeed"
 	let tagKey: String // the key being set, e.g. opening_hours
-	let defaultValue: String?
+	let defaultValue: String? // we don't use this, even though it is present
 	let placeholder: String // placeholder text in the UITextField
 	let presetValues: [PresetDisplayValue]? // array of potential values, or nil if it's free-form text
 	let keyboardType: UIKeyboardType

@@ -193,6 +193,7 @@ extension PresetsDatabase {
 				label: name,
 				type: .check,
 				key: keys[i],
+				options: nil,
 				defaultValue: defaultValue,
 				placeholder: nil,
 				keyboard: keyboard,
@@ -256,15 +257,35 @@ extension PresetsDatabase {
 		label: String,
 		type: PresetType,
 		key: String,
+		options: [String]?, // only used by defaultCheck
 		defaultValue: String?,
 		placeholder: String?,
 		keyboard: UIKeyboardType,
 		capitalize: UITextAutocapitalizationType,
 		autocorrect: UITextAutocorrectionType) -> PresetDisplayKey
 	{
+		let valueYes: String
+		let valueNo: String
+		if type == .defaultCheck,
+		   let options = options,
+		   options.count == 2,
+		   options[0] == "undefined"
+		{
+			valueNo = "no"
+			valueYes = options[1]
+		} else {
+			valueNo = "no"
+			valueYes = "yes"
+		}
 		let presetValues = [
-			PresetDisplayValue(name: PresetTranslations.shared.yesForLocale, details: nil, icon: nil, tagValue: "yes"),
-			PresetDisplayValue(name: PresetTranslations.shared.noForLocale, details: nil, icon: nil, tagValue: "no")
+			PresetDisplayValue(name: PresetTranslations.shared.yesForLocale,
+							   details: nil,
+							   icon: nil,
+							   tagValue: valueYes),
+			PresetDisplayValue(name: PresetTranslations.shared.noForLocale,
+							   details: nil,
+							   icon: nil,
+							   tagValue: valueNo)
 		]
 		let tag = PresetDisplayKey(
 			name: label,
@@ -332,6 +353,7 @@ extension PresetsDatabase {
 				label: label,
 				type: field.type,
 				key: key,
+				options: field.options,
 				defaultValue: field.defaultValue,
 				placeholder: field.localizedPlaceholder,
 				keyboard: .default,
@@ -363,6 +385,7 @@ extension PresetsDatabase {
 						label: name,
 						type: .check,
 						key: keys.first!,
+						options: nil,
 						defaultValue: field.defaultValue,
 						placeholder: field.localizedPlaceholder,
 						keyboard: .default,
