@@ -23,17 +23,9 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                                 <connections>
-                                    <outlet property="addNodeButton" destination="53z-ij-akY" id="fNB-z4-AOz"/>
-                                    <outlet property="aerialAlignmentButton" destination="DFj-Vi-kBz" id="pAF-6Z-MIn"/>
-                                    <outlet property="aerialServiceLogo" destination="2Ka-IT-DQC" id="KDN-9Z-L5e"/>
-                                    <outlet property="centerOnGPSButton" destination="Fo4-Nq-pAz" id="EWp-gg-bm2"/>
-                                    <outlet property="compassButton" destination="E22-sL-sNt" id="aGc-Fs-I8q"/>
-                                    <outlet property="dPadView" destination="FM9-uI-awq" id="pUA-Lp-9UL"/>
                                     <outlet property="editToolbar" destination="R2j-Xq-Q3E" id="Ruo-Y4-9zI"/>
                                     <outlet property="fpsLabel" destination="9t5-wq-j1u" id="3lK-so-dSY"/>
-                                    <outlet property="helpButton" destination="TnL-YC-BCg" id="hR9-Za-lMp"/>
                                     <outlet property="progressIndicator" destination="Zh9-uC-62t" id="GOZ-5L-yvO"/>
-                                    <outlet property="rulerView" destination="TJj-HW-GPO" id="hdg-PH-xwj"/>
                                     <outlet property="statusBarBackground" destination="uDR-wZ-Dsb" id="8pj-zQ-PCt"/>
                                     <outlet property="userInstructionLabel" destination="N5Q-nV-TPG" id="z8L-Lc-jxy"/>
                                     <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="LdR-vi-xJW"/>
@@ -373,11 +365,19 @@
                     <navigationItem key="navigationItem" id="oh1-at-KwN"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="addNodeButton" destination="53z-ij-akY" id="X8s-iv-8Kl"/>
+                        <outlet property="aerialAlignmentButton" destination="DFj-Vi-kBz" id="5Ed-eV-oPi"/>
+                        <outlet property="aerialServiceLogo" destination="2Ka-IT-DQC" id="iZ8-RY-FEe"/>
+                        <outlet property="centerOnGPSButton" destination="Fo4-Nq-pAz" id="GSu-R7-dan"/>
+                        <outlet property="compassButton" destination="E22-sL-sNt" id="WSB-0m-Fil"/>
+                        <outlet property="dPadView" destination="FM9-uI-awq" id="g1G-br-0Vd"/>
                         <outlet property="displayButton" destination="UQ6-Pa-U58" id="lto-1X-HyX"/>
                         <outlet property="flashLabel" destination="nU5-T2-ADn" id="lBg-Db-pV1"/>
+                        <outlet property="helpButton" destination="TnL-YC-BCg" id="Hq9-at-1I1"/>
                         <outlet property="locationButton" destination="rdp-7O-8Ad" id="fnP-To-Zhg"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
                         <outlet property="redoButton" destination="tmm-lt-HSk" id="P0O-q4-hlG"/>
+                        <outlet property="rulerView" destination="TJj-HW-GPO" id="y6m-qe-yvc"/>
                         <outlet property="searchButton" destination="X1d-Y3-CcW" id="Fl5-cx-g49"/>
                         <outlet property="settingsButton" destination="9O3-HG-HvC" id="Xv7-pm-1Cm"/>
                         <outlet property="undoButton" destination="gwJ-lB-zMc" id="hH3-DO-Cny"/>

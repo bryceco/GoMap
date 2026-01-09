@@ -23,6 +23,14 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	@IBOutlet var redoButton: UIButton!
 	@IBOutlet var undoRedoView: UIVisualEffectView!
 	@IBOutlet var searchButton: UIButton!
+	@IBOutlet var compassButton: CompassButton!
+	@IBOutlet var aerialServiceLogo: UIButton!
+	@IBOutlet var helpButton: UIButton!
+	@IBOutlet var centerOnGPSButton: UIButton!
+	@IBOutlet var addNodeButton: UIButton!
+	@IBOutlet var rulerView: RulerView!
+	@IBOutlet var aerialAlignmentButton: UIButton!
+	@IBOutlet var dPadView: DPadView!
 
 	@IBOutlet var mapView: MapView!
 	@IBOutlet var locationButton: UIButton!
@@ -68,10 +76,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		UserPrefs.shared.mapViewButtonLayout.value = layout.rawValue
 
 		guard
-			let addButton = mapView.addNodeButton,
-			let superview = addButton.superview,
+			let superview = addNodeButton.superview,
 			let c = superview.constraints.first(where: {
-				if ($0.firstItem as? UIView) == addButton,
+				if ($0.firstItem as? UIView) == addNodeButton,
 				   ($0.secondItem is UILayoutGuide) || ($0.secondItem is UIView),
 				   $0.firstAttribute == .leading || $0.firstAttribute == .trailing,
 				   $0.secondAttribute == .leading || $0.secondAttribute == .trailing
@@ -103,7 +110,10 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 		mapView.mainViewController = self
 
+		// set up delegates
 		AppDelegate.shared.mapView = mapView
+		rulerView.mapView = mapView
+		//    _rulerView.layer.zPosition = Z_RULER;
 
 		// undo/redo buttons
 		updateUndoRedoButtonState()
@@ -121,12 +131,25 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayButtonLongPressGesture(_:)))
 		displayButton.addGestureRecognizer(longPress)
 
+		// gesture recognizers
+		addNodeButton.addGestureRecognizer(mapView.addNodeButtonLongPressGestureRecognizer!)
+
+		// center button
+		centerOnGPSButton.isHidden = true
+
+		// dPadView
+		dPadView.delegate = mapView
+		dPadView.layer.zPosition = ZLAYER.D_PAD.rawValue
+		dPadView.isHidden = true
+
 		// customize buttons
 		setButtonAppearances()
 
 		// tell our error display manager where to display messages
 		MessageDisplay.shared.topViewController = self
 		MessageDisplay.shared.flashLabel = flashLabel
+
+		mapView.updateAerialAttributionButton()
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -285,11 +308,11 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			undoButton,
 			redoButton,
 			locationButton,
-			mapView.addNodeButton,
-			mapView.compassButton,
-			mapView.centerOnGPSButton,
-			mapView.helpButton,
-			mapView.aerialAlignmentButton,
+			addNodeButton,
+			compassButton,
+			centerOnGPSButton,
+			helpButton,
+			aerialAlignmentButton,
 			settingsButton,
 			uploadButton,
 			displayButton,
@@ -322,10 +345,10 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 						config.baseBackgroundColor = .clear
 						config.cornerStyle = oldConfig.cornerStyle
 						config.contentInsets = oldConfig.contentInsets
-					case mapView.aerialAlignmentButton, mapView.helpButton:
+					case aerialAlignmentButton, helpButton:
 						// These button have tighter spacing to deemphasize them
 						config.contentInsets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
-					case mapView.addNodeButton:
+					case addNodeButton:
 						config.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
 					case locationButton:
 						config.baseForegroundColor = .systemBlue
@@ -344,9 +367,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 #endif
 
 					// Adjust sizes of buttons to make them a little larger
-					if button != mapView.helpButton,
-					   button != mapView.aerialAlignmentButton,
-					   button != mapView.addNodeButton
+					if button != helpButton,
+					   button != aerialAlignmentButton,
+					   button != addNodeButton
 					{
 						button.constraints.first(where: { $0.firstAttribute == .width })?.constant = 47
 						button.constraints.first(where: { $0.firstAttribute == .height })?.constant = 47
@@ -360,9 +383,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			// Below here is for non-glass, prior to iOS 26
 
 			// corners
-			if view == mapView.compassButton || view == mapView.editToolbar {
+			if view == compassButton || view == mapView.editToolbar {
 				// these buttons take care of themselves
-			} else if view == mapView.helpButton || view == mapView.addNodeButton {
+			} else if view == helpButton || view == addNodeButton {
 				// The button is a circle.
 				let width = view.bounds.size.width
 				view.layer.cornerRadius = width / 2
@@ -373,9 +396,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			}
 			// image blue tint
 			if let button = view as? UIButton,
-			   button != mapView.compassButton,
-			   button != mapView.helpButton,
-			   button != mapView.aerialAlignmentButton
+			   button != compassButton,
+			   button != helpButton,
+			   button != aerialAlignmentButton
 			{
 				let image = button.currentImage?.withRenderingMode(.alwaysTemplate)
 				button.setImage(image, for: .normal)
@@ -409,9 +432,9 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 		// special handling for aerial logo button
 		if #available(iOS 13.4, *) {
-			if !mapView.aerialServiceLogo.interactions.contains(where: { $0.isKind(of: UIPointerInteraction.self) }) {
+			if !aerialServiceLogo.interactions.contains(where: { $0.isKind(of: UIPointerInteraction.self) }) {
 				let interaction = UIPointerInteraction(delegate: self)
-				mapView.aerialServiceLogo.interactions.append(interaction)
+				aerialServiceLogo.interactions.append(interaction)
 			}
 		}
 	}
@@ -451,7 +474,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		} else {
 			button.backgroundColor = UIColor.white
 		}
-		if button == mapView.aerialAlignmentButton {
+		if button == aerialAlignmentButton {
 			button.backgroundColor = button.backgroundColor?.withAlphaComponent(0.4)
 		}
 #endif

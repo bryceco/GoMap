@@ -122,7 +122,8 @@ enum EDIT_ACTION: Int {
 	}
 }
 
-private enum ZLAYER: CGFloat {
+// FIXME: Move to MainViewController
+enum ZLAYER: CGFloat {
 	case AERIAL = -100
 	case BASEMAP = -98
 	case LOCATOR = -50
@@ -209,19 +210,11 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	var windowPresented = false
 	var locationManagerExtraneousNotification = false
 
-	var mainViewController = MainViewController()
+	var mainViewController: MainViewController!
 	@IBOutlet var fpsLabel: FpsLabel!
 	@IBOutlet var userInstructionLabel: UILabel!
-	@IBOutlet var compassButton: CompassButton!
-	@IBOutlet var aerialServiceLogo: UIButton!
-	@IBOutlet var helpButton: UIButton!
-	@IBOutlet var centerOnGPSButton: UIButton!
-	@IBOutlet var addNodeButton: UIButton!
-	@IBOutlet var rulerView: RulerView!
 	@IBOutlet var progressIndicator: UIActivityIndicatorView!
 	@IBOutlet var editToolbar: CustomSegmentedControl!
-	@IBOutlet var aerialAlignmentButton: UIButton!
-	@IBOutlet var dPadView: DPadView!
 
 	private var magnifyingGlass: MagnifyingGlass!
 
@@ -251,13 +244,13 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	// Set true when the user moved the screen manually, so GPS updates shouldn't recenter screen on user
 	public var userOverrodeLocationPosition = false {
 		didSet {
-			centerOnGPSButton.isHidden = !userOverrodeLocationPosition || gpsState == .NONE
+			mainViewController.centerOnGPSButton.isHidden = !userOverrodeLocationPosition || gpsState == .NONE
 		}
 	}
 
 	public var userOverrodeLocationZoom = false {
 		didSet {
-			centerOnGPSButton.isHidden = !userOverrodeLocationZoom || gpsState == .NONE
+			mainViewController.centerOnGPSButton.isHidden = !userOverrodeLocationZoom || gpsState == .NONE
 		}
 	}
 
@@ -437,7 +430,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 				}
 
 				if gpsState == .NONE {
-					centerOnGPSButton.isHidden = true
+					mainViewController.centerOnGPSButton.isHidden = true
 					voiceAnnouncement?.enabled = false
 				} else {
 					voiceAnnouncement?.enabled = true
@@ -731,9 +724,6 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 		}
 		locationManager.activityType = .other
 
-		rulerView.mapView = self
-		//    _rulerView.layer.zPosition = Z_RULER;
-
 		// set up action button
 		editToolbar.isHidden = true
 		editToolbar.layer.zPosition = ZLAYER.TOOLBAR.rawValue
@@ -766,7 +756,6 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 			action: #selector(plusButtonLongPressHandler(_:)))
 		addNodeButtonLongPressGestureRecognizer?.minimumPressDuration = 0.001
 		addNodeButtonLongPressGestureRecognizer?.delegate = self
-		addNodeButton.addGestureRecognizer(addNodeButtonLongPressGestureRecognizer!)
 
 		if #available(iOS 13.4, macCatalyst 13.4, *) {
 			// pan gesture to recognize mouse-wheel scrolling (zoom) on iPad and Mac Catalyst
@@ -779,14 +768,6 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 		}
 
 		mapMarkerDatabase.mapData = editorLayer.mapData
-
-		// center button
-		centerOnGPSButton.isHidden = true
-
-		// dPadView
-		dPadView.delegate = self
-		dPadView.layer.zPosition = ZLAYER.D_PAD.rawValue
-		dPadView.isHidden = true
 
 		// magnifying glass
 		magnifyingGlass = MagnifyingGlass(sourceView: self, radius: 70.0, scale: 2.0)
@@ -824,8 +805,6 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 			self.promptForBetterBackgroundImagery()
 			self.checkForChangedTileOverlayLayers()
 		}
-
-		updateAerialAttributionButton()
 
 		editorLayer.whiteText = !aerialLayer.isHidden
 	}
@@ -1014,16 +993,17 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 	func updateAerialAttributionButton() {
 		let service = aerialLayer.tileServer
-		let icon = service.attributionIcon(height: aerialServiceLogo.frame.size.height,
+		let icon = service.attributionIcon(height: mainViewController.aerialServiceLogo.frame.size.height,
 		                                   completion: {
 		                                   	self.updateAerialAttributionButton()
 		                                   })
-		aerialServiceLogo.isHidden = aerialLayer.isHidden || (service.attributionString.isEmpty && icon == nil)
-		if !aerialServiceLogo.isHidden {
+		mainViewController.aerialServiceLogo.isHidden = aerialLayer
+			.isHidden || (service.attributionString.isEmpty && icon == nil)
+		if !mainViewController.aerialServiceLogo.isHidden {
 			let gap = icon != nil && service.attributionString.count > 0 ? " " : ""
 			let title = gap + service.attributionString
-			aerialServiceLogo.setImage(icon, for: .normal)
-			aerialServiceLogo.setTitle(title, for: .normal)
+			mainViewController.aerialServiceLogo.setImage(icon, for: .normal)
+			mainViewController.aerialServiceLogo.setTitle(title, for: .normal)
 		}
 	}
 
@@ -1266,8 +1246,8 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 		locatorLayer.isHidden = !newOverlays.contains(.LOCATOR) || locatorLayer.tileServer.apiKey == ""
 
-		aerialAlignmentButton.isHidden = true
-		dPadView.isHidden = true
+		mainViewController.aerialAlignmentButton.isHidden = true
+		mainViewController.dPadView.isHidden = true
 
 		switch newState {
 		case MapViewState.EDITOR:
@@ -1281,7 +1261,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 			aerialLayer.isHidden = false
 			basemapLayer.isHidden = true
 			editorLayer.whiteText = true
-			aerialAlignmentButton.isHidden = false
+			mainViewController.aerialAlignmentButton.isHidden = false
 		case MapViewState.AERIAL:
 			aerialLayer.tileServer = tileServerList.currentServer
 			editorLayer.isHidden = true
@@ -1315,7 +1295,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 		// enable/disable editing buttons based on visibility
 		mainViewController.updateUndoRedoButtonState()
 		updateAerialAttributionButton()
-		addNodeButton.isHidden = editorLayer.isHidden
+		mainViewController.addNodeButton.isHidden = editorLayer.isHidden
 
 		editorLayer.whiteText = !aerialLayer.isHidden
 	}
@@ -1437,7 +1417,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	// MARK: Aerial imagery alignment
 
 	@IBAction func aerialAlignmentPressed(_ sender: Any) {
-		dPadView.isHidden = !dPadView.isHidden
+		mainViewController.dPadView.isHidden = !mainViewController.dPadView.isHidden
 	}
 
 	func updateAerialAlignmentButton() {
@@ -1449,8 +1429,8 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 			buttonText = String(format: "(%.1f,%.1f)", arguments: [offset.x, offset.y])
 		}
 		UIView.performWithoutAnimation {
-			aerialAlignmentButton.setTitle(buttonText, for: .normal)
-			aerialAlignmentButton.layoutIfNeeded()
+			mainViewController.aerialAlignmentButton.setTitle(buttonText, for: .normal)
+			mainViewController.aerialAlignmentButton.layoutIfNeeded()
 		}
 	}
 
@@ -1660,9 +1640,8 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
 		var error = error
-		let controller = mainViewController
 		if (error as? CLError)?.code == CLError.Code.denied {
-			controller.setGpsState(GPS_STATE.NONE)
+			mainViewController.setGpsState(GPS_STATE.NONE)
 			if !isLocationSpecified() {
 				// go home
 				centerOn(latLon: LatLon(latitude: 47.6858, longitude: -122.1917),
@@ -1808,7 +1787,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 		screenFromMapTransform = t
 
 		let screenAngle = screenFromMapTransform.rotation()
-		compassButton.rotate(angle: CGFloat(screenAngle))
+		mainViewController.compassButton.rotate(angle: CGFloat(screenAngle))
 		if !locationBallLayer.isHidden {
 			if gpsState == .HEADING,
 			   abs(locationBallLayer.heading - -.pi / 2) < 0.0001
@@ -1988,7 +1967,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	func updateEditControl() {
 		let show = pushPin != nil || editorLayer.selectedPrimary != nil
 		editToolbar.isHidden = !show
-		rulerView.isHidden = show
+		mainViewController.rulerView.isHidden = show
 		if show {
 			let backgroundColor = UIColor.systemBackground
 			let foregroundColor = UIColor.label

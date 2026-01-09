@@ -29,20 +29,29 @@ class DisplayViewController: UITableViewController {
 				"The + button can be positioned on either the left or right side of the screen",
 				comment: ""),
 			preferredStyle: .alert)
-		alert.addAction(UIAlertAction(
+		let left = UIAlertAction(
 			title: NSLocalizedString("Left side", comment: "Left-hand side of screen"),
 			style: .default,
 			handler: { _ in
 				AppDelegate.shared.mapView.mainViewController.buttonLayout = .buttonsOnLeft
 				self.setButtonLayoutTitle()
-			}))
-		alert.addAction(UIAlertAction(
+			})
+		let right = UIAlertAction(
 			title: NSLocalizedString("Right side", comment: "Right-hand side of screen"),
 			style: .default,
 			handler: { _ in
 				AppDelegate.shared.mapView.mainViewController.buttonLayout = .buttonsOnRight
 				self.setButtonLayoutTitle()
-			}))
+			})
+#if targetEnvironment(macCatalyst)
+		// buttons appear right-to-left
+		alert.addAction(right)
+		alert.addAction(left)
+#else
+		// buttons appear left-to-right
+		alert.addAction(left)
+		alert.addAction(right)
+#endif
 		present(alert, animated: true)
 	}
 
