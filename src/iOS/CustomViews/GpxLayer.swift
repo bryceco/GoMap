@@ -322,51 +322,31 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 		}
 	}
 
-	func center(on track: GpxTrack) {
-		let center: GpxPoint
-		if let wayPoint = track.wayPoints.first {
-			center = wayPoint
-		} else {
-			// get midpoint
-			let mid = track.points.count / 2
-			guard mid < track.points.count else {
-				return
-			}
-			center = track.points[mid]
-		}
-		mapView.centerOn(latLon: center.latLon, metersWide: 20.0)
-	}
-
 	// Load a GPX trace from an external source
-	func addGPX(track: GpxTrack, center: Bool) {
+	@discardableResult
+	func addGPX(track: GpxTrack) -> GpxTrack? {
 		// ensure the track doesn't already exist
-		if previousTracks.contains(where: {
-			$0.name == track.name &&
-				$0.points.count == track.points.count &&
-				$0.points.first?.latLon == track.points.first?.latLon &&
-				$0.points.last?.latLon == track.points.last?.latLon
-		}) {
+		if let duplicate = previousTracks.first(where: { track.isEqual(to: $0) }) {
 			// duplicate track
-			return
+			return duplicate
 		}
 		previousTracks.append(track)
 		previousTracks.sort(by: { $0.creationDate > $1.creationDate })
 
-		if center {
-			self.center(on: track)
-			selectedTrack = track
-			mapView.displayGpxLogs = true // ensure GPX tracks are visible
-		}
 		save(toDisk: track)
+		selectedTrack = track
+		return track
 	}
 
 	// Load a GPX trace from an external source
-	func loadGPXData(_ data: Data, name: String, center: Bool) throws {
+	// Returns a location on the track, suitable for display
+	@discardableResult
+	func loadGPXData(_ data: Data, name: String) throws -> GpxTrack? {
 		let newTrack = try GpxTrack(xmlData: data)
 		if name != "" {
 			newTrack.name = name
 		}
-		addGPX(track: newTrack, center: center)
+		return addGPX(track: newTrack)
 	}
 
 	// MARK: Properties

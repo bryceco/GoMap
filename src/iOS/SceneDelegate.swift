@@ -87,6 +87,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let localizedGPX = NSLocalizedString("GPX", comment: "The name of a GPX file")
 		let mapView = AppDelegate.shared.mapView!
 
+		func openGPX(data: Data, name: String) {
+			do {
+				let mapView = AppDelegate.shared.mapView!
+				let track = try mapView.gpxLayer.loadGPXData(data, name: name)
+				if let center = track?.center() {
+					mapView.displayGpxLogs = true // ensure GPX tracks are visible
+					mapView.centerOn(latLon: center, metersWide: 20.0)
+					mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
+				}
+			} catch {
+				self.displayImportError(error, filetype: localizedGPX)
+			}
+		}
+
 		if url.isFileURL {
 			let data: Data
 			do {
@@ -102,12 +116,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			case "gpx":
 				// Load GPX
 				MainActor.runAfter(nanoseconds: 100_000000) {
-					do {
-						try mapView.gpxLayer.loadGPXData(data, name: url.lastPathComponent, center: true)
-						mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
-					} catch {
-						self.displayImportError(error, filetype: localizedGPX)
-					}
+					openGPX(data: data, name: url.lastPathComponent)
 				}
 				return true
 			case "jpg", "jpeg", "png", "gif", "bmp", "tiff", "tif", "heic", "heif", "webp", "ico", "raw", "svg":
@@ -169,12 +178,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 						let data = try await URLSession.shared.data(with: gpxUrl)
 						try await Task.sleep(nanoseconds: 500_000000)
 						await MainActor.run {
-							do {
-								try mapView.gpxLayer.loadGPXData(data, name: "", center: true)
-								mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
-							} catch {
-								displayImportError(error, filetype: localizedGPX)
-							}
+							openGPX(data: data, name: "")
 						}
 					} catch {
 						await MainActor.run {

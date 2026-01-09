@@ -160,6 +160,16 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		return geoJSONFeature!
 	}
 
+	func isEqual(to track: GpxTrack) -> Bool {
+		return name == track.name &&
+			points.count == track.points.count &&
+			points.first?.latLon == track.points.first?.latLon &&
+			points.last?.latLon == track.points.last?.latLon &&
+			wayPoints.count == track.wayPoints.count &&
+			wayPoints.first?.latLon == track.wayPoints.first?.latLon &&
+			wayPoints.last?.latLon == track.wayPoints.last?.latLon
+	}
+
 	func addPoint(_ location: CLLocation) {
 		recording = true
 
@@ -345,6 +355,19 @@ final class GpxTrack: NSObject, NSSecureCoding {
 			}
 		}
 		return distance
+	}
+
+	func center() -> LatLon? {
+		if let wayPoint = wayPoints.first {
+			return wayPoint.latLon
+		} else {
+			// get midpoint
+			let mid = points.count / 2
+			guard mid < points.count else {
+				return nil
+			}
+			return points[mid].latLon
+		}
 	}
 
 	func fileName() -> String {

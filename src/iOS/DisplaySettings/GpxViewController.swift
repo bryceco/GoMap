@@ -110,7 +110,7 @@ class GpxTrackImportHealthKit: UITableViewCell {
 						gpx.addPoint(point)
 					}
 					gpx.finish()
-					AppDelegate.shared.mapView.gpxLayer.addGPX(track: gpx, center: false)
+					AppDelegate.shared.mapView.gpxLayer.addGPX(track: gpx)
 				}
 				if let tableView = self.vc.view as? UITableView {
 					tableView.reloadData()
@@ -476,16 +476,18 @@ class GpxViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if indexPath.section == SECTION_ACTIVE_TRACK {
 			// active track
-			let gpxLayer = AppDelegate.shared.mapView.gpxLayer
+			let mapView = AppDelegate.shared.mapView!
+			let gpxLayer = mapView.gpxLayer
 			gpxLayer.selectedTrack = gpxLayer.activeTrack
-			if let selectedTrack = gpxLayer.selectedTrack {
-				gpxLayer.center(on: selectedTrack)
+			if let trackPt = gpxLayer.selectedTrack?.center() {
+				mapView.centerOn(latLon: trackPt, metersWide: 20.0)
 			}
 			navigationController?.dismiss(animated: true)
 		} else if indexPath.section == SECTION_CONFIGURE {
 			// configuration
 		} else if indexPath.section == SECTION_PREVIOUS_TRACKS {
-			let gpxLayer = AppDelegate.shared.mapView.gpxLayer
+			let mapView = AppDelegate.shared.mapView!
+			let gpxLayer = mapView.gpxLayer
 			if indexPath.row == gpxLayer.previousTracks.count {
 				if #available(iOS 14.0, *) {
 					doImportGPX()
@@ -495,7 +497,9 @@ class GpxViewController: UITableViewController {
 			}
 			let track = gpxLayer.previousTracks[indexPath.row]
 			gpxLayer.selectedTrack = track
-			gpxLayer.center(on: track)
+			if let center = track.center() {
+				mapView.centerOn(latLon: center)
+			}
 			AppDelegate.shared.mapView.displayGpxLogs = true
 			navigationController?.dismiss(animated: true)
 		}
@@ -521,6 +525,7 @@ class GpxViewController: UITableViewController {
 }
 
 import UniformTypeIdentifiers
+
 extension GpxViewController: UIDocumentPickerDelegate {
 	@available(iOS 14.0, *)
 	func doImportGPX() {
@@ -539,7 +544,7 @@ extension GpxViewController: UIDocumentPickerDelegate {
 			do {
 				let gpxLayer = AppDelegate.shared.mapView.gpxLayer
 				let data = try Data(contentsOf: url)
-				try gpxLayer.loadGPXData(data, name: url.lastPathComponent, center: false)
+				try gpxLayer.loadGPXData(data, name: url.lastPathComponent)
 			} catch {
 				print("\(error)")
 			}
