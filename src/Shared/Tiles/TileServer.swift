@@ -418,7 +418,7 @@ final class TileServer: Equatable, Codable {
 	static func fetchDynamicBingServer() async throws -> TileServer {
 		// None of this works any more.
 		// Server complains our api key is invalid, but iD has an API key that works.
-		// 
+		//
 		// For related discussion see https://osmus.slack.com/archives/C2SNNUNUV/p1753306512834219
 
 		struct Welcome: Decodable {

@@ -36,7 +36,9 @@ class RulerView: UIView {
 
 	var mapView: MapView? {
 		didSet {
-			mapView?.mapTransform.observe(by: self, callback: { self.updateText() })
+			mapView?.mapTransform.onChange.subscribe(self) { [weak self] in
+				self?.updateText()
+			}
 		}
 	}
 

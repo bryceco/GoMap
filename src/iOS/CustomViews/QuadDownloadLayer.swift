@@ -42,9 +42,9 @@ final class QuadDownloadLayer: CALayer {
 			"isHidden": NSNull()
 		]
 
-		mapView.mapTransform.observe(by: self, callback: {
+		mapView.mapTransform.onChange.subscribe(self) {
 			self.setNeedsLayout()
-		})
+		}
 	}
 
 	override func layoutSublayers() {

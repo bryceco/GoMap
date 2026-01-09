@@ -29,27 +29,13 @@ final class MapTransform {
 	// This matrix translates between a "mapPoint" (a 256x256 mercator map of the world) and the screen
 	var transform = OSMTransform.identity {
 		didSet {
-			notifyObservers()
+			onChange.notify()
 		}
 	}
 
 	// MARK: Observers
 
-	private struct Observer {
-		weak var object: AnyObject?
-		var callback: () -> Void
-	}
-
-	private var observers: [Observer] = []
-
-	func observe(by object: AnyObject, callback: @escaping () -> Void) {
-		observers.append(Observer(object: object, callback: callback))
-	}
-
-	func notifyObservers() {
-		observers.removeAll(where: { $0.object == nil })
-		observers.forEach({ $0.callback() })
-	}
+	let onChange = NotificationService<Void>()
 
 	// MARK: Bird's eye view
 
@@ -57,7 +43,7 @@ final class MapTransform {
 	let birdsEyeDistance = 1000.0
 	var birdsEyeRotation = 0.0 {
 		didSet {
-			notifyObservers()
+			onChange.notify()
 		}
 	}
 

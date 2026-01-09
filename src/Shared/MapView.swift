@@ -387,7 +387,8 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 			// Determine if we've zoomed out enough to disable editing
 			// We can only compute a precise surface area size at high zoom since it's possible
 			// for the earth to be larger than the screen
-			let area = mapTransform.zoom() > 8 ? SurfaceAreaOfRect(boundingLatLonForScreen()) : Double.greatestFiniteMagnitude
+			let area = mapTransform.zoom() > 8 ? SurfaceAreaOfRect(boundingLatLonForScreen())
+				: Double.greatestFiniteMagnitude
 			var isZoomedOut = area > 2.0 * 1000 * 1000
 			if !editorLayer.isHidden,
 			   !editorLayer.atVisibleObjectLimit,
@@ -638,9 +639,9 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 		super.init(coder: coder)
 
-		tileServerList.onChange.subscribe(object: self, callback: { [weak self] in
+		tileServerList.onChange.subscribe(self) { [weak self] in
 			self?.promptForBetterBackgroundImagery()
-		})
+		}
 
 		layer.masksToBounds = true
 		backgroundColor = UIColor(white: 0.1, alpha: 1.0)
@@ -831,10 +832,10 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 		currentRegion = RegionInfoForLocation.fromUserPrefs() ?? RegionInfoForLocation.none
 
-		UserPrefs.shared.tileOverlaySelections.onChange.subscribe(object: self, callback: { [weak self] _ in
+		UserPrefs.shared.tileOverlaySelections.onChange.subscribe(self) { [weak self] _ in
 			guard let self = self else { return }
 			self.updateTileOverlayLayers(latLon: self.screenCenterLatLon())
-		})
+		}
 
 		MainActor.runAfter(nanoseconds: 2000_000000) {
 			self.updateCurrentRegionForLocationUsingCountryCoder()

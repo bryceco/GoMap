@@ -171,14 +171,15 @@ final class EditorMapLayer: CALayer {
 			}
 		}
 
-		objectFilters.onChange.subscribe(object: self, callback: { [weak self] in
+		objectFilters.onChange.subscribe(self, handler: { [weak self] in
 			self?.mapData.clearCachedProperties()
 		})
 		whiteText = true
 
 		// observe changes to screen
-		owner.mapTransform.observe(by: self,
-		                           callback: { [weak self] in self?.updateMapLocation() })
+		owner.mapTransform.onChange.subscribe(self) {
+			[weak self] in self?.updateMapLocation()
+		}
 
 		OsmMapData.g_EditorMapLayerForArchive = self
 

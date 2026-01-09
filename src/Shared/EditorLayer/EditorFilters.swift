@@ -14,7 +14,7 @@ final class EditorFilters {
 	var enableObjectFilters = false { // turn all filters on/on
 		didSet {
 			UserPrefs.shared.editor_enableObjectFilters.value = enableObjectFilters
-			onChange.notify(())
+			onChange.notify()
 		}
 	}
 
@@ -36,13 +36,13 @@ final class EditorFilters {
 	var showLevelRange = "" { // range of levels for building level
 		didSet {
 			UserPrefs.shared.editor_showLevelRange.value = self.showLevelRange
-			onChange.notify(())
+			onChange.notify()
 		}
 	}
 
 	func save(_ pref: Pref<Bool>, _ value: Bool) {
 		pref.value = value
-		onChange.notify(())
+		onChange.notify()
 	}
 
 	init() {

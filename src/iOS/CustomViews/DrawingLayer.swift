@@ -156,7 +156,9 @@ class DrawingLayer: CALayer {
 		]
 
 		// observe changes to geometry
-		mapView.mapTransform.observe(by: self, callback: { self.setNeedsLayout() })
+		mapView.mapTransform.onChange.subscribe(self) { [weak self] in
+			self?.setNeedsLayout()
+		}
 
 		setNeedsLayout()
 	}

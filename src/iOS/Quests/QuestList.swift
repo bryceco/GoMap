@@ -328,7 +328,7 @@ class QuestList {
 		list += userQuests.list.compactMap { try? $0.makeQuestInstance() }
 		sortList()
 
-		UserPrefs.shared.questUserDefinedList.onChange.subscribe(object: self, callback: { [weak self] pref in
+		UserPrefs.shared.questUserDefinedList.onChange.subscribe(self, handler: { [weak self] pref in
 			self?.userQuests = QuestUserList(fromUserPrefsWith: pref)
 		})
 	}

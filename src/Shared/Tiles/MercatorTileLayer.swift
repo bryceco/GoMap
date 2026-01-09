@@ -45,7 +45,7 @@ final class MercatorTileLayer: CALayer {
 
 		needsDisplayOnBoundsChange = true
 
-		mapView.mapTransform.observe(by: self, callback: { [weak self] in
+		mapView.mapTransform.onChange.subscribe(self) { [weak self] in
 			guard let self = self,
 			      !self.isHidden
 			else { return }
@@ -54,7 +54,7 @@ final class MercatorTileLayer: CALayer {
 			t = CATransform3DRotate(t, CGFloat(mapView.mapTransform.birdsEyeRotation), 1, 0, 0)
 			self.sublayerTransform = t
 			self.setNeedsLayout()
-		})
+		}
 	}
 
 	deinit {}

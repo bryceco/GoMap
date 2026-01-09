@@ -29,7 +29,7 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 		setPreferredFrameRate()
 
 		updateUsingCurrentMapTransform()
-		mapView.mapTransform.observe(by: self) { [weak self] in
+		mapView.mapTransform.onChange.subscribe(self) { [weak self] in
 			self?.updateUsingCurrentMapTransform()
 		}
 	}

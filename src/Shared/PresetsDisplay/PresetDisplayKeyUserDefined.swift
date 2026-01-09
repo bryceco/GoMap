@@ -104,7 +104,7 @@ class PresetKeyUserDefinedList: Codable {
 				list = []
 			}
 		}
-		UserPrefs.shared.userDefinedPresetKeys.onChange.subscribe(object: self, callback: { [weak self] pref in
+		UserPrefs.shared.userDefinedPresetKeys.onChange.subscribe(self) { [weak self] pref in
 			guard
 				let self = self,
 				let data = pref.value,
@@ -113,7 +113,7 @@ class PresetKeyUserDefinedList: Codable {
 				return
 			}
 			self.list = list
-		})
+		}
 	}
 
 	func save() {

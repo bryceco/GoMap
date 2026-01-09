@@ -14,16 +14,29 @@ final class NotificationService<T> {
 		let callback: (T) -> Void
 	}
 
+	private let queue = DispatchQueue(label: "com.gomap.notificationservice")
 	private var subscribers: [Subscriber] = []
 
-	func subscribe(object: AnyObject, callback: @escaping (T) -> Void) {
-		subscribers.append(Subscriber(object: object, callback: callback))
+	func subscribe(_ observer: AnyObject, handler: @escaping (T) -> Void) {
+		queue.sync {
+			subscribers.append(Subscriber(object: observer, callback: handler))
+		}
 	}
 
 	func notify(_ result: T) {
-		subscribers = subscribers.filter { $0.object != nil }
-		for subscriber in subscribers {
-			subscriber.callback(result)
+		queue.async {
+			self.subscribers = self.subscribers.filter { $0.object != nil }
+			for subscriber in self.subscribers {
+				DispatchQueue.main.async {
+					subscriber.callback(result)
+				}
+			}
 		}
+	}
+}
+
+extension NotificationService where T == Void {
+	func notify() {
+		notify(())
 	}
 }
