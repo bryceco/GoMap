@@ -335,8 +335,9 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		creationDate = trkPoints.first?.timestamp ?? wptPoints.first?.timestamp ?? Date()
 	}
 
-	convenience init(xmlFile path: String) throws {
-		guard let data = NSData(contentsOfFile: path) as Data?
+	convenience init(xmlFile url: URL) throws {
+		guard
+			let data = try? Data(contentsOf: url)
 		else {
 			throw GpxError.noData
 		}

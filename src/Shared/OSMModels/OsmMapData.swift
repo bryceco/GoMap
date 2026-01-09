@@ -1360,8 +1360,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		consistencyCheck()
 	}
 
-	static func pathToArchiveFile() -> String {
-		return ArchivePath.osmDataArchive.path()
+	static func pathToArchiveFile() -> URL {
+		return ArchivePath.osmDataArchive.url()
 	}
 
 	func sqlSave(
@@ -1851,18 +1851,20 @@ enum MapDataError: LocalizedError {
 
 class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 	func saveArchive(mapData: OsmMapData) -> Bool {
-		let path = OsmMapData.pathToArchiveFile()
 		let archiver = NSKeyedArchiver(requiringSecureCoding: true)
 		archiver.encode(mapData, forKey: "OsmMapData")
 		archiver.finishEncoding()
-		let data = archiver.encodedData as NSData
-		let ok = data.write(toFile: path, atomically: true)
-		return ok
+		do {
+			let url = OsmMapData.pathToArchiveFile()
+			try archiver.encodedData.write(to: url, options: [.atomic])
+			return true
+		} catch {
+			return false
+		}
 	}
 
 	func loadArchive() throws -> OsmMapData {
-		let path = OsmMapData.pathToArchiveFile()
-		let url = URL(fileURLWithPath: path)
+		let url = OsmMapData.pathToArchiveFile()
 		if (try? url.checkResourceIsReachable()) != true {
 			print("Archive file doesn't exist")
 			throw MapDataError.archiveDoesNotExist

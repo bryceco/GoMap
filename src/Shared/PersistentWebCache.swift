@@ -191,7 +191,7 @@ final class PersistentWebCache<T: AnyObject> {
 				   let data = try? result.get()
 				{
 					Task(priority: .medium) {
-						(data as NSData).write(to: filePath, atomically: true)
+						try? data.write(to: filePath, options: [.atomic])
 					}
 				}
 			}

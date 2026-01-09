@@ -58,8 +58,8 @@ final class TileServerList {
 		return downloadedList.first(where: { identifier == $0.identifier })
 	}
 
-	private func pathToExternalAerialsCache() -> String {
-		return ArchivePath.aerialProviers.path()
+	var externalAerialsCache: URL {
+		return ArchivePath.aerialProviers.url()
 	}
 
 	func updateDownloadList(with list: [TileServer]) {
@@ -74,7 +74,7 @@ final class TileServerList {
 	func fetchOsmLabAerials(_ completion: @escaping (_ isAsync: Bool) -> Void) {
 		// get cached data
 		let startTime = CACurrentMediaTime()
-		var cachedData = NSData(contentsOfFile: pathToExternalAerialsCache()) as Data?
+		var cachedData = try? Data(contentsOf: externalAerialsCache)
 		let readTime = CACurrentMediaTime()
 		if let data = cachedData {
 			let externalAerials = Self.processOsmLabAerialsData(data)
@@ -115,8 +115,7 @@ final class TileServerList {
 				let externalAerials = Self.processOsmLabAerialsData(data)
 				if externalAerials.count > 100 {
 					// cache download for next time
-					let fileUrl = URL(fileURLWithPath: pathToExternalAerialsCache())
-					try? data.write(to: fileUrl, options: .atomic)
+					try? data.write(to: externalAerialsCache, options: .atomic)
 
 					// notify caller of update
 					await MainActor.run {

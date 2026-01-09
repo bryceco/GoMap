@@ -685,8 +685,8 @@ public class HoursRecognizer: ObservableObject {
 	}
 
 	static let languageList: [Language] = {
-		let path = Bundle.main.path(forResource: "HoursRecognizer", ofType: "json")!
-		let data = NSData(contentsOfFile: path)! as Data
+		let url = Bundle.main.url(forResource: "HoursRecognizer", withExtension: "json")!
+		let data = try! Data(contentsOf: url)
 		let json = try! JSONDecoder().decode(HoursRecognizerJson.self, from: data)
 		return json.languages
 	}()
