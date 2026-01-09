@@ -34,11 +34,7 @@ enum MenuLocation {
 // MARK: EditorMapLayerOwner protocol
 
 // The UIView that hosts us.
-protocol EditorMapLayerOwner: UIView, MapViewProgress {
-	var mapTransform: MapTransform { get }
-
-	func centerPoint() -> CGPoint
-
+protocol EditorMapLayerOwner: UIView, MapViewPort, MapViewProgress {
 	func pushpinView() -> PushPinView? // fetch the pushpin from owner
 	func removePin()
 	func placePushpin(at: CGPoint, object: OsmBaseObject?)
@@ -47,8 +43,6 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	var editToolbar: CustomSegmentedControl! { get }
 
 	func setScreenFromMap(transform: OSMTransform) // used when undo/redo change the location
-	func boundingLatLonForScreen() -> OSMRect
-	func metersPerPixel() -> Double
 
 	// boolean options chosen by owner
 	func useTurnRestrictions() -> Bool
@@ -78,6 +72,12 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 // MARK: EditorMapLayer
 
 final class EditorMapLayer: CALayer {
+	// how close to an object do we need to tap to select it
+	static let DefaultHitTestRadius: CGFloat = 10.0
+
+	// how close to an object do we need to drag a node to connect to it
+	static let DragConnectHitTestRadius = (DefaultHitTestRadius * 0.6)
+
 	let highwayScale: CGFloat = 2.0
 	var shownObjects: ContiguousArray<OsmBaseObject> = []
 	var fadingOutSet: [OsmBaseObject] = []

@@ -143,24 +143,17 @@ class DrawingLayer: CALayer {
 		layerDict = [:]
 		super.init()
 
-		actions = [
-			"onOrderIn": NSNull(),
-			"onOrderOut": NSNull(),
-			"hidden": NSNull(),
-			"sublayers": NSNull(),
-			"contents": NSNull(),
-			"bounds": NSNull(),
-			"position": NSNull(),
-			"transform": NSNull(),
-			"lineWidth": NSNull()
-		]
-
 		// observe changes to geometry
 		mapView.mapTransform.onChange.subscribe(self) { [weak self] in
 			self?.setNeedsLayout()
 		}
 
 		setNeedsLayout()
+	}
+
+	override func action(forKey event: String) -> (any CAAction)? {
+		// never do animation
+		return NSNull()
 	}
 
 	// MARK: Drawing
@@ -176,8 +169,8 @@ class DrawingLayer: CALayer {
 	}
 
 	private func layoutSublayersSafe() {
-		let tRotation = mapView.screenFromMapTransform.rotation()
-		let tScale = mapView.screenFromMapTransform.scale() / PATH_SCALING
+		let tRotation = mapView.mapTransform.rotation()
+		let tScale = mapView.mapTransform.scale() / PATH_SCALING
 		var scale = Int(floor(-log(tScale)))
 		if scale < 0 {
 			scale = 0

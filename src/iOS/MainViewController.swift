@@ -204,12 +204,13 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		   mapView.hitTest(loc, with: nil) == mapView
 		{
 			if mapView.editorLayer.selectedWay != nil {
-				hit = mapView.editorLayer.osmHitTestNode(inSelectedWay: loc, radius: DefaultHitTestRadius)
+				hit = mapView.editorLayer.osmHitTestNode(inSelectedWay: loc,
+				                                         radius: EditorMapLayer.DefaultHitTestRadius)
 			}
 			if hit == nil {
 				hit = mapView.editorLayer.osmHitTest(
 					loc,
-					radius: DefaultHitTestRadius,
+					radius: EditorMapLayer.DefaultHitTestRadius,
 					isDragConnect: false,
 					ignoreList: [],
 					segment: &segment)
@@ -727,7 +728,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		switch mapView.gpsState {
 		case GPS_STATE.NONE:
 			// if the user hasn't rotated the screen then start facing north, otherwise follow heading
-			if fabs(mapView.screenFromMapTransform.rotation()) < 0.0001 {
+			if fabs(mapView.mapTransform.rotation()) < 0.0001 {
 				setGpsState(GPS_STATE.LOCATION)
 			} else {
 				setGpsState(GPS_STATE.HEADING)

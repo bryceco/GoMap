@@ -139,12 +139,6 @@ private enum ZLAYER: CGFloat {
 	case PUSHPIN = 105
 }
 
-// how close to an object do we need to tap to select it
-let DefaultHitTestRadius: CGFloat = 10.0
-
-// how close to an object do we need to drag a node to connect to it
-let DragConnectHitTestRadius = (DefaultHitTestRadius * 0.6)
-
 struct MapLocation {
 	var longitude: Double
 	var latitude: Double
@@ -183,8 +177,10 @@ protocol MapViewProgress {
 protocol MapViewPort: AnyObject, MapViewProgress {
 	var mapTransform: MapTransform { get }
 	func metersPerPixel() -> Double
-	func boundingMapRectForScreen() -> OSMRect
+	func screenCenterPoint() -> CGPoint
 	func screenCenterLatLon() -> LatLon
+	func boundingMapRectForScreen() -> OSMRect
+	func boundingLatLonForScreen() -> OSMRect
 }
 
 // MARK: Gestures
@@ -333,7 +329,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	private(set) var allLayers: [LayerOrView] = []
 
 	var mapTransform = MapTransform()
-	var screenFromMapTransform: OSMTransform {
+	private var screenFromMapTransform: OSMTransform {
 		get {
 			return mapTransform.transform
 		}
@@ -491,7 +487,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 		didSet {
 			if !enableRotation {
 				// remove rotation
-				let centerPoint = centerPoint()
+				let centerPoint = screenCenterPoint()
 				let angle = CGFloat(screenFromMapTransform.rotation())
 				rotate(by: -angle, aroundScreenPoint: centerPoint)
 			}
@@ -1352,7 +1348,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	}
 
 	func screenCenterLatLon() -> LatLon {
-		return mapTransform.latLon(forScreenPoint: centerPoint())
+		return mapTransform.latLon(forScreenPoint: screenCenterPoint())
 	}
 
 	// MARK: Set location
@@ -1560,7 +1556,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 		if gpsState == .HEADING {
 			// rotate to new heading
-			let center = centerPoint()
+			let center = screenCenterPoint()
 			let delta = -(heading + screenAngle)
 			rotate(by: CGFloat(delta), aroundScreenPoint: center)
 		} else if !locationBallLayer.isHidden {
@@ -1891,7 +1887,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 			angle = -currentRotation
 		}
 
-		let offset = mapTransform.mapPoint(forScreenPoint: OSMPoint(centerPoint()), birdsEye: false)
+		let offset = mapTransform.mapPoint(forScreenPoint: OSMPoint(screenCenterPoint()), birdsEye: false)
 
 		t = t.translatedBy(dx: offset.x, dy: offset.y)
 #if TRANSFORM_3D
@@ -1909,7 +1905,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 	func rotateToNorth() {
 		// Rotate to face North
-		let center = centerPoint()
+		let center = screenCenterPoint()
 		let rotation = screenFromMapTransform.rotation()
 		animateRotation(by: -rotation, aroundPoint: center)
 	}
@@ -1917,7 +1913,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	func rotateToHeading() {
 		// Rotate to face current compass heading
 		if let heading = locationManager.heading {
-			let center = centerPoint()
+			let center = screenCenterPoint()
 			let screenAngle = screenFromMapTransform.rotation()
 			let heading = self.heading(for: heading)
 			animateRotation(by: -(screenAngle + heading), aroundPoint: center)
@@ -2259,7 +2255,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 				if scrollx != 0.0 || scrolly != 0.0 {
 					// if we're dragging at a diagonal then scroll diagonally as well, in the direction the user is dragging
-					let center = self.centerPoint()
+					let center = self.screenCenterPoint()
 					let v = Sub(OSMPoint(arrow), OSMPoint(center)).unitVector()
 					scrollx = SCROLL_SPEED * CGFloat(v.x)
 					scrolly = SCROLL_SPEED * CGFloat(v.y)
@@ -2833,7 +2829,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 			let delta = tapAndDrag.translation(in: self)
 			let scale = 1.0 - delta.y * 0.01
-			let zoomCenter = centerPoint()
+			let zoomCenter = screenCenterPoint()
 			adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 		case .ended:
 			updateMapMarkersFromServer(withDelay: 0, including: [])
@@ -2985,7 +2981,7 @@ extension MapView: EditorMapLayerOwner {
 		mapMarkerDatabase.didSelectObject(editorLayer.selectedPrimary)
 	}
 
-	func centerPoint() -> CGPoint {
+	func screenCenterPoint() -> CGPoint {
 		return bounds.center()
 	}
 

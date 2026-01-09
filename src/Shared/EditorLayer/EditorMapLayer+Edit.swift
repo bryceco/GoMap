@@ -143,7 +143,7 @@ extension EditorMapLayer {
 
 		if selectedWay != nil,
 		   // check for selecting node inside previously selected way
-		   let hit = osmHitTestNode(inSelectedWay: point, radius: DefaultHitTestRadius)
+		   let hit = osmHitTestNode(inSelectedWay: point, radius: Self.DefaultHitTestRadius)
 		{
 			selectedNode = hit
 
@@ -152,7 +152,7 @@ extension EditorMapLayer {
 			var segment = -1
 			if let hit = osmHitTest(
 				point,
-				radius: DefaultHitTestRadius,
+				radius: Self.DefaultHitTestRadius,
 				isDragConnect: false,
 				ignoreList: [],
 				segment: &segment)
@@ -413,7 +413,7 @@ extension EditorMapLayer {
 			}
 		}
 		let hit = osmHitTest(point,
-		                     radius: DragConnectHitTestRadius,
+		                     radius: Self.DragConnectHitTestRadius,
 		                     isDragConnect: true,
 		                     ignoreList: ignoreList,
 		                     segment: &segment)
@@ -728,13 +728,13 @@ extension EditorMapLayer {
 				guard let primary = selectedPrimary,
 				      let pushpinView = owner.pushpinView()
 				else { return }
-				let delta = CGPoint(x: owner.centerPoint().x - pushpinView.arrowPoint.x,
-				                    y: owner.centerPoint().y - pushpinView.arrowPoint.y)
+				let delta = CGPoint(x: owner.screenCenterPoint().x - pushpinView.arrowPoint.x,
+				                    y: owner.screenCenterPoint().y - pushpinView.arrowPoint.y)
 				var offset: OSMPoint
 				if hypot(delta.x, delta.y) > 20 {
 					// move to position of crosshairs
 					let p1 = owner.mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
-					let p2 = owner.mapTransform.latLon(forScreenPoint: owner.centerPoint())
+					let p2 = owner.mapTransform.latLon(forScreenPoint: owner.screenCenterPoint())
 					offset = OSMPoint(x: p2.lon - p1.lon, y: p2.lat - p1.lat)
 				} else {
 					offset = OSMPoint(x: 0.00005, y: -0.00005)
@@ -857,7 +857,7 @@ extension EditorMapLayer {
 	// MARK: Create node/ways
 
 	func longPressAtPoint(_ point: CGPoint) {
-		let objects = osmHitTestMultiple(point, radius: DefaultHitTestRadius)
+		let objects = osmHitTestMultiple(point, radius: Self.DefaultHitTestRadius)
 		if objects.count == 0 {
 			return
 		}

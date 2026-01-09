@@ -52,7 +52,7 @@ final class QuadDownloadLayer: CALayer {
 			return
 		}
 		// update locations of tiles
-		let tRotation = mapView.screenFromMapTransform.rotation()
+		let tRotation = mapView.mapTransform.rotation()
 		sublayers = []
 		mapView.editorLayer.mapData.region.enumerate({ quad in
 			if !quad.isDownloaded, !quad.busy {

@@ -10,11 +10,11 @@
 import MapLibre
 
 class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
-	let mapView: MapView
+	let mapViewPort: MapViewPort
 	let tileServer: TileServer
 
-	init(mapView: MapView, tileServer: TileServer) {
-		self.mapView = mapView
+	init(mapView: MapViewPort, tileServer: TileServer) {
+		self.mapViewPort = mapView
 		self.tileServer = tileServer
 		super.init(frame: .zero,
 		           styleURL: URL(string: tileServer.url)!)
@@ -35,9 +35,9 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 	}
 
 	func updateUsingCurrentMapTransform() {
-		let center = mapView.mapTransform.latLon(forScreenPoint: mapView.mapTransform.center)
-		let zoom = mapView.mapTransform.zoom() - 1.0
-		let dir = (360.0 + mapView.mapTransform.rotation() * 180 / .pi).remainder(dividingBy: 360.0)
+		let center = mapViewPort.mapTransform.latLon(forScreenPoint: mapViewPort.mapTransform.center)
+		let zoom = mapViewPort.mapTransform.zoom() - 1.0
+		let dir = (360.0 + mapViewPort.mapTransform.rotation() * 180 / .pi).remainder(dividingBy: 360.0)
 		guard
 			center.lat.isFinite,
 			center.lon.isFinite,
