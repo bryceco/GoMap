@@ -24,7 +24,7 @@ class PresetTranslations: Codable {
 					try me.setLanguage(lang)
 				} catch {
 					print(error)
-					showInternalError(error, context: "Error initializing language: \(lang)")
+					MessageDisplay.shared.showInternalError(error, context: "Error initializing language: \(lang)")
 				}
 			}
 		}
@@ -34,7 +34,7 @@ class PresetTranslations: Codable {
 			try me.setLanguage(langCode)
 		} catch {
 			// never returns
-			showInternalError(error, context: "Error initializing language: \(langCode)")
+			MessageDisplay.shared.showInternalError(error, context: "Error initializing language: \(langCode)")
 		}
 		return me
 	}()

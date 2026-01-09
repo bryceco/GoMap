@@ -388,7 +388,7 @@ final class MercatorTileLayer: CALayer {
 						if let error = error,
 						   self.tileServer != TileServer.mapboxLocator
 						{
-							mapViewPort.presentError(title: tileServer.name, error: error, flash: true)
+							MessageDisplay.shared.presentError(title: tileServer.name, error: error, flash: true)
 						}
 						mapViewPort.progressDecrement()
 					})

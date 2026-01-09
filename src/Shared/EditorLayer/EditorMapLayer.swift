@@ -44,10 +44,7 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func placePushpin(at: CGPoint, object: OsmBaseObject?)
 	func placePushpinForSelection(at point: CGPoint?)
 
-	func flashMessage(title: String?, message: String)
-	func showAlert(_ title: String, message: String?)
-	func presentAlert(alert: UIAlertController, location: MenuLocation)
-	func presentError(title: String?, error: Error, flash: Bool)
+	var editToolbar: CustomSegmentedControl! { get }
 
 	func setScreenFromMap(transform: OSMTransform) // used when undo/redo change the location
 	func boundingLatLonForScreen() -> OSMRect
@@ -109,14 +106,16 @@ final class EditorMapLayer: CALayer {
 
 	let mapData: OsmMapData
 	let owner: EditorMapLayerOwner
+	let display: MessageDisplay
 
 	var silentUndo = false // don't flash message about undo
 
 	// Indicates that enough objects are on-screen that we might have to hide some objects
 	private(set) var atVisibleObjectLimit = false
 
-	init(owner: EditorMapLayerOwner) {
+	init(owner: EditorMapLayerOwner, display: MessageDisplay) {
 		self.owner = owner
+		self.display = display
 
 		var t = CACurrentMediaTime()
 		var alert: UIAlertController?
@@ -167,18 +166,18 @@ final class EditorMapLayer: CALayer {
 		if let alert = alert {
 			// this has to occur after super.init()
 			MainActor.runAfter(nanoseconds: 500_000000) {
-				self.owner.presentAlert(alert: alert, location: .none)
+				self.presentAlert(alert: alert, location: .none)
 			}
 		}
 
-		objectFilters.onChange.subscribe(self, handler: { [weak self] in
+		objectFilters.onChange.subscribe(self) { [weak self] in
 			self?.mapData.clearCachedProperties()
-		})
+		}
 		whiteText = true
 
 		// observe changes to screen
-		owner.mapTransform.onChange.subscribe(self) {
-			[weak self] in self?.updateMapLocation()
+		owner.mapTransform.onChange.subscribe(self) { [weak self]
+			in self?.updateMapLocation()
 		}
 
 		OsmMapData.g_EditorMapLayerForArchive = self
@@ -237,7 +236,7 @@ final class EditorMapLayer: CALayer {
 				self.owner.removePin()
 			}
 			let message = "\(title) \(action)"
-			self.owner.flashMessage(title: nil, message: message)
+			self.display.flashMessage(title: nil, message: message)
 		}
 		addSublayer(baseLayer)
 
@@ -253,6 +252,7 @@ final class EditorMapLayer: CALayer {
 	override init(layer: Any) {
 		let layer = layer as! EditorMapLayer
 		owner = layer.owner
+		display = layer.display
 		mapData = layer.mapData
 		baseLayer = CATransformLayer() // not sure if we should provide the original or not?
 		super.init(layer: layer)
@@ -383,7 +383,7 @@ final class EditorMapLayer: CALayer {
 				DispatchQueue.main.async(execute: { [self] in
 					// if we've been hidden don't bother displaying errors
 					if !isHidden {
-						owner.presentError(title: nil, error: error, flash: true)
+						display.presentError(title: nil, error: error, flash: true)
 					}
 				})
 				return
@@ -397,6 +397,21 @@ final class EditorMapLayer: CALayer {
 	func didReceiveMemoryWarning() {
 		purgeCachedData(.soft)
 		save()
+	}
+
+	func presentAlert(alert: UIAlertController, location: MenuLocation) {
+		switch location {
+		case .none:
+			break
+		case .editBar:
+			let button = owner.editToolbar.controls.first!
+			alert.popoverPresentationController?.sourceView = button
+			alert.popoverPresentationController?.sourceRect = button.bounds
+		case let .rect(rc):
+			alert.popoverPresentationController?.sourceView = owner
+			alert.popoverPresentationController?.sourceRect = rc
+		}
+		display.showAlert(alert)
 	}
 
 	// MARK: Common Drawing

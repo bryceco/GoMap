@@ -14,7 +14,7 @@ final class PresetsDatabase {
 			let database = try PresetsDatabase()
 			return database
 		} catch {
-			showInternalError(error, context: nil)
+			MessageDisplay.shared.showInternalError(error, context: nil)
 			fatalError()
 		}
 	}()
@@ -127,7 +127,7 @@ final class PresetsDatabase {
 					print("NSI read = \(readTime.timeIntervalSince(startTime)), " +
 						"decode = \(Date().timeIntervalSince(readTime))")
 				} catch {
-					showInternalError(error, context: "NSI")
+					MessageDisplay.shared.showInternalError(error, context: "NSI")
 				}
 			}
 		}
@@ -148,7 +148,7 @@ final class PresetsDatabase {
 					self.nsiGeoJson = featureDict
 				}
 			} catch {
-				showInternalError(error, context: "NSI geojson")
+				MessageDisplay.shared.showInternalError(error, context: "NSI geojson")
 			}
 		}
 		print("PresetsDatabase read = \(readTime.timeIntervalSince(startTime)), " +

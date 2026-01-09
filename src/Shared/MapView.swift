@@ -137,7 +137,6 @@ private enum ZLAYER: CGFloat {
 	case LOCATION_BALL = 10
 	case TOOLBAR = 90
 	case PUSHPIN = 105
-	case FLASH = 110
 }
 
 // how close to an object do we need to tap to select it
@@ -186,7 +185,6 @@ protocol MapViewPort: AnyObject, MapViewProgress {
 	func metersPerPixel() -> Double
 	func boundingMapRectForScreen() -> OSMRect
 	func screenCenterLatLon() -> LatLon
-	func presentError(title: String?, error: Error, flash: Bool)
 }
 
 // MARK: Gestures
@@ -209,8 +207,6 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
 
-	var lastErrorDate: Date? // to prevent spamming of error dialogs
-	var ignoreNetworkErrorsUntilDate: Date?
 	var voiceAnnouncement: VoiceAnnouncement?
 	var tapAndDragGesture: TapAndDragGesture!
 
@@ -224,7 +220,6 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	@IBOutlet var fpsLabel: FpsLabel!
 	@IBOutlet var userInstructionLabel: UILabel!
 	@IBOutlet var compassButton: CompassButton!
-	@IBOutlet var flashLabel: UILabel!
 	@IBOutlet var aerialServiceLogo: UIButton!
 	@IBOutlet var helpButton: UIButton!
 	@IBOutlet var centerOnGPSButton: UIButton!
@@ -314,7 +309,8 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	// background layers
 	private(set) lazy var aerialLayer = MercatorTileLayer(mapView: self)
 	private(set) lazy var basemapLayer: LayerOrView & DiskCacheSizeProtocol = MercatorTileLayer(mapView: self)
-	private(set) lazy var editorLayer = EditorMapLayer(owner: self)
+	private(set) lazy var editorLayer = EditorMapLayer(owner: self,
+	                                                   display: MessageDisplay.shared)
 
 	// overlays
 	private(set) lazy var gpxLayer = GpxLayer(mapView: self)
@@ -665,7 +661,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 		basemapServer = basemapServer
 		basemapLayer.isHidden = true
 
-		editorLayer = EditorMapLayer(owner: self)
+		editorLayer = EditorMapLayer(owner: self, display: MessageDisplay.shared)
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
 		allLayers.append(editorLayer)
 
@@ -798,13 +794,6 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 		dPadView.delegate = self
 		dPadView.layer.zPosition = ZLAYER.D_PAD.rawValue
 		dPadView.isHidden = true
-
-		// error message label
-		flashLabel.font = UIFont.preferredFont(forTextStyle: .title3)
-		flashLabel.layer.cornerRadius = 5
-		flashLabel.layer.masksToBounds = true
-		flashLabel.layer.zPosition = ZLAYER.FLASH.rawValue
-		flashLabel.isHidden = true
 
 		// magnifying glass
 		magnifyingGlass = MagnifyingGlass(sourceView: self, radius: 70.0, scale: 2.0)
@@ -1042,130 +1031,6 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 			let title = gap + service.attributionString
 			aerialServiceLogo.setImage(icon, for: .normal)
 			aerialServiceLogo.setTitle(title, for: .normal)
-		}
-	}
-
-	func showAlert(_ title: String, message: String?) {
-		let alertError = UIAlertController(title: title,
-		                                   message: message,
-		                                   preferredStyle: .alert)
-		alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-		mainViewController.present(alertError, animated: true)
-	}
-
-	func flashMessage(title: String?, message: String, duration: TimeInterval) {
-		let MAX_ALPHA: CGFloat = 0.8
-
-		if let attrText = NSMutableAttributedString(withHtmlString: message,
-		                                            textColor: UIColor.white,
-		                                            backgroundColor: UIColor.black),
-			attrText.length > 0
-		{
-			if let title = title {
-				let attrTitle = NSMutableAttributedString(string: title + "\n\n", attributes: [
-					.foregroundColor: UIColor.white,
-					.backgroundColor: UIColor.black
-				])
-				attrTitle.append(attrText)
-				flashLabel.attributedText = attrTitle
-			} else {
-				flashLabel.attributedText = attrText
-			}
-		} else {
-			if let title = title {
-				flashLabel.text = title + "\n\n" + message
-			} else {
-				flashLabel.text = message
-			}
-		}
-
-		if flashLabel.isHidden {
-			// animate in
-			flashLabel.alpha = 0.0
-			flashLabel.isHidden = false
-			UIView.animate(withDuration: 0.25, animations: {
-				self.flashLabel.alpha = MAX_ALPHA
-			})
-		} else {
-			// already displayed
-			flashLabel.layer.removeAllAnimations()
-			flashLabel.alpha = MAX_ALPHA
-		}
-
-		MainActor.runAfter(nanoseconds: UInt64(duration * 1000_000000)) {
-			UIView.animate(withDuration: 0.35, animations: {
-				self.flashLabel.alpha = 0.0
-			}) { finished in
-				if finished, self.flashLabel.layer.presentation()?.opacity == 0.0 {
-					self.flashLabel.isHidden = true
-				}
-			}
-		}
-	}
-
-	func flashMessage(title: String?, message: String) {
-		flashMessage(title: title, message: message, duration: 0.7)
-	}
-
-	func presentError(title: String?, error: Error, flash: Bool) {
-		if lastErrorDate == nil || Date().timeIntervalSince(lastErrorDate ?? Date()) > 3.0 {
-			var title = title ?? NSLocalizedString("Error", comment: "")
-			var text = error.localizedDescription
-
-			var isNetworkError = false
-			var ignoreButton: String?
-			let userInfo = (error as NSError).userInfo
-			if userInfo["NSErrorFailingURLKey"] != nil {
-				isNetworkError = true
-			}
-			if let underError = userInfo["NSUnderlyingError"] as? NSError,
-			   (underError.domain as CFString) == kCFErrorDomainCFNetwork
-			{
-				isNetworkError = true
-			}
-			if let error = error as? UrlSessionError,
-			   case let .badStatusCode(_, html) = error,
-			   html.count > 20
-			{
-				text = html
-			}
-
-			if isNetworkError {
-				if let ignoreNetworkErrorsUntilDate = ignoreNetworkErrorsUntilDate {
-					if Date().timeIntervalSince(ignoreNetworkErrorsUntilDate) >= 0 {
-						self.ignoreNetworkErrorsUntilDate = nil
-					}
-				}
-				if ignoreNetworkErrorsUntilDate != nil {
-					return
-				}
-				title = NSLocalizedString("Network error", comment: "")
-				ignoreButton = NSLocalizedString("Ignore", comment: "")
-			}
-
-			if flash {
-				flashMessage(title: title, message: text, duration: 0.9)
-			} else {
-				let alertError = UIAlertController(title: title, message: text, preferredStyle: .alert)
-				if let attrText = NSMutableAttributedString(withHtmlString: text,
-				                                            textColor: UIColor.black,
-				                                            backgroundColor: UIColor.white)
-				{
-					alertError.setValue(attrText, forKey: "attributedMessage")
-				}
-				alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-				                                   style: .cancel, handler: nil))
-				if let ignoreButton = ignoreButton {
-					alertError.addAction(UIAlertAction(title: ignoreButton, style: .default, handler: { [self] _ in
-						// ignore network errors for a while
-						ignoreNetworkErrorsUntilDate = Date().addingTimeInterval(5 * 60.0)
-					}))
-				}
-				mainViewController.present(alertError, animated: true)
-			}
-		}
-		if !flash {
-			lastErrorDate = Date()
 		}
 	}
 
@@ -1549,7 +1414,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 		if enableAutomaticCacheManagement {
 			let changed = editorLayer.mapData.discardStaleData()
 			if changed {
-				flashMessage(title: nil, message: NSLocalizedString("Cache trimmed", comment: ""))
+				MessageDisplay.shared.flashMessage(title: nil, message: NSLocalizedString("Cache trimmed", comment: ""))
 				editorLayer.updateMapLocation() // download data if necessary
 			}
 		}
@@ -1819,14 +1684,14 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 			error = NSError(domain: "Location", code: 100, userInfo: [
 				NSLocalizedDescriptionKey: text
 			])
-			presentError(title: nil, error: error, flash: false)
+			MessageDisplay.shared.presentError(title: nil, error: error, flash: false)
 		} else {
 			// driving through a tunnel or something
 			let text = NSLocalizedString("Location unavailable", comment: "")
 			error = NSError(domain: "Location", code: 100, userInfo: [
 				NSLocalizedDescriptionKey: text
 			])
-			presentError(title: nil, error: error, flash: true)
+			MessageDisplay.shared.presentError(title: nil, error: error, flash: true)
 		}
 	}
 
@@ -1869,7 +1734,9 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 	@IBAction func undo(_ sender: Any?) {
 		if editorLayer.isHidden {
-			flashMessage(title: nil, message: NSLocalizedString("Editing layer not visible", comment: ""))
+			MessageDisplay.shared.flashMessage(
+				title: nil,
+				message: NSLocalizedString("Editing layer not visible", comment: ""))
 			return
 		}
 		// if just dropped a pin then undo removes the pin
@@ -1884,7 +1751,9 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 
 	@IBAction func redo(_ sender: Any?) {
 		if editorLayer.isHidden {
-			flashMessage(title: nil, message: NSLocalizedString("Editing layer not visible", comment: ""))
+			MessageDisplay.shared.flashMessage(
+				title: nil,
+				message: NSLocalizedString("Editing layer not visible", comment: ""))
 			return
 		}
 		removePin()
@@ -2310,7 +2179,7 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 				let viaNode = relation.member(byRole: "via")?.obj as? OsmNode
 			else {
 				// not supported yet
-				showAlert(
+				MessageDisplay.shared.showAlert(
 					NSLocalizedString("Unsupported turn restriction type", comment: ""),
 					message: NSLocalizedString(
 						"This app does not yet support editing turn restrictions without a node as the 'via' member",
@@ -3133,21 +3002,6 @@ extension MapView: EditorMapLayerOwner {
 
 	func pushpinView() -> PushPinView? {
 		return pushPin
-	}
-
-	func presentAlert(alert: UIAlertController, location: MenuLocation) {
-		switch location {
-		case .none:
-			break
-		case .editBar:
-			let button = editToolbar.controls.first!
-			alert.popoverPresentationController?.sourceView = button
-			alert.popoverPresentationController?.sourceRect = button.bounds
-		case let .rect(rc):
-			alert.popoverPresentationController?.sourceView = self
-			alert.popoverPresentationController?.sourceRect = rc
-		}
-		mainViewController.present(alert, animated: true)
 	}
 
 	func addNote() {

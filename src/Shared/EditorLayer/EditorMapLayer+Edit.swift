@@ -76,7 +76,7 @@ extension EditorMapLayer {
 			pastedTags = copyPasteTags
 		}
 		guard pastedTags.count > 0 else {
-			owner.showAlert(NSLocalizedString("No tags to paste", comment: ""), message: nil)
+			display.showAlert(NSLocalizedString("No tags to paste", comment: ""), message: nil)
 			return
 		}
 		if selectedPrimary == nil {
@@ -105,7 +105,7 @@ extension EditorMapLayer {
 			                                   handler: { [self] _ in
 			                                   	self.pasteTagsReplace(selectedPrimary, tags: pastedTags)
 			                                   }))
-			owner.presentAlert(alert: alertPaste, location: .none)
+			presentAlert(alert: alertPaste, location: .none)
 		} else {
 			pasteTagsReplace(selectedPrimary, tags: pastedTags)
 		}
@@ -326,7 +326,7 @@ extension EditorMapLayer {
 						owner.placePushpinForSelection(at: nil)
 					}
 				} catch {
-					owner.showAlert(error.localizedDescription, message: nil)
+					display.showAlert(error.localizedDescription, message: nil)
 					return
 				}
 			} else if let hit = hit as? OsmWay {
@@ -337,7 +337,7 @@ extension EditorMapLayer {
 					let add = try canAddNode(toWay: hit, atIndex: segment + 1)
 					add(dragNode)
 				} catch {
-					owner.showAlert(
+					display.showAlert(
 						NSLocalizedString("Error connecting to way", comment: ""),
 						message: error.localizedDescription)
 				}
@@ -375,13 +375,12 @@ extension EditorMapLayer {
 			                                  	self.owner.removePin()
 			                                  	self.setNeedsLayout()
 			                                  }))
-			alertMove
-				.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""),
-				                         style: .default,
-				                         handler: { _ in
-				                         	// okay
-				                         }))
-			owner.presentAlert(alert: alertMove, location: .none)
+			alertMove.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""),
+			                                  style: .default,
+			                                  handler: { _ in
+			                                  	// okay
+			                                  }))
+			presentAlert(alert: alertMove, location: .none)
 		}
 	}
 
@@ -574,7 +573,7 @@ extension EditorMapLayer {
 					}
 				}
 			} catch {
-				owner.showAlert(NSLocalizedString("Delete failed", comment: ""), message: error.localizedDescription)
+				display.showAlert(NSLocalizedString("Delete failed", comment: ""), message: error.localizedDescription)
 			}
 		}
 
@@ -602,12 +601,12 @@ extension EditorMapLayer {
 						self.selectedRelation = nil
 						owner.didUpdateObject()
 					} catch {
-						owner.showAlert(
+						display.showAlert(
 							NSLocalizedString("Delete failed", comment: ""),
 							message: error.localizedDescription)
 					}
 				}))
-			owner.presentAlert(alert: alertDelete, location: .editBar)
+			presentAlert(alert: alertDelete, location: .editBar)
 
 		} else {
 			// regular delete
@@ -624,7 +623,7 @@ extension EditorMapLayer {
 			alertDelete
 				.addAction(UIAlertAction(title: NSLocalizedString("Delete", comment: ""),
 				                         style: .destructive, handler: deleteHandler))
-			owner.presentAlert(alert: alertDelete, location: .none)
+			presentAlert(alert: alertDelete, location: .none)
 		}
 	}
 
@@ -823,13 +822,13 @@ extension EditorMapLayer {
 						self.selectedRelation = relation
 						self.setNeedsLayout()
 						owner.didUpdateObject()
-						owner.showAlert(
+						display.showAlert(
 							NSLocalizedString("Adding members:", comment: ""),
 							message: NSLocalizedString(
 								"To add another member to the relation 'long press' on the way to be added",
 								comment: ""))
 					} catch {
-						owner.showAlert(error.localizedDescription, message: nil)
+						display.showAlert(error.localizedDescription, message: nil)
 					}
 				}
 				let actionSheet = UIAlertController(
@@ -845,11 +844,11 @@ extension EditorMapLayer {
 				                                    style: .cancel,
 				                                    handler: nil))
 				let rc = CGRect(origin: owner.pushpinView()?.arrowPoint ?? .zero, size: .zero)
-				owner.presentAlert(alert: actionSheet, location: .rect(rc))
+				presentAlert(alert: actionSheet, location: .rect(rc))
 				return
 			}
 		} catch {
-			owner.showAlert(error.localizedDescription, message: nil)
+			display.showAlert(error.localizedDescription, message: nil)
 		}
 		setNeedsLayout()
 		owner.didUpdateObject()
@@ -882,12 +881,12 @@ extension EditorMapLayer {
 						                                  to: self.selectedRelation!,
 						                                  withRole: role)
 						add()
-						owner.flashMessage(title: nil,
-						                   message: NSLocalizedString("added to multipolygon relation", comment: ""))
+						display.flashMessage(title: nil,
+						                     message: NSLocalizedString("added to multipolygon relation", comment: ""))
 						self.setNeedsLayout()
 					} catch {
-						owner.showAlert(NSLocalizedString("Error", comment: ""),
-						                message: error.localizedDescription)
+						display.showAlert(NSLocalizedString("Error", comment: ""),
+						                  message: error.localizedDescription)
 					}
 				}
 				confirm.addAction(UIAlertAction(
@@ -906,7 +905,7 @@ extension EditorMapLayer {
 					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
 					                         style: .cancel,
 					                         handler: nil))
-				owner.presentAlert(alert: confirm, location: .none)
+				presentAlert(alert: confirm, location: .none)
 				return
 			}
 		}
@@ -951,7 +950,7 @@ extension EditorMapLayer {
 		                                         style: .cancel,
 		                                         handler: nil))
 		let rc = CGRect(x: point.x, y: point.y, width: 0.0, height: 0.0)
-		owner.presentAlert(alert: multiSelectSheet, location: .rect(rc))
+		presentAlert(alert: multiSelectSheet, location: .rect(rc))
 	}
 
 	func extendSelectedWay(to newPoint: CGPoint, from pinPoint: CGPoint) -> Result<CGPoint, EditError> {
@@ -1106,8 +1105,8 @@ extension EditorMapLayer {
 
 	func addNode(at dropPoint: CGPoint) {
 		if isHidden {
-			owner.flashMessage(title: nil,
-			                   message: NSLocalizedString("Editing layer not visible", comment: ""))
+			display.flashMessage(title: nil,
+			                     message: NSLocalizedString("Editing layer not visible", comment: ""))
 			return
 		}
 
@@ -1127,8 +1126,8 @@ extension EditorMapLayer {
 
 		let prevPointIsOffScreen = !bounds.contains(pushpinView.arrowPoint)
 		let offscreenWarning: (() -> Void) = {
-			self.owner.flashMessage(title: nil,
-			                        message: NSLocalizedString("Selected object is off screen", comment: ""))
+			self.display.flashMessage(title: nil,
+			                          message: NSLocalizedString("Selected object is off screen", comment: ""))
 		}
 
 		if let selectedWay = selectedWay,
@@ -1161,7 +1160,7 @@ extension EditorMapLayer {
 			owner.placePushpinForSelection(at: pt)
 		case let .failure(error):
 			if case let .text(text) = error {
-				owner.showAlert(NSLocalizedString("Can't extend way", comment: ""), message: text)
+				display.showAlert(NSLocalizedString("Can't extend way", comment: ""), message: text)
 			}
 		}
 	}

@@ -26,6 +26,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	@IBOutlet var mapView: MapView!
 	@IBOutlet var locationButton: UIButton!
+	@IBOutlet var flashLabel: UILabel!
 
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
@@ -122,6 +123,10 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 		// customize buttons
 		setButtonAppearances()
+
+		// tell our error display manager where to display messages
+		MessageDisplay.shared.topViewController = self
+		MessageDisplay.shared.flashLabel = flashLabel
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -692,8 +697,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 			}
 #endif
 		}
-		mapView.flashMessage(title: nil,
-		                     message: NSLocalizedString("Low memory: clearing cache", comment: ""))
+		MessageDisplay.shared.flashMessage(title: nil,
+		                                   message: NSLocalizedString("Low memory: clearing cache", comment: ""))
 		mapView.editorLayer.didReceiveMemoryWarning()
 	}
 

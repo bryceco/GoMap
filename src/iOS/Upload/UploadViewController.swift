@@ -250,9 +250,9 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 				// flash success message
 				MainActor.runAfter(nanoseconds: 300_000000) {
 					appDelegate.mapView.editorLayer.setNeedsLayout()
-					appDelegate.mapView.flashMessage(title: nil,
-					                                 message: NSLocalizedString("Upload complete!", comment: ""),
-					                                 duration: 1.5)
+					MessageDisplay.shared.flashMessage(title: nil,
+					                                   message: NSLocalizedString("Upload complete!", comment: ""),
+					                                   duration: 1.5)
 
 					// record number of uploads
 					var editCount = UserPrefs.shared.uploadCountPerVersion.value ?? 0

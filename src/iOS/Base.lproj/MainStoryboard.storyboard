@@ -30,7 +30,6 @@
                                     <outlet property="compassButton" destination="E22-sL-sNt" id="aGc-Fs-I8q"/>
                                     <outlet property="dPadView" destination="FM9-uI-awq" id="pUA-Lp-9UL"/>
                                     <outlet property="editToolbar" destination="R2j-Xq-Q3E" id="Ruo-Y4-9zI"/>
-                                    <outlet property="flashLabel" destination="nU5-T2-ADn" id="deT-NP-s3P"/>
                                     <outlet property="fpsLabel" destination="9t5-wq-j1u" id="3lK-so-dSY"/>
                                     <outlet property="helpButton" destination="TnL-YC-BCg" id="hR9-Za-lMp"/>
                                     <outlet property="progressIndicator" destination="Zh9-uC-62t" id="GOZ-5L-yvO"/>
@@ -233,9 +232,9 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A Error Message Flashing Z" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nU5-T2-ADn">
-                                <rect key="frame" x="92.333333333333329" y="596.33333333333337" width="208.66666666666669" height="20.333333333333371"/>
+                                <rect key="frame" x="88" y="596.33333333333337" width="217" height="20.333333333333371"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                                 <attributedString key="userComments">
@@ -375,6 +374,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="displayButton" destination="UQ6-Pa-U58" id="lto-1X-HyX"/>
+                        <outlet property="flashLabel" destination="nU5-T2-ADn" id="lBg-Db-pV1"/>
                         <outlet property="locationButton" destination="rdp-7O-8Ad" id="fnP-To-Zhg"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
                         <outlet property="redoButton" destination="tmm-lt-HSk" id="P0O-q4-hlG"/>
@@ -930,16 +930,16 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray2Color">
-            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68235294120000001" green="0.68235294120000001" blue="0.69803921570000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray4Color">
-            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.81960784310000001" green="0.81960784310000001" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

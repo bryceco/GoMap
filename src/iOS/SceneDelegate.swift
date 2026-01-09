@@ -66,8 +66,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			filetype)
 		message += "\n\n"
 		message += error.localizedDescription
-		AppDelegate.shared.mapView.showAlert(NSLocalizedString("Open URL", comment: ""),
-		                                     message: message)
+		MessageDisplay.shared.showAlert(NSLocalizedString("Open URL", comment: ""),
+		                                message: message)
 	}
 
 	func displayImageLocationStatus(success: Bool) {
@@ -79,8 +79,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			message = NSLocalizedString("The selected image file does not contain location information.",
 			                            comment: "")
 		}
-		AppDelegate.shared.mapView.showAlert(NSLocalizedString("Open Image File", comment: ""),
-		                                     message: message)
+		MessageDisplay.shared.showAlert(NSLocalizedString("Open Image File", comment: ""),
+		                                message: message)
 	}
 
 	func openUrl(_ url: URL) -> Bool {
@@ -93,8 +93,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				data = try dataForScopedUrl(url)
 			} catch {
 				MainActor.runAfter(nanoseconds: 100_000000) {
-					mapView.showAlert(NSLocalizedString("Invalid URL", comment: ""),
-					                  message: error.localizedDescription)
+					MessageDisplay.shared.showAlert(NSLocalizedString("Invalid URL", comment: ""),
+					                                message: error.localizedDescription)
 				}
 				return false
 			}
@@ -193,8 +193,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				return true
 			} else {
 				MainActor.runAfter(nanoseconds: 100_000000) {
-					mapView.showAlert(NSLocalizedString("Invalid URL", comment: ""),
-					                  message: url.absoluteString)
+					MessageDisplay.shared.showAlert(NSLocalizedString("Invalid URL", comment: ""),
+					                                message: url.absoluteString)
 				}
 				return false
 			}

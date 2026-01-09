@@ -64,6 +64,7 @@
 		02505C5729A458A30078D60D /* QuestDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5629A458A30078D60D /* QuestDefinition.swift */; };
 		02505C5929A52EA80078D60D /* QuestDefinitionWithFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */; };
 		02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */; };
+		02572B732F10D8C400216EE3 /* MessageDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02572B722F10D8C400216EE3 /* MessageDisplay.swift */; };
 		025CCA12271244B800074726 /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 025CCA11271244B800074726 /* KissXML */; };
 		025F004F2E453002003A68FA /* TypeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025F004E2E453002003A68FA /* TypeCast.swift */; };
 		0260E05F2BE30D4700975570 /* CompassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0260E05E2BE30D4700975570 /* CompassButton.swift */; };
@@ -410,6 +411,7 @@
 		02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFeatures.swift; sourceTree = "<group>"; };
 		0250C8DF2E7CBD7700192893 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/TurnRestrictions.xcstrings; sourceTree = "<group>"; };
 		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "../POI-Icons"; sourceTree = "<group>"; };
+		02572B722F10D8C400216EE3 /* MessageDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDisplay.swift; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		025F004E2E453002003A68FA /* TypeCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCast.swift; sourceTree = "<group>"; };
 		0260E05E2BE30D4700975570 /* CompassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassButton.swift; sourceTree = "<group>"; };
@@ -817,6 +819,7 @@
 				02F0297A2BFAFF2E002F7956 /* DataOverlays */,
 				64D74BF02253DF39004FFD20 /* Direction */,
 				0244399629CA9A28009FC2D0 /* DisplaySettings */,
+				02572B722F10D8C400216EE3 /* MessageDisplay.swift */,
 				02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */,
 				02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */,
 				02CBF3C72BE85829000DE2AD /* GpxTrackWidgetManager.swift */,
@@ -1553,6 +1556,7 @@
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */,
 				02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */,
+				02572B732F10D8C400216EE3 /* MessageDisplay.swift in Sources */,
 				02969EBA2DF630A6003BA34A /* Array+Extension.swift in Sources */,
 				02505C5929A52EA80078D60D /* QuestDefinitionWithFilters.swift in Sources */,
 				ED91352526020945006A637A /* OfflineViewController.swift in Sources */,
