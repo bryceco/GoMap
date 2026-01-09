@@ -68,7 +68,7 @@ extension EditorMapLayer {
 		block: (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void)
 	{
 		let location = owner.mapTransform.latLon(forScreenPoint: point)
-		let viewCoord = owner.screenLatLonRect()
+		let viewCoord = owner.boundingLatLonForScreen()
 		let pixelsPerDegree = OSMSize(width: Double(owner.bounds.size.width) / viewCoord.size.width,
 		                              height: Double(owner.bounds.size.height) / viewCoord.size.height)
 

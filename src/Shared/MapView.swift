@@ -180,12 +180,21 @@ protocol MapViewProgress {
 	func progressDecrement()
 }
 
+// Allows other layers of the map to view changes to the map view
+protocol MapViewPort: AnyObject, MapViewProgress {
+	var mapTransform: MapTransform { get }
+	func metersPerPixel() -> Double
+	func boundingMapRectForScreen() -> OSMRect
+	func screenCenterLatLon() -> LatLon
+	func presentError(title: String?, error: Error, flash: Bool)
+}
+
 // MARK: Gestures
 
 private let DisplayLinkHeading = "Heading"
 private let DisplayLinkPanning = "Panning" // disable gestures inside toolbar buttons
 
-final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActionSheetDelegate,
+final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDelegate, UIActionSheetDelegate,
 	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate, DPadDelegate,
 	UISheetPresentationControllerDelegate
 {
@@ -378,7 +387,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 			// Determine if we've zoomed out enough to disable editing
 			// We can only compute a precise surface area size at high zoom since it's possible
 			// for the earth to be larger than the screen
-			let area = mapTransform.zoom() > 8 ? SurfaceAreaOfRect(screenLatLonRect()) : Double.greatestFiniteMagnitude
+			let area = mapTransform.zoom() > 8 ? SurfaceAreaOfRect(boundingLatLonForScreen()) : Double.greatestFiniteMagnitude
 			var isZoomedOut = area > 2.0 * 1000 * 1000
 			if !editorLayer.isHidden,
 			   !editorLayer.atVisibleObjectLimit,
@@ -1473,7 +1482,7 @@ final class MapView: UIView, MapViewProgress, CLLocationManagerDelegate, UIActio
 		return mapTransform.boundingMapRect(forScreenRect: rc)
 	}
 
-	func screenLatLonRect() -> OSMRect {
+	func boundingLatLonForScreen() -> OSMRect {
 		let rc = boundingMapRectForScreen()
 		let rect = MapTransform.latLon(forMapRect: rc)
 		return rect

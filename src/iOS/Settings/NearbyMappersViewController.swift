@@ -20,7 +20,7 @@ class NearbyMappersViewController: UITableViewController {
 
 		let appDelegate = AppDelegate.shared
 
-		let rect = appDelegate.mapView.screenLatLonRect()
+		let rect = appDelegate.mapView.boundingLatLonForScreen()
 		mappers = appDelegate.mapView.editorLayer.mapData.userStatistics(forRegion: rect)
 		mappers.sort(by: { s1, s2 in s1.lastEdit.compare(s2.lastEdit) != .orderedAscending })
 	}

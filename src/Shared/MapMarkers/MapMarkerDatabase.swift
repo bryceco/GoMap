@@ -223,7 +223,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 				// Check for cancellation before proceeding
 				!Task.isCancelled,
 				// Don't update excessively large regions
-				let bbox = AppDelegate.shared.mapView?.screenLatLonRect(),
+				let bbox = AppDelegate.shared.mapView?.boundingLatLonForScreen(),
 				bbox.size.width * bbox.size.height <= 0.25
 			else {
 				return
