@@ -25,10 +25,10 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 
 	private(set) var previousTracks: [GpxTrack] = [] // sorted with most recent first
 
-	override init(mapView: MapView) {
+	override init(mapViewPort: MapViewPort) {
 		let uploads = UserPrefs.shared.gpxUploadedGpxTracks.value ?? [:]
 		uploadedTracks = uploads.mapValues({ $0.boolValue })
-		super.init(mapView: mapView)
+		super.init(mapViewPort: mapViewPort)
 		super.geojsonDelegate = self
 	}
 

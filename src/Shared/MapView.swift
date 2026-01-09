@@ -306,9 +306,9 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	                                                   display: MessageDisplay.shared)
 
 	// overlays
-	private(set) lazy var gpxLayer = GpxLayer(mapView: self)
+	private(set) lazy var gpxLayer = GpxLayer(mapViewPort: self)
 	private(set) lazy var locatorLayer = MercatorTileLayer(mapView: self)
-	private(set) lazy var dataOverlayLayer = DataOverlayLayer(mapView: self)
+	private(set) lazy var dataOverlayLayer = DataOverlayLayer(mapViewPort: self)
 	private(set) var quadDownloadLayer: QuadDownloadLayer?
 
 	// List of all layers that are displayed and need to be resized, etc.

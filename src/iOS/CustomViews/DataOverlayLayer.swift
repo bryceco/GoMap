@@ -1,5 +1,5 @@
 //
-//  CustomLayer.swift
+//  DataOverlayLayer.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 4/29/24.
@@ -13,8 +13,8 @@ import UIKit
 
 // A layer in MapView that displays custom data (GeoJSON, etc) that the user wants to load
 final class DataOverlayLayer: DrawingLayer, DrawingLayerDelegate {
-	override init(mapView: MapView) {
-		super.init(mapView: mapView)
+	override init(mapViewPort: MapViewPort) {
+		super.init(mapViewPort: mapViewPort)
 		geojsonDelegate = self
 	}
 
