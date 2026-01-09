@@ -391,7 +391,7 @@ final class TileServer: Equatable, Codable {
 	private static let builtinBingAerial = TileServer(
 		withName: "Bing",
 		identifier: BingIdentifier,
-		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=10618&key={apikey}",
+		url: "https://ecn.{switch:t0,t1,t2,t3}.tiles.virtualearth.net/tiles/a{u}.jpeg?g=15458&key={apikey}",
 		best: false,
 		overlay: false,
 		apiKey: BING_MAPS_KEY,
