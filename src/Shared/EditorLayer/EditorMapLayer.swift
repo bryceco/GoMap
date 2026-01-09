@@ -60,7 +60,8 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func presentEditActionSheet(_ sender: Any?)
 	func presentTurnRestrictionEditor()
 
-	// FIXME: We should move this functionality into EditorMapLayer
+	// FIXME: We should move this functionality into EditorMapLayer.
+	// But that might also require moving PushPin as well.
 	func blink(_ object: OsmBaseObject?, segment: Int)
 	func unblinkObject()
 	func startObjectRotation()

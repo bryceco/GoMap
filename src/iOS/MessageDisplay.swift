@@ -19,6 +19,7 @@ class MessageDisplay {
 			flashLabel.isHidden = true
 		}
 	}
+
 	weak var topViewController: UIViewController?
 
 	var lastErrorDate: Date? // to prevent spamming of error dialogs

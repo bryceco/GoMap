@@ -200,9 +200,6 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 	var progressActive = AtomicInt(0)
 	var locationBallLayer: LocationBallLayer
 	var addWayProgressLayer: CAShapeLayer?
-	var blinkObject: OsmBaseObject? // used for creating a moving dots animation during selection
-	var blinkSegment = 0
-	var blinkLayer: CAShapeLayer?
 	var isZoomScroll = false // Command-scroll zooms instead of scrolling (desktop only)
 
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
@@ -2367,6 +2364,10 @@ final class MapView: UIView, MapViewPort, MapViewProgress, CLLocationManagerDele
 		let text = editorLayer.selectedPrimary?.friendlyDescription() ?? NSLocalizedString("(new object)", comment: "")
 		pushPin?.text = text
 	}
+
+	var blinkObject: OsmBaseObject? // used for creating a moving dots animation during selection
+	var blinkSegment = 0
+	var blinkLayer: CAShapeLayer?
 
 	func unblinkObject() {
 		blinkLayer?.removeFromSuperlayer()
