@@ -119,7 +119,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 	var mainView: MainViewController!
 	var viewPort: MapViewPort { mainView }
-	var mapTransform: MapTransform { mainView.mapTransform }
+	var mapTransform: MapTransform { viewPort.mapTransform }
 
 	public var viewState: MapViewState = .EDITORAERIAL {
 		willSet(newValue) {
@@ -260,7 +260,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			}
 
 			// update transform
-			mainView.mapTransform.transform = t
+			viewPort.mapTransform.transform = t
 
 			// Determine if we've zoomed out enough to disable editing
 			// We can only compute a precise surface area size at high zoom since it's possible
@@ -363,7 +363,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		didSet {
 			if !enableBirdsEye {
 				// remove birdsEye
-				mainView.rotateBirdsEye(by: -mapTransform.birdsEyeRotation)
+				viewPort.rotateBirdsEye(by: -mapTransform.birdsEyeRotation)
 			}
 		}
 	}
@@ -374,7 +374,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 				// remove rotation
 				let centerPoint = viewPort.screenCenterPoint()
 				let angle = CGFloat(screenFromMapTransform.rotation())
-				mainView.rotate(by: -angle, aroundScreenPoint: centerPoint)
+				viewPort.rotate(by: -angle, aroundScreenPoint: centerPoint)
 			}
 		}
 	}
@@ -442,7 +442,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 					                    lat: startLatLon.lat + sin(offset * 2.0 * .pi) * radius2.y)
 					let zoomFrac = (1.0 + cos(offset * 2.0 * .pi)) * 0.5
 					let zoom = startZoom * (1 + zoomFrac * 0.01)
-					myself.mainView.centerOn(latLon: origin, zoom: zoom)
+					myself.viewPort.centerOn(latLon: origin, zoom: zoom)
 				})
 			} else {
 				fpsLabel.showFPS = false
@@ -720,7 +720,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			   let lon = UserPrefs.shared.view_longitude.value,
 			   let scale = UserPrefs.shared.view_scale.value
 			{
-				mainView.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
+				viewPort.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
 				                         scale: scale)
 			} else {
 				let rc = OSMRect(layer.bounds)
@@ -1277,7 +1277,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 		userOverrodeLocationPosition = false
 		if let location = locationManager.location {
-			mainView.centerOn(latLon: LatLon(location.coordinate))
+			viewPort.centerOn(latLon: LatLon(location.coordinate))
 		}
 	}
 
@@ -1285,12 +1285,12 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		switch gpsState {
 		case .HEADING:
 			gpsState = .LOCATION
-			mainView.rotateToNorth()
+			viewPort.rotateToNorth()
 		case .LOCATION:
 			gpsState = .HEADING
-			mainView.rotateToHeading()
+			viewPort.rotateToHeading()
 		case .NONE:
-			mainView.rotateToNorth()
+			viewPort.rotateToNorth()
 		}
 	}
 
@@ -1345,7 +1345,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			// rotate to new heading
 			let center = viewPort.screenCenterPoint()
 			let delta = -(heading + screenAngle)
-			mainView.rotate(by: CGFloat(delta), aroundScreenPoint: center)
+			viewPort.rotate(by: CGFloat(delta), aroundScreenPoint: center)
 		} else if !locationBallLayer.isHidden {
 			// rotate location ball
 			locationBallLayer.headingAccuracy = CGFloat(accuracy * (.pi / 180))
@@ -1420,9 +1420,9 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		{
 			// move view to center on new location
 			if userOverrodeLocationZoom {
-				mainView.centerOn(latLon: LatLon(newLocation.coordinate))
+				viewPort.centerOn(latLon: LatLon(newLocation.coordinate))
 			} else {
-				mainView.centerOn(latLon: LatLon(newLocation.coordinate),
+				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
 				                  metersWide: 20.0)
 			}
 		}
@@ -1451,7 +1451,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			mainView.setGpsState(GPS_STATE.NONE)
 			if !mainView.isLocationSpecified() {
 				// go home
-				mainView.centerOn(latLon: LatLon(latitude: 47.6858, longitude: -122.1917),
+				viewPort.centerOn(latLon: LatLon(latitude: 47.6858, longitude: -122.1917),
 				                  metersWide: 50.0)
 			}
 			var text = String.localizedStringWithFormat(
@@ -1504,10 +1504,10 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 		if viewStateZoomedOut {
 			// set location and zoom in
-			mainView.centerOn(latLon: loc, metersWide: 30.0)
+			viewPort.centerOn(latLon: loc, metersWide: 30.0)
 		} else if !bounds.contains(pushPin!.arrowPoint) {
 			// set location without changing zoom
-			mainView.centerOn(latLon: loc)
+			viewPort.centerOn(latLon: loc)
 		}
 	}
 
@@ -1745,7 +1745,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			let rc = myVc.viewWithTitle.frame
 			let pt = pushPin.arrowPoint
 			let delta = CGPoint(x: Double(bounds.midX - pt.x), y: Double(bounds.midY - rc.size.height / 2 - pt.y))
-			mainView.adjustOrigin(by: delta)
+			viewPort.adjustOrigin(by: delta)
 		}
 
 		// check if this is a fancy relation type we don't support well
@@ -1888,7 +1888,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 						// scale to 60 FPS assumption, need to move farther if framerate is slow
 						let sx = scrollx * CGFloat(duration) * 60.0
 						let sy = scrolly * CGFloat(duration) * 60.0
-						self.mainView.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
+						self.viewPort.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
 						// update position of blink layer
 						if let pt = self.blinkLayer?.position.withOffset(-sx, -sy) {
 							self.blinkLayer?.position = pt
@@ -2276,7 +2276,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			let newPin = CGPoint(x: bounds.midX,
 			                     y: (bounds.minY + bounds.center().y) / 2)
 			let translation = newPin.minus(pin)
-			mainView.adjustOrigin(by: translation)
+			viewPort.adjustOrigin(by: translation)
 		}
 	}
 
@@ -2351,12 +2351,12 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 				if enableBirdsEye, pan.numberOfTouches == 3 {
 					let translation = pan.translation(in: self)
 					let delta = Double(-translation.y / 40 / 180 * .pi)
-					mainView.rotateBirdsEye(by: delta)
+					viewPort.rotateBirdsEye(by: delta)
 					return
 				}
 			}
 			let translation = pan.translation(in: self)
-			mainView.adjustOrigin(by: translation)
+			viewPort.adjustOrigin(by: translation)
 			pan.setTranslation(CGPoint(x: 0, y: 0), in: self)
 		} else if pan.state == .ended || pan.state == .cancelled {
 			// cancelled occurs when we throw an error dialog
@@ -2378,7 +2378,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 						let t = timeOffset / duration // time [0..1]
 						translation.x = CGFloat(1 - t) * initialVelecity.x * CGFloat(displayLink.duration())
 						translation.y = CGFloat(1 - t) * initialVelecity.y * CGFloat(displayLink.duration())
-						self.mainView.adjustOrigin(by: translation)
+						self.viewPort.adjustOrigin(by: translation)
 					}
 				})
 			}
@@ -2414,7 +2414,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			let zoomCenter = pinch.location(in: self)
 #endif
 			let scale = pinch.scale / prevousPinchScale
-			mainView.adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
+			viewPort.adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 			prevousPinchScale = pinch.scale
 		case .ended:
 			updateMapMarkersFromServer(withDelay: 0, including: [])
@@ -2449,7 +2449,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			let delta = tapAndDrag.translation(in: self)
 			let scale = 1.0 - delta.y * 0.01
 			let zoomCenter = viewPort.screenCenterPoint()
-			mainView.adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
+			viewPort.adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 		case .ended:
 			updateMapMarkersFromServer(withDelay: 0, including: [])
 		default:
@@ -2544,7 +2544,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 				let centerPoint = rotationGesture.location(in: self)
 #endif
 				let angle = rotationGesture.rotation
-				mainView.rotate(by: angle, aroundScreenPoint: centerPoint)
+				viewPort.rotate(by: angle, aroundScreenPoint: centerPoint)
 				rotationGesture.rotation = 0.0
 
 				if gpsState == .HEADING {
