@@ -41,10 +41,12 @@ final class MainViewController: UIViewController,
 	@IBOutlet var aerialAlignmentButton: UIButton!
 	@IBOutlet var dPadView: DPadView!
 	@IBOutlet var progressIndicator: UIActivityIndicatorView!
-
-	@IBOutlet var mapView: MapView!
+	@IBOutlet var fpsLabel: FpsLabel!
+	@IBOutlet var userInstructionLabel: UILabel!
 	@IBOutlet var locationButton: UIButton!
 	@IBOutlet var flashLabel: UILabel!
+
+	@IBOutlet var mapView: MapView!
 
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
@@ -59,6 +61,135 @@ final class MainViewController: UIViewController,
 
 	@IBOutlet private var settingsButton: UIButton!
 	@IBOutlet private var displayButton: UIButton!
+
+	// MARK: Initialization
+
+	override func viewDidLoad() {
+		super.viewDidLoad()
+
+		// set up delegates
+		AppDelegate.shared.mapView = mapView
+		AppDelegate.shared.mainView = self
+
+		// configure views in MapView
+		mapView.setUpChildViews(with: self)
+
+		rulerView.mapView = mapView
+		//    _rulerView.layer.zPosition = Z_RULER;
+
+		// undo/redo buttons
+		updateUndoRedoButtonState()
+		updateUploadButtonState()
+
+		weak let weakSelf = self
+		mapView.editorLayer.mapData.addChangeCallback({
+			weakSelf?.updateUndoRedoButtonState()
+			weakSelf?.updateUploadButtonState()
+		})
+
+		setupAccessibility()
+
+		// long press for quick access to aerial imagery
+		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayButtonLongPressGesture(_:)))
+		displayButton.addGestureRecognizer(longPress)
+
+		// gesture recognizers
+		addNodeButton.addGestureRecognizer(mapView.addNodeButtonLongPressGestureRecognizer!)
+
+		// center button
+		centerOnGPSButton.isHidden = true
+
+		// dPadView
+		dPadView.delegate = mapView
+		dPadView.layer.zPosition = ZLAYER.D_PAD.rawValue
+		dPadView.isHidden = true
+
+		// Zoom to Edit message:
+		userInstructionLabel.layer.cornerRadius = 5
+		userInstructionLabel.layer.masksToBounds = true
+		userInstructionLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
+		userInstructionLabel.textColor = UIColor.white
+		userInstructionLabel.isHidden = true
+
+		// customize buttons
+		setButtonAppearances()
+
+		progressIndicator.color = UIColor.green
+
+		// tell our error display manager where to display messages
+		MessageDisplay.shared.topViewController = self
+		MessageDisplay.shared.flashLabel = flashLabel
+
+		mapView.updateAerialAttributionButton()
+
+		let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+		view.addGestureRecognizer(tap)
+
+		let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+		view.addGestureRecognizer(pan)
+
+		let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+		view.addGestureRecognizer(pinch)
+
+	}
+
+	@IBAction func handlePanGesture(_ pan: UIPanGestureRecognizer) {
+		mapView.handlePanGesture(pan)
+	}
+	@IBAction func handleTapGesture(_ tap: UITapGestureRecognizer) {
+		mapView.handleTapGesture(tap)
+	}
+	@IBAction func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
+		mapView.handlePinchGesture(pinch)
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		navigationController?.isNavigationBarHidden = true
+
+		// update button layout constraints
+		buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.mapViewButtonLayout.value
+			?? MainViewButtonLayout.buttonsOnRight.rawValue)
+
+		if #available(iOS 13.4, macCatalyst 13.0, *) {
+			// mouseover support for Mac Catalyst and iPad:
+			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
+			mapView.addGestureRecognizer(hover)
+
+#if targetEnvironment(macCatalyst)
+			// right-click support for Mac Catalyst
+			let rightClick = UIContextMenuInteraction(delegate: self)
+			mapView.addInteraction(rightClick)
+#else
+			// right-click support for iPad:
+			let rightClick = UITapGestureRecognizer(target: self, action: #selector(rightClick(_:)))
+			rightClick.allowedTouchTypes = [NSNumber(integerLiteral: UITouch.TouchType.indirect.rawValue)]
+			rightClick.buttonMaskRequired = .secondary
+			mapView.addGestureRecognizer(rightClick)
+#endif
+		}
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+#if USER_MOVABLE_BUTTONS
+		makeMovableButtons()
+#endif
+
+		// this is necessary because we need the frame to be set on the view before we set the previous lat/lon for the view
+		mapView.viewDidAppear()
+	}
+
+	func setupAccessibility() {
+		locationButton.accessibilityIdentifier = "location_button"
+		undoButton.accessibilityLabel = NSLocalizedString("Undo", comment: "")
+		redoButton.accessibilityLabel = NSLocalizedString("Redo", comment: "")
+		settingsButton.accessibilityLabel = NSLocalizedString("Settings", comment: "")
+		uploadButton.accessibilityLabel = NSLocalizedString("Upload your changes", comment: "")
+		displayButton.accessibilityLabel = NSLocalizedString("Display options", comment: "")
+	}
+
+	// MARK: Button state
 
 	func updateUndoRedoButtonState() {
 		guard undoButton != nil else { return } // during init it can be null
@@ -113,106 +244,6 @@ final class MainViewController: UIViewController,
 			multiplier: 1.0,
 			constant: isLeft ? abs(c.constant) : -abs(c.constant))
 		superview.addConstraint(c2)
-	}
-
-	// MARK: Initialization
-
-	override func viewDidLoad() {
-		super.viewDidLoad()
-
-		// set up delegates
-		AppDelegate.shared.mapView = mapView
-		AppDelegate.shared.mainView = self
-
-		// configure views in MapView
-		mapView.setUpChildViews(with: self)
-
-		rulerView.mapView = mapView
-		//    _rulerView.layer.zPosition = Z_RULER;
-
-		// undo/redo buttons
-		updateUndoRedoButtonState()
-		updateUploadButtonState()
-
-		weak let weakSelf = self
-		mapView.editorLayer.mapData.addChangeCallback({
-			weakSelf?.updateUndoRedoButtonState()
-			weakSelf?.updateUploadButtonState()
-		})
-
-		setupAccessibility()
-
-		// long press for quick access to aerial imagery
-		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayButtonLongPressGesture(_:)))
-		displayButton.addGestureRecognizer(longPress)
-
-		// gesture recognizers
-		addNodeButton.addGestureRecognizer(mapView.addNodeButtonLongPressGestureRecognizer!)
-
-		// center button
-		centerOnGPSButton.isHidden = true
-
-		// dPadView
-		dPadView.delegate = mapView
-		dPadView.layer.zPosition = ZLAYER.D_PAD.rawValue
-		dPadView.isHidden = true
-
-		// customize buttons
-		setButtonAppearances()
-
-		progressIndicator.color = UIColor.green
-
-		// tell our error display manager where to display messages
-		MessageDisplay.shared.topViewController = self
-		MessageDisplay.shared.flashLabel = flashLabel
-
-		mapView.updateAerialAttributionButton()
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		navigationController?.isNavigationBarHidden = true
-
-		// update button layout constraints
-		buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.mapViewButtonLayout.value
-			?? MainViewButtonLayout.buttonsOnRight.rawValue)
-
-		if #available(iOS 13.4, macCatalyst 13.0, *) {
-			// mouseover support for Mac Catalyst and iPad:
-			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
-			mapView.addGestureRecognizer(hover)
-
-#if targetEnvironment(macCatalyst)
-			// right-click support for Mac Catalyst
-			let rightClick = UIContextMenuInteraction(delegate: self)
-			mapView.addInteraction(rightClick)
-#else
-			// right-click support for iPad:
-			let rightClick = UITapGestureRecognizer(target: self, action: #selector(rightClick(_:)))
-			rightClick.allowedTouchTypes = [NSNumber(integerLiteral: UITouch.TouchType.indirect.rawValue)]
-			rightClick.buttonMaskRequired = .secondary
-			mapView.addGestureRecognizer(rightClick)
-#endif
-		}
-	}
-
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-#if USER_MOVABLE_BUTTONS
-		makeMovableButtons()
-#endif
-
-		// this is necessary because we need the frame to be set on the view before we set the previous lat/lon for the view
-		mapView.viewDidAppear()
-	}
-
-	func setupAccessibility() {
-		locationButton.accessibilityIdentifier = "location_button"
-		undoButton.accessibilityLabel = NSLocalizedString("Undo", comment: "")
-		redoButton.accessibilityLabel = NSLocalizedString("Redo", comment: "")
-		settingsButton.accessibilityLabel = NSLocalizedString("Settings", comment: "")
-		uploadButton.accessibilityLabel = NSLocalizedString("Upload your changes", comment: "")
-		displayButton.accessibilityLabel = NSLocalizedString("Display options", comment: "")
 	}
 
 	// MARK: Notifications

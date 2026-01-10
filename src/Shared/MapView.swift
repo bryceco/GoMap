@@ -106,8 +106,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	var windowPresented = false
 	var locationManagerExtraneousNotification = false
 
-	@IBOutlet var fpsLabel: FpsLabel!
-	@IBOutlet var userInstructionLabel: UILabel!
 	@IBOutlet var editToolbar: CustomSegmentedControl!
 
 	private var magnifyingGlass: MagnifyingGlass!
@@ -422,7 +420,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 			if enable {
 				// automaatically scroll view for frame rate testing
-				fpsLabel.showFPS = true
+				mainView.fpsLabel.showFPS = true
 
 				// this set's the starting center point
 				let startLatLon = LatLon(lon: -122.2060122462481, lat: 47.675389766549706)
@@ -445,7 +443,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 					myself.viewPort.centerOn(latLon: origin, zoom: zoom)
 				})
 			} else {
-				fpsLabel.showFPS = false
+				mainView.fpsLabel.showFPS = false
 				displayLink.removeName(AUTOSCROLL_DISPLAYLINK_NAME)
 			}
 		}
@@ -521,12 +519,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			selector: #selector(applicationWillTerminate(_:)),
 			name: UIApplication.willResignActiveNotification,
 			object: nil)
-
-		userInstructionLabel.layer.cornerRadius = 5
-		userInstructionLabel.layer.masksToBounds = true
-		userInstructionLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
-		userInstructionLabel.textColor = UIColor.white
-		userInstructionLabel.isHidden = true
 
 		locationManagerExtraneousNotification = true // flag that we're going to receive a bogus notification from CL
 		locationManager.delegate = self
@@ -1174,9 +1166,9 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			basemapLayer.isHidden = false
 		}
 
-		userInstructionLabel.isHidden = (state != .EDITOR && state != .EDITORAERIAL) || !zoomedOut
-		if !userInstructionLabel.isHidden {
-			userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
+		mainView.userInstructionLabel.isHidden = (state != .EDITOR && state != .EDITORAERIAL) || !zoomedOut
+		if !mainView.userInstructionLabel.isHidden {
+			mainView.userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
 		}
 
 		quadDownloadLayer?.isHidden = editorLayer.isHidden
@@ -2336,7 +2328,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		return true
 	}
 
-	@objc func handlePanGesture(_ pan: UIPanGestureRecognizer) {
+	@IBAction func handlePanGesture(_ pan: UIPanGestureRecognizer) {
 		userOverrodeLocationPosition = true
 
 		if pan.state == .began {
@@ -2394,7 +2386,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	// we need to track the previous scale
 	var prevousPinchScale = 0.0
 
-	@objc func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
+	@IBAction func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
 		switch pinch.state {
 		case .began:
 			prevousPinchScale = 1.0
@@ -2458,7 +2450,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	}
 
 	/// Invoked to select an object on the screen
-	@IBAction func screenTapGesture(_ tap: UITapGestureRecognizer) {
+	@IBAction func handleTapGesture(_ tap: UITapGestureRecognizer) {
 		switch tap.state {
 		case .ended:
 			// we don't want the initial tap of a tap-and-drag to change object selection

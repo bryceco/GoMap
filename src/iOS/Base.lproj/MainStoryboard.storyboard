@@ -24,10 +24,7 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outlet property="editToolbar" destination="R2j-Xq-Q3E" id="Ruo-Y4-9zI"/>
-                                    <outlet property="fpsLabel" destination="9t5-wq-j1u" id="3lK-so-dSY"/>
                                     <outlet property="statusBarBackground" destination="uDR-wZ-Dsb" id="8pj-zQ-PCt"/>
-                                    <outlet property="userInstructionLabel" destination="N5Q-nV-TPG" id="z8L-Lc-jxy"/>
-                                    <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="LdR-vi-xJW"/>
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDR-wZ-Dsb" userLabel="Status Bar Blur" customClass="StatusBarGradient" customModule="Go_Map__" customModuleProvider="target">
@@ -356,10 +353,6 @@
                             <constraint firstItem="53z-ij-akY" firstAttribute="leading" secondItem="P70-Oz-du4" secondAttribute="leading" constant="10" id="yIe-bo-vcf"/>
                             <constraint firstItem="DFj-Vi-kBz" firstAttribute="centerY" secondItem="2Ka-IT-DQC" secondAttribute="centerY" id="ydk-KN-Rz7"/>
                         </constraints>
-                        <connections>
-                            <outletCollection property="gestureRecognizers" destination="0bZ-QH-3ce" appends="YES" id="qRj-Ec-HPc"/>
-                            <outletCollection property="gestureRecognizers" destination="OlO-FJ-kfn" appends="YES" id="9QG-zF-58T"/>
-                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="oh1-at-KwN"/>
                     <nil key="simulatedTopBarMetrics"/>
@@ -372,6 +365,7 @@
                         <outlet property="dPadView" destination="FM9-uI-awq" id="g1G-br-0Vd"/>
                         <outlet property="displayButton" destination="UQ6-Pa-U58" id="lto-1X-HyX"/>
                         <outlet property="flashLabel" destination="nU5-T2-ADn" id="lBg-Db-pV1"/>
+                        <outlet property="fpsLabel" destination="9t5-wq-j1u" id="We8-om-6Cr"/>
                         <outlet property="helpButton" destination="TnL-YC-BCg" id="Hq9-at-1I1"/>
                         <outlet property="locationButton" destination="rdp-7O-8Ad" id="fnP-To-Zhg"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
@@ -383,31 +377,13 @@
                         <outlet property="undoButton" destination="gwJ-lB-zMc" id="hH3-DO-Cny"/>
                         <outlet property="undoRedoView" destination="yPg-PO-9HK" id="Asd-6X-Isa"/>
                         <outlet property="uploadButton" destination="YRw-Aj-GwS" id="4Vd-GX-cdu"/>
+                        <outlet property="userInstructionLabel" destination="N5Q-nV-TPG" id="Vyf-0j-ia3"/>
                         <segue destination="wrG-56-yuW" kind="modal" identifier="NotesSegue" id="ROf-ZO-hu1"/>
                         <segue destination="rzX-ca-ESu" kind="modal" identifier="BingMetadataSegue" id="MvO-jp-eEt"/>
                         <segue destination="Dsa-9O-Cca" kind="modal" identifier="poiSegue" id="GP1-Ol-g7i"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="10" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer cancelsTouchesInView="NO" minimumNumberOfTouches="1" id="0bZ-QH-3ce">
-                    <scrollTypes key="allowedScrollTypesMask" continuous="YES"/>
-                    <connections>
-                        <action selector="handlePanGesture:" destination="fss-Ag-fKJ" id="tOw-4b-9rt"/>
-                        <outlet property="delegate" destination="fss-Ag-fKJ" id="J71-B4-4YV"/>
-                    </connections>
-                </panGestureRecognizer>
-                <pinchGestureRecognizer cancelsTouchesInView="NO" id="Y1a-yM-KYa">
-                    <connections>
-                        <action selector="handlePinchGesture:" destination="fss-Ag-fKJ" id="fuY-va-HHI"/>
-                        <outlet property="delegate" destination="fss-Ag-fKJ" id="Und-5d-rjJ"/>
-                    </connections>
-                </pinchGestureRecognizer>
-                <tapGestureRecognizer cancelsTouchesInView="NO" id="OlO-FJ-kfn" userLabel="Tap Gesture Recognizer - Single">
-                    <connections>
-                        <action selector="screenTapGesture:" destination="fss-Ag-fKJ" id="ras-bV-QZu"/>
-                        <outlet property="delegate" destination="fss-Ag-fKJ" id="hxv-uP-kPk"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-1838.9312977099237" y="-164.08450704225353"/>
         </scene>
