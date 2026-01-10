@@ -288,6 +288,9 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 			// We moved to a new location so update markers
 			updateMapMarkerButtonPositions()
+
+			// This does a more expensive update, but debounced
+			updateMapMarkersFromServer(withDelay: 0, including: [])
 		}
 	}
 
@@ -534,21 +537,11 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		longPress.delegate = self
 		addGestureRecognizer(longPress)
 
-		// two-finger rotation
+		// two-finger rotation of OSM objects
 		objectRotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotationGesture(_:)))
 		objectRotationGesture.delegate = self
 		objectRotationGesture.isEnabled = false // disabled until needed
 		addGestureRecognizer(objectRotationGesture)
-
-		if #available(iOS 13.4, macCatalyst 13.4, *) {
-			// pan gesture to recognize mouse-wheel scrolling (zoom) on iPad and Mac Catalyst
-			let scrollWheelGesture = UIPanGestureRecognizer(
-				target: self,
-				action: #selector(handleScrollWheelGesture(_:)))
-			scrollWheelGesture.allowedScrollTypesMask = .discrete
-			scrollWheelGesture.maximumNumberOfTouches = 0
-			addGestureRecognizer(scrollWheelGesture)
-		}
 
 		// magnifying glass
 		magnifyingGlass = MagnifyingGlass(sourceView: self, radius: 70.0, scale: 2.0)
@@ -2330,44 +2323,10 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 					}
 				})
 			}
-			updateMapMarkersFromServer(withDelay: CGFloat(duration), including: [])
 		} else if pan.state == .failed {
 			DLog("pan gesture failed")
 		} else {
 			DLog("pan gesture \(pan.state)")
-		}
-	}
-
-	// unfortunately macCatalyst does't handle setting pinch.scale correctly, so
-	// we need to track the previous scale
-	var prevousPinchScale = 0.0
-
-	@IBAction func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
-		switch pinch.state {
-		case .began:
-			prevousPinchScale = 1.0
-			fallthrough
-		case .changed:
-			mainView.userOverrodeLocationZoom = true
-
-			DisplayLink.shared.removeName(DisplayLinkPanning)
-
-#if targetEnvironment(macCatalyst)
-			// On Mac we want to zoom around the screen center, not the cursor.
-			// This is better determined by testing for indirect touches, but
-			// that information isn't exposed by the gesture recognizer.
-			// If we're zooming via mouse then we'll follow the zoom path, not the pinch path.
-			let zoomCenter = crossHairs.position
-#else
-			let zoomCenter = pinch.location(in: self)
-#endif
-			let scale = pinch.scale / prevousPinchScale
-			viewPort.adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
-			prevousPinchScale = pinch.scale
-		case .ended:
-			updateMapMarkersFromServer(withDelay: 0, including: [])
-		default:
-			break
 		}
 	}
 
@@ -2399,7 +2358,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			let zoomCenter = viewPort.screenCenterPoint()
 			viewPort.adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 		case .ended:
-			updateMapMarkersFromServer(withDelay: 0, including: [])
+			break
 		default:
 			break
 		}
@@ -2460,23 +2419,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	}
 
 	func updateSpeechBalloonPosition() {}
-
-	// MARK: Mouse movment
-
-	@objc func handleScrollWheelGesture(_ pan: UIPanGestureRecognizer) {
-		if pan.state == .changed {
-			let delta = pan.translation(in: self)
-			var center = pan.location(in: self)
-			center.y -= delta.y
-			let zoom = delta.y >= 0 ? (1000.0 + delta.y) / 1000.0 : 1000.0 / (1000.0 - delta.y)
-			mainView.adjustZoom(by: zoom, aroundScreenPoint: center)
-		}
-	}
-
-	func rightClick(atLocation location: CGPoint) {
-		// right-click is equivalent to holding + and clicking
-		editorLayer.addNode(at: location)
-	}
 }
 
 // MARK: EditorMapLayerOwner delegate methods

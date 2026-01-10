@@ -182,14 +182,22 @@ final class MainViewController: UIViewController,
 #if targetEnvironment(macCatalyst)
 			// right-click support for Mac Catalyst
 			let rightClick = UIContextMenuInteraction(delegate: self)
-			mapView.addInteraction(rightClick)
+			view.addInteraction(rightClick)
 #else
 			// right-click support for iPad:
-			let rightClick = UITapGestureRecognizer(target: self, action: #selector(rightClick(_:)))
+			let rightClick = UITapGestureRecognizer(target: self, action: #selector(handleRightClick(_:)))
 			rightClick.allowedTouchTypes = [NSNumber(integerLiteral: UITouch.TouchType.indirect.rawValue)]
 			rightClick.buttonMaskRequired = .secondary
-			mapView.addGestureRecognizer(rightClick)
+			view.addGestureRecognizer(rightClick)
 #endif
+
+			// pan gesture to recognize mouse-wheel scrolling (zoom) on iPad and Mac Catalyst
+			let scrollWheelGesture = UIPanGestureRecognizer(
+				target: self,
+				action: #selector(handleScrollWheelGesture(_:)))
+			scrollWheelGesture.allowedScrollTypesMask = .discrete
+			scrollWheelGesture.maximumNumberOfTouches = 0
+			view.addGestureRecognizer(scrollWheelGesture)
 		}
 	}
 
@@ -275,18 +283,24 @@ final class MainViewController: UIViewController,
 		// We were just displayed so update map
 	}
 
-	@objc func rightClick(_ recognizer: UIGestureRecognizer) {
-		let location = recognizer.location(in: mapView)
-		mapView.rightClick(atLocation: location)
-	}
-
 	@available(iOS 13.0, *)
 	func contextMenuInteraction(
 		_ interaction: UIContextMenuInteraction,
 		configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration?
 	{
-		mapView.rightClick(atLocation: location)
+		let location = interaction.location(in: mapView)
+		rightClick(at: location)
 		return nil
+	}
+
+	@objc func handleRightClick(_ recognizer: UIGestureRecognizer) {
+		let location = recognizer.location(in: mapView)
+		rightClick(at: location)
+	}
+
+	func rightClick(at location: CGPoint) {
+		// right-click is equivalent to holding + and clicking
+		mapView.editorLayer.addNode(at: location)
 	}
 
 	@objc func hover(_ recognizer: UIGestureRecognizer) {
@@ -324,10 +338,10 @@ final class MainViewController: UIViewController,
 		let size = view.bounds.size
 		let delta = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
 		switch key.keyCode {
-		case .keyboardRightArrow: mapView.adjustOrigin(by: CGPoint(x: -delta.x, y: 0))
-		case .keyboardLeftArrow: mapView.adjustOrigin(by: CGPoint(x: delta.x, y: 0))
-		case .keyboardDownArrow: mapView.adjustOrigin(by: CGPoint(x: 0, y: -delta.y))
-		case .keyboardUpArrow: mapView.adjustOrigin(by: CGPoint(x: 0, y: delta.y))
+		case .keyboardRightArrow: adjustOrigin(by: CGPoint(x: -delta.x, y: 0))
+		case .keyboardLeftArrow: adjustOrigin(by: CGPoint(x: delta.x, y: 0))
+		case .keyboardDownArrow: adjustOrigin(by: CGPoint(x: 0, y: -delta.y))
+		case .keyboardUpArrow: adjustOrigin(by: CGPoint(x: 0, y: delta.y))
 		default: break
 		}
 	}
@@ -766,8 +780,37 @@ final class MainViewController: UIViewController,
 		mapView.handleTapGesture(tap)
 	}
 
+	// unfortunately macCatalyst does't handle setting pinch.scale correctly, so
+	// we need to track the previous scale
+	var prevousPinchScale = 0.0
+
 	@IBAction func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
-		mapView.handlePinchGesture(pinch)
+		switch pinch.state {
+		case .began:
+			prevousPinchScale = 1.0
+			fallthrough
+		case .changed:
+			userOverrodeLocationZoom = true
+
+			DisplayLink.shared.removeName(DisplayLinkPanning)
+
+#if targetEnvironment(macCatalyst)
+			// On Mac we want to zoom around the screen center, not the cursor.
+			// This is better determined by testing for indirect touches, but
+			// that information isn't exposed by the gesture recognizer.
+			// If we're zooming via mouse then we'll follow the zoom path, not the pinch path.
+			let zoomCenter = screenCenterPoint()
+#else
+			let zoomCenter = pinch.location(in: mapView)
+#endif
+			let scale = pinch.scale / prevousPinchScale
+			adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
+			prevousPinchScale = pinch.scale
+		case .ended:
+			break
+		default:
+			break
+		}
 	}
 
 	@IBAction func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
@@ -784,7 +827,7 @@ final class MainViewController: UIViewController,
 			// On Mac we want to rotate around the screen center, not the cursor.
 			// This is better determined by testing for indirect touches, but
 			// that information isn't exposed by the gesture recognizer.
-			let centerPoint = crossHairs.position
+			let centerPoint = screenCenterPoint()
 #else
 			let centerPoint = rotationGesture.location(in: mapView)
 #endif
@@ -804,6 +847,16 @@ final class MainViewController: UIViewController,
 
 	@objc func handleTapAndDragGesture(_ tapAndDrag: TapAndDragGesture) {
 		mapView.handleTapAndDragGesture(tapAndDrag)
+	}
+
+	@objc func handleScrollWheelGesture(_ pan: UIPanGestureRecognizer) {
+		if pan.state == .changed {
+			let delta = pan.translation(in: mapView)
+			var center = pan.location(in: mapView)
+			center.y -= delta.y
+			let zoom = delta.y >= 0 ? (1000.0 + delta.y) / 1000.0 : 1000.0 / (1000.0 - delta.y)
+			adjustZoom(by: zoom, aroundScreenPoint: center)
+		}
 	}
 
 	@objc func plusButtonLongPressHandler(_ recognizer: UILongPressGestureRecognizer) {
