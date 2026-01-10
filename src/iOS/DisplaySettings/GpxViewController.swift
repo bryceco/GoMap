@@ -476,18 +476,18 @@ class GpxViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if indexPath.section == SECTION_ACTIVE_TRACK {
 			// active track
-			let mapView = AppDelegate.shared.mapView!
-			let gpxLayer = mapView.gpxLayer!
+			let mainView = AppDelegate.shared.mainView!
+			let gpxLayer = mainView.mapView.gpxLayer!
 			gpxLayer.selectedTrack = gpxLayer.activeTrack
 			if let trackPt = gpxLayer.selectedTrack?.center() {
-				mapView.centerOn(latLon: trackPt, metersWide: 20.0)
+				mainView.centerOn(latLon: trackPt, metersWide: 20.0)
 			}
 			navigationController?.dismiss(animated: true)
 		} else if indexPath.section == SECTION_CONFIGURE {
 			// configuration
 		} else if indexPath.section == SECTION_PREVIOUS_TRACKS {
-			let mapView = AppDelegate.shared.mapView!
-			let gpxLayer = mapView.gpxLayer!
+			let mainView = AppDelegate.shared.mainView!
+			let gpxLayer = mainView.mapView.gpxLayer!
 			if indexPath.row == gpxLayer.previousTracks.count {
 				if #available(iOS 14.0, *) {
 					doImportGPX()
@@ -498,7 +498,7 @@ class GpxViewController: UITableViewController {
 			let track = gpxLayer.previousTracks[indexPath.row]
 			gpxLayer.selectedTrack = track
 			if let center = track.center() {
-				mapView.centerOn(latLon: center)
+				mainView.centerOn(latLon: center)
 			}
 			AppDelegate.shared.mapView.displayGpxLogs = true
 			navigationController?.dismiss(animated: true)

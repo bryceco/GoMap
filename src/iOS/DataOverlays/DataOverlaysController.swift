@@ -125,10 +125,10 @@ class DataOverlaysController: UITableViewController {
 					indexPath.row < geoJsonList.count,
 					let geoJson = try? GeoJSONFile(url: geoJsonList[indexPath.row].url),
 					let latLon = geoJson.firstPoint(),
-					let mapView = AppDelegate.shared.mapView
+					let mainView = AppDelegate.shared.mainView
 				else { return }
 				self.dismiss(animated: true)
-				mapView.centerOn(latLon: latLon, metersWide: 20.0)
+				mainView.centerOn(latLon: latLon, metersWide: 20.0)
 			}
 		}
 	}

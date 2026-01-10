@@ -58,6 +58,13 @@ struct GeoJSONFeature: Decodable {
 		self.properties = properties
 	}
 
+	init() {
+		type = "Feature"
+		id = nil
+		geometry = nil
+		properties = nil
+	}
+
 	init(from decoder: Decoder) throws {
 		enum CodingKeys: String, CodingKey {
 			case type
@@ -191,32 +198,32 @@ struct GeoJSONGeometry: Codable {
 
 		private init(pointJSON json: Any) throws {
 			guard let nsPoints = json as? [NSNumber] else { throw GeoJsonError.invalidDataShapeForType }
-			self = .point(points: try LatLon(array: nsPoints))
+			self = try .point(points: LatLon(array: nsPoints))
 		}
 
 		private init(multiPointJSON json: Any) throws {
 			guard let nsPoints = json as? [[NSNumber]] else { throw GeoJsonError.invalidDataShapeForType }
-			self = .multiPoint(points: try nsPoints.map { try LatLon(array: $0) })
+			self = try .multiPoint(points: nsPoints.map { try LatLon(array: $0) })
 		}
 
 		private init(lineStringJSON json: Any) throws {
 			guard let nsPoints = json as? [[NSNumber]] else { throw GeoJsonError.invalidDataShapeForType }
-			self = .lineString(points: try nsPoints.map { try LatLon(array: $0) })
+			self = try .lineString(points: nsPoints.map { try LatLon(array: $0) })
 		}
 
 		private init(multiLineStringJSON json: Any) throws {
 			guard let nsPoints = json as? [[[NSNumber]]] else { throw GeoJsonError.invalidDataShapeForType }
-			self = .multiLineString(points: try nsPoints.map { try $0.map { try LatLon(array: $0) }})
+			self = try .multiLineString(points: nsPoints.map { try $0.map { try LatLon(array: $0) }})
 		}
 
 		private init(polygonJSON json: Any) throws {
 			guard let nsPoints = json as? [[[NSNumber]]] else { throw GeoJsonError.invalidDataShapeForType }
-			self = .polygon(points: try nsPoints.map { try $0.map { try LatLon(array: $0) }})
+			self = try .polygon(points: nsPoints.map { try $0.map { try LatLon(array: $0) }})
 		}
 
 		private init(multiPolygonJSON json: Any) throws {
 			guard let nsPoints = json as? [[[[NSNumber]]]] else { throw GeoJsonError.invalidDataShapeForType }
-			self = .multiPolygon(points: try nsPoints.map { try $0.map { try $0.map { try LatLon(array: $0) }}})
+			self = try .multiPolygon(points: nsPoints.map { try $0.map { try $0.map { try LatLon(array: $0) }}})
 		}
 
 		private init(geometryCollectionJSON json: Any) throws {
@@ -266,7 +273,7 @@ struct GeoJSONGeometry: Codable {
 	}
 
 	init(geometry: [String: Any]) throws {
-		self.init(geometry: try GeometryType(json: geometry))
+		try self.init(geometry: GeometryType(json: geometry))
 	}
 
 	init?(geometry: [String: Any]?) throws {
@@ -276,7 +283,7 @@ struct GeoJSONGeometry: Codable {
 
 	init(from decoder: Decoder) throws {
 		do {
-			self.init(geometry: try GeometryType(from: decoder))
+			try self.init(geometry: GeometryType(from: decoder))
 		} catch {
 			print("\(error)")
 			throw error

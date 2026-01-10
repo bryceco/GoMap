@@ -44,7 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func setMapLocation(_ location: MapLocation) {
 		MainActor.runAfter(nanoseconds: 100_000000) {
-			AppDelegate.shared.mapView.centerOn(location)
+			AppDelegate.shared.mainView.centerOn(location)
 		}
 	}
 
@@ -75,13 +75,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func openUrl(_ url: URL) -> Bool {
 		let localizedGPX = NSLocalizedString("GPX", comment: "The name of a GPX file")
 		let mapView = AppDelegate.shared.mapView!
+		let mainView = AppDelegate.shared.mainView!
 
 		func openGPX(data: Data, name: String) {
 			do {
 				let track = try mapView.gpxLayer.loadGPXData(data, name: name)
 				if let center = track?.center() {
 					mapView.displayGpxLogs = true // ensure GPX tracks are visible
-					mapView.centerOn(latLon: center, metersWide: 20.0)
+					mainView.centerOn(latLon: center, metersWide: 20.0)
 					mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 				}
 			} catch {
@@ -130,7 +131,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 						let geo = try GeoJSONFile(data: data)
 						try geoJsonList.add(name: url.lastPathComponent, data: data)
 						if let loc = geo.firstPoint() {
-							mapView.centerOn(latLon: loc)
+							mainView.centerOn(latLon: loc)
 							mapView.displayDataOverlayLayers = true
 						}
 					} catch {

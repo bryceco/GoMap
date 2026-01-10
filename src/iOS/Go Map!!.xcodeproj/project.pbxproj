@@ -128,6 +128,7 @@
 		02BB355B29B6757C00FB52E5 /* NsiLogoDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */; };
 		02BB355D29B6A55D00FB52E5 /* OsmUserPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
+		02C35E162F12E0AF00BE5948 /* MapViewPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C35E152F12E0AF00BE5948 /* MapViewPort.swift */; };
 		02C456A829C8DB410077E3FD /* TagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C456A729C8DB410077E3FD /* TagInfo.swift */; };
 		02C8C56526F446FD003B0122 /* MapMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56426F446FD003B0122 /* MapMarker.swift */; };
 		02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56626F44728003B0122 /* OsmNoteMarker.swift */; };
@@ -472,6 +473,7 @@
 		02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Go Map!!.entitlements"; path = "Go Map!!/Go Map!!.entitlements"; sourceTree = "<group>"; };
 		02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NsiLogoDatabase.swift; sourceTree = "<group>"; };
 		02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmUserPrefs.swift; sourceTree = "<group>"; };
+		02C35E152F12E0AF00BE5948 /* MapViewPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewPort.swift; sourceTree = "<group>"; };
 		02C456A729C8DB410077E3FD /* TagInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagInfo.swift; sourceTree = "<group>"; };
 		02C8C56426F446FD003B0122 /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
 		02C8C56626F44728003B0122 /* OsmNoteMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNoteMarker.swift; sourceTree = "<group>"; };
@@ -819,7 +821,6 @@
 				02F0297A2BFAFF2E002F7956 /* DataOverlays */,
 				64D74BF02253DF39004FFD20 /* Direction */,
 				0244399629CA9A28009FC2D0 /* DisplaySettings */,
-				02572B722F10D8C400216EE3 /* MessageDisplay.swift */,
 				02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */,
 				02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */,
 				02CBF3C72BE85829000DE2AD /* GpxTrackWidgetManager.swift */,
@@ -829,7 +830,9 @@
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
 				C3004F51263A6CA5006BF313 /* MainViewController.swift */,
 				022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */,
+				02C35E152F12E0AF00BE5948 /* MapViewPort.swift */,
 				0293FEB2299D84F7002EED90 /* MaxarAerial.secret */,
+				02572B722F10D8C400216EE3 /* MessageDisplay.swift */,
 				C3D096D7263EAE1E00E3B129 /* MyApplication.swift */,
 				C3004F4C263A6306006BF313 /* NominatimViewController.swift */,
 				C341E1592639DF210022E983 /* NotesTableViewController.swift */,
@@ -1556,6 +1559,7 @@
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */,
 				02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */,
+				02C35E162F12E0AF00BE5948 /* MapViewPort.swift in Sources */,
 				02572B732F10D8C400216EE3 /* MessageDisplay.swift in Sources */,
 				02969EBA2DF630A6003BA34A /* Array+Extension.swift in Sources */,
 				02505C5929A52EA80078D60D /* QuestDefinitionWithFilters.swift in Sources */,

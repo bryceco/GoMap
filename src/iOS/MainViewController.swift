@@ -22,17 +22,6 @@ protocol MapViewProgress {
 	func progressDecrement()
 }
 
-// Allows other layers of the map to view changes to the map view
-protocol MapViewPort: AnyObject, MapViewProgress {
-	var mapTransform: MapTransform { get }
-	func metersPerPixel() -> Double
-	func pixelsPerDegree() -> OSMSize
-	func screenCenterPoint() -> CGPoint
-	func screenCenterLatLon() -> LatLon
-	func boundingMapRectForScreen() -> OSMRect
-	func boundingLatLonForScreen() -> OSMRect
-}
-
 final class MainViewController: UIViewController,
 	UIActionSheetDelegate, UIGestureRecognizerDelegate,
 	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate,
@@ -131,11 +120,12 @@ final class MainViewController: UIViewController,
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		mapView.setUpChildViews(with: self)
-
 		// set up delegates
 		AppDelegate.shared.mapView = mapView
 		AppDelegate.shared.mainView = self
+
+		// configure views in MapView
+		mapView.setUpChildViews(with: self)
 
 		rulerView.mapView = mapView
 		//    _rulerView.layer.zPosition = Z_RULER;
@@ -839,36 +829,5 @@ final class MainViewController: UIViewController,
 }
 
 extension MainViewController: MapViewPort {
-	func metersPerPixel() -> Double {
-		return mapTransform.metersPerPixel(atScreenPoint: mapView.crossHairs.position)
-	}
-
-	func pixelsPerDegree() -> OSMSize {
-		let metersPerPixel = metersPerPixel()
-
-		// Get meters per degree at this latitude
-		let metersPerDegree = MetersPerDegreeAt(latitude: screenCenterLatLon().lat)
-
-		return OSMSize(width: metersPerDegree.x / metersPerPixel,
-		               height: metersPerDegree.y / metersPerPixel)
-	}
-
-	func boundingMapRectForScreen() -> OSMRect {
-		let rc = OSMRect(mapView.layer.bounds)
-		return mapTransform.boundingMapRect(forScreenRect: rc)
-	}
-
-	func boundingLatLonForScreen() -> OSMRect {
-		let rc = boundingMapRectForScreen()
-		let rect = MapTransform.latLon(forMapRect: rc)
-		return rect
-	}
-
-	func screenCenterLatLon() -> LatLon {
-		return mapTransform.latLon(forScreenPoint: screenCenterPoint())
-	}
-
-	func screenCenterPoint() -> CGPoint {
-		return mapView.bounds.center()
-	}
+	// pick up all the functions defined in the protocol automatically
 }

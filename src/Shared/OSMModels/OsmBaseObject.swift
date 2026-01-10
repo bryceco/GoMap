@@ -458,10 +458,10 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	// MARK: Update properties with refreshed data from server
 
 	func serverUpdate(ident: OsmIdentifier,
-					  version: Int,
-					  changeset: OsmIdentifier,
-					  timestamp: Date,
-					  user: String?)
+	                  version: Int,
+	                  changeset: OsmIdentifier,
+	                  timestamp: Date,
+	                  user: String?)
 	{
 		DbgAssert((self.ident < 0 && ident > 0) || self.ident == ident)
 		self.ident = ident
@@ -713,7 +713,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				objects: [parentRelation, undo!])
 		}
 #if DEBUG
-		if let current = AppDelegate.shared.mapView?.editorLayer.mapData.relations[parentRelation.ident] {
+		if let current = AppDelegate.shared.mapView?.editorLayer?.mapData.relations[parentRelation.ident] {
 			DbgAssert(current === parentRelation)
 		}
 #endif
