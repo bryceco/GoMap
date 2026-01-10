@@ -78,7 +78,7 @@ class TurnRestrictController: UIViewController {
 			fromWay = allRelations.last?.member(byRole: "from")?.obj as? OsmWay
 		} else {
 			// no relations or multiple relations, so select highway already selected by user
-			let editor = AppDelegate.shared.mapView.editorLayer
+			let editor = AppDelegate.shared.mapView.editorLayer!
 			fromWay = editor.selectedWay
 		}
 		if let fromWay = fromWay {
@@ -319,7 +319,7 @@ class TurnRestrictController: UIViewController {
 	func select(fromHighway selectedHwy: TurnRestrictHwyView) {
 		selectedFromHwy = selectedHwy
 
-		let editor = AppDelegate.shared.mapView.editorLayer
+		let editor = AppDelegate.shared.mapView.editorLayer!
 		editor.selectedWay = selectedHwy.wayObj
 
 		selectedHwy.wayObj = selectedHwy.connectedNode.turnRestrictionParentWay

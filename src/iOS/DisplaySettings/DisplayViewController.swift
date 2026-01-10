@@ -33,14 +33,14 @@ class DisplayViewController: UITableViewController {
 			title: NSLocalizedString("Left side", comment: "Left-hand side of screen"),
 			style: .default,
 			handler: { _ in
-				AppDelegate.shared.mapView.mainViewController.buttonLayout = .buttonsOnLeft
+				AppDelegate.shared.mainView.buttonLayout = .buttonsOnLeft
 				self.setButtonLayoutTitle()
 			})
 		let right = UIAlertAction(
 			title: NSLocalizedString("Right side", comment: "Right-hand side of screen"),
 			style: .default,
 			handler: { _ in
-				AppDelegate.shared.mapView.mainViewController.buttonLayout = .buttonsOnRight
+				AppDelegate.shared.mainView.buttonLayout = .buttonsOnRight
 				self.setButtonLayoutTitle()
 			})
 #if targetEnvironment(macCatalyst)
@@ -101,7 +101,7 @@ class DisplayViewController: UITableViewController {
 	}
 
 	func setButtonLayoutTitle() {
-		let onLeft = AppDelegate.shared.mapView.mainViewController.buttonLayout == MainViewButtonLayout.buttonsOnLeft
+		let onLeft = AppDelegate.shared.mainView.buttonLayout == MainViewButtonLayout.buttonsOnLeft
 		let title = onLeft
 			? NSLocalizedString("Left", comment: "")
 			: NSLocalizedString("Right", comment: "")

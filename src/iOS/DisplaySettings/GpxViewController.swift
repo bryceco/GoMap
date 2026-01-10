@@ -49,7 +49,7 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 				                                          applicationActivities: nil)
 				controller.completionWithItemsHandler = { _, completed, _, _ in
 					if completed {
-						let gpxLayer = AppDelegate.shared.mapView.gpxLayer
+						let gpxLayer = AppDelegate.shared.mapView.gpxLayer!
 						gpxLayer.markTrackUploaded(self.gpxTrack)
 						self.tableView?.tableView.reloadData()
 					}
@@ -220,7 +220,7 @@ class GpxViewController: UITableViewController {
 						self.present(success, animated: true)
 
 						// mark track as uploaded in UI
-						let gpxLayer = AppDelegate.shared.mapView.gpxLayer
+						let gpxLayer = AppDelegate.shared.mapView.gpxLayer!
 						gpxLayer.markTrackUploaded(track)
 						self.tableView?.reloadData()
 					}
@@ -333,7 +333,7 @@ class GpxViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let mapView = AppDelegate.shared.mapView!
-		let gpxLayer = mapView.gpxLayer
+		let gpxLayer = mapView.gpxLayer!
 
 		if indexPath.section == SECTION_CONFIGURE {
 			// configuration section
@@ -449,7 +449,7 @@ class GpxViewController: UITableViewController {
 	{
 		if editingStyle == .delete {
 			// Delete the row from the data source
-			let gpxLayer = AppDelegate.shared.mapView.gpxLayer
+			let gpxLayer = AppDelegate.shared.mapView.gpxLayer!
 			let track = gpxLayer.previousTracks[indexPath.row]
 			gpxLayer.delete(track)
 
@@ -477,7 +477,7 @@ class GpxViewController: UITableViewController {
 		if indexPath.section == SECTION_ACTIVE_TRACK {
 			// active track
 			let mapView = AppDelegate.shared.mapView!
-			let gpxLayer = mapView.gpxLayer
+			let gpxLayer = mapView.gpxLayer!
 			gpxLayer.selectedTrack = gpxLayer.activeTrack
 			if let trackPt = gpxLayer.selectedTrack?.center() {
 				mapView.centerOn(latLon: trackPt, metersWide: 20.0)
@@ -487,7 +487,7 @@ class GpxViewController: UITableViewController {
 			// configuration
 		} else if indexPath.section == SECTION_PREVIOUS_TRACKS {
 			let mapView = AppDelegate.shared.mapView!
-			let gpxLayer = mapView.gpxLayer
+			let gpxLayer = mapView.gpxLayer!
 			if indexPath.row == gpxLayer.previousTracks.count {
 				if #available(iOS 14.0, *) {
 					doImportGPX()
@@ -542,7 +542,7 @@ extension GpxViewController: UIDocumentPickerDelegate {
 	{
 		for url in urls {
 			do {
-				let gpxLayer = AppDelegate.shared.mapView.gpxLayer
+				let gpxLayer = AppDelegate.shared.mapView.gpxLayer!
 				let data = try Data(contentsOf: url)
 				try gpxLayer.loadGPXData(data, name: url.lastPathComponent)
 			} catch {

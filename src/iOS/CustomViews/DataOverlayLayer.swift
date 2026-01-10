@@ -13,8 +13,8 @@ import UIKit
 
 // A layer in MapView that displays custom data (GeoJSON, etc) that the user wants to load
 final class DataOverlayLayer: DrawingLayer, DrawingLayerDelegate {
-	override init(mapViewPort: MapViewPort) {
-		super.init(mapViewPort: mapViewPort)
+	override init(viewPort: MapViewPort) {
+		super.init(viewPort: viewPort)
 		geojsonDelegate = self
 	}
 

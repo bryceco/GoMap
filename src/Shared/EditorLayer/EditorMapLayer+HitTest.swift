@@ -61,17 +61,14 @@ extension EditorMapLayer {
 	private static func osmHitTestEnumerate(
 		_ point: CGPoint,
 		radius: CGFloat,
-		owner: EditorMapLayerOwner,
+		viewPort: MapViewPort,
 		objects: ContiguousArray<OsmBaseObject>,
 		testNodes: Bool,
 		ignoreList: [OsmBaseObject],
 		block: (_ obj: OsmBaseObject, _ dist: CGFloat, _ segment: Int) -> Void)
 	{
-		let location = owner.mapTransform.latLon(forScreenPoint: point)
-		let viewCoord = owner.boundingLatLonForScreen()
-		let pixelsPerDegree = OSMSize(width: Double(owner.bounds.size.width) / viewCoord.size.width,
-		                              height: Double(owner.bounds.size.height) / viewCoord.size.height)
-
+		let location = viewPort.mapTransform.latLon(forScreenPoint: point)
+		let pixelsPerDegree = viewPort.pixelsPerDegree()
 		let maxDegrees = OSMSize(width: Double(radius) / pixelsPerDegree.width,
 		                         height: Double(radius) / pixelsPerDegree.height)
 		let NODE_BIAS = 0.5 // make nodes appear closer so they can be selected
@@ -169,7 +166,7 @@ extension EditorMapLayer {
 		EditorMapLayer.osmHitTestEnumerate(
 			point,
 			radius: radius,
-			owner: owner,
+			viewPort: viewPort,
 			objects: shownObjects,
 			testNodes: isDragConnect,
 			ignoreList: ignoreList,
@@ -234,7 +231,7 @@ extension EditorMapLayer {
 		EditorMapLayer.osmHitTestEnumerate(
 			point,
 			radius: radius,
-			owner: owner,
+			viewPort: viewPort,
 			objects: shownObjects,
 			testNodes: true,
 			ignoreList: [],
@@ -267,7 +264,7 @@ extension EditorMapLayer {
 		var bestDist: CGFloat = 1_000000
 		EditorMapLayer.osmHitTestEnumerate(point,
 		                                   radius: radius,
-		                                   owner: owner,
+		                                   viewPort: viewPort,
 		                                   objects: ContiguousArray<OsmBaseObject>(selectedWay.nodes),
 		                                   testNodes: true,
 		                                   ignoreList: [],

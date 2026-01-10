@@ -34,7 +34,7 @@ enum MenuLocation {
 // MARK: EditorMapLayerOwner protocol
 
 // The UIView that hosts us.
-protocol EditorMapLayerOwner: UIView, MapViewPort, MapViewProgress {
+protocol EditorMapLayerOwner: UIView, MapViewProgress {
 	func pushpinView() -> PushPinView? // fetch the pushpin from owner
 	func removePin()
 	func placePushpin(at: CGPoint, object: OsmBaseObject?)
@@ -96,46 +96,46 @@ enum EDIT_ACTION: Int {
 		switch self {
 		case .ADDNOTE:
 			return (NSLocalizedString("Add Note", comment: "Edit action"),
-					UIImage(systemName: "note.text.badge.plus"))
+			        UIImage(systemName: "note.text.badge.plus"))
 		case .CIRCULARIZE:
 			return (NSLocalizedString("Make Circular", comment: "Edit action"),
-					UIImage(systemName: "circle"))
+			        UIImage(systemName: "circle"))
 		case .COPYTAGS:
 			return (NSLocalizedString("Copy Tags", comment: "Edit action"),
-					UIImage(systemName: "doc.on.doc"))
+			        UIImage(systemName: "doc.on.doc"))
 		case .CREATE_RELATION:
 			return (NSLocalizedString("Create Relation", comment: "Edit action"),
-					UIImage(systemName: "link.badge.plus"))
+			        UIImage(systemName: "link.badge.plus"))
 		case .DELETE:
 			return (NSLocalizedString("Delete", comment: "Edit action"),
-					UIImage(systemName: "trash"))
+			        UIImage(systemName: "trash"))
 		case .DISCONNECT:
 			return (NSLocalizedString("Disconnect", comment: "Edit action"),
-					UIImage(systemName: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right"))
+			        UIImage(systemName: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right"))
 		case .DUPLICATE:
 			return (NSLocalizedString("Duplicate", comment: "Edit action"),
-					UIImage(systemName: "plus.rectangle.on.rectangle"))
+			        UIImage(systemName: "plus.rectangle.on.rectangle"))
 		case .EDITTAGS:
 			return (NSLocalizedString("Tags", comment: "Edit action"),
-					UIImage(systemName: "square.and.pencil"))
+			        UIImage(systemName: "square.and.pencil"))
 		case .EXTRACTNODE:
 			return (NSLocalizedString("Extract Node", comment: "Edit action"),
-					UIImage(systemName: "tray.and.arrow.up"))
+			        UIImage(systemName: "tray.and.arrow.up"))
 		case .JOIN:
 			return (NSLocalizedString("Join", comment: "Edit action"),
-					UIImage(systemName: "arrow.merge"))
+			        UIImage(systemName: "arrow.merge"))
 		case .MORE:
 			return (NSLocalizedString("More...", comment: "Edit action"),
-					UIImage(systemName: "line.3.horizontal"))
+			        UIImage(systemName: "line.3.horizontal"))
 		case .PASTETAGS:
 			return (NSLocalizedString("Paste", comment: "Edit action"),
-					UIImage(systemName: "doc.on.clipboard"))
+			        UIImage(systemName: "doc.on.clipboard"))
 		case .RECTANGULARIZE:
 			return (NSLocalizedString("Make Rectangular", comment: "Edit action"),
-					UIImage(systemName: "rectangle"))
+			        UIImage(systemName: "rectangle"))
 		case .REVERSE:
 			return (NSLocalizedString("Reverse", comment: "Edit action"),
-					UIImage(systemName: "arrow.left.arrow.right"))
+			        UIImage(systemName: "arrow.left.arrow.right"))
 		case .RESTRICT:
 			return (abbreviated
 				? NSLocalizedString("Restrict", comment: "Edit action")
@@ -143,13 +143,13 @@ enum EDIT_ACTION: Int {
 				UIImage(systemName: "nosign"))
 		case .ROTATE:
 			return (NSLocalizedString("Rotate", comment: "Edit action"),
-					UIImage(systemName: "arrow.clockwise"))
+			        UIImage(systemName: "arrow.clockwise"))
 		case .SPLIT:
 			return (NSLocalizedString("Split", comment: "Edit action"),
-					UIImage(systemName: "scissors")!)
+			        UIImage(systemName: "scissors")!)
 		case .STRAIGHTEN:
 			return (NSLocalizedString("Straighten", comment: "Edit action"),
-					UIImage(systemName: "line.diagonal"))
+			        UIImage(systemName: "line.diagonal"))
 		}
 	}
 }
@@ -192,6 +192,7 @@ final class EditorMapLayer: CALayer {
 
 	let mapData: OsmMapData
 	let owner: EditorMapLayerOwner
+	let viewPort: MapViewPort
 	let display: MessageDisplay
 
 	var silentUndo = false // don't flash message about undo
@@ -199,8 +200,12 @@ final class EditorMapLayer: CALayer {
 	// Indicates that enough objects are on-screen that we might have to hide some objects
 	private(set) var atVisibleObjectLimit = false
 
-	init(owner: EditorMapLayerOwner, display: MessageDisplay) {
+	init(owner: EditorMapLayerOwner,
+	     viewPort: MapViewPort,
+	     display: MessageDisplay)
+	{
 		self.owner = owner
+		self.viewPort = viewPort
 		self.display = display
 
 		var t = CACurrentMediaTime()
@@ -262,14 +267,14 @@ final class EditorMapLayer: CALayer {
 		whiteText = true
 
 		// observe changes to screen
-		owner.mapTransform.onChange.subscribe(self) { [weak self]
+		viewPort.mapTransform.onChange.subscribe(self) { [weak self]
 			in self?.updateMapLocation()
 		}
 
 		OsmMapData.g_EditorMapLayerForArchive = self
 
 		mapData.undoContextForComment = { comment in
-			let location = Data.fromStruct(self.owner.mapTransform.transform)
+			let location = Data.fromStruct(self.viewPort.mapTransform.transform)
 			var dict: [String: Any] = [:]
 			dict["comment"] = comment
 			dict["location"] = location
@@ -313,9 +318,9 @@ final class EditorMapLayer: CALayer {
 				// since we don't record the pushpin location until after a drag has begun we need to re-center on the
 				// object:
 				var pt = NSCoder.cgPoint(for: pushpin)
-				let loc = self.owner.mapTransform.latLon(forScreenPoint: pt)
+				let loc = self.viewPort.mapTransform.latLon(forScreenPoint: pt)
 				let pos = primary.latLonOnObject(forLatLon: loc)
-				pt = self.owner.mapTransform.screenPoint(forLatLon: pos, birdsEye: true)
+				pt = self.viewPort.mapTransform.screenPoint(forLatLon: pos, birdsEye: true)
 				// place pushpin
 				self.owner.placePushpin(at: pt, object: primary)
 			} else {
@@ -338,6 +343,7 @@ final class EditorMapLayer: CALayer {
 	override init(layer: Any) {
 		let layer = layer as! EditorMapLayer
 		owner = layer.owner
+		viewPort = layer.viewPort
 		display = layer.display
 		mapData = layer.mapData
 		baseLayer = CATransformLayer() // not sure if we should provide the original or not?
@@ -454,11 +460,11 @@ final class EditorMapLayer: CALayer {
 			return
 		}
 
-		if owner.mapTransform.transform.a == 1.0 {
+		if viewPort.mapTransform.transform.a == 1.0 {
 			return // identity, we haven't been initialized yet
 		}
 
-		let box = owner.boundingLatLonForScreen()
+		let box = viewPort.boundingLatLonForScreen()
 		if box.size.height <= 0 || box.size.width <= 0 {
 			return
 		}
@@ -510,7 +516,7 @@ final class EditorMapLayer: CALayer {
 		let path = CGMutablePath()
 		var first = true
 		for node in way.nodes {
-			let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
+			let pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
 			if pt.x.isInfinite {
 				break
 			}
@@ -574,7 +580,7 @@ final class EditorMapLayer: CALayer {
 		var first = true
 
 		for node in way.nodes {
-			let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
+			let pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
 			let inside = viewRect.contains(pt)
 			defer {
 				prev = pt
@@ -1159,7 +1165,7 @@ final class EditorMapLayer: CALayer {
 
 		let pt = MapTransform.mapPoint(forLatLon: node.latLon)
 
-		let screenAngle = owner.mapTransform.transform.rotation()
+		let screenAngle = viewPort.mapTransform.transform.rotation()
 		layer.setAffineTransform(CGAffineTransform(rotationAngle: CGFloat(screenAngle)))
 
 		let radius: CGFloat = 30.0
@@ -1348,7 +1354,7 @@ final class EditorMapLayer: CALayer {
 				let nodes = object == selectedWay ? object.nodeSet() : []
 				for node in nodes {
 					let layer2 = CAShapeLayerWithProperties()
-					layer2.position = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
+					layer2.position = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
 					layer2.strokeColor = node == selectedNode ? selectedNodeColor.cgColor : nodeInWayColor.cgColor
 					layer2.fillColor = UIColor.clear.cgColor
 					layer2.lineWidth = 3.0
@@ -1382,7 +1388,7 @@ final class EditorMapLayer: CALayer {
 				}
 			} else if let node = object as? OsmNode {
 				// draw square around selected node
-				let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
+				let pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: false)
 
 				let layer = CAShapeLayerWithProperties()
 				var rect = CGRect(x: -MinIconSizeInPixels / 2,
@@ -1491,7 +1497,7 @@ final class EditorMapLayer: CALayer {
 	// MARK: Select objects and draw
 
 	func getVisibleObjects() -> ContiguousArray<OsmBaseObject> {
-		let box = owner.boundingLatLonForScreen()
+		let box = viewPort.boundingLatLonForScreen()
 		var a: ContiguousArray<OsmBaseObject> = []
 		a.reserveCapacity(4000)
 		mapData.enumerateObjects(inRegion: box, block: { obj in
@@ -1581,7 +1587,7 @@ final class EditorMapLayer: CALayer {
 			}
 		}
 
-		if owner.mapTransform.zoom() < 21.0 {
+		if viewPort.mapTransform.zoom() < 21.0 {
 			// sort from big to small objects, and remove excess objects
 			objects = RenderInfo.sortByPriority(list: objects, keepingFirst: objectLimit)
 		}
@@ -1607,7 +1613,7 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func layoutSublayersSafe() {
-		if let birdsEye = owner.mapTransform.birdsEye() {
+		if let birdsEye = viewPort.mapTransform.birdsEye() {
 			var t = CATransform3DIdentity
 			t.m34 = CGFloat(-1.0 / birdsEye.distance)
 			t = CATransform3DRotate(t, CGFloat(birdsEye.rotation), 1.0, 0, 0)
@@ -1663,9 +1669,9 @@ final class EditorMapLayer: CALayer {
 		CATransaction.setAnimationDuration(1.0)
 #endif
 
-		let tRotation = owner.mapTransform.rotation()
-		let tScale = CGFloat(owner.mapTransform.scale() / PATH_SCALING)
-		let pixelsPerMeter = 0.8 * 1.0 / owner.mapTransform.metersPerPixel(atScreenPoint: bounds.center())
+		let tRotation = viewPort.mapTransform.rotation()
+		let tScale = CGFloat(viewPort.mapTransform.scale() / PATH_SCALING)
+		let pixelsPerMeter = 0.8 * 1.0 / viewPort.mapTransform.metersPerPixel(atScreenPoint: bounds.center())
 
 		for object in shownObjects {
 			let layers = getShapeLayers(for: object)
@@ -1678,7 +1684,7 @@ final class EditorMapLayer: CALayer {
 				if props.is3D || (isShapeLayer && object.isNode() == nil) {
 					// way or area -- need to rotate and scale
 					if props.is3D {
-						guard let t = props.layerTransform3D(mapTransform: owner.mapTransform,
+						guard let t = props.layerTransform3D(mapTransform: viewPort.mapTransform,
 						                                     pixelsPerMeter: pixelsPerMeter)
 						else {
 							layer.removeFromSuperlayer()
@@ -1690,7 +1696,7 @@ final class EditorMapLayer: CALayer {
 							layer.borderWidth = props.lineWidth / tScale
 						}
 					} else {
-						let t = props.layerTransformFor(mapTransform: owner.mapTransform)
+						let t = props.layerTransformFor(mapTransform: viewPort.mapTransform)
 						layer.setAffineTransform(t)
 					}
 
@@ -1707,7 +1713,7 @@ final class EditorMapLayer: CALayer {
 						} else {
 							// its a label on a building or polygon
 							let rcMap = MapTransform.mapRect(forLatLonRect: object.boundingBox)
-							let rcScreen = owner.mapTransform.boundingScreenRect(forMapRect: rcMap)
+							let rcScreen = viewPort.mapTransform.boundingScreenRect(forMapRect: rcMap)
 							if layer.bounds.size.width >= 1.1 * rcScreen.size.width {
 								// text label is too big so hide it
 								layer.removeFromSuperlayer()
@@ -1722,7 +1728,7 @@ final class EditorMapLayer: CALayer {
 					}
 
 					let scale = Double(UIScreen.main.scale)
-					var pt2 = OSMPoint(owner.mapTransform.screenPoint(forMapPoint: props.position, birdsEye: false))
+					var pt2 = OSMPoint(viewPort.mapTransform.screenPoint(forMapPoint: props.position, birdsEye: false))
 					pt2.x = round(pt2.x * scale) / scale
 					pt2.y = round(pt2.y * scale) / scale
 					DbgAssert(pt2.y.isFinite)

@@ -126,7 +126,7 @@ class RulerView: UIView {
 		}
 		let left = convert(CGPoint(x: bounds.minX, y: bounds.minY), to: mapView)
 		let right = convert(CGPoint(x: bounds.maxX, y: bounds.minY), to: mapView)
-		let rulerLength = mapView.distance(from: left, to: right)
+		let rulerLength = mapView.mapTransform.meters(from: left, to: right)
 		textLayer.string = UnitFormatter.shared.stringFor(meters: rulerLength, unitType: unitType)
 	}
 

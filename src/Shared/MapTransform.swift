@@ -283,7 +283,7 @@ final class MapTransform {
 		return meters
 	}
 
-	func distance(from: CGPoint, to: CGPoint) -> Double {
+	func meters(from: CGPoint, to: CGPoint) -> Double {
 		let c1 = latLon(forScreenPoint: from)
 		let c2 = latLon(forScreenPoint: to)
 		let meters = GreatCircleDistance(c1, c2)

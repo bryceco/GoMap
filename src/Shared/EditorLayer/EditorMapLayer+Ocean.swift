@@ -234,7 +234,7 @@ extension EditorMapLayer {
 	}
 
 	private func convertLatLonToScreenPoint(_ latLon: LatLon) -> CGPoint {
-		return owner.mapTransform.screenPoint(forLatLon: latLon, birdsEye: false)
+		return viewPort.mapTransform.screenPoint(forLatLon: latLon, birdsEye: false)
 	}
 
 	private static func visibleSegmentsOfWay(_ way: [CGPoint], inView viewRect: CGRect) -> [[CGPoint]] {

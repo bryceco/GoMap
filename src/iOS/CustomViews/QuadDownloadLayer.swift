@@ -14,37 +14,31 @@ import UIKit
 /// See: MapView.quadDownloadLayer and OsmMapData.downloadMissingData()
 final class QuadDownloadLayer: CALayer {
 	let mapView: MapView
+	let viewPort: MapViewPort
 
 	// MARK: Implementation
 
 	override init(layer: Any) {
 		let layer = layer as! QuadDownloadLayer
 		mapView = layer.mapView
+		viewPort = layer.viewPort
 		super.init(layer: layer)
 	}
 
-	init(mapView: MapView) {
+	init(mapView: MapView, viewPort: MapViewPort) {
 		self.mapView = mapView
+		self.viewPort = viewPort
 		super.init()
 
 		needsDisplayOnBoundsChange = true
 
-		// disable animations
-		actions = [
-			"onOrderIn": NSNull(),
-			"onOrderOut": NSNull(),
-			"sublayers": NSNull(),
-			"contents": NSNull(),
-			"bounds": NSNull(),
-			"position": NSNull(),
-			"anchorPoint": NSNull(),
-			"transform": NSNull(),
-			"isHidden": NSNull()
-		]
-
 		mapView.mapTransform.onChange.subscribe(self) {
 			self.setNeedsLayout()
 		}
+	}
+
+	override func action(forKey event: String) -> (any CAAction)? {
+		return NSNull()
 	}
 
 	override func layoutSublayers() {

@@ -30,7 +30,7 @@ class OfflineViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let rect = AppDelegate.shared.mapView.boundingMapRectForScreen()
+		let rect = AppDelegate.shared.mainView.boundingMapRectForScreen()
 
 		tableView.estimatedRowHeight = 100
 		tableView.rowHeight = UITableView.automaticDimension

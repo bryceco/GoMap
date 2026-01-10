@@ -23,7 +23,7 @@ final class MercatorTileLayer: CALayer {
 	private var webCache: PersistentWebCache<UIImage>?
 	private var layerDict: [String: CALayer] = [:] // map of tiles currently displayed
 
-	let mapViewPort: MapViewPort
+	let viewPort: MapViewPort
 	private var isPerformingLayout = AtomicInt(0)
 
 	var supportDarkMode = false
@@ -32,26 +32,26 @@ final class MercatorTileLayer: CALayer {
 
 	override init(layer: Any) {
 		let layer = layer as! MercatorTileLayer
-		mapViewPort = layer.mapViewPort
+		viewPort = layer.viewPort
 		tileServer = layer.tileServer
 		supportDarkMode = layer.supportDarkMode
 		super.init(layer: layer)
 	}
 
-	init(mapView: MapViewPort) {
-		self.mapViewPort = mapView
+	init(viewPort: MapViewPort) {
+		self.viewPort = viewPort
 		tileServer = TileServer.none // arbitrary, just need a default value
 		super.init()
 
 		needsDisplayOnBoundsChange = true
 
-		mapView.mapTransform.onChange.subscribe(self) { [weak self] in
+		viewPort.mapTransform.onChange.subscribe(self) { [weak self] in
 			guard let self = self,
 			      !self.isHidden
 			else { return }
 			var t = CATransform3DIdentity
-			t.m34 = -1 / CGFloat(mapView.mapTransform.birdsEyeDistance)
-			t = CATransform3DRotate(t, CGFloat(mapView.mapTransform.birdsEyeRotation), 1, 0, 0)
+			t.m34 = -1 / CGFloat(viewPort.mapTransform.birdsEyeDistance)
+			t = CATransform3DRotate(t, CGFloat(viewPort.mapTransform.birdsEyeRotation), 1, 0, 0)
 			self.sublayerTransform = t
 			self.setNeedsLayout()
 		}
@@ -82,7 +82,7 @@ final class MercatorTileLayer: CALayer {
 	}
 
 	func zoomLevel() -> Int {
-		let z = mapViewPort.mapTransform.zoom()
+		let z = viewPort.mapTransform.zoom()
 		guard
 			z.isFinite,
 			z >= Double(Int.min),
@@ -99,7 +99,7 @@ final class MercatorTileLayer: CALayer {
 		}
 
 		let center = await MainActor.run {
-			mapViewPort.screenCenterLatLon()
+			viewPort.screenCenterLatLon()
 		}
 		var zoomLevel = self.zoomLevel()
 		if zoomLevel > 21 {
@@ -138,10 +138,10 @@ final class MercatorTileLayer: CALayer {
 		var p3 = OSMPoint(x: Double(rc.origin.x + rc.size.width), y: Double(rc.origin.y + rc.size.height))
 		var p4 = OSMPoint(x: Double(rc.origin.x + rc.size.width), y: Double(rc.origin.y))
 
-		p1 = mapViewPort.mapTransform.toBirdsEye(p1, center)
-		p2 = mapViewPort.mapTransform.toBirdsEye(p2, center)
-		p3 = mapViewPort.mapTransform.toBirdsEye(p3, center)
-		p4 = mapViewPort.mapTransform.toBirdsEye(p4, center)
+		p1 = viewPort.mapTransform.toBirdsEye(p1, center)
+		p2 = viewPort.mapTransform.toBirdsEye(p2, center)
+		p3 = viewPort.mapTransform.toBirdsEye(p3, center)
+		p4 = viewPort.mapTransform.toBirdsEye(p4, center)
 
 		let rect = OSMRect(rc)
 		return rect.containsPoint(p1) || rect.containsPoint(p2) || rect.containsPoint(p3) || rect.containsPoint(p4)
@@ -329,11 +329,11 @@ final class MercatorTileLayer: CALayer {
 
 	private func setSublayerPositions(_ _layerDict: [String: CALayer]) {
 		// update locations of tiles
-		let metersPerPixel = mapViewPort.metersPerPixel()
+		let metersPerPixel = viewPort.metersPerPixel()
 		let offsetPixels = CGPoint(x: imageryOffsetMeters.x / metersPerPixel,
 		                           y: -imageryOffsetMeters.y / metersPerPixel)
-		let tRotation = mapViewPort.mapTransform.rotation()
-		let tScale = mapViewPort.mapTransform.scale()
+		let tRotation = viewPort.mapTransform.rotation()
+		let tScale = viewPort.mapTransform.scale()
 		for (tileKey, layer) in _layerDict {
 			let splitTileKey: [String] = tileKey.components(separatedBy: ",")
 			let tileZ = Int32(splitTileKey[0]) ?? 0
@@ -342,7 +342,7 @@ final class MercatorTileLayer: CALayer {
 
 			var scale = 256.0 / Double(1 << tileZ)
 			let pt = OSMPoint(x: Double(tileX) * scale, y: Double(tileY) * scale)
-			let cgPt = mapViewPort.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false)
+			let cgPt = viewPort.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false)
 			layer.position = cgPt
 			layer.bounds = CGRect(x: 0, y: 0, width: 256, height: 256)
 			layer.anchorPoint = CGPoint(x: 0, y: 0)
@@ -355,7 +355,7 @@ final class MercatorTileLayer: CALayer {
 	}
 
 	private func layoutSublayersSafe() {
-		let rect = mapViewPort.boundingMapRectForScreen()
+		let rect = viewPort.boundingMapRectForScreen()
 		var zoomLevel = self.zoomLevel()
 
 		if zoomLevel < 1 {
@@ -376,7 +376,7 @@ final class MercatorTileLayer: CALayer {
 		}
 
 		// create any tiles that don't yet exist
-		mapViewPort.progressIncrement((tileEast - tileWest) * (tileSouth - tileNorth))
+		viewPort.progressIncrement((tileEast - tileWest) * (tileSouth - tileNorth))
 		for tileX in tileWest..<tileEast {
 			for tileY in tileNorth..<tileSouth {
 				fetchTile(
@@ -390,7 +390,7 @@ final class MercatorTileLayer: CALayer {
 						{
 							MessageDisplay.shared.presentError(title: tileServer.name, error: error, flash: true)
 						}
-						mapViewPort.progressDecrement()
+						viewPort.progressDecrement()
 					})
 			}
 		}

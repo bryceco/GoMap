@@ -10,13 +10,33 @@ import CoreLocation
 import SafariServices
 import UIKit
 
+let USER_MOVABLE_BUTTONS = 0
+
 enum MainViewButtonLayout: Int {
 	case buttonsOnLeft
 	case buttonsOnRight
 }
 
-class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureRecognizerDelegate,
-	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate, UIAdaptivePresentationControllerDelegate
+protocol MapViewProgress {
+	func progressIncrement(_ delta: Int)
+	func progressDecrement()
+}
+
+// Allows other layers of the map to view changes to the map view
+protocol MapViewPort: AnyObject, MapViewProgress {
+	var mapTransform: MapTransform { get }
+	func metersPerPixel() -> Double
+	func pixelsPerDegree() -> OSMSize
+	func screenCenterPoint() -> CGPoint
+	func screenCenterLatLon() -> LatLon
+	func boundingMapRectForScreen() -> OSMRect
+	func boundingLatLonForScreen() -> OSMRect
+}
+
+final class MainViewController: UIViewController,
+	UIActionSheetDelegate, UIGestureRecognizerDelegate,
+	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate,
+	UIAdaptivePresentationControllerDelegate
 {
 	@IBOutlet var uploadButton: UIButton!
 	@IBOutlet var undoButton: UIButton!
@@ -31,6 +51,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	@IBOutlet var rulerView: RulerView!
 	@IBOutlet var aerialAlignmentButton: UIButton!
 	@IBOutlet var dPadView: DPadView!
+	@IBOutlet var progressIndicator: UIActivityIndicatorView!
 
 	@IBOutlet var mapView: MapView!
 	@IBOutlet var locationButton: UIButton!
@@ -38,6 +59,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
+
+	var mapTransform = MapTransform()
 
 	var buttonLayout: MainViewButtonLayout! {
 		didSet {
@@ -108,10 +131,12 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		mapView.mainViewController = self
+		mapView.setUpChildViews(with: self)
 
 		// set up delegates
 		AppDelegate.shared.mapView = mapView
+		AppDelegate.shared.mainView = self
+
 		rulerView.mapView = mapView
 		//    _rulerView.layer.zPosition = Z_RULER;
 
@@ -144,6 +169,8 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 
 		// customize buttons
 		setButtonAppearances()
+
+		progressIndicator.color = UIColor.green
 
 		// tell our error display manager where to display messages
 		MessageDisplay.shared.topViewController = self
@@ -601,6 +628,29 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		openHelp()
 	}
 
+	// MARK: Progress indicator
+
+	var progressActive = AtomicInt(0)
+
+	func progressIncrement(_ delta: Int = 1) {
+		if progressActive.value() == 0, delta > 0 {
+			progressIndicator.startAnimating()
+		}
+		progressActive.increment(delta)
+	}
+
+	func progressDecrement() {
+		progressActive.decrement()
+		if progressActive.value() == 0 {
+			progressIndicator.stopAnimating()
+		}
+#if DEBUG
+		if progressActive.value() < 0 {
+			print("progressDecrement = \(progressActive.value())")
+		}
+#endif
+	}
+
 	// MARK: Gesture recognizers
 
 	// disable gestures inside toolbar buttons
@@ -751,7 +801,7 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 		switch mapView.gpsState {
 		case GPS_STATE.NONE:
 			// if the user hasn't rotated the screen then start facing north, otherwise follow heading
-			if fabs(mapView.mapTransform.rotation()) < 0.0001 {
+			if fabs(mapTransform.rotation()) < 0.0001 {
 				setGpsState(GPS_STATE.LOCATION)
 			} else {
 				setGpsState(GPS_STATE.HEADING)
@@ -788,4 +838,37 @@ class MainViewController: UIViewController, UIActionSheetDelegate, UIGestureReco
 	}
 }
 
-let USER_MOVABLE_BUTTONS = 0
+extension MainViewController: MapViewPort {
+	func metersPerPixel() -> Double {
+		return mapTransform.metersPerPixel(atScreenPoint: mapView.crossHairs.position)
+	}
+
+	func pixelsPerDegree() -> OSMSize {
+		let metersPerPixel = metersPerPixel()
+
+		// Get meters per degree at this latitude
+		let metersPerDegree = MetersPerDegreeAt(latitude: screenCenterLatLon().lat)
+
+		return OSMSize(width: metersPerDegree.x / metersPerPixel,
+		               height: metersPerDegree.y / metersPerPixel)
+	}
+
+	func boundingMapRectForScreen() -> OSMRect {
+		let rc = OSMRect(mapView.layer.bounds)
+		return mapTransform.boundingMapRect(forScreenRect: rc)
+	}
+
+	func boundingLatLonForScreen() -> OSMRect {
+		let rc = boundingMapRectForScreen()
+		let rect = MapTransform.latLon(forMapRect: rc)
+		return rect
+	}
+
+	func screenCenterLatLon() -> LatLon {
+		return mapTransform.latLon(forScreenPoint: screenCenterPoint())
+	}
+
+	func screenCenterPoint() -> CGPoint {
+		return mapView.bounds.center()
+	}
+}

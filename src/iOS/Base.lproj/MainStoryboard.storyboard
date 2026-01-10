@@ -25,7 +25,6 @@
                                 <connections>
                                     <outlet property="editToolbar" destination="R2j-Xq-Q3E" id="Ruo-Y4-9zI"/>
                                     <outlet property="fpsLabel" destination="9t5-wq-j1u" id="3lK-so-dSY"/>
-                                    <outlet property="progressIndicator" destination="Zh9-uC-62t" id="GOZ-5L-yvO"/>
                                     <outlet property="statusBarBackground" destination="uDR-wZ-Dsb" id="8pj-zQ-PCt"/>
                                     <outlet property="userInstructionLabel" destination="N5Q-nV-TPG" id="z8L-Lc-jxy"/>
                                     <outletCollection property="gestureRecognizers" destination="Y1a-yM-KYa" appends="YES" id="LdR-vi-xJW"/>
@@ -376,6 +375,7 @@
                         <outlet property="helpButton" destination="TnL-YC-BCg" id="Hq9-at-1I1"/>
                         <outlet property="locationButton" destination="rdp-7O-8Ad" id="fnP-To-Zhg"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
+                        <outlet property="progressIndicator" destination="Zh9-uC-62t" id="PlQ-ss-wjk"/>
                         <outlet property="redoButton" destination="tmm-lt-HSk" id="P0O-q4-hlG"/>
                         <outlet property="rulerView" destination="TJj-HW-GPO" id="y6m-qe-yvc"/>
                         <outlet property="searchButton" destination="X1d-Y3-CcW" id="Fl5-cx-g49"/>

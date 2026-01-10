@@ -127,7 +127,7 @@ protocol DrawingLayerDelegate {
 
 // A layer that draws things stored in GeoJSON formats.
 class DrawingLayer: CALayer {
-	let mapViewPort: MapViewPort
+	let viewPort: MapViewPort
 
 	var geojsonDelegate: DrawingLayerDelegate?
 
@@ -138,13 +138,13 @@ class DrawingLayer: CALayer {
 		fatalError()
 	}
 
-	init(mapViewPort: MapViewPort) {
-		self.mapViewPort = mapViewPort
+	init(viewPort: MapViewPort) {
+		self.viewPort = viewPort
 		layerDict = [:]
 		super.init()
 
 		// observe changes to geometry
-		mapViewPort.mapTransform.onChange.subscribe(self) { [weak self] in
+		viewPort.mapTransform.onChange.subscribe(self) { [weak self] in
 			self?.setNeedsLayout()
 		}
 
@@ -169,8 +169,8 @@ class DrawingLayer: CALayer {
 	}
 
 	private func layoutSublayersSafe() {
-		let tRotation = mapViewPort.mapTransform.rotation()
-		let tScale = mapViewPort.mapTransform.scale() / PATH_SCALING
+		let tRotation = viewPort.mapTransform.rotation()
+		let tScale = viewPort.mapTransform.scale() / PATH_SCALING
 		var scale = Int(floor(-log(tScale)))
 		if scale < 0 {
 			scale = 0
@@ -211,7 +211,7 @@ class DrawingLayer: CALayer {
 
 			// configure the layer for presentation
 			guard let pt = layer.props.position else { continue }
-			let pt2 = OSMPoint(mapViewPort.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false))
+			let pt2 = OSMPoint(viewPort.mapTransform.screenPoint(forMapPoint: pt, birdsEye: false))
 
 			// rotate and scale
 			let t = CGAffineTransform(translationX: CGFloat(pt2.x - pt.x), y: CGFloat(pt2.y - pt.y))
@@ -227,10 +227,10 @@ class DrawingLayer: CALayer {
 			}
 		}
 
-		if mapViewPort.mapTransform.birdsEyeRotation != 0 {
+		if viewPort.mapTransform.birdsEyeRotation != 0 {
 			var t = CATransform3DIdentity
-			t.m34 = -1.0 / CGFloat(mapViewPort.mapTransform.birdsEyeDistance)
-			t = CATransform3DRotate(t, CGFloat(mapViewPort.mapTransform.birdsEyeRotation), 1.0, 0, 0)
+			t.m34 = -1.0 / CGFloat(viewPort.mapTransform.birdsEyeDistance)
+			t = CATransform3DRotate(t, CGFloat(viewPort.mapTransform.birdsEyeRotation), 1.0, 0, 0)
 			sublayerTransform = t
 		} else {
 			sublayerTransform = CATransform3DIdentity

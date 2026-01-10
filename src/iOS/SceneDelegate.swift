@@ -78,7 +78,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		func openGPX(data: Data, name: String) {
 			do {
-				let mapView = AppDelegate.shared.mapView!
 				let track = try mapView.gpxLayer.loadGPXData(data, name: name)
 				if let center = track?.center() {
 					mapView.displayGpxLogs = true // ensure GPX tracks are visible
@@ -249,6 +248,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	func sceneWillEnterForeground(_ scene: UIScene) {
 		let mapView = AppDelegate.shared.mapView!
+		let mainView = AppDelegate.shared.mainView!
 		if mapView.gpsState != .NONE {
 			if mapView.gpsInBackground,
 			   mapView.displayGpxLogs
@@ -262,7 +262,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 					mapView.locationManager.startUpdatingHeading()
 				} else {
 					// turn off GPS on resume when user hasn't used app recently
-					mapView.mainViewController.setGpsState(GPS_STATE.NONE)
+					mainView.setGpsState(GPS_STATE.NONE)
 				}
 			}
 		} else {

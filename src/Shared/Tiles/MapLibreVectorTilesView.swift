@@ -10,11 +10,11 @@
 import MapLibre
 
 class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
-	let mapViewPort: MapViewPort
+	let viewPort: MapViewPort
 	let tileServer: TileServer
 
-	init(mapView: MapViewPort, tileServer: TileServer) {
-		self.mapViewPort = mapView
+	init(viewPort: MapViewPort, tileServer: TileServer) {
+		self.viewPort = viewPort
 		self.tileServer = tileServer
 		super.init(frame: .zero,
 		           styleURL: URL(string: tileServer.url)!)
@@ -29,15 +29,15 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 		setPreferredFrameRate()
 
 		updateUsingCurrentMapTransform()
-		mapView.mapTransform.onChange.subscribe(self) { [weak self] in
+		viewPort.mapTransform.onChange.subscribe(self) { [weak self] in
 			self?.updateUsingCurrentMapTransform()
 		}
 	}
 
 	func updateUsingCurrentMapTransform() {
-		let center = mapViewPort.mapTransform.latLon(forScreenPoint: mapViewPort.mapTransform.center)
-		let zoom = mapViewPort.mapTransform.zoom() - 1.0
-		let dir = (360.0 + mapViewPort.mapTransform.rotation() * 180 / .pi).remainder(dividingBy: 360.0)
+		let center = viewPort.mapTransform.latLon(forScreenPoint: viewPort.mapTransform.center)
+		let zoom = viewPort.mapTransform.zoom() - 1.0
+		let dir = (360.0 + viewPort.mapTransform.rotation() * 180 / .pi).remainder(dividingBy: 360.0)
 		guard
 			center.lat.isFinite,
 			center.lon.isFinite,
@@ -109,11 +109,11 @@ extension MapLibreVectorTilesView: DiskCacheSizeProtocol {
 import UIKit
 
 class MapLibreVectorTilesView: UIView, TilesProvider, DiskCacheSizeProtocol {
-	var mapView: MapView
+	var viewPort: MapViewPort
 	let tileServer: TileServer
 	var styleURL: URL
 
-	init(mapView: MapView, tileServer: TileServer) {
+	init(viewPort: MapViewPort, tileServer: TileServer) {
 		fatalError()
 	}
 

@@ -209,9 +209,9 @@ extension EditorMapLayer {
 
 		if let selectedPrimary = selectedPrimary {
 			// adjust tap point to touch object
-			var latLon = owner.mapTransform.latLon(forScreenPoint: point)
+			var latLon = viewPort.mapTransform.latLon(forScreenPoint: point)
 			latLon = selectedPrimary.latLonOnObject(forLatLon: latLon)
-			let point = owner.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
+			let point = viewPort.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
 
 			owner.placePushpin(at: point, object: selectedPrimary)
 
@@ -226,7 +226,7 @@ extension EditorMapLayer {
 
 	func dragBegin(from: CGPoint) {
 		mapData.beginUndoGrouping()
-		dragState.startPoint = owner.mapTransform.latLon(forScreenPoint: from)
+		dragState.startPoint = viewPort.mapTransform.latLon(forScreenPoint: from)
 		dragState.didMove = false
 	}
 
@@ -248,18 +248,18 @@ extension EditorMapLayer {
 		}
 		dragState.didMove = true
 
-		let p1 = owner.mapTransform.screenPoint(forLatLon: dragState.startPoint, birdsEye: true)
+		let p1 = viewPort.mapTransform.screenPoint(forLatLon: dragState.startPoint, birdsEye: true)
 		let totalMovement = toPoint.minus(p1)
 
 		// move all dragged nodes
 		if let rotate = isRotateObjectMode {
 			// rotate object
 			let delta = Double(-(totalMovement.x + totalMovement.y) / 100)
-			let axis = owner.mapTransform.screenPoint(forLatLon: rotate.rotateObjectCenter,
-			                                          birdsEye: true)
+			let axis = viewPort.mapTransform.screenPoint(forLatLon: rotate.rotateObjectCenter,
+			                                             birdsEye: true)
 			let nodeSet = (object.isNode() != nil) ? selectedWay?.nodeSet() : object.nodeSet()
 			for node in nodeSet ?? [] {
-				let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
+				let pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
 				let diff = OSMPoint(x: Double(pt.x - axis.x), y: Double(pt.y - axis.y))
 				let radius = hypot(diff.x, diff.y)
 				var angle = atan2(diff.y, diff.x)
@@ -319,7 +319,7 @@ extension EditorMapLayer {
 					hit = merge()
 					if dragWay.isArea() {
 						selectedNode = nil
-						let pt = owner.mapTransform.screenPoint(forLatLon: hit.latLon, birdsEye: true)
+						let pt = viewPort.mapTransform.screenPoint(forLatLon: hit.latLon, birdsEye: true)
 						owner.placePushpin(at: pt, object: dragWay)
 					} else {
 						selectedNode = hit
@@ -441,11 +441,11 @@ extension EditorMapLayer {
 
 		dragState.didMove = true
 
-		let axis = owner.mapTransform.screenPoint(forLatLon: rotate.rotateObjectCenter, birdsEye: true)
+		let axis = viewPort.mapTransform.screenPoint(forLatLon: rotate.rotateObjectCenter, birdsEye: true)
 		let rotatedObject = selectedRelation ?? selectedWay
 		if let nodeSet = rotatedObject?.nodeSet() {
 			for node in nodeSet {
-				let pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
+				let pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
 				let diff = OSMPoint(x: Double(pt.x - axis.x), y: Double(pt.y - axis.y))
 				let radius = hypot(diff.x, diff.y)
 				var angle = atan2(diff.y, diff.x)
@@ -465,10 +465,10 @@ extension EditorMapLayer {
 	// MARK: Editing
 
 	func adjust(_ node: OsmNode, byScreenDistance delta: CGPoint) {
-		var pt = owner.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
+		var pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
 		pt.x += delta.x
 		pt.y -= delta.y
-		let loc = owner.mapTransform.latLon(forScreenPoint: pt)
+		let loc = viewPort.mapTransform.latLon(forScreenPoint: pt)
 		mapData.setLatLon(loc, forNode: node)
 
 		setNeedsLayout()
@@ -481,7 +481,7 @@ extension EditorMapLayer {
 	}
 
 	func createNode(atScreenPoint point: CGPoint) -> OsmNode {
-		let loc = owner.mapTransform.latLon(forScreenPoint: point)
+		let loc = viewPort.mapTransform.latLon(forScreenPoint: point)
 		let node = mapData.createNode(atLocation: loc)
 		setNeedsLayout()
 		return node
@@ -565,10 +565,10 @@ extension EditorMapLayer {
 					   let node = nodeIndex == 0 ? way.nodes.first : nodeIndex == way.nodes.count ? way.nodes.last : nil
 					{
 						selectedNode = node
-						pos = owner.mapTransform.screenPoint(on: node, forScreenPoint: pos)
+						pos = viewPort.mapTransform.screenPoint(on: node, forScreenPoint: pos)
 						owner.placePushpin(at: pos, object: node)
 					} else {
-						pos = owner.mapTransform.screenPoint(on: primary, forScreenPoint: pos)
+						pos = viewPort.mapTransform.screenPoint(on: primary, forScreenPoint: pos)
 						owner.placePushpin(at: pos, object: primary)
 					}
 				}
@@ -728,13 +728,13 @@ extension EditorMapLayer {
 				guard let primary = selectedPrimary,
 				      let pushpinView = owner.pushpinView()
 				else { return }
-				let delta = CGPoint(x: owner.screenCenterPoint().x - pushpinView.arrowPoint.x,
-				                    y: owner.screenCenterPoint().y - pushpinView.arrowPoint.y)
+				let delta = CGPoint(x: viewPort.screenCenterPoint().x - pushpinView.arrowPoint.x,
+				                    y: viewPort.screenCenterPoint().y - pushpinView.arrowPoint.y)
 				var offset: OSMPoint
 				if hypot(delta.x, delta.y) > 20 {
 					// move to position of crosshairs
-					let p1 = owner.mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
-					let p2 = owner.mapTransform.latLon(forScreenPoint: owner.screenCenterPoint())
+					let p1 = viewPort.mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
+					let p2 = viewPort.screenCenterLatLon()
 					offset = OSMPoint(x: p2.lon - p1.lon, y: p2.lat - p1.lat)
 				} else {
 					offset = OSMPoint(x: 0.00005, y: -0.00005)
@@ -754,7 +754,7 @@ extension EditorMapLayer {
 				owner.startObjectRotation()
 			case .RECTANGULARIZE:
 				guard let way = selectedWay else { return }
-				if way.ident >= 0, !owner.boundingLatLonForScreen().containsRect(way.boundingBox) {
+				if way.ident >= 0, !viewPort.boundingLatLonForScreen().containsRect(way.boundingBox) {
 					throw EditError.text(NSLocalizedString("The selected way must be completely visible",
 					                                       comment: "")) // avoid bugs where nodes are deleted from other objects
 				}
@@ -782,7 +782,7 @@ extension EditorMapLayer {
 			case .STRAIGHTEN:
 				if let selectedWay = selectedWay {
 					let boundingBox = selectedWay.boundingBox
-					if selectedWay.ident >= 0, !owner.boundingLatLonForScreen().containsRect(boundingBox) {
+					if selectedWay.ident >= 0, !viewPort.boundingLatLonForScreen().containsRect(boundingBox) {
 						throw EditError.text(NSLocalizedString("The selected way must be completely visible",
 						                                       comment: "")) // avoid bugs where nodes are deleted from other objects
 					} else {
@@ -942,7 +942,7 @@ extension EditorMapLayer {
 				} else if object.isRelation() != nil {
 					self.selectedRelation = object.isRelation()
 				}
-				let pos = owner.mapTransform.screenPoint(on: object, forScreenPoint: point)
+				let pos = viewPort.mapTransform.screenPoint(on: object, forScreenPoint: point)
 				owner.placePushpin(at: pos, object: object)
 			}))
 		}
@@ -958,7 +958,7 @@ extension EditorMapLayer {
 		   selectedNode == nil
 		{
 			// insert a new node into way at pushPin location
-			let pt = owner.mapTransform.latLon(forScreenPoint: pinPoint)
+			let pt = viewPort.mapTransform.latLon(forScreenPoint: pinPoint)
 			guard
 				way.nodes.allSatisfy({ $0.latLon != pt })
 			else {
@@ -1004,7 +1004,7 @@ extension EditorMapLayer {
 		// add new node at point
 		var newPoint = newPoint
 		let prevPrevNode = way.nodes.count >= 2 ? way.nodes[way.nodes.count - 2] : nil
-		let prevPrevPoint = prevPrevNode != nil ? owner.mapTransform.screenPoint(
+		let prevPrevPoint = prevPrevNode != nil ? viewPort.mapTransform.screenPoint(
 			forLatLon: prevPrevNode!.latLon,
 			birdsEye: true) : CGPoint.zero
 
@@ -1027,7 +1027,7 @@ extension EditorMapLayer {
 			} else if way.nodes.count == 2 {
 				// create 3rd point 90 degrees from first 2
 				let n1 = way.nodes[1 - prevIndex]
-				let p1 = owner.mapTransform.screenPoint(forLatLon: n1.latLon, birdsEye: true)
+				let p1 = viewPort.mapTransform.screenPoint(forLatLon: n1.latLon, birdsEye: true)
 				var delta = CGPoint(x: p1.x - pinPoint.x, y: p1.y - pinPoint.y)
 				let len = hypot(delta.x, delta.y)
 				if len > 100 {
@@ -1047,8 +1047,8 @@ extension EditorMapLayer {
 				// create 4th point and beyond following angle of previous 3
 				let n1 = prevIndex == 0 ? way.nodes[1] : way.nodes[prevIndex - 1]
 				let n2 = prevIndex == 0 ? way.nodes[2] : way.nodes[prevIndex - 2]
-				let p1 = owner.mapTransform.screenPoint(forLatLon: n1.latLon, birdsEye: true)
-				let p2 = owner.mapTransform.screenPoint(forLatLon: n2.latLon, birdsEye: true)
+				let p1 = viewPort.mapTransform.screenPoint(forLatLon: n1.latLon, birdsEye: true)
+				let p2 = viewPort.mapTransform.screenPoint(forLatLon: n2.latLon, birdsEye: true)
 				let d1 = OSMPoint(x: Double(pinPoint.x - p1.x), y: Double(pinPoint.y - p1.y))
 				let d2 = OSMPoint(x: Double(p1.x - p2.x), y: Double(p1.y - p2.y))
 				var a1 = atan2(d1.y, d1.x)
@@ -1075,7 +1075,7 @@ extension EditorMapLayer {
 
 		if way.nodes.count >= 2 {
 			let start = prevIndex == 0 ? way.nodes.last! : way.nodes[0]
-			let s = owner.mapTransform.screenPoint(forLatLon: start.latLon, birdsEye: true)
+			let s = viewPort.mapTransform.screenPoint(forLatLon: start.latLon, birdsEye: true)
 			let d = hypot(s.x - newPoint.x, s.y - newPoint.y)
 			if d < 3.0 {
 				// join first to last

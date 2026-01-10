@@ -89,7 +89,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			if let latLon = result.latLon {
 				// compute distance
 				let dist = GreatCircleDistance(latLon,
-				                               AppDelegate.shared.mapView.screenCenterLatLon())
+				                               AppDelegate.shared.mainView.screenCenterLatLon())
 				subtitle = UnitFormatter.shared.stringFor(meters: dist)
 			} else {
 				subtitle = ""
@@ -109,7 +109,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 		// disable GPS
 		while appDelegate.mapView.gpsState != GPS_STATE.NONE {
-			appDelegate.mapView.mainViewController.toggleLocationButton(self)
+			appDelegate.mainView.toggleLocationButton(self)
 		}
 		let latLon = LatLon(latitude: lat, longitude: lon)
 
@@ -252,7 +252,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		guard
 			let url = nominatimSearchURL(query: string,
 			                             lang: PresetLanguages.preferredLanguageCode(),
-			                             latLon: AppDelegate.shared.mapView.screenCenterLatLon())
+			                             latLon: AppDelegate.shared.mainView.screenCenterLatLon())
 		else {
 			return
 		}

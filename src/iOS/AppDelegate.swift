@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	weak var mapView: MapView!
+	weak var mainView: MainViewController!
+	var viewPort: MapViewPort { mainView }
+
 	private(set) var isAppUpgrade = false
 
 	var userName: String? {
@@ -116,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground.
 
 		// Turn off GPS so we gracefully end GPX trace.
-		AppDelegate.shared.mapView?.mainViewController.setGpsState(.NONE)
+		AppDelegate.shared.mainView.setGpsState(.NONE)
 
 #if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 		// Remove any live activities
@@ -191,7 +194,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	@objc func openPreferences() {
 		let storyboard = UIStoryboard(name: "Settings", bundle: nil)
 		guard
-			let mainVC = mapView?.mainViewController,
+			let mainVC = mainView,
 			mainVC.presentedViewController == nil,
 			let vc = storyboard.instantiateInitialViewController()
 		else {

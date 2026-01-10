@@ -114,7 +114,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 	}
 
 	@IBAction func onSave(_ sender: Any?) {
-		let editor = AppDelegate.shared.mapView.editorLayer
+		let editor = AppDelegate.shared.mapView.editorLayer!
 		guard var tags = editor.selectedPrimary?.tags else { return }
 		for keyIndex in presetKeys.indices {
 			let section = keyIndex + 1

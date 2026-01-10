@@ -604,7 +604,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		// dismiss ourself and switch to the relation
 		mapView.refreshPushpinText() // update pushpin description to the relation
 		dismiss(animated: true) {
-			mapView.mainViewController.performSegue(withIdentifier: "poiSegue", sender: nil)
+			AppDelegate.shared.mainView.performSegue(withIdentifier: "poiSegue", sender: nil)
 		}
 		return false
 	}
