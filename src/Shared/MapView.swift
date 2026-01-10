@@ -84,7 +84,7 @@ struct MapLocation {
 	}
 }
 
-// MARK: Gestures
+// MARK: MapView
 
 final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate, DPadDelegate,
@@ -98,10 +98,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
 
 	var voiceAnnouncement: VoiceAnnouncement?
-	var tapAndDragGesture: TapAndDragGesture!
-
-	var addNodeButtonLongPressGestureRecognizer: UILongPressGestureRecognizer?
-	var plusButtonTimestamp: TimeInterval = 0.0
+	var objectRotationGesture: UIRotationGestureRecognizer!
 
 	var windowPresented = false
 	var locationManagerExtraneousNotification = false
@@ -134,19 +131,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	private var viewStateZoomedOut = false { // override layer because we're zoomed out
 		willSet(newValue) {
 			viewStateWillChangeTo(viewState, overlays: viewOverlayMask, zoomedOut: newValue)
-		}
-	}
-
-	// Set true when the user moved the screen manually, so GPS updates shouldn't recenter screen on user
-	public var userOverrodeLocationPosition = false {
-		didSet {
-			mainView.centerOnGPSButton.isHidden = !userOverrodeLocationPosition || gpsState == .NONE
-		}
-	}
-
-	public var userOverrodeLocationZoom = false {
-		didSet {
-			mainView.centerOnGPSButton.isHidden = !userOverrodeLocationZoom || gpsState == .NONE
 		}
 	}
 
@@ -484,8 +468,8 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 					break
 				}
 
-				userOverrodeLocationPosition = false
-				userOverrodeLocationZoom = false
+				mainView.userOverrodeLocationPosition = false
+				mainView.userOverrodeLocationZoom = false
 				locationManager.startUpdatingLocation()
 				locationManager.startUpdatingHeading()
 				locationBallLayer.isHidden = false
@@ -551,16 +535,10 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		addGestureRecognizer(longPress)
 
 		// two-finger rotation
-		let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotationGesture(_:)))
-		rotationGesture.delegate = self
-		addGestureRecognizer(rotationGesture)
-
-		// long-press on + for adding nodes via taps
-		addNodeButtonLongPressGestureRecognizer = UILongPressGestureRecognizer(
-			target: self,
-			action: #selector(plusButtonLongPressHandler(_:)))
-		addNodeButtonLongPressGestureRecognizer?.minimumPressDuration = 0.001
-		addNodeButtonLongPressGestureRecognizer?.delegate = self
+		objectRotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotationGesture(_:)))
+		objectRotationGesture.delegate = self
+		objectRotationGesture.isEnabled = false // disabled until needed
+		addGestureRecognizer(objectRotationGesture)
 
 		if #available(iOS 13.4, macCatalyst 13.4, *) {
 			// pan gesture to recognize mouse-wheel scrolling (zoom) on iPad and Mac Catalyst
@@ -577,13 +555,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		superview!.addSubview(magnifyingGlass)
 		magnifyingGlass.setPosition(.topLeft, animated: false)
 		magnifyingGlass.isHidden = true
-
-		// Support zoom via tap and drag
-		tapAndDragGesture = TapAndDragGesture(target: self, action: #selector(handleTapAndDragGesture(_:)))
-		tapAndDragGesture.delegate = self
-		tapAndDragGesture.delaysTouchesBegan = false
-		tapAndDragGesture.delaysTouchesEnded = false
-		addGestureRecognizer(tapAndDragGesture)
 	}
 
 	func setUpChildViews(with main: MainViewController) {
@@ -1097,6 +1068,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		layer.addSublayer(rotateObjectOverlay)
 
 		isRotateObjectMode = (rotateObjectOverlay, rotateObjectCenter)
+		objectRotationGesture.isEnabled = true
 	}
 
 	func endObjectRotation() {
@@ -1104,6 +1076,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		placePushpinForSelection()
 		editorLayer.dragState.confirmDrag = false
 		isRotateObjectMode = nil
+		objectRotationGesture.isEnabled = false
 	}
 
 	func viewStateWillChangeTo(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) {
@@ -1267,7 +1240,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			return
 		}
 
-		userOverrodeLocationPosition = false
+		mainView.userOverrodeLocationPosition = false
 		if let location = locationManager.location {
 			viewPort.centerOn(latLon: LatLon(location.coordinate))
 		}
@@ -1407,11 +1380,11 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			locating = false
 		}
 
-		if !userOverrodeLocationPosition,
+		if !mainView.userOverrodeLocationPosition,
 		   UIApplication.shared.applicationState == .active
 		{
 			// move view to center on new location
-			if userOverrodeLocationZoom {
+			if mainView.userOverrodeLocationZoom {
 				viewPort.centerOn(latLon: LatLon(newLocation.coordinate))
 			} else {
 				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
@@ -1728,7 +1701,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			mainView.present(myVc, animated: true)
 
 			// if GPS is running don't keep moving around
-			userOverrodeLocationPosition = true
+			mainView.userOverrodeLocationPosition = true
 
 			// ensure view is loaded before we access frame info
 			myVc.loadViewIfNeeded()
@@ -2296,13 +2269,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		_ gestureRecognizer: UIGestureRecognizer,
 		shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool
 	{
-		if gestureRecognizer == addNodeButtonLongPressGestureRecognizer ||
-			otherGestureRecognizer == addNodeButtonLongPressGestureRecognizer
-		{
-			// if holding down the + button then always allow other gestures to proceeed
-			return true
-		}
-
 		if gestureRecognizer is UILongPressGestureRecognizer ||
 			otherGestureRecognizer is UILongPressGestureRecognizer
 		{
@@ -2310,26 +2276,16 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			return false
 		}
 
-		if (gestureRecognizer is UIPanGestureRecognizer && otherGestureRecognizer is TapAndDragGesture) ||
-			(gestureRecognizer is TapAndDragGesture && otherGestureRecognizer is UIPanGestureRecognizer)
-		{
-			// Tap-and-drag is a shortcut for zooming, so it's not compatible with the Pan gesture
-			return false
-		} else if gestureRecognizer is TapAndDragGesture {
-			return true
-		}
-
 		if gestureRecognizer is UITapGestureRecognizer || otherGestureRecognizer is UITapGestureRecognizer {
 			// don't register taps during panning/zooming/rotating
 			return false
 		}
 
-		// allow other things so we can pan/zoom/rotate simultaneously
 		return true
 	}
 
 	@IBAction func handlePanGesture(_ pan: UIPanGestureRecognizer) {
-		userOverrodeLocationPosition = true
+		mainView.userOverrodeLocationPosition = true
 
 		if pan.state == .began {
 			// start pan
@@ -2392,7 +2348,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			prevousPinchScale = 1.0
 			fallthrough
 		case .changed:
-			userOverrodeLocationZoom = true
+			mainView.userOverrodeLocationZoom = true
 
 			DisplayLink.shared.removeName(DisplayLinkPanning)
 
@@ -2434,7 +2390,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 				self.tapAndDragSelections = nil
 			}
 		case .changed:
-			userOverrodeLocationZoom = true
+			mainView.userOverrodeLocationZoom = true
 
 			DisplayLink.shared.removeName(DisplayLinkPanning)
 
@@ -2467,32 +2423,12 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			}
 
 			let point = tap.location(in: self)
-			if plusButtonTimestamp != 0.0 {
+			if mainView.plusButtonTimestamp != 0.0 {
 				// user is doing a long-press on + button
 				editorLayer.addNode(at: point)
 			} else {
 				editorLayer.selectObjectAtPoint(point)
 			}
-		default:
-			break
-		}
-	}
-
-	@objc func plusButtonLongPressHandler(_ recognizer: UILongPressGestureRecognizer) {
-		switch recognizer.state {
-		case .began:
-			plusButtonTimestamp = TimeInterval(CACurrentMediaTime())
-		case .ended:
-			if CACurrentMediaTime() - plusButtonTimestamp < 0.5 {
-				// treat as tap, but make sure it occured inside the button
-				let touch = recognizer.location(in: recognizer.view)
-				if recognizer.view?.bounds.contains(touch) ?? false {
-					editorLayer.addNode(at: crossHairs.position)
-				}
-			}
-			plusButtonTimestamp = 0.0
-		case .cancelled, .failed:
-			plusButtonTimestamp = 0.0
 		default:
 			break
 		}
@@ -2506,47 +2442,20 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		}
 	}
 
+	// user rotating an OSM object
 	@IBAction func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
-		if let rotate = isRotateObjectMode {
-			// Rotate object on screen
-			if rotationGesture.state == .began {
-				editorLayer.rotateBegin()
-			} else if rotationGesture.state == .changed {
-				editorLayer.rotateContinue(delta: rotationGesture.rotation, rotate: rotate)
-			} else {
-				// ended
-				endObjectRotation()
-				editorLayer.rotateFinish()
-			}
+		guard let rotate = isRotateObjectMode else {
 			return
 		}
-
-		// Rotate screen
-		if enableRotation {
-			switch rotationGesture.state {
-			case .began:
-				break // ignore
-			case .changed:
-#if targetEnvironment(macCatalyst)
-				// On Mac we want to rotate around the screen center, not the cursor.
-				// This is better determined by testing for indirect touches, but
-				// that information isn't exposed by the gesture recognizer.
-				let centerPoint = crossHairs.position
-#else
-				let centerPoint = rotationGesture.location(in: self)
-#endif
-				let angle = rotationGesture.rotation
-				viewPort.rotate(by: angle, aroundScreenPoint: centerPoint)
-				rotationGesture.rotation = 0.0
-
-				if gpsState == .HEADING {
-					gpsState = .LOCATION
-				}
-			case .ended:
-				updateMapMarkersFromServer(withDelay: 0, including: [])
-			default:
-				break // ignore
-			}
+		// Rotate object on screen
+		if rotationGesture.state == .began {
+			editorLayer.rotateBegin()
+		} else if rotationGesture.state == .changed {
+			editorLayer.rotateContinue(delta: rotationGesture.rotation, rotate: rotate)
+		} else {
+			// ended
+			endObjectRotation()
+			editorLayer.rotateFinish()
 		}
 	}
 

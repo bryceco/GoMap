@@ -27,6 +27,8 @@ final class MainViewController: UIViewController,
 	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate,
 	UIAdaptivePresentationControllerDelegate
 {
+	@IBOutlet var settingsButton: UIButton!
+	@IBOutlet var displayButton: UIButton!
 	@IBOutlet var uploadButton: UIButton!
 	@IBOutlet var undoButton: UIButton!
 	@IBOutlet var redoButton: UIButton!
@@ -59,8 +61,21 @@ final class MainViewController: UIViewController,
 		}
 	}
 
-	@IBOutlet private var settingsButton: UIButton!
-	@IBOutlet private var displayButton: UIButton!
+	var addNodeButtonLongPressGestureRecognizer: UILongPressGestureRecognizer?
+	var plusButtonTimestamp: TimeInterval = 0.0
+
+	// Set true when the user moved the screen manually, so GPS updates shouldn't recenter screen on user
+	public var userOverrodeLocationPosition = false {
+		didSet {
+			centerOnGPSButton.isHidden = !userOverrodeLocationPosition || mapView.gpsState == .NONE
+		}
+	}
+
+	public var userOverrodeLocationZoom = false {
+		didSet {
+			centerOnGPSButton.isHidden = !userOverrodeLocationZoom || mapView.gpsState == .NONE
+		}
+	}
 
 	// MARK: Initialization
 
@@ -93,8 +108,13 @@ final class MainViewController: UIViewController,
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayButtonLongPressGesture(_:)))
 		displayButton.addGestureRecognizer(longPress)
 
-		// gesture recognizers
-		addNodeButton.addGestureRecognizer(mapView.addNodeButtonLongPressGestureRecognizer!)
+		// long-press on + for adding nodes via taps
+		addNodeButtonLongPressGestureRecognizer = UILongPressGestureRecognizer(
+			target: self,
+			action: #selector(plusButtonLongPressHandler(_:)))
+		addNodeButtonLongPressGestureRecognizer?.minimumPressDuration = 0.001
+		addNodeButtonLongPressGestureRecognizer?.delegate = self
+		addNodeButton.addGestureRecognizer(addNodeButtonLongPressGestureRecognizer!)
 
 		// center button
 		centerOnGPSButton.isHidden = true
@@ -123,24 +143,27 @@ final class MainViewController: UIViewController,
 		mapView.updateAerialAttributionButton()
 
 		let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
+		tap.delegate = self
 		view.addGestureRecognizer(tap)
 
 		let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+		pan.delegate = self
 		view.addGestureRecognizer(pan)
 
 		let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+		pinch.delegate = self
 		view.addGestureRecognizer(pinch)
 
-	}
+		// two-finger rotation
+		let rotate = UIRotationGestureRecognizer(target: self, action: #selector(handleRotationGesture(_:)))
+		view.addGestureRecognizer(rotate)
 
-	@IBAction func handlePanGesture(_ pan: UIPanGestureRecognizer) {
-		mapView.handlePanGesture(pan)
-	}
-	@IBAction func handleTapGesture(_ tap: UITapGestureRecognizer) {
-		mapView.handleTapGesture(tap)
-	}
-	@IBAction func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
-		mapView.handlePinchGesture(pinch)
+		// Support zoom via tap and drag
+		let tapAndDragGesture = TapAndDragGesture(target: self, action: #selector(handleTapAndDragGesture(_:)))
+		tapAndDragGesture.delegate = self
+		tapAndDragGesture.delaysTouchesBegan = false
+		tapAndDragGesture.delaysTouchesEnded = false
+		view.addGestureRecognizer(tapAndDragGesture)
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
@@ -677,26 +700,133 @@ final class MainViewController: UIViewController,
 	// disable gestures inside toolbar buttons
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
 		// http://stackoverflow.com/questions/3344341/uibutton-inside-a-view-that-has-a-uitapgesturerecognizer
-		if (touch.view is UIControl) || (touch.view is UIToolbar) {
-			// we touched a button, slider, or other UIControl
-			return false // ignore the touch
+		var view = touch.view
+		while view != nil, !((view is UIControl) || (view is UIToolbar)) {
+			view = view?.superview
+		}
+		if view != nil {
+			// We touched a button, slider, or other UIControl.
+			// When the user taps a button we don't want to
+			// select the object underneath it, so we reject
+			// Tap recognizers.
+			if gestureRecognizer is UITapGestureRecognizer || view is PushPinView {
+				return false // ignore the touch
+			}
 		}
 		return true // handle the touch
 	}
 
-	func installGestureRecognizer(_ gesture: UIGestureRecognizer, on button: UIButton) {
-		if (button.gestureRecognizers?.count ?? 0) == 0 {
-			button.addGestureRecognizer(gesture)
+	func gestureRecognizer(
+		_ gestureRecognizer: UIGestureRecognizer,
+		shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool
+	{
+		if gestureRecognizer == addNodeButtonLongPressGestureRecognizer ||
+			otherGestureRecognizer == addNodeButtonLongPressGestureRecognizer
+		{
+			// if holding down the + button then always allow other gestures to proceeed
+			return true
 		}
+
+		if gestureRecognizer is UILongPressGestureRecognizer ||
+			otherGestureRecognizer is UILongPressGestureRecognizer
+		{
+			// don't register long-press when other gestures are occuring
+			return false
+		}
+
+		if (gestureRecognizer is UIPanGestureRecognizer && otherGestureRecognizer is TapAndDragGesture) ||
+			(gestureRecognizer is TapAndDragGesture && otherGestureRecognizer is UIPanGestureRecognizer)
+		{
+			// Tap-and-drag is a shortcut for zooming, so it's not compatible with the Pan gesture
+			return false
+		} else if gestureRecognizer is TapAndDragGesture {
+			return true
+		}
+
+		if gestureRecognizer is UITapGestureRecognizer || otherGestureRecognizer is UITapGestureRecognizer {
+			// don't register taps during panning/zooming/rotating
+			return false
+		}
+
+		// allow other things so we can pan/zoom/rotate simultaneously
+		return true
 	}
 
 	@objc func displayButtonLongPressGesture(_ recognizer: UILongPressGestureRecognizer) {
 		if recognizer.state == .began {
-			showPopupToSelectFromRecentAerialImagery()
+			displayButtonLongPressHandler()
 		}
 	}
 
-	func showPopupToSelectFromRecentAerialImagery() {
+	@IBAction func handlePanGesture(_ pan: UIPanGestureRecognizer) {
+		mapView.handlePanGesture(pan)
+	}
+
+	@IBAction func handleTapGesture(_ tap: UITapGestureRecognizer) {
+		mapView.handleTapGesture(tap)
+	}
+
+	@IBAction func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
+		mapView.handlePinchGesture(pinch)
+	}
+
+	@IBAction func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
+		// Rotate screen
+		guard mapView.enableRotation else {
+			return
+		}
+
+		switch rotationGesture.state {
+		case .began:
+			break // ignore
+		case .changed:
+#if targetEnvironment(macCatalyst)
+			// On Mac we want to rotate around the screen center, not the cursor.
+			// This is better determined by testing for indirect touches, but
+			// that information isn't exposed by the gesture recognizer.
+			let centerPoint = crossHairs.position
+#else
+			let centerPoint = rotationGesture.location(in: mapView)
+#endif
+			let angle = rotationGesture.rotation
+			rotate(by: angle, aroundScreenPoint: centerPoint)
+			rotationGesture.rotation = 0.0
+
+			if mapView.gpsState == .HEADING {
+				mapView.gpsState = .LOCATION
+			}
+		case .ended:
+			mapView.updateMapMarkersFromServer(withDelay: 0, including: [])
+		default:
+			break // ignore
+		}
+	}
+
+	@objc func handleTapAndDragGesture(_ tapAndDrag: TapAndDragGesture) {
+		mapView.handleTapAndDragGesture(tapAndDrag)
+	}
+
+	@objc func plusButtonLongPressHandler(_ recognizer: UILongPressGestureRecognizer) {
+		switch recognizer.state {
+		case .began:
+			plusButtonTimestamp = TimeInterval(CACurrentMediaTime())
+		case .ended:
+			if CACurrentMediaTime() - plusButtonTimestamp < 0.5 {
+				// treat as tap, but make sure it occured inside the button
+				let touch = recognizer.location(in: recognizer.view)
+				if recognizer.view?.bounds.contains(touch) ?? false {
+					mapView.editorLayer.addNode(at: mapView.crossHairs.position)
+				}
+			}
+			plusButtonTimestamp = 0.0
+		case .cancelled, .failed:
+			plusButtonTimestamp = 0.0
+		default:
+			break
+		}
+	}
+
+	func displayButtonLongPressHandler() {
 		// show the most recently used aerial imagery
 		let tileServerlList = mapView.tileServerList
 		let actionSheet = UIAlertController(

@@ -31,7 +31,7 @@ class TapAndDragGesture: UIGestureRecognizer {
 	private var tapPoint = CGPoint.zero
 	private var lastTouchLocation = CGPoint.zero
 	private var lastTouchTranslation = CGPoint.zero
-	private var lastTouchTimestamp: TimeInterval = 0.0
+	private var secondTapTimer: Timer?
 
 #if DEBUG
 	private func showState() {
@@ -53,6 +53,11 @@ class TapAndDragGesture: UIGestureRecognizer {
 		      let touch = touches.first
 		else { return }
 
+		if tapState == .needSecondTap {
+			secondTapTimer?.invalidate()
+			secondTapTimer = nil
+		}
+
 		var isIndirect = touches.first?.type == .indirect
 		if #available(iOS 13.4, *),
 		   touches.first?.type == .indirectPointer
@@ -71,7 +76,6 @@ class TapAndDragGesture: UIGestureRecognizer {
 			lastTouchLocation = loc
 		} else if tapState == .needSecondTap {
 			guard
-				touch.timestamp - lastTouchTimestamp < DoubleTapTime,
 				hypot(Float(lastTouchLocation.x - loc.x),
 				      Float(lastTouchLocation.y - loc.y)) < DoubleTapDistance
 			else {
@@ -87,15 +91,22 @@ class TapAndDragGesture: UIGestureRecognizer {
 	override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent) {
 		super.touchesEnded(touches, with: event)
 
-		guard state == .possible || state == .changed
+		guard
+			state == .possible || state == .changed
 		else {
 			return
 		}
 		switch tapState {
 		case .needFirstTap:
-			if let touch = touches.first {
-				tapState = .needSecondTap
-				lastTouchTimestamp = touch.timestamp
+			tapState = .needSecondTap
+			secondTapTimer?.invalidate()
+			secondTapTimer = Timer.scheduledTimer(withTimeInterval: DoubleTapTime,
+			                                      repeats: false)
+			{ [weak self] _ in
+				guard let self = self else { return }
+				if self.tapState == .needSecondTap {
+					self.state = .failed
+				}
 			}
 		case .needSecondTap:
 			break
@@ -130,8 +141,6 @@ class TapAndDragGesture: UIGestureRecognizer {
 			state = .failed
 			return
 		}
-
-		lastTouchTimestamp = touch.timestamp
 		lastTouchTranslation = delta
 	}
 
