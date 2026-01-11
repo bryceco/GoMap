@@ -664,31 +664,24 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			self.promptForBetterBackgroundImagery()
 			self.checkForChangedTileOverlayLayers()
 		}
-	}
 
-	func viewDidAppear() {
-		// Only want to run this once. On older versions of iOS viewDidAppear is called multiple times
-		if !windowPresented {
-			windowPresented = true
-
-			// get current location
-			if let lat = UserPrefs.shared.view_latitude.value,
-			   let lon = UserPrefs.shared.view_longitude.value,
-			   let scale = UserPrefs.shared.view_scale.value
-			{
-				viewPort.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
-				                         scale: scale)
-			} else {
-				let rc = OSMRect(layer.bounds)
-				screenFromMapTransform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
-				                                                  rc.origin.y + rc.size.height / 2 - 128)
-				// turn on GPS which will move us to current location
-				mainView.setGpsState(GPS_STATE.LOCATION)
-			}
-
-			// get notes
-			updateMapMarkersFromServer(withDelay: 1.0, including: [])
+		// get current location
+		if let lat = UserPrefs.shared.view_latitude.value,
+		   let lon = UserPrefs.shared.view_longitude.value,
+		   let scale = UserPrefs.shared.view_scale.value
+		{
+			viewPort.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
+									 scale: scale)
+		} else {
+			let rc = OSMRect(layer.bounds)
+			screenFromMapTransform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
+															  rc.origin.y + rc.size.height / 2 - 128)
+			// turn on GPS which will move us to current location
+			mainView.setGpsState(GPS_STATE.LOCATION)
 		}
+
+		// get notes, etc.
+		updateMapMarkersFromServer(withDelay: 1.0, including: [])
 	}
 
 	func acceptsFirstResponder() -> Bool {

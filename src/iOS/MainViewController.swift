@@ -89,6 +89,8 @@ final class MainViewController: UIViewController,
 		// configure views in MapView
 		mapView.setUpChildViews(with: self)
 
+		navigationController?.isNavigationBarHidden = true
+
 		rulerView.mapView = mapView
 		//    _rulerView.layer.zPosition = Z_RULER;
 
@@ -134,6 +136,14 @@ final class MainViewController: UIViewController,
 		// customize buttons
 		setButtonAppearances()
 
+#if USER_MOVABLE_BUTTONS
+		makeMovableButtons()
+#endif
+
+		// update button layout constraints
+		buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.mapViewButtonLayout.value
+			?? MainViewButtonLayout.buttonsOnRight.rawValue)
+
 		progressIndicator.color = UIColor.green
 
 		// tell our error display manager where to display messages
@@ -142,6 +152,8 @@ final class MainViewController: UIViewController,
 
 		mapView.updateAerialAttributionButton()
 
+		// Install gesture recognizers
+		
 		let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
 		tap.delegate = self
 		view.addGestureRecognizer(tap)
@@ -164,15 +176,6 @@ final class MainViewController: UIViewController,
 		tapAndDragGesture.delaysTouchesBegan = false
 		tapAndDragGesture.delaysTouchesEnded = false
 		view.addGestureRecognizer(tapAndDragGesture)
-	}
-
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
-		navigationController?.isNavigationBarHidden = true
-
-		// update button layout constraints
-		buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.mapViewButtonLayout.value
-			?? MainViewButtonLayout.buttonsOnRight.rawValue)
 
 		if #available(iOS 13.4, macCatalyst 13.0, *) {
 			// mouseover support for Mac Catalyst and iPad:
@@ -199,16 +202,6 @@ final class MainViewController: UIViewController,
 			scrollWheelGesture.maximumNumberOfTouches = 0
 			view.addGestureRecognizer(scrollWheelGesture)
 		}
-	}
-
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-#if USER_MOVABLE_BUTTONS
-		makeMovableButtons()
-#endif
-
-		// this is necessary because we need the frame to be set on the view before we set the previous lat/lon for the view
-		mapView.viewDidAppear()
 	}
 
 	func setupAccessibility() {
