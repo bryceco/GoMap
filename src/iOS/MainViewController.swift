@@ -49,6 +49,7 @@ final class MainViewController: UIViewController,
 	@IBOutlet var flashLabel: UILabel!
 
 	@IBOutlet var mapView: MapView!
+	var locationBallView = LocationBallView()
 
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
@@ -133,6 +134,13 @@ final class MainViewController: UIViewController,
 		userInstructionLabel.textColor = UIColor.white
 		userInstructionLabel.isHidden = true
 
+		// Location ball appearance
+		locationBallView.heading = 0.0
+		locationBallView.showHeading = true
+		locationBallView.isHidden = true
+		locationBallView.viewPort = self
+		mapView.addSubview(locationBallView)
+
 		// customize buttons
 		setButtonAppearances()
 
@@ -153,7 +161,7 @@ final class MainViewController: UIViewController,
 		mapView.updateAerialAttributionButton()
 
 		// Install gesture recognizers
-		
+
 		let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
 		tap.delegate = self
 		view.addGestureRecognizer(tap)

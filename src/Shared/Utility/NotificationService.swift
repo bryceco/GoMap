@@ -23,12 +23,31 @@ final class NotificationService<T> {
 		}
 	}
 
+	func unsubscribe(_ observer: AnyObject) {
+		queue.sync {
+			subscribers = subscribers.filter { $0.object !== observer }
+		}
+	}
+
 	func notify(_ result: T) {
-		queue.async {
-			self.subscribers = self.subscribers.filter { $0.object != nil }
-			for subscriber in self.subscribers {
-				DispatchQueue.main.async {
-					subscriber.callback(result)
+		if Thread.isMainThread {
+			// Synchronous path for main thread
+			var currentSubscribers: [Subscriber] = []
+			queue.sync {
+				self.subscribers = self.subscribers.filter { $0.object != nil }
+				currentSubscribers = self.subscribers
+			}
+			for subscriber in currentSubscribers {
+				subscriber.callback(result)
+			}
+		} else {
+			// Async path for background threads
+			queue.async {
+				self.subscribers = self.subscribers.filter { $0.object != nil }
+				for subscriber in self.subscribers {
+					DispatchQueue.main.async {
+						subscriber.callback(result)
+					}
 				}
 			}
 		}

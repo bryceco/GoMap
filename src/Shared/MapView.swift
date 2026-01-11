@@ -91,7 +91,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	UISheetPresentationControllerDelegate
 {
 	var lastMouseDragPos = CGPoint.zero
-	var locationBallLayer: LocationBallLayer
 	var addWayProgressLayer: CAShapeLayer?
 	var isZoomScroll = false // Command-scroll zooms instead of scrolling (desktop only)
 
@@ -200,98 +199,57 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 	private(set) var allLayers: [LayerOrView] = []
 
-	private var screenFromMapTransform: OSMTransform {
-		get {
-			return viewPort.mapTransform.transform
+	func mapTransformDidChange() {
+		// we could move the blink outline similar to pushpin, but it's complicated and less important
+		unblinkObject()
+
+		// Determine if we've zoomed out enough to disable editing
+		// We can only compute a precise surface area size at high zoom since it's possible
+		// for the screen to be larger than the earth
+		let area = mapTransform.zoom() > 8
+			? SurfaceAreaOfRect(viewPort.boundingLatLonForScreen())
+			: Double.greatestFiniteMagnitude
+		var isZoomedOut = area > 2.0 * 1000 * 1000
+		if !editorLayer.isHidden,
+		   !editorLayer.atVisibleObjectLimit,
+		   area < 1000.0 * 1000 * 1000
+		{
+			isZoomedOut = false
 		}
-		set(t) {
-			if t == viewPort.mapTransform.transform {
-				return
-			}
-			var t = t
+		viewStateZoomedOut = isZoomedOut
 
-			// save pushpinView coordinates
-			var pp: LatLon?
-			if let pushpinView = pushPin {
-				pp = viewPort.mapTransform.latLon(forScreenPoint: pushpinView.arrowPoint)
-			}
-			// we could move the blink outline similar to pushpin, but it's complicated and less important
-			unblinkObject()
+		updateCurrentRegionForLocationUsingCountryCoder()
+		promptForBetterBackgroundImagery()
+		checkForChangedTileOverlayLayers()
 
-			// Wrap around if we translate too far longitudinally
-			let unitX = t.unitX()
-			let unitY = OSMPoint(x: -unitX.y, y: unitX.x)
-			let tran = t.translation()
-			let dx = Dot(tran, unitX) // translation distance in x direction
-			let dy = Dot(tran, unitY)
-			let scale = t.scale()
-			let mapSize = 256 * scale
-			if dx > 0 {
-				let mul = ceil(dx / mapSize)
-				t = t.translatedBy(dx: -mul * mapSize / scale, dy: 0.0)
-			} else if dx < -mapSize {
-				let mul = floor(-dx / mapSize)
-				t = t.translatedBy(dx: mul * mapSize / scale, dy: 0.0)
-			}
-
-			// limit scrolling latitudinally
-			if dy > mapSize {
-				t = t.translatedBy(dx: 0.0, dy: mapSize - dy)
-			} else if dy < -2 * mapSize {
-				t = t.translatedBy(dx: 0.0, dy: -2 * mapSize - dy)
-			}
-
-			// update transform
-			viewPort.mapTransform.transform = t
-
-			// Determine if we've zoomed out enough to disable editing
-			// We can only compute a precise surface area size at high zoom since it's possible
-			// for the earth to be larger than the screen
-			let area = mapTransform.zoom() > 8 ? SurfaceAreaOfRect(viewPort.boundingLatLonForScreen())
-				: Double.greatestFiniteMagnitude
-			var isZoomedOut = area > 2.0 * 1000 * 1000
-			if !editorLayer.isHidden,
-			   !editorLayer.atVisibleObjectLimit,
-			   area < 1000.0 * 1000 * 1000
-			{
-				isZoomedOut = false
-			}
-			viewStateZoomedOut = isZoomedOut
-
-			updateUserLocationIndicator(nil)
-			updateCurrentRegionForLocationUsingCountryCoder()
-			promptForBetterBackgroundImagery()
-			checkForChangedTileOverlayLayers()
-
-			// update pushpin location
-			if let pushpinView = pushPin,
-			   let pp = pp
-			{
-				if pushpinView.isDragging {
-					// moving the screen while dragging the pin moves the pin/object
-					let pt = mapTransform.screenPoint(forLatLon: pp, birdsEye: true)
-					let drag = pushpinView.arrowPoint.minus(pt)
-					pushpinView.dragCallback(.changed, drag.x, drag.y)
-				} else {
-					// if not dragging then make sure pin placement is updated
-					let wasInside = bounds.contains(pushpinView.arrowPoint)
-					pushpinView.arrowPoint = mapTransform.screenPoint(forLatLon: pp,
-					                                                  birdsEye: true)
-					let isInside = bounds.contains(pushpinView.arrowPoint)
-					if wasInside, !isInside {
-						// generate feedback if the user scrolled the pushpin off the screen
-						let feedback = UINotificationFeedbackGenerator()
-						feedback.notificationOccurred(.warning)
-					}
-				}
-			}
-
-			// We moved to a new location so update markers
-			updateMapMarkerButtonPositions()
-
-			// This does a more expensive update, but debounced
-			updateMapMarkersFromServer(withDelay: 0, including: [])
+		// update pushpin location
+		if let pushpinView = self.pushPin {
+			/*
+			 // FIXME: Fix pushpin
+			 if pushpinView.isDragging {
+			 // moving the screen while dragging the pin moves the pin/object
+			 let pt = mapTransform.screenPoint(forMapPoint: oldMapPoint, birdsEye: false)
+			 let drag = pushpinView.arrowPoint.minus(pt)
+			 pushpinView.dragCallback(.changed, drag.x, drag.y)
+			 } else {
+			 // if not dragging then make sure pin placement is updated
+			 let wasInside = bounds.contains(pushpinView.arrowPoint)
+			 pushpinView.arrowPoint = mapTransform.screenPoint(forMapPoint: newMapPoint, birdsEye: false)
+			 let isInside = bounds.contains(pushpinView.arrowPoint)
+			 if wasInside, !isInside {
+			 // generate feedback if the user scrolled the pushpin off the screen
+			 let feedback = UINotificationFeedbackGenerator()
+			 feedback.notificationOccurred(.warning)
+			 }
+			 }
+			 */
 		}
+
+		// We moved to a new location so update markers
+		updateMapMarkerButtonPositions()
+
+		// This does a more expensive update, but debounced
+		updateMapMarkersFromServer(withDelay: 0, including: [])
 	}
 
 	var gpsLastActive = Date.distantPast
@@ -358,7 +316,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			if !enableRotation {
 				// remove rotation
 				let centerPoint = viewPort.screenCenterPoint()
-				let angle = CGFloat(screenFromMapTransform.rotation())
+				let angle = CGFloat(mapTransform.rotation())
 				viewPort.rotate(by: -angle, aroundScreenPoint: centerPoint)
 			}
 		}
@@ -475,11 +433,11 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 				mainView.userOverrodeLocationZoom = false
 				locationManager.startUpdatingLocation()
 				locationManager.startUpdatingHeading()
-				locationBallLayer.isHidden = false
+				mainView.locationBallView.isHidden = false
 			} else {
 				locationManager.stopUpdatingLocation()
 				locationManager.stopUpdatingHeading()
-				locationBallLayer.isHidden = true
+				mainView.locationBallView.isHidden = true
 				currentLocation = CLLocation()
 			}
 		}
@@ -491,7 +449,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 	required init?(coder: NSCoder) {
 		tileServerList = TileServerList()
-		locationBallLayer = LocationBallLayer()
 		locating = false
 		currentRegion = RegionInfoForLocation.none
 
@@ -552,6 +509,10 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 	func setUpChildViews(with main: MainViewController) {
 		self.mainView = main
+
+		mapTransform.onChange.subscribe(self) { [weak self] in
+			self?.mapTransformDidChange()
+		}
 
 		tileServerList.onChange.subscribe(self) { [weak self] in
 			self?.promptForBetterBackgroundImagery()
@@ -621,12 +582,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		crossHairs.zPosition = ZLAYER.CROSSHAIRS.rawValue
 		layer.addSublayer(crossHairs)
 
-		locationBallLayer.zPosition = ZLAYER.LOCATION_BALL.rawValue
-		locationBallLayer.heading = 0.0
-		locationBallLayer.showHeading = true
-		locationBallLayer.isHidden = true
-		layer.addSublayer(locationBallLayer)
-
 #if false
 		voiceAnnouncement = VoiceAnnouncement()
 		voiceAnnouncement?.mapView = self
@@ -671,11 +626,11 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		   let scale = UserPrefs.shared.view_scale.value
 		{
 			viewPort.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
-									 scale: scale)
+			                         scale: scale)
 		} else {
 			let rc = OSMRect(layer.bounds)
-			screenFromMapTransform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
-															  rc.origin.y + rc.size.height / 2 - 128)
+			mapTransform.transform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
+			                                                  rc.origin.y + rc.size.height / 2 - 128)
 			// turn on GPS which will move us to current location
 			mainView.setGpsState(GPS_STATE.LOCATION)
 		}
@@ -750,7 +705,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	func save() {
 		// save preferences first
 		let latLon = viewPort.screenCenterLatLon()
-		let scale = screenFromMapTransform.scale()
+		let scale = mapTransform.scale()
 #if false && DEBUG
 		assert(scale > 1.0)
 #endif
@@ -1245,31 +1200,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		}
 	}
 
-	func updateUserLocationIndicator(_ location: CLLocation?) {
-		if !locationBallLayer.isHidden {
-			// set new position
-			guard
-				let location = location ?? locationManager.location,
-				location.horizontalAccuracy >= 0,
-				location.horizontalAccuracy < 1000
-			else {
-				return
-			}
-			let coord = LatLon(location.coordinate)
-			var point = mapTransform.screenPoint(forLatLon: coord, birdsEye: true)
-			point = mapTransform.wrappedScreenPoint(point, screenBounds: bounds)
-			locationBallLayer.position = point
-
-			// set location accuracy
-			let meters = location.horizontalAccuracy
-			var pixels = CGFloat(meters / viewPort.metersPerPixel())
-			if pixels == 0.0 {
-				pixels = 100.0
-			}
-			locationBallLayer.radiusInPixels = pixels
-		}
-	}
-
 	func heading(for clHeading: CLHeading) -> Double {
 		var heading = clHeading.trueHeading * .pi / 180
 		if let scene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first {
@@ -1287,22 +1217,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			}
 		}
 		return heading
-	}
-
-	func updateHeadingSmoothed(_ heading: Double, accuracy: Double) {
-		let screenAngle = screenFromMapTransform.rotation()
-
-		if gpsState == .HEADING {
-			// rotate to new heading
-			let center = viewPort.screenCenterPoint()
-			let delta = -(heading + screenAngle)
-			viewPort.rotate(by: CGFloat(delta), aroundScreenPoint: center)
-		} else if !locationBallLayer.isHidden {
-			// rotate location ball
-			locationBallLayer.headingAccuracy = CGFloat(accuracy * (.pi / 180))
-			locationBallLayer.showHeading = true
-			locationBallLayer.heading = CGFloat(heading + screenAngle - .pi / 2)
-		}
 	}
 
 	private var locationManagerSmoothHeading = 0.0
@@ -1323,7 +1237,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			} else {
 				self.locationManagerSmoothHeading += delta
 			}
-			updateHeadingSmoothed(self.locationManagerSmoothHeading, accuracy: accuracy)
+			viewPort.updateHeadingSmoothed(self.locationManagerSmoothHeading, accuracy: accuracy)
 			if heading == self.locationManagerSmoothHeading {
 				DisplayLink.shared.removeName("smoothHeading")
 			}
@@ -1383,7 +1297,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			pushPin.arrowPoint = mapTransform.screenPoint(forLatLon: pp, birdsEye: true)
 		}
 
-		updateUserLocationIndicator(newLocation)
+		mainView.locationBallView.updateLocation(newLocation)
 	}
 
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -2428,10 +2342,6 @@ extension MapView: MapViewProgress {
 }
 
 extension MapView: EditorMapLayerOwner {
-	func setScreenFromMap(transform: OSMTransform) {
-		screenFromMapTransform = transform
-	}
-
 	func didUpdateObject() {
 		refreshPushpinText()
 		updateMapMarkerButtonPositions()

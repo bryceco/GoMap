@@ -1,17 +1,70 @@
 //
-//  LocationBallLayer.swift
+//  LocationBallView.swift
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 12/27/12.
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+import CoreLocation
 import QuartzCore
 import UIKit
 
-final class LocationBallLayer: CALayer {
+final class LocationBallView: UIView {
 	private var headingLayer: CAGradientLayer
 	private var ringLayer: CAShapeLayer
+	private var circleLayer: CAShapeLayer
+
+	var location = CLLocation() {
+		didSet {
+			updateScreenPosition()
+		}
+	}
+
+	private func updateScreenPosition() {
+		guard
+			let viewPort,
+			let mapView = AppDelegate.shared.mapView
+		else {
+			return
+		}
+		let latLon = LatLon(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+		var point = viewPort.mapTransform.screenPoint(forLatLon: latLon, birdsEye: false)
+		point = viewPort.mapTransform.wrappedScreenPoint(point, screenBounds: mapView.bounds)
+		center = point
+	}
+
+	func updateLocation(_ location: CLLocation) {
+		// set new position
+		guard
+			!isHidden,
+			let viewPort,
+			location.horizontalAccuracy >= 0,
+			location.horizontalAccuracy < 1000
+		else {
+			return
+		}
+		self.location = location
+
+		// set location accuracy
+		let meters = location.horizontalAccuracy
+		var pixels = CGFloat(meters / viewPort.metersPerPixel())
+		if pixels == 0.0 {
+			pixels = 100.0
+		}
+		radiusInPixels = pixels
+
+		updateScreenPosition()
+	}
+
+	var viewPort: MapViewPort? {
+		didSet {
+			oldValue?.mapTransform.onChange.unsubscribe(self)
+			viewPort?.mapTransform.onChange.subscribe(self) { [weak self] in
+				self?.updateScreenPosition()
+			}
+		}
+	}
 
 	var showHeading = false {
 		didSet {
@@ -41,31 +94,18 @@ final class LocationBallLayer: CALayer {
 		}
 	}
 
-	override init(layer: Any) {
-		let layer = layer as! Self
+	override init(frame: CGRect) {
 		ringLayer = CAShapeLayer()
 		headingLayer = CAGradientLayer()
-		super.init(layer: layer)
-	}
+		circleLayer = CAShapeLayer()
 
-	override init() {
-		ringLayer = CAShapeLayer()
-		headingLayer = CAGradientLayer()
+		super.init(frame: frame)
 
-		super.init()
-		frame = CGRect(x: 0, y: 0, width: 16, height: 16)
+		self.frame = CGRect(x: 0, y: 0, width: 16, height: 16)
+		backgroundColor = .clear
+		isUserInteractionEnabled = false
 
 		radiusInPixels = 25.0
-
-		actions = [
-			"onOrderIn": NSNull(),
-			"onOrderOut": NSNull(),
-			"sublayers": NSNull(),
-			"contents": NSNull(),
-			"bounds": NSNull(),
-			"position": NSNull(),
-			"transform": NSNull()
-		]
 
 		let circleColor = UIColor(red: 79 / 255.0, green: 138 / 255.0, blue: 247 / 255.0, alpha: 1.0)
 
@@ -74,10 +114,10 @@ final class LocationBallLayer: CALayer {
 		ringLayer.strokeColor = circleColor.cgColor
 		ringLayer.lineWidth = 2.0
 		ringLayer.frame = bounds
-		ringLayer.position = CGPoint(x: 16, y: 16)
+		ringLayer.position = CGPoint(x: 8, y: 8)
 		let animation = ringAnimation(withRadius: 100)
 		ringLayer.add(animation, forKey: "ring")
-		addSublayer(ringLayer)
+		layer.addSublayer(ringLayer)
 
 		// create a mask that will be shaped as a cone for the heading
 		let rc = CGRect(x: 0.0, y: 0.0, width: 80.0, height: 80.0)
@@ -88,42 +128,45 @@ final class LocationBallLayer: CALayer {
 		// create a radial gradient for the heading cone
 		headingLayer.isHidden = true
 		headingLayer.frame = rc.offsetBy(dx: (bounds.size.width - rc.width) / 2,
-		                                 dy: (bounds.size.height - rc.height) / 2)
+										 dy: (bounds.size.height - rc.height) / 2)
 		headingLayer.type = .radial
 		headingLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
 		headingLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
 		headingLayer.colors = [circleColor.cgColor,
-		                       circleColor.cgColor,
-		                       circleColor.withAlphaComponent(0.7).cgColor,
-		                       circleColor.withAlphaComponent(0.4).cgColor,
-		                       circleColor.withAlphaComponent(0.2).cgColor]
+							   circleColor.cgColor,
+							   circleColor.withAlphaComponent(0.7).cgColor,
+							   circleColor.withAlphaComponent(0.4).cgColor,
+							   circleColor.withAlphaComponent(0.2).cgColor]
 		headingLayer.mask = gradientMask
-		addSublayer(headingLayer)
+		layer.addSublayer(headingLayer)
 
 		// create a circle marking the current location
-		let circleLayer = CAShapeLayer()
 		circleLayer.path = UIBezierPath(ovalIn: bounds).cgPath
 		circleLayer.frame = bounds
 		circleLayer.fillColor = circleColor.cgColor
 		circleLayer.strokeColor = UIColor.white.cgColor
 		circleLayer.lineWidth = 2.0
-		addSublayer(circleLayer)
+		layer.addSublayer(circleLayer)
 
 		// add shadow
-		shadowColor = UIColor.black.cgColor
-		shadowOffset = CGSize(width: 3, height: 3)
-		shadowOpacity = 0.6
+		layer.shadowColor = UIColor.black.cgColor
+		layer.shadowOffset = CGSize(width: 3, height: 3)
+		layer.shadowOpacity = 0.6
+	}
+
+	convenience init() {
+		self.init(frame: .zero)
 	}
 
 	func ringAnimation(withRadius radius: CGFloat) -> CABasicAnimation {
 		let startRadius: CGFloat = 5
 		let finishRadius = radius
 		let startPath = CGPath(ellipseIn: CGRect(x: -startRadius, y: -startRadius,
-		                                         width: 2 * startRadius, height: 2 * startRadius),
-		                       transform: nil)
+												 width: 2 * startRadius, height: 2 * startRadius),
+							   transform: nil)
 		let finishPath = CGPath(ellipseIn: CGRect(x: -finishRadius, y: -finishRadius,
-		                                          width: 2 * finishRadius, height: 2 * finishRadius),
-		                        transform: nil)
+												  width: 2 * finishRadius, height: 2 * finishRadius),
+								transform: nil)
 		let anim = CABasicAnimation(keyPath: "path")
 		anim.duration = 2.0
 		anim.fromValue = startPath
@@ -135,7 +178,9 @@ final class LocationBallLayer: CALayer {
 		return anim
 	}
 
-	override func layoutSublayers() {
+	override func layoutSubviews() {
+		super.layoutSubviews()
+
 		if showHeading, headingAccuracy > 0 {
 			// draw heading
 			let shapeLayer = headingLayer.mask as! CAShapeLayer

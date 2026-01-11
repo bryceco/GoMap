@@ -32,7 +32,7 @@ final class QuadDownloadLayer: CALayer {
 
 		needsDisplayOnBoundsChange = true
 
-		mapView.mapTransform.onChange.subscribe(self) {
+		mapView.mapTransform.onChange.subscribe(self) {_ in
 			self.setNeedsLayout()
 		}
 	}

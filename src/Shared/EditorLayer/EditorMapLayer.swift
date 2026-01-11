@@ -42,8 +42,6 @@ protocol EditorMapLayerOwner: UIView, MapViewProgress {
 
 	var editToolbar: CustomSegmentedControl! { get }
 
-	func setScreenFromMap(transform: OSMTransform) // used when undo/redo change the location
-
 	// boolean options chosen by owner
 	func useTurnRestrictions() -> Bool
 	func useAutomaticCacheManagement() -> Bool
@@ -267,8 +265,8 @@ final class EditorMapLayer: CALayer {
 		whiteText = true
 
 		// observe changes to screen
-		viewPort.mapTransform.onChange.subscribe(self) { [weak self]
-			in self?.updateMapLocation()
+		viewPort.mapTransform.onChange.subscribe(self) { [weak self] in
+			self?.updateMapLocation()
 		}
 
 		OsmMapData.g_EditorMapLayerForArchive = self
@@ -302,7 +300,7 @@ final class EditorMapLayer: CALayer {
 			      let transform: OSMTransform = location.asStruct()
 			else { return }
 			// FIXME: Use Coder for OSMTransform (warning: doing this will break backwards compatibility)
-			owner.setScreenFromMap(transform: transform)
+			viewPort.mapTransform.transform = transform
 			let title = undo ? NSLocalizedString("Undo", comment: "") : NSLocalizedString("Redo", comment: "")
 
 			self.selectedRelation = context["selectedRelation"] as? OsmRelation

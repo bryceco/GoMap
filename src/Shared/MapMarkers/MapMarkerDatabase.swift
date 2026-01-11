@@ -230,7 +230,6 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 			}
 
 			await MainActor.run {
-				print("update markers: \(Date())")
 				self.updateMarkers(forRegion: bbox, mapData: mapData, including: including, completion: completion)
 			}
 		}

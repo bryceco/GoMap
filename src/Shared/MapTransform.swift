@@ -22,15 +22,47 @@ import Foundation
 
 /// Encapsulates all information for translating between a lat/lon coordinate and the screen
 final class MapTransform {
-	var center: CGPoint = .zero // screen center, needed for bird's eye calculations
+	let center: CGPoint = .zero // screen center, needed for bird's eye calculations
 
 	static let latitudeLimit = 85.051128
 
 	// This matrix translates between a "mapPoint" (a 256x256 mercator map of the world) and the screen
-	var transform = OSMTransform.identity {
-		didSet {
+	var _transform = OSMTransform.identity
+	var transform: OSMTransform {
+		get {
+			return _transform
+		}
+		set {
+			_transform = Self.wrapTransform(newValue)
 			onChange.notify()
 		}
+	}
+
+	private static func wrapTransform(_ transform: OSMTransform) -> OSMTransform {
+		var wrappedTransform = transform
+
+		// Extract translation components
+		let tx = transform.tx
+		let ty = transform.ty
+
+		// size of transformed image
+		let scaledWidth = hypot(256 * transform.a, 256 * transform.c)
+		let scaledHeight = hypot(256 * transform.b, 256 * transform.d)
+
+		// Wrap the horizontal translation to keep the map cycling smoothly
+		// Use modulo to ensure we're always within one map width
+		let wrappedTx = tx.truncatingRemainder(dividingBy: scaledWidth)
+
+		// Pin vertical translation so the center point (0, 0) is always covered
+		let minTy = -scaledHeight // Center at bottom of map
+		let maxTy: CGFloat = 0 // Center at top of map
+		let pinnedTy = max(minTy, min(maxTy, ty))
+
+		// Update the transform with wrapped/pinned translation
+		wrappedTransform.tx = wrappedTx
+		wrappedTransform.ty = pinnedTy
+
+		return wrappedTransform
 	}
 
 	// MARK: Observers
@@ -119,7 +151,7 @@ final class MapTransform {
 
 	func mapPoint(forScreenPoint point: OSMPoint, birdsEye: Bool) -> OSMPoint {
 		var point = point
-		if birdsEyeRotation != 0.0, birdsEye {
+		if birdsEye, birdsEyeRotation != 0.0 {
 			point = Self.FromBirdsEye(screenPoint: point,
 			                          screenCenter: center,
 			                          birdsEyeDistance: Double(birdsEyeDistance),

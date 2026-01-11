@@ -232,7 +232,7 @@
 		C3004F4D263A6306006BF313 /* NominatimViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F4C263A6306006BF313 /* NominatimViewController.swift */; };
 		C3004F52263A6CA5006BF313 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F51263A6CA5006BF313 /* MainViewController.swift */; };
 		C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */; };
-		C31315232644292700C0AD86 /* LocationBallLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */; };
+		C31315232644292700C0AD86 /* LocationBallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D4263EACFF00E3B129 /* LocationBallView.swift */; };
 		C341E1532639DECC0022E983 /* WikiPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1522639DECC0022E983 /* WikiPage.swift */; };
 		C341E15A2639DF210022E983 /* NotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1592639DF210022E983 /* NotesTableViewController.swift */; };
 		C341E15C2639DF440022E983 /* NearbyMappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */; };
@@ -604,7 +604,7 @@
 		C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadThreadPool.swift; path = ../Shared/DownloadThreadPool.swift; sourceTree = "<group>"; };
 		C3D096CE263EA0DB00E3B129 /* KeyChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		C3D096D1263EA7E100E3B129 /* LayerProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerProperties.swift; sourceTree = "<group>"; };
-		C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationBallLayer.swift; sourceTree = "<group>"; };
+		C3D096D4263EACFF00E3B129 /* LocationBallView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationBallView.swift; sourceTree = "<group>"; };
 		C3D096D7263EAE1E00E3B129 /* MyApplication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyApplication.swift; sourceTree = "<group>"; };
 		C3D096DA263EB73E00E3B129 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		C3D096EE263EBE5D00E3B129 /* OsmMember.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmMember.swift; sourceTree = "<group>"; };
@@ -921,7 +921,7 @@
 				027CF8722BDE141700E6F03B /* DrawingLayer.swift */,
 				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
-				C3D096D4263EACFF00E3B129 /* LocationBallLayer.swift */,
+				C3D096D4263EACFF00E3B129 /* LocationBallView.swift */,
 				02CE3CE829919FC400DDACE0 /* LocationButton.swift */,
 				02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */,
 				C381C30A263FE518003142BA /* PushPinView.swift */,
@@ -1631,7 +1631,7 @@
 				02505C5529A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift in Sources */,
 				02A59EDD297E444500B0A676 /* PresetAddressFormat.swift in Sources */,
 				02EF13C32E5D041800418CA4 /* UIFont+Ext.swift in Sources */,
-				C31315232644292700C0AD86 /* LocationBallLayer.swift in Sources */,
+				C31315232644292700C0AD86 /* LocationBallView.swift in Sources */,
 				ED964A012601D6A900EC0A60 /* POICommonTagsViewController.swift in Sources */,
 				0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */,
 				0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */,

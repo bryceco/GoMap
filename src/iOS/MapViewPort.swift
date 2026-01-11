@@ -114,16 +114,16 @@ extension MapViewPort {
 
 		let screenAngle = mapTransform.rotation()
 		mainView.compassButton.rotate(angle: CGFloat(screenAngle))
-		if !mapView.locationBallLayer.isHidden {
+		if !mainView.locationBallView.isHidden {
 			if mapView.gpsState == .HEADING,
-			   abs(mapView.locationBallLayer.heading - -.pi / 2) < 0.0001
+			   abs(mainView.locationBallView.heading - -.pi / 2) < 0.0001
 			{
 				// don't pin location ball to North until we've animated our rotation to north
-				mapView.locationBallLayer.heading = -.pi / 2
+				mainView.locationBallView.heading = -.pi / 2
 			} else {
 				if let heading = mapView.locationManager.heading {
 					let heading = mapView.heading(for: heading)
-					mapView.locationBallLayer.heading = CGFloat(screenAngle + heading - .pi / 2)
+					mainView.locationBallView.heading = CGFloat(screenAngle + heading - .pi / 2)
 				}
 			}
 		}
@@ -203,11 +203,6 @@ extension MapViewPort {
 #endif
 		t = t.translatedBy(dx: -offset.x, dy: -offset.y)
 		mapTransform.transform = t
-
-		let mapView = AppDelegate.shared.mapView!
-		if !mapView.locationBallLayer.isHidden {
-			mapView.updateUserLocationIndicator(nil)
-		}
 	}
 
 	func rotateToNorth() {
@@ -279,6 +274,24 @@ extension MapViewPort {
 		rotate(by: CGFloat(-rotation), aroundScreenPoint: screenCenterPoint())
 		if let state = location.viewState {
 			AppDelegate.shared.mapView.viewState = state
+		}
+	}
+
+	func updateHeadingSmoothed(_ heading: Double, accuracy: Double) {
+		let screenAngle = mapTransform.rotation()
+
+		if AppDelegate.shared.mapView.gpsState == .HEADING {
+			// rotate to new heading
+			let center = screenCenterPoint()
+			let delta = -(heading + screenAngle)
+			rotate(by: CGFloat(delta), aroundScreenPoint: center)
+		} else if let locationBall = AppDelegate.shared.mainView?.locationBallView,
+		          !locationBall.isHidden
+		{
+			// rotate location ball
+			locationBall.headingAccuracy = CGFloat(accuracy * (.pi / 180))
+			locationBall.showHeading = true
+			locationBall.heading = CGFloat(heading + screenAngle - .pi / 2)
 		}
 	}
 }
