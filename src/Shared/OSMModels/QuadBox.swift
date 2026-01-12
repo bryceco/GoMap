@@ -13,8 +13,7 @@ private let MAP_RECT = OSMRect(x: -180.0, y: -90.0, width: 360.0, height: 180.0)
 private let MAX_MEMBERS_PER_LEVEL = 40
 private let MAX_DEPTH = 26 // 2 feet wide
 
-private
-enum QUAD_ENUM: Int, CaseIterable {
+private enum QUAD_ENUM: Int, CaseIterable {
 	case SE = 0
 	case SW = 1
 	case NE = 2
@@ -430,9 +429,7 @@ final class QuadBox: NSObject, NSSecureCoding {
 		} else {
 			// add to self
 			if members.contains(member) {
-#if DEBUG
-				assertionFailure() // duplicate entry
-#endif
+				// it's already in this box
 				return
 			}
 			members.append(member)
