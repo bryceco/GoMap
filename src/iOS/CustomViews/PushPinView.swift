@@ -10,7 +10,7 @@ import CoreLocation
 import QuartzCore
 import UIKit
 
-typealias PushPinViewDragCallback = (UIGestureRecognizer.State, CGFloat, CGFloat) -> Void
+typealias PushPinViewDragCallback = (PushPinView, UIGestureRecognizer.State, CGFloat, CGFloat) -> Void
 
 final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGestureRecognizerDelegate {
 	private let shapeLayer: CAShapeLayer // shape for balloon
@@ -76,7 +76,7 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 		}
 	}
 
-	var dragCallback: PushPinViewDragCallback = { _, _, _ in }
+	var dragCallback: PushPinViewDragCallback = { _, _, _, _ in }
 
 	init() {
 		shapeLayer = CAShapeLayer()
@@ -275,7 +275,7 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 
 		location = viewPort.mapTransform.latLon(forScreenPoint: arrowPoint.plus(delta))
 
-		dragCallback(gesture.state, delta.x, delta.y)
+		dragCallback(self, gesture.state, delta.x, delta.y)
 
 		gesture.setTranslation(.zero, in: self)
 	}

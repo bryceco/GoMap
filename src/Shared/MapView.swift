@@ -923,7 +923,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		return allLayers.first(where: { $0.hasTileServer == TileServer.noName })
 	}
 
-	// MARK: viewPort changed
+	// MARK: ViewPort changed
 
 	func mapTransformDidChange() {
 		// we could move the blink outline similar to pushpin, but it's complicated and less important
@@ -948,25 +948,15 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		promptForBetterBackgroundImagery()
 		checkForChangedTileOverlayLayers()
 
-		// update pushpin location
-		if let pushpinView = self.pushPin {
-			if pushpinView.isDragging {
-				// print("drag pin")
-				/*
-				 // moving the screen while dragging the pin moves the pin/object
-				 let pt = mapTransform.screenPoint(forMapPoint: oldMapPoint, birdsEye: false)
-				 let drag = pushpinView.arrowPoint.minus(pt)
-				 pushpinView.dragCallback(.changed, drag.x, drag.y)
-				  */
-			} else {
-				let isInside = bounds.contains(pushpinView.arrowPoint)
-				if pushPinIsOnscreen, !isInside {
-					// generate feedback if the user scrolled the pushpin off the screen
-					let feedback = UINotificationFeedbackGenerator()
-					feedback.notificationOccurred(.warning)
-				}
-				pushPinIsOnscreen = isInside
+		// notify user if pushpin goes off-screen
+		if let pushPin {
+			let isInside = bounds.contains(pushPin.arrowPoint)
+			if pushPinIsOnscreen, !isInside {
+				// generate feedback if the user scrolled the pushpin off the screen
+				let feedback = UINotificationFeedbackGenerator()
+				feedback.notificationOccurred(.warning)
 			}
+			pushPinIsOnscreen = isInside
 		}
 
 		// We moved to a new location so update markers
@@ -1693,8 +1683,11 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	// screen we scroll the screen to keep the pin in bounds.
 	private func pushpinDragCallbackFor(object: OsmBaseObject) -> PushPinViewDragCallback {
 		weak let object = object
-		return { [weak self] state, dx, dy in
-			guard let self = self else { return }
+		return { pushPin, state, dx, dy in
+			onPushPinDrag(pushPin: pushPin, state: state, dx: dx, dy: dy)
+		}
+
+		func onPushPinDrag(pushPin: PushPinView, state: UIPanGestureRecognizer.State, dx: Double, dy: Double) {
 			switch state {
 			case .ended, .cancelled, .failed:
 				DisplayLink.shared.removeName("dragScroll")
@@ -1707,29 +1700,26 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 					self.editorLayer.dragFinish(object: object, isRotate: isRotate)
 				}
 			case .began:
-				if let pos = self.pushPin?.arrowPoint {
-					self.editorLayer.dragBegin(from: pos.minus(CGPoint(x: dx, y: dy)))
-				}
+				self.editorLayer.dragBegin(from: pushPin.arrowPoint.minus(CGPoint(x: dx, y: dy)))
 				fallthrough // begin state can have movement
 			case .changed:
 				// define the drag function
 				func dragObjectToPushpin() {
 					guard
-						let object = object,
-						let pos = self.pushPin?.arrowPoint
+						let object = object
 					else {
 						return
 					}
 					self.editorLayer.dragContinue(object: object,
-					                              toPoint: pos,
+					                              toPoint: pushPin.arrowPoint,
 					                              isRotateObjectMode: self.isRotateObjectMode)
 				}
 
 				// scroll screen if too close to edge
 				let MinDistanceSide: CGFloat = 40.0
-				let MinDistanceTop = MinDistanceSide + 10.0
+				let MinDistanceTop = MinDistanceSide + self.safeAreaInsets.top
 				let MinDistanceBottom = MinDistanceSide + 120.0
-				let arrow = self.pushPin?.arrowPoint ?? .zero
+				let arrow = pushPin.arrowPoint
 				let screen = self.bounds
 				let SCROLL_SPEED: CGFloat = 10.0
 				var scrollx: CGFloat = 0
@@ -1763,6 +1753,11 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 						let sx = scrollx * CGFloat(duration) * 60.0
 						let sy = scrolly * CGFloat(duration) * 60.0
 						self.viewPort.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
+						// because we moved the screen the pushpin is now back on-screen, but
+						// for smooth continuous operation we put the pushpin back off-screen:
+						let newArrowPoint = pushPin.arrowPoint.withOffset(sx, sy)
+						pushPin.location = viewPort.mapTransform.latLon(forScreenPoint: newArrowPoint)
+
 						// update position of blink layer
 						if let pt = self.blinkLayer?.position.withOffset(-sx, -sy) {
 							self.blinkLayer?.position = pt
@@ -1797,7 +1792,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		if let object = object {
 			pushpinView.dragCallback = pushpinDragCallbackFor(object: object)
 		} else {
-			pushpinView.dragCallback = { _, _, _ in
+			pushpinView.dragCallback = { _, _, _, _ in
 				self.magnifyingGlass.setSourceCenter(
 					pushpinView.arrowPoint,
 					in: self,
