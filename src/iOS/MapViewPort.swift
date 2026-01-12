@@ -52,10 +52,6 @@ let DisplayLinkPanning = "Panning" // disable gestures inside toolbar buttons
 
 extension MapViewPort {
 
-	var mapFromScreenTransform: OSMTransform {
-		return mapTransform.transform.inverse()
-	}
-
 	func isLocationSpecified() -> Bool {
 		return !(mapTransform.transform == .identity)
 	}

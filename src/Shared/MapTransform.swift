@@ -24,47 +24,52 @@ import Foundation
 final class MapTransform {
 	let center: CGPoint = .zero // screen center, needed for bird's eye calculations
 
-	static let latitudeLimit = 85.051128
-
 	// This matrix translates between a "mapPoint" (a 256x256 mercator map of the world) and the screen
-	var _transform = OSMTransform.identity
+	private var _transform = OSMTransform.identity
+	private var _inverse = OSMTransform.identity
 	var transform: OSMTransform {
 		get {
 			return _transform
 		}
 		set {
-			_transform = Self.wrapTransform(newValue)
+			let inverse = newValue.inverse()
+			if let t = Self.wrapTransform(newValue, inverse: inverse) {
+				// needed to wrap/clip the transform
+				_transform = t
+				_inverse = t.inverse()
+			} else {
+				_transform = newValue
+				_inverse = inverse
+			}
 			onChange.notify()
 		}
 	}
 
 	// If we scroll horizontally around the world then wrap, and if we
 	// scroll vertically then ensure that the map remains visible.
-	private static func wrapTransform(_ t: OSMTransform) -> OSMTransform {
+	private static func wrapTransform(_ t: OSMTransform, inverse: OSMTransform) -> OSMTransform? {
 		// We want to find mapCenter such that t * mapCenter = (0,0)
-		let det = t.a * t.d - t.b * t.c
-		let mapCenterX = (t.c * t.ty - t.d * t.tx) / det
-		let mapCenterY = (t.b * t.tx - t.a * t.ty) / det
+		let mapCenter = OSMPoint.zero.withTransform(inverse)
 
 		// Wrap X into [0, 256]
-		var adjustedX = mapCenterX
-		if mapCenterX < 0 {
+		var adjustedX = mapCenter.x
+		if mapCenter.x < 0 {
 			adjustedX += 256
-		} else if mapCenterX > 256 {
+		} else if mapCenter.x > 256 {
 			adjustedX -= 256
 		}
 
 		// Clamp Y into [0, 256]
-		var adjustedY = mapCenterY
-		if mapCenterY < 0 {
+		var adjustedY = mapCenter.y
+		if mapCenter.y < 0 {
 			adjustedY = 0
-		} else if mapCenterY > 256 {
+		} else if mapCenter.y > 256 {
 			adjustedY = 256
 		}
 
 		// If nothing changed, return original
-		if adjustedX == mapCenterX && adjustedY == mapCenterY {
-			return t
+		if adjustedX == mapCenter.x, adjustedY == mapCenter.y {
+			return nil
 		}
 
 		// Rebuild translation
@@ -167,7 +172,7 @@ final class MapTransform {
 			                          birdsEyeDistance: Double(birdsEyeDistance),
 			                          birdsEyeRotation: Double(birdsEyeRotation))
 		}
-		point = point.withTransform(transform.inverse())
+		point = point.withTransform(_inverse)
 		return point
 	}
 
@@ -214,7 +219,7 @@ final class MapTransform {
 	}
 
 	func mapRect(fromScreenRect rect: OSMRect) -> OSMRect {
-		return rect.withTransform(transform.inverse())
+		return rect.withTransform(_inverse)
 	}
 
 	// MARK: Transform screenRect <--> latLonRect
