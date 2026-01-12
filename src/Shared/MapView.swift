@@ -199,58 +199,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 	private(set) var allLayers: [LayerOrView] = []
 
-	func mapTransformDidChange() {
-		// we could move the blink outline similar to pushpin, but it's complicated and less important
-		unblinkObject()
-
-		// Determine if we've zoomed out enough to disable editing
-		// We can only compute a precise surface area size at high zoom since it's possible
-		// for the screen to be larger than the earth
-		let area = mapTransform.zoom() > 8
-			? SurfaceAreaOfRect(viewPort.boundingLatLonForScreen())
-			: Double.greatestFiniteMagnitude
-		var isZoomedOut = area > 2.0 * 1000 * 1000
-		if !editorLayer.isHidden,
-		   !editorLayer.atVisibleObjectLimit,
-		   area < 1000.0 * 1000 * 1000
-		{
-			isZoomedOut = false
-		}
-		viewStateZoomedOut = isZoomedOut
-
-		updateCurrentRegionForLocationUsingCountryCoder()
-		promptForBetterBackgroundImagery()
-		checkForChangedTileOverlayLayers()
-
-		// update pushpin location
-		if let pushpinView = self.pushPin {
-			/*
-			if pushpinView.isDragging {
-				// moving the screen while dragging the pin moves the pin/object
-				let pt = mapTransform.screenPoint(forMapPoint: oldMapPoint, birdsEye: false)
-				let drag = pushpinView.arrowPoint.minus(pt)
-				pushpinView.dragCallback(.changed, drag.x, drag.y)
-			} else {
-				// if not dragging then make sure pin placement is updated
-				let wasInside = bounds.contains(pushpinView.arrowPoint)
-				pushpinView.arrowPoint = mapTransform.screenPoint(forMapPoint: newMapPoint, birdsEye: false)
-				let isInside = bounds.contains(pushpinView.arrowPoint)
-				if wasInside, !isInside {
-					// generate feedback if the user scrolled the pushpin off the screen
-					let feedback = UINotificationFeedbackGenerator()
-					feedback.notificationOccurred(.warning)
-				}
-			}
-			 */
-		}
-
-		// We moved to a new location so update markers
-		updateMapMarkerButtonPositions()
-
-		// This does a more expensive update, but debounced
-		updateMapMarkersFromServer(withDelay: 0, including: [])
-	}
-
 	var gpsLastActive = Date.distantPast
 	var gpsState: GPS_STATE = .NONE {
 		didSet {
@@ -298,6 +246,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	}
 
 	private(set) var pushPin: PushPinView?
+	var pushPinIsOnscreen = false
 
 	let tileServerList: TileServerList
 
@@ -594,7 +543,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		{
 			viewPort.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
 			                         scale: scale,
-									 rotation: 0.0)
+			                         rotation: 0.0)
 		} else {
 			let rc = OSMRect(layer.bounds)
 			mapTransform.transform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
@@ -974,6 +923,59 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		return allLayers.first(where: { $0.hasTileServer == TileServer.noName })
 	}
 
+	// MARK: viewPort changed
+
+	func mapTransformDidChange() {
+		// we could move the blink outline similar to pushpin, but it's complicated and less important
+		unblinkObject()
+
+		// Determine if we've zoomed out enough to disable editing
+		// We can only compute a precise surface area size at high zoom since it's possible
+		// for the screen to be larger than the earth
+		let area = mapTransform.zoom() > 8
+			? SurfaceAreaOfRect(viewPort.boundingLatLonForScreen())
+			: Double.greatestFiniteMagnitude
+		var isZoomedOut = area > 2.0 * 1000 * 1000
+		if !editorLayer.isHidden,
+		   !editorLayer.atVisibleObjectLimit,
+		   area < 1000.0 * 1000 * 1000
+		{
+			isZoomedOut = false
+		}
+		viewStateZoomedOut = isZoomedOut
+
+		updateCurrentRegionForLocationUsingCountryCoder()
+		promptForBetterBackgroundImagery()
+		checkForChangedTileOverlayLayers()
+
+		// update pushpin location
+		if let pushpinView = self.pushPin {
+			if pushpinView.isDragging {
+				// print("drag pin")
+				/*
+				 // moving the screen while dragging the pin moves the pin/object
+				 let pt = mapTransform.screenPoint(forMapPoint: oldMapPoint, birdsEye: false)
+				 let drag = pushpinView.arrowPoint.minus(pt)
+				 pushpinView.dragCallback(.changed, drag.x, drag.y)
+				  */
+			} else {
+				let isInside = bounds.contains(pushpinView.arrowPoint)
+				if pushPinIsOnscreen, !isInside {
+					// generate feedback if the user scrolled the pushpin off the screen
+					let feedback = UINotificationFeedbackGenerator()
+					feedback.notificationOccurred(.warning)
+				}
+				pushPinIsOnscreen = isInside
+			}
+		}
+
+		// We moved to a new location so update markers
+		updateMapMarkerButtonPositions()
+
+		// This does a more expensive update, but debounced
+		updateMapMarkersFromServer(withDelay: 0, including: [])
+	}
+
 	// MARK: Rotate object
 
 	func startObjectRotation() {
@@ -1184,8 +1186,8 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		mainView.userOverrodeLocationPosition = false
 		if let location = locationManager.location {
 			viewPort.centerOn(latLon: LatLon(location.coordinate),
-							  zoom: nil, // don't change zoom
-							  rotation: nil) // don't change rotation
+			                  zoom: nil, // don't change zoom
+			                  rotation: nil) // don't change rotation
 		}
 	}
 
@@ -1288,8 +1290,8 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			// move view to center on new location
 			if mainView.userOverrodeLocationZoom {
 				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
-								  zoom: nil,
-								  rotation: nil)
+				                  zoom: nil,
+				                  rotation: nil)
 			} else {
 				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
 				                  metersWide: 20.0)
@@ -1372,8 +1374,8 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		} else if !bounds.contains(pushPin!.arrowPoint) {
 			// set location without changing zoom
 			viewPort.centerOn(latLon: loc,
-							  zoom: nil,
-							  rotation: nil)
+			                  zoom: nil,
+			                  rotation: nil)
 		}
 	}
 
@@ -1685,7 +1687,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		magnifyingGlass.isHidden = true
 	}
 
-	// This function gets call by the pushpin when the user is dragging it.
+	// This function gets called by the pushpin when the user is dragging it.
 	// If the pin is attached to an editor object we drag the object.
 	// If the pin is being dragged off the edge of the
 	// screen we scroll the screen to keep the pin in bounds.
@@ -1711,14 +1713,16 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 				fallthrough // begin state can have movement
 			case .changed:
 				// define the drag function
-				let dragObjectToPushpin: (() -> Void) = { [weak object] in
-					if let object = object,
-					   let pos = self.pushPin?.arrowPoint
-					{
-						self.editorLayer.dragContinue(object: object,
-						                              toPoint: pos,
-						                              isRotateObjectMode: self.isRotateObjectMode)
+				func dragObjectToPushpin() {
+					guard
+						let object = object,
+						let pos = self.pushPin?.arrowPoint
+					else {
+						return
 					}
+					self.editorLayer.dragContinue(object: object,
+					                              toPoint: pos,
+					                              isRotateObjectMode: self.isRotateObjectMode)
 				}
 
 				// scroll screen if too close to edge

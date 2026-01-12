@@ -270,7 +270,7 @@ extension MapViewPort {
 		}
 		setTransformFor(latLon: latLon,
 		                scale: scale,
-						rotation: rotation)
+		                rotation: rotation)
 	}
 
 	func centerOn(latLon: LatLon, metersWide: Double?) {
@@ -279,7 +279,7 @@ extension MapViewPort {
 		let scale = 360 / (degrees / 2)
 		setTransformFor(latLon: latLon,
 		                scale: scale,
-						rotation: 0.0)
+		                rotation: 0.0)
 	}
 
 	func centerOn(_ location: MapLocation) {
@@ -287,8 +287,8 @@ extension MapViewPort {
 		let latLon = LatLon(latitude: location.latitude, longitude: location.longitude)
 		let rotation = location.direction * .pi / 180.0
 		centerOn(latLon: latLon,
-				 zoom: zoom,
-				 rotation: rotation)
+		         zoom: zoom,
+		         rotation: rotation)
 		if let state = location.viewState {
 			AppDelegate.shared.mapView.viewState = state
 		}
