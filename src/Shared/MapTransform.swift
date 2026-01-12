@@ -38,31 +38,41 @@ final class MapTransform {
 		}
 	}
 
-	private static func wrapTransform(_ transform: OSMTransform) -> OSMTransform {
-		var wrappedTransform = transform
+	// If we scroll horizontally around the world then wrap, and if we
+	// scroll vertically then ensure that the map remains visible.
+	private static func wrapTransform(_ t: OSMTransform) -> OSMTransform {
+		// We want to find mapCenter such that t * mapCenter = (0,0)
+		let det = t.a * t.d - t.b * t.c
+		let mapCenterX = (t.c * t.ty - t.d * t.tx) / det
+		let mapCenterY = (t.b * t.tx - t.a * t.ty) / det
 
-		// Extract translation components
-		let tx = transform.tx
-		let ty = transform.ty
+		// Wrap X into [0, 256]
+		var adjustedX = mapCenterX
+		if mapCenterX < 0 {
+			adjustedX += 256
+		} else if mapCenterX > 256 {
+			adjustedX -= 256
+		}
 
-		// size of transformed image
-		let scaledWidth = hypot(256 * transform.a, 256 * transform.c)
-		let scaledHeight = hypot(256 * transform.b, 256 * transform.d)
+		// Clamp Y into [0, 256]
+		var adjustedY = mapCenterY
+		if mapCenterY < 0 {
+			adjustedY = 0
+		} else if mapCenterY > 256 {
+			adjustedY = 256
+		}
 
-		// Wrap the horizontal translation to keep the map cycling smoothly
-		// Use modulo to ensure we're always within one map width
-		let wrappedTx = tx.truncatingRemainder(dividingBy: scaledWidth)
+		// If nothing changed, return original
+		if adjustedX == mapCenterX && adjustedY == mapCenterY {
+			return t
+		}
 
-		// Pin vertical translation so the center point (0, 0) is always covered
-		let minTy = -scaledHeight // Center at bottom of map
-		let maxTy: CGFloat = 0 // Center at top of map
-		let pinnedTy = max(minTy, min(maxTy, ty))
+		// Rebuild translation
+		var result = t
+		result.tx = -(t.a * adjustedX + t.c * adjustedY)
+		result.ty = -(t.b * adjustedX + t.d * adjustedY)
 
-		// Update the transform with wrapped/pinned translation
-		wrappedTransform.tx = wrappedTx
-		wrappedTransform.ty = pinnedTy
-
-		return wrappedTransform
+		return result
 	}
 
 	// MARK: Observers

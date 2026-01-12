@@ -82,7 +82,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				let track = try mapView.gpxLayer.loadGPXData(data, name: name)
 				if let center = track?.center() {
 					mapView.displayGpxLogs = true // ensure GPX tracks are visible
-					mainView.centerOn(latLon: center, metersWide: 20.0)
+					mainView.centerOn(latLon: center, metersWide: nil)
 					mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 				}
 			} catch {
@@ -131,7 +131,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 						let geo = try GeoJSONFile(data: data)
 						try geoJsonList.add(name: url.lastPathComponent, data: data)
 						if let loc = geo.firstPoint() {
-							mainView.centerOn(latLon: loc)
+							mainView.centerOn(latLon: loc, metersWide: nil)
 							mapView.displayDataOverlayLayers = true
 						}
 					} catch {

@@ -458,6 +458,7 @@ extension OSMTransform {
 		let d = sqrt(m11 * m11 + m12 * m12 + m13 * m13)
 		return d
 #else
+		// We never have skew, and scaleX == scaleY, so just compute scaleX:
 		return hypot(a, c)
 #endif
 	}

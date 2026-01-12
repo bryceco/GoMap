@@ -128,7 +128,7 @@ class DataOverlaysController: UITableViewController {
 					let mainView = AppDelegate.shared.mainView
 				else { return }
 				self.dismiss(animated: true)
-				mainView.centerOn(latLon: latLon, metersWide: 20.0)
+				mainView.centerOn(latLon: latLon, metersWide: nil)
 			}
 		}
 	}

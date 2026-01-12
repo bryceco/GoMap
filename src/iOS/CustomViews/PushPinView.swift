@@ -6,12 +6,13 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
+import CoreLocation
 import QuartzCore
 import UIKit
 
 typealias PushPinViewDragCallback = (UIGestureRecognizer.State, CGFloat, CGFloat) -> Void
 
-final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDelegate {
+final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGestureRecognizerDelegate {
 	private let shapeLayer: CAShapeLayer // shape for balloon
 	private let textLayer: CATextLayer // text in balloon
 	private var hittestRect = CGRect.zero
@@ -21,6 +22,29 @@ final class PushPinView: UIButton, CAAnimationDelegate, UIGestureRecognizerDeleg
 	private var buttonList = [UIButton]()
 	private var callbackList = [() -> Void]()
 	private var lineLayers = [CAShapeLayer]()
+
+	var location: LatLon = .zero {
+		didSet {
+			if let point = screenPoint() {
+				arrowPoint = point
+			}
+		}
+	}
+
+	var viewPort: MapViewPort? {
+		didSet {
+			oldValue?.mapTransform.onChange.unsubscribe(self)
+			viewPort?.mapTransform.onChange.subscribe(self) { [weak self] in
+				self?.updateScreenPosition()
+			}
+		}
+	}
+
+	func updateScreenPosition() {
+		if let point = screenPoint() {
+			arrowPoint = point
+		}
+	}
 
 	var text: String {
 		get {

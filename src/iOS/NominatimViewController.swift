@@ -117,7 +117,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		   zoom > 1,
 		   zoom < 24
 		{
-			appDelegate.mainView.centerOn(latLon: latLon, zoom: zoom)
+			appDelegate.mainView.centerOn(latLon: latLon, zoom: zoom, rotation: 0.0)
 		} else {
 			appDelegate.mainView.centerOn(latLon: latLon, metersWide: 50.0)
 		}

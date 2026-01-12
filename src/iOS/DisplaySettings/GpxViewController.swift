@@ -480,7 +480,7 @@ class GpxViewController: UITableViewController {
 			let gpxLayer = mainView.mapView.gpxLayer!
 			gpxLayer.selectedTrack = gpxLayer.activeTrack
 			if let trackPt = gpxLayer.selectedTrack?.center() {
-				mainView.centerOn(latLon: trackPt, metersWide: 20.0)
+				mainView.centerOn(latLon: trackPt, metersWide: nil)
 			}
 			navigationController?.dismiss(animated: true)
 		} else if indexPath.section == SECTION_CONFIGURE {
@@ -498,7 +498,7 @@ class GpxViewController: UITableViewController {
 			let track = gpxLayer.previousTracks[indexPath.row]
 			gpxLayer.selectedTrack = track
 			if let center = track.center() {
-				mainView.centerOn(latLon: center)
+				mainView.centerOn(latLon: center, metersWide: nil)
 			}
 			AppDelegate.shared.mapView.displayGpxLogs = true
 			navigationController?.dismiss(animated: true)

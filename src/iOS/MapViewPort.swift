@@ -231,47 +231,64 @@ extension MapViewPort {
 
 	// Try not to call this directly, since scale isn't something exposed.
 	// Use one of the centerOn() functions instead.
-	func setTransformFor(latLon: LatLon, scale: Double? = nil) {
-		var lat = latLon.lat
-		lat = min(lat, MapTransform.latitudeLimit)
-		lat = max(lat, -MapTransform.latitudeLimit)
-		let latLon2 = LatLon(latitude: lat, longitude: latLon.lon)
-		let point = mapTransform.screenPoint(forLatLon: latLon2, birdsEye: false)
-		let center = screenCenterPoint()
-		let delta = CGPoint(x: center.x - point.x, y: center.y - point.y)
-		adjustOrigin(by: delta)
+	func setTransformFor(
+		latLon: LatLon,
+		scale newScale: Double? = nil,
+		rotation: Double? = nil)
+	{
+		// Current matrix
+		let old = mapTransform.transform
 
-		if let scale = scale {
-			let ratio = scale / mapTransform.scale()
-			adjustZoom(by: CGFloat(ratio), aroundScreenPoint: screenCenterPoint())
+		// Extract current scale from matrix magnitude
+		let currentScale = mapTransform.scale()
+		let scale = newScale ?? currentScale
+
+		// Compute uniform scale factor
+		let factor = scale / currentScale
+
+		// Scale the matrix without touching rotation
+		let a = old.a * factor
+		let b = old.b * factor
+		let c = old.c * factor
+		let d = old.d * factor
+
+		// Compute translation to center on the new lat/lon
+		let pt = MapTransform.mapPoint(forLatLon: latLon)
+		let tx = -(pt.x * a + pt.y * c)
+		let ty = -(pt.x * b + pt.y * d)
+
+		mapTransform.transform = OSMTransform(a: a, b: b, c: c, d: d, tx: tx, ty: ty)
+	}
+
+	// center without changing zoom or rotation, such as when pressing the Center button
+	func centerOn(latLon: LatLon, zoom: Double?, rotation: Double?) {
+		let scale: Double?
+		if let zoom {
+			scale = pow(2.0, zoom)
+		} else {
+			scale = nil
 		}
-	}
-
-	// center without changing zoom
-	func centerOn(latLon: LatLon) {
-		setTransformFor(latLon: latLon, scale: nil)
-	}
-
-	func centerOn(latLon: LatLon, zoom: Double) {
-		let scale = pow(2.0, zoom)
 		setTransformFor(latLon: latLon,
-		                scale: scale)
+		                scale: scale,
+						rotation: rotation)
 	}
 
-	func centerOn(latLon: LatLon, metersWide: Double) {
+	func centerOn(latLon: LatLon, metersWide: Double?) {
+		let metersWide = metersWide ?? 20.0
 		let degrees = metersToDegrees(meters: metersWide, latitude: latLon.lat)
 		let scale = 360 / (degrees / 2)
 		setTransformFor(latLon: latLon,
-		                scale: scale)
+		                scale: scale,
+						rotation: 0.0)
 	}
 
 	func centerOn(_ location: MapLocation) {
 		let zoom = location.zoom > 0 ? location.zoom : 21.0
 		let latLon = LatLon(latitude: location.latitude, longitude: location.longitude)
+		let rotation = location.direction * .pi / 180.0
 		centerOn(latLon: latLon,
-		         zoom: zoom)
-		let rotation = location.direction * .pi / 180.0 + mapTransform.rotation()
-		rotate(by: CGFloat(-rotation), aroundScreenPoint: screenCenterPoint())
+				 zoom: zoom,
+				 rotation: rotation)
 		if let state = location.viewState {
 			AppDelegate.shared.mapView.viewState = state
 		}

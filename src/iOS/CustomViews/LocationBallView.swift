@@ -10,51 +10,31 @@ import CoreLocation
 import QuartzCore
 import UIKit
 
-final class LocationBallView: UIView {
+final class LocationBallView: UIView, MapPositionedView {
 	private var headingLayer: CAGradientLayer
 	private var ringLayer: CAShapeLayer
 	private var circleLayer: CAShapeLayer
 
-	var location = CLLocation() {
-		didSet {
-			updateScreenPosition()
-		}
-	}
-
-	private func updateScreenPosition() {
-		guard
-			let viewPort,
-			let mapView = AppDelegate.shared.mapView
-		else {
-			return
-		}
-		let latLon = LatLon(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-		var point = viewPort.mapTransform.screenPoint(forLatLon: latLon, birdsEye: false)
-		point = viewPort.mapTransform.wrappedScreenPoint(point, screenBounds: mapView.bounds)
-		center = point
-	}
+	var location: LatLon = .zero
 
 	func updateLocation(_ location: CLLocation) {
-		// set new position
 		guard
-			!isHidden,
-			let viewPort,
 			location.horizontalAccuracy >= 0,
 			location.horizontalAccuracy < 1000
 		else {
 			return
 		}
-		self.location = location
+		updateLocationDefault(LatLon(lon: location.coordinate.longitude, lat: location.coordinate.latitude))
 
 		// set location accuracy
-		let meters = location.horizontalAccuracy
-		var pixels = CGFloat(meters / viewPort.metersPerPixel())
-		if pixels == 0.0 {
-			pixels = 100.0
+		if let viewPort {
+			let meters = location.horizontalAccuracy
+			var pixels = CGFloat(meters / viewPort.metersPerPixel())
+			if pixels == 0.0 {
+				pixels = 100.0
+			}
+			radiusInPixels = pixels
 		}
-		radiusInPixels = pixels
-
-		updateScreenPosition()
 	}
 
 	var viewPort: MapViewPort? {
@@ -114,7 +94,7 @@ final class LocationBallView: UIView {
 		ringLayer.strokeColor = circleColor.cgColor
 		ringLayer.lineWidth = 2.0
 		ringLayer.frame = bounds
-		ringLayer.position = CGPoint(x: 8, y: 8)
+		ringLayer.position = CGPoint(x: 16, y: 16)
 		let animation = ringAnimation(withRadius: 100)
 		ringLayer.add(animation, forKey: "ring")
 		layer.addSublayer(ringLayer)
@@ -128,15 +108,15 @@ final class LocationBallView: UIView {
 		// create a radial gradient for the heading cone
 		headingLayer.isHidden = true
 		headingLayer.frame = rc.offsetBy(dx: (bounds.size.width - rc.width) / 2,
-										 dy: (bounds.size.height - rc.height) / 2)
+		                                 dy: (bounds.size.height - rc.height) / 2)
 		headingLayer.type = .radial
 		headingLayer.startPoint = CGPoint(x: 0.5, y: 0.5)
 		headingLayer.endPoint = CGPoint(x: 1.0, y: 1.0)
 		headingLayer.colors = [circleColor.cgColor,
-							   circleColor.cgColor,
-							   circleColor.withAlphaComponent(0.7).cgColor,
-							   circleColor.withAlphaComponent(0.4).cgColor,
-							   circleColor.withAlphaComponent(0.2).cgColor]
+		                       circleColor.cgColor,
+		                       circleColor.withAlphaComponent(0.7).cgColor,
+		                       circleColor.withAlphaComponent(0.4).cgColor,
+		                       circleColor.withAlphaComponent(0.2).cgColor]
 		headingLayer.mask = gradientMask
 		layer.addSublayer(headingLayer)
 
@@ -162,11 +142,11 @@ final class LocationBallView: UIView {
 		let startRadius: CGFloat = 5
 		let finishRadius = radius
 		let startPath = CGPath(ellipseIn: CGRect(x: -startRadius, y: -startRadius,
-												 width: 2 * startRadius, height: 2 * startRadius),
-							   transform: nil)
+		                                         width: 2 * startRadius, height: 2 * startRadius),
+		                       transform: nil)
 		let finishPath = CGPath(ellipseIn: CGRect(x: -finishRadius, y: -finishRadius,
-												  width: 2 * finishRadius, height: 2 * finishRadius),
-								transform: nil)
+		                                          width: 2 * finishRadius, height: 2 * finishRadius),
+		                        transform: nil)
 		let anim = CABasicAnimation(keyPath: "path")
 		anim.duration = 2.0
 		anim.fromValue = startPath

@@ -225,23 +225,22 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		// update pushpin location
 		if let pushpinView = self.pushPin {
 			/*
-			 // FIXME: Fix pushpin
-			 if pushpinView.isDragging {
-			 // moving the screen while dragging the pin moves the pin/object
-			 let pt = mapTransform.screenPoint(forMapPoint: oldMapPoint, birdsEye: false)
-			 let drag = pushpinView.arrowPoint.minus(pt)
-			 pushpinView.dragCallback(.changed, drag.x, drag.y)
-			 } else {
-			 // if not dragging then make sure pin placement is updated
-			 let wasInside = bounds.contains(pushpinView.arrowPoint)
-			 pushpinView.arrowPoint = mapTransform.screenPoint(forMapPoint: newMapPoint, birdsEye: false)
-			 let isInside = bounds.contains(pushpinView.arrowPoint)
-			 if wasInside, !isInside {
-			 // generate feedback if the user scrolled the pushpin off the screen
-			 let feedback = UINotificationFeedbackGenerator()
-			 feedback.notificationOccurred(.warning)
-			 }
-			 }
+			if pushpinView.isDragging {
+				// moving the screen while dragging the pin moves the pin/object
+				let pt = mapTransform.screenPoint(forMapPoint: oldMapPoint, birdsEye: false)
+				let drag = pushpinView.arrowPoint.minus(pt)
+				pushpinView.dragCallback(.changed, drag.x, drag.y)
+			} else {
+				// if not dragging then make sure pin placement is updated
+				let wasInside = bounds.contains(pushpinView.arrowPoint)
+				pushpinView.arrowPoint = mapTransform.screenPoint(forMapPoint: newMapPoint, birdsEye: false)
+				let isInside = bounds.contains(pushpinView.arrowPoint)
+				if wasInside, !isInside {
+					// generate feedback if the user scrolled the pushpin off the screen
+					let feedback = UINotificationFeedbackGenerator()
+					feedback.notificationOccurred(.warning)
+				}
+			}
 			 */
 		}
 
@@ -385,7 +384,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 					                    lat: startLatLon.lat + sin(offset * 2.0 * .pi) * radius2.y)
 					let zoomFrac = (1.0 + cos(offset * 2.0 * .pi)) * 0.5
 					let zoom = startZoom * (1 + zoomFrac * 0.01)
-					myself.viewPort.centerOn(latLon: origin, zoom: zoom)
+					myself.viewPort.centerOn(latLon: origin, zoom: zoom, rotation: nil)
 				})
 			} else {
 				mainView.fpsLabel.showFPS = false
@@ -588,6 +587,22 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		voiceAnnouncement?.radius = 30 // meters
 #endif
 
+		// get current location
+		if let lat = UserPrefs.shared.view_latitude.value,
+		   let lon = UserPrefs.shared.view_longitude.value,
+		   let scale = UserPrefs.shared.view_scale.value
+		{
+			viewPort.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
+			                         scale: scale,
+									 rotation: 0.0)
+		} else {
+			let rc = OSMRect(layer.bounds)
+			mapTransform.transform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
+			                                                  rc.origin.y + rc.size.height / 2 - 128)
+			// turn on GPS which will move us to current location
+			mainView.setGpsState(GPS_STATE.LOCATION)
+		}
+
 		// these need to be loaded late because assigning to them changes the view
 		displayGpxLogs = UserPrefs.shared.mapViewEnableBreadCrumb.value ?? false
 		displayDataOverlayLayers = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
@@ -618,21 +633,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			self.updateCurrentRegionForLocationUsingCountryCoder()
 			self.promptForBetterBackgroundImagery()
 			self.checkForChangedTileOverlayLayers()
-		}
-
-		// get current location
-		if let lat = UserPrefs.shared.view_latitude.value,
-		   let lon = UserPrefs.shared.view_longitude.value,
-		   let scale = UserPrefs.shared.view_scale.value
-		{
-			viewPort.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
-			                         scale: scale)
-		} else {
-			let rc = OSMRect(layer.bounds)
-			mapTransform.transform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
-			                                                  rc.origin.y + rc.size.height / 2 - 128)
-			// turn on GPS which will move us to current location
-			mainView.setGpsState(GPS_STATE.LOCATION)
 		}
 
 		// get notes, etc.
@@ -1183,7 +1183,9 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 		mainView.userOverrodeLocationPosition = false
 		if let location = locationManager.location {
-			viewPort.centerOn(latLon: LatLon(location.coordinate))
+			viewPort.centerOn(latLon: LatLon(location.coordinate),
+							  zoom: nil, // don't change zoom
+							  rotation: nil) // don't change rotation
 		}
 	}
 
@@ -1285,16 +1287,13 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		{
 			// move view to center on new location
 			if mainView.userOverrodeLocationZoom {
-				viewPort.centerOn(latLon: LatLon(newLocation.coordinate))
+				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
+								  zoom: nil,
+								  rotation: nil)
 			} else {
 				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
 				                  metersWide: 20.0)
 			}
-		}
-
-		if let pushPin = pushPin {
-			let pp = mapTransform.latLon(forScreenPoint: pushPin.arrowPoint)
-			pushPin.arrowPoint = mapTransform.screenPoint(forLatLon: pp, birdsEye: true)
 		}
 
 		mainView.locationBallView.updateLocation(newLocation)
@@ -1372,7 +1371,9 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			viewPort.centerOn(latLon: loc, metersWide: 30.0)
 		} else if !bounds.contains(pushPin!.arrowPoint) {
 			// set location without changing zoom
-			viewPort.centerOn(latLon: loc)
+			viewPort.centerOn(latLon: loc,
+							  zoom: nil,
+							  rotation: nil)
 		}
 	}
 
@@ -1684,6 +1685,10 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		magnifyingGlass.isHidden = true
 	}
 
+	// This function gets call by the pushpin when the user is dragging it.
+	// If the pin is attached to an editor object we drag the object.
+	// If the pin is being dragged off the edge of the
+	// screen we scroll the screen to keep the pin in bounds.
 	private func pushpinDragCallbackFor(object: OsmBaseObject) -> PushPinViewDragCallback {
 		weak let object = object
 		return { [weak self] state, dx, dy in
@@ -1779,10 +1784,11 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 		editorLayer.dragState.confirmDrag = false
 		let pushpinView = PushPinView()
+		pushpinView.viewPort = viewPort
 		pushPin = pushpinView
 		refreshPushpinText()
-		pushpinView.layer.zPosition = ZLAYER.PUSHPIN.rawValue
-		pushpinView.arrowPoint = point
+		pushpinView.location = viewPort.mapTransform.latLon(forScreenPoint: point)
+		addSubview(pushpinView)
 
 		if let object = object {
 			pushpinView.dragCallback = pushpinDragCallbackFor(object: object)
@@ -1834,8 +1840,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 			magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self, visible: !aerialLayer.isHidden)
 		}
-
-		addSubview(pushpinView)
 
 		updateEditControl()
 	}

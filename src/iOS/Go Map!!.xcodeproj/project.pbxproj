@@ -198,6 +198,7 @@
 		02F0297C2BFAFF53002F7956 /* DataOverlays.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02F0297B2BFAFF53002F7956 /* DataOverlays.storyboard */; };
 		02F0297E2BFB01E3002F7956 /* DataOverlaysController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F0297D2BFB01E3002F7956 /* DataOverlaysController.swift */; };
 		02F2449A264F635800C42E41 /* PathUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924C263FFEF9000A2A99 /* PathUtil.swift */; };
+		02F3C8672F145D2800BB94C6 /* MapPositionedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F3C8662F145D2800BB94C6 /* MapPositionedView.swift */; };
 		02F3F8412B96CCAE00ECB99F /* MapLibre in Frameworks */ = {isa = PBXBuildFile; platformFilter = ios; productRef = 02F3F8402B96CCAE00ECB99F /* MapLibre */; settings = {ATTRIBUTES = (Required, ); }; };
 		02F3F8432B96CDA600ECB99F /* MapLibreVectorTilesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F3F8422B96CDA600ECB99F /* MapLibreVectorTilesView.swift */; };
 		02F53298267AB41C0088DF41 /* EditorMapLayer+HitTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */; };
@@ -544,6 +545,7 @@
 		02EF13C22E5D041800418CA4 /* UIFont+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Ext.swift"; sourceTree = "<group>"; };
 		02F0297B2BFAFF53002F7956 /* DataOverlays.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DataOverlays.storyboard; sourceTree = "<group>"; };
 		02F0297D2BFB01E3002F7956 /* DataOverlaysController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataOverlaysController.swift; sourceTree = "<group>"; };
+		02F3C8662F145D2800BB94C6 /* MapPositionedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPositionedView.swift; sourceTree = "<group>"; };
 		02F3F8422B96CDA600ECB99F /* MapLibreVectorTilesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapLibreVectorTilesView.swift; sourceTree = "<group>"; };
 		02F53297267AB41C0088DF41 /* EditorMapLayer+HitTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+HitTest.swift"; sourceTree = "<group>"; };
 		02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Ext.swift"; sourceTree = "<group>"; };
@@ -922,6 +924,7 @@
 				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
 				C3D096D4263EACFF00E3B129 /* LocationBallView.swift */,
+				02F3C8662F145D2800BB94C6 /* MapPositionedView.swift */,
 				02CE3CE829919FC400DDACE0 /* LocationButton.swift */,
 				02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */,
 				C381C30A263FE518003142BA /* PushPinView.swift */,
@@ -1709,6 +1712,7 @@
 				025F004F2E453002003A68FA /* TypeCast.swift in Sources */,
 				02FBDB5D2E873D9200A70CEF /* StatusBarGradient.swift in Sources */,
 				02CE3CE52990A8CE00DDACE0 /* QuestChooserController.swift in Sources */,
+				02F3C8672F145D2800BB94C6 /* MapPositionedView.swift in Sources */,
 				024909CF267EADC70027E531 /* OsmXmlGenerator.swift in Sources */,
 				0202C6002E3C348400649F26 /* ButtonClosure.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
