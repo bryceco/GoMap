@@ -951,7 +951,10 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		// notify user if pushpin goes off-screen
 		if let pushPin {
 			let isInside = bounds.contains(pushPin.arrowPoint)
-			if pushPinIsOnscreen, !isInside {
+			if pushPinIsOnscreen,
+			   !isInside,
+			   !pushPin.isDragging
+			{
 				// generate feedback if the user scrolled the pushpin off the screen
 				let feedback = UINotificationFeedbackGenerator()
 				feedback.notificationOccurred(.warning)
@@ -1681,100 +1684,94 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	// If the pin is attached to an editor object we drag the object.
 	// If the pin is being dragged off the edge of the
 	// screen we scroll the screen to keep the pin in bounds.
-	private func pushpinDragCallbackFor(object: OsmBaseObject) -> PushPinViewDragCallback {
-		weak let object = object
-		return { pushPin, state, dx, dy in
-			onPushPinDrag(pushPin: pushPin, state: state, dx: dx, dy: dy)
-		}
+	func onPushPinDrag(pushPin: PushPinView, state: UIPanGestureRecognizer.State,
+	                   object: OsmBaseObject?,
+	                   dx: Double, dy: Double)
+	{
+		switch state {
+		case .ended, .cancelled, .failed:
 
-		func onPushPinDrag(pushPin: PushPinView, state: UIPanGestureRecognizer.State, dx: Double, dy: Double) {
-			switch state {
-			case .ended, .cancelled, .failed:
-				DisplayLink.shared.removeName("dragScroll")
-				let isRotate = self.isRotateObjectMode != nil
-				if isRotate {
-					self.endObjectRotation()
-				}
-				self.unblinkObject()
-				if let object = object {
-					self.editorLayer.dragFinish(object: object, isRotate: isRotate)
-				}
-			case .began:
-				self.editorLayer.dragBegin(from: pushPin.arrowPoint.minus(CGPoint(x: dx, y: dy)))
-				fallthrough // begin state can have movement
-			case .changed:
-				// define the drag function
-				func dragObjectToPushpin() {
-					guard
-						let object = object
-					else {
-						return
-					}
+			DisplayLink.shared.removeName("dragScroll")
+			let isRotate = self.isRotateObjectMode != nil
+			if isRotate {
+				self.endObjectRotation()
+			}
+			self.unblinkObject()
+			if let object {
+				self.editorLayer.dragFinish(object: object, isRotate: isRotate)
+			}
+		case .began:
+			self.editorLayer.dragBegin(from: pushPin.arrowPoint.minus(CGPoint(x: dx, y: dy)))
+			fallthrough // begin state can have movement
+		case .changed:
+			// define the drag function
+			func dragObjectToPushpin() {
+				if let object {
 					self.editorLayer.dragContinue(object: object,
 					                              toPoint: pushPin.arrowPoint,
 					                              isRotateObjectMode: self.isRotateObjectMode)
 				}
-
-				// scroll screen if too close to edge
-				let MinDistanceSide: CGFloat = 40.0
-				let MinDistanceTop = MinDistanceSide + self.safeAreaInsets.top
-				let MinDistanceBottom = MinDistanceSide + 120.0
-				let arrow = pushPin.arrowPoint
-				let screen = self.bounds
-				let SCROLL_SPEED: CGFloat = 10.0
-				var scrollx: CGFloat = 0
-				var scrolly: CGFloat = 0
-
-				if arrow.x < (screen.origin.x + MinDistanceSide) {
-					scrollx = -SCROLL_SPEED
-				} else if arrow.x > screen.origin.x + screen.size.width - MinDistanceSide {
-					scrollx = SCROLL_SPEED
-				}
-				if arrow.y < screen.origin.y + MinDistanceTop {
-					scrolly = -SCROLL_SPEED
-				} else if arrow.y > screen.origin.y + screen.size.height - MinDistanceBottom {
-					scrolly = SCROLL_SPEED
-				}
-
-				if scrollx != 0.0 || scrolly != 0.0 {
-					// if we're dragging at a diagonal then scroll diagonally as well, in the direction the user is dragging
-					let center = viewPort.screenCenterPoint()
-					let v = Sub(OSMPoint(arrow), OSMPoint(center)).unitVector()
-					scrollx = SCROLL_SPEED * CGFloat(v.x)
-					scrolly = SCROLL_SPEED * CGFloat(v.y)
-
-					// scroll the screen to keep pushpin centered
-					var prevTime = TimeInterval(CACurrentMediaTime())
-					DisplayLink.shared.addName("dragScroll", block: { [self] in
-						let now = TimeInterval(CACurrentMediaTime())
-						let duration = now - prevTime
-						prevTime = now
-						// scale to 60 FPS assumption, need to move farther if framerate is slow
-						let sx = scrollx * CGFloat(duration) * 60.0
-						let sy = scrolly * CGFloat(duration) * 60.0
-						self.viewPort.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
-						// because we moved the screen the pushpin is now back on-screen, but
-						// for smooth continuous operation we put the pushpin back off-screen:
-						let newArrowPoint = pushPin.arrowPoint.withOffset(sx, sy)
-						pushPin.location = viewPort.mapTransform.latLon(forScreenPoint: newArrowPoint)
-
-						// update position of blink layer
-						if let pt = self.blinkLayer?.position.withOffset(-sx, -sy) {
-							self.blinkLayer?.position = pt
-						}
-						dragObjectToPushpin()
-					})
-				} else {
-					DisplayLink.shared.removeName("dragScroll")
-				}
-
-				// move the object
-				dragObjectToPushpin()
-
-				self.magnifyingGlass.setSourceCenter(arrow, in: self, visible: !self.aerialLayer.isHidden)
-			default:
-				break
 			}
+
+			// scroll screen if too close to edge
+			let MinDistanceSide: CGFloat = 40.0
+			let MinDistanceTop = MinDistanceSide + self.safeAreaInsets.top
+			let MinDistanceBottom = MinDistanceSide + 120.0
+			let arrow = pushPin.arrowPoint
+			let screen = self.bounds
+			let SCROLL_SPEED: CGFloat = 10.0
+			var scrollx: CGFloat = 0
+			var scrolly: CGFloat = 0
+
+			if arrow.x < (screen.origin.x + MinDistanceSide) {
+				scrollx = -SCROLL_SPEED
+			} else if arrow.x > screen.origin.x + screen.size.width - MinDistanceSide {
+				scrollx = SCROLL_SPEED
+			}
+			if arrow.y < screen.origin.y + MinDistanceTop {
+				scrolly = -SCROLL_SPEED
+			} else if arrow.y > screen.origin.y + screen.size.height - MinDistanceBottom {
+				scrolly = SCROLL_SPEED
+			}
+
+			if scrollx != 0.0 || scrolly != 0.0 {
+				// if we're dragging at a diagonal then scroll diagonally as well, in the direction the user is dragging
+				let center = viewPort.screenCenterPoint()
+				let v = Sub(OSMPoint(arrow), OSMPoint(center)).unitVector()
+				scrollx = SCROLL_SPEED * CGFloat(v.x)
+				scrolly = SCROLL_SPEED * CGFloat(v.y)
+
+				// scroll the screen to keep pushpin on-screen
+				var prevTime = TimeInterval(CACurrentMediaTime())
+				DisplayLink.shared.addName("dragScroll", block: { [self] in
+					let now = TimeInterval(CACurrentMediaTime())
+					let duration = now - prevTime
+					prevTime = now
+					// scale to 60 FPS assumption, need to move farther if framerate is slow
+					let sx = scrollx * CGFloat(duration) * 60.0
+					let sy = scrolly * CGFloat(duration) * 60.0
+					self.viewPort.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
+					// because we moved the screen the pushpin is now back on-screen, but
+					// for smooth continuous operation we put the pushpin back off-screen:
+					let newArrowPoint = pushPin.arrowPoint.withOffset(sx, sy)
+					pushPin.location = viewPort.mapTransform.latLon(forScreenPoint: newArrowPoint)
+
+					// update position of blink layer
+					if let pt = self.blinkLayer?.position.withOffset(-sx, -sy) {
+						self.blinkLayer?.position = pt
+					}
+					dragObjectToPushpin()
+					self.magnifyingGlass.setSourceCenter(arrow, in: self, visible: !self.aerialLayer.isHidden)
+				})
+			} else {
+				DisplayLink.shared.removeName("dragScroll")
+			}
+
+			// move the object
+			dragObjectToPushpin()
+			self.magnifyingGlass.setSourceCenter(arrow, in: self, visible: !self.aerialLayer.isHidden)
+		default:
+			break
 		}
 	}
 
@@ -1789,15 +1786,8 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		pushpinView.location = viewPort.mapTransform.latLon(forScreenPoint: point)
 		addSubview(pushpinView)
 
-		if let object = object {
-			pushpinView.dragCallback = pushpinDragCallbackFor(object: object)
-		} else {
-			pushpinView.dragCallback = { _, _, _, _ in
-				self.magnifyingGlass.setSourceCenter(
-					pushpinView.arrowPoint,
-					in: self,
-					visible: !self.aerialLayer.isHidden)
-			}
+		pushpinView.dragCallback = { [weak self, weak object] pushPin, state, dx, dy in
+			self?.onPushPinDrag(pushPin: pushPin, state: state, object: object, dx: dx, dy: dy)
 		}
 
 		if object == nil {
