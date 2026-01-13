@@ -90,16 +90,10 @@ final class MapView: UIView, UIActionSheetDelegate,
 	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate, DPadDelegate,
 	UISheetPresentationControllerDelegate
 {
-	var lastMouseDragPos = CGPoint.zero
-	var addWayProgressLayer: CAShapeLayer?
-	var isZoomScroll = false // Command-scroll zooms instead of scrolling (desktop only)
-
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
 
 	var voiceAnnouncement: VoiceAnnouncement?
 	var objectRotationGesture: UIRotationGestureRecognizer!
-
-	var windowPresented = false
 
 	@IBOutlet var editToolbar: CustomSegmentedControl!
 
@@ -628,24 +622,19 @@ final class MapView: UIView, UIActionSheetDelegate,
 
 	// MARK: Utility
 
-	func isFlipped() -> Bool {
-		return true
-	}
-
 	func updateAerialAttributionButton() {
 		let service = aerialLayer.tileServer
 		let icon = service.attributionIcon(height: mainView.aerialServiceLogo.frame.size.height,
-		                                   completion: {
-		                                   	self.updateAerialAttributionButton()
+		                                   completion: { [weak self] in
+		                                   	self?.updateAerialAttributionButton()
 		                                   })
-		mainView.aerialServiceLogo.isHidden = aerialLayer
-			.isHidden || (service.attributionString.isEmpty && icon == nil)
-		if !mainView.aerialServiceLogo.isHidden {
-			let gap = icon != nil && service.attributionString.count > 0 ? " " : ""
-			let title = gap + service.attributionString
-			mainView.aerialServiceLogo.setImage(icon, for: .normal)
-			mainView.aerialServiceLogo.setTitle(title, for: .normal)
-		}
+		mainView.aerialServiceLogo.isHidden = aerialLayer.isHidden
+			|| (service.attributionString.isEmpty && icon == nil)
+
+		let gap = icon != nil && service.attributionString.count > 0 ? " " : ""
+		let title = gap + service.attributionString
+		mainView.aerialServiceLogo.setImage(icon, for: .normal)
+		mainView.aerialServiceLogo.setTitle(title, for: .normal)
 	}
 
 	func ask(toRate uploadCount: Int) {
@@ -1078,43 +1067,6 @@ final class MapView: UIView, UIActionSheetDelegate,
 
 	// MARK: Undo/Redo
 
-	func placePushpinForSelection(at point: CGPoint? = nil) {
-		guard let selection = editorLayer.selectedPrimary
-		else {
-			removePin()
-			return
-		}
-
-		// Make sure editor is visible
-		switch viewState {
-		case .AERIAL, .BASEMAP:
-			viewState = .EDITORAERIAL
-		case .EDITOR, .EDITORAERIAL:
-			break
-		}
-
-		let loc: LatLon
-		if let point = point {
-			let latLon = viewPort.mapTransform.latLon(forScreenPoint: point)
-			loc = selection.latLonOnObject(forLatLon: latLon)
-		} else {
-			loc = selection.selectionPoint()
-		}
-
-		let point = viewPort.mapTransform.screenPoint(forLatLon: loc, birdsEye: true)
-		placePushpin(at: point, object: selection)
-
-		if viewStateZoomedOut {
-			// set location and zoom in
-			viewPort.centerOn(latLon: loc, metersWide: 30.0)
-		} else if !bounds.contains(pushPin!.arrowPoint) {
-			// set location without changing zoom
-			viewPort.centerOn(latLon: loc,
-			                  zoom: nil,
-			                  rotation: nil)
-		}
-	}
-
 	@IBAction func undo(_ sender: Any?) {
 		if editorLayer.isHidden {
 			MessageDisplay.shared.flashMessage(
@@ -1411,6 +1363,45 @@ final class MapView: UIView, UIActionSheetDelegate,
 			}
 		} else if selectedPrimary.isNode() != nil {
 			restrictionEditWarning(viaNode: editorLayer.selectedNode)
+		}
+	}
+
+	// MARK: PushPin
+
+	func placePushpinForSelection(at point: CGPoint? = nil) {
+		guard let selection = editorLayer.selectedPrimary
+		else {
+			removePin()
+			return
+		}
+
+		// Make sure editor is visible
+		switch viewState {
+		case .AERIAL, .BASEMAP:
+			viewState = .EDITORAERIAL
+		case .EDITOR, .EDITORAERIAL:
+			break
+		}
+
+		let loc: LatLon
+		if let point = point {
+			let latLon = viewPort.mapTransform.latLon(forScreenPoint: point)
+			loc = selection.latLonOnObject(forLatLon: latLon)
+		} else {
+			loc = selection.selectionPoint()
+		}
+
+		let point = viewPort.mapTransform.screenPoint(forLatLon: loc, birdsEye: true)
+		placePushpin(at: point, object: selection)
+
+		if viewStateZoomedOut {
+			// set location and zoom in
+			viewPort.centerOn(latLon: loc, metersWide: 30.0)
+		} else if !bounds.contains(pushPin!.arrowPoint) {
+			// set location without changing zoom
+			viewPort.centerOn(latLon: loc,
+			                  zoom: nil,
+			                  rotation: nil)
 		}
 	}
 

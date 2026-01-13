@@ -10,8 +10,6 @@ import CoreLocation
 import SafariServices
 import UIKit
 
-let USER_MOVABLE_BUTTONS = 0
-
 enum MainViewButtonLayout: Int {
 	case buttonsOnLeft
 	case buttonsOnRight
@@ -148,10 +146,6 @@ final class MainViewController: UIViewController,
 
 		// customize buttons
 		setButtonAppearances()
-
-#if USER_MOVABLE_BUTTONS
-		makeMovableButtons()
-#endif
 
 		// update button layout constraints
 		buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.mapViewButtonLayout.value
@@ -377,10 +371,10 @@ final class MainViewController: UIViewController,
 		let size = view.bounds.size
 		let delta = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
 		switch key.keyCode {
-		case .keyboardRightArrow: adjustOrigin(by: CGPoint(x: -delta.x, y: 0))
-		case .keyboardLeftArrow: adjustOrigin(by: CGPoint(x: delta.x, y: 0))
-		case .keyboardDownArrow: adjustOrigin(by: CGPoint(x: 0, y: -delta.y))
-		case .keyboardUpArrow: adjustOrigin(by: CGPoint(x: 0, y: delta.y))
+		case .keyboardRightArrow: viewPort.adjustOrigin(by: CGPoint(x: -delta.x, y: 0))
+		case .keyboardLeftArrow: viewPort.adjustOrigin(by: CGPoint(x: delta.x, y: 0))
+		case .keyboardDownArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: -delta.y))
+		case .keyboardUpArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: delta.y))
 		default: break
 		}
 	}
@@ -604,82 +598,6 @@ final class MainViewController: UIViewController,
 #endif
 	}
 
-	// MARK: User-movable buttons
-
-#if USER_MOVABLE_BUTTONS
-	func removeConstrains(on view: UIView?) {
-		var superview = view?.superview
-		while superview != nil {
-			for c in superview?.constraints ?? [] {
-				if (c.firstItem as? UIView) == view || (c.secondItem as? UIView) == view {
-					superview?.removeConstraint(c)
-				}
-			}
-			superview = superview?.superview
-		}
-		for c in view?.constraints ?? [] {
-			if (c.firstItem as? UIView)?.superview == view || (c.secondItem as? UIView)?.superview == view {
-				// skip
-			} else {
-				view?.removeConstraint(c)
-			}
-		}
-	}
-
-	func makeMovableButtons() {
-		let buttons = [
-			//		_mapView.editControl,
-			undoRedoView,
-			locationButton,
-			searchButton,
-			mapView.addNodeButton,
-			settingsButton,
-			uploadButton,
-			displayButton,
-			mapView.compassButton,
-			mapView.helpButton,
-			mapView.centerOnGPSButton
-			//		_mapView.rulerView,
-		]
-		// remove layout constraints
-		for button in buttons {
-			guard let button = button as? UIButton else {
-				continue
-			}
-			removeConstrains(on: button)
-			button.translatesAutoresizingMaskIntoConstraints = true
-		}
-		for button in buttons {
-			guard let button = button as? UIButton else {
-				continue
-			}
-			let panGesture = UIPanGestureRecognizer(target: self, action: #selector(buttonPan(_:)))
-			// panGesture.delegate = self;
-			button.addGestureRecognizer(panGesture)
-		}
-		let message = """
-		This build has a temporary feature: Drag the buttons in the UI to new locations that looks and feel best for you.\n\n\
-		* Submit your preferred layouts either via email or on GitHub.\n\n\
-		* Positions reset when the app terminates\n\n\
-		* Orientation changes are not supported\n\n\
-		* Buttons won't move when they're disabled (undo/redo, upload)
-		"""
-		let alert = UIAlertController(buttonLabel: "Attention Testers!", message: message, preferredStyle: .alert)
-		let ok = UIAlertAction(buttonLabel: NSLocalizedString("OK", comment: ""), style: .default, handler: { _ in
-			alert.dismiss(animated: true)
-		})
-		alert.addAction(ok)
-		present(alert, animated: true)
-	}
-
-	@objc func buttonPan(_ pan: UIPanGestureRecognizer?) {
-		if pan?.state == .began {
-		} else if pan?.state == .changed {
-			pan?.view?.center = pan?.location(in: view) ?? CGPoint.zero
-		} else {}
-	}
-#endif
-
 	// MARK: Keyboard shortcuts
 
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
@@ -819,7 +737,7 @@ final class MainViewController: UIViewController,
 			// This is better determined by testing for indirect touches, but
 			// that information isn't exposed by the gesture recognizer.
 			// If we're zooming via mouse then we'll follow the zoom path, not the pinch path.
-			let zoomCenter = screenCenterPoint()
+			let zoomCenter = viewPort.screenCenterPoint()
 #else
 			let zoomCenter = pinch.location(in: mapView)
 #endif
@@ -847,7 +765,7 @@ final class MainViewController: UIViewController,
 			// On Mac we want to rotate around the screen center, not the cursor.
 			// This is better determined by testing for indirect touches, but
 			// that information isn't exposed by the gesture recognizer.
-			let centerPoint = screenCenterPoint()
+			let centerPoint = viewPort.screenCenterPoint()
 #else
 			let centerPoint = rotationGesture.location(in: mapView)
 #endif
