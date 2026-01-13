@@ -40,8 +40,25 @@ final class LocationBallView: UIView, MapPositionedView {
 	var viewPort: MapViewPort? {
 		didSet {
 			oldValue?.mapTransform.onChange.unsubscribe(self)
-			viewPort?.mapTransform.onChange.subscribe(self) { [weak self] in
-				self?.updateScreenPosition()
+			guard let viewPort else { return }
+			viewPort.mapTransform.onChange.subscribe(self) { [weak self] in
+				guard let self else { return }
+				self.updateScreenPosition()
+
+				guard !isHidden else { return }
+				let screenAngle = viewPort.mapTransform.rotation()
+				let mapView = AppDelegate.shared.mapView!
+				if mapView.gpsState == .HEADING,
+				   abs(heading - -.pi / 2) < 0.0001
+				{
+					// don't pin location ball to North until we've animated our rotation to north
+					heading = -.pi / 2
+				} else {
+					if let heading = mapView.locationManager.heading {
+						let heading = mapView.heading(for: heading)
+						self.heading = CGFloat(screenAngle + heading - .pi / 2)
+					}
+				}
 			}
 		}
 	}

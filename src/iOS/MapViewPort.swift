@@ -103,26 +103,6 @@ extension MapViewPort {
 		t = t.rotatedBy(Double(angle))
 		t = t.translatedBy(dx: -offset.x, dy: -offset.y)
 		mapTransform.transform = t
-
-		// FIXME: remove this
-		let mapView = AppDelegate.shared.mapView!
-		let mainView = AppDelegate.shared.mainView!
-
-		let screenAngle = mapTransform.rotation()
-		mainView.compassButton.rotate(angle: CGFloat(screenAngle))
-		if !mainView.locationBallView.isHidden {
-			if mapView.gpsState == .HEADING,
-			   abs(mainView.locationBallView.heading - -.pi / 2) < 0.0001
-			{
-				// don't pin location ball to North until we've animated our rotation to north
-				mainView.locationBallView.heading = -.pi / 2
-			} else {
-				if let heading = mapView.locationManager.heading {
-					let heading = mapView.heading(for: heading)
-					mainView.locationBallView.heading = CGFloat(screenAngle + heading - .pi / 2)
-				}
-			}
-		}
 	}
 
 	func animateRotation(by deltaHeading: Double, aroundPoint center: CGPoint) {
