@@ -590,10 +590,10 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		mapView.editorLayer.selectedRelation = object.isRelation()
 
 		var newPoint = mapView.pushPin!.arrowPoint
-		let latLon1 = mapView.mapTransform.latLon(forScreenPoint: newPoint)
+		let latLon1 = mapView.viewPort.mapTransform.latLon(forScreenPoint: newPoint)
 		let latLon = object.latLonOnObject(forLatLon: latLon1)
 
-		newPoint = mapView.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
+		newPoint = mapView.viewPort.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
 		if !mapView.bounds.contains(newPoint) {
 			// new object is far away
 			mapView.placePushpinForSelection()

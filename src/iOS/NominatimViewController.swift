@@ -89,7 +89,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			if let latLon = result.latLon {
 				// compute distance
 				let dist = GreatCircleDistance(latLon,
-											   AppDelegate.shared.mainView.viewPort.screenCenterLatLon())
+				                               AppDelegate.shared.mainView.viewPort.screenCenterLatLon())
 				subtitle = UnitFormatter.shared.stringFor(meters: dist)
 			} else {
 				subtitle = ""
@@ -252,7 +252,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		guard
 			let url = nominatimSearchURL(query: string,
 			                             lang: PresetLanguages.preferredLanguageCode(),
-										 latLon: AppDelegate.shared.mainView.viewPort.screenCenterLatLon())
+			                             latLon: AppDelegate.shared.mainView.viewPort.screenCenterLatLon())
 		else {
 			return
 		}

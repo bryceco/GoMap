@@ -630,6 +630,6 @@ class TurnRestrictController: UIViewController {
 
 	// Convert location point to CGPoint
 	func screenPoint(forLatLon pt: LatLon) -> CGPoint {
-		return AppDelegate.shared.mapView.mapTransform.screenPoint(forLatLon: pt, birdsEye: false)
+		return AppDelegate.shared.mapView.viewPort.mapTransform.screenPoint(forLatLon: pt, birdsEye: false)
 	}
 }

@@ -109,7 +109,6 @@ final class MapView: UIView, UIActionSheetDelegate,
 
 	var mainView: MainViewController!
 	var viewPort: MapViewPort { mainView.viewPort }
-	var mapTransform: MapTransform { viewPort.mapTransform }
 
 	public var viewState: MapViewState = .EDITORAERIAL {
 		willSet(newValue) {
@@ -205,7 +204,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 		didSet {
 			if !enableBirdsEye {
 				// remove birdsEye
-				viewPort.rotateBirdsEye(by: -mapTransform.birdsEyeRotation)
+				viewPort.rotateBirdsEye(by: -viewPort.mapTransform.birdsEyeRotation)
 			}
 		}
 	}
@@ -215,7 +214,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 			if !enableRotation {
 				// remove rotation
 				let centerPoint = viewPort.screenCenterPoint()
-				let angle = CGFloat(mapTransform.rotation())
+				let angle = CGFloat(viewPort.mapTransform.rotation())
 				viewPort.rotate(by: -angle, aroundScreenPoint: centerPoint)
 			}
 		}
@@ -357,7 +356,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 	func setUpChildViews(with main: MainViewController) {
 		self.mainView = main
 
-		mapTransform.onChange.subscribe(self) { [weak self] in
+		viewPort.mapTransform.onChange.subscribe(self) { [weak self] in
 			self?.mapTransformDidChange()
 		}
 
@@ -542,7 +541,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 	func save() {
 		// save preferences first
 		let latLon = viewPort.screenCenterLatLon()
-		let scale = mapTransform.scale()
+		let scale = viewPort.mapTransform.scale()
 #if false && DEBUG
 		assert(scale > 1.0)
 #endif
@@ -757,7 +756,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 			let best = tileServerList.bestService(at: latLon) ?? tileServerList.builtinServers()[0]
 			tileServerList.currentServer = best
 			setAerialTileServer(best)
-		} else if mapTransform.zoom() < 15 {
+		} else if viewPort.mapTransform.zoom() < 15 {
 			// the user has zoomed out, so don't bother them until they zoom in.
 			// return here instead of updating last check location.
 			return
@@ -820,7 +819,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 		// Determine if we've zoomed out enough to disable editing
 		// We can only compute a precise surface area size at high zoom since it's possible
 		// for the screen to be larger than the earth
-		let area = mapTransform.zoom() > 8
+		let area = viewPort.mapTransform.zoom() > 8
 			? SurfaceAreaOfRect(viewPort.boundingLatLonForScreen())
 			: Double.greatestFiniteMagnitude
 		var isZoomedOut = area > 2.0 * 1000 * 1000
@@ -874,7 +873,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 		let radiusInner: CGFloat = 70
 		let radiusOuter: CGFloat = 90
 		let arrowWidth: CGFloat = 60
-		let center = mapTransform.screenPoint(forLatLon: rotateObjectCenter, birdsEye: true)
+		let center = viewPort.mapTransform.screenPoint(forLatLon: rotateObjectCenter, birdsEye: true)
 		let path = UIBezierPath(
 			arcCenter: center,
 			radius: radiusInner,
@@ -1096,13 +1095,13 @@ final class MapView: UIView, UIActionSheetDelegate,
 
 		let loc: LatLon
 		if let point = point {
-			let latLon = mapTransform.latLon(forScreenPoint: point)
+			let latLon = viewPort.mapTransform.latLon(forScreenPoint: point)
 			loc = selection.latLonOnObject(forLatLon: latLon)
 		} else {
 			loc = selection.selectionPoint()
 		}
 
-		let point = mapTransform.screenPoint(forLatLon: loc, birdsEye: true)
+		let point = viewPort.mapTransform.screenPoint(forLatLon: loc, birdsEye: true)
 		placePushpin(at: point, object: selection)
 
 		if viewStateZoomedOut {
@@ -1608,7 +1607,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 		// create a layer for the object
 		let path = CGMutablePath()
 		if let node = object as? OsmNode {
-			let center = mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
+			let center = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
 			var rect = CGRect(x: center.x, y: center.y, width: 0, height: 0)
 			rect = rect.insetBy(dx: -10, dy: -10)
 			path.addEllipse(in: rect, transform: .identity)
@@ -1617,14 +1616,14 @@ final class MapView: UIView, UIActionSheetDelegate,
 				assert(way.nodes.count >= segment + 2)
 				let n1 = way.nodes[segment]
 				let n2 = way.nodes[segment + 1]
-				let p1 = mapTransform.screenPoint(forLatLon: n1.latLon, birdsEye: true)
-				let p2 = mapTransform.screenPoint(forLatLon: n2.latLon, birdsEye: true)
+				let p1 = viewPort.mapTransform.screenPoint(forLatLon: n1.latLon, birdsEye: true)
+				let p2 = viewPort.mapTransform.screenPoint(forLatLon: n2.latLon, birdsEye: true)
 				path.move(to: CGPoint(x: p1.x, y: p1.y))
 				path.addLine(to: CGPoint(x: p2.x, y: p2.y))
 			} else {
 				var isFirst = true
 				for node in way.nodes {
-					let pt = mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
+					let pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
 					if isFirst {
 						path.move(to: CGPoint(x: pt.x, y: pt.y))
 					} else {
@@ -1748,9 +1747,9 @@ final class MapView: UIView, UIActionSheetDelegate,
 		let button = marker.button!
 		button.isHidden = false
 		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
-		let pos = mapTransform.screenPoint(forLatLon: LatLon(latitude: marker.latLon.lat,
-		                                                     longitude: marker.latLon.lon + offsetX),
-		                                   birdsEye: true)
+		let pos = viewPort.mapTransform.screenPoint(forLatLon: LatLon(latitude: marker.latLon.lat,
+		                                                              longitude: marker.latLon.lon + offsetX),
+		                                            birdsEye: true)
 		if pos.x.isInfinite || pos.y.isInfinite {
 			return false
 		}
@@ -1785,7 +1784,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 			editorLayer.selectedRelation = object.isRelation()
 
 			let pt = object.latLonOnObject(forLatLon: marker.latLon)
-			let point = mapTransform.screenPoint(forLatLon: pt, birdsEye: true)
+			let point = viewPort.mapTransform.screenPoint(forLatLon: pt, birdsEye: true)
 			placePushpin(at: point, object: object)
 		}
 
@@ -1985,7 +1984,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 			if let tapAndDragSelections = tapAndDragSelections {
 				editorLayer.selections = tapAndDragSelections
 				if let tapAndDragPushpinLatLon = tapAndDragPushpinLatLon {
-					let pt = mapTransform.screenPoint(forLatLon: tapAndDragPushpinLatLon, birdsEye: true)
+					let pt = viewPort.mapTransform.screenPoint(forLatLon: tapAndDragPushpinLatLon, birdsEye: true)
 					placePushpinForSelection(at: pt)
 				} else {
 					removePin()
@@ -2015,7 +2014,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 			// we don't want the initial tap of a tap-and-drag to change object selection
 			tapAndDragSelections = editorLayer.selections
 			if let pushPin = pushPin {
-				tapAndDragPushpinLatLon = mapTransform.latLon(forScreenPoint: pushPin.arrowPoint)
+				tapAndDragPushpinLatLon = viewPort.mapTransform.latLon(forScreenPoint: pushPin.arrowPoint)
 			} else {
 				tapAndDragPushpinLatLon = nil
 			}

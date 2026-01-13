@@ -32,7 +32,7 @@ final class QuadDownloadLayer: CALayer {
 
 		needsDisplayOnBoundsChange = true
 
-		mapView.mapTransform.onChange.subscribe(self) { _ in
+		mapView.viewPort.mapTransform.onChange.subscribe(self) { _ in
 			self.setNeedsLayout()
 		}
 	}
@@ -46,14 +46,16 @@ final class QuadDownloadLayer: CALayer {
 			return
 		}
 		// update locations of tiles
-		let tRotation = mapView.mapTransform.rotation()
+		let tRotation = mapView.viewPort.mapTransform.rotation()
 		sublayers = []
 		mapView.editorLayer.mapData.region.enumerate({ quad in
 			if !quad.isDownloaded, !quad.busy {
 				return
 			}
-			let upperLeft = mapView.mapTransform.screenPoint(forLatLon: LatLon(quad.rect.origin), birdsEye: true)
-			let bottomRight = mapView.mapTransform.screenPoint(
+			let upperLeft = mapView.viewPort.mapTransform.screenPoint(
+				forLatLon: LatLon(quad.rect.origin),
+				birdsEye: true)
+			let bottomRight = mapView.viewPort.mapTransform.screenPoint(
 				forLatLon: LatLon(lon: quad.rect.origin.x + quad.rect.size.width,
 				                  lat: quad.rect.origin.y + quad.rect.size.height),
 				birdsEye: true)

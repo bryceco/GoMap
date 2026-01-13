@@ -14,7 +14,7 @@ protocol MapViewPort: AnyObject {
 	var mapTransform: MapTransform { get }
 }
 
-class MapViewPortObject: MapViewPort {
+final class MapViewPortObject: MapViewPort {
 	var mapTransform = MapTransform()
 }
 
