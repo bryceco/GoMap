@@ -214,14 +214,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// Save when we last used GPS
 		mapView.gpsLastActive = Date()
 
-		// while in background don't update our location so we don't download tiles/OSM data when moving
-		mapView.locationManager.stopUpdatingHeading()
-
 		// Save preferences in case user force-kills us while we're in background
 		UserPrefs.shared.synchronize()
 
 		if mapView.gpsState != .NONE,
-		   mapView.gpsInBackground,
+		   LocationProvider.shared.gpsInBackground,
 		   mapView.displayGpxLogs
 		{
 			// Show GPX activity widget
@@ -232,7 +229,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			}
 		} else {
 			// turn off GPS tracking
-			mapView.locationManager.stopUpdatingLocation()
+			LocationProvider.shared.stop()
 		}
 	}
 
@@ -251,16 +248,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let mapView = AppDelegate.shared.mapView!
 		let mainView = AppDelegate.shared.mainView!
 		if mapView.gpsState != .NONE {
-			if mapView.gpsInBackground,
+			if LocationProvider.shared.gpsInBackground,
 			   mapView.displayGpxLogs
 			{
 				// GPS was running in the background
-				mapView.locationManager.startUpdatingHeading()
+				LocationProvider.shared.start()
 			} else {
 				// If the user recently closed the app with GPS running, then enable GPS again
 				if Date().timeIntervalSince(mapView.gpsLastActive) < 30 * 60 {
-					mapView.locationManager.startUpdatingLocation()
-					mapView.locationManager.startUpdatingHeading()
+					LocationProvider.shared.start()
 				} else {
 					// turn off GPS on resume when user hasn't used app recently
 					mainView.setGpsState(GPS_STATE.NONE)

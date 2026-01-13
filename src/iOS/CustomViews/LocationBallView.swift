@@ -54,7 +54,7 @@ final class LocationBallView: UIView, MapPositionedView {
 					// don't pin location ball to North until we've animated our rotation to north
 					heading = -.pi / 2
 				} else {
-					if let heading = mapView.locationManager.heading {
+					if let heading = LocationProvider.shared.currentHeading {
 						let heading = viewPort.headingAdjustedForInterfaceOrientation(heading)
 						self.heading = CGFloat(screenAngle + heading - .pi / 2)
 					}

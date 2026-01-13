@@ -86,7 +86,7 @@ struct MapLocation {
 
 // MARK: MapView
 
-final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
+final class MapView: UIView, UIActionSheetDelegate,
 	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate, DPadDelegate,
 	UISheetPresentationControllerDelegate
 {
@@ -100,16 +100,12 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	var objectRotationGesture: UIRotationGestureRecognizer!
 
 	var windowPresented = false
-	var locationManagerExtraneousNotification = false
 
 	@IBOutlet var editToolbar: CustomSegmentedControl!
 
 	private var magnifyingGlass: MagnifyingGlass!
 
 	private var editControlActions: [EDIT_ACTION] = []
-
-	let locationManager = CLLocationManager()
-	private(set) var currentLocation = CLLocation()
 
 	var mainView: MainViewController!
 	var viewPort: MapViewPort { mainView }
@@ -219,27 +215,13 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 				}
 
 				if gpsState != .NONE {
-					locating = true
+					mainView.userOverrodeLocationPosition = false
+					mainView.userOverrodeLocationZoom = false
+					mainView.locationBallView.isHidden = false
+					LocationProvider.shared.start()
 				} else {
-					locating = false
-				}
-			}
-		}
-	}
-
-	var gpsInBackground: Bool {
-		get {
-			return GpxLayer.backgroundTracking
-		}
-		set(gpsInBackground) {
-			GpxLayer.backgroundTracking = gpsInBackground
-
-			locationManager.allowsBackgroundLocationUpdates = gpsInBackground && displayGpxLogs
-
-			if gpsInBackground {
-				// ios 8 and later:
-				if locationManager.responds(to: #selector(CLLocationManager.requestAlwaysAuthorization)) {
-					locationManager.requestAlwaysAuthorization()
+					LocationProvider.shared.stop()
+					mainView.locationBallView.isHidden = true
 				}
 			}
 		}
@@ -273,7 +255,8 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	var displayGpxLogs = false {
 		didSet {
 			gpxLayer.isHidden = !displayGpxLogs
-			locationManager.allowsBackgroundLocationUpdates = gpsInBackground && displayGpxLogs
+			LocationProvider.shared.locationManager.allowsBackgroundLocationUpdates
+				= LocationProvider.shared.gpsInBackground && displayGpxLogs
 		}
 	}
 
@@ -348,56 +331,12 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 	// gets updated if the user moves a large distance.
 	private(set) var currentRegion: RegionInfoForLocation
 
-	private var locating: Bool {
-		didSet {
-			if oldValue == locating {
-				return
-			}
-			if locating {
-				let status: CLAuthorizationStatus
-				if #available(iOS 14.0, *) {
-					status = locationManager.authorizationStatus
-				} else {
-					status = CLLocationManager.authorizationStatus()
-				}
-				switch status {
-				case .notDetermined:
-					// we haven't asked user before, so have iOS pop up the question
-					locationManager.requestWhenInUseAuthorization()
-					gpsState = .NONE
-					return
-				case .restricted, .denied:
-					// user denied permission previously, so ask if they want to open Settings
-					AppDelegate.askUser(toAllowLocationAccess: mainView)
-					gpsState = .NONE
-					return
-				case .authorizedAlways, .authorizedWhenInUse:
-					break
-				default:
-					break
-				}
-
-				mainView.userOverrodeLocationPosition = false
-				mainView.userOverrodeLocationZoom = false
-				locationManager.startUpdatingLocation()
-				locationManager.startUpdatingHeading()
-				mainView.locationBallView.isHidden = false
-			} else {
-				locationManager.stopUpdatingLocation()
-				locationManager.stopUpdatingHeading()
-				mainView.locationBallView.isHidden = true
-				currentLocation = CLLocation()
-			}
-		}
-	}
-
 	@IBOutlet private var statusBarBackground: StatusBarGradient!
 
 	// MARK: initialization
 
 	required init?(coder: NSCoder) {
 		tileServerList = TileServerList()
-		locating = false
 		currentRegion = RegionInfoForLocation.none
 
 		super.init(coder: coder)
@@ -411,15 +350,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			selector: #selector(applicationWillTerminate(_:)),
 			name: UIApplication.willResignActiveNotification,
 			object: nil)
-
-		locationManagerExtraneousNotification = true // flag that we're going to receive a bogus notification from CL
-		locationManager.delegate = self
-		locationManager.pausesLocationUpdatesAutomatically = false
-		locationManager.allowsBackgroundLocationUpdates = gpsInBackground && displayGpxLogs
-		if #available(iOS 11.0, *) {
-			locationManager.showsBackgroundLocationIndicator = true
-		}
-		locationManager.activityType = .other
 
 		// set up action button
 		editToolbar.isHidden = true
@@ -464,6 +394,10 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 		tileServerList.onChange.subscribe(self) { [weak self] in
 			self?.promptForBetterBackgroundImagery()
+		}
+
+		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
+			self?.locationUpdated(to: location)
 		}
 
 		layer.masksToBounds = true
@@ -1151,26 +1085,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 	// MARK: GPS and Location Manager
 
-	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-		if locationManagerExtraneousNotification {
-			// filter out extraneous notification we get when initializing CL
-			//
-			locationManagerExtraneousNotification = false
-			return
-		}
-
-		var ok = false
-		switch status {
-		case .authorizedAlways, .authorizedWhenInUse:
-			ok = true
-		case .notDetermined, .restricted, .denied:
-			fallthrough
-		default:
-			ok = false
-		}
-		mainView.setGpsState(ok ? .LOCATION : .NONE)
-	}
-
 	func moveToLocation(_ location: MapLocation) {
 		let zoom = location.zoom > 0 ? location.zoom : 21.0
 		let latLon = LatLon(latitude: location.latitude, longitude: location.longitude)
@@ -1183,53 +1097,7 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		}
 	}
 
-	private var locationManagerSmoothHeading = 0.0
-	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-		let accuracy = newHeading.headingAccuracy
-		let heading = viewPort.headingAdjustedForInterfaceOrientation(newHeading)
-
-		DisplayLink.shared.addName("smoothHeading", block: { [self] in
-			var delta = heading - self.locationManagerSmoothHeading
-			if delta > .pi {
-				delta -= 2 * .pi
-			} else if delta < -.pi {
-				delta += 2 * .pi
-			}
-			delta *= 0.15
-			if abs(delta) < 0.001 {
-				self.locationManagerSmoothHeading = heading
-			} else {
-				self.locationManagerSmoothHeading += delta
-			}
-			viewPort.updateHeadingSmoothed(self.locationManagerSmoothHeading, accuracy: accuracy)
-			if heading == self.locationManagerSmoothHeading {
-				DisplayLink.shared.removeName("smoothHeading")
-			}
-		})
-	}
-
-	@objc func locationUpdated(to newLocation: CLLocation) {
-		guard gpsState != .NONE else {
-			// sometimes we get a notification after turning off notifications
-			DLog("discard location notification")
-			return
-		}
-
-		guard newLocation.timestamp >= Date(timeIntervalSinceNow: -10.0) else {
-			// its old data
-			DLog("discard old GPS data: \(newLocation.timestamp), \(Date())\n")
-			return
-		}
-
-		guard
-			GreatCircleDistance(newLocation.coordinate, currentLocation.coordinate) >= 0.1 ||
-			abs(newLocation.horizontalAccuracy - currentLocation.horizontalAccuracy) >= 1.0
-		else {
-			// didn't move far, and the accuracy didn't change either, so ignore it
-			return
-		}
-		currentLocation = newLocation
-
+	private func locationUpdated(to newLocation: CLLocation) {
 		if let voiceAnnouncement = voiceAnnouncement,
 		   !editorLayer.isHidden
 		{
@@ -1238,10 +1106,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 
 		if gpxLayer.activeTrack != nil {
 			gpxLayer.addPoint(newLocation)
-		}
-
-		if gpsState == .NONE {
-			locating = false
 		}
 
 		if !mainView.userOverrodeLocationPosition,
@@ -1256,47 +1120,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
 				                  metersWide: 20.0)
 			}
-		}
-
-		mainView.locationBallView.updateLocation(newLocation)
-	}
-
-	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-		for location in locations {
-			locationUpdated(to: location)
-		}
-	}
-
-	func locationManagerDidPauseLocationUpdates(_ manager: CLLocationManager) {
-		print("GPS paused by iOS\n")
-	}
-
-	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-		var error = error
-		if (error as? CLError)?.code == CLError.Code.denied {
-			mainView.setGpsState(GPS_STATE.NONE)
-			if !mainView.isLocationSpecified() {
-				// go home
-				viewPort.centerOn(latLon: LatLon(latitude: 47.6858, longitude: -122.1917),
-				                  metersWide: 50.0)
-			}
-			var text = String.localizedStringWithFormat(
-				NSLocalizedString(
-					"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",
-					comment: ""),
-				error.localizedDescription)
-			text = NSLocalizedString("The current location cannot be determined: ", comment: "") + text
-			error = NSError(domain: "Location", code: 100, userInfo: [
-				NSLocalizedDescriptionKey: text
-			])
-			MessageDisplay.shared.presentError(title: nil, error: error, flash: false)
-		} else {
-			// driving through a tunnel or something
-			let text = NSLocalizedString("Location unavailable", comment: "")
-			error = NSError(domain: "Location", code: 100, userInfo: [
-				NSLocalizedDescriptionKey: text
-			])
-			MessageDisplay.shared.presentError(title: nil, error: error, flash: true)
 		}
 	}
 

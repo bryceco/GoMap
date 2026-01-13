@@ -73,8 +73,7 @@ class GpxTrackBackgroundCollection: UITableViewCell {
 
 	@IBAction func enableBackground(_ sender: Any) {
 		let toggle = sender as? UISwitch
-		let appDelegate = AppDelegate.shared
-		appDelegate.mapView.gpsInBackground = toggle?.isOn ?? false
+		LocationProvider.shared.gpsInBackground = toggle?.isOn ?? false
 	}
 }
 
@@ -361,7 +360,7 @@ class GpxViewController: UITableViewController {
 				let cell = tableView.dequeueReusableCell(
 					withIdentifier: "GpxTrackBackgroundCollection",
 					for: indexPath) as! GpxTrackBackgroundCollection
-				cell.enableBackground.isOn = mapView.gpsInBackground
+				cell.enableBackground.isOn = LocationProvider.shared.gpsInBackground
 				return cell
 			case 2:
 				// HealthKit support

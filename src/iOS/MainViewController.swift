@@ -139,6 +139,9 @@ final class MainViewController: UIViewController,
 		locationBallView.showHeading = true
 		locationBallView.isHidden = true
 		locationBallView.viewPort = self
+		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
+			self?.locationBallView.updateLocation(location)
+		}
 		mapView.addSubview(locationBallView)
 
 		// Compass button
@@ -994,7 +997,7 @@ final class MainViewController: UIViewController,
 			rotateToNorth()
 		case .LOCATION:
 			mapView.gpsState = .HEADING
-			if let clHeading = mapView.locationManager.heading {
+			if let clHeading = LocationProvider.shared.currentHeading {
 				let heading = headingAdjustedForInterfaceOrientation(clHeading)
 				rotateToHeading(heading)
 			}
@@ -1003,13 +1006,9 @@ final class MainViewController: UIViewController,
 		}
 	}
 
-	@IBAction func center(onGPS sender: Any) {
-		if mapView.gpsState == .NONE {
-			return
-		}
-
-		userOverrodeLocationPosition = false
-		if let location = mapView.locationManager.location {
+	@IBAction func centerOnGPS(_ sender: Any) {
+		if let location = LocationProvider.shared.currentLocation {
+			userOverrodeLocationPosition = false
 			centerOn(latLon: LatLon(location.coordinate),
 			         zoom: nil, // don't change zoom
 			         rotation: nil) // don't change rotation

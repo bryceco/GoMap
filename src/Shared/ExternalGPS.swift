@@ -174,8 +174,7 @@ class ExternalGPS: NSObject, StreamDelegate {
 #if os(iOS)
 				let loc = CLLocation(latitude: CLLocationDegrees(dLat), longitude: CLLocationDegrees(dLon))
 				DLog("lat/lon = \(loc)")
-				let appDelegate = AppDelegate.shared
-				appDelegate.mapView?.locationUpdated(to: loc)
+				LocationProvider.shared.updateToLocation(loc)
 #endif
 			} else if line.hasPrefix("PGSV") {
 				// satelite info, one line per satelite

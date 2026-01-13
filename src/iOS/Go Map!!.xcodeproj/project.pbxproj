@@ -205,6 +205,7 @@
 		02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */; };
 		02F6A459268AE42800F2ACE7 /* Debugger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F6A458268AE42800F2ACE7 /* Debugger.swift */; };
 		02F72BCC2E35828100B6C76C /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F72BCB2E35828100B6C76C /* NotificationService.swift */; };
+		02F9CEA72F16BDFE00ADED7C /* LocationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */; };
 		02FBDB5D2E873D9200A70CEF /* StatusBarGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FBDB5C2E873D9200A70CEF /* StatusBarGradient.swift */; };
 		02FC7F962D7FD6E800DC333D /* CustomFeatureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC7F952D7FD6DC00DC333D /* CustomFeatureController.swift */; };
 		02FC7F982D7FD6FD00DC333D /* CustomFeatureListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */; };
@@ -551,6 +552,7 @@
 		02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Ext.swift"; sourceTree = "<group>"; };
 		02F6A458268AE42800F2ACE7 /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		02F72BCB2E35828100B6C76C /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocationProvider.swift; path = ../Shared/LocationProvider.swift; sourceTree = SOURCE_ROOT; };
 		02FBDB5C2E873D9200A70CEF /* StatusBarGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarGradient.swift; sourceTree = "<group>"; };
 		02FC7F952D7FD6DC00DC333D /* CustomFeatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeatureController.swift; sourceTree = "<group>"; };
 		02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeatureListViewController.swift; sourceTree = "<group>"; };
@@ -904,6 +906,7 @@
 				C381C305263FD0CA003142BA /* VectorMath.swift */,
 				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
 				C341E1522639DECC0022E983 /* WikiPage.swift */,
+				02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1584,6 +1587,7 @@
 				02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */,
 				02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */,
 				02C8C56D26F4479A003B0122 /* WayPointMarker.swift in Sources */,
+				02F9CEA72F16BDFE00ADED7C /* LocationProvider.swift in Sources */,
 				0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */,
 				0244398D29C9402B009FC2D0 /* TileServerList+JSON.swift in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,

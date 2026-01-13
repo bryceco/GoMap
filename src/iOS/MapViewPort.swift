@@ -270,7 +270,7 @@ extension MapViewPort {
 		                rotation: 0.0)
 	}
 
-	func updateHeadingSmoothed(_ heading: Double, accuracy: Double) {
+	func updateHeading(_ heading: Double, accuracy: Double) {
 		let screenAngle = mapTransform.rotation()
 
 		if AppDelegate.shared.mapView.gpsState == .HEADING {
