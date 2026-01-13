@@ -226,7 +226,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 				return
 			}
 			// Don't update excessively large regions
-			let bbox = AppDelegate.shared.viewPort.boundingLatLonForScreen()
+			let bbox = AppDelegate.shared.mainView.viewPort.boundingLatLonForScreen()
 			guard bbox.size.width * bbox.size.height <= 0.25 else { return }
 
 			await MainActor.run {

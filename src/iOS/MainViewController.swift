@@ -54,15 +54,13 @@ final class MainViewController: UIViewController,
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
 
-	let mapTransform = MapTransform()
+	let viewPort = MapViewPortObject()
 
 	var buttonLayout: MainViewButtonLayout! {
 		didSet {
 			updateButtonPositionsFor(layout: buttonLayout)
 		}
 	}
-
-	var viewPort: MapViewPort { self as MapViewPort }
 
 	var addNodeButtonLongPressGestureRecognizer: UILongPressGestureRecognizer?
 	var plusButtonTimestamp: TimeInterval = 0.0
@@ -86,7 +84,6 @@ final class MainViewController: UIViewController,
 		super.viewDidLoad()
 
 		// set up delegates
-		AppDelegate.shared.mapView = mapView
 		AppDelegate.shared.mainView = self
 
 		// configure views in MapView
@@ -1002,7 +999,7 @@ final class MainViewController: UIViewController,
 		switch gpsState {
 		case GPS_STATE.NONE:
 			// if the user hasn't rotated the screen then start facing north, otherwise follow heading
-			if fabs(mapTransform.rotation()) < 0.0001 {
+			if fabs(viewPort.mapTransform.rotation()) < 0.0001 {
 				gpsState = .LOCATION
 			} else {
 				gpsState = .HEADING
@@ -1096,10 +1093,6 @@ final class MainViewController: UIViewController,
 			vc.mapView = mapView
 		}
 	}
-}
-
-extension MainViewController: MapViewPort {
-	// pick up all the functions defined in the protocol automatically
 }
 
 extension MainViewController: MapViewProgress {

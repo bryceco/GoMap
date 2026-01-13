@@ -31,7 +31,7 @@ class DataOverlaysController: UITableViewController {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
-		let latLon = AppDelegate.shared.viewPort.screenCenterLatLon()
+		let latLon = AppDelegate.shared.mainView.viewPort.screenCenterLatLon()
 		let mapView = AppDelegate.shared.mapView!
 		overlayList = mapView.tileServerList.allServices(at: latLon, overlay: true)
 		overlaySelections = UserPrefs.shared.tileOverlaySelections.value ?? []

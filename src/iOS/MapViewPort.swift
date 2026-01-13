@@ -14,6 +14,10 @@ protocol MapViewPort: AnyObject {
 	var mapTransform: MapTransform { get }
 }
 
+class MapViewPortObject: MapViewPort {
+	var mapTransform = MapTransform()
+}
+
 // Add functions for retrieving metrics about the viewport (read-only)
 extension MapViewPort {
 	func screenCenterPoint() -> CGPoint {
