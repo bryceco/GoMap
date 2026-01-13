@@ -1191,35 +1191,19 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 			viewPort.rotateToNorth()
 		case .LOCATION:
 			gpsState = .HEADING
-			viewPort.rotateToHeading()
+			if let clHeading = locationManager.heading {
+				let heading = viewPort.headingAdjustedForInterfaceOrientation(clHeading)
+				viewPort.rotateToHeading(heading)
+			}
 		case .NONE:
 			viewPort.rotateToNorth()
 		}
 	}
 
-	func heading(for clHeading: CLHeading) -> Double {
-		var heading = clHeading.trueHeading * .pi / 180
-		if let scene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first {
-			switch scene.interfaceOrientation {
-			case .portraitUpsideDown:
-				heading += .pi
-			case .landscapeLeft:
-				heading -= .pi / 2
-			case .landscapeRight:
-				heading += .pi / 2
-			case .portrait:
-				fallthrough
-			default:
-				break
-			}
-		}
-		return heading
-	}
-
 	private var locationManagerSmoothHeading = 0.0
 	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
 		let accuracy = newHeading.headingAccuracy
-		let heading = self.heading(for: newHeading)
+		let heading = viewPort.headingAdjustedForInterfaceOrientation(newHeading)
 
 		DisplayLink.shared.addName("smoothHeading", block: { [self] in
 			var delta = heading - self.locationManagerSmoothHeading

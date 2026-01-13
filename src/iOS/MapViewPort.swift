@@ -6,6 +6,7 @@
 //  Copyright © 2026 Bryce Cogswell. All rights reserved.
 //
 
+import CoreLocation
 import UIKit
 
 // Allows other layers of the map to view changes to the map view
@@ -181,23 +182,34 @@ extension MapViewPort {
 		mapTransform.transform = t
 	}
 
-	func rotateToNorth() {
-		// Rotate to face North
-		let center = screenCenterPoint()
-		let rotation = mapTransform.rotation()
-		animateRotation(by: -rotation, aroundPoint: center)
+	func headingAdjustedForInterfaceOrientation(_ clHeading: CLHeading) -> Double {
+		var heading = clHeading.trueHeading * .pi / 180
+		if let scene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first {
+			switch scene.interfaceOrientation {
+			case .portraitUpsideDown:
+				heading += .pi
+			case .landscapeLeft:
+				heading -= .pi / 2
+			case .landscapeRight:
+				heading += .pi / 2
+			case .portrait:
+				fallthrough
+			default:
+				break
+			}
+		}
+		return heading
 	}
 
-	func rotateToHeading() {
+	func rotateToHeading(_ heading: Double) {
 		// Rotate to face current compass heading
-		let mapView = AppDelegate.shared.mapView!
+		let center = screenCenterPoint()
+		let screenAngle = mapTransform.rotation()
+		animateRotation(by: -(screenAngle + heading), aroundPoint: center)
+	}
 
-		if let heading = mapView.locationManager.heading {
-			let center = mapView.viewPort.screenCenterPoint()
-			let screenAngle = mapView.viewPort.mapTransform.rotation()
-			let heading = mapView.heading(for: heading)
-			animateRotation(by: -(screenAngle + heading), aroundPoint: center)
-		}
+	func rotateToNorth() {
+		rotateToHeading(0.0)
 	}
 }
 

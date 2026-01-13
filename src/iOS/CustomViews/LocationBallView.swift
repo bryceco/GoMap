@@ -49,13 +49,13 @@ final class LocationBallView: UIView, MapPositionedView {
 				let screenAngle = viewPort.mapTransform.rotation()
 				let mapView = AppDelegate.shared.mapView!
 				if mapView.gpsState == .HEADING,
-				   abs(heading - -.pi / 2) < 0.0001
+				   abs(heading - -.pi / 2) < 0.001
 				{
 					// don't pin location ball to North until we've animated our rotation to north
 					heading = -.pi / 2
 				} else {
 					if let heading = mapView.locationManager.heading {
-						let heading = mapView.heading(for: heading)
+						let heading = viewPort.headingAdjustedForInterfaceOrientation(heading)
 						self.heading = CGFloat(screenAngle + heading - .pi / 2)
 					}
 				}
