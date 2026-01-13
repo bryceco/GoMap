@@ -1171,35 +1171,6 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		mainView.setGpsState(ok ? .LOCATION : .NONE)
 	}
 
-	@IBAction func center(onGPS sender: Any) {
-		if gpsState == .NONE {
-			return
-		}
-
-		mainView.userOverrodeLocationPosition = false
-		if let location = locationManager.location {
-			viewPort.centerOn(latLon: LatLon(location.coordinate),
-			                  zoom: nil, // don't change zoom
-			                  rotation: nil) // don't change rotation
-		}
-	}
-
-	@IBAction func compassPressed(_ sender: Any) {
-		switch gpsState {
-		case .HEADING:
-			gpsState = .LOCATION
-			viewPort.rotateToNorth()
-		case .LOCATION:
-			gpsState = .HEADING
-			if let clHeading = locationManager.heading {
-				let heading = viewPort.headingAdjustedForInterfaceOrientation(clHeading)
-				viewPort.rotateToHeading(heading)
-			}
-		case .NONE:
-			viewPort.rotateToNorth()
-		}
-	}
-
 	func moveToLocation(_ location: MapLocation) {
 		let zoom = location.zoom > 0 ? location.zoom : 21.0
 		let latLon = LatLon(latitude: location.latitude, longitude: location.longitude)

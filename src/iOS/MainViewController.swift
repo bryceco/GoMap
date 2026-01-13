@@ -949,40 +949,7 @@ final class MainViewController: UIViewController,
 		present(actionSheet, animated: true)
 	}
 
-	// MARK: Other stuff
-
-	@IBAction func openHelp() {
-		let urlAsString = "https://wiki.openstreetmap.org/w/index.php?title=Go_Map!!&mobileaction=toggle_view_mobile"
-		guard let url = URL(string: urlAsString) else { return }
-
-		let safariViewController = SFSafariViewController(url: url)
-		safariViewController.modalPresentationStyle = .pageSheet
-		safariViewController.popoverPresentationController?.sourceView = view
-		present(safariViewController, animated: true)
-	}
-
-	override func didReceiveMemoryWarning() {
-		super.didReceiveMemoryWarning()
-
-		if var memoryUsed = MemoryUsed(),
-		   var memoryTotal = TotalDeviceMemory()
-		{
-			let bytesPerMB = Double(1024 * 1024)
-			memoryUsed /= bytesPerMB
-			memoryTotal /= bytesPerMB
-
-			DLog("memory warning: \(memoryUsed) of \(memoryTotal) MB used")
-#if !DEBUG
-			if memoryUsed / memoryTotal < 0.4 {
-				// ignore unless we're being a memory hog
-				return
-			}
-#endif
-		}
-		MessageDisplay.shared.flashMessage(title: nil,
-		                                   message: NSLocalizedString("Low memory: clearing cache", comment: ""))
-		mapView.editorLayer.didReceiveMemoryWarning()
-	}
+	// MARK: Button actions
 
 	func setGpsState(_ state: GPS_STATE) {
 		if mapView.gpsState != state {
@@ -1018,6 +985,70 @@ final class MainViewController: UIViewController,
 		     GPS_STATE.HEADING:
 			setGpsState(GPS_STATE.NONE)
 		}
+	}
+
+	@IBAction func compassPressed(_ sender: Any) {
+		switch mapView.gpsState {
+		case .HEADING:
+			mapView.gpsState = .LOCATION
+			rotateToNorth()
+		case .LOCATION:
+			mapView.gpsState = .HEADING
+			if let clHeading = mapView.locationManager.heading {
+				let heading = headingAdjustedForInterfaceOrientation(clHeading)
+				rotateToHeading(heading)
+			}
+		case .NONE:
+			rotateToNorth()
+		}
+	}
+
+	@IBAction func center(onGPS sender: Any) {
+		if mapView.gpsState == .NONE {
+			return
+		}
+
+		userOverrodeLocationPosition = false
+		if let location = mapView.locationManager.location {
+			centerOn(latLon: LatLon(location.coordinate),
+			         zoom: nil, // don't change zoom
+			         rotation: nil) // don't change rotation
+		}
+	}
+
+	@IBAction func openHelp() {
+		let urlAsString = "https://wiki.openstreetmap.org/w/index.php?title=Go_Map!!&mobileaction=toggle_view_mobile"
+		guard let url = URL(string: urlAsString) else { return }
+
+		let safariViewController = SFSafariViewController(url: url)
+		safariViewController.modalPresentationStyle = .pageSheet
+		safariViewController.popoverPresentationController?.sourceView = view
+		present(safariViewController, animated: true)
+	}
+
+	// MARK: Other stuff
+
+	override func didReceiveMemoryWarning() {
+		super.didReceiveMemoryWarning()
+
+		if var memoryUsed = MemoryUsed(),
+		   var memoryTotal = TotalDeviceMemory()
+		{
+			let bytesPerMB = Double(1024 * 1024)
+			memoryUsed /= bytesPerMB
+			memoryTotal /= bytesPerMB
+
+			DLog("memory warning: \(memoryUsed) of \(memoryTotal) MB used")
+#if !DEBUG
+			if memoryUsed / memoryTotal < 0.4 {
+				// ignore unless we're being a memory hog
+				return
+			}
+#endif
+		}
+		MessageDisplay.shared.flashMessage(title: nil,
+		                                   message: NSLocalizedString("Low memory: clearing cache", comment: ""))
+		mapView.editorLayer.didReceiveMemoryWarning()
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
