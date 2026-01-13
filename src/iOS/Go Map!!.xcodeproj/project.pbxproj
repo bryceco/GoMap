@@ -886,6 +886,7 @@
 				02225DA629EB3AE900859F9D /* GpxTrack.swift */,
 				02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */,
 				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
+				02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */,
 				02C8C56326F446A3003B0122 /* MapMarkers */,
 				024909C8267BF9F70027E531 /* MapTransform.swift */,
 				0282C4C826617E7400F2D282 /* MapView.swift */,
@@ -906,7 +907,6 @@
 				C381C305263FD0CA003142BA /* VectorMath.swift */,
 				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
 				C341E1522639DECC0022E983 /* WikiPage.swift */,
-				02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";

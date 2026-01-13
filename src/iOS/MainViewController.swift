@@ -49,12 +49,12 @@ final class MainViewController: UIViewController,
 	@IBOutlet var flashLabel: UILabel!
 
 	@IBOutlet var mapView: MapView!
-	var locationBallView = LocationBallView()
+	let locationBallView = LocationBallView()
 
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
 
-	var mapTransform = MapTransform()
+	let mapTransform = MapTransform()
 
 	var buttonLayout: MainViewButtonLayout! {
 		didSet {

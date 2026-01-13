@@ -73,7 +73,7 @@ class GpxTrackBackgroundCollection: UITableViewCell {
 
 	@IBAction func enableBackground(_ sender: Any) {
 		let toggle = sender as? UISwitch
-		LocationProvider.shared.gpsInBackground = toggle?.isOn ?? false
+		GpxLayer.recordTracksInBackground = toggle?.isOn ?? false
 	}
 }
 
@@ -360,7 +360,7 @@ class GpxViewController: UITableViewController {
 				let cell = tableView.dequeueReusableCell(
 					withIdentifier: "GpxTrackBackgroundCollection",
 					for: indexPath) as! GpxTrackBackgroundCollection
-				cell.enableBackground.isOn = LocationProvider.shared.gpsInBackground
+				cell.enableBackground.isOn = GpxLayer.recordTracksInBackground
 				return cell
 			case 2:
 				// HealthKit support
@@ -499,7 +499,7 @@ class GpxViewController: UITableViewController {
 			if let center = track.center() {
 				mainView.centerOn(latLon: center, metersWide: nil)
 			}
-			AppDelegate.shared.mapView.displayGpxLogs = true
+			AppDelegate.shared.mapView.displayGpxTracks = true
 			navigationController?.dismiss(animated: true)
 		}
 	}

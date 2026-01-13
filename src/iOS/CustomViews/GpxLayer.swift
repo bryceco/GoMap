@@ -222,12 +222,17 @@ final class GpxLayer: DrawingLayer, DiskCacheSizeProtocol, DrawingLayerDelegate 
 		}
 	}
 
-	static var backgroundTracking: Bool {
+	static var recordTracksInBackground: Bool {
 		get {
 			UserPrefs.shared.gpxRecordsTracksInBackground.value ?? false
 		}
 		set {
 			UserPrefs.shared.gpxRecordsTracksInBackground.value = newValue
+
+			NotificationCenter.default.post(
+				name: NSNotification.Name("CollectGpxTracksInBackgroundChanged"),
+				object: nil,
+				userInfo: nil)
 		}
 	}
 

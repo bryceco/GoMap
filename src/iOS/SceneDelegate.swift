@@ -81,7 +81,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			do {
 				let track = try mapView.gpxLayer.loadGPXData(data, name: name)
 				if let center = track?.center() {
-					mapView.displayGpxLogs = true // ensure GPX tracks are visible
+					mapView.displayGpxTracks = true // ensure GPX tracks are visible
 					mainView.centerOn(latLon: center, metersWide: nil)
 					mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 				}
@@ -218,8 +218,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		UserPrefs.shared.synchronize()
 
 		if mapView.gpsState != .NONE,
-		   LocationProvider.shared.gpsInBackground,
-		   mapView.displayGpxLogs
+		   GpxLayer.recordTracksInBackground,
+		   mapView.displayGpxTracks
 		{
 			// Show GPX activity widget
 			if #available(iOS 16.2, *) {
@@ -248,8 +248,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let mapView = AppDelegate.shared.mapView!
 		let mainView = AppDelegate.shared.mainView!
 		if mapView.gpsState != .NONE {
-			if LocationProvider.shared.gpsInBackground,
-			   mapView.displayGpxLogs
+			if GpxLayer.recordTracksInBackground,
+			   mapView.displayGpxTracks
 			{
 				// GPS was running in the background
 				LocationProvider.shared.start()

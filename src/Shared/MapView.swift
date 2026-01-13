@@ -252,11 +252,11 @@ final class MapView: UIView, UIActionSheetDelegate,
 		}
 	}
 
-	var displayGpxLogs = false {
+	var displayGpxTracks = false {
 		didSet {
-			gpxLayer.isHidden = !displayGpxLogs
-			LocationProvider.shared.locationManager.allowsBackgroundLocationUpdates
-				= LocationProvider.shared.gpsInBackground && displayGpxLogs
+			gpxLayer.isHidden = !displayGpxTracks
+			LocationProvider.shared.allowsBackgroundLocationUpdates
+				= GpxLayer.recordTracksInBackground && displayGpxTracks
 		}
 	}
 
@@ -487,7 +487,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 		}
 
 		// these need to be loaded late because assigning to them changes the view
-		displayGpxLogs = UserPrefs.shared.mapViewEnableBreadCrumb.value ?? false
+		displayGpxTracks = UserPrefs.shared.mapViewEnableBreadCrumb.value ?? false
 		displayDataOverlayLayers = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
 		enableTurnRestriction = UserPrefs.shared.mapViewEnableTurnRestriction.value ?? false
 
@@ -601,7 +601,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 
 		UserPrefs.shared.mapViewEnableRotation.value = enableRotation
 		UserPrefs.shared.mapViewEnableBirdsEye.value = enableBirdsEye
-		UserPrefs.shared.mapViewEnableBreadCrumb.value = displayGpxLogs
+		UserPrefs.shared.mapViewEnableBreadCrumb.value = displayGpxTracks
 		UserPrefs.shared.mapViewEnableDataOverlay.value = displayDataOverlayLayers
 		UserPrefs.shared.mapViewEnableTurnRestriction.value = enableTurnRestriction
 		UserPrefs.shared.automaticCacheManagement.value = enableAutomaticCacheManagement
@@ -1729,7 +1729,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 			if viewOverlayMask.contains(.QUESTS) {
 				including.insert(.quest)
 			}
-			if displayGpxLogs {
+			if displayGpxTracks {
 				including.insert(.gpx)
 			}
 			if displayDataOverlayLayers {

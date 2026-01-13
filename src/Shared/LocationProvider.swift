@@ -9,12 +9,12 @@
 import CoreLocation
 import Foundation
 
-class LocationProvider: NSObject, ObservableObject, CLLocationManagerDelegate {
+final class LocationProvider: NSObject, CLLocationManagerDelegate {
 
 	static let shared = LocationProvider()
-	var locationManagerExtraneousNotification = false
+	var ignoreInitialStatusUpdate = false
 
-	let locationManager: CLLocationManager!
+	private let locationManager: CLLocationManager!
 	private(set) var currentLocation: CLLocation? {
 		didSet {
 			if let currentLocation {
@@ -41,37 +41,46 @@ class LocationProvider: NSObject, ObservableObject, CLLocationManagerDelegate {
 	let onChangeSmoothHeading = NotificationService<Double>()
 	let onChangeLocation = NotificationService<CLLocation>()
 
+	var allowsBackgroundLocationUpdates: Bool {
+		get {
+			locationManager.allowsBackgroundLocationUpdates
+		}
+		set {
+			locationManager.allowsBackgroundLocationUpdates = newValue
+		}
+	}
+
 	override init() {
 		locationManager = CLLocationManager()
 		super.init()
 
-		locationManagerExtraneousNotification = true // flag that we're going to receive a bogus notification from CL
+		ignoreInitialStatusUpdate = true // flag that we're going to receive an extra notification from CL
 		locationManager.delegate = self
 		locationManager.pausesLocationUpdatesAutomatically = false
-		locationManager.allowsBackgroundLocationUpdates = gpsInBackground
-			&& AppDelegate.shared.mapView.displayGpxLogs
+		locationManager.allowsBackgroundLocationUpdates = GpxLayer.recordTracksInBackground
+			&& AppDelegate.shared.mapView.displayGpxTracks
 		if #available(iOS 11.0, *) {
 			locationManager.showsBackgroundLocationIndicator = true
 		}
 		locationManager.activityType = .other
 
 		locationManager.delegate = self
+
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(backgroundCollectionSettingChanged(_:)),
+			name: NSNotification.Name("CollectGpxTracksInBackgroundChanged"),
+			object: nil)
 	}
 
-	var gpsInBackground: Bool {
-		get {
-			return GpxLayer.backgroundTracking
-		}
-		set(gpsInBackground) {
-			let mapView = AppDelegate.shared.mapView!
-
-			GpxLayer.backgroundTracking = gpsInBackground
-
-			locationManager.allowsBackgroundLocationUpdates = gpsInBackground && mapView.displayGpxLogs
-
-			if gpsInBackground {
-				locationManager.requestAlwaysAuthorization()
-			}
+	@objc func backgroundCollectionSettingChanged(_ notification: Notification) {
+		if GpxLayer.recordTracksInBackground,
+		   AppDelegate.shared.mapView.displayGpxTracks
+		{
+			allowsBackgroundLocationUpdates = true
+			locationManager.requestAlwaysAuthorization()
+		} else {
+			allowsBackgroundLocationUpdates = false
 		}
 	}
 
@@ -134,6 +143,8 @@ class LocationProvider: NSObject, ObservableObject, CLLocationManagerDelegate {
 		}
 		self.currentLocation = newLocation
 	}
+
+	// MARK: CLLocationManagerDelegate
 
 	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
 		let viewPort = AppDelegate.shared.mapView.viewPort
@@ -201,10 +212,9 @@ class LocationProvider: NSObject, ObservableObject, CLLocationManagerDelegate {
 	}
 
 	func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-		if locationManagerExtraneousNotification {
+		if ignoreInitialStatusUpdate {
 			// filter out extraneous notification we get when initializing CL
-			//
-			locationManagerExtraneousNotification = false
+			ignoreInitialStatusUpdate = false
 			return
 		}
 
