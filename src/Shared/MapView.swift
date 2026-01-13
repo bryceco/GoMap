@@ -108,7 +108,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 	private var editControlActions: [EDIT_ACTION] = []
 
 	var mainView: MainViewController!
-	var viewPort: MapViewPort { mainView }
+	var viewPort: MapViewPort { mainView.viewPort }
 	var mapTransform: MapTransform { viewPort.mapTransform }
 
 	public var viewState: MapViewState = .EDITORAERIAL {
@@ -437,22 +437,6 @@ final class MapView: UIView, UIActionSheetDelegate,
 		voiceAnnouncement?.mapView = self
 		voiceAnnouncement?.radius = 30 // meters
 #endif
-
-		// get current location
-		if let lat = UserPrefs.shared.view_latitude.value,
-		   let lon = UserPrefs.shared.view_longitude.value,
-		   let scale = UserPrefs.shared.view_scale.value
-		{
-			viewPort.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
-			                         scale: scale,
-			                         rotation: 0.0)
-		} else {
-			let rc = OSMRect(layer.bounds)
-			mapTransform.transform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
-			                                                  rc.origin.y + rc.size.height / 2 - 128)
-			// turn on GPS which will move us to current location
-			mainView.gpsState = .LOCATION
-		}
 
 		// these need to be loaded late because assigning to them changes the view
 		displayGpxTracks = UserPrefs.shared.mapViewEnableBreadCrumb.value ?? false

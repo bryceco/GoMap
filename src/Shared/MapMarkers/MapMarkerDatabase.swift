@@ -221,13 +221,13 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 
 			guard
 				// Check for cancellation before proceeding
-				!Task.isCancelled,
-				// Don't update excessively large regions
-				let bbox = AppDelegate.shared.mainView?.boundingLatLonForScreen(),
-				bbox.size.width * bbox.size.height <= 0.25
+				!Task.isCancelled
 			else {
 				return
 			}
+			// Don't update excessively large regions
+			let bbox = AppDelegate.shared.viewPort.boundingLatLonForScreen()
+			guard bbox.size.width * bbox.size.height <= 0.25 else { return }
 
 			await MainActor.run {
 				self.updateMarkers(forRegion: bbox, mapData: mapData, including: including, completion: completion)

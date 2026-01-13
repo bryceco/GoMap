@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	weak var mapView: MapView!
 	weak var mainView: MainViewController!
-	var viewPort: MapViewPort { mainView }
+	var viewPort: MapViewPort { mainView.viewPort }
 
 	private(set) var isAppUpgrade = false
 

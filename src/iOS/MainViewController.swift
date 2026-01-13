@@ -62,6 +62,8 @@ final class MainViewController: UIViewController,
 		}
 	}
 
+	var viewPort: MapViewPort { self as MapViewPort }
+
 	var addNodeButtonLongPressGestureRecognizer: UILongPressGestureRecognizer?
 	var plusButtonTimestamp: TimeInterval = 0.0
 
@@ -138,14 +140,14 @@ final class MainViewController: UIViewController,
 		locationBallView.heading = 0.0
 		locationBallView.showHeading = true
 		locationBallView.isHidden = true
-		locationBallView.viewPort = self
+		locationBallView.viewPort = viewPort
 		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
 			self?.locationBallView.updateLocation(location)
 		}
 		mapView.addSubview(locationBallView)
 
 		// Compass button
-		compassButton.viewPort = self
+		compassButton.viewPort = viewPort
 
 		// customize buttons
 		setButtonAppearances()
@@ -215,6 +217,22 @@ final class MainViewController: UIViewController,
 			scrollWheelGesture.allowedScrollTypesMask = .discrete
 			scrollWheelGesture.maximumNumberOfTouches = 0
 			view.addGestureRecognizer(scrollWheelGesture)
+		}
+
+		// get current location
+		if let lat = UserPrefs.shared.view_latitude.value,
+		   let lon = UserPrefs.shared.view_longitude.value,
+		   let scale = UserPrefs.shared.view_scale.value
+		{
+			viewPort.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
+			                         scale: scale,
+			                         rotation: 0.0)
+		} else {
+			let rc = OSMRect(mapView.layer.bounds)
+			viewPort.mapTransform.transform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
+			                                                           rc.origin.y + rc.size.height / 2 - 128)
+			// turn on GPS which will move us to current location
+			gpsState = .LOCATION
 		}
 	}
 
@@ -828,7 +846,7 @@ final class MainViewController: UIViewController,
 			let zoomCenter = pinch.location(in: mapView)
 #endif
 			let scale = pinch.scale / prevousPinchScale
-			adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
+			viewPort.adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 			prevousPinchScale = pinch.scale
 		case .ended:
 			break
@@ -856,7 +874,7 @@ final class MainViewController: UIViewController,
 			let centerPoint = rotationGesture.location(in: mapView)
 #endif
 			let angle = rotationGesture.rotation
-			rotate(by: angle, aroundScreenPoint: centerPoint)
+			viewPort.rotate(by: angle, aroundScreenPoint: centerPoint)
 			rotationGesture.rotation = 0.0
 
 			if gpsState == .HEADING {
@@ -879,7 +897,7 @@ final class MainViewController: UIViewController,
 			var center = pan.location(in: mapView)
 			center.y -= delta.y
 			let zoom = delta.y >= 0 ? (1000.0 + delta.y) / 1000.0 : 1000.0 / (1000.0 - delta.y)
-			adjustZoom(by: zoom, aroundScreenPoint: center)
+			viewPort.adjustZoom(by: zoom, aroundScreenPoint: center)
 		}
 	}
 
@@ -1017,24 +1035,24 @@ final class MainViewController: UIViewController,
 		switch gpsState {
 		case .HEADING:
 			gpsState = .LOCATION
-			rotateToNorth()
+			viewPort.rotateToNorth()
 		case .LOCATION:
 			gpsState = .HEADING
 			if let clHeading = LocationProvider.shared.currentHeading {
-				let heading = headingAdjustedForInterfaceOrientation(clHeading)
-				rotateToHeading(heading)
+				let heading = viewPort.headingAdjustedForInterfaceOrientation(clHeading)
+				viewPort.rotateToHeading(heading)
 			}
 		case .NONE:
-			rotateToNorth()
+			viewPort.rotateToNorth()
 		}
 	}
 
 	@IBAction func centerOnGPS(_ sender: Any) {
 		if let location = LocationProvider.shared.currentLocation {
 			userOverrodeLocationPosition = false
-			centerOn(latLon: LatLon(location.coordinate),
-			         zoom: nil, // don't change zoom
-			         rotation: nil) // don't change rotation
+			viewPort.centerOn(latLon: LatLon(location.coordinate),
+			                  zoom: nil, // don't change zoom
+			                  rotation: nil) // don't change rotation
 		}
 	}
 
