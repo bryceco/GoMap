@@ -19,6 +19,17 @@ class CompassButton: UIButton {
 		layer.addSublayer(pivot)
 	}
 
+	var viewPort: MapViewPort? {
+		didSet {
+			viewPort?.mapTransform.onChange.subscribe(self) { [weak self] in
+				if let self, let viewPort = self.viewPort {
+					let screenAngle = viewPort.mapTransform.rotation()
+					rotate(angle: CGFloat(screenAngle))
+				}
+			}
+		}
+	}
+
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		commonInit()

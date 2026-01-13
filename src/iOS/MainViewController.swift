@@ -141,6 +141,9 @@ final class MainViewController: UIViewController,
 		locationBallView.viewPort = self
 		mapView.addSubview(locationBallView)
 
+		// Compass button
+		compassButton.viewPort = self
+
 		// customize buttons
 		setButtonAppearances()
 
