@@ -273,7 +273,7 @@ extension MapViewPort {
 	func updateHeading(_ heading: Double, accuracy: Double) {
 		let screenAngle = mapTransform.rotation()
 
-		if AppDelegate.shared.mapView.gpsState == .HEADING {
+		if AppDelegate.shared.mainView.gpsState == .HEADING {
 			// rotate to new heading
 			let center = screenCenterPoint()
 			let delta = -(heading + screenAngle)

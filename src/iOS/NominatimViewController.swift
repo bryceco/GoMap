@@ -105,11 +105,11 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	}
 
 	func jumpTo(lat: Double, lon: Double, zoom: Double?) {
-		let appDelegate = AppDelegate.shared
+		let mainView = AppDelegate.shared.mainView!
 
 		// disable GPS
-		while appDelegate.mapView.gpsState != GPS_STATE.NONE {
-			appDelegate.mainView.toggleLocationButton(self)
+		while mainView.gpsState != GPS_STATE.NONE {
+			mainView.toggleLocationButton(self)
 		}
 		let latLon = LatLon(latitude: lat, longitude: lon)
 
@@ -117,9 +117,9 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		   zoom > 1,
 		   zoom < 24
 		{
-			appDelegate.mainView.centerOn(latLon: latLon, zoom: zoom, rotation: 0.0)
+			mainView.centerOn(latLon: latLon, zoom: zoom, rotation: 0.0)
 		} else {
-			appDelegate.mainView.centerOn(latLon: latLon, metersWide: 50.0)
+			mainView.centerOn(latLon: latLon, metersWide: 50.0)
 		}
 
 		dismiss(animated: true)

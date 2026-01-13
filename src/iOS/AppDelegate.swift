@@ -119,7 +119,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground.
 
 		// Turn off GPS so we gracefully end GPX trace.
-		AppDelegate.shared.mainView.setGpsState(.NONE)
+		AppDelegate.shared.mainView.gpsState = .NONE
 
 #if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 		// Remove any live activities

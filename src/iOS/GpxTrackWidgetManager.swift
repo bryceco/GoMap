@@ -53,7 +53,7 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 
 		if fromWidget {
 			// start a new track
-			AppDelegate.shared.mainView.setGpsState(.LOCATION)
+			AppDelegate.shared.mainView.gpsState = .LOCATION
 		}
 
 		// get the track
@@ -86,7 +86,7 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 		}
 
 		// start a new track
-		AppDelegate.shared.mainView.setGpsState(.LOCATION)
+		AppDelegate.shared.mainView.gpsState = .LOCATION
 
 		// get the track
 		guard let track = AppDelegate.shared.mapView.gpxLayer.activeTrack else {
@@ -123,7 +123,7 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 		else {
 			return
 		}
-		AppDelegate.shared.mainView.setGpsState(.NONE)
+		AppDelegate.shared.mainView.gpsState = .NONE
 		Task {
 			var state = activity.content.state
 			state.endTime = Date()
@@ -147,7 +147,7 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 			await activity.end(using: state, dismissalPolicy: .immediate)
 		}
 		if fromWidget {
-			AppDelegate.shared.mainView.setGpsState(.NONE)
+			AppDelegate.shared.mainView.gpsState = .NONE
 		}
 		self.activity = nil
 	}

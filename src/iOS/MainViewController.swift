@@ -68,13 +68,13 @@ final class MainViewController: UIViewController,
 	// Set true when the user moved the screen manually, so GPS updates shouldn't recenter screen on user
 	public var userOverrodeLocationPosition = false {
 		didSet {
-			centerOnGPSButton.isHidden = !userOverrodeLocationPosition || mapView.gpsState == .NONE
+			centerOnGPSButton.isHidden = !userOverrodeLocationPosition || gpsState == .NONE
 		}
 	}
 
 	public var userOverrodeLocationZoom = false {
 		didSet {
-			centerOnGPSButton.isHidden = !userOverrodeLocationZoom || mapView.gpsState == .NONE
+			centerOnGPSButton.isHidden = !userOverrodeLocationZoom || gpsState == .NONE
 		}
 	}
 
@@ -251,6 +251,23 @@ final class MainViewController: UIViewController,
 		uploadButton.tintColor = color
 		uploadButton.isEnabled = changeCount > 0
 		uploadButton.isHidden = changeCount == 0
+	}
+
+	func updateGpsButtonState() {
+		// update GPS icon
+		let isActive = gpsState != GPS_STATE.NONE
+		let imageName = isActive ? "location.fill" : "location"
+		var image = UIImage(systemName: imageName)
+		let color = UIColor.systemBlue
+		if #available(iOS 26.0, *) {
+			locationButton.setImage(image, for: .normal)
+			locationButton.tintColor = color
+			locationButton.configuration?.image = image
+			locationButton.configuration?.baseForegroundColor = color
+		} else {
+			image = image?.withRenderingMode(.alwaysTemplate)
+			locationButton.setImage(image, for: .normal)
+		}
 	}
 
 	func updateButtonPositionsFor(layout: MainViewButtonLayout) {
@@ -842,8 +859,8 @@ final class MainViewController: UIViewController,
 			rotate(by: angle, aroundScreenPoint: centerPoint)
 			rotationGesture.rotation = 0.0
 
-			if mapView.gpsState == .HEADING {
-				mapView.gpsState = .LOCATION
+			if gpsState == .HEADING {
+				gpsState = .LOCATION
 			}
 		case .ended:
 			mapView.updateMapMarkersFromServer(withDelay: 0, including: [])
@@ -952,51 +969,57 @@ final class MainViewController: UIViewController,
 		present(actionSheet, animated: true)
 	}
 
-	// MARK: Button actions
+	// MARK: GPS tracking
 
-	func setGpsState(_ state: GPS_STATE) {
-		if mapView.gpsState != state {
-			mapView.gpsState = state
+	var gpsState: GPS_STATE = .NONE {
+		didSet {
+			if gpsState != oldValue {
+				if gpsState == .NONE {
+					centerOnGPSButton.isHidden = true
+					LocationProvider.shared.stop()
+					locationBallView.isHidden = true
+					mapView.voiceAnnouncement?.enabled = false
+					mapView.gpxLayer.endActiveTrack(continuingCurrentTrack: false)
+				} else {
+					userOverrodeLocationPosition = false
+					userOverrodeLocationZoom = false
+					locationBallView.isHidden = false
+					LocationProvider.shared.start()
+					mapView.voiceAnnouncement?.enabled = true
+					if oldValue == .NONE {
+						// because recording GPX tracks is cheap we record them any time GPS is enabled
+						mapView.gpxLayer.startNewTrack(continuingCurrentTrack: false)
+					}
+				}
 
-			// update GPS icon
-			let isActive = mapView.gpsState != GPS_STATE.NONE
-			let imageName = isActive ? "location.fill" : "location"
-			var image = UIImage(systemName: imageName)
-			let color = UIColor.systemBlue
-			if #available(iOS 26.0, *) {
-				locationButton.setImage(image, for: .normal)
-				locationButton.tintColor = color
-				locationButton.configuration?.image = image
-				locationButton.configuration?.baseForegroundColor = color
-			} else {
-				image = image?.withRenderingMode(.alwaysTemplate)
-				locationButton.setImage(image, for: .normal)
+				updateUploadButtonState()
 			}
 		}
 	}
 
+	// MARK: Button actions
+
 	@IBAction func toggleLocationButton(_ sender: Any) {
-		switch mapView.gpsState {
+		switch gpsState {
 		case GPS_STATE.NONE:
 			// if the user hasn't rotated the screen then start facing north, otherwise follow heading
 			if fabs(mapTransform.rotation()) < 0.0001 {
-				setGpsState(GPS_STATE.LOCATION)
+				gpsState = .LOCATION
 			} else {
-				setGpsState(GPS_STATE.HEADING)
+				gpsState = .HEADING
 			}
-		case GPS_STATE.LOCATION,
-		     GPS_STATE.HEADING:
-			setGpsState(GPS_STATE.NONE)
+		case GPS_STATE.LOCATION, GPS_STATE.HEADING:
+			gpsState = .NONE
 		}
 	}
 
 	@IBAction func compassPressed(_ sender: Any) {
-		switch mapView.gpsState {
+		switch gpsState {
 		case .HEADING:
-			mapView.gpsState = .LOCATION
+			gpsState = .LOCATION
 			rotateToNorth()
 		case .LOCATION:
-			mapView.gpsState = .HEADING
+			gpsState = .HEADING
 			if let clHeading = LocationProvider.shared.currentHeading {
 				let heading = headingAdjustedForInterfaceOrientation(clHeading)
 				rotateToHeading(heading)

@@ -85,7 +85,6 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 	}
 
 	func start() {
-		let mapView = AppDelegate.shared.mapView!
 		let mainView = AppDelegate.shared.mainView!
 
 		let status: CLAuthorizationStatus
@@ -98,12 +97,12 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 		case .notDetermined:
 			// we haven't asked user before, so have iOS pop up the question
 			locationManager.requestWhenInUseAuthorization()
-			mapView.gpsState = .NONE
+			mainView.gpsState = .NONE
 			return
 		case .restricted, .denied:
 			// user denied permission previously, so ask if they want to open Settings
 			AppDelegate.askUser(toAllowLocationAccess: mainView)
-			mapView.gpsState = .NONE
+			mainView.gpsState = .NONE
 			return
 		case .authorizedAlways, .authorizedWhenInUse:
 			break
@@ -122,7 +121,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 	}
 
 	func updateToLocation(_ newLocation: CLLocation) {
-		guard AppDelegate.shared.mapView.gpsState != .NONE else {
+		guard AppDelegate.shared.mainView.gpsState != .NONE else {
 			// sometimes we get a notification after turning off notifications
 			DLog("discard location notification")
 			return
@@ -189,7 +188,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 
 		var error = error
 		if (error as? CLError)?.code == CLError.Code.denied {
-			mainView.setGpsState(GPS_STATE.NONE)
+			mainView.gpsState = .NONE
 
 			var text = String.localizedStringWithFormat(
 				NSLocalizedString(
@@ -218,15 +217,13 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 			return
 		}
 
-		var ok = false
 		switch status {
 		case .authorizedAlways, .authorizedWhenInUse:
-			ok = true
+			AppDelegate.shared.mainView.gpsState = .LOCATION
 		case .notDetermined, .restricted, .denied:
 			fallthrough
 		default:
-			ok = false
+			AppDelegate.shared.mainView.gpsState = .NONE
 		}
-		AppDelegate.shared.mainView.setGpsState(ok ? .LOCATION : .NONE)
 	}
 }

@@ -32,7 +32,7 @@ class HeightViewController: UIViewController {
 	var callback: ((_ newValue: String) -> Void)?
 
 	class func unableToInstantiate(withUserWarning vc: UIViewController) -> Bool {
-		if AppDelegate.shared.mapView.gpsState == GPS_STATE.NONE {
+		if AppDelegate.shared.mainView.gpsState == GPS_STATE.NONE {
 			let alert = UIAlertController(
 				title: NSLocalizedString("Error", comment: "Error dialog title"),
 				message: NSLocalizedString("This action requires GPS to be turned on", comment: ""),

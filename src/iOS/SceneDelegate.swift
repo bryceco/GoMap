@@ -200,9 +200,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 	}
 
+	var gpsLastActive = Date.distantPast
+
 	func sceneDidEnterBackground(_ scene: UIScene) {
 		// set app badge if edits are pending
 		let mapView = AppDelegate.shared.mapView!
+		let mainView = AppDelegate.shared.mainView!
 		let pendingEdits = mapView.editorLayer.mapData.modificationCount()
 		if pendingEdits != 0 {
 			UNUserNotificationCenter.current().requestAuthorization(options: .badge,
@@ -212,12 +215,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		UIApplication.shared.applicationIconBadgeNumber = pendingEdits
 
 		// Save when we last used GPS
-		mapView.gpsLastActive = Date()
+		gpsLastActive = Date()
 
 		// Save preferences in case user force-kills us while we're in background
 		UserPrefs.shared.synchronize()
 
-		if mapView.gpsState != .NONE,
+		if mainView.gpsState != .NONE,
 		   GpxLayer.recordTracksInBackground,
 		   mapView.displayGpxTracks
 		{
@@ -247,7 +250,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	func sceneWillEnterForeground(_ scene: UIScene) {
 		let mapView = AppDelegate.shared.mapView!
 		let mainView = AppDelegate.shared.mainView!
-		if mapView.gpsState != .NONE {
+		if mainView.gpsState != .NONE {
 			if GpxLayer.recordTracksInBackground,
 			   mapView.displayGpxTracks
 			{
@@ -255,11 +258,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				LocationProvider.shared.start()
 			} else {
 				// If the user recently closed the app with GPS running, then enable GPS again
-				if Date().timeIntervalSince(mapView.gpsLastActive) < 30 * 60 {
+				if Date().timeIntervalSince(gpsLastActive) < 30 * 60 {
 					LocationProvider.shared.start()
 				} else {
 					// turn off GPS on resume when user hasn't used app recently
-					mainView.setGpsState(GPS_STATE.NONE)
+					mainView.gpsState = .NONE
 				}
 			}
 		} else {

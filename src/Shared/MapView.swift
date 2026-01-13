@@ -195,38 +195,6 @@ final class MapView: UIView, UIActionSheetDelegate,
 
 	private(set) var allLayers: [LayerOrView] = []
 
-	var gpsLastActive = Date.distantPast
-	var gpsState: GPS_STATE = .NONE {
-		didSet {
-			if gpsState != oldValue {
-				// update collection of GPX points
-				if oldValue == .NONE, gpsState != .NONE {
-					// because recording GPX tracks is cheap we record them every time GPS is enabled
-					gpxLayer.startNewTrack(continuingCurrentTrack: false)
-				} else if gpsState == .NONE {
-					gpxLayer.endActiveTrack(continuingCurrentTrack: false)
-				}
-
-				if gpsState == .NONE {
-					mainView.centerOnGPSButton.isHidden = true
-					voiceAnnouncement?.enabled = false
-				} else {
-					voiceAnnouncement?.enabled = true
-				}
-
-				if gpsState != .NONE {
-					mainView.userOverrodeLocationPosition = false
-					mainView.userOverrodeLocationZoom = false
-					mainView.locationBallView.isHidden = false
-					LocationProvider.shared.start()
-				} else {
-					LocationProvider.shared.stop()
-					mainView.locationBallView.isHidden = true
-				}
-			}
-		}
-	}
-
 	private(set) var pushPin: PushPinView?
 	var pushPinIsOnscreen = false
 
@@ -483,7 +451,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 			mapTransform.transform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
 			                                                  rc.origin.y + rc.size.height / 2 - 128)
 			// turn on GPS which will move us to current location
-			mainView.setGpsState(GPS_STATE.LOCATION)
+			mainView.gpsState = .LOCATION
 		}
 
 		// these need to be loaded late because assigning to them changes the view
