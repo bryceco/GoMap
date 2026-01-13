@@ -732,25 +732,6 @@ final class MainViewController: UIViewController,
 
 	var progressActive = AtomicInt(0)
 
-	func progressIncrement(_ delta: Int = 1) {
-		if progressActive.value() == 0, delta > 0 {
-			progressIndicator.startAnimating()
-		}
-		progressActive.increment(delta)
-	}
-
-	func progressDecrement() {
-		progressActive.decrement()
-		if progressActive.value() == 0 {
-			progressIndicator.stopAnimating()
-		}
-#if DEBUG
-		if progressActive.value() < 0 {
-			print("progressDecrement = \(progressActive.value())")
-		}
-#endif
-	}
-
 	// MARK: Gesture recognizers
 
 	// disable gestures inside toolbar buttons
@@ -1119,4 +1100,21 @@ final class MainViewController: UIViewController,
 
 extension MainViewController: MapViewPort {
 	// pick up all the functions defined in the protocol automatically
+}
+
+extension MainViewController: MapViewProgress {
+
+	func progressIncrement(_ delta: Int = 1) {
+		if progressActive.value() == 0, delta > 0 {
+			progressIndicator.startAnimating()
+		}
+		progressActive.increment(delta)
+	}
+
+	func progressDecrement() {
+		progressActive.decrement()
+		if progressActive.value() == 0 {
+			progressIndicator.stopAnimating()
+		}
+	}
 }

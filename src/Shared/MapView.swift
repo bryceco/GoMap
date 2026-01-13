@@ -150,7 +150,8 @@ final class MapView: UIView, UIActionSheetDelegate,
 				insertSubview(view, at: 0) // place at bottom so MapMarkers are above it
 				basemapLayer = view
 			} else {
-				let layer = MercatorTileLayer(viewPort: viewPort)
+				let layer = MercatorTileLayer(viewPort: viewPort,
+				                              progress: mainView)
 				layer.tileServer = newValue
 				layer.supportDarkMode = true
 				layer.zPosition = ZLAYER.BASEMAP.rawValue
@@ -374,13 +375,13 @@ final class MapView: UIView, UIActionSheetDelegate,
 		// this option needs to be set before the editor is initialized
 		enableAutomaticCacheManagement = UserPrefs.shared.automaticCacheManagement.value ?? true
 
-		locatorLayer = MercatorTileLayer(viewPort: viewPort)
+		locatorLayer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
 		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
 		locatorLayer.tileServer = TileServer.mapboxLocator
 		locatorLayer.isHidden = true
 		allLayers.append(locatorLayer)
 
-		aerialLayer = MercatorTileLayer(viewPort: viewPort)
+		aerialLayer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
 		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue
 		aerialLayer.tileServer = tileServerList.currentServer
 		aerialLayer.isHidden = true
@@ -392,7 +393,8 @@ final class MapView: UIView, UIActionSheetDelegate,
 
 		editorLayer = EditorMapLayer(owner: self,
 		                             viewPort: viewPort,
-		                             display: MessageDisplay.shared)
+		                             display: MessageDisplay.shared,
+		                             progress: mainView)
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
 		allLayers.append(editorLayer)
 
@@ -526,7 +528,7 @@ final class MapView: UIView, UIActionSheetDelegate,
 					continue
 				}
 
-				let layer = MercatorTileLayer(viewPort: viewPort)
+				let layer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
 				layer.zPosition = ZLAYER.GPX.rawValue
 				layer.tileServer = tileServer
 				layer.isHidden = false
@@ -2066,16 +2068,6 @@ final class MapView: UIView, UIActionSheetDelegate,
 // MARK: EditorMapLayerOwner delegate methods
 
 // EditorMap extensions
-extension MapView: MapViewProgress {
-	func progressIncrement(_ delta: Int) {
-		mainView.progressIncrement()
-	}
-
-	func progressDecrement() {
-		mainView.progressDecrement()
-	}
-}
-
 extension MapView: EditorMapLayerOwner {
 	func didUpdateObject() {
 		refreshPushpinText()

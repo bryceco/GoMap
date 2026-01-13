@@ -34,7 +34,7 @@ enum MenuLocation {
 // MARK: EditorMapLayerOwner protocol
 
 // The UIView that hosts us.
-protocol EditorMapLayerOwner: UIView, MapViewProgress {
+protocol EditorMapLayerOwner: UIView {
 	func pushpinView() -> PushPinView? // fetch the pushpin from owner
 	func removePin()
 	func placePushpin(at: CGPoint, object: OsmBaseObject?)
@@ -190,6 +190,7 @@ final class EditorMapLayer: CALayer {
 
 	let mapData: OsmMapData
 	let owner: EditorMapLayerOwner
+	let progress: MapViewProgress
 	let viewPort: MapViewPort
 	let display: MessageDisplay
 
@@ -200,11 +201,13 @@ final class EditorMapLayer: CALayer {
 
 	init(owner: EditorMapLayerOwner,
 	     viewPort: MapViewPort,
-	     display: MessageDisplay)
+	     display: MessageDisplay,
+	     progress: MapViewProgress)
 	{
 		self.owner = owner
 		self.viewPort = viewPort
 		self.display = display
+		self.progress = progress
 
 		var t = CACurrentMediaTime()
 		var alert: UIAlertController?
@@ -344,6 +347,7 @@ final class EditorMapLayer: CALayer {
 		viewPort = layer.viewPort
 		display = layer.display
 		mapData = layer.mapData
+		progress = layer.progress
 		baseLayer = CATransformLayer() // not sure if we should provide the original or not?
 		super.init(layer: layer)
 	}
@@ -467,7 +471,7 @@ final class EditorMapLayer: CALayer {
 			return
 		}
 
-		mapData.downloadMissingData(inRect: box, withProgress: owner, didChange: { [self] error in
+		mapData.downloadMissingData(inRect: box, withProgress: progress, didChange: { [self] error in
 			if let error = error {
 				// present error asynchrounously so we don't interrupt the current UI action
 				DispatchQueue.main.async(execute: { [self] in

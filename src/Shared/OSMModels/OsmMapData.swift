@@ -625,7 +625,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	///	- We submit the rect to the server
 	///	- Once we've successfully fetched the data for the rect we tell the QuadMap that it can mark the given QuadBoxes as downloaded
 	func downloadMissingData(inRect rect: OSMRect,
-	                         withProgress progress: NSObjectProtocol & MapViewProgress,
+	                         withProgress progress: MapViewProgress,
 	                         didChange: @escaping (_ error: Error?) -> Void)
 	{
 		// get list of new quads to fetch
@@ -837,7 +837,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			case let .success(postData):
 				let response = String(decoding: postData, as: UTF8.self)
 
-				if retries > 0 && response.hasPrefix("Version mismatch") {
+				if retries > 0, response.hasPrefix("Version mismatch") {
 					// update the bad element and retry
 					DLog("Upload error: \(response)")
 					// "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld"
@@ -968,8 +968,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	{
 		guard
 			let xmlChanges = OsmXmlGenerator.createXmlFor(nodes: nodes.values,
-														  ways: ways.values,
-														  relations: relations.values)
+			                                              ways: ways.values,
+			                                              relations: relations.values)
 		else {
 			completion(OsmMapDataError.badXML)
 			return
@@ -1001,10 +1001,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		assert(newVersion > 0)
 		object.serverUpdate(ident: newId,
-							version: newVersion,
-							changeset: changeset,
-							timestamp: timestamp,
-							user: AppDelegate.shared.userName)
+		                    version: newVersion,
+		                    changeset: changeset,
+		                    timestamp: timestamp,
+		                    user: AppDelegate.shared.userName)
 		sqlUpdate[object] = true // mark for insertion
 
 		if oldId != newId {
@@ -1751,12 +1751,15 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			}
 		}
 		// ensure there is no object with parentRelations that isn't actually a member
-		nodes.values.forEach({ obj in
-			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
-		ways.values.forEach({ obj in
-			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
-		relations.values.forEach({ obj in
-			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) }) })
+		for obj in nodes.values {
+			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) })
+		}
+		for obj in ways.values {
+			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) })
+		}
+		for obj in relations.values {
+			obj.parentRelations.forEach({ assert($0.members.map({ $0.obj }).contains(obj)) })
+		}
 	}
 
 	func consistencyCheckDebugOnly() {

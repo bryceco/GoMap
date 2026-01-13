@@ -24,6 +24,7 @@ final class MercatorTileLayer: CALayer {
 	private var layerDict: [String: CALayer] = [:] // map of tiles currently displayed
 
 	let viewPort: MapViewPort
+	let progress: MapViewProgress
 	private var isPerformingLayout = AtomicInt(0)
 
 	var supportDarkMode = false
@@ -33,13 +34,15 @@ final class MercatorTileLayer: CALayer {
 	override init(layer: Any) {
 		let layer = layer as! MercatorTileLayer
 		viewPort = layer.viewPort
+		progress = layer.progress
 		tileServer = layer.tileServer
 		supportDarkMode = layer.supportDarkMode
 		super.init(layer: layer)
 	}
 
-	init(viewPort: MapViewPort) {
+	init(viewPort: MapViewPort, progress: MapViewProgress) {
 		self.viewPort = viewPort
+		self.progress = progress
 		tileServer = TileServer.none // arbitrary, just need a default value
 		super.init()
 
@@ -376,7 +379,7 @@ final class MercatorTileLayer: CALayer {
 		}
 
 		// create any tiles that don't yet exist
-		viewPort.progressIncrement((tileEast - tileWest) * (tileSouth - tileNorth))
+		progress.progressIncrement((tileEast - tileWest) * (tileSouth - tileNorth))
 		for tileX in tileWest..<tileEast {
 			for tileY in tileNorth..<tileSouth {
 				fetchTile(
@@ -390,7 +393,7 @@ final class MercatorTileLayer: CALayer {
 						{
 							MessageDisplay.shared.presentError(title: tileServer.name, error: error, flash: true)
 						}
-						viewPort.progressDecrement()
+						progress.progressDecrement()
 					})
 			}
 		}

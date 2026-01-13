@@ -10,7 +10,7 @@ import CoreLocation
 import UIKit
 
 // Allows other layers of the map to view changes to the map view
-protocol MapViewPort: AnyObject, MapViewProgress {
+protocol MapViewPort: AnyObject {
 	var mapTransform: MapTransform { get }
 }
 
