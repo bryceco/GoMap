@@ -44,7 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func setMapLocation(_ location: MapLocation) {
 		MainActor.runAfter(nanoseconds: 100_000000) {
-			AppDelegate.shared.mainView.centerOn(location)
+			AppDelegate.shared.mapView.moveToLocation(location)
 		}
 	}
 

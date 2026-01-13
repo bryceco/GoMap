@@ -270,18 +270,6 @@ extension MapViewPort {
 		                rotation: 0.0)
 	}
 
-	func centerOn(_ location: MapLocation) {
-		let zoom = location.zoom > 0 ? location.zoom : 21.0
-		let latLon = LatLon(latitude: location.latitude, longitude: location.longitude)
-		let rotation = location.direction * .pi / 180.0
-		centerOn(latLon: latLon,
-		         zoom: zoom,
-		         rotation: rotation)
-		if let state = location.viewState {
-			AppDelegate.shared.mapView.viewState = state
-		}
-	}
-
 	func updateHeadingSmoothed(_ heading: Double, accuracy: Double) {
 		let screenAngle = mapTransform.rotation()
 
@@ -290,9 +278,7 @@ extension MapViewPort {
 			let center = screenCenterPoint()
 			let delta = -(heading + screenAngle)
 			rotate(by: CGFloat(delta), aroundScreenPoint: center)
-		} else if let locationBall = AppDelegate.shared.mainView?.locationBallView,
-		          !locationBall.isHidden
-		{
+		} else if let locationBall = AppDelegate.shared.mainView?.locationBallView {
 			// rotate location ball
 			locationBall.headingAccuracy = CGFloat(accuracy * (.pi / 180))
 			locationBall.showHeading = true

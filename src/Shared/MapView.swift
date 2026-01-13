@@ -1200,6 +1200,18 @@ final class MapView: UIView, CLLocationManagerDelegate, UIActionSheetDelegate,
 		}
 	}
 
+	func moveToLocation(_ location: MapLocation) {
+		let zoom = location.zoom > 0 ? location.zoom : 21.0
+		let latLon = LatLon(latitude: location.latitude, longitude: location.longitude)
+		let rotation = location.direction * .pi / 180.0
+		viewPort.centerOn(latLon: latLon,
+		                  zoom: zoom,
+		                  rotation: rotation)
+		if let state = location.viewState {
+			viewState = state
+		}
+	}
+
 	private var locationManagerSmoothHeading = 0.0
 	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
 		let accuracy = newHeading.headingAccuracy
