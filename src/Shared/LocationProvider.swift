@@ -161,7 +161,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 				delta += 2 * .pi
 			}
 			delta *= 0.15
-			if abs(delta) < .pi / 100.0 {
+			if abs(delta) < 0.0001 {
 				self.smoothHeading = heading
 			} else {
 				self.smoothHeading += delta
