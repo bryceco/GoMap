@@ -234,6 +234,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			// turn off GPS tracking
 			LocationProvider.shared.stop()
 		}
+
+		// save all our data in case we never come back
+		AppDelegate.shared.mainView.applicationWillEnterBackground()
 	}
 
 	func scene(_ scene: UIScene,

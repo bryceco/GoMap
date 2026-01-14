@@ -76,6 +76,26 @@ final class MainViewController: UIViewController,
 		}
 	}
 
+	var enableBirdsEye = false {
+		didSet {
+			if !enableBirdsEye {
+				// remove birdsEye
+				viewPort.rotateBirdsEye(by: -viewPort.mapTransform.birdsEyeRotation)
+			}
+		}
+	}
+
+	var enableRotation = false {
+		didSet {
+			if !enableRotation {
+				// remove rotation
+				let centerPoint = viewPort.screenCenterPoint()
+				let angle = CGFloat(viewPort.mapTransform.rotation())
+				viewPort.rotate(by: -angle, aroundScreenPoint: centerPoint)
+			}
+		}
+	}
+
 	// MARK: Initialization
 
 	override func viewDidLoad() {
@@ -225,6 +245,9 @@ final class MainViewController: UIViewController,
 			// turn on GPS which will move us to current location
 			gpsState = .LOCATION
 		}
+
+		enableRotation = UserPrefs.shared.mapViewEnableRotation.value ?? true
+		enableBirdsEye = UserPrefs.shared.mapViewEnableBirdsEye.value ?? false
 	}
 
 	func setupAccessibility() {
@@ -234,6 +257,43 @@ final class MainViewController: UIViewController,
 		settingsButton.accessibilityLabel = NSLocalizedString("Settings", comment: "")
 		uploadButton.accessibilityLabel = NSLocalizedString("Upload your changes", comment: "")
 		displayButton.accessibilityLabel = NSLocalizedString("Display options", comment: "")
+	}
+
+	func applicationWillEnterBackground() {
+		mapView.voiceAnnouncement?.removeAll()
+		save()
+	}
+
+	func save() {
+		// save preferences first
+		let latLon = viewPort.screenCenterLatLon()
+		let scale = viewPort.mapTransform.scale()
+#if false && DEBUG
+		assert(scale > 1.0)
+#endif
+		UserPrefs.shared.view_scale.value = scale
+		UserPrefs.shared.view_latitude.value = latLon.lat
+		UserPrefs.shared.view_longitude.value = latLon.lon
+
+		UserPrefs.shared.mapViewState.value = mapView.viewState.rawValue
+		UserPrefs.shared.mapViewOverlays.value = mapView.viewOverlayMask.rawValue
+
+		UserPrefs.shared.mapViewEnableRotation.value = enableRotation
+		UserPrefs.shared.mapViewEnableBirdsEye.value = enableBirdsEye
+		UserPrefs.shared.mapViewEnableBreadCrumb.value = mapView.displayGpxTracks
+		UserPrefs.shared.mapViewEnableDataOverlay.value = mapView.displayDataOverlayLayers
+		UserPrefs.shared.mapViewEnableTurnRestriction.value = mapView.enableTurnRestriction
+		UserPrefs.shared.automaticCacheManagement.value = mapView.enableAutomaticCacheManagement
+
+		mapView.currentRegion.saveToUserPrefs()
+
+		UserPrefs.shared.synchronize()
+
+		mapView.tileServerList.save()
+		mapView.gpxLayer.saveActiveTrack()
+
+		// then save data
+		mapView.editorLayer.save()
 	}
 
 	// MARK: Button state
@@ -710,8 +770,57 @@ final class MainViewController: UIViewController,
 		}
 	}
 
-	@IBAction func handlePanGesture(_ pan: UIPanGestureRecognizer) {
-		mapView.handlePanGesture(pan)
+	@objc func handlePanGesture(_ pan: UIPanGestureRecognizer) {
+		userOverrodeLocationPosition = true
+
+		if pan.state == .began {
+			// start pan
+			DisplayLink.shared.removeName(DisplayLinkPanning)
+			// disable frame rate test if active
+			mapView.automatedFramerateTestActive = false
+		} else if pan.state == .changed {
+			// move pan
+			if SHOW_3D {
+				// multi-finger drag to initiate 3-D view
+				if enableBirdsEye, pan.numberOfTouches == 3 {
+					let translation = pan.translation(in: self.view)
+					let delta = Double(-translation.y / 40 / 180 * .pi)
+					viewPort.rotateBirdsEye(by: delta)
+					return
+				}
+			}
+			let translation = pan.translation(in: mapView)
+			viewPort.adjustOrigin(by: translation)
+			pan.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
+		} else if pan.state == .ended || pan.state == .cancelled {
+			// cancelled occurs when we throw an error dialog
+			let duration = 0.5
+
+			// finish pan with inertia
+			let initialVelecity = pan.velocity(in: self.view)
+			if hypot(initialVelecity.x, initialVelecity.y) < 100.0 {
+				// don't use inertia for small movements because it interferes with dropping the pin precisely
+			} else {
+				let startTime = CACurrentMediaTime()
+				let displayLink = DisplayLink.shared
+				displayLink.addName(DisplayLinkPanning, block: {
+					let timeOffset = CACurrentMediaTime() - startTime
+					if timeOffset >= duration {
+						displayLink.removeName(DisplayLinkPanning)
+					} else {
+						var translation = CGPoint()
+						let t = timeOffset / duration // time [0..1]
+						translation.x = CGFloat(1 - t) * initialVelecity.x * CGFloat(displayLink.duration())
+						translation.y = CGFloat(1 - t) * initialVelecity.y * CGFloat(displayLink.duration())
+						self.viewPort.adjustOrigin(by: translation)
+					}
+				})
+			}
+		} else if pan.state == .failed {
+			DLog("pan gesture failed")
+		} else {
+			DLog("pan gesture \(pan.state)")
+		}
 	}
 
 	@IBAction func handleTapGesture(_ tap: UITapGestureRecognizer) {
@@ -753,7 +862,7 @@ final class MainViewController: UIViewController,
 
 	@IBAction func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
 		// Rotate screen
-		guard mapView.enableRotation else {
+		guard enableRotation else {
 			return
 		}
 

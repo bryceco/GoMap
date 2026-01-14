@@ -105,7 +105,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	@objc func periodicSave(_ timer: Timer) {
 		let appDelegate = AppDelegate.shared
-		appDelegate.mapView.save() // this will also invalidate the timer
+		appDelegate.mainView.save() // this will also invalidate the timer
 	}
 
 	func setConstructed() {

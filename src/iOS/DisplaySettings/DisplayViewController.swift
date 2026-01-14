@@ -56,7 +56,8 @@ class DisplayViewController: UITableViewController {
 	}
 
 	func applyChanges() {
-		let mapView = AppDelegate.shared.mapView!
+		let mainView = AppDelegate.shared.mainView!
+		let mapView = mainView.mapView!
 
 		let maxRow = tableView.numberOfRows(inSection: BACKGROUND_SECTION)
 		for row in 0..<maxRow {
@@ -76,7 +77,7 @@ class DisplayViewController: UITableViewController {
 			dataOverlaySwitch.isOn ? .DATAOVERLAY : []
 		]
 
-		mapView.enableRotation = rotationSwitch.isOn
+		mainView.enableRotation = rotationSwitch.isOn
 		mapView.displayGpxTracks = gpxLoggingSwitch.isOn
 		mapView.displayDataOverlayLayers = dataOverlaySwitch.isOn
 		mapView.enableTurnRestriction = turnRestrictionSwitch.isOn
@@ -111,7 +112,10 @@ class DisplayViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		guard let mapView = AppDelegate.shared.mapView else { return }
+		guard
+			let mainView = AppDelegate.shared.mainView,
+			let mapView = mainView.mapView
+		else { return }
 
 		// becoming visible the first time
 		navigationController?.isNavigationBarHidden = false
@@ -120,7 +124,7 @@ class DisplayViewController: UITableViewController {
 		questsSwitch.isOn = mapView.viewOverlayMask.contains(.QUESTS)
 		dataOverlaySwitch.isOn = mapView.displayDataOverlayLayers
 
-		rotationSwitch.isOn = mapView.enableRotation
+		rotationSwitch.isOn = mainView.enableRotation
 		gpxLoggingSwitch.isOn = mapView.displayGpxTracks
 		turnRestrictionSwitch.isOn = mapView.enableTurnRestriction
 		objectFiltersSwitch.isOn = mapView.editorLayer.objectFilters.enableObjectFilters
