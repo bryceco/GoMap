@@ -84,9 +84,24 @@ struct MapLocation {
 	}
 }
 
+protocol MapViewSharedState: AnyObject {
+	var displayGpxTracks: Bool { get set }
+	var bounds: CGRect { get }
+	var gpxLayer: GpxLayer! { get }
+	var aerialLayer: MercatorTileLayer! { get }
+	var tileServerList: TileServerList { get }
+	var editorLayer: EditorMapLayer! { get }
+	var enableAutomaticCacheManagement: Bool { get }
+	var displayDataOverlayLayers: Bool { get }
+	var dataOverlayLayer: DataOverlayLayer! { get }
+
+	func refreshPushpinText()
+}
+
 // MARK: MapView
 
-final class MapView: UIView, UIActionSheetDelegate,
+final class MapView: UIView, MapViewSharedState,
+	UIActionSheetDelegate,
 	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate, DPadDelegate,
 	UISheetPresentationControllerDelegate
 {
