@@ -15,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return UIApplication.shared.delegate as! AppDelegate
 	}
 
-	weak var mainView: MainViewController!
+	weak var mainView: MainViewState!
 	var mapView: MapView! { mainView.mapView }
 
 	private(set) var isAppUpgrade = false
@@ -128,13 +128,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 #endif
 	}
 
-	class func askUser(toAllowLocationAccess parentVC: UIViewController) {
+	class func askUserToAllowLocationAccess() {
 		let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
 		let title = String.localizedStringWithFormat(
 			NSLocalizedString("Turn On Location Services to Allow %@ to Determine Your Location", comment: ""),
 			appName ?? "")
 
-		AppDelegate.askUserToOpenSettings(withAlertTitle: title, message: nil, parentVC: parentVC)
+		let vc = AppDelegate.shared.mainView.topViewController
+		AppDelegate.askUserToOpenSettings(withAlertTitle: title, message: nil, parentVC: vc)
 	}
 
 	class func askUserToOpenSettings(withAlertTitle title: String, message: String?, parentVC: UIViewController) {

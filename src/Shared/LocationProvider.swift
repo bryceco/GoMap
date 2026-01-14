@@ -101,7 +101,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 			return
 		case .restricted, .denied:
 			// user denied permission previously, so ask if they want to open Settings
-			AppDelegate.askUser(toAllowLocationAccess: mainView)
+			AppDelegate.askUserToAllowLocationAccess()
 			mainView.gpsState = .NONE
 			return
 		case .authorizedAlways, .authorizedWhenInUse:

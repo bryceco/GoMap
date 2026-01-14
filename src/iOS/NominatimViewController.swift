@@ -109,7 +109,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 		// disable GPS
 		while mainView.gpsState != GPS_STATE.NONE {
-			mainView.toggleLocationButton(self)
+			mainView.toggleLocationButton()
 		}
 		let latLon = LatLon(latitude: lat, longitude: lon)
 

@@ -20,7 +20,20 @@ protocol MapViewProgress {
 	func progressDecrement()
 }
 
-final class MainViewController: UIViewController,
+protocol MainViewState: AnyObject {
+	var mapView: MapView! { get }
+	var gpsState: GPS_STATE { get set }
+	var viewPort: MapViewPortObject { get }
+	var buttonLayout: MainViewButtonLayout! { get set }
+	var enableRotation: Bool { get set }
+	var topViewController: UIViewController { get }
+
+	func toggleLocationButton()
+	func applicationWillEnterBackground()
+	func save()
+}
+
+final class MainViewController: UIViewController, MainViewState,
 	UIActionSheetDelegate, UIGestureRecognizerDelegate,
 	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate,
 	UIAdaptivePresentationControllerDelegate
@@ -53,6 +66,8 @@ final class MainViewController: UIViewController,
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
 
 	let viewPort = MapViewPortObject()
+
+	var topViewController: UIViewController { self }
 
 	var buttonLayout: MainViewButtonLayout! {
 		didSet {
@@ -1040,7 +1055,7 @@ final class MainViewController: UIViewController,
 
 	// MARK: Button actions
 
-	@IBAction func toggleLocationButton(_ sender: Any) {
+	@IBAction func toggleLocationButton() {
 		switch gpsState {
 		case GPS_STATE.NONE:
 			// if the user hasn't rotated the screen then start facing north, otherwise follow heading
@@ -1054,7 +1069,7 @@ final class MainViewController: UIViewController,
 		}
 	}
 
-	@IBAction func compassPressed(_ sender: Any) {
+	@IBAction func compassPressed(_ sender: Any?) {
 		switch gpsState {
 		case .HEADING:
 			gpsState = .LOCATION
