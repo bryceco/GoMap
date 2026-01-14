@@ -116,10 +116,9 @@ final class MainViewController: UIViewController,
 		updateUndoRedoButtonState()
 		updateUploadButtonState()
 
-		weak let weakSelf = self
-		mapView.editorLayer.mapData.addChangeCallback({
-			weakSelf?.updateUndoRedoButtonState()
-			weakSelf?.updateUploadButtonState()
+		mapView.editorLayer.mapData.addChangeCallback({ [weak self] in
+			self?.updateUndoRedoButtonState()
+			self?.updateUploadButtonState()
 		})
 
 		setupAccessibility()

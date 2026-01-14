@@ -1,5 +1,5 @@
 //
-//  CameraViewController.swift
+//  CameraView.swift
 //
 //  Created by Bryce Cogswell on 4/8/21.
 //
@@ -79,9 +79,9 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	internal func photoOutput(_ output: AVCapturePhotoOutput,
-	                          didFinishProcessingPhoto photo: AVCapturePhoto,
-	                          error: Error?)
+	func photoOutput(_ output: AVCapturePhotoOutput,
+	                 didFinishProcessingPhoto photo: AVCapturePhoto,
+	                 error: Error?)
 	{
 		let cgImage: CGImage?
 
@@ -163,33 +163,33 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 		addBoxes(boxes: boxes, color: UIColor.red)
 	}
 
-	internal func captureOutput(_ output: AVCaptureOutput,
-	                            didOutput sampleBuffer: CMSampleBuffer,
-	                            from connection: AVCaptureConnection)
+	func captureOutput(_ output: AVCaptureOutput,
+	                   didOutput sampleBuffer: CMSampleBuffer,
+	                   from connection: AVCaptureConnection)
 	{
 		guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 
 		let request = VNRecognizeTextRequest(completionHandler: { [weak self] request, _ in
-			guard let weakSelf = self else { return }
+			guard let self else { return }
 
 			// we need to check this before we tear down the boxes
-			if !(weakSelf.shouldRecordCallback?() ?? true) {
+			if !(self.shouldRecordCallback?() ?? true) {
 				// stop recording
 				DispatchQueue.main.sync {
-					weakSelf.stopRunning()
+					self.stopRunning()
 				}
 				return
 			}
 
 			guard let results = request.results as? [VNRecognizedTextObservation] else { return }
-			weakSelf.addBoxes(forObservations: results)
-			weakSelf.observationsCallback?(results, weakSelf)
-			weakSelf.displayBoxes()
+			self.addBoxes(forObservations: results)
+			self.observationsCallback?(results, self)
+			self.displayBoxes()
 
-			if !(weakSelf.shouldRecordCallback?() ?? true) {
+			if !(self.shouldRecordCallback?() ?? true) {
 				// stop recording
 				DispatchQueue.main.sync {
-					weakSelf.stopRunning()
+					self.stopRunning()
 				}
 			}
 		})

@@ -128,30 +128,29 @@ extension MapViewPort {
 
 		let duration = 0.4
 		var prevHeading: Double = 0
-		weak let weakSelf = self
-		DisplayLink.shared.addName(DisplayLinkHeading, block: {
-			if let myself = weakSelf {
-				var elapsedTime = CACurrentMediaTime() - startTime
-				if elapsedTime > duration {
-					elapsedTime = CFTimeInterval(duration) // don't want to over-rotate
+		DisplayLink.shared.addName(DisplayLinkHeading, block: { [weak self] in
+			guard let self else { return }
+
+			var elapsedTime = CACurrentMediaTime() - startTime
+			if elapsedTime > duration {
+				elapsedTime = CFTimeInterval(duration) // don't want to over-rotate
+			}
+			// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
+			// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
+			func easeInOutQuad(_ t: Double, _ b: Double, _ c: Double, _ d: Double) -> Double {
+				var t = t
+				t /= d / 2
+				if t < 1 {
+					return c / 2 * t * t + b
 				}
-				// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
-				// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
-				func easeInOutQuad(_ t: Double, _ b: Double, _ c: Double, _ d: Double) -> Double {
-					var t = t
-					t /= d / 2
-					if t < 1 {
-						return c / 2 * t * t + b
-					}
-					t -= 1
-					return -c / 2 * (t * (t - 2) - 1) + b
-				}
-				let miniHeading = easeInOutQuad(elapsedTime, 0, deltaHeading, duration)
-				myself.rotate(by: CGFloat(miniHeading - prevHeading), aroundScreenPoint: center)
-				prevHeading = miniHeading
-				if elapsedTime >= duration {
-					DisplayLink.shared.removeName(DisplayLinkHeading)
-				}
+				t -= 1
+				return -c / 2 * (t * (t - 2) - 1) + b
+			}
+			let miniHeading = easeInOutQuad(elapsedTime, 0, deltaHeading, duration)
+			self.rotate(by: CGFloat(miniHeading - prevHeading), aroundScreenPoint: center)
+			prevHeading = miniHeading
+			if elapsedTime >= duration {
+				DisplayLink.shared.removeName(DisplayLinkHeading)
 			}
 		})
 	}

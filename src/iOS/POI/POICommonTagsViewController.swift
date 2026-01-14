@@ -176,24 +176,23 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
 			}
 
-			weak let weakself = self
 			allPresets = PresetDisplayForFeature(
 				withFeature: selectedFeature,
 				objectTags: dict,
 				geometry: geometry,
-				update: {
+				update: { [weak self] in
 					// This closure is called whenever results from TagInfo return, which
 					// may be much later, even after we've been dismissed. We need to rebuild
 					// the preset list in response.
-					if let weakself = weakself,
-					   !weakself.isEditing
+					if let self,
+					   !self.isEditing
 					{
-						weakself.allPresets = PresetDisplayForFeature(
-							withFeature: weakself.currentFeature,
+						self.allPresets = PresetDisplayForFeature(
+							withFeature: self.currentFeature,
 							objectTags: tabController.keyValueDict,
 							geometry: geometry,
 							update: nil)
-						weakself.tableView.reloadData()
+						self.tableView.reloadData()
 					}
 				})
 			computeExtraTags()

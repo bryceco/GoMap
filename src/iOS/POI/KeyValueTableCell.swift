@@ -65,12 +65,11 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 		text1.spellCheckingType = .no
 		text2.spellCheckingType = .no
 
-		weak let weakSelf = self
-		text1.didSelectAutocomplete = {
-			weakSelf?.text2.becomeFirstResponder()
+		text1.didSelectAutocomplete = { [weak self] in
+			self?.text2.becomeFirstResponder()
 		}
-		text2.didSelectAutocomplete = {
-			weakSelf?.text2.becomeFirstResponder()
+		text2.didSelectAutocomplete = { [weak self] in
+			self?.text2.becomeFirstResponder()
 		}
 		text2.owner = self
 
