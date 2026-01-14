@@ -55,7 +55,7 @@ final class LocationBallView: UIView, MapPositionedView {
 					heading = -.pi / 2
 				} else {
 					if let heading = LocationProvider.shared.currentHeading {
-						let heading = viewPort.headingAdjustedForInterfaceOrientation(heading)
+						let heading = LocationProvider.headingAdjustedForInterfaceOrientation(heading)
 						self.heading = CGFloat(screenAngle + heading - .pi / 2)
 					}
 				}

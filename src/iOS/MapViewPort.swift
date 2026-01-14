@@ -185,25 +185,6 @@ extension MapViewPort {
 		mapTransform.transform = t
 	}
 
-	func headingAdjustedForInterfaceOrientation(_ clHeading: CLHeading) -> Double {
-		var heading = clHeading.trueHeading * .pi / 180
-		if let scene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first {
-			switch scene.interfaceOrientation {
-			case .portraitUpsideDown:
-				heading += .pi
-			case .landscapeLeft:
-				heading -= .pi / 2
-			case .landscapeRight:
-				heading += .pi / 2
-			case .portrait:
-				fallthrough
-			default:
-				break
-			}
-		}
-		return heading
-	}
-
 	func rotateToHeading(_ heading: Double) {
 		// Rotate to face current compass heading
 		let center = screenCenterPoint()

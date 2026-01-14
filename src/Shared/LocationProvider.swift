@@ -7,14 +7,15 @@
 //
 
 import CoreLocation
-import Foundation
+import UIKit
 
 final class LocationProvider: NSObject, CLLocationManagerDelegate {
 
 	static let shared = LocationProvider()
+	private let locationManager = CLLocationManager()
+
 	var ignoreInitialStatusUpdate = false
 
-	private let locationManager: CLLocationManager!
 	private(set) var currentLocation: CLLocation? {
 		didSet {
 			if let currentLocation {
@@ -51,7 +52,6 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 	}
 
 	override init() {
-		locationManager = CLLocationManager()
 		super.init()
 
 		ignoreInitialStatusUpdate = true // flag that we're going to receive an extra notification from CL
@@ -143,12 +143,29 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 		self.currentLocation = newLocation
 	}
 
+	static func headingAdjustedForInterfaceOrientation(_ clHeading: CLHeading) -> Double {
+		var heading = clHeading.trueHeading * .pi / 180
+		if let scene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first {
+			switch scene.interfaceOrientation {
+			case .portraitUpsideDown:
+				heading += .pi
+			case .landscapeLeft:
+				heading -= .pi / 2
+			case .landscapeRight:
+				heading += .pi / 2
+			case .portrait:
+				fallthrough
+			default:
+				break
+			}
+		}
+		return heading
+	}
+
 	// MARK: CLLocationManagerDelegate
 
 	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-		let viewPort = AppDelegate.shared.mapView.viewPort
-
-		let heading = viewPort.headingAdjustedForInterfaceOrientation(newHeading)
+		let heading = Self.headingAdjustedForInterfaceOrientation(newHeading)
 
 		self.currentHeading = newHeading
 

@@ -1062,7 +1062,7 @@ final class MainViewController: UIViewController,
 		case .LOCATION:
 			gpsState = .HEADING
 			if let clHeading = LocationProvider.shared.currentHeading {
-				let heading = viewPort.headingAdjustedForInterfaceOrientation(clHeading)
+				let heading = LocationProvider.headingAdjustedForInterfaceOrientation(clHeading)
 				viewPort.rotateToHeading(heading)
 			}
 		case .NONE:
