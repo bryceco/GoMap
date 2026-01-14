@@ -33,12 +33,12 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 
 	private(set) var smoothHeading = 0.0 {
 		didSet {
-			onChangeSmoothHeading.notify(smoothHeading)
+			onChangeSmoothHeading.notify((smoothHeading, currentHeading?.headingAccuracy ?? 0.0))
 		}
 	}
 
 	let onChangeHeading = NotificationService<CLHeading>()
-	let onChangeSmoothHeading = NotificationService<Double>()
+	let onChangeSmoothHeading = NotificationService<(heading: Double, accuracy: Double)>()
 	let onChangeLocation = NotificationService<CLLocation>()
 
 	var allowsBackgroundLocationUpdates: Bool {
@@ -148,7 +148,6 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
 		let viewPort = AppDelegate.shared.mapView.viewPort
 
-		let accuracy = newHeading.headingAccuracy
 		let heading = viewPort.headingAdjustedForInterfaceOrientation(newHeading)
 
 		self.currentHeading = newHeading
@@ -166,7 +165,6 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 			} else {
 				self.smoothHeading += delta
 			}
-			viewPort.updateHeading(self.smoothHeading, accuracy: accuracy)
 			if heading == self.smoothHeading {
 				DisplayLink.shared.removeName("smoothHeading")
 			}

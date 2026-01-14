@@ -272,20 +272,4 @@ extension MapViewPort {
 		                scale: scale,
 		                rotation: 0.0)
 	}
-
-	func updateHeading(_ heading: Double, accuracy: Double) {
-		let screenAngle = mapTransform.rotation()
-
-		if AppDelegate.shared.mainView.gpsState == .HEADING {
-			// rotate to new heading
-			let center = screenCenterPoint()
-			let delta = -(heading + screenAngle)
-			rotate(by: CGFloat(delta), aroundScreenPoint: center)
-		} else if let locationBall = AppDelegate.shared.mainView?.locationBallView {
-			// rotate location ball
-			locationBall.headingAccuracy = CGFloat(accuracy * (.pi / 180))
-			locationBall.showHeading = true
-			locationBall.heading = CGFloat(heading + screenAngle - .pi / 2)
-		}
-	}
 }

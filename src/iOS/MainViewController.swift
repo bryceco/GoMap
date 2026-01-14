@@ -158,6 +158,9 @@ final class MainViewController: UIViewController,
 		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
 			self?.locationBallView.updateLocation(location)
 		}
+		LocationProvider.shared.onChangeSmoothHeading.subscribe(self) { [weak self] heading, accuracy in
+			self?.headingChanged(heading, accuracy: accuracy)
+		}
 		mapView.addSubview(locationBallView)
 
 		// Compass button
@@ -1016,6 +1019,22 @@ final class MainViewController: UIViewController,
 
 				updateUploadButtonState()
 			}
+		}
+	}
+
+	func headingChanged(_ heading: Double, accuracy: Double) {
+		let screenAngle = viewPort.mapTransform.rotation()
+
+		if gpsState == .HEADING {
+			// rotate to new heading
+			let center = viewPort.screenCenterPoint()
+			let delta = -(heading + screenAngle)
+			viewPort.rotate(by: CGFloat(delta), aroundScreenPoint: center)
+		} else {
+			// rotate location ball
+			locationBallView.headingAccuracy = CGFloat(accuracy * (.pi / 180))
+			locationBallView.showHeading = true
+			locationBallView.heading = CGFloat(heading + screenAngle - .pi / 2)
 		}
 	}
 
