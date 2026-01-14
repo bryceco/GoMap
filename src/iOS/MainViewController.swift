@@ -20,7 +20,7 @@ protocol MapViewProgress {
 	func progressDecrement()
 }
 
-protocol MainViewState: AnyObject {
+protocol MainViewSharedState: AnyObject {
 	var mapView: MapView! { get }
 	var gpsState: GPS_STATE { get set }
 	var viewPort: MapViewPortObject { get }
@@ -30,10 +30,11 @@ protocol MainViewState: AnyObject {
 
 	func toggleLocationButton()
 	func applicationWillEnterBackground()
+	func askToRate(uploadCount: Int)
 	func save()
 }
 
-final class MainViewController: UIViewController, MainViewState,
+final class MainViewController: UIViewController, MainViewSharedState,
 	UIActionSheetDelegate, UIGestureRecognizerDelegate,
 	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate,
 	UIAdaptivePresentationControllerDelegate
@@ -155,7 +156,6 @@ final class MainViewController: UIViewController, MainViewState,
 
 		// dPadView
 		dPadView.delegate = mapView
-		dPadView.layer.zPosition = ZLAYER.D_PAD.rawValue
 		dPadView.isHidden = true
 
 		// Zoom to Edit message:
@@ -194,7 +194,7 @@ final class MainViewController: UIViewController, MainViewState,
 		MessageDisplay.shared.topViewController = self
 		MessageDisplay.shared.flashLabel = flashLabel
 
-		mapView.updateAerialAttributionButton()
+		updateAerialAttributionButton()
 
 		// Install gesture recognizers
 
@@ -840,7 +840,7 @@ final class MainViewController: UIViewController, MainViewState,
 		}
 	}
 
-	@IBAction func handleTapGesture(_ tap: UITapGestureRecognizer) {
+	@objc func handleTapGesture(_ tap: UITapGestureRecognizer) {
 		mapView.handleTapGesture(tap)
 	}
 
@@ -848,7 +848,7 @@ final class MainViewController: UIViewController, MainViewState,
 	// we need to track the previous scale
 	var prevousPinchScale = 0.0
 
-	@IBAction func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
+	@objc func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
 		switch pinch.state {
 		case .began:
 			prevousPinchScale = 1.0
@@ -877,7 +877,7 @@ final class MainViewController: UIViewController, MainViewState,
 		}
 	}
 
-	@IBAction func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
+	@objc func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
 		// Rotate screen
 		guard enableRotation else {
 			return
@@ -1104,7 +1104,77 @@ final class MainViewController: UIViewController, MainViewState,
 		present(safariViewController, animated: true)
 	}
 
+	@IBAction func requestAerialServiceAttribution(_ sender: Any) {
+		let aerial = mapView.aerialLayer.tileServer
+		if aerial.isBingAerial() {
+			// present bing metadata
+			performSegue(withIdentifier: "BingMetadataSegue", sender: self)
+		} else if aerial.attributionUrl.count > 0 {
+			// open the attribution url
+			if let url = URL(string: aerial.attributionUrl) {
+				let safariViewController = SFSafariViewController(url: url)
+				present(safariViewController, animated: true)
+			}
+		}
+	}
+
+	func showInAppStore() {
+		let appStoreId = "592990211"
+		let urlText = "itms-apps://itunes.apple.com/app/id\(appStoreId)"
+		let url = URL(string: urlText)
+		if let url = url {
+			UIApplication.shared.open(url, options: [:], completionHandler: nil)
+		}
+	}
+
 	// MARK: Other stuff
+
+	func updateAerialAttributionButton() {
+		let service = mapView.aerialLayer.tileServer
+		let icon = service.attributionIcon(height: aerialServiceLogo.frame.size.height,
+		                                   completion: { [weak self] in
+		                                   	self?.updateAerialAttributionButton()
+		                                   })
+		aerialServiceLogo.isHidden = mapView.aerialLayer.isHidden
+			|| (service.attributionString.isEmpty && icon == nil)
+
+		let gap = icon != nil && service.attributionString.count > 0 ? " " : ""
+		let title = gap + service.attributionString
+		aerialServiceLogo.setImage(icon, for: .normal)
+		aerialServiceLogo.setTitle(title, for: .normal)
+	}
+
+	func askToRate(uploadCount: Int) {
+		// Don't ask if running under TestFlight
+		if Bundle.main.appStoreReceiptURL?.path.contains("sandboxReceipt") ?? false {
+			return
+		}
+		let countLog10 = log10(Double(uploadCount))
+		if uploadCount > 1, countLog10 == floor(countLog10) {
+			let title = String.localizedStringWithFormat(
+				NSLocalizedString("You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?",
+				                  comment: ""),
+				uploadCount)
+			let alertViewRateApp = UIAlertController(
+				title: title,
+				message: NSLocalizedString(
+					"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.",
+					comment: ""),
+				preferredStyle: .alert)
+			alertViewRateApp.addAction(UIAlertAction(
+				title: NSLocalizedString("Maybe later...", comment: "rate the app later"),
+				style: .cancel,
+				handler: { _ in
+				}))
+			alertViewRateApp.addAction(UIAlertAction(
+				title: NSLocalizedString("I'll do it!", comment: "rate the app now"),
+				style: .default,
+				handler: { [self] _ in
+					showInAppStore()
+				}))
+			present(alertViewRateApp, animated: true)
+		}
+	}
 
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()

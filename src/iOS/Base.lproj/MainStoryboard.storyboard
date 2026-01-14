@@ -203,7 +203,7 @@
                                 </constraints>
                                 <state key="normal" image="location" catalog="system"/>
                                 <connections>
-                                    <action selector="toggleLocationButton:" destination="2" eventType="touchUpInside" id="JLZ-2W-IwT"/>
+                                    <action selector="toggleLocationButton" destination="2" eventType="touchUpInside" id="Mpy-Fc-LKH"/>
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Zh9-uC-62t">
@@ -252,7 +252,7 @@
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
-                                            <action selector="requestAerialServiceAttribution:" destination="fss-Ag-fKJ" eventType="touchUpInside" id="tf2-Qn-bbX"/>
+                                            <action selector="requestAerialServiceAttribution:" destination="2" eventType="touchUpInside" id="l8y-f0-XCO"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="infoLight" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TnL-YC-BCg" userLabel="Help Button">

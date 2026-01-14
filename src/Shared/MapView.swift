@@ -37,7 +37,7 @@ enum GPS_STATE: Int {
 	case HEADING // location and heading
 }
 
-// FIXME: Move to MainViewController
+// FIXME: Move to MainViewController when other layer code moves
 enum ZLAYER: CGFloat {
 	case AERIAL = -100
 	case BASEMAP = -98
@@ -49,10 +49,6 @@ enum ZLAYER: CGFloat {
 	case ROTATEGRAPHIC = -3
 	case BLINK = 4
 	case CROSSHAIRS = 5
-	case D_PAD = 6
-	case LOCATION_BALL = 10
-	case TOOLBAR = 90
-	case PUSHPIN = 105
 }
 
 struct MapLocation {
@@ -304,7 +300,6 @@ final class MapView: UIView, MapViewSharedState,
 
 		// set up action button
 		editToolbar.isHidden = true
-		editToolbar.layer.zPosition = ZLAYER.TOOLBAR.rawValue
 		editToolbar.layer.cornerRadius = 8.0
 		editToolbar.layer.masksToBounds = true
 #if targetEnvironment(macCatalyst)
@@ -571,94 +566,6 @@ final class MapView: UIView, MapViewSharedState,
 
 	// MARK: Utility
 
-	func updateAerialAttributionButton() {
-		let service = aerialLayer.tileServer
-		let icon = service.attributionIcon(height: mainView.aerialServiceLogo.frame.size.height,
-		                                   completion: { [weak self] in
-		                                   	self?.updateAerialAttributionButton()
-		                                   })
-		mainView.aerialServiceLogo.isHidden = aerialLayer.isHidden
-			|| (service.attributionString.isEmpty && icon == nil)
-
-		let gap = icon != nil && service.attributionString.count > 0 ? " " : ""
-		let title = gap + service.attributionString
-		mainView.aerialServiceLogo.setImage(icon, for: .normal)
-		mainView.aerialServiceLogo.setTitle(title, for: .normal)
-	}
-
-	func ask(toRate uploadCount: Int) {
-		// Don't ask if running under TestFlight
-		if Bundle.main.appStoreReceiptURL?.path.contains("sandboxReceipt") ?? false {
-			return
-		}
-		let countLog10 = log10(Double(uploadCount))
-		if uploadCount > 1, countLog10 == floor(countLog10) {
-			let title = String.localizedStringWithFormat(
-				NSLocalizedString("You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?",
-				                  comment: ""),
-				uploadCount)
-			let alertViewRateApp = UIAlertController(
-				title: title,
-				message: NSLocalizedString(
-					"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.",
-					comment: ""),
-				preferredStyle: .alert)
-			alertViewRateApp.addAction(UIAlertAction(
-				title: NSLocalizedString("Maybe later...", comment: "rate the app later"),
-				style: .cancel,
-				handler: { _ in
-				}))
-			alertViewRateApp.addAction(UIAlertAction(
-				title: NSLocalizedString("I'll do it!", comment: "rate the app now"),
-				style: .default,
-				handler: { [self] _ in
-					showInAppStore()
-				}))
-			mainView.present(alertViewRateApp, animated: true)
-		}
-	}
-
-	func showInAppStore() {
-		let appStoreId = 592_990211
-#if true
-		let urlText = "itms-apps://itunes.apple.com/app/id\(appStoreId)"
-		let url = URL(string: urlText)
-		if let url = url {
-			UIApplication.shared.open(url, options: [:], completionHandler: nil)
-		}
-#else
-		let spvc = SKStoreProductViewController()
-		spvc.delegate = self // self is the view controller to present spvc
-		spvc.loadProduct(
-			withParameters: [
-				SKStoreProductParameterITunesItemIdentifier: NSNumber(value: appStoreId)
-			],
-			completionBlock: { [self] result, _ in
-				if result {
-					viewController.present(spvc, animated: true)
-				}
-			})
-#endif
-	}
-
-	func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
-		(viewController.delegate as? UIViewController)?.dismiss(animated: true)
-	}
-
-	@IBAction func requestAerialServiceAttribution(_ sender: Any) {
-		let aerial = aerialLayer.tileServer
-		if aerial.isBingAerial() {
-			// present bing metadata
-			mainView.performSegue(withIdentifier: "BingMetadataSegue", sender: self)
-		} else if aerial.attributionUrl.count > 0 {
-			// open the attribution url
-			if let url = URL(string: aerial.attributionUrl) {
-				let safariViewController = SFSafariViewController(url: url)
-				mainView.present(safariViewController, animated: true)
-			}
-		}
-	}
-
 	private func checkForChangedTileOverlayLayers() {
 		// If the user has overlay imagery enabled that is no longer present at this location
 		// then remove it.
@@ -921,7 +828,7 @@ final class MapView: UIView, MapViewSharedState,
 
 		// enable/disable editing buttons based on visibility
 		mainView.updateUndoRedoButtonState()
-		updateAerialAttributionButton()
+		mainView.updateAerialAttributionButton()
 		mainView.addNodeButton.isHidden = editorLayer.isHidden
 
 		editorLayer.whiteText = !aerialLayer.isHidden
@@ -929,7 +836,7 @@ final class MapView: UIView, MapViewSharedState,
 
 	func setAerialTileServer(_ service: TileServer) {
 		aerialLayer.tileServer = service
-		updateAerialAttributionButton()
+		mainView.updateAerialAttributionButton()
 		// update imagery offset
 		aerialLayer.imageryOffsetMeters = CGPointZero
 		updateAerialAlignmentButton()

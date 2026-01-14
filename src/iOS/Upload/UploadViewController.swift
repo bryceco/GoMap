@@ -258,7 +258,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 					var editCount = UserPrefs.shared.uploadCountPerVersion.value ?? 0
 					editCount += 1
 					UserPrefs.shared.uploadCountPerVersion.value = editCount
-					appDelegate.mapView.ask(toRate: editCount)
+					appDelegate.mainView.askToRate(uploadCount: editCount)
 				}
 			}
 		}
