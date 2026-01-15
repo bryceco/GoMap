@@ -33,6 +33,7 @@ protocol MainViewSharedState: AnyObject {
 	func applicationWillEnterBackground()
 	func askToRate(uploadCount: Int)
 	func save()
+	func moveToLocation(_ location: MapLocation)
 }
 
 final class MainViewController: UIViewController, MainViewSharedState, DPadDelegate,
@@ -137,6 +138,10 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			self?.updateUndoRedoButtonState()
 			self?.updateUploadButtonState()
 		})
+
+		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
+			self?.locationUpdated(to: location)
+		}
 
 		setupAccessibility()
 
@@ -1051,6 +1056,44 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			locationBallView.headingAccuracy = CGFloat(accuracy * (.pi / 180))
 			locationBallView.showHeading = true
 			locationBallView.heading = CGFloat(heading + screenAngle - .pi / 2)
+		}
+	}
+
+	private func locationUpdated(to newLocation: CLLocation) {
+		if let voiceAnnouncement = mapView.voiceAnnouncement,
+		   !mapView.editorLayer.isHidden
+		{
+			voiceAnnouncement.announce(forLocation: LatLon(newLocation.coordinate))
+		}
+
+		if mapView.gpxLayer.activeTrack != nil {
+			mapView.gpxLayer.addPoint(newLocation)
+		}
+
+		if !userOverrodeLocationPosition,
+		   UIApplication.shared.applicationState == .active
+		{
+			// move view to center on new location
+			if userOverrodeLocationZoom {
+				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
+				                  zoom: nil,
+				                  rotation: nil)
+			} else {
+				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
+				                  metersWide: 20.0)
+			}
+		}
+	}
+
+	func moveToLocation(_ location: MapLocation) {
+		let zoom = location.zoom > 0 ? location.zoom : 21.0
+		let latLon = LatLon(latitude: location.latitude, longitude: location.longitude)
+		let rotation = location.direction * .pi / 180.0
+		viewPort.centerOn(latLon: latLon,
+		                  zoom: zoom,
+		                  rotation: rotation)
+		if let state = location.viewState {
+			mapView.viewState = state
 		}
 	}
 

@@ -298,10 +298,6 @@ final class MapView: UIView, MapViewSharedState,
 			self?.promptForBetterBackgroundImagery()
 		}
 
-		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
-			self?.locationUpdated(to: location)
-		}
-
 		layer.masksToBounds = true
 		backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
@@ -806,46 +802,6 @@ final class MapView: UIView, MapViewSharedState,
 			if changed {
 				MessageDisplay.shared.flashMessage(title: nil, message: NSLocalizedString("Cache trimmed", comment: ""))
 				editorLayer.updateMapLocation() // download data if necessary
-			}
-		}
-	}
-
-	// MARK: GPS and Location Manager
-
-	func moveToLocation(_ location: MapLocation) {
-		let zoom = location.zoom > 0 ? location.zoom : 21.0
-		let latLon = LatLon(latitude: location.latitude, longitude: location.longitude)
-		let rotation = location.direction * .pi / 180.0
-		viewPort.centerOn(latLon: latLon,
-		                  zoom: zoom,
-		                  rotation: rotation)
-		if let state = location.viewState {
-			viewState = state
-		}
-	}
-
-	private func locationUpdated(to newLocation: CLLocation) {
-		if let voiceAnnouncement = voiceAnnouncement,
-		   !editorLayer.isHidden
-		{
-			voiceAnnouncement.announce(forLocation: LatLon(newLocation.coordinate))
-		}
-
-		if gpxLayer.activeTrack != nil {
-			gpxLayer.addPoint(newLocation)
-		}
-
-		if !mainView.userOverrodeLocationPosition,
-		   UIApplication.shared.applicationState == .active
-		{
-			// move view to center on new location
-			if mainView.userOverrodeLocationZoom {
-				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
-				                  zoom: nil,
-				                  rotation: nil)
-			} else {
-				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
-				                  metersWide: 20.0)
 			}
 		}
 	}
