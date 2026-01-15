@@ -43,7 +43,7 @@ class AdvancedSettingsViewController: UITableViewController {
 		originalHostname = hostname.text
 
 		let app = UIApplication.shared as! MyApplication
-		switchFPS.isOn = appDelegate.mapView.automatedFramerateTestActive
+		switchFPS.isOn = appDelegate.mainView.fpsLabel.automatedFramerateTestActive
 		switchTouches.isOn = app.showTouchCircles
 
 		switchMaxFPS.isOn = UserPrefs.shared.maximizeFrameRate.value ?? false
@@ -68,7 +68,7 @@ class AdvancedSettingsViewController: UITableViewController {
 	@IBAction func switchShowFPS(_ sender: Any) {
 		let toggle = sender as! UISwitch
 		let appDelegate = AppDelegate.shared
-		appDelegate.mapView.automatedFramerateTestActive = toggle.isOn
+		appDelegate.mainView.fpsLabel.automatedFramerateTestActive = toggle.isOn
 	}
 
 	@IBAction func switchShowTouches(_ sender: Any) {

@@ -27,6 +27,7 @@ protocol MainViewSharedState: AnyObject {
 	var buttonLayout: MainViewButtonLayout! { get set }
 	var enableRotation: Bool { get set }
 	var topViewController: UIViewController { get }
+	var fpsLabel: FpsLabel! { get }
 
 	func toggleLocationButton()
 	func applicationWillEnterBackground()
@@ -34,7 +35,7 @@ protocol MainViewSharedState: AnyObject {
 	func save()
 }
 
-final class MainViewController: UIViewController, MainViewSharedState,
+final class MainViewController: UIViewController, MainViewSharedState, DPadDelegate,
 	UIActionSheetDelegate, UIGestureRecognizerDelegate,
 	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate,
 	UIAdaptivePresentationControllerDelegate
@@ -155,7 +156,7 @@ final class MainViewController: UIViewController, MainViewSharedState,
 		centerOnGPSButton.isHidden = true
 
 		// dPadView
-		dPadView.delegate = mapView
+		dPadView.delegate = self
 		dPadView.isHidden = true
 
 		// Zoom to Edit message:
@@ -794,7 +795,7 @@ final class MainViewController: UIViewController, MainViewSharedState,
 			// start pan
 			DisplayLink.shared.removeName(DisplayLinkPanning)
 			// disable frame rate test if active
-			mapView.automatedFramerateTestActive = false
+			fpsLabel.automatedFramerateTestActive = false
 		} else if pan.state == .changed {
 			// move pan
 			if SHOW_3D {
@@ -1125,6 +1126,33 @@ final class MainViewController: UIViewController, MainViewSharedState,
 		if let url = url {
 			UIApplication.shared.open(url, options: [:], completionHandler: nil)
 		}
+	}
+
+	// MARK: Aerial imagery alignment
+
+	@IBAction func aerialAlignmentPressed(_ sender: Any) {
+		dPadView.isHidden = !dPadView.isHidden
+	}
+
+	func updateAerialAlignmentButton() {
+		let offset = mapView.aerialLayer.imageryOffsetMeters
+		let buttonText: String
+		if offset == CGPointZero {
+			buttonText = "(0,0)"
+		} else {
+			buttonText = String(format: "(%.1f,%.1f)", arguments: [offset.x, offset.y])
+		}
+		UIView.performWithoutAnimation {
+			aerialAlignmentButton.setTitle(buttonText, for: .normal)
+			aerialAlignmentButton.layoutIfNeeded()
+		}
+	}
+
+	func dPadPress(_ shift: CGPoint) {
+		let scale = 0.5
+		let newOffset = mapView.aerialLayer.imageryOffsetMeters.plus(CGPoint(x: shift.x * scale, y: shift.y * scale))
+		mapView.aerialLayer.imageryOffsetMeters = newOffset
+		updateAerialAlignmentButton()
 	}
 
 	// MARK: Other stuff

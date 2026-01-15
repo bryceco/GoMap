@@ -98,7 +98,7 @@ protocol MapViewSharedState: AnyObject {
 
 final class MapView: UIView, MapViewSharedState,
 	UIActionSheetDelegate,
-	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate, DPadDelegate,
+	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate,
 	UISheetPresentationControllerDelegate
 {
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
@@ -233,50 +233,6 @@ final class MapView: UIView, MapViewSharedState,
 	}
 
 	var enableAutomaticCacheManagement = false
-
-	private let AUTOSCROLL_DISPLAYLINK_NAME = "autoScroll"
-	var automatedFramerateTestActive: Bool {
-		get {
-			return DisplayLink.shared.hasName(AUTOSCROLL_DISPLAYLINK_NAME)
-		}
-		set(enable) {
-			let displayLink = DisplayLink.shared
-
-			if enable == displayLink.hasName(AUTOSCROLL_DISPLAYLINK_NAME) {
-				// unchanged
-				return
-			}
-
-			if enable {
-				// automaatically scroll view for frame rate testing
-				mainView.fpsLabel.showFPS = true
-
-				// this set's the starting center point
-				let startLatLon = LatLon(lon: -122.2060122462481, lat: 47.675389766549706)
-				let startZoom = 18.0
-
-				// sets the size of the circle
-				let mpd = MetersPerDegreeAt(latitude: startLatLon.lat)
-				let radius = 35.0
-				let radius2 = CGPoint(x: radius / mpd.x, y: radius / mpd.y)
-				let startTime = CACurrentMediaTime()
-				let periodSeconds = 2.0
-
-				displayLink.addName(AUTOSCROLL_DISPLAYLINK_NAME, block: { [weak self] in
-					guard let myself = self else { return }
-					let offset = 1.0 - fmod((CACurrentMediaTime() - startTime) / periodSeconds, 1.0)
-					let origin = LatLon(lon: startLatLon.lon + cos(offset * 2.0 * .pi) * radius2.x,
-					                    lat: startLatLon.lat + sin(offset * 2.0 * .pi) * radius2.y)
-					let zoomFrac = (1.0 + cos(offset * 2.0 * .pi)) * 0.5
-					let zoom = startZoom * (1 + zoomFrac * 0.01)
-					myself.viewPort.centerOn(latLon: origin, zoom: zoom, rotation: nil)
-				})
-			} else {
-				mainView.fpsLabel.showFPS = false
-				displayLink.removeName(AUTOSCROLL_DISPLAYLINK_NAME)
-			}
-		}
-	}
 
 	private(set) var crossHairs: CAShapeLayer!
 
@@ -839,7 +795,7 @@ final class MapView: UIView, MapViewSharedState,
 		mainView.updateAerialAttributionButton()
 		// update imagery offset
 		aerialLayer.imageryOffsetMeters = CGPointZero
-		updateAerialAlignmentButton()
+		mainView.updateAerialAlignmentButton()
 	}
 
 	// MARK: Discard stale data
@@ -852,33 +808,6 @@ final class MapView: UIView, MapViewSharedState,
 				editorLayer.updateMapLocation() // download data if necessary
 			}
 		}
-	}
-
-	// MARK: Aerial imagery alignment
-
-	@IBAction func aerialAlignmentPressed(_ sender: Any) {
-		mainView.dPadView.isHidden = !mainView.dPadView.isHidden
-	}
-
-	func updateAerialAlignmentButton() {
-		let offset = aerialLayer.imageryOffsetMeters
-		let buttonText: String
-		if offset == CGPointZero {
-			buttonText = "(0,0)"
-		} else {
-			buttonText = String(format: "(%.1f,%.1f)", arguments: [offset.x, offset.y])
-		}
-		UIView.performWithoutAnimation {
-			mainView.aerialAlignmentButton.setTitle(buttonText, for: .normal)
-			mainView.aerialAlignmentButton.layoutIfNeeded()
-		}
-	}
-
-	func dPadPress(_ shift: CGPoint) {
-		let scale = 0.5
-		let newOffset = aerialLayer.imageryOffsetMeters.plus(CGPoint(x: shift.x * scale, y: shift.y * scale))
-		aerialLayer.imageryOffsetMeters = newOffset
-		updateAerialAlignmentButton()
 	}
 
 	// MARK: GPS and Location Manager

@@ -93,3 +93,51 @@ final class FpsLabel: UILabel {
 		}
 	}
 }
+
+private let AUTOSCROLL_DISPLAYLINK_NAME = "autoScroll"
+
+extension FpsLabel {
+
+	var automatedFramerateTestActive: Bool {
+		get {
+			return DisplayLink.shared.hasName(AUTOSCROLL_DISPLAYLINK_NAME)
+		}
+		set(enable) {
+			let displayLink = DisplayLink.shared
+			let mainView = AppDelegate.shared.mainView!
+
+			if enable == displayLink.hasName(AUTOSCROLL_DISPLAYLINK_NAME) {
+				// unchanged
+				return
+			}
+
+			if enable {
+				// automaatically scroll view for frame rate testing
+				showFPS = true
+
+				// this set's the starting center point
+				let startLatLon = LatLon(lon: -122.2060122462481, lat: 47.675389766549706)
+				let startZoom = 18.0
+
+				// sets the size of the circle
+				let mpd = MetersPerDegreeAt(latitude: startLatLon.lat)
+				let radius = 35.0
+				let radius2 = CGPoint(x: radius / mpd.x, y: radius / mpd.y)
+				let startTime = CACurrentMediaTime()
+				let periodSeconds = 2.0
+
+				displayLink.addName(AUTOSCROLL_DISPLAYLINK_NAME, block: {
+					let offset = 1.0 - fmod((CACurrentMediaTime() - startTime) / periodSeconds, 1.0)
+					let origin = LatLon(lon: startLatLon.lon + cos(offset * 2.0 * .pi) * radius2.x,
+					                    lat: startLatLon.lat + sin(offset * 2.0 * .pi) * radius2.y)
+					let zoomFrac = (1.0 + cos(offset * 2.0 * .pi)) * 0.5
+					let zoom = startZoom * (1 + zoomFrac * 0.01)
+					mainView.viewPort.centerOn(latLon: origin, zoom: zoom, rotation: nil)
+				})
+			} else {
+				showFPS = false
+				displayLink.removeName(AUTOSCROLL_DISPLAYLINK_NAME)
+			}
+		}
+	}
+}
