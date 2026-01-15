@@ -6,11 +6,6 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-import CoreLocation
-import Foundation
-import QuartzCore
-import SafariServices
-import StoreKit
 import UIKit
 
 /// The main map display: Editor, Aerial, Basemap etc.
@@ -97,9 +92,7 @@ protocol MapViewSharedState: AnyObject {
 // MARK: MapView
 
 final class MapView: UIView, MapViewSharedState,
-	UIActionSheetDelegate,
-	UIGestureRecognizerDelegate, SKStoreProductViewControllerDelegate,
-	UISheetPresentationControllerDelegate
+	UIGestureRecognizerDelegate, UISheetPresentationControllerDelegate
 {
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
 
