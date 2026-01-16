@@ -26,6 +26,7 @@
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
 		020EC41F2EA9D6B9005B94D9 /* AlertPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020EC41E2EA9D6B9005B94D9 /* AlertPopup.swift */; };
 		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
+		0210AE072F19A9DF0031F047 /* GpxTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0210AE062F19A9DF0031F047 /* GpxTracks.swift */; };
 		021BC21E2D6E6E0E004631C5 /* Panoramax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021BC21D2D6E6E05004631C5 /* Panoramax.swift */; };
 		021BC2222D7625FB004631C5 /* Panoramax.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021BC2212D7625FB004631C5 /* Panoramax.storyboard */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
@@ -371,6 +372,7 @@
 		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
 		020EC41E2EA9D6B9005B94D9 /* AlertPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPopup.swift; sourceTree = "<group>"; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
+		0210AE062F19A9DF0031F047 /* GpxTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GpxTracks.swift; path = ../Shared/GpxTracks.swift; sourceTree = "<group>"; };
 		021BC21D2D6E6E05004631C5 /* Panoramax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panoramax.swift; sourceTree = "<group>"; };
 		021BC2212D7625FB004631C5 /* Panoramax.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Panoramax.storyboard; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -884,6 +886,7 @@
 				0200FECC2908B0EB002C3F94 /* GeoJSON.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				02225DA629EB3AE900859F9D /* GpxTrack.swift */,
+				0210AE062F19A9DF0031F047 /* GpxTracks.swift */,
 				02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */,
 				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
 				02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */,
@@ -1673,6 +1676,7 @@
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				02225DA729EB3AE900859F9D /* GpxTrack.swift in Sources */,
 				02008650265B25DC008F37DD /* Database.swift in Sources */,
+				0210AE072F19A9DF0031F047 /* GpxTracks.swift in Sources */,
 				02FC7F962D7FD6E800DC333D /* CustomFeatureController.swift in Sources */,
 				020E160B267A82050037DE49 /* TileServer.swift in Sources */,
 				02E049BE2651D1750028B57F /* UndoAction.m in Sources */,

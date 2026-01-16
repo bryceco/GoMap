@@ -202,7 +202,7 @@ final class MapView: UIView, MapViewSharedState,
 		didSet {
 			gpxLayer.isHidden = !displayGpxTracks
 			LocationProvider.shared.allowsBackgroundLocationUpdates
-				= GpxLayer.recordTracksInBackground && displayGpxTracks
+				= gpxLayer.gpxTracks.recordTracksInBackground && displayGpxTracks
 		}
 	}
 

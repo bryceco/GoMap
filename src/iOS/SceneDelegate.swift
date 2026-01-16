@@ -79,7 +79,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		func openGPX(data: Data, name: String) {
 			do {
-				let track = try mapView.gpxLayer.loadGPXData(data, name: name)
+				let track = try mapView.gpxLayer.gpxTracks.loadGPXData(data, name: name)
 				if let center = track?.center() {
 					mapView.displayGpxTracks = true // ensure GPX tracks are visible
 					mainView.viewPort.centerOn(latLon: center, metersWide: nil)
@@ -221,7 +221,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		UserPrefs.shared.synchronize()
 
 		if mainView.gpsState != .NONE,
-		   GpxLayer.recordTracksInBackground,
+		   AppDelegate.shared.mapView!.gpxLayer.gpxTracks.recordTracksInBackground,
 		   mapView.displayGpxTracks
 		{
 			// Show GPX activity widget
@@ -254,7 +254,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let mapView = AppDelegate.shared.mapView!
 		let mainView = AppDelegate.shared.mainView!
 		if mainView.gpsState != .NONE {
-			if GpxLayer.recordTracksInBackground,
+			if AppDelegate.shared.mapView!.gpxLayer.gpxTracks.recordTracksInBackground,
 			   mapView.displayGpxTracks
 			{
 				// GPS was running in the background

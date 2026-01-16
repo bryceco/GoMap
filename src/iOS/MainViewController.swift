@@ -313,7 +313,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		UserPrefs.shared.synchronize()
 
 		mapView.tileServerList.save()
-		mapView.gpxLayer.saveActiveTrack()
+		mapView.gpxLayer.gpxTracks.saveActiveTrack()
 
 		// then save data
 		mapView.editorLayer.save()
@@ -1025,7 +1025,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 					LocationProvider.shared.stop()
 					locationBallView.isHidden = true
 					mapView.voiceAnnouncement?.enabled = false
-					mapView.gpxLayer.endActiveTrack(continuingCurrentTrack: false)
+					mapView.gpxLayer.gpxTracks.endActiveTrack(continuingCurrentTrack: false)
 				} else {
 					userOverrodeLocationPosition = false
 					userOverrodeLocationZoom = false
@@ -1034,7 +1034,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 					mapView.voiceAnnouncement?.enabled = true
 					if oldValue == .NONE {
 						// because recording GPX tracks is cheap we record them any time GPS is enabled
-						mapView.gpxLayer.startNewTrack(continuingCurrentTrack: false)
+						mapView.gpxLayer.gpxTracks.startNewTrack(continuingCurrentTrack: false)
 					}
 				}
 
@@ -1066,8 +1066,8 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			voiceAnnouncement.announce(forLocation: LatLon(newLocation.coordinate))
 		}
 
-		if mapView.gpxLayer.activeTrack != nil {
-			mapView.gpxLayer.addPoint(newLocation)
+		if mapView.gpxLayer.gpxTracks.activeTrack != nil {
+			mapView.gpxLayer.gpxTracks.addPoint(newLocation)
 		}
 
 		if !userOverrodeLocationPosition,
@@ -1111,6 +1111,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		case GPS_STATE.LOCATION, GPS_STATE.HEADING:
 			gpsState = .NONE
 		}
+		updateGpsButtonState()
 	}
 
 	@IBAction func compassPressed(_ sender: Any?) {

@@ -49,8 +49,8 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 				                                          applicationActivities: nil)
 				controller.completionWithItemsHandler = { _, completed, _, _ in
 					if completed {
-						let gpxLayer = AppDelegate.shared.mapView.gpxLayer!
-						gpxLayer.markTrackUploaded(self.gpxTrack)
+						let gpxTracks = AppDelegate.shared.mapView.gpxLayer.gpxTracks
+						gpxTracks.markTrackUploaded(self.gpxTrack)
 						self.tableView?.tableView.reloadData()
 					}
 				}
@@ -73,7 +73,7 @@ class GpxTrackBackgroundCollection: UITableViewCell {
 
 	@IBAction func enableBackground(_ sender: Any) {
 		let toggle = sender as? UISwitch
-		GpxLayer.recordTracksInBackground = toggle?.isOn ?? false
+		AppDelegate.shared.mapView.gpxLayer?.gpxTracks.recordTracksInBackground = toggle?.isOn ?? false
 	}
 }
 
@@ -101,7 +101,7 @@ class GpxTrackImportHealthKit: UITableViewCell {
 				                              handler: nil))
 				self.vc.present(alert, animated: true)
 			case let .success(routes):
-				let origCount = AppDelegate.shared.mapView.gpxLayer.previousTracks.count
+				let origCount = AppDelegate.shared.mapView.gpxLayer.gpxTracks.savedTracks.count
 				for route in routes {
 					let gpx = GpxTrack()
 					gpx.name = "HealthKit"
@@ -109,12 +109,12 @@ class GpxTrackImportHealthKit: UITableViewCell {
 						gpx.addPoint(point)
 					}
 					gpx.finish()
-					AppDelegate.shared.mapView.gpxLayer.addGPX(track: gpx)
+					AppDelegate.shared.mapView.gpxLayer.gpxTracks.addGPX(track: gpx)
 				}
 				if let tableView = self.vc.view as? UITableView {
 					tableView.reloadData()
 				}
-				let newCount = AppDelegate.shared.mapView.gpxLayer.previousTracks.count - origCount
+				let newCount = AppDelegate.shared.mapView.gpxLayer.gpxTracks.savedTracks.count - origCount
 				let message = String.localizedStringWithFormat(
 					NSLocalizedString("%ld new route(s) imported,\n%ld duplicate(s) skipped",
 					                  comment: "result of importing GPX routes"),
@@ -143,6 +143,8 @@ private let SECTION_PREVIOUS_TRACKS = 2
 class GpxViewController: UITableViewController {
 	private var timer: Timer?
 	@IBOutlet var navigationBar: UINavigationBar!
+
+	let gpxTracks = AppDelegate.shared.mapView!.gpxLayer.gpxTracks
 
 	@IBAction func cancel(_ sender: Any) {
 		dismiss(animated: true)
@@ -219,8 +221,7 @@ class GpxViewController: UITableViewController {
 						self.present(success, animated: true)
 
 						// mark track as uploaded in UI
-						let gpxLayer = AppDelegate.shared.mapView.gpxLayer!
-						gpxLayer.markTrackUploaded(track)
+						gpxTracks.markTrackUploaded(track)
 						self.tableView?.reloadData()
 					}
 				} catch {
@@ -249,14 +250,9 @@ class GpxViewController: UITableViewController {
 
 		navigationItem.rightBarButtonItem = editButtonItem
 
-		AppDelegate.shared.mapView.gpxLayer.loadTracksInBackground(withProgress: { [weak self] in
-			self?.tableView?.reloadData()
-			self?.updateEditButton()
-		})
-
 		updateEditButton()
 
-		if let track = AppDelegate.shared.mapView.gpxLayer.activeTrack {
+		if let track = gpxTracks.activeTrack {
 			startTimer(forStart: track.creationDate)
 		}
 	}
@@ -274,7 +270,7 @@ class GpxViewController: UITableViewController {
 		let date = now.addingTimeInterval(delta)
 		timer = Timer(fire: date, interval: 1.0, repeats: true, block: { [weak self] timer in
 			guard let self = self else { return }
-			if AppDelegate.shared.mapView.gpxLayer.activeTrack != nil {
+			if gpxTracks.activeTrack != nil {
 				let index = IndexPath(row: 0, section: SECTION_ACTIVE_TRACK)
 				self.tableView?.reloadRows(at: [index], with: .none)
 			} else {
@@ -298,9 +294,9 @@ class GpxViewController: UITableViewController {
 		} else if section == SECTION_PREVIOUS_TRACKS {
 			// previous tracks + import button
 			if #available(iOS 14.0, *) {
-				return AppDelegate.shared.mapView.gpxLayer.previousTracks.count + 1
+				return gpxTracks.savedTracks.count + 1
 			} else {
-				return AppDelegate.shared.mapView.gpxLayer.previousTracks.count
+				return gpxTracks.savedTracks.count
 			}
 		} else if section == SECTION_CONFIGURE {
 			// configuration
@@ -331,9 +327,6 @@ class GpxViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let mapView = AppDelegate.shared.mapView!
-		let gpxLayer = mapView.gpxLayer!
-
 		if indexPath.section == SECTION_CONFIGURE {
 			// configuration section
 			switch indexPath.row {
@@ -342,7 +335,7 @@ class GpxViewController: UITableViewController {
 				let cell = tableView.dequeueReusableCell(
 					withIdentifier: "GpxTrackExpirationCell",
 					for: indexPath) as! GpxTrackExpirationCell
-				let expirationDays = GpxLayer.expirationDays
+				let expirationDays = gpxTracks.expirationDays
 				let expiration = expirationDays
 				let title = expiration <= 0 ? NSLocalizedString("Never", comment: "Never delete old tracks") : String
 					.localizedStringWithFormat(
@@ -360,7 +353,7 @@ class GpxViewController: UITableViewController {
 				let cell = tableView.dequeueReusableCell(
 					withIdentifier: "GpxTrackBackgroundCollection",
 					for: indexPath) as! GpxTrackBackgroundCollection
-				cell.enableBackground.isOn = GpxLayer.recordTracksInBackground
+				cell.enableBackground.isOn = gpxTracks.recordTracksInBackground
 				return cell
 			case 2:
 				// HealthKit support
@@ -376,7 +369,7 @@ class GpxViewController: UITableViewController {
 		}
 
 		if indexPath.section == SECTION_ACTIVE_TRACK,
-		   gpxLayer.activeTrack == nil
+		   gpxTracks.activeTrack == nil
 		{
 			// no active track
 			let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
@@ -385,7 +378,7 @@ class GpxViewController: UITableViewController {
 		}
 
 		if indexPath.section == SECTION_PREVIOUS_TRACKS,
-		   indexPath.row == gpxLayer.previousTracks.count
+		   indexPath.row == gpxTracks.savedTracks.count
 		{
 			// import button
 			let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
@@ -396,8 +389,8 @@ class GpxViewController: UITableViewController {
 		}
 
 		// active track or previous tracks
-		let track = indexPath.section == SECTION_ACTIVE_TRACK ? gpxLayer.activeTrack!
-			: gpxLayer.previousTracks[indexPath.row]
+		let track = indexPath.section == SECTION_ACTIVE_TRACK ? gpxTracks.activeTrack!
+			: gpxTracks.savedTracks[indexPath.row]
 		let startDate = DateFormatter.localizedString(from: track.creationDate, dateStyle: .short, timeStyle: .short)
 		let dur = Int(round(track.duration()))
 		let duration = String(format: "%d:%02d:%02d", dur / 3600, dur / 60 % 60, dur % 60)
@@ -423,7 +416,7 @@ class GpxViewController: UITableViewController {
 		cell.gpxTrack = track
 		cell.tableView = self
 		let name = track.name
-		if gpxLayer.uploadedTracks[name] != nil {
+		if gpxTracks.uploadedTracks[name] != nil {
 			cell.uploadButton.setImage(nil, for: .normal)
 			cell.uploadButton.setTitle("\u{2714}", for: .normal)
 		} else {
@@ -437,7 +430,7 @@ class GpxViewController: UITableViewController {
 	// Override to support conditional editing of the table view.
 	override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
 		return indexPath.section == SECTION_PREVIOUS_TRACKS
-			&& indexPath.row < AppDelegate.shared.mapView.gpxLayer.previousTracks.count
+			&& indexPath.row < gpxTracks.savedTracks.count
 	}
 
 	// Override to support editing the table view.
@@ -448,10 +441,8 @@ class GpxViewController: UITableViewController {
 	{
 		if editingStyle == .delete {
 			// Delete the row from the data source
-			let gpxLayer = AppDelegate.shared.mapView.gpxLayer!
-			let track = gpxLayer.previousTracks[indexPath.row]
-			gpxLayer.delete(track)
-
+			let track = gpxTracks.savedTracks[indexPath.row]
+			gpxTracks.delete(track: track)
 			tableView.deleteRows(at: [indexPath], with: .fade)
 		} else if editingStyle == .insert {
 			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -465,7 +456,9 @@ class GpxViewController: UITableViewController {
 		if indexPath.section == SECTION_CONFIGURE {
 			return nil
 		}
-		if indexPath.section == SECTION_ACTIVE_TRACK, AppDelegate.shared.mapView.gpxLayer.activeTrack == nil {
+		if indexPath.section == SECTION_ACTIVE_TRACK,
+		   gpxTracks.activeTrack == nil
+		{
 			// don't allow selecting the active track if there is none
 			return nil
 		}
@@ -475,29 +468,27 @@ class GpxViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		if indexPath.section == SECTION_ACTIVE_TRACK {
 			// active track
-			let mainView = AppDelegate.shared.mainView!
-			let gpxLayer = mainView.mapView.gpxLayer!
-			gpxLayer.selectedTrack = gpxLayer.activeTrack
-			if let trackPt = gpxLayer.selectedTrack?.center() {
-				mainView.viewPort.centerOn(latLon: trackPt, metersWide: nil)
+			gpxTracks.selectedTrack = gpxTracks.activeTrack
+			if let trackPt = gpxTracks.selectedTrack?.center() {
+				let viewPort = AppDelegate.shared.mainView.viewPort
+				viewPort.centerOn(latLon: trackPt, metersWide: nil)
 			}
 			navigationController?.dismiss(animated: true)
 		} else if indexPath.section == SECTION_CONFIGURE {
 			// configuration
 		} else if indexPath.section == SECTION_PREVIOUS_TRACKS {
-			let mainView = AppDelegate.shared.mainView!
-			let gpxLayer = mainView.mapView.gpxLayer!
-			if indexPath.row == gpxLayer.previousTracks.count {
+			if indexPath.row == gpxTracks.savedTracks.count {
 				if #available(iOS 14.0, *) {
 					doImportGPX()
 				}
 				tableView.deselectRow(at: indexPath, animated: true)
 				return
 			}
-			let track = gpxLayer.previousTracks[indexPath.row]
-			gpxLayer.selectedTrack = track
+			let track = gpxTracks.savedTracks[indexPath.row]
+			gpxTracks.selectedTrack = track
 			if let center = track.center() {
-				mainView.viewPort.centerOn(latLon: center, metersWide: nil)
+				let viewPort = AppDelegate.shared.mainView.viewPort
+				viewPort.centerOn(latLon: center, metersWide: nil)
 			}
 			AppDelegate.shared.mapView.displayGpxTracks = true
 			navigationController?.dismiss(animated: true)
@@ -509,13 +500,15 @@ class GpxViewController: UITableViewController {
 	// In a storyboard-based application, you will often want to do a little preparation before navigation
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 		if let dest = segue.destination as? GpxConfigureViewController {
-			dest.expirationValue = GpxLayer.expirationDays
-			dest.completion = { pick in
-				GpxLayer.expirationDays = pick
+			dest.expirationValue = gpxTracks.expirationDays
+			dest.completion = { [weak self] pick in
+				guard let self else { return }
+
+				self.gpxTracks.expirationDays = pick
 
 				if pick > 0 {
 					let cutoff = Date(timeIntervalSinceNow: TimeInterval(-pick * 24 * 60 * 60))
-					AppDelegate.shared.mapView.gpxLayer.trimTracksOlderThan(cutoff)
+					self.gpxTracks.trimTracksOlderThan(cutoff)
 				}
 				self.tableView?.reloadData()
 			}
@@ -541,9 +534,8 @@ extension GpxViewController: UIDocumentPickerDelegate {
 	{
 		for url in urls {
 			do {
-				let gpxLayer = AppDelegate.shared.mapView.gpxLayer!
 				let data = try Data(contentsOf: url)
-				try gpxLayer.loadGPXData(data, name: url.lastPathComponent)
+				try gpxTracks.loadGPXData(data, name: url.lastPathComponent)
 			} catch {
 				print("\(error)")
 			}

@@ -101,7 +101,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	}
 
 	func addGpxWaypoints() {
-		for track in AppDelegate.shared.mapView.gpxLayer.allTracks() {
+		for track in AppDelegate.shared.mapView.gpxLayer.gpxTracks.allTracks() {
 			for point in track.wayPoints {
 				let marker = WayPointMarker(with: point)
 				addOrUpdate(marker: marker)

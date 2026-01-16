@@ -60,18 +60,10 @@ private class PathShapeLayer: CAShapeLayer {
 		actions = actions
 		props.position = refPoint
 		props.lineWidth = lineWidth
+	}
 
-		actions = [
-			"onOrderIn": NSNull(),
-			"onOrderOut": NSNull(),
-			"hidden": NSNull(),
-			"sublayers": NSNull(),
-			"contents": NSNull(),
-			"bounds": NSNull(),
-			"position": NSNull(),
-			"transform": NSNull(),
-			"lineWidth": NSNull()
-		]
+	override func action(forKey event: String) -> CAAction? {
+		return NSNull()
 	}
 
 	@available(*, unavailable)
@@ -151,6 +143,14 @@ class DrawingLayer: CALayer {
 		setNeedsLayout()
 	}
 
+	override var isHidden: Bool {
+		didSet {
+			if !isHidden {
+				setNeedsLayout()
+			}
+		}
+	}
+
 	override func action(forKey event: String) -> (any CAAction)? {
 		// never do animation
 		return NSNull()
@@ -168,7 +168,12 @@ class DrawingLayer: CALayer {
 		}
 	}
 
-	private func layoutSublayersSafe() {
+	override func layoutSublayers() {
+		guard !isHidden else {
+			// don't run if hidden
+			return
+		}
+
 		let tRotation = viewPort.mapTransform.rotation()
 		let tScale = viewPort.mapTransform.scale() / PATH_SCALING
 		var scale = Int(floor(-log(tScale)))
@@ -177,6 +182,7 @@ class DrawingLayer: CALayer {
 		}
 
 		// get list of GeoJSON structs
+		// FIXME: instead of refetching all data here we should just update the path of things that changed.
 		let geomList = geojsonDelegate?.geojsonData().filter { !$0.geom.geometryPoints.isPoint() } ?? []
 
 		// compute what's new and what's old
@@ -234,12 +240,6 @@ class DrawingLayer: CALayer {
 			sublayerTransform = t
 		} else {
 			sublayerTransform = CATransform3DIdentity
-		}
-	}
-
-	override func layoutSublayers() {
-		if !isHidden {
-			layoutSublayersSafe()
 		}
 	}
 }

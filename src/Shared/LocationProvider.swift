@@ -57,8 +57,9 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 		ignoreInitialStatusUpdate = true // flag that we're going to receive an extra notification from CL
 		locationManager.delegate = self
 		locationManager.pausesLocationUpdatesAutomatically = false
-		locationManager.allowsBackgroundLocationUpdates = GpxLayer.recordTracksInBackground
-			&& AppDelegate.shared.mapView.displayGpxTracks
+		locationManager.allowsBackgroundLocationUpdates =
+			AppDelegate.shared.mainView.mapView.gpxLayer.gpxTracks.recordTracksInBackground
+				&& AppDelegate.shared.mapView.displayGpxTracks
 		if #available(iOS 11.0, *) {
 			locationManager.showsBackgroundLocationIndicator = true
 		}
@@ -74,7 +75,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 	}
 
 	@objc func backgroundCollectionSettingChanged(_ notification: Notification) {
-		if GpxLayer.recordTracksInBackground,
+		if AppDelegate.shared.mainView.mapView.gpxLayer.gpxTracks.recordTracksInBackground,
 		   AppDelegate.shared.mapView.displayGpxTracks
 		{
 			allowsBackgroundLocationUpdates = true
@@ -134,12 +135,13 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 		}
 
 		if let currentLocation,
-		   GreatCircleDistance(newLocation.coordinate, currentLocation.coordinate) >= 0.1 ||
-		   abs(newLocation.horizontalAccuracy - currentLocation.horizontalAccuracy) >= 1.0
+		   GreatCircleDistance(newLocation.coordinate, currentLocation.coordinate) < 0.1,
+		   abs(newLocation.horizontalAccuracy - currentLocation.horizontalAccuracy) < 1.0
 		{
 			// didn't move far, and the accuracy didn't change either, so ignore it
 			return
 		}
+
 		self.currentLocation = newLocation
 	}
 
