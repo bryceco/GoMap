@@ -194,7 +194,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	@objc func openPreferences() {
 		let storyboard = UIStoryboard(name: "Settings", bundle: nil)
 		guard
-			let mainVC = mainView,
+			let mainVC = mainView as? MainViewController,
 			mainVC.presentedViewController == nil,
 			let vc = storyboard.instantiateInitialViewController()
 		else {

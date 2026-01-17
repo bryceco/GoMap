@@ -76,13 +76,10 @@ struct MapLocation {
 }
 
 protocol MapViewSharedState: AnyObject {
-	var displayGpxTracks: Bool { get set }
 	var bounds: CGRect { get }
 	var gpxLayer: GpxLayer! { get }
 	var aerialLayer: MercatorTileLayer! { get }
-	var tileServerList: TileServerList { get }
 	var editorLayer: EditorMapLayer! { get }
-	var enableAutomaticCacheManagement: Bool { get }
 	var displayDataOverlayLayers: Bool { get }
 	var dataOverlayLayer: DataOverlayLayer! { get }
 
@@ -196,16 +193,6 @@ final class MapView: UIView, MapViewSharedState,
 	private(set) var pushPin: PushPinView?
 	var pushPinIsOnscreen = false
 
-	let tileServerList: TileServerList
-
-	var displayGpxTracks = false {
-		didSet {
-			gpxLayer.isHidden = !displayGpxTracks
-			LocationProvider.shared.allowsBackgroundLocationUpdates
-				= gpxLayer.gpxTracks.recordTracksInBackground && displayGpxTracks
-		}
-	}
-
 	var displayDataOverlayLayers = false {
 		didSet {
 			dataOverlayLayer.isHidden = !displayDataOverlayLayers
@@ -216,16 +203,6 @@ final class MapView: UIView, MapViewSharedState,
 			updateTileOverlayLayers(latLon: viewPort.screenCenterLatLon())
 		}
 	}
-
-	var enableTurnRestriction = false {
-		didSet {
-			if oldValue != enableTurnRestriction {
-				editorLayer.clearCachedProperties()
-			}
-		}
-	}
-
-	var enableAutomaticCacheManagement = false
 
 	private(set) var crossHairs: CAShapeLayer!
 
@@ -238,7 +215,6 @@ final class MapView: UIView, MapViewSharedState,
 	// MARK: initialization
 
 	required init?(coder: NSCoder) {
-		tileServerList = TileServerList()
 		currentRegion = RegionInfoForLocation.none
 
 		super.init(coder: coder)
@@ -287,7 +263,7 @@ final class MapView: UIView, MapViewSharedState,
 			self?.mapTransformDidChange()
 		}
 
-		tileServerList.onChange.subscribe(self) { [weak self] in
+		AppState.shared.tileServerList.onChange.subscribe(self) { [weak self] in
 			self?.promptForBetterBackgroundImagery()
 		}
 
@@ -295,8 +271,6 @@ final class MapView: UIView, MapViewSharedState,
 		backgroundColor = UIColor(white: 0.1, alpha: 1.0)
 
 		// this option needs to be set before the editor is initialized
-		enableAutomaticCacheManagement = UserPrefs.shared.automaticCacheManagement.value ?? true
-
 		locatorLayer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
 		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
 		locatorLayer.tileServer = TileServer.mapboxLocator
@@ -305,7 +279,7 @@ final class MapView: UIView, MapViewSharedState,
 
 		aerialLayer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
 		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue
-		aerialLayer.tileServer = tileServerList.currentServer
+		aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
 		aerialLayer.isHidden = true
 		allLayers.append(aerialLayer)
 
@@ -363,9 +337,17 @@ final class MapView: UIView, MapViewSharedState,
 #endif
 
 		// these need to be loaded late because assigning to them changes the view
-		displayGpxTracks = UserPrefs.shared.mapViewEnableBreadCrumb.value ?? false
 		displayDataOverlayLayers = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
-		enableTurnRestriction = UserPrefs.shared.mapViewEnableTurnRestriction.value ?? false
+
+		mainView.settings.$enableTurnRestriction.subscribe(self) { [weak self] enableTurnRestriction in
+			self?.editorLayer.clearCachedProperties()
+		}
+
+		mainView.settings.$displayGpxTracks.subscribe(self) { [weak self] displayGpxTracks in
+			self?.gpxLayer.isHidden = !displayGpxTracks
+			LocationProvider.shared.allowsBackgroundLocationUpdates
+				= AppState.shared.gpxTracks.recordTracksInBackground && displayGpxTracks
+		}
 
 		currentRegion = RegionInfoForLocation.fromUserPrefs() ?? RegionInfoForLocation.none
 
@@ -436,7 +418,7 @@ final class MapView: UIView, MapViewSharedState,
 					// already have it
 					continue
 				}
-				guard let tileServer = tileServerList.serviceWithIdentifier(ident) else {
+				guard let tileServer = AppState.shared.tileServerList.serviceWithIdentifier(ident) else {
 					// server doesn't exist anymore
 					var list = overlaysIdList
 					list.removeAll(where: { $0 == ident })
@@ -541,6 +523,7 @@ final class MapView: UIView, MapViewSharedState,
 		}
 
 		// check whether we need to change aerial imagery
+		let tileServerList = AppState.shared.tileServerList
 		if !tileServerList.currentServer.coversLocation(latLon) {
 			// current imagery layer doesn't exist at current location
 			let best = tileServerList.bestService(at: latLon) ?? tileServerList.builtinServers()[0]
@@ -573,7 +556,7 @@ final class MapView: UIView, MapViewSharedState,
 			                              handler: nil))
 			alert.addAction(UIAlertAction(title: NSLocalizedString("Change", comment: ""), style: .default,
 			                              handler: { _ in
-			                              	self.tileServerList.currentServer = best
+											AppState.shared.tileServerList.currentServer = best
 			                              	self.setAerialTileServer(best)
 			                              }))
 			mainView.present(alert, animated: true)
@@ -735,14 +718,14 @@ final class MapView: UIView, MapViewSharedState,
 			basemapLayer.isHidden = true
 			editorLayer.whiteText = true
 		case MapViewState.EDITORAERIAL:
-			aerialLayer.tileServer = tileServerList.currentServer
+			aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
 			editorLayer.isHidden = false
 			aerialLayer.isHidden = false
 			basemapLayer.isHidden = true
 			editorLayer.whiteText = true
 			mainView.aerialAlignmentButton.isHidden = false
 		case MapViewState.AERIAL:
-			aerialLayer.tileServer = tileServerList.currentServer
+			aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
 			editorLayer.isHidden = true
 			aerialLayer.isHidden = false
 			basemapLayer.isHidden = true
@@ -774,6 +757,7 @@ final class MapView: UIView, MapViewSharedState,
 		// enable/disable editing buttons based on visibility
 		mainView.updateUndoRedoButtonState()
 		mainView.updateAerialAttributionButton()
+		mainView.updateUploadButtonState()
 		mainView.addNodeButton.isHidden = editorLayer.isHidden
 
 		editorLayer.whiteText = !aerialLayer.isHidden
@@ -790,7 +774,7 @@ final class MapView: UIView, MapViewSharedState,
 	// MARK: Discard stale data
 
 	func discardStaleData() {
-		if enableAutomaticCacheManagement {
+		if mainView.settings.enableAutomaticCacheManagement {
 			let changed = editorLayer.mapData.discardStaleData()
 			if changed {
 				MessageDisplay.shared.flashMessage(title: nil, message: NSLocalizedString("Cache trimmed", comment: ""))
@@ -1407,7 +1391,7 @@ final class MapView: UIView, MapViewSharedState,
 			if viewOverlayMask.contains(.QUESTS) {
 				including.insert(.quest)
 			}
-			if displayGpxTracks {
+			if mainView.settings.displayGpxTracks {
 				including.insert(.gpx)
 			}
 			if displayDataOverlayLayers {
@@ -1755,7 +1739,7 @@ extension MapView: EditorMapLayerOwner {
 	}
 
 	func useTurnRestrictions() -> Bool {
-		return enableTurnRestriction
+		return mainView.settings.enableTurnRestriction
 	}
 
 	func useUnnamedRoadHalo() -> Bool {
@@ -1763,7 +1747,7 @@ extension MapView: EditorMapLayerOwner {
 	}
 
 	func useAutomaticCacheManagement() -> Bool {
-		return enableAutomaticCacheManagement
+		return mainView.settings.enableAutomaticCacheManagement
 	}
 
 	func pushpinView() -> PushPinView? {

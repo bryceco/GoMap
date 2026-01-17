@@ -30,16 +30,13 @@ class ClearCacheViewController: UITableViewController {
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 44
 
-		let appDelegate = AppDelegate.shared
-
-		automaticCacheManagement.isOn = appDelegate.mapView.enableAutomaticCacheManagement
+		automaticCacheManagement.isOn = AppDelegate.shared.mainView.settings.enableAutomaticCacheManagement
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		let appDelegate = AppDelegate.shared
-		appDelegate.mapView.enableAutomaticCacheManagement = automaticCacheManagement.isOn
+		AppDelegate.shared.mainView.settings.enableAutomaticCacheManagement = automaticCacheManagement.isOn
 	}
 
 	// MARK: - Table view delegate
@@ -165,7 +162,7 @@ class ClearCacheViewController: UITableViewController {
 		case .basemap:
 			appDelegate.mapView.basemapLayer.purgeTileCache()
 		case .otherCaches:
-			for tileServer in AppDelegate.shared.mapView.tileServerList.allServices() {
+			for tileServer in AppState.shared.tileServerList.allServices() {
 				let cache = PersistentWebCache<UIImage>(name: tileServer.identifier,
 				                                        memorySize: 0,
 				                                        daysToKeep: 0)

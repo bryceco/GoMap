@@ -58,8 +58,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 		locationManager.delegate = self
 		locationManager.pausesLocationUpdatesAutomatically = false
 		locationManager.allowsBackgroundLocationUpdates =
-			AppDelegate.shared.mainView.mapView.gpxLayer.gpxTracks.recordTracksInBackground
-				&& AppDelegate.shared.mapView.displayGpxTracks
+			AppState.shared.gpxTracks.recordTracksInBackground && AppDelegate.shared.mainView.settings.displayGpxTracks
 		if #available(iOS 11.0, *) {
 			locationManager.showsBackgroundLocationIndicator = true
 		}
@@ -75,8 +74,8 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 	}
 
 	@objc func backgroundCollectionSettingChanged(_ notification: Notification) {
-		if AppDelegate.shared.mainView.mapView.gpxLayer.gpxTracks.recordTracksInBackground,
-		   AppDelegate.shared.mapView.displayGpxTracks
+		if AppState.shared.gpxTracks.recordTracksInBackground,
+		   AppDelegate.shared.mainView.settings.displayGpxTracks
 		{
 			allowsBackgroundLocationUpdates = true
 			locationManager.requestAlwaysAuthorization()

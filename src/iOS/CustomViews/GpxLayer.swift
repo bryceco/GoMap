@@ -9,7 +9,7 @@
 import UIKit
 
 final class GpxLayer: DrawingLayer, DrawingLayerDelegate {
-	let gpxTracks = GpxTracks()
+	let gpxTracks = AppState.shared.gpxTracks
 
 	override init(viewPort: MapViewPort) {
 		super.init(viewPort: viewPort)

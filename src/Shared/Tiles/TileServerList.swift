@@ -137,8 +137,8 @@ final class TileServerList {
 	}
 
 	private func load() {
-		let list = UserPrefs.shared.customAerialList.value ?? []
-		userDefinedList = list.map({ TileServer(withDictionary: $0) })
+		let customList = UserPrefs.shared.customAerialList.value ?? []
+		userDefinedList = customList.map({ TileServer(withDictionary: $0) })
 
 		// build a dictionary of all known sources
 		let dict = allServicesDict()

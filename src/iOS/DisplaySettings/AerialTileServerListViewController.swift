@@ -19,7 +19,7 @@ class AerialTileServerListViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		let appDelegate = AppDelegate.shared
-		serverList = appDelegate.mapView.tileServerList
+		serverList = AppState.shared.tileServerList
 
 		let latLon = appDelegate.mainView.viewPort.screenCenterLatLon()
 		imageryForRegion = serverList.allServices(at: latLon, overlay: false)
@@ -195,8 +195,8 @@ class AerialTileServerListViewController: UITableViewController {
 		guard let service = (indexPath.row < list.count ? list[indexPath.row] : nil) else {
 			return
 		}
+		
 		serverList.currentServer = service
-
 		mapView.setAerialTileServer(serverList.currentServer)
 
 		// if popping all the way up we need to tell Settings to save changes

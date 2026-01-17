@@ -79,9 +79,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		func openGPX(data: Data, name: String) {
 			do {
-				let track = try mapView.gpxLayer.gpxTracks.loadGPXData(data, name: name)
+				let track = try AppState.shared.gpxTracks.loadGPXData(data, name: name)
 				if let center = track?.center() {
-					mapView.displayGpxTracks = true // ensure GPX tracks are visible
+					mainView.settings.displayGpxTracks = true // ensure GPX tracks are visible
 					mainView.viewPort.centerOn(latLon: center, metersWide: nil)
 					mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
 				}
@@ -221,8 +221,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		UserPrefs.shared.synchronize()
 
 		if mainView.gpsState != .NONE,
-		   AppDelegate.shared.mapView!.gpxLayer.gpxTracks.recordTracksInBackground,
-		   mapView.displayGpxTracks
+		   AppState.shared.gpxTracks.recordTracksInBackground,
+		   mainView.settings.displayGpxTracks
 		{
 			// Show GPX activity widget
 			if #available(iOS 16.2, *) {
@@ -251,11 +251,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	func sceneWillEnterForeground(_ scene: UIScene) {
-		let mapView = AppDelegate.shared.mapView!
 		let mainView = AppDelegate.shared.mainView!
 		if mainView.gpsState != .NONE {
-			if AppDelegate.shared.mapView!.gpxLayer.gpxTracks.recordTracksInBackground,
-			   mapView.displayGpxTracks
+			if AppState.shared.gpxTracks.recordTracksInBackground,
+			   mainView.settings.displayGpxTracks
 			{
 				// GPS was running in the background
 				LocationProvider.shared.start()

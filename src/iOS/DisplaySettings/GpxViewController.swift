@@ -49,7 +49,7 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 				                                          applicationActivities: nil)
 				controller.completionWithItemsHandler = { _, completed, _, _ in
 					if completed {
-						let gpxTracks = AppDelegate.shared.mapView.gpxLayer.gpxTracks
+						let gpxTracks = AppState.shared.gpxTracks
 						gpxTracks.markTrackUploaded(self.gpxTrack)
 						self.tableView?.tableView.reloadData()
 					}
@@ -101,7 +101,8 @@ class GpxTrackImportHealthKit: UITableViewCell {
 				                              handler: nil))
 				self.vc.present(alert, animated: true)
 			case let .success(routes):
-				let origCount = AppDelegate.shared.mapView.gpxLayer.gpxTracks.savedTracks.count
+				let gpxTracks = AppState.shared.gpxTracks
+				let origCount = gpxTracks.savedTracks.count
 				for route in routes {
 					let gpx = GpxTrack()
 					gpx.name = "HealthKit"
@@ -109,12 +110,12 @@ class GpxTrackImportHealthKit: UITableViewCell {
 						gpx.addPoint(point)
 					}
 					gpx.finish()
-					AppDelegate.shared.mapView.gpxLayer.gpxTracks.addGPX(track: gpx)
+					gpxTracks.addGPX(track: gpx)
 				}
 				if let tableView = self.vc.view as? UITableView {
 					tableView.reloadData()
 				}
-				let newCount = AppDelegate.shared.mapView.gpxLayer.gpxTracks.savedTracks.count - origCount
+				let newCount = gpxTracks.savedTracks.count - origCount
 				let message = String.localizedStringWithFormat(
 					NSLocalizedString("%ld new route(s) imported,\n%ld duplicate(s) skipped",
 					                  comment: "result of importing GPX routes"),
@@ -144,7 +145,7 @@ class GpxViewController: UITableViewController {
 	private var timer: Timer?
 	@IBOutlet var navigationBar: UINavigationBar!
 
-	let gpxTracks = AppDelegate.shared.mapView!.gpxLayer.gpxTracks
+	let gpxTracks = AppState.shared.gpxTracks
 
 	@IBAction func cancel(_ sender: Any) {
 		dismiss(animated: true)
@@ -490,7 +491,7 @@ class GpxViewController: UITableViewController {
 				let viewPort = AppDelegate.shared.mainView.viewPort
 				viewPort.centerOn(latLon: center, metersWide: nil)
 			}
-			AppDelegate.shared.mapView.displayGpxTracks = true
+			AppDelegate.shared.mainView.settings.displayGpxTracks = true
 			navigationController?.dismiss(animated: true)
 		}
 	}

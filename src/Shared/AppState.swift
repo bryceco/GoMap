@@ -7,3 +7,16 @@
 //
 
 import Foundation
+
+final class AppState {
+	static let shared = AppState()
+
+	let tileServerList = TileServerList()
+
+	let gpxTracks = GpxTracks()
+
+	func save() {
+		tileServerList.save()
+		gpxTracks.saveActiveTrack()
+	}
+}
