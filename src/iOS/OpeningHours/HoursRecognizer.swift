@@ -6,7 +6,6 @@
 
 #if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
 
-import Combine
 import Vision
 import VisionKit
 

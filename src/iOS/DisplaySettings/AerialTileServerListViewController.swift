@@ -19,7 +19,7 @@ class AerialTileServerListViewController: UITableViewController {
 
 	override func viewDidLoad() {
 		let appDelegate = AppDelegate.shared
-		serverList = appDelegate.mapView.tileServerList
+		serverList = AppState.shared.tileServerList
 
 		let latLon = appDelegate.mainView.viewPort.screenCenterLatLon()
 		imageryForRegion = serverList.allServices(at: latLon, overlay: false)

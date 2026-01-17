@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  MainViewController.h
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 12/6/12.
@@ -24,8 +24,6 @@ protocol MainViewSharedState: AnyObject {
 	var mapView: MapView! { get }
 	var gpsState: GPS_STATE { get set }
 	var viewPort: MapViewPortObject { get }
-	var buttonLayout: MainViewButtonLayout! { get set }
-	var enableRotation: Bool { get set }
 	var topViewController: UIViewController { get }
 	var fpsLabel: FpsLabel! { get }
 
@@ -72,12 +70,6 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 
 	var topViewController: UIViewController { self }
 
-	var buttonLayout: MainViewButtonLayout! {
-		didSet {
-			updateButtonPositionsFor(layout: buttonLayout)
-		}
-	}
-
 	var addNodeButtonLongPressGestureRecognizer: UILongPressGestureRecognizer?
 	var plusButtonTimestamp: TimeInterval = 0.0
 
@@ -91,26 +83,6 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 	public var userOverrodeLocationZoom = false {
 		didSet {
 			centerOnGPSButton.isHidden = !userOverrodeLocationZoom || gpsState == .NONE
-		}
-	}
-
-	var enableBirdsEye = false {
-		didSet {
-			if !enableBirdsEye {
-				// remove birdsEye
-				viewPort.rotateBirdsEye(by: -viewPort.mapTransform.birdsEyeRotation)
-			}
-		}
-	}
-
-	var enableRotation = false {
-		didSet {
-			if !enableRotation {
-				// remove rotation
-				let centerPoint = viewPort.screenCenterPoint()
-				let angle = CGFloat(viewPort.mapTransform.rotation())
-				viewPort.rotate(by: -angle, aroundScreenPoint: centerPoint)
-			}
 		}
 	}
 
@@ -138,6 +110,15 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			self?.updateUndoRedoButtonState()
 			self?.updateUploadButtonState()
 		})
+
+		AppState.shared.settings.$enableBirdsEye.subscribe(self) { [weak self] enableBirdsEye in
+			if !enableBirdsEye,
+			   let viewPort = self?.viewPort
+			{
+				// remove birdsEye
+				viewPort.rotateBirdsEye(by: -viewPort.mapTransform.birdsEyeRotation)
+			}
+		}
 
 		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
 			self?.locationUpdated(to: location)
@@ -177,6 +158,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		locationBallView.isHidden = true
 		locationBallView.viewPort = viewPort
 		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
+			self?.locationUpdated(to: location)
 			self?.locationBallView.updateLocation(location)
 		}
 		LocationProvider.shared.onChangeSmoothHeading.subscribe(self) { [weak self] heading, accuracy in
@@ -191,8 +173,9 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		setButtonAppearances()
 
 		// update button layout constraints
-		buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.mapViewButtonLayout.value
-			?? MainViewButtonLayout.buttonsOnRight.rawValue)
+		AppState.shared.settings.$buttonLayout.subscribe(self) { [weak self] buttonLayout in
+			self?.updateButtonPositionsFor(layout: buttonLayout)
+		}
 
 		progressIndicator.color = UIColor.green
 
@@ -269,8 +252,18 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			gpsState = .LOCATION
 		}
 
-		enableRotation = UserPrefs.shared.mapViewEnableRotation.value ?? true
-		enableBirdsEye = UserPrefs.shared.mapViewEnableBirdsEye.value ?? false
+		// Bindings
+
+		let settings = AppState.shared.settings
+		settings.$enableRotation.subscribe(self) { [weak self] newValue in
+			guard let self else { return }
+			if !newValue {
+				// remove rotation
+				let centerPoint = viewPort.screenCenterPoint()
+				let angle = CGFloat(viewPort.mapTransform.rotation())
+				viewPort.animateRotation(by: -angle, aroundPoint: centerPoint)
+			}
+		}
 	}
 
 	func setupAccessibility() {
@@ -301,19 +294,13 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		UserPrefs.shared.mapViewState.value = mapView.viewState.rawValue
 		UserPrefs.shared.mapViewOverlays.value = mapView.viewOverlayMask.rawValue
 
-		UserPrefs.shared.mapViewEnableRotation.value = enableRotation
-		UserPrefs.shared.mapViewEnableBirdsEye.value = enableBirdsEye
-		UserPrefs.shared.mapViewEnableBreadCrumb.value = mapView.displayGpxTracks
 		UserPrefs.shared.mapViewEnableDataOverlay.value = mapView.displayDataOverlayLayers
-		UserPrefs.shared.mapViewEnableTurnRestriction.value = mapView.enableTurnRestriction
-		UserPrefs.shared.automaticCacheManagement.value = mapView.enableAutomaticCacheManagement
 
 		mapView.currentRegion.saveToUserPrefs()
 
 		UserPrefs.shared.synchronize()
 
-		mapView.tileServerList.save()
-		mapView.gpxLayer.gpxTracks.saveActiveTrack()
+		AppState.shared.save()
 
 		// then save data
 		mapView.editorLayer.save()
@@ -805,7 +792,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			// move pan
 			if SHOW_3D {
 				// multi-finger drag to initiate 3-D view
-				if enableBirdsEye, pan.numberOfTouches == 3 {
+				if AppState.shared.settings.enableBirdsEye, pan.numberOfTouches == 3 {
 					let translation = pan.translation(in: self.view)
 					let delta = Double(-translation.y / 40 / 180 * .pi)
 					viewPort.rotateBirdsEye(by: delta)
@@ -885,7 +872,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 
 	@objc func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
 		// Rotate screen
-		guard enableRotation else {
+		guard AppState.shared.settings.enableRotation else {
 			return
 		}
 
@@ -951,7 +938,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 
 	func displayButtonLongPressHandler() {
 		// show the most recently used aerial imagery
-		let tileServerlList = mapView.tileServerList
+		let tileServerlList = AppState.shared.tileServerList
 		let actionSheet = UIAlertController(
 			title: NSLocalizedString("Recent Aerial Imagery", comment: "Alert title message"),
 			message: nil,
@@ -1025,7 +1012,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 					LocationProvider.shared.stop()
 					locationBallView.isHidden = true
 					mapView.voiceAnnouncement?.enabled = false
-					mapView.gpxLayer.gpxTracks.endActiveTrack(continuingCurrentTrack: false)
+					AppState.shared.gpxTracks.endActiveTrack(continuingCurrentTrack: false)
 				} else {
 					userOverrodeLocationPosition = false
 					userOverrodeLocationZoom = false
@@ -1034,11 +1021,9 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 					mapView.voiceAnnouncement?.enabled = true
 					if oldValue == .NONE {
 						// because recording GPX tracks is cheap we record them any time GPS is enabled
-						mapView.gpxLayer.gpxTracks.startNewTrack(continuingCurrentTrack: false)
+						AppState.shared.gpxTracks.startNewTrack(continuingCurrentTrack: false)
 					}
 				}
-
-				updateUploadButtonState()
 			}
 		}
 	}
@@ -1066,8 +1051,8 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			voiceAnnouncement.announce(forLocation: LatLon(newLocation.coordinate))
 		}
 
-		if mapView.gpxLayer.gpxTracks.activeTrack != nil {
-			mapView.gpxLayer.gpxTracks.addPoint(newLocation)
+		if AppState.shared.gpxTracks.activeTrack != nil {
+			AppState.shared.gpxTracks.addPoint(newLocation)
 		}
 
 		if !userOverrodeLocationPosition,

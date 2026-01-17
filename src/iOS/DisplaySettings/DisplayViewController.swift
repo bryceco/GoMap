@@ -33,14 +33,14 @@ class DisplayViewController: UITableViewController {
 			title: NSLocalizedString("Left side", comment: "Left-hand side of screen"),
 			style: .default,
 			handler: { _ in
-				AppDelegate.shared.mainView.buttonLayout = .buttonsOnLeft
+				AppState.shared.settings.buttonLayout = .buttonsOnLeft
 				self.setButtonLayoutTitle()
 			})
 		let right = UIAlertAction(
 			title: NSLocalizedString("Right side", comment: "Right-hand side of screen"),
 			style: .default,
 			handler: { _ in
-				AppDelegate.shared.mainView.buttonLayout = .buttonsOnRight
+				AppState.shared.settings.buttonLayout = .buttonsOnRight
 				self.setButtonLayoutTitle()
 			})
 #if targetEnvironment(macCatalyst)
@@ -65,7 +65,7 @@ class DisplayViewController: UITableViewController {
 			if let cell = tableView.cellForRow(at: indexPath) {
 				if cell.accessoryType == .checkmark {
 					mapView.viewState = MapViewState(rawValue: cell.tag) ?? MapViewState.EDITORAERIAL
-					mapView.setAerialTileServer(mapView.tileServerList.currentServer)
+					mapView.setAerialTileServer(AppState.shared.tileServerList.currentServer)
 					break
 				}
 			}
@@ -77,18 +77,17 @@ class DisplayViewController: UITableViewController {
 			dataOverlaySwitch.isOn ? .DATAOVERLAY : []
 		]
 
-		mainView.enableRotation = rotationSwitch.isOn
-		mapView.displayGpxTracks = gpxLoggingSwitch.isOn
+		AppState.shared.settings.enableRotation = rotationSwitch.isOn
+		AppState.shared.settings.displayGpxTracks = gpxLoggingSwitch.isOn
 		mapView.displayDataOverlayLayers = dataOverlaySwitch.isOn
-		mapView.enableTurnRestriction = turnRestrictionSwitch.isOn
+		AppState.shared.settings.enableTurnRestriction = turnRestrictionSwitch.isOn
 
 		mapView.editorLayer.setNeedsLayout()
 	}
 
 	@IBAction func gpsSwitchChanged(_ sender: Any) {
 		// need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
-		let mapView = AppDelegate.shared.mapView
-		mapView?.displayGpxTracks = gpxLoggingSwitch.isOn
+		AppState.shared.settings.displayGpxTracks = gpxLoggingSwitch.isOn
 	}
 
 	@IBAction func dataOverlaySwitchChanged(_ sender: Any) {
@@ -102,7 +101,7 @@ class DisplayViewController: UITableViewController {
 	}
 
 	func setButtonLayoutTitle() {
-		let onLeft = AppDelegate.shared.mainView.buttonLayout == MainViewButtonLayout.buttonsOnLeft
+		let onLeft = AppState.shared.settings.buttonLayout == MainViewButtonLayout.buttonsOnLeft
 		let title = onLeft
 			? NSLocalizedString("Left", comment: "")
 			: NSLocalizedString("Right", comment: "")
@@ -124,10 +123,10 @@ class DisplayViewController: UITableViewController {
 		questsSwitch.isOn = mapView.viewOverlayMask.contains(.QUESTS)
 		dataOverlaySwitch.isOn = mapView.displayDataOverlayLayers
 
-		rotationSwitch.isOn = mainView.enableRotation
-		gpxLoggingSwitch.isOn = mapView.displayGpxTracks
-		turnRestrictionSwitch.isOn = mapView.enableTurnRestriction
+		gpxLoggingSwitch.isOn = AppState.shared.settings.displayGpxTracks
+		turnRestrictionSwitch.isOn = AppState.shared.settings.enableTurnRestriction
 		objectFiltersSwitch.isOn = mapView.editorLayer.objectFilters.enableObjectFilters
+		rotationSwitch.isOn = AppState.shared.settings.enableRotation
 
 		setButtonLayoutTitle()
 	}
@@ -148,7 +147,7 @@ class DisplayViewController: UITableViewController {
 		// set the name of the aerial provider
 		if indexPath.section == BACKGROUND_SECTION, indexPath.row == 2 {
 			if let custom = cell as? CustomBackgroundCell {
-				let servers = AppDelegate.shared.mapView.tileServerList
+				let servers = AppState.shared.tileServerList
 				custom.button.setTitle(servers.currentServer.name, for: .normal)
 				custom.button.sizeToFit()
 			}

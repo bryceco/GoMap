@@ -32,8 +32,7 @@ class DataOverlaysController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		let latLon = AppDelegate.shared.mainView.viewPort.screenCenterLatLon()
-		let mapView = AppDelegate.shared.mapView!
-		overlayList = mapView.tileServerList.allServices(at: latLon, overlay: true)
+		overlayList = AppState.shared.tileServerList.allServices(at: latLon, overlay: true)
 		overlaySelections = UserPrefs.shared.tileOverlaySelections.value ?? []
 
 		// Don't show edit button if there's nothing to edit
