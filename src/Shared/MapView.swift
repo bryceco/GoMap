@@ -47,11 +47,11 @@ enum ZLAYER: CGFloat {
 }
 
 struct MapLocation {
-	var longitude: Double
-	var latitude: Double
-	var zoom: Double
-	var direction: Double // degrees clockwise from north
-	var viewState: MapViewState?
+	let longitude: Double
+	let latitude: Double
+	let zoom: Double
+	let direction: Double // degrees clockwise from north
+	let viewState: MapViewState?
 
 	init(longitude: Double,
 	     latitude: Double,
