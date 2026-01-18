@@ -160,10 +160,10 @@ class WikiPage {
 
 	private let descriptionCache = PersistentWebCache<KeyValueDescription>(name: "wikiTagStore",
 	                                                                       memorySize: 10_000000,
-	                                                                       daysToKeep: 45.0)
+	                                                                       daysToKeep: 14.0)
 	private let imageCache = PersistentWebCache<UIImage>(name: "wikiImageStore",
 	                                                     memorySize: 10_000000,
-	                                                     daysToKeep: 45.0)
+	                                                     daysToKeep: 14.0)
 
 	func resetCache() {
 		descriptionCache.removeAllObjects()

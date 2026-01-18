@@ -24,7 +24,7 @@ final class TileServer: Equatable, Codable {
 	private static let iconCache: PersistentWebCache<UIImage> = {
 		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache",
 		                                        memorySize: 10000,
-		                                        daysToKeep: 90.0)
+		                                        daysToKeep: 30.0)
 		return cache
 	}()
 

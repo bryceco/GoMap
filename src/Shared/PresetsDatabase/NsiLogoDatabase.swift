@@ -13,7 +13,7 @@ class NsiLogoDatabase {
 
 	var logoCache = PersistentWebCache<UIImage>(name: "presetLogoCache",
 	                                            memorySize: 5 * 1_000000,
-	                                            daysToKeep: 90.0)
+	                                            daysToKeep: 30.0)
 
 	// MARK: NSI Logo icon retrieval
 
