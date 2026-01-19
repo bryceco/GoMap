@@ -34,8 +34,8 @@ class OfflineViewController: UITableViewController {
 
 		tableView.estimatedRowHeight = 100
 		tableView.rowHeight = UITableView.automaticDimension
-		aerialCell.tileLayer = AppDelegate.shared.mapView.aerialLayer
-		basemapCell.tileLayer = AppDelegate.shared.mapView.basemapLayer as? TilesProvider
+		aerialCell.tileLayer = AppDelegate.shared.mapView.allLayers.aerialLayer
+		basemapCell.tileLayer = AppDelegate.shared.mapView.allLayers.basemapLayer as? TilesProvider
 
 		for cell in [aerialCell!, basemapCell!] {
 			cell.activityView.startAnimating()

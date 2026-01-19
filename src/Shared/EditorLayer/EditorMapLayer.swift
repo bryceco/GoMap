@@ -1775,7 +1775,7 @@ final class EditorMapLayer: CALayer {
 	}
 
 	override func layoutSublayers() {
-		if isHidden {
+		guard !isHidden else {
 			return
 		}
 
@@ -1789,6 +1789,8 @@ final class EditorMapLayer: CALayer {
 
 	override func setNeedsLayout() {
 		if isPerformingLayout {
+			print("recursive set needs layout")
+			DbgAssert(false)
 			return
 		}
 		super.setNeedsLayout()
@@ -1865,7 +1867,7 @@ final class EditorMapLayer: CALayer {
 	}
 }
 
-extension EditorMapLayer: MapView.LayerOrView {
+extension EditorMapLayer: MapLayersView.LayerOrView {
 	var hasTileServer: TileServer? {
 		return nil
 	}

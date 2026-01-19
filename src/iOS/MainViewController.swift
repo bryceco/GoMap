@@ -214,6 +214,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		setButtonAppearances()
 
 		// update button layout constraints
+		updateButtonPositionsFor(layout: settings.buttonLayout)
 		settings.$buttonLayout.subscribe(self) { [weak self] buttonLayout in
 			self?.updateButtonPositionsFor(layout: buttonLayout)
 		}
@@ -334,7 +335,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		UserPrefs.shared.mapViewState.value = mapView.viewState.rawValue
 		UserPrefs.shared.mapViewOverlays.value = mapView.viewOverlayMask.rawValue
 
-		UserPrefs.shared.mapViewEnableDataOverlay.value = mapView.displayDataOverlayLayers
+		UserPrefs.shared.mapViewEnableDataOverlay.value = mapView.allLayers.displayDataOverlayLayers
 
 		mapView.currentRegion.saveToUserPrefs()
 
@@ -1117,7 +1118,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		viewPort.centerOn(latLon: latLon,
 		                  zoom: zoom,
 		                  rotation: rotation)
-		if let state = location.viewState {
+		if let state = location.view {
 			mapView.viewState = state
 		}
 	}
@@ -1175,7 +1176,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 	}
 
 	@IBAction func requestAerialServiceAttribution(_ sender: Any) {
-		let aerial = mapView.aerialLayer.tileServer
+		let aerial = mapView.allLayers.aerialLayer.tileServer
 		if aerial.isBingAerial() {
 			// present bing metadata
 			performSegue(withIdentifier: "BingMetadataSegue", sender: self)
@@ -1204,7 +1205,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 	}
 
 	func updateAerialAlignmentButton() {
-		let offset = mapView.aerialLayer.imageryOffsetMeters
+		let offset = mapView.allLayers.aerialLayer.imageryOffsetMeters
 		let buttonText: String
 		if offset == CGPointZero {
 			buttonText = "(0,0)"
@@ -1219,20 +1220,20 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 
 	func dPadPress(_ shift: CGPoint) {
 		let scale = 0.5
-		let newOffset = mapView.aerialLayer.imageryOffsetMeters.plus(CGPoint(x: shift.x * scale, y: shift.y * scale))
-		mapView.aerialLayer.imageryOffsetMeters = newOffset
+		let newOffset = mapView.allLayers.aerialLayer.imageryOffsetMeters.plus(CGPoint(x: shift.x * scale, y: shift.y * scale))
+		mapView.allLayers.aerialLayer.imageryOffsetMeters = newOffset
 		updateAerialAlignmentButton()
 	}
 
 	// MARK: Other stuff
 
 	func updateAerialAttributionButton() {
-		let service = mapView.aerialLayer.tileServer
+		let service = mapView.allLayers.aerialLayer.tileServer
 		let icon = service.attributionIcon(height: aerialServiceLogo.frame.size.height,
 		                                   completion: { [weak self] in
 		                                   	self?.updateAerialAttributionButton()
 		                                   })
-		aerialServiceLogo.isHidden = mapView.aerialLayer.isHidden
+		aerialServiceLogo.isHidden = mapView.allLayers.aerialLayer.isHidden
 			|| (service.attributionString.isEmpty && icon == nil)
 
 		let gap = icon != nil && service.attributionString.count > 0 ? " " : ""

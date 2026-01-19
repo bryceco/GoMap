@@ -82,7 +82,7 @@ class AdvancedSettingsViewController: UITableViewController {
 		UserPrefs.shared.maximizeFrameRate.value = toggle.isOn
 		DisplayLink.shared.setFrameRate()
 
-		if let mapLibre = AppDelegate.shared.mapView.basemapLayer as? MapLibreVectorTilesView {
+		if let mapLibre = AppDelegate.shared.mapView.allLayers.basemapLayer as? MapLibreVectorTilesView {
 			// Call this after updating DisplayLink speed
 			mapLibre.setPreferredFrameRate()
 		}

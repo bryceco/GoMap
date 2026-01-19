@@ -71,7 +71,7 @@ class LocationURLParserTestCase: XCTestCase {
 		XCTAssertEqual(result.latitude, latitude)
 		XCTAssertEqual(result.longitude, longitude)
 		XCTAssertEqual(result.zoom, zoom)
-		XCTAssertEqual(result.viewState, nil)
+		XCTAssertEqual(result.view, nil)
 	}
 
 	func testParseURL_withURLThatContainsSemicolonsBetweenCoordinatesAndZoom_shouldNotResultInNil() {

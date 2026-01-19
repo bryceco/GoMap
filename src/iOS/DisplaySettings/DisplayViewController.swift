@@ -79,7 +79,7 @@ class DisplayViewController: UITableViewController {
 
 		mainView.settings.enableRotation = rotationSwitch.isOn
 		mainView.settings.displayGpxTracks = gpxLoggingSwitch.isOn
-		mapView.displayDataOverlayLayers = dataOverlaySwitch.isOn
+		mapView.allLayers.displayDataOverlayLayers = dataOverlaySwitch.isOn
 		mainView.settings.enableTurnRestriction = turnRestrictionSwitch.isOn
 
 		mapView.editorLayer.setNeedsLayout()
@@ -93,7 +93,7 @@ class DisplayViewController: UITableViewController {
 	@IBAction func dataOverlaySwitchChanged(_ sender: Any) {
 		// need this to take effect immediately in case they exit the app without dismissing this controller, and they want GPS enabled in background
 		let mapView = AppDelegate.shared.mapView
-		mapView?.displayDataOverlayLayers = dataOverlaySwitch.isOn
+		mapView?.allLayers.displayDataOverlayLayers = dataOverlaySwitch.isOn
 	}
 
 	@IBAction func toggleObjectFilters(_ sender: UISwitch) {
@@ -121,7 +121,7 @@ class DisplayViewController: UITableViewController {
 
 		notesSwitch.isOn = mapView.viewOverlayMask.contains(.NOTES)
 		questsSwitch.isOn = mapView.viewOverlayMask.contains(.QUESTS)
-		dataOverlaySwitch.isOn = mapView.displayDataOverlayLayers
+		dataOverlaySwitch.isOn = mapView.allLayers.displayDataOverlayLayers
 
 		gpxLoggingSwitch.isOn = AppDelegate.shared.mainView.settings.displayGpxTracks
 		turnRestrictionSwitch.isOn = AppDelegate.shared.mainView.settings.enableTurnRestriction
@@ -156,7 +156,7 @@ class DisplayViewController: UITableViewController {
 		// set the name of the basemap provider
 		if indexPath.section == BACKGROUND_SECTION, indexPath.row == 3 {
 			if let custom = cell as? CustomBackgroundCell {
-				let server = AppDelegate.shared.mapView.basemapServer
+				let server = AppDelegate.shared.mapView.allLayers.basemapServer
 				custom.button.setTitle(server.name, for: .normal)
 				custom.button.sizeToFit()
 			}

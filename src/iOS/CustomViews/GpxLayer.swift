@@ -45,7 +45,7 @@ final class GpxLayer: DrawingLayer, DrawingLayerDelegate {
 	}
 }
 
-extension GpxLayer: MapView.LayerOrView {
+extension GpxLayer: MapLayersView.LayerOrView {
 	var hasTileServer: TileServer? {
 		return nil
 	}

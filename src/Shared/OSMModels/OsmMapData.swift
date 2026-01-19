@@ -631,7 +631,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 
 #if DEBUG
-		AppDelegate.shared.mapView.quadDownloadLayer?.setNeedsLayout()
+		AppDelegate.shared.mapView.allLayers.quadDownloadLayer?.setNeedsLayout()
 #endif
 
 		// Convert the list of quads into server queries. We look for quads that are adjacent
@@ -675,7 +675,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					progress.progressDecrement()
 
 #if DEBUG
-					AppDelegate.shared.mapView.quadDownloadLayer?.setNeedsLayout()
+					AppDelegate.shared.mapView.allLayers.quadDownloadLayer?.setNeedsLayout()
 #endif
 				}
 			}

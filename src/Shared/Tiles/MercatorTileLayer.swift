@@ -483,7 +483,7 @@ extension MercatorTileLayer: DiskCacheSizeProtocol {
 	}
 }
 
-extension MercatorTileLayer: MapView.LayerOrView {
+extension MercatorTileLayer: MapLayersView.LayerOrView {
 	var hasTileServer: TileServer? {
 		return tileServer
 	}

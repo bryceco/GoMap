@@ -28,6 +28,7 @@
 		020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */; };
 		0210AE072F19A9DF0031F047 /* GpxTracks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0210AE062F19A9DF0031F047 /* GpxTracks.swift */; };
 		0210AE092F1A2C770031F047 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0210AE082F1A2C770031F047 /* AppState.swift */; };
+		0210AE0B2F1D9E120031F047 /* MapLayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0210AE0A2F1D9E120031F047 /* MapLayersView.swift */; };
 		021BC21E2D6E6E0E004631C5 /* Panoramax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021BC21D2D6E6E05004631C5 /* Panoramax.swift */; };
 		021BC2222D7625FB004631C5 /* Panoramax.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021BC2212D7625FB004631C5 /* Panoramax.storyboard */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
@@ -375,6 +376,7 @@
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
 		0210AE062F19A9DF0031F047 /* GpxTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GpxTracks.swift; path = ../Shared/GpxTracks.swift; sourceTree = "<group>"; };
 		0210AE082F1A2C770031F047 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppState.swift; path = ../Shared/AppState.swift; sourceTree = SOURCE_ROOT; };
+		0210AE0A2F1D9E120031F047 /* MapLayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapLayersView.swift; path = ../Shared/MapLayersView.swift; sourceTree = SOURCE_ROOT; };
 		021BC21D2D6E6E05004631C5 /* Panoramax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panoramax.swift; sourceTree = "<group>"; };
 		021BC2212D7625FB004631C5 /* Panoramax.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Panoramax.storyboard; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -913,6 +915,7 @@
 				C381C305263FD0CA003142BA /* VectorMath.swift */,
 				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
 				C341E1522639DECC0022E983 /* WikiPage.swift */,
+				0210AE0A2F1D9E120031F047 /* MapLayersView.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1559,6 +1562,7 @@
 				ED9649D32601C4CE00EC0A60 /* AerialTileServerListViewController.swift in Sources */,
 				02C456A829C8DB410077E3FD /* TagInfo.swift in Sources */,
 				ED9649C22601C33E00EC0A60 /* TileServerEditViewController.swift in Sources */,
+				0210AE0B2F1D9E120031F047 /* MapLayersView.swift in Sources */,
 				0202C5FE2E3BFD7500649F26 /* CustomSegmentedControl.swift in Sources */,
 				02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */,
 				0220526429283498003C6AE1 /* CountryCoder.swift in Sources */,

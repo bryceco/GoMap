@@ -78,7 +78,7 @@ class ClearCacheViewController: UITableViewController {
 				let count: Int
 				switch indexPath.row {
 				case Row.basemap.rawValue:
-					(size, count) = await mapView.basemapLayer.getDiskCacheSize()
+					(size, count) = await mapView.allLayers.basemapLayer.getDiskCacheSize()
 				case Row.otherCaches.rawValue:
 					(size, count) = sizeOfCachesDirectory() ?? (0, 0)
 				default:
@@ -160,7 +160,7 @@ class ClearCacheViewController: UITableViewController {
 			appDelegate.mapView.editorLayer.purgeCachedData(.hard)
 			refreshAfterPurge()
 		case .basemap:
-			appDelegate.mapView.basemapLayer.purgeTileCache()
+			appDelegate.mapView.allLayers.basemapLayer.purgeTileCache()
 		case .otherCaches:
 			for tileServer in AppState.shared.tileServerList.allServices() {
 				let cache = PersistentWebCache<UIImage>(name: tileServer.identifier,

@@ -56,7 +56,7 @@ final class DataOverlayLayer: DrawingLayer, DrawingLayerDelegate {
 	}
 }
 
-extension DataOverlayLayer: MapView.LayerOrView {
+extension DataOverlayLayer: MapLayersView.LayerOrView {
 	var hasTileServer: TileServer? {
 		return nil
 	}

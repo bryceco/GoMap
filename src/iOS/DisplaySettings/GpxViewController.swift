@@ -73,7 +73,7 @@ class GpxTrackBackgroundCollection: UITableViewCell {
 
 	@IBAction func enableBackground(_ sender: Any) {
 		let toggle = sender as? UISwitch
-		AppDelegate.shared.mapView.gpxLayer?.gpxTracks.recordTracksInBackground = toggle?.isOn ?? false
+		AppDelegate.shared.mapView.allLayers.gpxLayer?.gpxTracks.recordTracksInBackground = toggle?.isOn ?? false
 	}
 }
 

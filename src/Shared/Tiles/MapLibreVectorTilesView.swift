@@ -114,11 +114,13 @@ class MapLibreVectorTilesView: UIView, TilesProvider, DiskCacheSizeProtocol {
 	var styleURL: URL
 
 	init(viewPort: MapViewPort, tileServer: TileServer) {
+		// Sorry, but MapLibre isn't supported in this environment
 		fatalError()
 	}
 
 	@available(*, unavailable)
 	required init?(coder: NSCoder) {
+		// Sorry, but MapLibre isn't supported in this environment
 		fatalError()
 	}
 
@@ -146,7 +148,7 @@ class MapLibreVectorTilesView: UIView, TilesProvider, DiskCacheSizeProtocol {
 }
 #endif
 
-extension MapLibreVectorTilesView: MapView.LayerOrView {
+extension MapLibreVectorTilesView: MapLayersView.LayerOrView {
 	var hasTileServer: TileServer? {
 		return tileServer
 	}
