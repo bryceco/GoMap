@@ -120,11 +120,11 @@ class MapLayersView: UIView {
 		allLayers.append(dataOverlayLayer)
 
 #if DEBUG && false
-		quadDownloadLayer = QuadDownloadLayer(mapView: self)
+		quadDownloadLayer = QuadDownloadLayer(mapData: mapView.editorLayer.mapData, viewPort: viewPort)
 		if let quadDownloadLayer = quadDownloadLayer {
-			quadDownloadLayer.zPosition = Z_QUADDOWNLOAD
+			quadDownloadLayer.zPosition = ZLAYER.QUADDOWNLOAD.rawValue
 			quadDownloadLayer.isHidden = false
-			backgroundLayers.append(.otherlayer(quadDownloadLayer))
+			allLayers.append(quadDownloadLayer)
 		}
 #endif
 

@@ -13,26 +13,26 @@ import UIKit
 /// It displays the quads that are downloading OSM data.
 /// See: MapView.quadDownloadLayer and OsmMapData.downloadMissingData()
 final class QuadDownloadLayer: CALayer {
-	let mapView: MapView
-	let viewPort: MapViewPort
+	private let mapData: OsmMapData
+	private let viewPort: MapViewPort
 
 	// MARK: Implementation
 
 	override init(layer: Any) {
 		let layer = layer as! QuadDownloadLayer
-		mapView = layer.mapView
+		mapData = layer.mapData
 		viewPort = layer.viewPort
 		super.init(layer: layer)
 	}
 
-	init(mapView: MapView, viewPort: MapViewPort) {
-		self.mapView = mapView
+	init(mapData: OsmMapData, viewPort: MapViewPort) {
+		self.mapData = mapData
 		self.viewPort = viewPort
 		super.init()
 
 		needsDisplayOnBoundsChange = true
 
-		mapView.viewPort.mapTransform.onChange.subscribe(self) { _ in
+		viewPort.mapTransform.onChange.subscribe(self) { _ in
 			self.setNeedsLayout()
 		}
 	}
@@ -46,16 +46,16 @@ final class QuadDownloadLayer: CALayer {
 			return
 		}
 		// update locations of tiles
-		let tRotation = mapView.viewPort.mapTransform.rotation()
+		let tRotation = viewPort.mapTransform.rotation()
 		sublayers = []
-		mapView.editorLayer.mapData.region.enumerate({ quad in
+		mapData.region.enumerate({ quad in
 			if !quad.isDownloaded, !quad.busy {
 				return
 			}
-			let upperLeft = mapView.viewPort.mapTransform.screenPoint(
+			let upperLeft = viewPort.mapTransform.screenPoint(
 				forLatLon: LatLon(quad.rect.origin),
 				birdsEye: true)
-			let bottomRight = mapView.viewPort.mapTransform.screenPoint(
+			let bottomRight = viewPort.mapTransform.screenPoint(
 				forLatLon: LatLon(lon: quad.rect.origin.x + quad.rect.size.width,
 				                  lat: quad.rect.origin.y + quad.rect.size.height),
 				birdsEye: true)
@@ -111,5 +111,15 @@ final class QuadDownloadLayer: CALayer {
 	@available(*, unavailable)
 	required init?(coder aDecoder: NSCoder) {
 		fatalError()
+	}
+}
+
+extension QuadDownloadLayer: MapLayersView.LayerOrView {
+	var hasTileServer: TileServer? {
+		return nil
+	}
+	
+	func removeFromSuper() {
+		removeFromSuperlayer()
 	}
 }
