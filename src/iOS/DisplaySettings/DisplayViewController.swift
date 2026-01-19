@@ -65,7 +65,7 @@ class DisplayViewController: UITableViewController {
 			if let cell = tableView.cellForRow(at: indexPath) {
 				if cell.accessoryType == .checkmark {
 					mapView.viewState = MapViewState(rawValue: cell.tag) ?? MapViewState.EDITORAERIAL
-					mapView.setAerialTileServer(AppState.shared.tileServerList.currentServer)
+					mainView.setAerialTileServer(AppState.shared.tileServerList.currentServer)
 					break
 				}
 			}

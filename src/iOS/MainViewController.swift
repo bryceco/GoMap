@@ -1007,7 +1007,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		for service in tileServerlList.recentlyUsed() {
 			actionSheet.addAction(UIAlertAction(title: service.name, style: .default, handler: { [self] _ in
 				tileServerlList.currentServer = service
-				mapView.setAerialTileServer(service)
+				setAerialTileServer(service)
 				if mapView.viewState == MapViewState.EDITOR {
 					mapView.viewState = MapViewState.EDITORAERIAL
 				} else if mapView.viewState == MapViewState.BASEMAP {
@@ -1248,6 +1248,14 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 	}
 
 	// MARK: Other stuff
+
+	func setAerialTileServer(_ service: TileServer) {
+		mapLayersView.aerialLayer.tileServer = service
+		updateAerialAttributionButton()
+		// update imagery offset
+		mapLayersView.aerialLayer.imageryOffsetMeters = CGPointZero
+		updateAerialAlignmentButton()
+	}
 
 	func updateAerialAttributionButton() {
 		let service = mapLayersView.aerialLayer.tileServer

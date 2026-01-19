@@ -189,8 +189,6 @@ final class MapView: UIView,
 	}
 
 	func setUpChildViews2() {
-		editorLayer.whiteText = !mainView.mapLayersView.aerialLayer.isHidden
-
 		// We need to kick the viewState so layers are hidden/unhidden correctly
 		viewState = .EDITORAERIAL
 		viewState = .BASEMAP
@@ -271,7 +269,7 @@ final class MapView: UIView,
 			// current imagery layer doesn't exist at current location
 			let best = tileServerList.bestService(at: latLon) ?? tileServerList.builtinServers()[0]
 			tileServerList.currentServer = best
-			setAerialTileServer(best)
+			mainView.setAerialTileServer(best)
 		} else if viewPort.mapTransform.zoom() < 15 {
 			// the user has zoomed out, so don't bother them until they zoom in.
 			// return here instead of updating last check location.
@@ -300,7 +298,7 @@ final class MapView: UIView,
 			alert.addAction(UIAlertAction(title: NSLocalizedString("Change", comment: ""), style: .default,
 			                              handler: { _ in
 			                              	AppState.shared.tileServerList.currentServer = best
-			                              	self.setAerialTileServer(best)
+											self.mainView.setAerialTileServer(best)
 			                              }))
 			mainView.present(alert, animated: true)
 		}
@@ -460,13 +458,11 @@ final class MapView: UIView,
 			editorLayer.isHidden = false
 			mainView.mapLayersView.aerialLayer.isHidden = true
 			mainView.mapLayersView.basemapLayer.isHidden = true
-			editorLayer.whiteText = true
 		case MapViewState.EDITORAERIAL:
 			mainView.mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
 			editorLayer.isHidden = false
 			mainView.mapLayersView.aerialLayer.isHidden = false
 			mainView.mapLayersView.basemapLayer.isHidden = true
-			editorLayer.whiteText = true
 			mainView.aerialAlignmentButton.isHidden = false
 		case MapViewState.AERIAL:
 			mainView.mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
@@ -505,14 +501,6 @@ final class MapView: UIView,
 		mainView.addNodeButton.isHidden = editorLayer.isHidden
 
 		editorLayer.whiteText = !mainView.mapLayersView.aerialLayer.isHidden
-	}
-
-	func setAerialTileServer(_ service: TileServer) {
-		mainView.mapLayersView.aerialLayer.tileServer = service
-		mainView.updateAerialAttributionButton()
-		// update imagery offset
-		mainView.mapLayersView.aerialLayer.imageryOffsetMeters = CGPointZero
-		mainView.updateAerialAlignmentButton()
 	}
 
 	// MARK: Discard stale data

@@ -36,7 +36,7 @@ class AerialTileServerListViewController: UITableViewController {
 		super.viewWillDisappear(animated)
 
 		if isMovingFromParent {
-			AppDelegate.shared.mapView.setAerialTileServer(serverList.currentServer)
+			AppDelegate.shared.mainView.setAerialTileServer(serverList.currentServer)
 		}
 	}
 
@@ -188,16 +188,13 @@ class AerialTileServerListViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let appDelegate = AppDelegate.shared
-		let mapView = appDelegate.mapView!
-
 		let list = tileServerList(forSection: indexPath.section)
 		guard let service = (indexPath.row < list.count ? list[indexPath.row] : nil) else {
 			return
 		}
 		
 		serverList.currentServer = service
-		mapView.setAerialTileServer(serverList.currentServer)
+		AppDelegate.shared.mainView.setAerialTileServer(serverList.currentServer)
 
 		// if popping all the way up we need to tell Settings to save changes
 		displayViewController?.applyChanges()
