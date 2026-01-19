@@ -104,6 +104,8 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 	@IBOutlet var mapView: MapView!
 	let locationBallView = LocationBallView()
 
+	let mapLayersView = MapLayersView()
+
 	let settings = DisplaySettings()
 
 	override var shouldAutorotate: Bool { true }
@@ -139,7 +141,23 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 
 		// configure views in MapView
 		mapView.setUpChildViews(with: self)
+		mapView.removeFromSuperview()
 
+		// set up layers view
+		mapLayersView.addDefaultChildViews(andAlso: [mapView, mapView.editorLayer])
+		mapLayersView.setUpChildViews()
+		view.addSubview(mapLayersView)
+		mapLayersView.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			mapLayersView.topAnchor.constraint(equalTo: view.topAnchor),
+			mapLayersView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			mapLayersView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			mapLayersView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+		])
+		mapView.setUpChildViews2()
+		view.sendSubviewToBack(mapLayersView)
+
+		
 		navigationController?.isNavigationBarHidden = true
 
 		rulerView.mapView = mapView
@@ -337,7 +355,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		UserPrefs.shared.mapViewState.value = mapView.viewState.rawValue
 		UserPrefs.shared.mapViewOverlays.value = mapView.viewOverlayMask.rawValue
 
-		UserPrefs.shared.mapViewEnableDataOverlay.value = mapView.mapLayersView.displayDataOverlayLayers
+		UserPrefs.shared.mapViewEnableDataOverlay.value = mapLayersView.displayDataOverlayLayers
 
 		mapView.currentRegion.saveToUserPrefs()
 
@@ -1178,7 +1196,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 	}
 
 	@IBAction func requestAerialServiceAttribution(_ sender: Any) {
-		let aerial = mapView.mapLayersView.aerialLayer.tileServer
+		let aerial = mapLayersView.aerialLayer.tileServer
 		if aerial.isBingAerial() {
 			// present bing metadata
 			performSegue(withIdentifier: "BingMetadataSegue", sender: self)
@@ -1207,7 +1225,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 	}
 
 	func updateAerialAlignmentButton() {
-		let offset = mapView.mapLayersView.aerialLayer.imageryOffsetMeters
+		let offset = mapLayersView.aerialLayer.imageryOffsetMeters
 		let buttonText: String
 		if offset == CGPointZero {
 			buttonText = "(0,0)"
@@ -1222,22 +1240,22 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 
 	func dPadPress(_ shift: CGPoint) {
 		let scale = 0.5
-		let newOffset = mapView.mapLayersView.aerialLayer.imageryOffsetMeters.plus(CGPoint(
+		let newOffset = mapLayersView.aerialLayer.imageryOffsetMeters.plus(CGPoint(
 			x: shift.x * scale,
 			y: shift.y * scale))
-		mapView.mapLayersView.aerialLayer.imageryOffsetMeters = newOffset
+		mapLayersView.aerialLayer.imageryOffsetMeters = newOffset
 		updateAerialAlignmentButton()
 	}
 
 	// MARK: Other stuff
 
 	func updateAerialAttributionButton() {
-		let service = mapView.mapLayersView.aerialLayer.tileServer
+		let service = mapLayersView.aerialLayer.tileServer
 		let icon = service.attributionIcon(height: aerialServiceLogo.frame.size.height,
 		                                   completion: { [weak self] in
 		                                   	self?.updateAerialAttributionButton()
 		                                   })
-		aerialServiceLogo.isHidden = mapView.mapLayersView.aerialLayer.isHidden
+		aerialServiceLogo.isHidden = mapLayersView.aerialLayer.isHidden
 			|| (service.attributionString.isEmpty && icon == nil)
 
 		let gap = icon != nil && service.attributionString.count > 0 ? " " : ""

@@ -1819,7 +1819,7 @@ final class EditorMapLayer: CALayer {
 	var selectedNode: OsmNode? {
 		didSet {
 			if oldValue != selectedNode {
-				setNeedsDisplay()
+				setNeedsLayout()
 				owner.selectionDidChange()
 			}
 		}
@@ -1828,7 +1828,7 @@ final class EditorMapLayer: CALayer {
 	var selectedWay: OsmWay? {
 		didSet {
 			if oldValue != selectedWay {
-				setNeedsDisplay()
+				setNeedsLayout()
 				owner.selectionDidChange()
 			}
 		}
@@ -1837,7 +1837,7 @@ final class EditorMapLayer: CALayer {
 	var selectedRelation: OsmRelation? {
 		didSet {
 			if oldValue != selectedRelation {
-				setNeedsDisplay()
+				setNeedsLayout()
 				owner.selectionDidChange()
 			}
 		}

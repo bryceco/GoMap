@@ -267,7 +267,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		if appDelegate.mapView.viewState == MapViewState.EDITORAERIAL ||
 			appDelegate.mapView.viewState == MapViewState.AERIAL
 		{
-			let server = appDelegate.mapView.mapLayersView.aerialLayer.tileServer
+			let server = appDelegate.mainView.mapLayersView.aerialLayer.tileServer
 			if server.identifier.hasPrefix("http:") || server.identifier.hasPrefix("https:") {
 				// custom user imagery
 				imagery = sanitizedURL(server.identifier)

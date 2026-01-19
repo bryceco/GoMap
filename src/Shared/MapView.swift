@@ -24,20 +24,6 @@ enum GPS_STATE: Int {
 	case HEADING // location and heading
 }
 
-// FIXME: Move to MainViewController when other layer code moves
-enum ZLAYER: CGFloat {
-	case AERIAL = -100
-	case BASEMAP = -98
-	case LOCATOR = -50
-	case DATA = -30
-	case EDITOR = -20
-	case QUADDOWNLOAD = -18
-	case GPX = -15
-	case ROTATEGRAPHIC = -3
-	case BLINK = 4
-	case CROSSHAIRS = 5
-}
-
 struct MapLocation {
 	let longitude: Double
 	let latitude: Double
@@ -108,8 +94,6 @@ final class MapView: UIView,
 
 	private(set) var editorLayer: EditorMapLayer!
 
-	let mapLayersView = MapLayersView()
-
 	private(set) var pushPin: PushPinView?
 	var pushPinIsOnscreen = false
 
@@ -177,19 +161,13 @@ final class MapView: UIView,
 		}
 
 		layer.masksToBounds = true
-		backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+		backgroundColor = .clear
 
 		editorLayer = EditorMapLayer(owner: self,
-		                             viewPort: viewPort,
-		                             display: MessageDisplay.shared,
-		                             progress: mainView)
+									 viewPort: viewPort,
+									 display: MessageDisplay.shared,
+									 progress: mainView)
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
-
-		mapLayersView.addDefaultChildViews(andAlso: [editorLayer])
-		mapLayersView.setUpChildViews()
-
-		mapLayersView.frame = bounds
-		addSubview(mapLayersView)
 
 		// implement crosshairs
 		crossHairs = CrossHairsLayer(radius: 12.0)
@@ -208,8 +186,10 @@ final class MapView: UIView,
 		}
 
 		currentRegion = RegionInfoForLocation.fromUserPrefs() ?? RegionInfoForLocation.none
+	}
 
-		editorLayer.whiteText = !mapLayersView.aerialLayer.isHidden
+	func setUpChildViews2() {
+		editorLayer.whiteText = !mainView.mapLayersView.aerialLayer.isHidden
 
 		// We need to kick the viewState so layers are hidden/unhidden correctly
 		viewState = .EDITORAERIAL
@@ -238,7 +218,6 @@ final class MapView: UIView,
 		super.layoutSubviews()
 
 		bounds.origin = CGPoint(x: -frame.size.width / 2, y: -frame.size.height / 2)
-		mapLayersView.frame = bounds
 		crossHairs.position = bounds.center()
 
 		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
@@ -249,7 +228,7 @@ final class MapView: UIView,
 		super.traitCollectionDidChange(previousTraitCollection)
 		if #available(iOS 13.0, *),
 		   traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
-		   let view = mapLayersView.basemapLayer as? MercatorTileLayer
+		   let view = mainView.mapLayersView.basemapLayer as? MercatorTileLayer
 		{
 			view.updateDarkMode()
 		}
@@ -268,12 +247,12 @@ final class MapView: UIView,
 		{
 			return
 		}
-		mapLayersView.updateTileOverlayLayers(latLon: latLon)
+		mainView.mapLayersView.updateTileOverlayLayers(latLon: latLon)
 		UserPrefs.shared.latestOverlayCheckLatLon.value = latLon.plist
 	}
 
 	private func promptForBetterBackgroundImagery() {
-		if mapLayersView.aerialLayer.isHidden {
+		if mainView.mapLayersView.aerialLayer.isHidden {
 			return
 		}
 
@@ -344,7 +323,7 @@ final class MapView: UIView,
 	}
 
 	func noNameLayer() -> MapLayersView.LayerOrView? {
-		return mapLayersView.allLayers.first(where: { $0.hasTileServer == TileServer.noName })
+		return mainView.mapLayersView.allLayers.first(where: { $0.hasTileServer == TileServer.noName })
 	}
 
 	// MARK: ViewPort changed
@@ -470,8 +449,8 @@ final class MapView: UIView,
 		CATransaction.begin()
 		CATransaction.setAnimationDuration(0.5)
 
-		mapLayersView.locatorLayer.isHidden = !newOverlays.contains(.LOCATOR) || mapLayersView.locatorLayer.tileServer
-			.apiKey == ""
+		mainView.mapLayersView.locatorLayer.isHidden = !newOverlays.contains(.LOCATOR)
+			|| mainView.mapLayersView.locatorLayer.tileServer.apiKey == ""
 
 		mainView.aerialAlignmentButton.isHidden = true
 		mainView.dPadView.isHidden = true
@@ -479,25 +458,25 @@ final class MapView: UIView,
 		switch newState {
 		case MapViewState.EDITOR:
 			editorLayer.isHidden = false
-			mapLayersView.aerialLayer.isHidden = true
-			mapLayersView.basemapLayer.isHidden = true
+			mainView.mapLayersView.aerialLayer.isHidden = true
+			mainView.mapLayersView.basemapLayer.isHidden = true
 			editorLayer.whiteText = true
 		case MapViewState.EDITORAERIAL:
-			mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
+			mainView.mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
 			editorLayer.isHidden = false
-			mapLayersView.aerialLayer.isHidden = false
-			mapLayersView.basemapLayer.isHidden = true
+			mainView.mapLayersView.aerialLayer.isHidden = false
+			mainView.mapLayersView.basemapLayer.isHidden = true
 			editorLayer.whiteText = true
 			mainView.aerialAlignmentButton.isHidden = false
 		case MapViewState.AERIAL:
-			mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
+			mainView.mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
 			editorLayer.isHidden = true
-			mapLayersView.aerialLayer.isHidden = false
-			mapLayersView.basemapLayer.isHidden = true
+			mainView.mapLayersView.aerialLayer.isHidden = false
+			mainView.mapLayersView.basemapLayer.isHidden = true
 		case MapViewState.BASEMAP:
 			editorLayer.isHidden = true
-			mapLayersView.aerialLayer.isHidden = true
-			mapLayersView.basemapLayer.isHidden = false
+			mainView.mapLayersView.aerialLayer.isHidden = true
+			mainView.mapLayersView.basemapLayer.isHidden = false
 		}
 
 		mainView.userInstructionLabel.isHidden = (state != .EDITOR && state != .EDITORAERIAL) || !zoomedOut
@@ -505,7 +484,7 @@ final class MapView: UIView,
 			mainView.userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
 		}
 
-		mapLayersView.quadDownloadLayer?.isHidden = editorLayer.isHidden
+		mainView.mapLayersView.quadDownloadLayer?.isHidden = editorLayer.isHidden
 
 		if var noName = noNameLayer() {
 			noName.isHidden = !editorLayer.isHidden
@@ -525,14 +504,14 @@ final class MapView: UIView,
 		mainView.updateUploadButtonState()
 		mainView.addNodeButton.isHidden = editorLayer.isHidden
 
-		editorLayer.whiteText = !mapLayersView.aerialLayer.isHidden
+		editorLayer.whiteText = !mainView.mapLayersView.aerialLayer.isHidden
 	}
 
 	func setAerialTileServer(_ service: TileServer) {
-		mapLayersView.aerialLayer.tileServer = service
+		mainView.mapLayersView.aerialLayer.tileServer = service
 		mainView.updateAerialAttributionButton()
 		// update imagery offset
-		mapLayersView.aerialLayer.imageryOffsetMeters = CGPointZero
+		mainView.mapLayersView.aerialLayer.imageryOffsetMeters = CGPointZero
 		mainView.updateAerialAlignmentButton()
 	}
 
@@ -980,7 +959,7 @@ final class MapView: UIView,
 					}
 					dragObjectToPushpin()
 					self.magnifyingGlass.setSourceCenter(arrow, in: self,
-					                                     visible: !self.mapLayersView.aerialLayer.isHidden)
+														 visible: !self.mainView.mapLayersView.aerialLayer.isHidden)
 				})
 			} else {
 				DisplayLink.shared.removeName("dragScroll")
@@ -989,7 +968,7 @@ final class MapView: UIView,
 			// move the object
 			dragObjectToPushpin()
 			self.magnifyingGlass.setSourceCenter(arrow, in: self,
-			                                     visible: !self.mapLayersView.aerialLayer.isHidden)
+												 visible: !self.mainView.mapLayersView.aerialLayer.isHidden)
 		default:
 			break
 		}
@@ -1048,7 +1027,7 @@ final class MapView: UIView,
 			}
 
 			magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self,
-			                                visible: !mapLayersView.aerialLayer.isHidden)
+											visible: !mainView.mapLayersView.aerialLayer.isHidden)
 		}
 
 		updateEditControl()
@@ -1163,7 +1142,7 @@ final class MapView: UIView,
 			if mainView.settings.displayGpxTracks {
 				including.insert(.gpx)
 			}
-			if mapLayersView.displayDataOverlayLayers {
+			if mainView.mapLayersView.displayDataOverlayLayers {
 				including.insert(.geojson)
 			}
 		} else if !viewOverlayMask.contains(.QUESTS) {
@@ -1580,5 +1559,15 @@ extension MapView {
 				_ = target!.perform(requestedAction!, with: self).takeUnretainedValue()
 			}
 		}
+	}
+}
+
+extension MapView: MapLayersView.LayerOrView {
+	var hasTileServer: TileServer? {
+		return nil
+	}
+	
+	func removeFromSuper() {
+		removeFromSuperview()
 	}
 }

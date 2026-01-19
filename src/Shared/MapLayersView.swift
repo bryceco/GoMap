@@ -8,6 +8,19 @@
 
 import UIKit
 
+enum ZLAYER: CGFloat {
+	case AERIAL = -100
+	case BASEMAP = -98
+	case LOCATOR = -50
+	case DATA = -30
+	case EDITOR = -20
+	case QUADDOWNLOAD = -18
+	case GPX = -15
+	case ROTATEGRAPHIC = -3
+	case BLINK = 4
+	case CROSSHAIRS = 5
+}
+
 /// The main map display: Editor, Aerial, Basemap etc.
 enum MapViewState: Int {
 	case EDITOR
@@ -33,7 +46,7 @@ class MapLayersView: UIView {
 		func removeFromSuper()
 	}
 
-	var mainView: MainViewController { AppDelegate.shared.mainView as! MainViewController }
+	var mainView: MainViewController { AppDelegate.shared.mainView }
 	var viewPort: MapViewPort { mainView.viewPort }
 	var mapView: MapView { mainView.mapView }
 
@@ -64,7 +77,8 @@ class MapLayersView: UIView {
 			})
 
 			if newValue.isVector {
-				let view = MapLibreVectorTilesView(viewPort: viewPort, tileServer: newValue)
+				let view = MapLibreVectorTilesView(viewPort: viewPort,
+												   tileServer: newValue)
 				view.layer.zPosition = ZLAYER.BASEMAP.rawValue
 				insertSubview(view, at: 0) // place at bottom so MapMarkers are above it
 				basemapLayer = view
@@ -97,6 +111,10 @@ class MapLayersView: UIView {
 	}
 
 	func addDefaultChildViews(andAlso more: [LayerOrView]) {
+		for layer in more {
+			allLayers.append(layer)
+		}
+
 		// this option needs to be set before the editor is initialized
 		locatorLayer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
 		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
@@ -129,13 +147,12 @@ class MapLayersView: UIView {
 			allLayers.append(quadDownloadLayer)
 		}
 #endif
-
-		for layer in more {
-			allLayers.append(layer)
-		}
 	}
 
 	func setUpChildViews() {
+		// set the background color visible when in editor-only mode
+		backgroundColor = UIColor(white: 0.1, alpha: 1.0)
+
 		// insert them
 		for bg in allLayers {
 			switch bg {
@@ -170,8 +187,8 @@ class MapLayersView: UIView {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		bounds.origin = CGPoint(x: -frame.size.width / 2,
-		                        y: -frame.size.height / 2)
+		bounds.origin = CGPoint(x: -bounds.size.width / 2,
+		                        y: -bounds.size.height / 2)
 
 		// update bounds of layers
 		for bg in allLayers {
@@ -179,10 +196,13 @@ class MapLayersView: UIView {
 			case let layer as CALayer:
 				layer.frame = bounds
 				layer.bounds.origin = bounds.origin
-			case let view as UIView:
+			case let view as MapLibreVectorTilesView:
 				view.frame = bounds
 				view.bounds.origin = CGPoint(x: bounds.origin.x + bounds.width / 2,
-				                             y: bounds.origin.y + bounds.height / 2)
+											 y: bounds.origin.y + bounds.height / 2)
+			case let view as UIView:
+				view.frame = bounds
+				view.bounds.origin = bounds.origin
 			default:
 				fatalError()
 			}

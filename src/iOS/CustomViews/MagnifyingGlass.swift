@@ -135,7 +135,7 @@ final class MagnifyingGlass: UIView {
 		                  y: sourceCenter.y - captureRadius,
 		                  width: 2 * captureRadius,
 		                  height: 2 * captureRadius)
-		let image = captureLayer(AppDelegate.shared.mapView.mapLayersView.aerialLayer, at: rect)
+		let image = captureLayer(AppDelegate.shared.mainView.mapLayersView.aerialLayer, at: rect)
 //		let image = captureViewAt(rect)
 		image.frame = bounds
 		image.layer.setAffineTransform(CGAffineTransform(scaleX: scale, y: scale))

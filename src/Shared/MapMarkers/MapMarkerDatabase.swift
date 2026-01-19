@@ -110,7 +110,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	}
 
 	func addGeoJSONPoints(forRegion box: OSMRect) {
-		let visible = AppDelegate.shared.mapView.mapLayersView.dataOverlayLayer.geojsonData()
+		let visible = AppDelegate.shared.mainView.mapLayersView.dataOverlayLayer.geojsonData()
 		for feature in visible {
 			if case let .point(latLon) = feature.geom.geometryPoints,
 			   box.containsPoint(OSMPoint(latLon)),

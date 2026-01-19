@@ -15,6 +15,9 @@ let BasemapServerList: [TileServer] = [
 	TileServer.americana
 ]
 .compactMap { $0 }
+#if !canImport(MapLibre)
+.filter { !$0.isVector }
+#endif
 .sorted(by: { a, b in a.best == b.best ? a.name.caseInsensitiveCompare(b.name).rawValue < 0 : a.best })
 
 class BasemapTileServerListViewController: UITableViewController {
@@ -59,7 +62,7 @@ class BasemapTileServerListViewController: UITableViewController {
 		if tileServer.best {
 			title = "☆" + title // star best imagery
 		}
-		if tileServer == AppDelegate.shared.mapView.mapLayersView.basemapServer {
+		if tileServer == AppDelegate.shared.mapLayersView.basemapServer {
 			title = "\u{2714} " + title // add checkmark
 		}
 
@@ -73,7 +76,7 @@ class BasemapTileServerListViewController: UITableViewController {
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let server = BasemapServerList[indexPath.row]
-		AppDelegate.shared.mapView.mapLayersView.basemapServer = server
+		AppDelegate.shared.mapLayersView.basemapServer = server
 		AppDelegate.shared.mapView.viewState = .BASEMAP
 
 		// if popping all the way up we need to tell Settings to save changes

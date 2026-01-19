@@ -15,8 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		return UIApplication.shared.delegate as! AppDelegate
 	}
 
-	weak var mainView: MainViewSharedState!
+	weak var mainView: MainViewController!
 	var mapView: MapView! { mainView.mapView }
+	var mapLayersView: MapLayersView { mainView.mapLayersView }
 
 	private(set) var isAppUpgrade = false
 
@@ -194,13 +195,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	@objc func openPreferences() {
 		let storyboard = UIStoryboard(name: "Settings", bundle: nil)
 		guard
-			let mainVC = mainView as? MainViewController,
-			mainVC.presentedViewController == nil,
+			mainView.presentedViewController == nil,
 			let vc = storyboard.instantiateInitialViewController()
 		else {
 			return
 		}
-		mainVC.present(vc, animated: true)
+		mainView.present(vc, animated: true)
 	}
 #endif
 }
