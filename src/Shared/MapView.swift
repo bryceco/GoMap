@@ -8,22 +8,6 @@
 
 import UIKit
 
-/// Overlays on top of the map: Locator when zoomed, GPS traces, etc.
-struct MapViewOverlays: OptionSet {
-	let rawValue: Int
-	static let LOCATOR = MapViewOverlays(rawValue: 1 << 0)
-	static let GPSTRACE = MapViewOverlays(rawValue: 1 << 1)
-	static let NOTES = MapViewOverlays(rawValue: 1 << 2)
-	static let QUESTS = MapViewOverlays(rawValue: 1 << 4)
-	static let DATAOVERLAY = MapViewOverlays(rawValue: 1 << 5)
-}
-
-enum GPS_STATE: Int {
-	case NONE // none
-	case LOCATION // location only
-	case HEADING // location and heading
-}
-
 struct MapLocation {
 	let longitude: Double
 	let latitude: Double
