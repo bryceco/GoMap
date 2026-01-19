@@ -20,22 +20,48 @@ protocol MapViewProgress {
 	func progressDecrement()
 }
 
-protocol MainViewSharedState: AnyObject {
-	var mapView: MapView! { get }
-	var gpsState: GPS_STATE { get set }
-	var viewPort: MapViewPortObject { get }
-	var topViewController: UIViewController { get }
-	var fpsLabel: FpsLabel! { get }
-	var settings: MainViewController.DisplaySettings { get }
-
-	func toggleLocationButton()
-	func applicationWillEnterBackground()
-	func askToRate(uploadCount: Int)
-	func save()
-	func moveToLocation(_ location: MapLocation)
+/// The main map display: Editor, Aerial, Basemap etc.
+enum MapViewState: Int {
+	case EDITOR
+	case EDITORAERIAL
+	case AERIAL
+	case BASEMAP
 }
 
-final class MainViewController: UIViewController, MainViewSharedState, DPadDelegate,
+struct ViewStateAndOverlays {
+	let onChange = NotificationService<ViewStateAndOverlays>()
+
+	public var state: MapViewState = .EDITORAERIAL {
+		didSet(newValue) {
+			onChange.notify(self)
+		}
+	}
+
+	public var overlayMask: MapViewOverlays = [] {
+		didSet(newValue) {
+			onChange.notify(self)
+		}
+	}
+
+	var zoomedOut = false { // override layer because we're zoomed out
+		didSet(newValue) {
+			onChange.notify(self)
+		}
+	}
+
+	init() {
+		if let state = UserPrefs.shared.mapViewState.value,
+		   let state = MapViewState(rawValue: state)
+		{
+			self.state = state
+		} else {
+			state = MapViewState.EDITORAERIAL
+		}
+		overlayMask = MapViewOverlays(rawValue: UserPrefs.shared.mapViewOverlays.value ?? 0)
+	}
+}
+
+final class MainViewController: UIViewController, DPadDelegate,
 	UIActionSheetDelegate, UIGestureRecognizerDelegate,
 	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate,
 	UIAdaptivePresentationControllerDelegate
@@ -103,11 +129,11 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 
 	@IBOutlet var mapView: MapView!
 	let locationBallView = LocationBallView()
-
 	let mapLayersView = MapLayersView()
 
 	let settings = DisplaySettings()
 
+	var viewState = ViewStateAndOverlays()
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
 
@@ -136,10 +162,12 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		// set up delegates
+		navigationController?.isNavigationBarHidden = true
+
+		// set up references
 		AppDelegate.shared.mainView = self
 
-		// configure views in MapView
+		// configure MapView
 		mapView.setUpChildViews(with: self)
 		mapView.removeFromSuperview()
 
@@ -154,14 +182,11 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			mapLayersView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			mapLayersView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
 		])
-		mapView.setUpChildViews2()
 		view.sendSubviewToBack(mapLayersView)
 
-		
-		navigationController?.isNavigationBarHidden = true
+		userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
 
 		rulerView.mapView = mapView
-		//    _rulerView.layer.zPosition = Z_RULER;
 
 		// undo/redo buttons
 		updateUndoRedoButtonState()
@@ -325,6 +350,13 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 				viewPort.animateRotation(by: -angle, aroundPoint: centerPoint)
 			}
 		}
+
+		// set initial visible layers
+		viewState.onChange.subscribe(self) { [weak self] state in
+			guard let self else { return }
+			self.viewStateDidChange(to: state)
+		}
+		viewStateDidChange(to: viewState)
 	}
 
 	func setupAccessibility() {
@@ -352,8 +384,8 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		UserPrefs.shared.view_latitude.value = latLon.lat
 		UserPrefs.shared.view_longitude.value = latLon.lon
 
-		UserPrefs.shared.mapViewState.value = mapView.viewState.rawValue
-		UserPrefs.shared.mapViewOverlays.value = mapView.viewOverlayMask.rawValue
+		UserPrefs.shared.mapViewState.value = viewState.state.rawValue
+		UserPrefs.shared.mapViewOverlays.value = viewState.overlayMask.rawValue
 
 		UserPrefs.shared.mapViewEnableDataOverlay.value = mapLayersView.displayDataOverlayLayers
 
@@ -1008,10 +1040,10 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			actionSheet.addAction(UIAlertAction(title: service.name, style: .default, handler: { [self] _ in
 				tileServerlList.currentServer = service
 				setAerialTileServer(service)
-				if mapView.viewState == MapViewState.EDITOR {
-					mapView.viewState = MapViewState.EDITORAERIAL
-				} else if mapView.viewState == MapViewState.BASEMAP {
-					mapView.viewState = MapViewState.EDITORAERIAL
+				if viewState.state == .EDITOR {
+					viewState.state = .EDITORAERIAL
+				} else if viewState.state == .BASEMAP {
+					viewState.state = .EDITORAERIAL
 				}
 			}))
 		}
@@ -1022,22 +1054,22 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			title: prefix + NSLocalizedString("Editor only", comment: ""),
 			style: .default,
 			handler: { [self] _ in
-				mapView.viewState = MapViewState.EDITOR
+				viewState.state = MapViewState.EDITOR
 			})
 		let aerialOnly = UIAlertAction(
 			title: prefix + NSLocalizedString("Aerial only", comment: ""),
 			style: .default,
 			handler: { [self] _ in
-				mapView.viewState = MapViewState.AERIAL
+				viewState.state = MapViewState.AERIAL
 			})
 		let editorAerial = UIAlertAction(
 			title: prefix + NSLocalizedString("Editor with Aerial", comment: ""),
 			style: .default,
 			handler: { [self] _ in
-				mapView.viewState = MapViewState.EDITORAERIAL
+				viewState.state = MapViewState.EDITORAERIAL
 			})
 
-		switch mapView.viewState {
+		switch viewState.state {
 		case .EDITOR:
 			actionSheet.addAction(editorAerial)
 			actionSheet.addAction(aerialOnly)
@@ -1139,7 +1171,7 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 		                  zoom: zoom,
 		                  rotation: rotation)
 		if let state = location.view {
-			mapView.viewState = state
+			viewState.state = state
 		}
 	}
 
@@ -1183,6 +1215,83 @@ final class MainViewController: UIViewController, MainViewSharedState, DPadDeleg
 			                  zoom: nil, // don't change zoom
 			                  rotation: nil) // don't change rotation
 		}
+	}
+
+	func viewStateDidChange(to state: ViewStateAndOverlays) {
+		// Things are complicated because the user has their own preference for the view
+		// but when they zoom out we make automatic substitutions:
+		// 	Editor only --> Basemap
+		//	Editor+Aerial --> Aerial+Locator
+		let newState: MapViewState
+		if state.zoomedOut && state.state == .EDITOR {
+			newState = .BASEMAP
+		} else if state.zoomedOut && state.state == .EDITORAERIAL {
+			newState = .AERIAL
+		} else {
+			newState = state.state
+		}
+
+		let newOverlays: MapViewOverlays
+		if state.zoomedOut && newState == .EDITORAERIAL {
+			newOverlays = state.overlayMask.union(.LOCATOR)
+		} else {
+			newOverlays = state.overlayMask
+		}
+
+		CATransaction.begin()
+		CATransaction.setAnimationDuration(0.5)
+
+		mapLayersView.locatorLayer.isHidden = !newOverlays.contains(.LOCATOR)
+			|| mapLayersView.locatorLayer.tileServer.apiKey == ""
+
+		aerialAlignmentButton.isHidden = true
+		dPadView.isHidden = true
+
+		switch newState {
+		case MapViewState.EDITOR:
+			mapView.editorLayer.isHidden = false
+			mapLayersView.aerialLayer.isHidden = true
+			mapLayersView.basemapLayer.isHidden = true
+		case MapViewState.EDITORAERIAL:
+			mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
+			mapView.editorLayer.isHidden = false
+			mapLayersView.aerialLayer.isHidden = false
+			mapLayersView.basemapLayer.isHidden = true
+			aerialAlignmentButton.isHidden = false
+		case MapViewState.AERIAL:
+			mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
+			mapView.editorLayer.isHidden = true
+			mapLayersView.aerialLayer.isHidden = false
+			mapLayersView.basemapLayer.isHidden = true
+		case MapViewState.BASEMAP:
+			mapView.editorLayer.isHidden = true
+			mapLayersView.aerialLayer.isHidden = true
+			mapLayersView.basemapLayer.isHidden = false
+		}
+
+		userInstructionLabel.isHidden = (newState != .EDITOR && newState != .EDITORAERIAL) || !state.zoomedOut
+
+		mapLayersView.quadDownloadLayer?.isHidden = mapView.editorLayer.isHidden
+
+		if var noName = mapLayersView.noNameLayer() {
+			noName.isHidden = !mapView.editorLayer.isHidden
+		}
+
+		CATransaction.commit()
+
+		DispatchQueue.main.async {
+			// Async because the state change hasn't happened yet.
+			// This entire function should be based on didChange instead of willChange.
+			self.mapView.updateMapMarkersFromServer(withDelay: 0, including: [])
+		}
+
+		// enable/disable editing buttons based on visibility
+		updateUndoRedoButtonState()
+		updateAerialAttributionButton()
+		updateUploadButtonState()
+		addNodeButton.isHidden = mapView.editorLayer.isHidden
+
+		mapView.editorLayer.whiteText = !mapLayersView.aerialLayer.isHidden
 	}
 
 	@IBAction func openHelp() {

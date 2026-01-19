@@ -16,9 +16,9 @@ let BasemapServerList: [TileServer] = [
 ]
 .compactMap { $0 }
 #if !canImport(MapLibre)
-.filter { !$0.isVector }
+	.filter { !$0.isVector }
 #endif
-.sorted(by: { a, b in a.best == b.best ? a.name.caseInsensitiveCompare(b.name).rawValue < 0 : a.best })
+	.sorted(by: { a, b in a.best == b.best ? a.name.caseInsensitiveCompare(b.name).rawValue < 0 : a.best })
 
 class BasemapTileServerListViewController: UITableViewController {
 	weak var displayViewController: DisplayViewController?
@@ -77,7 +77,7 @@ class BasemapTileServerListViewController: UITableViewController {
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let server = BasemapServerList[indexPath.row]
 		AppDelegate.shared.mapLayersView.basemapServer = server
-		AppDelegate.shared.mapView.viewState = .BASEMAP
+		AppDelegate.shared.mainView.viewState.state = .BASEMAP
 
 		// if popping all the way up we need to tell Settings to save changes
 		displayViewController?.applyChanges()

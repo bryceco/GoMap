@@ -72,24 +72,6 @@ final class MapView: UIView,
 	var mainView: MainViewController!
 	var viewPort: MapViewPort { mainView.viewPort }
 
-	public var viewState: MapViewState = .EDITORAERIAL {
-		willSet(newValue) {
-			viewStateWillChangeTo(newValue, overlays: viewOverlayMask, zoomedOut: viewStateZoomedOut)
-		}
-	}
-
-	public var viewOverlayMask: MapViewOverlays = [] {
-		willSet(newValue) {
-			viewStateWillChangeTo(viewState, overlays: newValue, zoomedOut: viewStateZoomedOut)
-		}
-	}
-
-	private var viewStateZoomedOut = false { // override layer because we're zoomed out
-		willSet(newValue) {
-			viewStateWillChangeTo(viewState, overlays: viewOverlayMask, zoomedOut: newValue)
-		}
-	}
-
 	private(set) lazy var mapMarkerDatabase = MapMarkerDatabase()
 
 	private(set) var editorLayer: EditorMapLayer!
@@ -164,9 +146,9 @@ final class MapView: UIView,
 		backgroundColor = .clear
 
 		editorLayer = EditorMapLayer(owner: self,
-									 viewPort: viewPort,
-									 display: MessageDisplay.shared,
-									 progress: mainView)
+		                             viewPort: viewPort,
+		                             display: MessageDisplay.shared,
+		                             progress: mainView)
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
 
 		// implement crosshairs
@@ -186,15 +168,6 @@ final class MapView: UIView,
 		}
 
 		currentRegion = RegionInfoForLocation.fromUserPrefs() ?? RegionInfoForLocation.none
-	}
-
-	func setUpChildViews2() {
-		// We need to kick the viewState so layers are hidden/unhidden correctly
-		viewState = .EDITORAERIAL
-		viewState = .BASEMAP
-		viewState = MapViewState(rawValue: UserPrefs.shared.mapViewState.value ?? -999)
-			?? MapViewState.EDITORAERIAL
-		viewOverlayMask = MapViewOverlays(rawValue: UserPrefs.shared.mapViewOverlays.value ?? 0)
 
 		mapMarkerDatabase.mapData = editorLayer.mapData
 
@@ -298,7 +271,7 @@ final class MapView: UIView,
 			alert.addAction(UIAlertAction(title: NSLocalizedString("Change", comment: ""), style: .default,
 			                              handler: { _ in
 			                              	AppState.shared.tileServerList.currentServer = best
-											self.mainView.setAerialTileServer(best)
+			                              	self.mainView.setAerialTileServer(best)
 			                              }))
 			mainView.present(alert, animated: true)
 		}
@@ -320,10 +293,6 @@ final class MapView: UIView,
 		currentRegion = CountryCoder.shared.regionInfoFor(latLon: latLon)
 	}
 
-	func noNameLayer() -> MapLayersView.LayerOrView? {
-		return mainView.mapLayersView.allLayers.first(where: { $0.hasTileServer == TileServer.noName })
-	}
-
 	// MARK: ViewPort changed
 
 	func mapTransformDidChange() {
@@ -343,7 +312,7 @@ final class MapView: UIView,
 		{
 			isZoomedOut = false
 		}
-		viewStateZoomedOut = isZoomedOut
+		mainView.viewState.zoomedOut = isZoomedOut
 
 		updateCurrentRegionForLocationUsingCountryCoder()
 		promptForBetterBackgroundImagery()
@@ -414,93 +383,6 @@ final class MapView: UIView,
 		editorLayer.dragState.confirmDrag = false
 		isRotateObjectMode = nil
 		objectRotationGesture.isEnabled = false
-	}
-
-	func viewStateWillChangeTo(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) {
-		if viewState == state, viewOverlayMask == overlays, viewStateZoomedOut == zoomedOut {
-			// no change
-			return
-		}
-
-		func StateFor(_ state: MapViewState, zoomedOut: Bool) -> MapViewState {
-			if zoomedOut, state == .EDITOR { return .BASEMAP }
-			if zoomedOut, state == .EDITORAERIAL { return .AERIAL }
-			return state
-		}
-		func OverlaysFor(_ state: MapViewState, overlays: MapViewOverlays, zoomedOut: Bool) -> MapViewOverlays {
-			if zoomedOut, state == .EDITORAERIAL { return overlays.union(.LOCATOR) }
-			return overlays
-		}
-
-		// Things are complicated because the user has their own preference for the view
-		// but when they zoom out we make automatic substitutions:
-		// 	Editor only --> Basemap
-		//	Editor+Aerial --> Aerial+Locator
-		let oldState = StateFor(viewState, zoomedOut: viewStateZoomedOut)
-		let newState = StateFor(state, zoomedOut: zoomedOut)
-		let oldOverlays = OverlaysFor(viewState, overlays: viewOverlayMask, zoomedOut: viewStateZoomedOut)
-		let newOverlays = OverlaysFor(state, overlays: overlays, zoomedOut: zoomedOut)
-		if newState == oldState, newOverlays == oldOverlays {
-			return
-		}
-
-		CATransaction.begin()
-		CATransaction.setAnimationDuration(0.5)
-
-		mainView.mapLayersView.locatorLayer.isHidden = !newOverlays.contains(.LOCATOR)
-			|| mainView.mapLayersView.locatorLayer.tileServer.apiKey == ""
-
-		mainView.aerialAlignmentButton.isHidden = true
-		mainView.dPadView.isHidden = true
-
-		switch newState {
-		case MapViewState.EDITOR:
-			editorLayer.isHidden = false
-			mainView.mapLayersView.aerialLayer.isHidden = true
-			mainView.mapLayersView.basemapLayer.isHidden = true
-		case MapViewState.EDITORAERIAL:
-			mainView.mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
-			editorLayer.isHidden = false
-			mainView.mapLayersView.aerialLayer.isHidden = false
-			mainView.mapLayersView.basemapLayer.isHidden = true
-			mainView.aerialAlignmentButton.isHidden = false
-		case MapViewState.AERIAL:
-			mainView.mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
-			editorLayer.isHidden = true
-			mainView.mapLayersView.aerialLayer.isHidden = false
-			mainView.mapLayersView.basemapLayer.isHidden = true
-		case MapViewState.BASEMAP:
-			editorLayer.isHidden = true
-			mainView.mapLayersView.aerialLayer.isHidden = true
-			mainView.mapLayersView.basemapLayer.isHidden = false
-		}
-
-		mainView.userInstructionLabel.isHidden = (state != .EDITOR && state != .EDITORAERIAL) || !zoomedOut
-		if !mainView.userInstructionLabel.isHidden {
-			mainView.userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
-		}
-
-		mainView.mapLayersView.quadDownloadLayer?.isHidden = editorLayer.isHidden
-
-		if var noName = noNameLayer() {
-			noName.isHidden = !editorLayer.isHidden
-		}
-
-		CATransaction.commit()
-
-		DispatchQueue.main.async {
-			// Async because the state change hasn't happened yet.
-			// This entire function should be based on didChange instead of willChange.
-			self.updateMapMarkersFromServer(withDelay: 0, including: [])
-		}
-
-		// enable/disable editing buttons based on visibility
-		mainView.updateUndoRedoButtonState()
-		mainView.updateAerialAttributionButton()
-		mainView.updateUploadButtonState()
-		mainView.addNodeButton.isHidden = editorLayer.isHidden
-
-		editorLayer.whiteText = !mainView.mapLayersView.aerialLayer.isHidden
 	}
 
 	// MARK: Discard stale data
@@ -827,9 +709,9 @@ final class MapView: UIView,
 		}
 
 		// Make sure editor is visible
-		switch viewState {
+		switch mainView.viewState.state {
 		case .AERIAL, .BASEMAP:
-			viewState = .EDITORAERIAL
+			mainView.viewState.state = .EDITORAERIAL
 		case .EDITOR, .EDITORAERIAL:
 			break
 		}
@@ -845,7 +727,7 @@ final class MapView: UIView,
 		let point = viewPort.mapTransform.screenPoint(forLatLon: loc, birdsEye: true)
 		placePushpin(at: point, object: selection)
 
-		if viewStateZoomedOut {
+		if mainView.viewState.zoomedOut {
 			// set location and zoom in
 			viewPort.centerOn(latLon: loc, metersWide: 30.0)
 		} else if !bounds.contains(pushPin!.arrowPoint) {
@@ -947,7 +829,7 @@ final class MapView: UIView,
 					}
 					dragObjectToPushpin()
 					self.magnifyingGlass.setSourceCenter(arrow, in: self,
-														 visible: !self.mainView.mapLayersView.aerialLayer.isHidden)
+					                                     visible: !self.mainView.mapLayersView.aerialLayer.isHidden)
 				})
 			} else {
 				DisplayLink.shared.removeName("dragScroll")
@@ -956,7 +838,7 @@ final class MapView: UIView,
 			// move the object
 			dragObjectToPushpin()
 			self.magnifyingGlass.setSourceCenter(arrow, in: self,
-												 visible: !self.mainView.mapLayersView.aerialLayer.isHidden)
+			                                     visible: !self.mainView.mapLayersView.aerialLayer.isHidden)
 		default:
 			break
 		}
@@ -1015,7 +897,7 @@ final class MapView: UIView,
 			}
 
 			magnifyingGlass.setSourceCenter(pushpinView.arrowPoint, in: self,
-											visible: !mainView.mapLayersView.aerialLayer.isHidden)
+			                                visible: !mainView.mapLayersView.aerialLayer.isHidden)
 		}
 
 		updateEditControl()
@@ -1120,11 +1002,11 @@ final class MapView: UIView,
 		var including = including
 		if including.isEmpty {
 			// compute the list
-			if viewOverlayMask.contains(.NOTES) {
+			if mainView.viewState.overlayMask.contains(.NOTES) {
 				including.insert(.notes)
 				including.insert(.fixme)
 			}
-			if viewOverlayMask.contains(.QUESTS) {
+			if mainView.viewState.overlayMask.contains(.QUESTS) {
 				including.insert(.quest)
 			}
 			if mainView.settings.displayGpxTracks {
@@ -1133,7 +1015,7 @@ final class MapView: UIView,
 			if mainView.mapLayersView.displayDataOverlayLayers {
 				including.insert(.geojson)
 			}
-		} else if !viewOverlayMask.contains(.QUESTS) {
+		} else if !mainView.viewState.overlayMask.contains(.QUESTS) {
 			including.remove(.quest)
 		}
 
@@ -1479,7 +1361,7 @@ extension MapView: EditorMapLayerOwner {
 	}
 
 	func useUnnamedRoadHalo() -> Bool {
-		return noNameLayer() != nil
+		return mainView.mapLayersView.noNameLayer() != nil
 	}
 
 	func useAutomaticCacheManagement() -> Bool {
@@ -1554,7 +1436,7 @@ extension MapView: MapLayersView.LayerOrView {
 	var hasTileServer: TileServer? {
 		return nil
 	}
-	
+
 	func removeFromSuper() {
 		removeFromSuperview()
 	}

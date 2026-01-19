@@ -99,6 +99,11 @@ final class Notify<T> {
 		service.subscribe(observer, handler: handler)
 	}
 
+	func callAndSubscribe(_ observer: AnyObject, handler: @escaping (T) -> Void) {
+		handler(value)
+		service.subscribe(observer, handler: handler)
+	}
+
 	func unsubscribe(_ observer: AnyObject) {
 		service.unsubscribe(observer)
 	}

@@ -37,7 +37,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		}
 		// Build a new list of markers that reference the object
 		var list = [MapMarker]()
-		if AppDelegate.shared.mapView.viewOverlayMask.contains(.QUESTS) {
+		if AppDelegate.shared.mainView.viewState.overlayMask.contains(.QUESTS) {
 			for quest in QuestList.shared.questsForObject(object) {
 				if let marker = QuestMarker(object: object, quest: quest, ignorable: self) {
 					addOrUpdate(marker: marker)
@@ -45,7 +45,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 				}
 			}
 		}
-		if AppDelegate.shared.mapView.viewOverlayMask.contains(.NOTES) {
+		if AppDelegate.shared.mainView.viewState.overlayMask.contains(.NOTES) {
 			if let fixme = FixmeMarker.fixmeTag(object) {
 				let marker = FixmeMarker(object: object, text: fixme)
 				addOrUpdate(marker: marker)

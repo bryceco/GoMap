@@ -192,7 +192,7 @@ class AerialTileServerListViewController: UITableViewController {
 		guard let service = (indexPath.row < list.count ? list[indexPath.row] : nil) else {
 			return
 		}
-		
+
 		serverList.currentServer = service
 		AppDelegate.shared.mainView.setAerialTileServer(serverList.currentServer)
 

@@ -21,14 +21,6 @@ enum ZLAYER: CGFloat {
 	case CROSSHAIRS = 5
 }
 
-/// The main map display: Editor, Aerial, Basemap etc.
-enum MapViewState: Int {
-	case EDITOR
-	case EDITORAERIAL
-	case AERIAL
-	case BASEMAP
-}
-
 class MapLayersView: UIView {
 
 	// List of all layers that are displayed and need to be resized, etc.
@@ -78,7 +70,7 @@ class MapLayersView: UIView {
 
 			if newValue.isVector {
 				let view = MapLibreVectorTilesView(viewPort: viewPort,
-												   tileServer: newValue)
+				                                   tileServer: newValue)
 				view.layer.zPosition = ZLAYER.BASEMAP.rawValue
 				insertSubview(view, at: 0) // place at bottom so MapMarkers are above it
 				basemapLayer = view
@@ -95,7 +87,7 @@ class MapLayersView: UIView {
 
 			UserPrefs.shared.currentBasemapSelection.value = newValue.identifier
 
-			basemapLayer.isHidden = mapView.viewState != .BASEMAP
+			basemapLayer.isHidden = mainView.viewState.state != .BASEMAP
 		}
 	}
 
@@ -172,7 +164,7 @@ class MapLayersView: UIView {
 		// these need to be loaded late because assigning to them changes the view
 		displayDataOverlayLayers = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
 
-		mainView.settings.$displayGpxTracks.subscribe(self) { [weak self] displayGpxTracks in
+		mainView.settings.$displayGpxTracks.callAndSubscribe(self) { [weak self] displayGpxTracks in
 			self?.gpxLayer.isHidden = !displayGpxTracks
 			LocationProvider.shared.allowsBackgroundLocationUpdates
 				= AppState.shared.gpxTracks.recordTracksInBackground && displayGpxTracks
@@ -199,7 +191,7 @@ class MapLayersView: UIView {
 			case let view as MapLibreVectorTilesView:
 				view.frame = bounds
 				view.bounds.origin = CGPoint(x: bounds.origin.x + bounds.width / 2,
-											 y: bounds.origin.y + bounds.height / 2)
+				                             y: bounds.origin.y + bounds.height / 2)
 			case let view as UIView:
 				view.frame = bounds
 				view.bounds.origin = bounds.origin
@@ -266,5 +258,9 @@ class MapLayersView: UIView {
 			}
 		}
 		setNeedsLayout()
+	}
+
+	func noNameLayer() -> MapLayersView.LayerOrView? {
+		return allLayers.first(where: { $0.hasTileServer == TileServer.noName })
 	}
 }

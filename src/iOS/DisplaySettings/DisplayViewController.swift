@@ -64,14 +64,14 @@ class DisplayViewController: UITableViewController {
 			let indexPath = IndexPath(row: row, section: BACKGROUND_SECTION)
 			if let cell = tableView.cellForRow(at: indexPath) {
 				if cell.accessoryType == .checkmark {
-					mapView.viewState = MapViewState(rawValue: cell.tag) ?? MapViewState.EDITORAERIAL
+					mainView.viewState.state = MapViewState(rawValue: cell.tag) ?? .EDITORAERIAL
 					mainView.setAerialTileServer(AppState.shared.tileServerList.currentServer)
 					break
 				}
 			}
 		}
 
-		mapView.viewOverlayMask = [
+		mainView.viewState.overlayMask = [
 			notesSwitch.isOn ? .NOTES : [],
 			questsSwitch.isOn ? .QUESTS : [],
 			dataOverlaySwitch.isOn ? .DATAOVERLAY : []
@@ -119,8 +119,8 @@ class DisplayViewController: UITableViewController {
 		// becoming visible the first time
 		navigationController?.isNavigationBarHidden = false
 
-		notesSwitch.isOn = mapView.viewOverlayMask.contains(.NOTES)
-		questsSwitch.isOn = mapView.viewOverlayMask.contains(.QUESTS)
+		notesSwitch.isOn = mainView.viewState.overlayMask.contains(.NOTES)
+		questsSwitch.isOn = mainView.viewState.overlayMask.contains(.QUESTS)
 		dataOverlaySwitch.isOn = mainView.mapLayersView.displayDataOverlayLayers
 
 		gpxLoggingSwitch.isOn = AppDelegate.shared.mainView.settings.displayGpxTracks
@@ -136,8 +136,8 @@ class DisplayViewController: UITableViewController {
 	{
 		// place a checkmark next to currently selected display
 		if indexPath.section == BACKGROUND_SECTION {
-			let mapView = AppDelegate.shared.mapView
-			if cell.tag == Int(mapView?.viewState.rawValue ?? -1) {
+			let mainView = AppDelegate.shared.mainView!
+			if cell.tag == mainView.viewState.state.rawValue {
 				cell.accessoryType = .checkmark
 			} else {
 				cell.accessoryType = .none

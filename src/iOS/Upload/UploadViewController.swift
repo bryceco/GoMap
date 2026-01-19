@@ -264,8 +264,8 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		}
 
 		var imagery = ""
-		if appDelegate.mapView.viewState == MapViewState.EDITORAERIAL ||
-			appDelegate.mapView.viewState == MapViewState.AERIAL
+		if appDelegate.mainView.viewState.state == MapViewState.EDITORAERIAL ||
+			appDelegate.mainView.viewState.state == MapViewState.AERIAL
 		{
 			let server = appDelegate.mainView.mapLayersView.aerialLayer.tileServer
 			if server.identifier.hasPrefix("http:") || server.identifier.hasPrefix("https:") {
