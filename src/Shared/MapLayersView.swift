@@ -189,7 +189,7 @@ class MapLayersView: UIView {
 		bounds.origin = CGPoint(x: -bounds.size.width / 2,
 		                        y: -bounds.size.height / 2)
 
-		crossHairs.position = layer.bounds.center()
+		crossHairs.position = viewPort.screenCenterPoint()
 
 		// update bounds of layers
 		for bg in allLayers {

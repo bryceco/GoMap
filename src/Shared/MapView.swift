@@ -164,7 +164,8 @@ final class MapView: UIView,
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		bounds.origin = CGPoint(x: -frame.size.width / 2, y: -frame.size.height / 2)
+		bounds.origin = CGPoint(x: -frame.size.width / 2,
+								y: -frame.size.height / 2)
 
 		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
 		statusBarBackground.isHidden = windowScene?.statusBarManager?.isStatusBarHidden ?? false
@@ -180,7 +181,7 @@ final class MapView: UIView,
 		}
 	}
 
-	// MARK: Utility
+	// MARK: Location-based updates
 
 	private func checkForChangedTileOverlayLayers() {
 		// If the user has overlay imagery enabled that is no longer present at this location

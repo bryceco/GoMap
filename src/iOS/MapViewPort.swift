@@ -21,7 +21,7 @@ final class MapViewPortObject: MapViewPort {
 // Add functions for retrieving metrics about the viewport (read-only)
 extension MapViewPort {
 	func screenCenterPoint() -> CGPoint {
-		return AppDelegate.shared.mapView.bounds.center()
+		return AppDelegate.shared.mainView.mapLayersView.bounds.center()
 	}
 
 	func metersPerPixel() -> Double {
@@ -36,7 +36,7 @@ extension MapViewPort {
 	}
 
 	func boundingMapRectForScreen() -> OSMRect {
-		let rc = OSMRect(AppDelegate.shared.mapView.layer.bounds)
+		let rc = OSMRect(AppDelegate.shared.mainView.mapLayersView.layer.bounds)
 		return mapTransform.boundingMapRect(forScreenRect: rc)
 	}
 
