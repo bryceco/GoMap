@@ -362,11 +362,10 @@ final class EditorMapLayer: CALayer {
 	}
 
 	override var bounds: CGRect {
-		get { super.bounds }
-		set {
-			super.bounds = newValue
+		didSet {
+			// need to set both of these so bounds stays in sync with superlayer bounds
 			baseLayer.frame = bounds
-			baseLayer.bounds = bounds // need to set both of these so bounds stays in sync with superlayer bounds
+			baseLayer.bounds.origin = bounds.origin
 			updateMapLocation()
 		}
 	}
@@ -462,12 +461,12 @@ final class EditorMapLayer: CALayer {
 			return
 		}
 
-		if viewPort.mapTransform.transform.a == 1.0 {
+		guard viewPort.mapTransform.transform.a != 1.0 else {
 			return // identity, we haven't been initialized yet
 		}
 
 		let box = viewPort.boundingLatLonForScreen()
-		if box.size.height <= 0 || box.size.width <= 0 {
+		guard box.size.height > 0, box.size.width > 0 else {
 			return
 		}
 

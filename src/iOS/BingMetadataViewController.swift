@@ -56,15 +56,15 @@ class BingMetadataViewController: UIViewController {
 
 		let appDelegate = AppDelegate.shared
 		let viewRect = appDelegate.mainView.viewPort.boundingLatLonForScreen()
-		var zoomLevel = appDelegate.mapView.allLayers.aerialLayer.zoomLevel()
-		let aerialService = appDelegate.mapView.allLayers.aerialLayer.tileServer
+		var zoomLevel = appDelegate.mapView.mapLayersView.aerialLayer.zoomLevel()
+		let aerialService = appDelegate.mapView.mapLayersView.aerialLayer.tileServer
 		if zoomLevel > aerialService.maxZoom {
 			zoomLevel = aerialService.maxZoom
 		}
 
 		Task {
 			do {
-				let data = try await appDelegate.mapView.allLayers.aerialLayer.metadata()
+				let data = try await appDelegate.mapView.mapLayersView.aerialLayer.metadata()
 				await MainActor.run {
 					self.activityIndicator.stopAnimating()
 

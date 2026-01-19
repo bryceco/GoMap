@@ -33,7 +33,6 @@ class MapLayersView: UIView {
 		func removeFromSuper()
 	}
 
-	var allLayers: [LayerOrView] = []
 	var mainView: MainViewController { AppDelegate.shared.mainView as! MainViewController }
 	var viewPort: MapViewPort { mainView.viewPort }
 	var mapView: MapView { mainView.mapView }
@@ -46,6 +45,8 @@ class MapLayersView: UIView {
 	private(set) var locatorLayer: MercatorTileLayer!
 	private(set) var dataOverlayLayer: DataOverlayLayer!
 	private(set) var quadDownloadLayer: QuadDownloadLayer?
+	// collect all of the above layers
+	var allLayers: [LayerOrView] = []
 
 	public var basemapServer: TileServer {
 		get {
@@ -69,7 +70,7 @@ class MapLayersView: UIView {
 				basemapLayer = view
 			} else {
 				let layer = MercatorTileLayer(viewPort: viewPort,
-											  progress: mainView)
+				                              progress: mainView)
 				layer.tileServer = newValue
 				layer.supportDarkMode = true
 				layer.zPosition = ZLAYER.BASEMAP.rawValue
@@ -120,8 +121,9 @@ class MapLayersView: UIView {
 		allLayers.append(dataOverlayLayer)
 
 #if DEBUG && false
-		quadDownloadLayer = QuadDownloadLayer(mapData: mapView.editorLayer.mapData, viewPort: viewPort)
-		if let quadDownloadLayer = quadDownloadLayer {
+		quadDownloadLayer = QuadDownloadLayer(mapData: AppDelegate.shared.mapView.editorLayer.mapData,
+		                                      viewPort: viewPort)
+		if let quadDownloadLayer {
 			quadDownloadLayer.zPosition = ZLAYER.QUADDOWNLOAD.rawValue
 			quadDownloadLayer.isHidden = false
 			allLayers.append(quadDownloadLayer)
@@ -133,7 +135,7 @@ class MapLayersView: UIView {
 		}
 	}
 
-	func setUpChildViews(with main: MainViewController) {
+	func setUpChildViews() {
 		// insert them
 		for bg in allLayers {
 			switch bg {
@@ -168,18 +170,19 @@ class MapLayersView: UIView {
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		bounds.origin = CGPoint(x: -frame.size.width/2,
-								y: -frame.size.height/2)
+		bounds.origin = CGPoint(x: -frame.size.width / 2,
+		                        y: -frame.size.height / 2)
 
 		// update bounds of layers
 		for bg in allLayers {
 			switch bg {
 			case let layer as CALayer:
 				layer.frame = bounds
-				layer.bounds = bounds
+				layer.bounds.origin = bounds.origin
 			case let view as UIView:
 				view.frame = bounds
-				view.bounds = bounds.offsetBy(dx: bounds.width / 2, dy: bounds.height / 2)
+				view.bounds.origin = CGPoint(x: bounds.origin.x + bounds.width / 2,
+				                             y: bounds.origin.y + bounds.height / 2)
 			default:
 				fatalError()
 			}
@@ -198,7 +201,7 @@ class MapLayersView: UIView {
 		allLayers = allLayers.filter { layer in
 			// make sure it's a tile server and an overlay
 			guard let tileServer = layer.hasTileServer,
-				  tileServer.overlay
+			      tileServer.overlay
 			else {
 				return true // keep layer
 			}
@@ -244,5 +247,4 @@ class MapLayersView: UIView {
 		}
 		setNeedsLayout()
 	}
-
 }

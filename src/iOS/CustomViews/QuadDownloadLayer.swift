@@ -118,7 +118,7 @@ extension QuadDownloadLayer: MapLayersView.LayerOrView {
 	var hasTileServer: TileServer? {
 		return nil
 	}
-	
+
 	func removeFromSuper() {
 		removeFromSuperlayer()
 	}

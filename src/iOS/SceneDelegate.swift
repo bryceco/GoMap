@@ -132,7 +132,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 						try geoJsonList.add(name: url.lastPathComponent, data: data)
 						if let loc = geo.firstPoint() {
 							mainView.viewPort.centerOn(latLon: loc, metersWide: nil)
-							mapView.allLayers.displayDataOverlayLayers = true
+							mapView.mapLayersView.displayDataOverlayLayers = true
 						}
 					} catch {
 						self.displayImportError(
