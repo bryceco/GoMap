@@ -53,6 +53,8 @@ class MapLayersView: UIView {
 	// collect all of the above layers
 	var allLayers: [LayerOrView] = []
 
+	private var crossHairs: CrossHairsLayer!
+
 	public var basemapServer: TileServer {
 		get {
 			let ident = UserPrefs.shared.currentBasemapSelection.value
@@ -139,6 +141,11 @@ class MapLayersView: UIView {
 			allLayers.append(quadDownloadLayer)
 		}
 #endif
+
+		// implement crosshairs
+		crossHairs = CrossHairsLayer(radius: 12.0)
+		crossHairs.zPosition = ZLAYER.CROSSHAIRS.rawValue
+		layer.addSublayer(crossHairs)
 	}
 
 	func setUpChildViews() {
@@ -181,6 +188,8 @@ class MapLayersView: UIView {
 
 		bounds.origin = CGPoint(x: -bounds.size.width / 2,
 		                        y: -bounds.size.height / 2)
+
+		crossHairs.position = layer.bounds.center()
 
 		// update bounds of layers
 		for bg in allLayers {

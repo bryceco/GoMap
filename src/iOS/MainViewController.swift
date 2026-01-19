@@ -286,8 +286,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 		MessageDisplay.shared.topViewController = self
 		MessageDisplay.shared.flashLabel = flashLabel
 
-		updateAerialAttributionButton()
-
 		// Install gesture recognizers
 
 		let tap = UITapGestureRecognizer(target: self, action: #selector(handleTapGesture(_:)))
@@ -373,6 +371,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 			self.viewStateDidChange(to: state)
 		}
 		viewStateDidChange(to: viewState)
+
+		updateAerialAttributionButton()
 	}
 
 	func setupAccessibility() {
@@ -1034,7 +1034,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				// treat as tap, but make sure it occured inside the button
 				let touch = recognizer.location(in: recognizer.view)
 				if recognizer.view?.bounds.contains(touch) ?? false {
-					mapView.editorLayer.addNode(at: mapView.crossHairs.position)
+					mapView.editorLayer.addNode(at: mapView.bounds.center())
 				}
 			}
 			plusButtonTimestamp = 0.0

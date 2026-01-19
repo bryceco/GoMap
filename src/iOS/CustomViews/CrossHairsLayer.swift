@@ -43,6 +43,10 @@ class CrossHairsLayer: CAShapeLayer {
 		shadowOffset = CGSize(width: 0, height: 0)
 	}
 
+	override init(layer: Any) {
+		super.init(layer: layer)
+	}
+
 	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")

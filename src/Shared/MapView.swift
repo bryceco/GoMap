@@ -63,8 +63,6 @@ final class MapView: UIView,
 	private(set) var pushPin: PushPinView?
 	var pushPinIsOnscreen = false
 
-	private(set) var crossHairs: CAShapeLayer!
-
 	// This contains the user's general vicinity. Although it contains a lat/lon it only
 	// gets updated if the user moves a large distance.
 	private(set) var currentRegion: RegionInfoForLocation
@@ -135,12 +133,6 @@ final class MapView: UIView,
 		                             progress: mainView)
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
 
-		// implement crosshairs
-		crossHairs = CrossHairsLayer(radius: 12.0)
-		crossHairs.position = bounds.center()
-		crossHairs.zPosition = ZLAYER.CROSSHAIRS.rawValue
-		layer.addSublayer(crossHairs)
-
 #if false
 		voiceAnnouncement = VoiceAnnouncement()
 		voiceAnnouncement?.mapView = self
@@ -173,7 +165,6 @@ final class MapView: UIView,
 		super.layoutSubviews()
 
 		bounds.origin = CGPoint(x: -frame.size.width / 2, y: -frame.size.height / 2)
-		crossHairs.position = bounds.center()
 
 		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
 		statusBarBackground.isHidden = windowScene?.statusBarManager?.isStatusBarHidden ?? false
