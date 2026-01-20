@@ -162,13 +162,9 @@ class ClearCacheViewController: UITableViewController {
 			refreshAfterPurge()
 		case .basemap:
 			appDelegate.mainView.mapLayersView.basemapLayer.purgeTileCache()
+			URLCache.shared.removeAllCachedResponses()
 		case .otherCaches:
-			for tileServer in AppState.shared.tileServerList.allServices() {
-				let cache = PersistentWebCache<UIImage>(name: tileServer.identifier,
-				                                        memorySize: 0,
-				                                        daysToKeep: 0)
-				cache.removeAllObjects()
-			}
+			clearCachesDirectory()
 			URLCache.shared.removeAllCachedResponses()
 		}
 		dismiss(animated: true)
@@ -200,4 +196,17 @@ private func sizeOfCachesDirectory() -> (size: Int, count: Int)? {
 		}
 	}
 	return (size: totalSize, count: fileCount)
+}
+
+private func clearCachesDirectory() {
+	let fileManager = FileManager.default
+	guard
+		let url = fileManager.urls(for: .cachesDirectory, in: .userDomainMask).first,
+		let contents = try? fileManager.contentsOfDirectory(at: url, includingPropertiesForKeys: nil)
+	else {
+		return
+	}
+	for itemURL in contents {
+		try? fileManager.removeItem(at: itemURL)
+	}
 }

@@ -39,10 +39,15 @@ final class PersistentWebCache<T: AnyObject> {
 		let options: FileManager.DirectoryEnumerationOptions = [.skipsSubdirectoryDescendants,
 		                                                        .skipsPackageDescendants,
 		                                                        .skipsHiddenFiles]
-		let list = try? fm.contentsOfDirectory(at: cacheDirectory,
-		                                       includingPropertiesForKeys: attr,
-		                                       options: options)
-		return list ?? []
+		do {
+			let list = try fm.contentsOfDirectory(at: cacheDirectory,
+			                                      includingPropertiesForKeys: attr,
+			                                      options: options)
+			return list
+		} catch {
+			print(error)
+			return []
+		}
 	}
 
 	func allKeys() -> [String] {
