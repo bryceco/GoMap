@@ -24,7 +24,6 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outlet property="editToolbar" destination="R2j-Xq-Q3E" id="Ruo-Y4-9zI"/>
-                                    <outlet property="statusBarBackground" destination="uDR-wZ-Dsb" id="8pj-zQ-PCt"/>
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uDR-wZ-Dsb" userLabel="Status Bar Blur" customClass="StatusBarGradient" customModule="Go_Map__" customModuleProvider="target">
@@ -374,6 +373,7 @@
                         <outlet property="rulerView" destination="TJj-HW-GPO" id="y6m-qe-yvc"/>
                         <outlet property="searchButton" destination="X1d-Y3-CcW" id="Fl5-cx-g49"/>
                         <outlet property="settingsButton" destination="9O3-HG-HvC" id="Xv7-pm-1Cm"/>
+                        <outlet property="statusBarBackground" destination="uDR-wZ-Dsb" id="YFU-eF-4mg"/>
                         <outlet property="undoButton" destination="gwJ-lB-zMc" id="hH3-DO-Cny"/>
                         <outlet property="undoRedoView" destination="yPg-PO-9HK" id="Asd-6X-Isa"/>
                         <outlet property="uploadButton" destination="YRw-Aj-GwS" id="4Vd-GX-cdu"/>

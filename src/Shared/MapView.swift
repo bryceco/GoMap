@@ -63,8 +63,6 @@ final class MapView: UIView,
 	private(set) var pushPin: PushPinView?
 	var pushPinIsOnscreen = false
 
-	@IBOutlet private var statusBarBackground: StatusBarGradient!
-
 	// MARK: initialization
 
 	required init?(coder: NSCoder) {
@@ -171,9 +169,6 @@ final class MapView: UIView,
 
 		editorLayer.frame = bounds
 		editorLayer.bounds.origin = bounds.origin
-
-		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-		statusBarBackground.isHidden = windowScene?.statusBarManager?.isStatusBarHidden ?? false
 	}
 
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

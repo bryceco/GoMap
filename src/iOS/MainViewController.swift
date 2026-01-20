@@ -148,6 +148,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 	@IBOutlet var userInstructionLabel: UILabel!
 	@IBOutlet var locationButton: UIButton!
 	@IBOutlet var flashLabel: UILabel!
+	@IBOutlet private var statusBarBackground: StatusBarGradient!
 
 	@IBOutlet var mapView: MapView!
 	let locationBallView = LocationBallView()
@@ -426,7 +427,12 @@ final class MainViewController: UIViewController, DPadDelegate,
 		mapView.editorLayer.save()
 	}
 
-	// MARK: Button state
+	override func viewDidLayoutSubviews() {
+		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+		statusBarBackground.isHidden = windowScene?.statusBarManager?.isStatusBarHidden ?? false
+	}
+
+	// MARK: Button state updates
 
 	func updateUndoRedoButtonState() {
 		guard undoButton != nil else { return } // during init it can be null
