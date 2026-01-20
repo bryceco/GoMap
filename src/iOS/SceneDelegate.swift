@@ -74,7 +74,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	func openUrl(_ url: URL) -> Bool {
 		let localizedGPX = NSLocalizedString("GPX", comment: "The name of a GPX file")
-		let mapView = AppDelegate.shared.mapView!
 		let mainView = AppDelegate.shared.mainView!
 
 		func openGPX(data: Data, name: String) {
@@ -83,7 +82,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				if let center = track?.center() {
 					mainView.settings.displayGpxTracks = true // ensure GPX tracks are visible
 					mainView.viewPort.centerOn(latLon: center, metersWide: nil)
-					mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.gpx])
+					mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
+														delay: 0.1,
+														including: [.gpx])
 				}
 			} catch {
 				self.displayImportError(error, filetype: localizedGPX)

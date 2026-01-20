@@ -160,10 +160,13 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		present(alert, animated: true)
 
 		// if user created a note then make sure notes are visible
-		AppDelegate.shared.mainView.viewState.overlayMask.insert(.NOTES)
-		AppDelegate.shared.mapView.updateMapMarkersFromServer(withDelay: 0.1, including: [.notes])
+		let mainView = AppDelegate.shared.mainView!
+		mainView.viewState.overlayMask.insert(.NOTES)
+		mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
+											delay: 0.1,
+											including: [.notes])
 
-		mapView.mapMarkerDatabase.update(note: note, close: resolves, comment: text) { [self] result in
+		mainView.mapMarkerDatabase.update(note: note, close: resolves, comment: text) { [self] result in
 			alert.dismiss(animated: true)
 			switch result {
 			case let .success(newNote):
@@ -172,8 +175,8 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 				DispatchQueue.main.async(execute: { [self] in
 					done(nil)
 					// remove note markers that are now resolved
-					mapView.mapMarkerDatabase.removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
-					mapView.updateMapMarkerButtonPositions()
+					mainView.mapMarkerDatabase.removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
+					mainView.updateMapMarkerButtonPositions()
 				})
 			case let .failure(error):
 				let alert2 = UIAlertController(title: NSLocalizedString("Error", comment: ""),

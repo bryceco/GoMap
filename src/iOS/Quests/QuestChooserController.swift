@@ -25,7 +25,7 @@ class QuestChooserTableCell: UITableViewCell {
 
 		// also update markers database
 		if !enabled {
-			AppDelegate.shared.mapView.mapMarkerDatabase.removeMarkers(where: {
+			AppDelegate.shared.mainView.mapMarkerDatabase.removeMarkers(where: {
 				($0 as? QuestMarker)?.quest.ident == quest.ident
 			})
 		}
@@ -50,7 +50,10 @@ class QuestChooserController: UITableViewController {
 
 	override func viewWillDisappear(_ animated: Bool) {
 		// Update markers for newly added quests
-		AppDelegate.shared.mapView.updateMapMarkersFromServer(withDelay: 0.0, including: .quest)
+		let mainView = AppDelegate.shared.mainView!
+		mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
+											delay: 0.0,
+											including: .quest)
 	}
 
 	// MARK: Table view delegate
@@ -167,7 +170,7 @@ class QuestChooserController: UITableViewController {
 			tableView.deleteRows(at: [indexPath], with: .fade)
 
 			// Remove associated markers
-			AppDelegate.shared.mapView.mapMarkerDatabase.removeMarkers(where: {
+			AppDelegate.shared.mainView.mapMarkerDatabase.removeMarkers(where: {
 				($0 as? QuestMarker)?.quest.ident == quest.ident
 			})
 		}
@@ -205,10 +208,12 @@ class QuestChooserController: UITableViewController {
 			do {
 				try QuestList.shared.addUserQuest(newQuest, replacing: quest)
 				self?.tableView.reloadData()
-				if let mapView = AppDelegate.shared.mapView {
+				if let mainView = AppDelegate.shared.mainView {
 					// Quest definition changed, so refresh everything
-					mapView.mapMarkerDatabase.removeAll()
-					mapView.updateMapMarkersFromServer(withDelay: 0.0, including: [])
+					mainView.mapMarkerDatabase.removeAll()
+					mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
+														delay: 0.0,
+														including: [])
 				}
 				return true
 			} catch {

@@ -207,7 +207,6 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 
 	func updateRegion(
 		withDelay delay: TimeInterval,
-		mapData: OsmMapData,
 		including: MapMarkerSet,
 		completion: @escaping () -> Void)
 	{

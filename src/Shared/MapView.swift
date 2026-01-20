@@ -39,8 +39,7 @@ struct MapLocation {
 
 // MARK: MapView
 
-final class MapView: UIView,
-	UIGestureRecognizerDelegate, UISheetPresentationControllerDelegate
+final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationControllerDelegate
 {
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
 
@@ -55,8 +54,6 @@ final class MapView: UIView,
 
 	var mainView: MainViewController!
 	var viewPort: MapViewPort { mainView.viewPort }
-
-	private(set) lazy var mapMarkerDatabase = MapMarkerDatabase()
 
 	private(set) var editorLayer: EditorMapLayer!
 
@@ -150,11 +147,6 @@ final class MapView: UIView,
 		mainView.settings.$enableTurnRestriction.subscribe(self) { [weak self] _ in
 			self?.editorLayer.clearCachedProperties()
 		}
-
-		mapMarkerDatabase.mapData = editorLayer.mapData
-
-		// get notes, etc.
-		updateMapMarkersFromServer(withDelay: 1.0, including: [])
 	}
 
 	func acceptsFirstResponder() -> Bool {
@@ -215,12 +207,6 @@ final class MapView: UIView,
 			}
 			pushPinIsOnscreen = isInside
 		}
-
-		// We moved to a new location so update markers
-		updateMapMarkerButtonPositions()
-
-		// This does a more expensive update, but debounced
-		updateMapMarkersFromServer(withDelay: 0, including: [])
 	}
 
 	// MARK: Rotate object
@@ -877,205 +863,6 @@ final class MapView: UIView,
 		layer.addSublayer(blinkLayer)
 	}
 
-	// MARK: Map Markers
-
-	// This performs an expensive update with a time delay, coalescing multiple calls
-	// into a single update.
-	func updateMapMarkersFromServer(withDelay delay: CGFloat, including: MapMarkerDatabase.MapMarkerSet) {
-		let delay = max(delay, 0.01)
-		var including = including
-		if including.isEmpty {
-			// compute the list
-			if mainView.viewState.overlayMask.contains(.NOTES) {
-				including.insert(.notes)
-				including.insert(.fixme)
-			}
-			if mainView.viewState.overlayMask.contains(.QUESTS) {
-				including.insert(.quest)
-			}
-			if mainView.settings.displayGpxTracks {
-				including.insert(.gpx)
-			}
-			if mainView.mapLayersView.displayDataOverlayLayers {
-				including.insert(.geojson)
-			}
-		} else if !mainView.viewState.overlayMask.contains(.QUESTS) {
-			including.remove(.quest)
-		}
-
-		mapMarkerDatabase.updateRegion(withDelay: delay,
-		                               mapData: editorLayer.mapData,
-		                               including: including,
-		                               completion: {
-		                               	self.updateMapMarkerButtonPositions()
-		                               })
-	}
-
-	// This performs an inexpensive update using only data we've already downloaded
-	func updateMapMarkerButtonPositions() {
-		// need this to disable implicit animation
-		UIView.performWithoutAnimation({
-			let MaxMarkers = 50
-			var count = 0
-			// update new and existing buttons
-			for marker in self.mapMarkerDatabase.allMapMarkers {
-				// Update the location of the button
-				let onScreen = updateButtonPositionForMapMarker(marker: marker, hidden: count > MaxMarkers)
-				if onScreen {
-					count += 1
-				}
-			}
-		})
-	}
-
-	// Update the location of the button. Return true if it is on-screen.
-	private func updateButtonPositionForMapMarker(marker: MapMarker, hidden: Bool) -> Bool {
-		// create buttons that haven't been created
-		guard !hidden else {
-			marker.button?.isHidden = true
-			return false
-		}
-		if marker.button == nil {
-			let button = marker.makeButton()
-			button.addTarget(self,
-			                 action: #selector(mapMarkerButtonPress(_:)),
-			                 for: .touchUpInside)
-			button.tag = marker.buttonId
-			addSubview(button)
-			if let object = marker.object {
-				// If marker is associated with an object then the marker needs to be
-				// updated when the object changes:
-				object.observer = { obj in
-					let markers = self.mapMarkerDatabase.refreshMarkersFor(object: obj)
-					for marker in markers {
-						_ = self.updateButtonPositionForMapMarker(marker: marker, hidden: false)
-					}
-				}
-			}
-		}
-
-		// Set position of button
-		let button = marker.button!
-		button.isHidden = false
-		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
-		let pos = viewPort.mapTransform.screenPoint(forLatLon: LatLon(latitude: marker.latLon.lat,
-		                                                              longitude: marker.latLon.lon + offsetX),
-		                                            birdsEye: true)
-		if pos.x.isInfinite || pos.y.isInfinite {
-			return false
-		}
-		if let button = button as? LocationButton {
-			button.arrowPoint = pos
-		} else {
-			var rc = button.bounds
-			rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
-			                 dy: pos.y - rc.size.height / 2)
-			button.frame = rc
-		}
-		return bounds.contains(pos)
-	}
-
-	@objc func mapMarkerButtonPress(_ sender: Any?) {
-		guard let button = sender as? UIButton,
-		      let marker = mapMarkerDatabase.mapMarker(forButtonId: button.tag)
-		else { return }
-
-		var object: OsmBaseObject?
-		if let marker = marker as? KeepRightMarker {
-			object = marker.object(from: editorLayer.mapData)
-		} else {
-			object = marker.object
-		}
-
-		if !editorLayer.isHidden,
-		   let object = object
-		{
-			editorLayer.selectedNode = object.isNode()
-			editorLayer.selectedWay = object.isWay()
-			editorLayer.selectedRelation = object.isRelation()
-
-			let pt = object.latLonOnObject(forLatLon: marker.latLon)
-			let point = viewPort.mapTransform.screenPoint(forLatLon: pt, birdsEye: true)
-			placePushpin(at: point, object: object)
-		}
-
-		if (marker is WayPointMarker) || (marker is KeepRightMarker) || (marker is GeoJsonMarker) {
-			let comment: NSAttributedString
-			let title: String
-			switch marker {
-			case let marker as WayPointMarker:
-				title = "Waypoint"
-				comment = marker.description
-			case let marker as GeoJsonMarker:
-				title = "GeoJSON"
-				comment = NSAttributedString(string: marker.description)
-			case let marker as KeepRightMarker:
-				title = "Keep Right"
-				comment = NSAttributedString(string: marker.description)
-			default:
-				title = ""
-				comment = NSAttributedString(string: "")
-			}
-
-			let alert = AlertPopup(title: title, message: comment)
-			if let marker = marker as? KeepRightMarker {
-				alert.addAction(
-					title: NSLocalizedString("Ignore", comment: ""),
-					handler: { [self] in
-						// they want to hide this button from now on
-						marker.ignore()
-						editorLayer.selectedNode = nil
-						editorLayer.selectedWay = nil
-						editorLayer.selectedRelation = nil
-						removePin()
-					})
-			}
-			mainView.present(alert, animated: true)
-		} else if let object = object {
-			// Fixme marker or Quest marker
-			if !editorLayer.isHidden {
-				if let marker = marker as? QuestMarker {
-					let onClose = {
-						// Need to update the QuestMarker icon
-						self.updateMapMarkersFromServer(withDelay: 0.0, including: [.quest])
-					}
-					let vc = QuestSolverController.instantiate(marker: marker,
-					                                           object: object,
-					                                           onClose: onClose)
-					if #available(iOS 15.0, *),
-					   let sheet = vc.sheetPresentationController
-					{
-						sheet.selectedDetentIdentifier = .large
-						sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-						sheet.detents = [.medium(), .large()]
-						sheet.delegate = self
-					}
-					mainView.present(vc, animated: true)
-				} else {
-					presentTagEditor(nil)
-				}
-			} else {
-				let text: String
-				if let fixme = marker as? FixmeMarker,
-				   let object = fixme.object
-				{
-					text = FixmeMarker.fixmeTag(object) ?? ""
-				} else if let quest = marker as? QuestMarker {
-					text = quest.quest.title
-				} else {
-					text = ""
-				}
-				let alert = UIAlertController(title: "\(object.friendlyDescription())",
-				                              message: text,
-				                              preferredStyle: .alert)
-				alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-				mainView.present(alert, animated: true)
-			}
-		} else if let note = marker as? OsmNoteMarker {
-			mainView.performSegue(withIdentifier: "NotesSegue", sender: note)
-		}
-	}
-
 	// This gets called when the user changes the size of a sheet
 	@available(iOS 15.0, *)
 	func sheetPresentationControllerDidChangeSelectedDetentIdentifier(
@@ -1228,16 +1015,18 @@ final class MapView: UIView,
 extension MapView: EditorMapLayerOwner {
 	func didUpdateObject() {
 		refreshPushpinText()
-		updateMapMarkerButtonPositions()
+		mainView.updateMapMarkerButtonPositions()
 	}
 
 	func didDownloadData() {
-		updateMapMarkersFromServer(withDelay: 0.5, including: [])
+		mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
+											delay: 0.5,
+											including: [])
 	}
 
 	func selectionDidChange() {
 		updateEditControl()
-		mapMarkerDatabase.didSelectObject(editorLayer.selectedPrimary)
+		mainView.mapMarkerDatabase.didSelectObject(editorLayer.selectedPrimary)
 	}
 
 	func useTurnRestrictions() -> Bool {
