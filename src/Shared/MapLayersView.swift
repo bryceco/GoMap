@@ -32,7 +32,7 @@ class MapLayersView: UIView {
 	// * Gpx Layer
 	// * DataOverlays like GeoJson
 	@MainActor
-	protocol LayerOrView {
+	protocol LayerOrView: AnyObject {
 		var hasTileServer: TileServer? { get }
 		var isHidden: Bool { get set }
 		func removeFromSuper()
@@ -61,14 +61,8 @@ class MapLayersView: UIView {
 			return BasemapServerList.first(where: { $0.identifier == ident }) ?? BasemapServerList.first!
 		}
 		set {
-			let oldServerId = basemapServer.identifier
-			allLayers.removeAll(where: {
-				if $0.hasTileServer?.identifier == oldServerId {
-					$0.removeFromSuper()
-					return true
-				}
-				return false
-			})
+			basemapLayer?.removeFromSuper()
+			allLayers.removeAll(where: { $0 === basemapLayer })
 
 			if newValue.isVector {
 				let view = MapLibreVectorTilesView(viewPort: viewPort,
@@ -85,11 +79,10 @@ class MapLayersView: UIView {
 				self.layer.addSublayer(layer)
 				basemapLayer = layer
 			}
-			allLayers.append(basemapLayer)
-
-			UserPrefs.shared.currentBasemapSelection.value = newValue.identifier
-
 			basemapLayer.isHidden = mainView.viewState.state != .BASEMAP
+
+			allLayers.append(basemapLayer)
+			UserPrefs.shared.currentBasemapSelection.value = newValue.identifier
 		}
 	}
 
