@@ -1027,7 +1027,7 @@ final class EditorMapLayer: CALayer {
 		var drawRef = true
 
 		// fetch icon
-		let location = AppDelegate.shared.mapView.currentRegion
+		let location = AppDelegate.shared.mainView.currentRegion
 		let feature = PresetsDatabase.shared.presetFeatureMatching(tags: node.tags,
 		                                                           geometry: node.geometry(),
 		                                                           location: location,

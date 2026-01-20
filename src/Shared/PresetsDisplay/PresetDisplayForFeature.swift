@@ -97,7 +97,7 @@ final class PresetDisplayForFeature {
 				fieldName: field,
 				objectTags: objectTags,
 				geometry: geometry,
-				countryCode: AppDelegate.shared.mapView.currentRegion.country,
+				countryCode: AppDelegate.shared.mainView.currentRegion.country,
 				ignore: ignore,
 				update: update)
 			else {

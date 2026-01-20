@@ -97,7 +97,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 			// We don't use the object geometry here in case the object has tags that match against
 			// multiple features and the isArea() function chooses the wrong one.
 			geometry: nil, // object.geometry(),
-			location: AppDelegate.shared.mapView.currentRegion,
+			location: AppDelegate.shared.mainView.currentRegion,
 			includeNSI: false,
 			withPresetKey: vc.editKeys.first)
 		_ = vc.refreshPresetKey()

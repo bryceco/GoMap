@@ -138,7 +138,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		let newFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: dict,
 			geometry: geometry,
-			location: AppDelegate.shared.mapView.currentRegion,
+			location: AppDelegate.shared.mainView.currentRegion,
 			includeNSI: true)
 
 		if !forceReload, newFeature?.featureID == currentFeature?.featureID {
@@ -245,7 +245,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	{
 		let tabController = tabBarController as! POITabBarController
 		let geometry = tabController.selection?.geometry() ?? GEOMETRY.POINT
-		let location = AppDelegate.shared.mapView.currentRegion
+		let location = AppDelegate.shared.mainView.currentRegion
 		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
 		                                                                    geometry: geometry,
 		                                                                    location: location)

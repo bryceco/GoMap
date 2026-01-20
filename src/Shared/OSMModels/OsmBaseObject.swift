@@ -589,7 +589,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			return name
 		}
 
-		let location = AppDelegate.shared.mapView.currentRegion
+		let location = AppDelegate.shared.mainView.currentRegion
 		if let feature = PresetsDatabase.shared.presetFeatureMatching(tags: tags,
 		                                                              geometry: geometry(),
 		                                                              location: location,

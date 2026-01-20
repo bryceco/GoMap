@@ -175,10 +175,13 @@ struct RegionInfoForLocation: Codable, Equatable {
 	}
 
 	static func fromUserPrefs() -> Self? {
-		if let data = UserPrefs.shared.currentRegion.value {
-			return try? PropertyListDecoder().decode(RegionInfoForLocation.self, from: data)
+		guard
+			let data = UserPrefs.shared.currentRegion.value,
+			let region = try? PropertyListDecoder().decode(RegionInfoForLocation.self, from: data)
+		else {
+			return nil
 		}
-		return nil
+		return region
 	}
 }
 

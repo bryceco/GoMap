@@ -19,6 +19,12 @@ final class NotificationService<T> {
 
 	func subscribe(_ observer: AnyObject, handler: @escaping (T) -> Void) {
 		queue.sync {
+#if DEBUG
+			if subscribers.contains(where: { $0.object === observer }) {
+				print("NotificationService: Duplicate subscription for \(observer)")
+				fatalError()
+			}
+#endif
 			subscribers = subscribers.filter { $0.object !== observer && $0.object != nil }
 			subscribers.append(Subscriber(object: observer, callback: handler))
 		}

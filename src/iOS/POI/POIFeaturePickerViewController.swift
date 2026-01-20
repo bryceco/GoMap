@@ -95,7 +95,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
 		if isTopLevel, section == 1 {
-			let countryCode = AppDelegate.shared.mapView.currentRegion.country
+			let countryCode = AppDelegate.shared.mainView.currentRegion.country
 			let locale = NSLocale.current as NSLocale
 			let countryName = locale.displayName(forKey: .countryCode, value: countryCode) ?? ""
 
@@ -167,7 +167,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		let currentFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: tabController?.keyValueDict,
 			geometry: geometry,
-			location: AppDelegate.shared.mapView.currentRegion,
+			location: AppDelegate.shared.mainView.currentRegion,
 			includeNSI: true)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
 		cell.title.text = feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature.friendlyName()
@@ -251,7 +251,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 				parentCategory,
 				matching: searchText,
 				geometry: geometry,
-				location: AppDelegate.shared.mapView.currentRegion)
+				location: AppDelegate.shared.mainView.currentRegion)
 		}
 		tableView.reloadData()
 	}

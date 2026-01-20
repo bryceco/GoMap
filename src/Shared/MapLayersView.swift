@@ -40,7 +40,6 @@ class MapLayersView: UIView {
 
 	var mainView: MainViewController { AppDelegate.shared.mainView }
 	var viewPort: MapViewPort { mainView.viewPort }
-	var mapView: MapView { mainView.mapView }
 
 	// opaque background layers
 	private(set) var aerialLayer: MercatorTileLayer!

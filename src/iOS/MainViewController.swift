@@ -161,6 +161,14 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	let viewPort = MapViewPortObject()
 
+	// This contains the user's general vicinity. Although it contains a lat/lon it only
+	// gets updated if the user moves a large distance.
+	private(set) var currentRegion = RegionInfoForLocation.fromUserPrefs() ?? .none {
+		didSet {
+			currentRegion.saveToUserPrefs()
+		}
+	}
+
 	var topViewController: UIViewController { self }
 
 	var addNodeButtonLongPressGestureRecognizer: UILongPressGestureRecognizer?
@@ -378,6 +386,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 		viewStateDidChange(to: viewState)
 
+		AppState.shared.tileServerList.onChange.subscribe(self) { [weak self] in
+			self?.promptForBetterBackgroundImagery()
+		}
+
 		updateAerialAttributionButton()
 	}
 
@@ -408,8 +420,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		UserPrefs.shared.mapViewState.value = viewState.state.rawValue
 		UserPrefs.shared.mapViewOverlays.value = viewState.overlayMask.rawValue
-
-		mapView.currentRegion.saveToUserPrefs()
 
 		UserPrefs.shared.synchronize()
 
@@ -1115,7 +1125,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		present(actionSheet, animated: true)
 	}
 
-	// MARK: GPS tracking
+	// MARK: GPS and Location-based updates
 
 	var gpsState: GPS_STATE = .NONE {
 		didSet {
@@ -1181,6 +1191,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 				                  metersWide: 20.0)
 			}
 		}
+
+		updateCurrentRegionForLocationUsingCountryCoder()
+		checkForChangedTileOverlayLayers()
 	}
 
 	func moveToLocation(_ location: MapLocation) {
@@ -1193,6 +1206,87 @@ final class MainViewController: UIViewController, DPadDelegate,
 		if let state = location.view {
 			viewState.state = state
 		}
+	}
+
+	private func updateCurrentRegionForLocationUsingCountryCoder() {
+		// if we moved a significant distance then check our location
+		let latLon = viewPort.screenCenterLatLon()
+		if GreatCircleDistance(latLon, currentRegion.latLon) < 10 * 1000 {
+			return
+		}
+		currentRegion = CountryCoder.shared.regionInfoFor(latLon: latLon)
+	}
+
+	private func checkForChangedTileOverlayLayers() {
+		// If the user has overlay imagery enabled that is no longer present at this location
+		// then remove it.
+		// Check if we've moved a long distance from the last check
+		let latLon = viewPort.screenCenterLatLon()
+		if let plist = UserPrefs.shared.latestOverlayCheckLatLon.value,
+		   let prevLatLon = LatLon(plist),
+		   GreatCircleDistance(latLon, prevLatLon) < 10 * 1000
+		{
+			return
+		}
+		mapLayersView.updateTileOverlayLayers(latLon: latLon)
+		UserPrefs.shared.latestOverlayCheckLatLon.value = latLon.plist
+	}
+
+	private func promptForBetterBackgroundImagery() {
+		if mapLayersView.aerialLayer.isHidden {
+			return
+		}
+
+		// Check if we've moved a long distance from the last check
+		let latLon = viewPort.screenCenterLatLon()
+		if let plist = UserPrefs.shared.latestAerialCheckLatLon.value,
+		   let prevLatLon = LatLon(plist),
+		   GreatCircleDistance(latLon, prevLatLon) < 10 * 1000
+		{
+			return
+		}
+
+		// check whether we need to change aerial imagery
+		let tileServerList = AppState.shared.tileServerList
+		if !tileServerList.currentServer.coversLocation(latLon) {
+			// current imagery layer doesn't exist at current location
+			let best = tileServerList.bestService(at: latLon) ?? tileServerList.builtinServers()[0]
+			tileServerList.currentServer = best
+			setAerialTileServer(best)
+		} else if viewPort.mapTransform.zoom() < 15 {
+			// the user has zoomed out, so don't bother them until they zoom in.
+			// return here instead of updating last check location.
+			return
+		} else if !tileServerList.currentServer.best,
+		          tileServerList.currentServer.isGlobalImagery(),
+		          let best = tileServerList.bestService(at: latLon)
+		{
+			// There's better imagery available at this location
+			var message = NSLocalizedString(
+				"Better background imagery is available for your location. Would you like to change to it?",
+				comment: "")
+			message += "\n\n"
+			message += best.name
+			if best.description != "",
+			   best.description != best.name
+			{
+				message += "\n\n"
+				message += best.description
+			}
+			let alert = UIAlertController(title: NSLocalizedString("Better imagery available", comment: ""),
+			                              message: message,
+			                              preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("Ignore", comment: ""), style: .cancel,
+			                              handler: nil))
+			alert.addAction(UIAlertAction(title: NSLocalizedString("Change", comment: ""), style: .default,
+			                              handler: { _ in
+			                              	AppState.shared.tileServerList.currentServer = best
+			                              	self.setAerialTileServer(best)
+			                              }))
+			present(alert, animated: true)
+		}
+
+		UserPrefs.shared.latestAerialCheckLatLon.value = latLon.plist
 	}
 
 	// MARK: Button actions

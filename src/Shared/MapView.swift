@@ -63,17 +63,11 @@ final class MapView: UIView,
 	private(set) var pushPin: PushPinView?
 	var pushPinIsOnscreen = false
 
-	// This contains the user's general vicinity. Although it contains a lat/lon it only
-	// gets updated if the user moves a large distance.
-	private(set) var currentRegion: RegionInfoForLocation
-
 	@IBOutlet private var statusBarBackground: StatusBarGradient!
 
 	// MARK: initialization
 
 	required init?(coder: NSCoder) {
-		currentRegion = RegionInfoForLocation.none
-
 		super.init(coder: coder)
 	}
 
@@ -120,11 +114,7 @@ final class MapView: UIView,
 			self?.mapTransformDidChange()
 		}
 
-		AppState.shared.tileServerList.onChange.subscribe(self) { [weak self] in
-			self?.promptForBetterBackgroundImagery()
-		}
-
-		func checkForNoNameChange(overlayMask: MapViewOverlays, overlays: [String] ) {
+		func checkForNoNameChange(overlayMask: MapViewOverlays, overlays: [String]) {
 			// if they toggled display of the noname layer we need to refresh the editor layer
 			let overlaysEnabled = overlayMask.contains(.DATAOVERLAY)
 			let noNameEnabled = overlays.contains(TileServer.noName.identifier)
@@ -135,12 +125,12 @@ final class MapView: UIView,
 		UserPrefs.shared.tileOverlaySelections.onChange.subscribe(self) { [weak self] pref in
 			guard let self else { return }
 			checkForNoNameChange(overlayMask: self.mainView.viewState.overlayMask,
-								 overlays: pref.value ?? [])
+			                     overlays: pref.value ?? [])
 		}
 		mainView.viewState.onChange.subscribe(self) { [weak self] viewState in
 			guard let self else { return }
 			checkForNoNameChange(overlayMask: viewState.overlayMask,
-								 overlays: UserPrefs.shared.tileOverlaySelections.value ?? [])
+			                     overlays: UserPrefs.shared.tileOverlaySelections.value ?? [])
 		}
 
 		layer.masksToBounds = true
@@ -163,15 +153,7 @@ final class MapView: UIView,
 			self?.editorLayer.clearCachedProperties()
 		}
 
-		currentRegion = RegionInfoForLocation.fromUserPrefs() ?? RegionInfoForLocation.none
-
 		mapMarkerDatabase.mapData = editorLayer.mapData
-
-		MainActor.runAfter(nanoseconds: 2000_000000) {
-			self.updateCurrentRegionForLocationUsingCountryCoder()
-			self.promptForBetterBackgroundImagery()
-			self.checkForChangedTileOverlayLayers()
-		}
 
 		// get notes, etc.
 		updateMapMarkersFromServer(withDelay: 1.0, including: [])
@@ -204,94 +186,6 @@ final class MapView: UIView,
 		}
 	}
 
-	// MARK: Location-based updates
-
-	private func checkForChangedTileOverlayLayers() {
-		// If the user has overlay imagery enabled that is no longer present at this location
-		// then remove it.
-		// Check if we've moved a long distance from the last check
-		let latLon = viewPort.screenCenterLatLon()
-		if let plist = UserPrefs.shared.latestOverlayCheckLatLon.value,
-		   let prevLatLon = LatLon(plist),
-		   GreatCircleDistance(latLon, prevLatLon) < 10 * 1000
-		{
-			return
-		}
-		mainView.mapLayersView.updateTileOverlayLayers(latLon: latLon)
-		UserPrefs.shared.latestOverlayCheckLatLon.value = latLon.plist
-	}
-
-	private func promptForBetterBackgroundImagery() {
-		if mainView.mapLayersView.aerialLayer.isHidden {
-			return
-		}
-
-		// Check if we've moved a long distance from the last check
-		let latLon = viewPort.screenCenterLatLon()
-		if let plist = UserPrefs.shared.latestAerialCheckLatLon.value,
-		   let prevLatLon = LatLon(plist),
-		   GreatCircleDistance(latLon, prevLatLon) < 10 * 1000
-		{
-			return
-		}
-
-		// check whether we need to change aerial imagery
-		let tileServerList = AppState.shared.tileServerList
-		if !tileServerList.currentServer.coversLocation(latLon) {
-			// current imagery layer doesn't exist at current location
-			let best = tileServerList.bestService(at: latLon) ?? tileServerList.builtinServers()[0]
-			tileServerList.currentServer = best
-			mainView.setAerialTileServer(best)
-		} else if viewPort.mapTransform.zoom() < 15 {
-			// the user has zoomed out, so don't bother them until they zoom in.
-			// return here instead of updating last check location.
-			return
-		} else if !tileServerList.currentServer.best,
-		          tileServerList.currentServer.isGlobalImagery(),
-		          let best = tileServerList.bestService(at: latLon)
-		{
-			// There's better imagery available at this location
-			var message = NSLocalizedString(
-				"Better background imagery is available for your location. Would you like to change to it?",
-				comment: "")
-			message += "\n\n"
-			message += best.name
-			if best.description != "",
-			   best.description != best.name
-			{
-				message += "\n\n"
-				message += best.description
-			}
-			let alert = UIAlertController(title: NSLocalizedString("Better imagery available", comment: ""),
-			                              message: message,
-			                              preferredStyle: .alert)
-			alert.addAction(UIAlertAction(title: NSLocalizedString("Ignore", comment: ""), style: .cancel,
-			                              handler: nil))
-			alert.addAction(UIAlertAction(title: NSLocalizedString("Change", comment: ""), style: .default,
-			                              handler: { _ in
-			                              	AppState.shared.tileServerList.currentServer = best
-			                              	self.mainView.setAerialTileServer(best)
-			                              }))
-			mainView.present(alert, animated: true)
-		}
-
-		UserPrefs.shared.latestAerialCheckLatLon.value = latLon.plist
-	}
-
-	func updateCurrentRegionForLocationUsingCountryCoder() {
-		if editorLayer.isHidden {
-			return
-		}
-
-		// if we moved a significant distance then check our location
-		let latLon = viewPort.screenCenterLatLon()
-		if GreatCircleDistance(latLon, currentRegion.latLon) < 10 * 1000 {
-			return
-		}
-
-		currentRegion = CountryCoder.shared.regionInfoFor(latLon: latLon)
-	}
-
 	// MARK: ViewPort changed
 
 	func mapTransformDidChange() {
@@ -312,10 +206,6 @@ final class MapView: UIView,
 			isZoomedOut = false
 		}
 		mainView.viewState.zoomedOut = isZoomedOut
-
-		updateCurrentRegionForLocationUsingCountryCoder()
-		promptForBetterBackgroundImagery()
-		checkForChangedTileOverlayLayers()
 
 		// notify user if pushpin goes off-screen
 		if let pushPin {

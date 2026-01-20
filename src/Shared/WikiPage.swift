@@ -420,11 +420,11 @@ extension WikiPage {
 		else {
 			return
 		}
-		let mapView = AppDelegate.shared.mapView
-		let geometry = mapView?.editorLayer.selectedPrimary?.geometry() ?? .POINT
+		let mainView = AppDelegate.shared.mainView!
+		let geometry = mainView.mapView?.editorLayer.selectedPrimary?.geometry() ?? .POINT
 		let feature = PresetsDatabase.shared.presetFeatureMatching(tags: [key: value],
 		                                                           geometry: geometry,
-		                                                           location: mapView?.currentRegion ?? .none,
+		                                                           location: mainView.currentRegion,
 		                                                           includeNSI: false)
 		let featureName: String?
 		if let feature = feature,

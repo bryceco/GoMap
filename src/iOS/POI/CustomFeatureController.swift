@@ -17,7 +17,7 @@ class CustomFeature: PresetFeature, Codable {
 		let impliedFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: tags,
 			geometry: GEOMETRY(rawValue: geometry.first!)!,
-			location: AppDelegate.shared.mapView.currentRegion,
+			location: AppDelegate.shared.mainView.currentRegion,
 			includeNSI: false)
 		super.init(_addTags: nil,
 		           aliases: [],
@@ -174,7 +174,7 @@ class CustomFeatureController: UITableViewController, UITextFieldDelegate {
 		   let geom = GEOMETRY(rawValue: geom),
 		   let impliedFeature = db.presetFeatureMatching(tags: tags,
 		                                                 geometry: geom,
-		                                                 location: AppDelegate.shared.mapView.currentRegion,
+		                                                 location: AppDelegate.shared.mainView.currentRegion,
 		                                                 includeNSI: false),
 		   !impliedFeature.tags.isEmpty
 		{

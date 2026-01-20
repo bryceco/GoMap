@@ -167,7 +167,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			selectedFeature = selectedFeature ?? PresetsDatabase.shared.presetFeatureMatching(
 				tags: dict,
 				geometry: geometry,
-				location: AppDelegate.shared.mapView.currentRegion,
+				location: AppDelegate.shared.mainView.currentRegion,
 				includeNSI: true)
 			currentFeature = selectedFeature
 
@@ -279,7 +279,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		selectedFeature = newFeature
 		let tabController = tabBarController as! POITabBarController
 		let geometry = tabController.selection?.geometry() ?? GEOMETRY.POINT
-		let location = AppDelegate.shared.mapView.currentRegion
+		let location = AppDelegate.shared.mainView.currentRegion
 		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
 		                                                                    geometry: geometry,
 		                                                                    location: location)
