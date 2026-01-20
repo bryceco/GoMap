@@ -124,6 +124,25 @@ final class MapView: UIView,
 			self?.promptForBetterBackgroundImagery()
 		}
 
+		func checkForNoNameChange(overlayMask: MapViewOverlays, overlays: [String] ) {
+			// if they toggled display of the noname layer we need to refresh the editor layer
+			let overlaysEnabled = overlayMask.contains(.DATAOVERLAY)
+			let noNameEnabled = overlays.contains(TileServer.noName.identifier)
+			if (overlaysEnabled && noNameEnabled) != self.useNoNameRoadHalo() {
+				self.editorLayer.clearCachedProperties()
+			}
+		}
+		UserPrefs.shared.tileOverlaySelections.onChange.subscribe(self) { [weak self] pref in
+			guard let self else { return }
+			checkForNoNameChange(overlayMask: self.mainView.viewState.overlayMask,
+								 overlays: pref.value ?? [])
+		}
+		mainView.viewState.onChange.subscribe(self) { [weak self] viewState in
+			guard let self else { return }
+			checkForNoNameChange(overlayMask: viewState.overlayMask,
+								 overlays: UserPrefs.shared.tileOverlaySelections.value ?? [])
+		}
+
 		layer.masksToBounds = true
 		backgroundColor = .clear
 
@@ -1340,7 +1359,7 @@ extension MapView: EditorMapLayerOwner {
 		return mainView.settings.enableTurnRestriction
 	}
 
-	func useUnnamedRoadHalo() -> Bool {
+	func useNoNameRoadHalo() -> Bool {
 		return mainView.mapLayersView.noNameLayer() != nil
 	}
 

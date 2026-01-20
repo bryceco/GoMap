@@ -48,20 +48,26 @@ struct ViewStateAndOverlays {
 	let onChange = NotificationService<ViewStateAndOverlays>()
 
 	public var state: MapViewState = .EDITORAERIAL {
-		didSet(newValue) {
-			onChange.notify(self)
+		didSet {
+			if state != oldValue {
+				onChange.notify(self)
+			}
 		}
 	}
 
 	public var overlayMask: MapViewOverlays = [] {
-		didSet(newValue) {
-			onChange.notify(self)
+		didSet {
+			if oldValue != overlayMask {
+				onChange.notify(self)
+			}
 		}
 	}
 
 	var zoomedOut = false { // override layer because we're zoomed out
-		didSet(newValue) {
-			onChange.notify(self)
+		didSet {
+			if oldValue != zoomedOut {
+				onChange.notify(self)
+			}
 		}
 	}
 
@@ -188,7 +194,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		mapView.removeFromSuperview()
 
 		// set up layers view
-		mapLayersView.addDefaultChildViews(andAlso: [mapView])
+		mapLayersView.initDefaultChildViews(andAlso: [mapView])
 		mapLayersView.setUpChildViews()
 		view.addSubview(mapLayersView)
 		mapLayersView.translatesAutoresizingMaskIntoConstraints = false
@@ -402,8 +408,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		UserPrefs.shared.mapViewState.value = viewState.state.rawValue
 		UserPrefs.shared.mapViewOverlays.value = viewState.overlayMask.rawValue
-
-		UserPrefs.shared.mapViewEnableDataOverlay.value = mapLayersView.displayDataOverlayLayers
 
 		mapView.currentRegion.saveToUserPrefs()
 
@@ -1289,7 +1293,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		mapLayersView.quadDownloadLayer?.isHidden = mapView.editorLayer.isHidden
 
-		if var noName = mapLayersView.noNameLayer() {
+		if let noName = mapLayersView.noNameLayer() {
 			noName.isHidden = !mapView.editorLayer.isHidden
 		}
 

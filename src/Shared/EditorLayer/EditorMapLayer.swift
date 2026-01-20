@@ -45,7 +45,7 @@ protocol EditorMapLayerOwner: UIView {
 	// boolean options chosen by owner
 	func useTurnRestrictions() -> Bool
 	func useAutomaticCacheManagement() -> Bool
-	func useUnnamedRoadHalo() -> Bool
+	func useNoNameRoadHalo() -> Bool
 
 	// editing actions handled by owner
 	func presentTagEditor(_ sender: Any?)
@@ -780,7 +780,7 @@ final class EditorMapLayer: CALayer {
 					}
 
 					// provide a halo for streets that don't have a name
-					if owner.useUnnamedRoadHalo(), object.isWay()?.needsNoNameHighlight() ?? false {
+					if owner.useNoNameRoadHalo(), object.isWay()?.needsNoNameHighlight() ?? false {
 						// it lacks a name
 						let haloLayer = CAShapeLayerWithProperties()
 						haloLayer.anchorPoint = CGPoint(x: 0, y: 0)

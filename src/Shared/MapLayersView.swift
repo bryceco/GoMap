@@ -88,6 +88,8 @@ class MapLayersView: UIView {
 
 	var displayDataOverlayLayers = false {
 		didSet {
+			UserPrefs.shared.mapViewEnableDataOverlay.value = displayDataOverlayLayers
+
 			dataOverlayLayer.isHidden = !displayDataOverlayLayers
 
 			if displayDataOverlayLayers {
@@ -97,7 +99,7 @@ class MapLayersView: UIView {
 		}
 	}
 
-	func addDefaultChildViews(andAlso more: [LayerOrView]) {
+	func initDefaultChildViews(andAlso more: [LayerOrView]) {
 		for layer in more {
 			allLayers.append(layer)
 		}
@@ -206,11 +208,6 @@ class MapLayersView: UIView {
 	func updateTileOverlayLayers(latLon: LatLon) {
 		let overlaysIdList = UserPrefs.shared.tileOverlaySelections.value ?? []
 
-		// if they toggled display of the noname layer we need to refresh the editor layer
-		if overlaysIdList.contains(TileServer.noName.identifier) != mapView.useUnnamedRoadHalo() {
-			mapView.editorLayer.clearCachedProperties()
-		}
-
 		// remove any overlay layers no longer displayed
 		allLayers = allLayers.filter { layer in
 			// make sure it's a tile server and an overlay
@@ -263,6 +260,6 @@ class MapLayersView: UIView {
 	}
 
 	func noNameLayer() -> MapLayersView.LayerOrView? {
-		return allLayers.first(where: { $0.hasTileServer == TileServer.noName })
+		return allLayers.first(where: { $0.hasTileServer === TileServer.noName })
 	}
 }
