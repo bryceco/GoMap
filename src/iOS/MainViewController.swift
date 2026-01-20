@@ -236,10 +236,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 			}
 		}
 
-		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
-			self?.locationUpdated(to: location)
-		}
-
 		setupAccessibility()
 
 		// long press for quick access to aerial imagery
@@ -273,14 +269,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 		locationBallView.showHeading = true
 		locationBallView.isHidden = true
 		locationBallView.viewPort = viewPort
-		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
-			self?.locationUpdated(to: location)
+		mapLayersView.addSubview(locationBallView)
+
+		LocationProvider.shared.onChangeLocation.subscribe(locationBallView) { [weak self] location in
 			self?.locationBallView.updateLocation(location)
 		}
-		LocationProvider.shared.onChangeSmoothHeading.subscribe(self) { [weak self] heading, accuracy in
-			self?.headingChanged(heading, accuracy: accuracy)
-		}
-		mapView.addSubview(locationBallView)
 
 		// Compass button
 		compassButton.viewPort = viewPort
@@ -368,6 +361,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		// Bindings
+
+		LocationProvider.shared.onChangeSmoothHeading.subscribe(self) { [weak self] heading, accuracy in
+			self?.headingChanged(heading, accuracy: accuracy)
+		}
 
 		settings.$enableRotation.subscribe(self) { [weak self] newValue in
 			guard let self else { return }
