@@ -132,6 +132,7 @@ final class MapView: UIView,
 		                             display: MessageDisplay.shared,
 		                             progress: mainView)
 		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
+		layer.addSublayer(editorLayer)
 
 #if false
 		voiceAnnouncement = VoiceAnnouncement()
@@ -165,7 +166,10 @@ final class MapView: UIView,
 		super.layoutSubviews()
 
 		bounds.origin = CGPoint(x: -frame.size.width / 2,
-								y: -frame.size.height / 2)
+		                        y: -frame.size.height / 2)
+
+		editorLayer.frame = bounds
+		editorLayer.bounds.origin = bounds.origin
 
 		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
 		statusBarBackground.isHidden = windowScene?.statusBarManager?.isStatusBarHidden ?? false

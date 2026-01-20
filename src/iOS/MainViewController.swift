@@ -188,7 +188,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		mapView.removeFromSuperview()
 
 		// set up layers view
-		mapLayersView.addDefaultChildViews(andAlso: [mapView, mapView.editorLayer])
+		mapLayersView.addDefaultChildViews(andAlso: [mapView])
 		mapLayersView.setUpChildViews()
 		view.addSubview(mapLayersView)
 		mapLayersView.translatesAutoresizingMaskIntoConstraints = false
