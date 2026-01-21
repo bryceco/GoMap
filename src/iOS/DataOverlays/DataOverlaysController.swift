@@ -33,7 +33,7 @@ class DataOverlaysController: UITableViewController {
 		super.viewWillAppear(animated)
 		let latLon = AppDelegate.shared.mainView.viewPort.screenCenterLatLon()
 		overlayList = AppState.shared.tileServerList.allServices(at: latLon, overlay: true)
-		overlaySelections = UserPrefs.shared.tileOverlaySelections.value ?? []
+		overlaySelections = AppDelegate.shared.mainView.settings.tileOverlaySelections
 
 		// Don't show edit button if there's nothing to edit
 		updateEditButton()
@@ -146,7 +146,7 @@ class DataOverlaysController: UITableViewController {
 			} else {
 				overlaySelections.removeAll(where: { $0 == server.identifier })
 			}
-			UserPrefs.shared.tileOverlaySelections.value = overlaySelections
+			AppDelegate.shared.mainView.settings.tileOverlaySelections = overlaySelections
 		default:
 			fatalError()
 		}

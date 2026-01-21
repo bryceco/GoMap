@@ -171,7 +171,7 @@ class MapLayersView: UIView {
 				= AppState.shared.gpxTracks.recordTracksInBackground && displayGpxTracks
 		}
 
-		UserPrefs.shared.tileOverlaySelections.onChange.subscribe(self) { [weak self] _ in
+		mainView.settings.$tileOverlaySelections.subscribe(self) { [weak self] _ in
 			guard let self = self else { return }
 			self.updateTileOverlayLayers(latLon: viewPort.screenCenterLatLon())
 		}
@@ -205,7 +205,7 @@ class MapLayersView: UIView {
 	}
 
 	func updateTileOverlayLayers(latLon: LatLon) {
-		let overlaysIdList = UserPrefs.shared.tileOverlaySelections.value ?? []
+		let overlaysIdList = AppDelegate.shared.mainView.settings.tileOverlaySelections
 
 		// remove any overlay layers no longer displayed
 		allLayers = allLayers.filter { layer in
@@ -240,7 +240,7 @@ class MapLayersView: UIView {
 					// server doesn't exist anymore
 					var list = overlaysIdList
 					list.removeAll(where: { $0 == ident })
-					UserPrefs.shared.tileOverlaySelections.value = list
+					AppDelegate.shared.mainView.settings.tileOverlaySelections = list
 					continue
 				}
 				guard tileServer.coversLocation(latLon) else {

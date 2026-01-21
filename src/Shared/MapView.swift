@@ -116,15 +116,15 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 				self.editorLayer.clearCachedProperties()
 			}
 		}
-		UserPrefs.shared.tileOverlaySelections.onChange.subscribe(self) { [weak self] pref in
+		AppDelegate.shared.mainView.settings.$tileOverlaySelections.subscribe(self) { [weak self] value in
 			guard let self else { return }
 			checkForNoNameChange(overlayMask: self.mainView.viewState.overlayMask,
-			                     overlays: pref.value ?? [])
+			                     overlays: value)
 		}
 		mainView.viewState.onChange.subscribe(self) { [weak self] viewState in
 			guard let self else { return }
 			checkForNoNameChange(overlayMask: viewState.overlayMask,
-			                     overlays: UserPrefs.shared.tileOverlaySelections.value ?? [])
+								 overlays: AppDelegate.shared.mainView.settings.tileOverlaySelections)
 		}
 
 		layer.masksToBounds = true

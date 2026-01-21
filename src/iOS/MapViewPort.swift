@@ -199,8 +199,29 @@ extension MapViewPort {
 
 // Add functions for changing the location of the viewport
 extension MapViewPort {
-	// MARK: Set location
 
+	func saveToUserDefaults() {
+		let latLon = screenCenterLatLon()
+		let scale = mapTransform.scale()
+		UserPrefs.shared.view_scale.value = scale
+		UserPrefs.shared.view_latitude.value = latLon.lat
+		UserPrefs.shared.view_longitude.value = latLon.lon
+	}
+
+	func loadFromUserDefaults() throws {
+		guard
+			let lat = UserPrefs.shared.view_latitude.value,
+			let lon = UserPrefs.shared.view_longitude.value,
+			let scale = UserPrefs.shared.view_scale.value
+		else {
+			throw NSError()
+		}
+		setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
+						scale: scale,
+						rotation: 0.0)
+	}
+
+	// MARK: Set location
 	// Try not to call this directly, since scale isn't something exposed.
 	// Use one of the centerOn() functions instead.
 	func setTransformFor(

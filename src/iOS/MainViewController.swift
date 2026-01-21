@@ -47,7 +47,7 @@ struct MapViewOverlays: OptionSet {
 struct ViewStateAndOverlays {
 	let onChange = NotificationService<ViewStateAndOverlays>()
 
-	public var state: MapViewState = .EDITORAERIAL {
+	public var state: MapViewState = UserPrefs.shared.mapViewState.value.flatMap(MapViewState.init(rawValue:)) ?? .EDITORAERIAL {
 		didSet {
 			if state != oldValue {
 				onChange.notify(self)
@@ -56,7 +56,7 @@ struct ViewStateAndOverlays {
 		}
 	}
 
-	public var overlayMask: MapViewOverlays = [] {
+	public var overlayMask: MapViewOverlays = MapViewOverlays(rawValue: UserPrefs.shared.mapViewOverlays.value ?? 0) {
 		didSet {
 			if oldValue != overlayMask {
 				onChange.notify(self)
@@ -71,17 +71,6 @@ struct ViewStateAndOverlays {
 				onChange.notify(self)
 			}
 		}
-	}
-
-	init() {
-		if let state = UserPrefs.shared.mapViewState.value,
-		   let state = MapViewState(rawValue: state)
-		{
-			self.state = state
-		} else {
-			state = MapViewState.EDITORAERIAL
-		}
-		overlayMask = MapViewOverlays(rawValue: UserPrefs.shared.mapViewOverlays.value ?? 0)
 	}
 }
 
@@ -115,8 +104,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 			}
 		}
 
-		@Notify var buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.mapViewButtonLayout.value ?? -1) ??
-			.buttonsOnRight
+		@Notify var buttonLayout = MainViewButtonLayout(rawValue: UserPrefs.shared.mapViewButtonLayout.value ?? -1)
+			?? .buttonsOnRight
 		{
 			didSet {
 				UserPrefs.shared.mapViewButtonLayout.value = buttonLayout.rawValue
@@ -126,6 +115,12 @@ final class MainViewController: UIViewController, DPadDelegate,
 		@Notify var enableTurnRestriction = UserPrefs.shared.mapViewEnableTurnRestriction.value ?? false {
 			didSet {
 				UserPrefs.shared.mapViewEnableTurnRestriction.value = enableTurnRestriction
+			}
+		}
+
+		@Notify var tileOverlaySelections = UserPrefs.shared.tileOverlaySelections.value ?? [] {
+			didSet {
+				UserPrefs.shared.tileOverlaySelections.value = tileOverlaySelections
 			}
 		}
 	}
@@ -288,8 +283,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		setButtonAppearances()
 
 		// update button layout constraints
-		updateButtonPositionsFor(layout: settings.buttonLayout)
-		settings.$buttonLayout.subscribe(self) { [weak self] buttonLayout in
+		settings.$buttonLayout.callAndSubscribe(self) { [weak self] buttonLayout in
 			self?.updateButtonPositionsFor(layout: buttonLayout)
 		}
 
@@ -351,17 +345,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		// get current location
-		if let lat = UserPrefs.shared.view_latitude.value,
-		   let lon = UserPrefs.shared.view_longitude.value,
-		   let scale = UserPrefs.shared.view_scale.value
-		{
-			viewPort.setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
-			                         scale: scale,
-			                         rotation: 0.0)
-		} else {
-			let rc = OSMRect(mapView.layer.bounds)
-			viewPort.mapTransform.transform = OSMTransform.translation(rc.origin.x + rc.size.width / 2 - 128,
-			                                                           rc.origin.y + rc.size.height / 2 - 128)
+		do {
+			try viewPort.loadFromUserDefaults()
+		} catch {
+			viewPort.mapTransform.transform = .identity
 			// turn on GPS which will move us to current location
 			gpsState = .LOCATION
 		}
@@ -421,14 +408,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	func save() {
 		// save preferences first
-		let latLon = viewPort.screenCenterLatLon()
-		let scale = viewPort.mapTransform.scale()
-#if false && DEBUG
-		assert(scale > 1.0)
-#endif
-		UserPrefs.shared.view_scale.value = scale
-		UserPrefs.shared.view_latitude.value = latLon.lat
-		UserPrefs.shared.view_longitude.value = latLon.lon
+		viewPort.saveToUserDefaults()
 
 		UserPrefs.shared.synchronize()
 
@@ -486,9 +466,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
-	func updateButtonPositionsFor(layout: MainViewButtonLayout) {
-		UserPrefs.shared.mapViewButtonLayout.value = layout.rawValue
-
+	private func updateButtonPositionsFor(layout: MainViewButtonLayout) {
 		guard
 			let superview = addNodeButton.superview,
 			let c = superview.constraints.first(where: {
