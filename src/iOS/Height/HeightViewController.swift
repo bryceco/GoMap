@@ -317,7 +317,7 @@ class HeightViewController: UIViewController {
 
 	func distanceToObject(error: inout Double, direction pDirection: inout Double) -> Double {
 		let mapView = AppDelegate.shared.mapView!
-		var object = mapView.editorLayer.selectedPrimary
+		var object = mapView.selectedPrimary
 		if object == nil, mapView.pushPin == nil {
 			error = .nan
 			pDirection = .nan

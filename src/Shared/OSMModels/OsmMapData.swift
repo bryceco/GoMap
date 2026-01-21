@@ -147,7 +147,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		if let object = object as? OsmNode {
 			// Don't scan everything: for performance reasons only consider visible objects
-			let shownObjects = AppDelegate.shared.mapView.editorLayer.shownObjects
+			let shownObjects = AppDelegate.shared.mapView.shownObjects
 			for obj in shownObjects {
 				if let way = obj as? OsmWay,
 				   way.nodes.contains(object)
@@ -452,13 +452,13 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			// deleting last member of relation, so delete relation
 			deleteRelationUnsafe(relation)
 		} else {
-			AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+			AppDelegate.shared.mapView.mapData.consistencyCheck()
 
 			registerUndoCommentString(NSLocalizedString("delete object from relation", comment: ""))
 			let bbox = relation.boundingBox
 			relation.removeMemberAtIndex(index, undo: undoManager)
 			spatial.updateMember(relation, fromBox: bbox, undo: undoManager)
-			AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+			AppDelegate.shared.mapView.mapData.consistencyCheck()
 
 			updateMultipolygonRelationRoles(relation)
 		}

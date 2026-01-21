@@ -27,7 +27,7 @@ var OSM_SERVER: OsmServer = {
 			return
 		}
 		UserPrefs.shared.osmServerUrl.value = OSM_SERVER.apiURL
-		AppDelegate.shared.mapView.editorLayer.mapData.resetServer(OSM_SERVER)
+		AppDelegate.shared.mapView.mapData.resetServer(OSM_SERVER)
 		AppDelegate.shared.userName = nil
 		Task.detached {
 			await OSM_SERVER.fetchCapabilities()

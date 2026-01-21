@@ -16,7 +16,7 @@ class POITabBarController: UITabBarController {
 		super.viewDidLoad()
 
 		let appDelegate = AppDelegate.shared
-		let selection = appDelegate.mapView.editorLayer.selectedPrimary
+		let selection = appDelegate.mapView.selectedPrimary
 		self.selection = selection
 		keyValueDict = selection?.tags ?? [:]
 		relationList = selection?.parentRelations ?? []
@@ -51,9 +51,9 @@ class POITabBarController: UITabBarController {
 
 		// make window resizable on MacCatalyst
 		if let windowScene = view.window?.windowScene {
-			 windowScene.sizeRestrictions?.minimumSize = CGSize(width: 400, height: 300)
-			 windowScene.sizeRestrictions?.maximumSize = CGSize(width: 2000, height: 2000)
-		 }
+			windowScene.sizeRestrictions?.minimumSize = CGSize(width: 400, height: 300)
+			windowScene.sizeRestrictions?.maximumSize = CGSize(width: 2000, height: 2000)
+		}
 	}
 
 	func removeValueFromKeyValueDict(key: String) {
@@ -107,11 +107,11 @@ class POITabBarController: UITabBarController {
 	}
 
 	func commitChanges() {
-		AppDelegate.shared.mapView.editorLayer.setTagsForCurrentObject(keyValueDict)
+		AppDelegate.shared.mapView.setTagsForCurrentObject(tags: keyValueDict)
 	}
 
 	func isTagDictChanged(_ newDictionary: [String: String]) -> Bool {
-		guard let tags = AppDelegate.shared.mapView.editorLayer.selectedPrimary?.tags
+		guard let tags = AppDelegate.shared.mapView.selectedPrimary?.tags
 		else {
 			// it's a brand new object
 			return newDictionary.count > 0

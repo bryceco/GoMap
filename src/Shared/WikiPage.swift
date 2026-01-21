@@ -421,7 +421,7 @@ extension WikiPage {
 			return
 		}
 		let mainView = AppDelegate.shared.mainView!
-		let geometry = mainView.mapView?.editorLayer.selectedPrimary?.geometry() ?? .POINT
+		let geometry = mainView.mapView?.selectedPrimary?.geometry() ?? .POINT
 		let feature = PresetsDatabase.shared.presetFeatureMatching(tags: [key: value],
 		                                                           geometry: geometry,
 		                                                           location: mainView.currentRegion,

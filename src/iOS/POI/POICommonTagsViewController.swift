@@ -674,7 +674,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			if case let .key(presetKey) = cell.presetKey {
 				let key = presetKey.tagKey
 				if PresetsDatabase.shared.eligibleForAutocomplete(key) {
-					var values = AppDelegate.shared.mapView.editorLayer.mapData.tagValues(forKey: key)
+					var values = AppDelegate.shared.mapView.mapData.tagValues(forKey: key)
 					let values2 = presetKey.presetValues?.map({ $0.tagValue }) ?? []
 					values = values.union(values2)
 					let list = [String](values)

@@ -96,7 +96,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 
 		var a = [(Double, OsmBaseObject)]()
 
-		mapView.editorLayer.mapData.enumerateObjects(inRegion: box, block: { obj in
+		mapView.mapData.enumerateObjects(inRegion: box, block: { obj in
 			if obj.deleted {
 				return
 			}
@@ -201,16 +201,12 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 
 	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
 		let object = utteranceMap.object(forKey: utterance)
-		mapView.editorLayer.selectedNode = object?.isNode()
-		mapView.editorLayer.selectedWay = object?.isWay()
-		mapView.editorLayer.selectedRelation = object?.isRelation()
+		mapView.selectObject(object)
 		utteranceMap.removeObject(forKey: utterance)
 	}
 
 	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-		mapView.editorLayer.selectedNode = nil
-		mapView.editorLayer.selectedWay = nil
-		mapView.editorLayer.selectedRelation = nil
+		mapView.unselectAll()
 	}
 
 	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {

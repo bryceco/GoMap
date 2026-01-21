@@ -83,8 +83,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 					mainView.settings.displayGpxTracks = true // ensure GPX tracks are visible
 					mainView.viewPort.centerOn(latLon: center, metersWide: nil)
 					mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
-														delay: 0.1,
-														including: [.gpx])
+					                                    delay: 0.1,
+					                                    including: [.gpx])
 				}
 			} catch {
 				self.displayImportError(error, filetype: localizedGPX)
@@ -207,7 +207,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		// set app badge if edits are pending
 		let mapView = AppDelegate.shared.mapView!
 		let mainView = AppDelegate.shared.mainView!
-		let pendingEdits = mapView.editorLayer.mapData.modificationCount()
+		let pendingEdits = mapView.mapData.modificationCount()
 		if pendingEdits != 0 {
 			UNUserNotificationCenter.current().requestAuthorization(options: .badge,
 			                                                        completionHandler: { _, _ in

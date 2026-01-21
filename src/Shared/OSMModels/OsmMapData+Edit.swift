@@ -982,7 +982,7 @@ extension OsmMapData {
 			}
 			newWays.append(newWay)
 		}
-		AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+		AppDelegate.shared.mapView.mapData.consistencyCheck()
 
 		var restriction = restriction
 		if restriction == nil {
@@ -990,7 +990,7 @@ extension OsmMapData {
 		} else {
 			while restriction!.members.count > 0 {
 				deleteMember(inRelationUnsafe: restriction!, index: 0, deletingRelationIfEmpty: false)
-				AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+				AppDelegate.shared.mapView.mapData.consistencyCheck()
 			}
 		}
 
@@ -1004,12 +1004,12 @@ extension OsmMapData {
 		let toM = OsmMember(obj: toWay, role: "to")
 
 		addMemberUnsafe(fromM, to: restriction!, at: 0)
-		AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+		AppDelegate.shared.mapView.mapData.consistencyCheck()
 		addMemberUnsafe(viaM, to: restriction!, at: 1)
-		AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+		AppDelegate.shared.mapView.mapData.consistencyCheck()
 		addMemberUnsafe(toM, to: restriction!, at: 2)
 
-		AppDelegate.shared.mapView.editorLayer.mapData.consistencyCheck()
+		AppDelegate.shared.mapView.mapData.consistencyCheck()
 
 		resultWays = newWays
 

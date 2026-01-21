@@ -370,10 +370,6 @@ final class EditorMapLayer: CALayer {
 		}
 	}
 
-	func save() {
-		mapData.archiveModifiedData()
-	}
-
 	// MARK: Map data
 
 	func clearCachedProperties() {
@@ -485,11 +481,6 @@ final class EditorMapLayer: CALayer {
 			owner.didDownloadData()
 		})
 		setNeedsLayout()
-	}
-
-	func didReceiveMemoryWarning() {
-		purgeCachedData(.soft)
-		save()
 	}
 
 	func presentAlert(alert: UIAlertController, location: MenuLocation) {
@@ -1797,15 +1788,9 @@ final class EditorMapLayer: CALayer {
 
 	// MARK: Highlighting and Selection
 
-	struct Selections {
-		var node: OsmNode?
-		var way: OsmWay?
-		var relation: OsmRelation?
-	}
-
-	var selections: Selections {
+	var selections: MapView.Selections {
 		get {
-			return Selections(node: selectedNode, way: selectedWay, relation: selectedRelation)
+			return MapView.Selections(node: selectedNode, way: selectedWay, relation: selectedRelation)
 		}
 		set {
 			selectedNode = newValue.node

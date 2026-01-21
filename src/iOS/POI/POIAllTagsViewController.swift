@@ -585,9 +585,6 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			return false
 		}
 		let mapView = AppDelegate.shared.mapView!
-		mapView.editorLayer.selectedNode = object.isNode()
-		mapView.editorLayer.selectedWay = object.isWay()
-		mapView.editorLayer.selectedRelation = object.isRelation()
 
 		var newPoint = mapView.pushPin!.arrowPoint
 		let latLon1 = mapView.viewPort.mapTransform.latLon(forScreenPoint: newPoint)
@@ -596,8 +593,9 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		newPoint = mapView.viewPort.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
 		if !mapView.bounds.contains(newPoint) {
 			// new object is far away
-			mapView.placePushpinForSelection()
+			mapView.selectObject(object)
 		} else {
+			mapView.selectObject(object)
 			mapView.placePushpin(at: newPoint, object: object)
 		}
 

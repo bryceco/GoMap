@@ -47,7 +47,9 @@ struct MapViewOverlays: OptionSet {
 struct ViewStateAndOverlays {
 	let onChange = NotificationService<ViewStateAndOverlays>()
 
-	public var state: MapViewState = UserPrefs.shared.mapViewState.value.flatMap(MapViewState.init(rawValue:)) ?? .EDITORAERIAL {
+	public var state: MapViewState = UserPrefs.shared.mapViewState.value
+		.flatMap(MapViewState.init(rawValue:)) ?? .EDITORAERIAL
+	{
 		didSet {
 			if state != oldValue {
 				onChange.notify(self)
@@ -56,7 +58,7 @@ struct ViewStateAndOverlays {
 		}
 	}
 
-	public var overlayMask: MapViewOverlays = MapViewOverlays(rawValue: UserPrefs.shared.mapViewOverlays.value ?? 0) {
+	public var overlayMask = MapViewOverlays(rawValue: UserPrefs.shared.mapViewOverlays.value ?? 0) {
 		didSet {
 			if oldValue != overlayMask {
 				onChange.notify(self)
@@ -221,7 +223,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		// undo/redo buttons
 		updateUndoRedoButtonState()
 		updateUploadButtonState()
-		mapView.editorLayer.mapData.addChangeCallback({ [weak self] in
+		mapView.mapData.addChangeCallback({ [weak self] in
 			self?.updateUndoRedoButtonState()
 			self?.updateUploadButtonState()
 		})
@@ -238,7 +240,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		setupAccessibility()
 
 		// initialize map markers database
-		mapMarkerDatabase.mapData = mapView.editorLayer.mapData
+		mapMarkerDatabase.mapData = mapView.mapData
 		updateMapMarkersFromServer(viewState: viewState,
 		                           delay: 1.0,
 		                           including: [])
@@ -415,7 +417,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		AppState.shared.save()
 
 		// then save data
-		mapView.editorLayer.save()
+		mapView.mapData.archiveModifiedData()
 	}
 
 	override func viewDidLayoutSubviews() {
@@ -427,15 +429,15 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	func updateUndoRedoButtonState() {
 		guard undoButton != nil else { return } // during init it can be null
-		undoButton.isEnabled = mapView.editorLayer.mapData.canUndo()
-		redoButton.isEnabled = mapView.editorLayer.mapData.canRedo()
-		undoRedoView.isHidden = mapView.editorLayer.isHidden || (!undoButton.isEnabled && !redoButton.isEnabled)
+		undoButton.isEnabled = mapView.mapData.canUndo()
+		redoButton.isEnabled = mapView.mapData.canRedo()
+		undoRedoView.isHidden = mapView.isHidden || (!undoButton.isEnabled && !redoButton.isEnabled)
 	}
 
 	func updateUploadButtonState() {
 		let yellowCount = 25
 		let redCount = 50
-		let changeCount = mapView.editorLayer.mapData.modificationCount()
+		let changeCount = mapView.mapData.modificationCount()
 		var color: UIColor?
 		if changeCount < yellowCount {
 			color = nil // default color
@@ -518,37 +520,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	func rightClick(at location: CGPoint) {
 		// right-click is equivalent to holding + and clicking
-		mapView.editorLayer.addNode(at: location)
+		mapView.rightClick(at: location)
 	}
 
 	@objc func hover(_ recognizer: UIGestureRecognizer) {
-		let loc = recognizer.location(in: mapView)
-		var segment = 0
-		var hit: OsmBaseObject?
-		if recognizer.state == .changed,
-		   !mapView.editorLayer.isHidden,
-		   mapView.hitTest(loc, with: nil) == mapView
-		{
-			if mapView.editorLayer.selectedWay != nil {
-				hit = mapView.editorLayer.osmHitTestNode(inSelectedWay: loc,
-				                                         radius: EditorMapLayer.DefaultHitTestRadius)
-			}
-			if hit == nil {
-				hit = mapView.editorLayer.osmHitTest(
-					loc,
-					radius: EditorMapLayer.DefaultHitTestRadius,
-					isDragConnect: false,
-					ignoreList: [],
-					segment: &segment)
-			}
-			if let chit = hit,
-			   chit == mapView.editorLayer.selectedNode || chit == mapView.editorLayer.selectedWay || chit
-			   .isRelation() != nil
-			{
-				hit = nil
-			}
-		}
-		mapView.blink(hit, segment: -1)
+		mapView.hover(recognizer)
 	}
 
 #if targetEnvironment(macCatalyst)
@@ -790,15 +766,15 @@ final class MainViewController: UIViewController, DPadDelegate,
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
 		switch action {
 		case #selector(undo(_:)):
-			return !mapView.editorLayer.isHidden && mapView.editorLayer.mapData.canUndo()
+			return !mapView.isHidden && mapView.mapData.canUndo()
 		case #selector(redo(_:)):
-			return !mapView.editorLayer.isHidden && mapView.editorLayer.mapData.canRedo()
+			return !mapView.isHidden && mapView.mapData.canRedo()
 		case #selector(copy(_:)):
-			return mapView.editorLayer.selectedPrimary != nil
+			return mapView.selectedPrimary != nil
 		case #selector(paste(_:)):
-			return mapView.editorLayer.selectedPrimary != nil && mapView.editorLayer.canPasteTags()
+			return mapView.selectedPrimary != nil && mapView.canPasteTags()
 		case #selector(delete(_:)):
-			return (mapView.editorLayer.selectedPrimary != nil) && (mapView.editorLayer.selectedRelation == nil)
+			return mapView.selectedPrimary != nil && mapView.selections.relation == nil
 		case #selector(showHelp(_:)):
 			return true
 		default:
@@ -815,15 +791,15 @@ final class MainViewController: UIViewController, DPadDelegate,
 	}
 
 	@objc override func copy(_ sender: Any?) {
-		mapView.editorLayer.performEdit(EDIT_ACTION.COPYTAGS)
+		mapView.copy(sender)
 	}
 
 	@objc override func paste(_ sender: Any?) {
-		mapView.editorLayer.performEdit(EDIT_ACTION.PASTETAGS)
+		mapView.paste(sender)
 	}
 
 	@objc override func delete(_ sender: Any?) {
-		mapView.editorLayer.performEdit(EDIT_ACTION.DELETE)
+		mapView.delete(sender)
 	}
 
 	@objc func showHelp(_ sender: Any?) {
@@ -1044,7 +1020,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				// treat as tap, but make sure it occured inside the button
 				let touch = recognizer.location(in: recognizer.view)
 				if recognizer.view?.bounds.contains(touch) ?? false {
-					mapView.editorLayer.addNode(at: mapView.bounds.center())
+					rightClick(at: mapView.bounds.center())
 				}
 			}
 			plusButtonTimestamp = 0.0
@@ -1165,7 +1141,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	private func locationUpdated(to newLocation: CLLocation) {
 		if let voiceAnnouncement = mapView.voiceAnnouncement,
-		   !mapView.editorLayer.isHidden
+		   !mapView.isHidden
 		{
 			voiceAnnouncement.announce(forLocation: LatLon(newLocation.coordinate))
 		}
@@ -1365,32 +1341,32 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		switch newState {
 		case MapViewState.EDITOR:
-			mapView.editorLayer.isHidden = false
+			mapView.isHidden = false
 			mapLayersView.aerialLayer.isHidden = true
 			mapLayersView.basemapLayer.isHidden = true
 		case MapViewState.EDITORAERIAL:
 			mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
-			mapView.editorLayer.isHidden = false
+			mapView.isHidden = false
 			mapLayersView.aerialLayer.isHidden = false
 			mapLayersView.basemapLayer.isHidden = true
 			aerialAlignmentButton.isHidden = false
 		case MapViewState.AERIAL:
 			mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
-			mapView.editorLayer.isHidden = true
+			mapView.isHidden = true
 			mapLayersView.aerialLayer.isHidden = false
 			mapLayersView.basemapLayer.isHidden = true
 		case MapViewState.BASEMAP:
-			mapView.editorLayer.isHidden = true
+			mapView.isHidden = true
 			mapLayersView.aerialLayer.isHidden = true
 			mapLayersView.basemapLayer.isHidden = false
 		}
 
 		userInstructionLabel.isHidden = (newState != .EDITOR && newState != .EDITORAERIAL) || !state.zoomedOut
 
-		mapLayersView.quadDownloadLayer?.isHidden = mapView.editorLayer.isHidden
+		mapLayersView.quadDownloadLayer?.isHidden = mapView.isHidden
 
 		if let noName = mapLayersView.noNameLayer() {
-			noName.isHidden = !mapView.editorLayer.isHidden
+			noName.isHidden = !mapView.isHidden
 		}
 
 		CATransaction.commit()
@@ -1399,14 +1375,14 @@ final class MainViewController: UIViewController, DPadDelegate,
 		updateUndoRedoButtonState()
 		updateAerialAttributionButton()
 		updateUploadButtonState()
-		addNodeButton.isHidden = mapView.editorLayer.isHidden
+		addNodeButton.isHidden = mapView.isHidden
 
 		updateMapMarkersFromServer(viewState: state,
 		                           delay: 0,
 		                           including: [])
 
 		// FIXME:
-		mapView.editorLayer.whiteText = !mapLayersView.aerialLayer.isHidden
+		mapView.whiteText = !mapLayersView.aerialLayer.isHidden
 	}
 
 	@IBAction func openHelp() {
@@ -1548,7 +1524,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 		MessageDisplay.shared.flashMessage(title: nil,
 		                                   message: NSLocalizedString("Low memory: clearing cache", comment: ""))
-		mapView.editorLayer.didReceiveMemoryWarning()
+		mapView.didReceiveMemoryWarning()
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -1686,21 +1662,17 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		var object: OsmBaseObject?
 		if let marker = marker as? KeepRightMarker {
-			object = marker.object(from: mapView.editorLayer.mapData)
+			object = marker.object(from: mapView.mapData)
 		} else {
 			object = marker.object
 		}
 
-		if !mapView.editorLayer.isHidden,
+		if !mapView.isHidden,
 		   let object = object
 		{
-			mapView.editorLayer.selectedNode = object.isNode()
-			mapView.editorLayer.selectedWay = object.isWay()
-			mapView.editorLayer.selectedRelation = object.isRelation()
-
 			let pt = object.latLonOnObject(forLatLon: marker.latLon)
 			let point = viewPort.mapTransform.screenPoint(forLatLon: pt, birdsEye: true)
-			mapView.placePushpin(at: point, object: object)
+			mapView.selectObject(object, pinAt: point)
 		}
 
 		if (marker is WayPointMarker) || (marker is KeepRightMarker) || (marker is GeoJsonMarker) {
@@ -1734,7 +1706,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 			present(alert, animated: true)
 		} else if let object = object {
 			// Fixme marker or Quest marker
-			if !mapView.editorLayer.isHidden {
+			if !mapView.isHidden {
 				if let marker = marker as? QuestMarker {
 					let onClose = {
 						// Need to update the QuestMarker icon

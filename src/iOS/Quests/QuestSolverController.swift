@@ -110,8 +110,11 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 	}
 
 	@IBAction func onSave(_ sender: Any?) {
-		let editor = AppDelegate.shared.mapView.editorLayer!
-		guard var tags = editor.selectedPrimary?.tags else { return }
+		guard
+			let mapView = AppDelegate.shared.mapView,
+			var tags = mapView.selectedPrimary?.tags
+		else { return }
+
 		for keyIndex in presetKeys.indices {
 			let section = keyIndex + 1
 			if let cell = tableView.cellForRow(at: IndexPath(row: tableView.numberOfRows(inSection: section) - 1,
@@ -133,7 +136,7 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 				// No value set
 			}
 		}
-		editor.setTagsForCurrentObject(tags)
+		mapView.setTagsForCurrentObject(tags: tags)
 		dismiss(animated: true, completion: nil)
 	}
 

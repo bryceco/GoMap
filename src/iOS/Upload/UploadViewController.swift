@@ -80,7 +80,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		super.viewWillAppear(animated)
 
 		let mapView = AppDelegate.shared.mapView
-		mapData = mapView?.editorLayer.mapData
+		mapData = mapView?.mapData
 
 		commentTextView.text = UserPrefs.shared.uploadComment.value
 		sourceTextField.text = UserPrefs.shared.uploadSource.value
@@ -249,7 +249,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 
 				// flash success message
 				MainActor.runAfter(nanoseconds: 300_000000) {
-					appDelegate.mapView.editorLayer.setNeedsLayout()
+					appDelegate.mapView.setNeedsLayout()
 					MessageDisplay.shared.flashMessage(title: nil,
 					                                   message: NSLocalizedString("Upload complete!", comment: ""),
 					                                   duration: 1.5)
@@ -388,12 +388,9 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		default:
 			return false
 		}
-		guard let object = appDelegate.mapView.editorLayer.mapData.object(withExtendedIdentifier: extendedId)
+		guard let object = appDelegate.mapView.mapData.object(withExtendedIdentifier: extendedId)
 		else { return false }
-		appDelegate.mapView.editorLayer.selectedRelation = object.isRelation()
-		appDelegate.mapView.editorLayer.selectedWay = object.isWay()
-		appDelegate.mapView.editorLayer.selectedNode = object.isNode()
-		appDelegate.mapView.placePushpinForSelection()
+		appDelegate.mapView.selectObject(object)
 		cancel(nil)
 		return false
 	}

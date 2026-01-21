@@ -82,7 +82,7 @@ class DisplayViewController: UITableViewController {
 		mainView.mapLayersView.displayDataOverlayLayers = dataOverlaySwitch.isOn
 		mainView.settings.enableTurnRestriction = turnRestrictionSwitch.isOn
 
-		mapView.editorLayer.setNeedsLayout()
+		mapView.setNeedsLayout()
 	}
 
 	@IBAction func gpsSwitchChanged(_ sender: Any) {
@@ -97,7 +97,7 @@ class DisplayViewController: UITableViewController {
 	}
 
 	@IBAction func toggleObjectFilters(_ sender: UISwitch) {
-		AppDelegate.shared.mapView.editorLayer.objectFilters.enableObjectFilters = sender.isOn
+		AppDelegate.shared.mapView.objectFilters.enableObjectFilters = sender.isOn
 	}
 
 	func setButtonLayoutTitle() {
@@ -125,7 +125,7 @@ class DisplayViewController: UITableViewController {
 
 		gpxLoggingSwitch.isOn = AppDelegate.shared.mainView.settings.displayGpxTracks
 		turnRestrictionSwitch.isOn = AppDelegate.shared.mainView.settings.enableTurnRestriction
-		objectFiltersSwitch.isOn = mapView.editorLayer.objectFilters.enableObjectFilters
+		objectFiltersSwitch.isOn = mapView.objectFilters.enableObjectFilters
 		rotationSwitch.isOn = AppDelegate.shared.mainView.settings.enableRotation
 
 		setButtonLayoutTitle()

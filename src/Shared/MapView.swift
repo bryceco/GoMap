@@ -44,20 +44,25 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 
 	var voiceAnnouncement: VoiceAnnouncement?
 	var objectRotationGesture: UIRotationGestureRecognizer!
-
 	@IBOutlet var editToolbar: CustomSegmentedControl!
 
 	private var magnifyingGlass: MagnifyingGlass!
 
 	private var editControlActions: [EDIT_ACTION] = []
 
-	var mainView: MainViewController!
+	weak var mainView: MainViewController!
 	var viewPort: MapViewPort { mainView.viewPort }
 
-	private(set) var editorLayer: EditorMapLayer!
+	private var editorLayer: EditorMapLayer!
 
 	private(set) var pushPin: PushPinView?
 	var pushPinIsOnscreen = false
+
+	struct Selections {
+		var node: OsmNode?
+		var way: OsmWay?
+		var relation: OsmRelation?
+	}
 
 	// MARK: initialization
 
@@ -124,7 +129,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 		mainView.viewState.onChange.subscribe(self) { [weak self] viewState in
 			guard let self else { return }
 			checkForNoNameChange(overlayMask: viewState.overlayMask,
-								 overlays: AppDelegate.shared.mainView.settings.tileOverlaySelections)
+			                     overlays: AppDelegate.shared.mainView.settings.tileOverlaySelections)
 		}
 
 		layer.masksToBounds = true
@@ -152,6 +157,11 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 		return true
 	}
 
+	override func setNeedsLayout() {
+		super.setNeedsLayout()
+		editorLayer.setNeedsLayout()
+	}
+
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
@@ -160,6 +170,11 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 
 		editorLayer.frame = bounds
 		editorLayer.bounds.origin = bounds.origin
+	}
+
+	func didReceiveMemoryWarning() {
+		editorLayer.purgeCachedData(.soft)
+		editorLayer.mapData.archiveModifiedData()
 	}
 
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -316,14 +331,16 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 	}
 #endif
 
-	/// Offers the option to either merge tags or replace them with the copied tags.
-	/// - Parameter sender: nil
-	override func paste(_ sender: Any?) {
-		editorLayer.pasteTags(string: nil)
+	@objc override func copy(_ sender: Any?) {
+		editorLayer.performEdit(EDIT_ACTION.COPYTAGS)
 	}
 
-	override func delete(_ sender: Any?) {
-		editorLayer.deleteCurrentSelection()
+	@objc override func paste(_ sender: Any?) {
+		editorLayer.performEdit(EDIT_ACTION.PASTETAGS)
+	}
+
+	@objc override func delete(_ sender: Any?) {
+		editorLayer.performEdit(EDIT_ACTION.DELETE)
 	}
 
 	// UIPasteControl stops initializing itself correctly after the app has been in the
@@ -568,6 +585,13 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 	}
 
 	// MARK: PushPin
+
+	func selectObject(_ object: OsmBaseObject?, pinAt point: CGPoint? = nil) {
+		editorLayer.selectedNode = object as? OsmNode
+		editorLayer.selectedWay = object as? OsmWay
+		editorLayer.selectedRelation = object as? OsmRelation
+		placePushpinForSelection(at: point)
+	}
 
 	func unselectAll() {
 		editorLayer.selectedNode = nil
@@ -923,7 +947,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 		return true
 	}
 
-	var tapAndDragSelections: EditorMapLayer.Selections?
+	var tapAndDragSelections: Selections?
 	var tapAndDragPushpinLatLon: LatLon?
 
 	@objc func handleTapAndDragGesture(_ tapAndDrag: TapAndDragGesture) {
@@ -1011,7 +1035,66 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 		}
 	}
 
+	func rightClick(at location: CGPoint) {
+		// right-click is equivalent to holding + and clicking
+		editorLayer.addNode(at: location)
+	}
+
+	// This is used to highlight objects when hovering with a mouse
+	@objc func hover(_ recognizer: UIGestureRecognizer) {
+		let loc = recognizer.location(in: self)
+		var segment = 0
+		var hit: OsmBaseObject?
+		if recognizer.state == .changed,
+		   !isHidden,
+		   hitTest(loc, with: nil) == self
+		{
+			if editorLayer.selectedWay != nil {
+				hit = editorLayer.osmHitTestNode(inSelectedWay: loc,
+				                                 radius: EditorMapLayer.DefaultHitTestRadius)
+			}
+			if hit == nil {
+				hit = editorLayer.osmHitTest(loc,
+				                             radius: EditorMapLayer.DefaultHitTestRadius,
+				                             isDragConnect: false,
+				                             ignoreList: [],
+				                             segment: &segment)
+			}
+			if let chit = hit,
+			   chit == editorLayer.selectedNode || chit == editorLayer.selectedWay || chit.isRelation() != nil
+			{
+				hit = nil
+			}
+		}
+		blink(hit, segment: -1)
+	}
+
 	func updateSpeechBalloonPosition() {}
+}
+
+// add extensions to provide selective access to the underlying EditorLayer
+extension MapView {
+	var mapData: OsmMapData { editorLayer?.mapData ?? OsmMapData() }
+	var selectedPrimary: OsmBaseObject? { editorLayer.selectedPrimary }
+	var objectFilters: EditorFilters { editorLayer.objectFilters }
+	var selections: MapView.Selections { editorLayer.selections }
+	var shownObjects: ContiguousArray<OsmBaseObject> { editorLayer.shownObjects }
+	var whiteText: Bool {
+		get { editorLayer.whiteText }
+		set { editorLayer.whiteText = newValue }
+	}
+
+	func setTagsForCurrentObject(tags: [String: String]) {
+		editorLayer.setTagsForCurrentObject(tags)
+	}
+
+	func purgeCachedData(_ style: EditorMapLayer.MapDataPurgeStyle) {
+		editorLayer.purgeCachedData(style)
+	}
+
+	func canPasteTags() -> Bool {
+		return editorLayer.canPasteTags()
+	}
 }
 
 // MARK: EditorMapLayerOwner delegate methods

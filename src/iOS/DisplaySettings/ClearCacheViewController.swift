@@ -51,7 +51,7 @@ class ClearCacheViewController: UITableViewController {
 
 		let mapView = AppDelegate.shared.mapView!
 		let mainView = AppDelegate.shared.mainView!
-		let mapData = mapView.editorLayer.mapData
+		let mapData = mapView.mapData
 
 		let title: String?
 		switch indexPath.row {
@@ -120,17 +120,17 @@ class ClearCacheViewController: UITableViewController {
 				appDelegate.mapView.placePushpinForSelection()
 				appDelegate.mainView.mapMarkerDatabase.removeAll()
 				appDelegate.mainView.updateMapMarkersFromServer(viewState: appDelegate.mainView.viewState,
-																delay: 0.0,
-																including: [])
+				                                                delay: 0.0,
+				                                                including: [])
 			}
-			if appDelegate.mapView.editorLayer.mapData.changesetAsXml() != nil
+			if appDelegate.mapView.mapData.changesetAsXml() != nil
 				|| isUnderDebugger()
 			{
 				alert.addAction(UIAlertAction(
 					title: NSLocalizedString("Purge", comment: "Discard editing changes when resetting OSM data cache"),
 					style: .destructive,
 					handler: { _ in
-						appDelegate.mapView.editorLayer.purgeCachedData(.hard)
+						appDelegate.mapView.purgeCachedData(.hard)
 						refreshAfterPurge()
 						self.navigationController?.popViewController(animated: true)
 					}))
@@ -142,7 +142,7 @@ class ClearCacheViewController: UITableViewController {
 					title: "Debug: Low memory",
 					style: .destructive,
 					handler: { _ in
-						appDelegate.mapView.editorLayer.purgeCachedData(.soft)
+						appDelegate.mapView.purgeCachedData(.soft)
 						refreshAfterPurge()
 						self.navigationController?.popViewController(animated: true)
 					}))
@@ -151,7 +151,7 @@ class ClearCacheViewController: UITableViewController {
 					title: "Debug: Automatic cache management",
 					style: .destructive,
 					handler: { _ in
-						_ = appDelegate.mapView.editorLayer.mapData.discardStaleData(maxObjects: 1000, maxAge: 5 * 60)
+						_ = appDelegate.mapView.mapData.discardStaleData(maxObjects: 1000, maxAge: 5 * 60)
 						refreshAfterPurge()
 						self.navigationController?.popViewController(animated: true)
 					}))
@@ -160,7 +160,7 @@ class ClearCacheViewController: UITableViewController {
 				present(alert, animated: true)
 				return
 			}
-			appDelegate.mapView.editorLayer.purgeCachedData(.hard)
+			appDelegate.mapView.purgeCachedData(.hard)
 			refreshAfterPurge()
 		case .basemap:
 			appDelegate.mainView.mapLayersView.basemapLayer.purgeTileCache()

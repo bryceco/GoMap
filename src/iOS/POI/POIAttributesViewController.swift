@@ -9,8 +9,7 @@
 import SafariServices
 import UIKit
 
-private
-enum ROW: Int {
+private enum ROW: Int {
 	case identifier = 0
 	case user
 	case uid
@@ -19,8 +18,7 @@ enum ROW: Int {
 	case changeset
 }
 
-private
-enum SectionType: Int {
+private enum SectionType: Int {
 	case metadata
 	case extraInfo
 	case wayNodes
@@ -37,7 +35,7 @@ class POIAttributesViewController: UITableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary
+		let object = AppDelegate.shared.mapView.selectedPrimary
 		title = object is OsmNode ? NSLocalizedString("Node Attributes", comment: "")
 			: object is OsmWay ? NSLocalizedString("Way Attributes", comment: "")
 			: object is OsmRelation ? NSLocalizedString("Relation Attributes", comment: "")
@@ -52,7 +50,7 @@ class POIAttributesViewController: UITableViewController {
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary else {
+		guard let object = AppDelegate.shared.mapView.selectedPrimary else {
 			return 0
 		}
 		switch object {
@@ -68,7 +66,7 @@ class POIAttributesViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary else { return 0 }
+		guard let object = AppDelegate.shared.mapView.selectedPrimary else { return 0 }
 
 		switch SectionType(rawValue: section) {
 		case .metadata:
@@ -98,7 +96,7 @@ class POIAttributesViewController: UITableViewController {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! AttributeCustomCell
 		cell.accessoryType = .none
 
-		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary,
+		guard let object = AppDelegate.shared.mapView.selectedPrimary,
 		      let section = SectionType(rawValue: indexPath.section)
 		else {
 			// should never happen (but it has)
@@ -209,7 +207,7 @@ class POIAttributesViewController: UITableViewController {
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		guard let object = AppDelegate.shared.mapView.editorLayer.selectedPrimary,
+		guard let object = AppDelegate.shared.mapView.selectedPrimary,
 		      let section = SectionType(rawValue: indexPath.section)
 		else {
 			return

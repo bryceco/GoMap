@@ -56,7 +56,7 @@ class AdvancedSettingsViewController: UITableViewController {
 			AppDelegate.shared.mapView.unselectAll()
 
 			OSM_SERVER = OsmServer.serverForUrl(hostname.text!)
-			AppDelegate.shared.mapView.editorLayer.setNeedsLayout()
+			AppDelegate.shared.mapView.setNeedsLayout()
 		}
 	}
 

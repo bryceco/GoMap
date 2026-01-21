@@ -713,7 +713,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				objects: [parentRelation, undo!])
 		}
 #if DEBUG
-		if let current = AppDelegate.shared.mapView?.editorLayer?.mapData.relations[parentRelation.ident] {
+		if let current = AppDelegate.shared.mapView?.mapData.relations[parentRelation.ident] {
 			DbgAssert(current === parentRelation)
 		}
 #endif

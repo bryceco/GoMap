@@ -217,8 +217,8 @@ extension MapViewPort {
 			throw NSError()
 		}
 		setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
-						scale: scale,
-						rotation: 0.0)
+		                scale: scale,
+		                rotation: 0.0)
 	}
 
 	// MARK: Set location
