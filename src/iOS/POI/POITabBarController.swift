@@ -46,6 +46,16 @@ class POITabBarController: UITabBarController {
 		}
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		// make window resizable on MacCatalyst
+		if let windowScene = view.window?.windowScene {
+			 windowScene.sizeRestrictions?.minimumSize = CGSize(width: 400, height: 300)
+			 windowScene.sizeRestrictions?.maximumSize = CGSize(width: 2000, height: 2000)
+		 }
+	}
+
 	func removeValueFromKeyValueDict(key: String) {
 		keyValueDict.removeValue(forKey: key)
 	}
