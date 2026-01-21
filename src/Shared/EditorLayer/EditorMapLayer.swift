@@ -435,7 +435,7 @@ final class EditorMapLayer: CALayer {
 				.flatMap { $0.windows }
 				.first { $0.isKeyWindow }
 #endif
-			if let presented = keyWindow!.rootViewController?.presentedViewController,
+			if let presented = keyWindow?.rootViewController?.presentedViewController,
 			   let selection = (presented as? POITabBarController)?.selection
 			{
 				print("Holding reference to: \(selection)")

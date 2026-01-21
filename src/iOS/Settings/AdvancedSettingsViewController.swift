@@ -53,15 +53,10 @@ class AdvancedSettingsViewController: UITableViewController {
 		super.viewWillDisappear(animated)
 
 		if hostname.text != originalHostname {
-			// FIXME: need to make this sequence an API
-			let appDelegate = AppDelegate.shared
-			appDelegate.mapView.removePin()
-			appDelegate.mapView.editorLayer.selectedNode = nil
-			appDelegate.mapView.editorLayer.selectedWay = nil
-			appDelegate.mapView.editorLayer.selectedRelation = nil
+			AppDelegate.shared.mapView.unselectAll()
 
 			OSM_SERVER = OsmServer.serverForUrl(hostname.text!)
-			appDelegate.mapView.editorLayer.setNeedsLayout()
+			AppDelegate.shared.mapView.editorLayer.setNeedsLayout()
 		}
 	}
 

@@ -39,8 +39,7 @@ struct MapLocation {
 
 // MARK: MapView
 
-final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationControllerDelegate
-{
+final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationControllerDelegate {
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
 
 	var voiceAnnouncement: VoiceAnnouncement?
@@ -299,6 +298,24 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 
 	// MARK: Key presses
 
+#if targetEnvironment(macCatalyst)
+	func keypressAction(key: UIKey) {
+		switch key.keyCode {
+		case .keyboardEscape:
+			guard
+				!isHidden,
+				!editorLayer.isHidden,
+				mainView.presentedViewController == nil
+			else {
+				break
+			}
+			unselectAll()
+		default:
+			break
+		}
+	}
+#endif
+
 	/// Offers the option to either merge tags or replace them with the copied tags.
 	/// - Parameter sender: nil
 	override func paste(_ sender: Any?) {
@@ -308,25 +325,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 	override func delete(_ sender: Any?) {
 		editorLayer.deleteCurrentSelection()
 	}
-
-#if !os(iOS)
-	func keyDown(_ event: NSEvent?) {
-		let chars = event?.characters
-		let character = unichar(chars?[chars?.index(chars?.startIndex, offsetBy: 0)] ?? 0)
-		var angle = 0.0
-		switch character {
-		case unichar(NSLeftArrowFunctionKey):
-			angle = .pi * -1 / 180
-		case unichar(NSRightArrowFunctionKey):
-			angle = .pi * 1 / 180
-		default:
-			break
-		}
-		if angle != 0.0 {
-			mapTransform = OSMTransformRotate(mapTransform, angle)
-		}
-	}
-#endif
 
 	// UIPasteControl stops initializing itself correctly after the app has been in the
 	// background several hours, so to get around this we instantiate UIPasteControl once
@@ -570,6 +568,13 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 	}
 
 	// MARK: PushPin
+
+	func unselectAll() {
+		editorLayer.selectedNode = nil
+		editorLayer.selectedWay = nil
+		editorLayer.selectedRelation = nil
+		removePin()
+	}
 
 	func placePushpinForSelection(at point: CGPoint? = nil) {
 		guard let selection = editorLayer.selectedPrimary
@@ -1020,8 +1025,8 @@ extension MapView: EditorMapLayerOwner {
 
 	func didDownloadData() {
 		mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
-											delay: 0.5,
-											including: [])
+		                                    delay: 0.5,
+		                                    including: [])
 	}
 
 	func selectionDidChange() {

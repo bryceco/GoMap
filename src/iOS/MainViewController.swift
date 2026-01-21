@@ -51,6 +51,7 @@ struct ViewStateAndOverlays {
 		didSet {
 			if state != oldValue {
 				onChange.notify(self)
+				UserPrefs.shared.mapViewState.value = state.rawValue
 			}
 		}
 	}
@@ -59,11 +60,12 @@ struct ViewStateAndOverlays {
 		didSet {
 			if oldValue != overlayMask {
 				onChange.notify(self)
+				UserPrefs.shared.mapViewOverlays.value = overlayMask.rawValue
 			}
 		}
 	}
 
-	var zoomedOut = false { // override layer because we're zoomed out
+	var zoomedOut = false {
 		didSet {
 			if oldValue != zoomedOut {
 				onChange.notify(self)
@@ -243,8 +245,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 		// initialize map markers database
 		mapMarkerDatabase.mapData = mapView.editorLayer.mapData
 		updateMapMarkersFromServer(viewState: viewState,
-								   delay: 1.0,
-								   including: [])
+		                           delay: 1.0,
+		                           including: [])
 
 		// long press for quick access to aerial imagery
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayButtonLongPressGesture(_:)))
@@ -427,9 +429,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 		UserPrefs.shared.view_latitude.value = latLon.lat
 		UserPrefs.shared.view_longitude.value = latLon.lon
 
-		UserPrefs.shared.mapViewState.value = viewState.state.rawValue
-		UserPrefs.shared.mapViewOverlays.value = viewState.overlayMask.rawValue
-
 		UserPrefs.shared.synchronize()
 
 		AppState.shared.save()
@@ -582,7 +581,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 		case .keyboardLeftArrow: viewPort.adjustOrigin(by: CGPoint(x: delta.x, y: 0))
 		case .keyboardDownArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: -delta.y))
 		case .keyboardUpArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: delta.y))
-		default: break
+		default:
+			// pass it down
+			mapView.keypressAction(key: key)
 		}
 	}
 
@@ -1034,8 +1035,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 			}
 		case .ended:
 			updateMapMarkersFromServer(viewState: viewState,
-									   delay: 0,
-									   including: [])
+			                           delay: 0,
+			                           including: [])
 		default:
 			break // ignore
 		}
@@ -1214,8 +1215,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		// This does a more expensive update, but debounced
 		updateMapMarkersFromServer(viewState: viewState,
-								   delay: 0,
-								   including: [])
+		                           delay: 0,
+		                           including: [])
 	}
 
 	func moveToLocation(_ location: MapLocation) {
@@ -1422,10 +1423,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 		addNodeButton.isHidden = mapView.editorLayer.isHidden
 
 		updateMapMarkersFromServer(viewState: state,
-								   delay: 0,
-								   including: [])
+		                           delay: 0,
+		                           including: [])
 
-		// FIXME
+		// FIXME:
 		mapView.editorLayer.whiteText = !mapLayersView.aerialLayer.isHidden
 	}
 
@@ -1601,8 +1602,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 	// This performs an expensive update with a time delay, coalescing multiple calls
 	// into a single update.
 	func updateMapMarkersFromServer(viewState: ViewStateAndOverlays,
-									delay: CGFloat,
-									including: MapMarkerDatabase.MapMarkerSet)
+	                                delay: CGFloat,
+	                                including: MapMarkerDatabase.MapMarkerSet)
 	{
 		let delay = max(delay, 0.01)
 		var including = including
@@ -1626,10 +1627,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		mapMarkerDatabase.updateRegion(withDelay: delay,
-									   including: including,
-									   completion: {
-										self.updateMapMarkerButtonPositions()
-									   })
+		                               including: including,
+		                               completion: {
+		                               	self.updateMapMarkerButtonPositions()
+		                               })
 	}
 
 	// This performs an inexpensive update using only data we've already downloaded
@@ -1642,7 +1643,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 			for marker in self.mapMarkerDatabase.allMapMarkers {
 				// Update the location of the button
 				let onScreen = updateButtonPositionForMapMarker(marker: marker,
-																hidden: count > MaxMarkers)
+				                                                hidden: count > MaxMarkers)
 				if onScreen {
 					count += 1
 				}
@@ -1652,7 +1653,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	// Update the location of the button. Return true if it is on-screen.
 	private func updateButtonPositionForMapMarker(marker: MapMarker,
-												  hidden: Bool) -> Bool
+	                                              hidden: Bool) -> Bool
 	{
 		// create buttons that haven't been created
 		guard !hidden else {
@@ -1662,8 +1663,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 		if marker.button == nil {
 			let button = marker.makeButton()
 			button.addTarget(self,
-							 action: #selector(mapMarkerButtonPress(_:)),
-							 for: .touchUpInside)
+			                 action: #selector(mapMarkerButtonPress(_:)),
+			                 for: .touchUpInside)
 			button.tag = marker.buttonId
 			mapLayersView.addSubview(button)
 			if let object = marker.object {
@@ -1683,8 +1684,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 		button.isHidden = false
 		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
 		let pos = viewPort.mapTransform.screenPoint(forLatLon: LatLon(latitude: marker.latLon.lat,
-																	  longitude: marker.latLon.lon + offsetX),
-													birdsEye: true)
+		                                                              longitude: marker.latLon.lon + offsetX),
+		                                            birdsEye: true)
 		if pos.x.isInfinite || pos.y.isInfinite {
 			return false
 		}
@@ -1693,7 +1694,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		} else {
 			var rc = button.bounds
 			rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
-							 dy: pos.y - rc.size.height / 2)
+			                 dy: pos.y - rc.size.height / 2)
 			button.frame = rc
 		}
 		return mapLayersView.bounds.contains(pos)
@@ -1701,7 +1702,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	@objc func mapMarkerButtonPress(_ sender: Any?) {
 		guard let button = sender as? UIButton,
-			  let marker = mapMarkerDatabase.mapMarker(forButtonId: button.tag)
+		      let marker = mapMarkerDatabase.mapMarker(forButtonId: button.tag)
 		else { return }
 
 		var object: OsmBaseObject?
@@ -1748,10 +1749,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 					handler: { [self] in
 						// they want to hide this button from now on
 						marker.ignore()
-						mapView.editorLayer.selectedNode = nil
-						mapView.editorLayer.selectedWay = nil
-						mapView.editorLayer.selectedRelation = nil
-						mapView.removePin()
+						mapView.unselectAll()
 					})
 			}
 			present(alert, animated: true)
@@ -1762,12 +1760,12 @@ final class MainViewController: UIViewController, DPadDelegate,
 					let onClose = {
 						// Need to update the QuestMarker icon
 						self.updateMapMarkersFromServer(viewState: self.viewState,
-														delay: 0.0,
-														including: [.quest])
+						                                delay: 0.0,
+						                                including: [.quest])
 					}
 					let vc = QuestSolverController.instantiate(marker: marker,
-															   object: object,
-															   onClose: onClose)
+					                                           object: object,
+					                                           onClose: onClose)
 					if #available(iOS 15.0, *),
 					   let sheet = vc.sheetPresentationController
 					{
@@ -1792,8 +1790,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 					text = ""
 				}
 				let alert = UIAlertController(title: "\(object.friendlyDescription())",
-											  message: text,
-											  preferredStyle: .alert)
+				                              message: text,
+				                              preferredStyle: .alert)
 				alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
 				present(alert, animated: true)
 			}
@@ -1801,8 +1799,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 			performSegue(withIdentifier: "NotesSegue", sender: note)
 		}
 	}
-
-
 }
 
 extension MainViewController: MapViewProgress {
