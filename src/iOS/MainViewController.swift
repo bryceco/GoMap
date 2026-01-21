@@ -281,10 +281,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 		locationBallView.viewPort = viewPort
 		mapLayersView.addSubview(locationBallView)
 
-		LocationProvider.shared.onChangeLocation.subscribe(locationBallView) { [weak self] location in
-			self?.locationBallView.updateLocation(location)
-		}
-
 		// Compass button
 		compassButton.viewPort = viewPort
 
@@ -371,6 +367,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		// Bindings
+
+		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
+			self?.locationUpdated(to: location)
+			self?.locationBallView.updateLocation(location)
+		}
 
 		LocationProvider.shared.onChangeSmoothHeading.subscribe(self) { [weak self] heading, accuracy in
 			self?.headingChanged(heading, accuracy: accuracy)
