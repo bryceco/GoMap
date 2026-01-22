@@ -48,11 +48,11 @@ class MapMarker {
 	var buttonLabel: String { "?" }
 
 	func makeButton() -> UIButton {
-		let button: MapView.MapViewButton
+		let button: DraggableButton
 		if self is QuestMarker {
 			button = MapPinButton(withLabel: buttonLabel)
 		} else {
-			button = MapView.MapViewButton(type: .custom)
+			button = DraggableButton(type: .custom)
 			button.layer.backgroundColor = UIColor.blue.cgColor
 			button.layer.borderColor = UIColor.white.cgColor
 			if buttonLabel.count > 1 {

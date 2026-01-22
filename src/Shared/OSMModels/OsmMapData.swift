@@ -1763,9 +1763,15 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		                         relations: relations)
 
 		// make sure all objects are marked as constructed
-		for node in nodes.values { assert(node.constructed()) }
-		for way in ways.values { assert(way.constructed()) }
-		for relation in relations.values { assert(relation.constructed()) }
+		for node in nodes.values {
+			assert(node.constructed())
+		}
+		for way in ways.values {
+			assert(way.constructed())
+		}
+		for relation in relations.values {
+			assert(relation.constructed())
+		}
 
 		// make sure that if the undo manager is holding an object that it's consistent with mapData
 		let undoObjects = undoManager.objectRefs()

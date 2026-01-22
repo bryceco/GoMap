@@ -76,6 +76,7 @@
 		02696CD52B8EF19400AB70B6 /* HealthKitRoutes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */; };
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
 		026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */; };
+		02709BCA2F21B82F00B277C6 /* DraggableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02709BC92F21B82F00B277C6 /* DraggableButton.swift */; };
 		02771D712BFC15C300FE9B79 /* UserFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02771D702BFC15C300FE9B79 /* UserFileList.swift */; };
 		027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FC250E9C8000C404CD /* Settings.storyboard */; };
 		027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FF250E9C8A00C404CD /* POI.storyboard */; };
@@ -427,6 +428,7 @@
 		0262175A2F08533D00594D88 /* PresetTranslations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetTranslations.swift; sourceTree = "<group>"; };
 		0266DE852655A21F007A502E /* Superview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Superview.swift; sourceTree = "<group>"; };
 		02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HealthKitRoutes.swift; path = ../Shared/HealthKitRoutes.swift; sourceTree = "<group>"; };
+		02709BC92F21B82F00B277C6 /* DraggableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableButton.swift; sourceTree = "<group>"; };
 		02771D702BFC15C300FE9B79 /* UserFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFileList.swift; path = ../Shared/UserFileList.swift; sourceTree = "<group>"; };
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		027AB506250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
@@ -932,6 +934,7 @@
 				0202C5FD2E3BFD7500649F26 /* CustomSegmentedControl.swift */,
 				023320A12BE07B2000E3311A /* DataOverlayLayer.swift */,
 				023320A32BE1DB9900E3311A /* DPadView.swift */,
+				02709BC92F21B82F00B277C6 /* DraggableButton.swift */,
 				027CF8722BDE141700E6F03B /* DrawingLayer.swift */,
 				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
@@ -1592,6 +1595,7 @@
 				02B5669F294FDCF200710632 /* CrossHairsLayer.swift in Sources */,
 				02C8C56926F44759003B0122 /* FixmeMarker.swift in Sources */,
 				021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */,
+				02709BCA2F21B82F00B277C6 /* DraggableButton.swift in Sources */,
 				02EDBF672653306400B7072E /* OsmBaseObject.swift in Sources */,
 				0288169F265895FA00C30EA2 /* OsmMapData.swift in Sources */,
 				02263CDF2677F93A002BA72F /* QuadBox.swift in Sources */,

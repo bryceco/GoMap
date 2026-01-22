@@ -11,7 +11,7 @@ import UIKit
 // A button with a map location pin style with room for a small graphic identifier
 
 @IBDesignable
-final class MapPinButton: MapView.MapViewButton {
+final class MapPinButton: DraggableButton {
 	let radius: CGFloat // radius of ciruclar part
 	let height: CGFloat // distance from center of circle to bottom vertex
 	let isCurvy: Bool
