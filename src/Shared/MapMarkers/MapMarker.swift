@@ -50,7 +50,7 @@ class MapMarker {
 	func makeButton() -> UIButton {
 		let button: MapView.MapViewButton
 		if self is QuestMarker {
-			button = LocationButton(withLabel: buttonLabel)
+			button = MapPinButton(withLabel: buttonLabel)
 		} else {
 			button = MapView.MapViewButton(type: .custom)
 			button.layer.backgroundColor = UIColor.blue.cgColor

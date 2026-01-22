@@ -1,5 +1,5 @@
 //
-//  LocationButton.swift
+//  MapPinButton.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 2/6/23.
@@ -11,7 +11,7 @@ import UIKit
 // A button with a map location pin style with room for a small graphic identifier
 
 @IBDesignable
-final class LocationButton: MapView.MapViewButton {
+final class MapPinButton: MapView.MapViewButton {
 	let radius: CGFloat // radius of ciruclar part
 	let height: CGFloat // distance from center of circle to bottom vertex
 	let isCurvy: Bool

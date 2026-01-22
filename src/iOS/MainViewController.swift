@@ -1644,7 +1644,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		if pos.x.isInfinite || pos.y.isInfinite {
 			return false
 		}
-		if let button = button as? LocationButton {
+		if let button = button as? MapPinButton {
 			button.arrowPoint = pos
 		} else {
 			var rc = button.bounds

@@ -162,7 +162,7 @@
 		02CE3CE32990A2C800DDACE0 /* QuestSolver.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CB523D299097C3007F758D /* QuestSolver.storyboard */; };
 		02CE3CE52990A8CE00DDACE0 /* QuestChooserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */; };
 		02CE3CE7299187C100DDACE0 /* TelephoneToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */; };
-		02CE3CE929919FC400DDACE0 /* LocationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE829919FC400DDACE0 /* LocationButton.swift */; };
+		02CE3CE929919FC400DDACE0 /* MapPinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE829919FC400DDACE0 /* MapPinButton.swift */; };
 		02CE3CEB2991B5FA00DDACE0 /* QuestIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */; };
 		02D276902E8B289400A21863 /* EXIFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2768F2E8B289400A21863 /* EXIFInfo.swift */; };
 		02D276912E8B289400A21863 /* EXIFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2768F2E8B289400A21863 /* EXIFInfo.swift */; };
@@ -513,7 +513,7 @@
 		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFilters.swift; sourceTree = "<group>"; };
 		02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestChooserController.swift; sourceTree = "<group>"; };
 		02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneToolbar.swift; sourceTree = "<group>"; };
-		02CE3CE829919FC400DDACE0 /* LocationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationButton.swift; sourceTree = "<group>"; };
+		02CE3CE829919FC400DDACE0 /* MapPinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinButton.swift; sourceTree = "<group>"; };
 		02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = QuestIcons.xcassets; sourceTree = "<group>"; };
 		02D2768F2E8B289400A21863 /* EXIFInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EXIFInfo.swift; path = ../Shared/EXIFInfo.swift; sourceTree = SOURCE_ROOT; };
 		02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetValueTextField.swift; sourceTree = "<group>"; };
@@ -936,9 +936,9 @@
 				C341E1552639DEFC0022E983 /* FpsLabel.swift */,
 				C3FA925626416BF5000A2A99 /* GpxLayer.swift */,
 				C3D096D4263EACFF00E3B129 /* LocationBallView.swift */,
-				02F3C8662F145D2800BB94C6 /* MapPositionedView.swift */,
-				02CE3CE829919FC400DDACE0 /* LocationButton.swift */,
 				02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */,
+				02CE3CE829919FC400DDACE0 /* MapPinButton.swift */,
+				02F3C8662F145D2800BB94C6 /* MapPositionedView.swift */,
 				C381C30A263FE518003142BA /* PushPinView.swift */,
 				0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */,
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
@@ -1606,7 +1606,7 @@
 				02B2E25E2C3F3DC600815F08 /* DarkModeImage.swift in Sources */,
 				ED56E5C426027A50000B368C /* CustomFieldController.swift in Sources */,
 				02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */,
-				02CE3CE929919FC400DDACE0 /* LocationButton.swift in Sources */,
+				02CE3CE929919FC400DDACE0 /* MapPinButton.swift in Sources */,
 				EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */,
 				021FADBB258591D000F6E1C0 /* PresetDisplayKey.swift in Sources */,
 				C381C30B263FE518003142BA /* PushPinView.swift in Sources */,
