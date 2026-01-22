@@ -105,15 +105,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	func setConstructed() {
-		(nodes as NSDictionary?)?.enumerateKeysAndObjects({ _, node, _ in
-			(node as? OsmNode)?.setConstructed()
-		})
-		(ways as NSDictionary?)?.enumerateKeysAndObjects({ _, way, _ in
-			(way as? OsmWay)?.setConstructed()
-		})
-		(relations as NSDictionary?)?.enumerateKeysAndObjects({ _, relation, _ in
-			(relation as? OsmRelation)?.setConstructed()
-		})
+		nodes.values.forEach { $0.setConstructed() }
+		ways.values.forEach { $0.setConstructed() }
+		relations.values.forEach { $0.setConstructed() }
 	}
 
 	func wayCount() -> Int {
@@ -1700,18 +1694,21 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	static func withArchivedData() throws -> OsmMapData {
 		let archiver = OsmMapDataArchiver()
-		let decode = try archiver.loadArchive()
-		if decode.spatial.countOfObjects() > 0 {
+		let mapData = try archiver.loadArchive()
+		if mapData.spatial.countOfObjects() > 0 {
 			print("spatial accidentally saved, please fix")
-			decode.spatial.rootQuad.reset()
+			mapData.spatial.rootQuad.reset()
 		}
 
 		// rebuild spatial database
-		decode.enumerateObjects(usingBlock: { obj in
+		mapData.enumerateObjects(usingBlock: { obj in
 			if !obj.deleted {
-				decode.spatial.addMember(obj, undo: nil)
+				mapData.spatial.addMember(obj, undo: nil)
 			}
 		})
+
+		// do this after spatial is built
+		mapData.consistencyCheck()
 
 		// merge info from SQL database
 		do {
@@ -1720,17 +1717,17 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			newData.nodes = try db.queryNodes()
 			newData.ways = try db.queryWays()
 			newData.relations = try db.queryRelations()
-			try decode.merge(newData, savingToDatabase: false)
+			try mapData.merge(newData, savingToDatabase: false)
 		} catch {
 			// database couldn't be read
 			print("Error: \(error.localizedDescription)")
 			print("Unable to read database: recreating from scratch")
 			try? Database.delete(withName: "")
 			// need to download all regions
-			decode.region.rootQuad.reset()
+			mapData.region.rootQuad.reset()
 		}
 
-		return decode
+		return mapData
 	}
 
 	// MARK: Consistency checking
@@ -1764,6 +1761,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		spatial.consistencyCheck(nodes: nodes,
 		                         ways: ways,
 		                         relations: relations)
+
+		// make sure all objects are marked as constructed
+		for node in nodes.values { assert(node.constructed()) }
+		for way in ways.values { assert(way.constructed()) }
+		for relation in relations.values { assert(relation.constructed()) }
 
 		// make sure that if the undo manager is holding an object that it's consistent with mapData
 		let undoObjects = undoManager.objectRefs()

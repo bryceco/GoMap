@@ -219,13 +219,13 @@ class QuadMap: NSObject, NSSecureCoding {
 		let diffWays = allWays.subtracting(quadWays)
 		let diffRelations = allRelations.subtracting(quadRelations)
 		for extra in diffNodes {
-			print("node \(extra) is missing from quadMap")
+			print("* node \(extra) is missing from quadMap")
 		}
 		for extra in diffWays {
-			print("way \(extra) is missing from quadMap")
+			print("* way \(extra) is missing from quadMap")
 		}
 		for extra in diffRelations {
-			print("relation \(extra) is missing from quadMap")
+			print("* relation \(extra) is missing from quadMap")
 		}
 		assert(diffNodes.isEmpty && diffWays.isEmpty && diffRelations.isEmpty)
 	}
