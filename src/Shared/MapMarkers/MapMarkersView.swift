@@ -95,20 +95,18 @@ class MapMarkersView: UIView {
 		// Set position of button
 		let button = marker.button!
 		button.isHidden = false
-		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker) ? 0.00001 : 0.0
-		let pos = viewPort.mapTransform.screenPoint(forLatLon: LatLon(latitude: marker.latLon.lat,
-		                                                              longitude: marker.latLon.lon + offsetX),
+		// We don't want a fixme marker to obscure a POI node, so give it a small offset:
+		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker)
+			? 1.0 / MetersPerDegreeAt(latitude: marker.latLon.lat).x
+			: 0.0
+		let latLon = LatLon(latitude: marker.latLon.lat,
+		                    longitude: marker.latLon.lon + offsetX)
+		let pos = viewPort.mapTransform.screenPoint(forLatLon: latLon,
 		                                            birdsEye: true)
-		if pos.x.isInfinite || pos.y.isInfinite {
-			return false
-		}
 		if let button = button as? MapPinButton {
 			button.arrowPoint = pos
 		} else {
-			var rc = button.bounds
-			rc = rc.offsetBy(dx: pos.x - rc.size.width / 2,
-			                 dy: pos.y - rc.size.height / 2)
-			button.frame = rc
+			button.center = pos
 		}
 		return bounds.contains(pos)
 	}
