@@ -695,6 +695,18 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		newWays.reserveCapacity(newData.ways.count)
 		newRelations.reserveCapacity(newData.relations.count)
 
+#if DEBUG
+		for value in nodes.values {
+			assert(value.constructed())
+		}
+		for value in ways.values {
+			assert(value.constructed())
+		}
+		for value in relations.values {
+			assert(value.constructed())
+		}
+#endif
+
 		for node in newData.nodes {
 			if let current = nodes[node.ident] {
 				if current.version < node.version {
@@ -766,6 +778,18 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		for relation in newData.relations {
 			relation.setConstructed()
 		}
+
+#if DEBUG
+		for value in nodes.values {
+			assert(value.constructed())
+		}
+		for value in ways.values {
+			assert(value.constructed())
+		}
+		for value in relations.values {
+			assert(value.constructed())
+		}
+#endif
 
 		// store new nodes in database
 		if save {
