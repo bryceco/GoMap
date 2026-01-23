@@ -218,14 +218,16 @@ class MapMarkersView: UIView {
 		}
 	}
 
-	// FIXME: Move this into NoteMarker
-	func update(
-		note: OsmNoteMarker,
-		close: Bool,
-		comment: String,
-		completion: @escaping (Result<OsmNoteMarker, Error>) -> Void)
+	// FIXME: Move this somewhere else, but mapMarkerDatabase is private so ??
+	func upload(note: OsmNoteMarker,
+	            close: Bool,
+	            comment: String,
+	            completion: @escaping (Result<OsmNoteMarker, Error>) -> Void)
 	{
-		mapMarkerDatabase.update(note: note, close: close, comment: comment, completion: completion)
+		mapMarkerDatabase.upload(note: note,
+		                         close: close,
+		                         comment: comment,
+		                         completion: completion)
 	}
 }
 

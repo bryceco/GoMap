@@ -164,7 +164,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		mainView.viewState.overlayMask.insert(.NOTES)
 		mainView.updateMapMarkers(including: [.notes])
 
-		mainView.mapLayersView.mapMarkersView.update(note: note, close: resolves, comment: text) { [self] result in
+		mainView.mapLayersView.mapMarkersView.upload(note: note, close: resolves, comment: text) { [self] result in
 			alert.dismiss(animated: true)
 			switch result {
 			case let .success(newNote):
