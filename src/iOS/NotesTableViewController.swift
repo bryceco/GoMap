@@ -163,10 +163,10 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		let mainView = AppDelegate.shared.mainView!
 		mainView.viewState.overlayMask.insert(.NOTES)
 		mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
-											delay: 0.1,
-											including: [.notes])
+		                                    delay: 0.1,
+		                                    including: [.notes])
 
-		mainView.mapMarkerDatabase.update(note: note, close: resolves, comment: text) { [self] result in
+		mainView.mapLayersView.mapMarkersView.update(note: note, close: resolves, comment: text) { [self] result in
 			alert.dismiss(animated: true)
 			switch result {
 			case let .success(newNote):
@@ -175,8 +175,9 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 				DispatchQueue.main.async(execute: { [self] in
 					done(nil)
 					// remove note markers that are now resolved
-					mainView.mapMarkerDatabase.removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
-					mainView.updateMapMarkerButtonPositions()
+					mainView.mapLayersView.mapMarkersView
+						.removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
+					mainView.mapLayersView.mapMarkersView.updateMapMarkerButtonPositions()
 				})
 			case let .failure(error):
 				let alert2 = UIAlertController(title: NSLocalizedString("Error", comment: ""),

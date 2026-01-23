@@ -77,6 +77,7 @@
 		026FC76726509D6E005DDAFF /* SpeechBalloonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */; };
 		026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */; };
 		02709BCA2F21B82F00B277C6 /* DraggableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02709BC92F21B82F00B277C6 /* DraggableButton.swift */; };
+		02709BCE2F2370E000B277C6 /* MapMarkersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02709BCD2F2370E000B277C6 /* MapMarkersView.swift */; };
 		02771D712BFC15C300FE9B79 /* UserFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02771D702BFC15C300FE9B79 /* UserFileList.swift */; };
 		027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FC250E9C8000C404CD /* Settings.storyboard */; };
 		027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FF250E9C8A00C404CD /* POI.storyboard */; };
@@ -429,6 +430,7 @@
 		0266DE852655A21F007A502E /* Superview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Superview.swift; sourceTree = "<group>"; };
 		02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HealthKitRoutes.swift; path = ../Shared/HealthKitRoutes.swift; sourceTree = "<group>"; };
 		02709BC92F21B82F00B277C6 /* DraggableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableButton.swift; sourceTree = "<group>"; };
+		02709BCD2F2370E000B277C6 /* MapMarkersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkersView.swift; sourceTree = "<group>"; };
 		02771D702BFC15C300FE9B79 /* UserFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFileList.swift; path = ../Shared/UserFileList.swift; sourceTree = "<group>"; };
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		027AB506250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
@@ -966,14 +968,15 @@
 			isa = PBXGroup;
 			children = (
 				02C8C56826F44759003B0122 /* FixmeMarker.swift */,
+				0229A8002E458C2100EB65E4 /* GeoJsonMarker.swift */,
 				02C8C56E26F447C3003B0122 /* KeepRightMarker.swift */,
 				02C8C56426F446FD003B0122 /* MapMarker.swift */,
 				02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */,
 				0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */,
+				02709BCD2F2370E000B277C6 /* MapMarkersView.swift */,
 				02C8C56626F44728003B0122 /* OsmNoteMarker.swift */,
 				02CB523329907832007F758D /* QuestMarker.swift */,
 				02C8C56C26F4479A003B0122 /* WayPointMarker.swift */,
-				0229A8002E458C2100EB65E4 /* GeoJsonMarker.swift */,
 			);
 			name = MapMarkers;
 			path = ../Shared/MapMarkers;
@@ -1737,6 +1740,7 @@
 				0202C6002E3C348400649F26 /* ButtonClosure.swift in Sources */,
 				020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */,
 				0226B7732683BCB6005DB9E2 /* URLSession+Extension.swift in Sources */,
+				02709BCE2F2370E000B277C6 /* MapMarkersView.swift in Sources */,
 				021FADC0258594EE00F6E1C0 /* PresetDisplayValue.swift in Sources */,
 				02CB52362990801E007F758D /* QuestList.swift in Sources */,
 				02F72BCC2E35828100B6C76C /* NotificationService.swift in Sources */,

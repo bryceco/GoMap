@@ -49,6 +49,7 @@ class MapLayersView: UIView {
 	private(set) var locatorLayer: MercatorTileLayer!
 	private(set) var dataOverlayLayer: DataOverlayLayer!
 	private(set) var quadDownloadLayer: QuadDownloadLayer?
+	private(set) var mapMarkersView: MapMarkersView!
 	// collect all of the above layers
 	var allLayers: [LayerOrView] = []
 
@@ -125,6 +126,11 @@ class MapLayersView: UIView {
 		dataOverlayLayer.zPosition = ZLAYER.DATA.rawValue
 		dataOverlayLayer.isHidden = true
 		allLayers.append(dataOverlayLayer)
+
+		mapMarkersView = MapMarkersView(viewPort: viewPort,
+		                               mapData: AppDelegate.shared.mainView.mapView.mapData)
+		mapMarkersView.isHidden = false
+		allLayers.append(mapMarkersView)
 
 #if DEBUG && false
 		quadDownloadLayer = QuadDownloadLayer(mapData: AppDelegate.shared.mapView.editorLayer.mapData,

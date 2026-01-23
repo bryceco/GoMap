@@ -1103,7 +1103,7 @@ extension MapView {
 extension MapView: EditorMapLayerOwner {
 	func didUpdateObject() {
 		refreshPushpinText()
-		mainView.updateMapMarkerButtonPositions()
+		mainView.mapLayersView.mapMarkersView.updateMapMarkerButtonPositions()
 	}
 
 	func didDownloadData() {
@@ -1114,7 +1114,7 @@ extension MapView: EditorMapLayerOwner {
 
 	func selectionDidChange() {
 		updateEditControl()
-		mainView.mapMarkerDatabase.didSelectObject(editorLayer.selectedPrimary)
+		mainView.mapLayersView.mapMarkersView.didSelectObject(editorLayer.selectedPrimary)
 	}
 
 	func useTurnRestrictions() -> Bool {
