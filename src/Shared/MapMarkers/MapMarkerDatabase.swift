@@ -81,7 +81,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		markerForIdentifier[newMarker.markerIdentifier] = newMarker
 	}
 
-	func addFixmeMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
+	func updateFixmeMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
 		mapData.enumerateObjects(inRegion: box, block: { [self] obj in
 			if let fixme = FixmeMarker.fixmeTag(obj) {
 				let marker = FixmeMarker(object: obj, text: fixme)
@@ -90,7 +90,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		})
 	}
 
-	func addQuestMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
+	func updateQuestMarkers(forRegion box: OSMRect, mapData: OsmMapData) {
 		mapData.enumerateObjects(inRegion: box, block: { obj in
 			for quest in QuestList.shared.questsForObject(obj) {
 				if let marker = QuestMarker(object: obj, quest: quest, ignorable: self) {
@@ -100,7 +100,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		})
 	}
 
-	func addGpxWaypoints() {
+	func updateGpxWaypoints() {
 		for track in AppState.shared.gpxTracks.allTracks() {
 			for point in track.wayPoints {
 				let marker = WayPointMarker(with: point)
@@ -109,7 +109,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		}
 	}
 
-	func addGeoJSONPoints(forRegion box: OSMRect) {
+	func updateGeoJSONPoints(forRegion box: OSMRect) {
 		let visible = AppDelegate.shared.mainView.mapLayersView.dataOverlayLayer.geojsonData()
 		for feature in visible {
 			if case let .point(latLon) = feature.geom.geometryPoints,
@@ -122,7 +122,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		}
 	}
 
-	func addKeepRight(forRegion box: OSMRect, mapData: OsmMapData, completion: @escaping () -> Void) {
+	func updateKeepRight(forRegion box: OSMRect, mapData: OsmMapData, completion: @escaping () -> Void) {
 		let template =
 			"https://keepright.at/export.php?format=gpx&ch=0,30,40,70,90,100,110,120,130,150,160,180,191,192,193,194,195,196,197,198,201,202,203,204,205,206,207,208,210,220,231,232,270,281,282,283,284,285,291,292,293,294,295,296,297,298,311,312,313,320,350,370,380,401,402,411,412,413&left=%f&bottom=%f&right=%f&top=%f"
 		let url = String(
@@ -175,22 +175,22 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	{
 		if including.contains(.fixme) {
 			removeMarkers(where: { ($0 as? FixmeMarker)?.shouldHide() ?? false })
-			addFixmeMarkers(forRegion: box, mapData: mapData)
+			updateFixmeMarkers(forRegion: box, mapData: mapData)
 		} else {
 			removeMarkers(where: { $0 is FixmeMarker })
 		}
 		if including.contains(.quest) {
-			addQuestMarkers(forRegion: box, mapData: mapData)
+			updateQuestMarkers(forRegion: box, mapData: mapData)
 		} else {
 			removeMarkers(where: { $0 is QuestMarker })
 		}
 		if including.contains(.gpx) {
-			addGpxWaypoints()
+			updateGpxWaypoints()
 		} else {
 			removeMarkers(where: { $0 is WayPointMarker })
 		}
 		if including.contains(.geojson) {
-			addGeoJSONPoints(forRegion: box)
+			updateGeoJSONPoints(forRegion: box)
 		} else {
 			removeMarkers(where: { $0 is GeoJsonMarker })
 		}

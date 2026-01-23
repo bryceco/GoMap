@@ -1588,7 +1588,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		                               })
 	}
 
-	// This performs an inexpensive update using only data we've already downloaded
+	// This performs an inexpensive update using only data we've already collected and have cached
 	func updateMapMarkerButtonPositions() {
 		// need this to disable implicit animation
 		UIView.performWithoutAnimation({
