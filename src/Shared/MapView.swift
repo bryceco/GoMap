@@ -1107,9 +1107,7 @@ extension MapView: EditorMapLayerOwner {
 	}
 
 	func didDownloadData() {
-		mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
-		                                    delay: 0.5,
-		                                    including: [])
+		mainView.updateMapMarkers()
 	}
 
 	func selectionDidChange() {

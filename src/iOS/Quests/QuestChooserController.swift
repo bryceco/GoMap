@@ -51,9 +51,7 @@ class QuestChooserController: UITableViewController {
 	override func viewWillDisappear(_ animated: Bool) {
 		// Update markers for newly added quests
 		let mainView = AppDelegate.shared.mainView!
-		mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
-		                                    delay: 0.0,
-		                                    including: .quest)
+		mainView.updateMapMarkers(including: [.quest])
 	}
 
 	// MARK: Table view delegate
@@ -211,9 +209,7 @@ class QuestChooserController: UITableViewController {
 				if let mainView = AppDelegate.shared.mainView {
 					// Quest definition changed, so refresh everything
 					mainView.mapLayersView.mapMarkersView.reset()
-					mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
-					                                    delay: 0.0,
-					                                    including: [])
+					mainView.updateMapMarkers(including: [.quest])
 				}
 				return true
 			} catch {

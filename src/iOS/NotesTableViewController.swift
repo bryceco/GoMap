@@ -162,9 +162,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		// if user created a note then make sure notes are visible
 		let mainView = AppDelegate.shared.mainView!
 		mainView.viewState.overlayMask.insert(.NOTES)
-		mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
-		                                    delay: 0.1,
-		                                    including: [.notes])
+		mainView.updateMapMarkers(including: [.notes])
 
 		mainView.mapLayersView.mapMarkersView.update(note: note, close: resolves, comment: text) { [self] result in
 			alert.dismiss(animated: true)

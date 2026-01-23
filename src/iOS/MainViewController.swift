@@ -238,9 +238,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 		setupAccessibility()
 
 		// initialize map markers database
-		updateMapMarkersFromServer(viewState: viewState,
-		                           delay: 1.0,
-		                           including: [])
+		updateMapMarkers(withState: viewState,
+		                 delay: 1.0,
+		                 including: [])
 
 		// long press for quick access to aerial imagery
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayButtonLongPressGesture(_:)))
@@ -982,9 +982,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				gpsState = .LOCATION
 			}
 		case .ended:
-			updateMapMarkersFromServer(viewState: viewState,
-			                           delay: 0,
-			                           including: [])
+			updateMapMarkers()
 		default:
 			break // ignore
 		}
@@ -1160,10 +1158,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 		updateCurrentRegionForLocationUsingCountryCoder()
 		checkForChangedTileOverlayLayers()
 
-		// This does a more expensive update, but debounced
-		updateMapMarkersFromServer(viewState: viewState,
-		                           delay: 0,
-		                           including: [])
+		// This does an expensive update of map markers, debounced
+		updateMapMarkers()
 	}
 
 	func moveToLocation(_ location: MapLocation) {
@@ -1369,9 +1365,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 		updateUploadButtonState()
 		addNodeButton.isHidden = mapView.isHidden
 
-		updateMapMarkersFromServer(viewState: state,
-		                           delay: 0,
-		                           including: [])
+		updateMapMarkers(withState: state,
+		                 delay: 0,
+		                 including: [])
 
 		// FIXME:
 		mapView.whiteText = !mapLayersView.aerialLayer.isHidden
@@ -1546,13 +1542,17 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	// MARK: Map Markers
 
+	func updateMapMarkers(including: MapMarkerDatabase.MapMarkerSet = []) {
+		updateMapMarkers(withState: viewState, delay: 0.0, including: including)
+	}
+
 	// This performs an expensive update with a time delay, coalescing multiple calls
 	// into a single update.
-	func updateMapMarkersFromServer(viewState: ViewStateAndOverlays,
-	                                delay: CGFloat,
-	                                including: MapMarkerDatabase.MapMarkerSet)
+	private func updateMapMarkers(withState viewState: ViewStateAndOverlays,
+	                              delay: CGFloat,
+	                              including: MapMarkerDatabase.MapMarkerSet)
 	{
-		let delay = max(delay, 0.01)
+		let delay = max(delay, 0.5)
 		var including = including
 		if including.isEmpty {
 			// compute the list
@@ -1574,7 +1574,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		mapLayersView.mapMarkersView.updateRegion(withDelay: delay,
-		                                         including: including)
+		                                          including: including)
 	}
 }
 

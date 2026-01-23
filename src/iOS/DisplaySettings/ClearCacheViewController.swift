@@ -119,9 +119,7 @@ class ClearCacheViewController: UITableViewController {
 			func refreshAfterPurge() {
 				appDelegate.mapView.placePushpinForSelection()
 				appDelegate.mainView.mapLayersView.mapMarkersView.reset()
-				appDelegate.mainView.updateMapMarkersFromServer(viewState: appDelegate.mainView.viewState,
-				                                                delay: 0.0,
-				                                                including: [])
+				appDelegate.mainView.updateMapMarkers()
 			}
 			if appDelegate.mapView.mapData.changesetAsXml() != nil
 				|| isUnderDebugger()

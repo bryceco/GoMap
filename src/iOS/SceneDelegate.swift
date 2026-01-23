@@ -82,9 +82,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				if let center = track?.center() {
 					mainView.settings.displayGpxTracks = true // ensure GPX tracks are visible
 					mainView.viewPort.centerOn(latLon: center, metersWide: nil)
-					mainView.updateMapMarkersFromServer(viewState: mainView.viewState,
-					                                    delay: 0.1,
-					                                    including: [.gpx])
+					mainView.updateMapMarkers(including: [.gpx])
 				}
 			} catch {
 				self.displayImportError(error, filetype: localizedGPX)
