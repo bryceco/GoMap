@@ -161,23 +161,22 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 
 		// if user created a note then make sure notes are visible
 		let mainView = AppDelegate.shared.mainView!
+		let mapMarkersView = mainView.mapLayersView.mapMarkersView!
 		mainView.viewState.overlayMask.insert(.NOTES)
 		mainView.updateMapMarkers(including: [.notes])
 
-		mainView.mapLayersView.mapMarkersView.upload(note: note, close: resolves, comment: text) { [self] result in
-			alert.dismiss(animated: true)
-			switch result {
-			case let .success(newNote):
+		Task { @MainActor in
+			do {
+				let newNote = try await mapMarkersView.upload(note: note, close: resolves, comment: text)
+				alert.dismiss(animated: true)
 				note = newNote
 				updateShareButton()
-				DispatchQueue.main.async(execute: { [self] in
-					done(nil)
-					// remove note markers that are now resolved
-					mainView.mapLayersView.mapMarkersView
-						.removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
-					mainView.mapLayersView.mapMarkersView.updateMapMarkerButtonPositions()
-				})
-			case let .failure(error):
+				done(nil)	// dismiss ourself
+
+				// remove note markers that are now resolved
+				mapMarkersView.removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
+				mapMarkersView.updateMapMarkerButtonPositions()
+			} catch {
 				let alert2 = UIAlertController(title: NSLocalizedString("Error", comment: ""),
 				                               message: error.localizedDescription,
 				                               preferredStyle: .alert)

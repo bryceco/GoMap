@@ -460,18 +460,13 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	func serverUpdate(ident: OsmIdentifier,
 	                  version: Int,
 	                  changeset: OsmIdentifier,
-	                  timestamp: Date,
-	                  user: String?)
+	                  timestamp: Date)
 	{
 		DbgAssert((self.ident < 0 && ident > 0) || self.ident == ident)
 		self.ident = ident
 		self.version = version
 		self.changeset = changeset
 		setTimestamp(timestamp, undo: nil)
-		if let user {
-			self.user = user
-			self.uid = 0 // we don't know it
-		}
 	}
 
 	func serverUpdate(with newerVersion: OsmBaseObject) {

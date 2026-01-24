@@ -35,6 +35,7 @@ enum OsmMapDataError: LocalizedError {
 	case osmWayResolveToMapDataCouldntFindNodeRef
 	case badURL(String)
 	case otherError(String)
+	case badServerUpdateValue
 	case badXML
 
 	public var errorDescription: String? {
@@ -44,6 +45,7 @@ enum OsmMapDataError: LocalizedError {
 		case .osmWayResolveToMapDataCouldntFindNodeRef: return "OsmMapDataError.osmWayResolveToMapDataCouldntFindNodeRef"
 		case let .badURL(url): return "OsmMapDataError.badURL(\(url))"
 		case let .otherError(message): return "OsmMapDataError.otherError(\(message))"
+		case .badServerUpdateValue: return "badServerUpdateValue"
 		case .badXML: return "OsmMapDataError:badXML"
 		}
 	}
@@ -835,161 +837,136 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 	}
 
-	func uploadChangeset(
-		xml xmlChanges: DDXMLDocument,
-		changesetID: Int64,
-		retries: Int,
-		completion: @escaping (_ error: Error?) -> Void)
+	func uploadChangeset(xml xmlChanges: DDXMLDocument,
+	                     changesetID: Int64,
+						 generator: String,
+	                     retries: Int) async throws
 	{
 		let url2 = OSM_SERVER.apiURL + "api/0.6/changeset/\(changesetID)/upload"
-		putRequest(url: url2, method: "POST", xml: xmlChanges) { [self] result in
+		let postData = try await putRequest(url: url2, method: "POST", xml: xmlChanges)
 
-			switch result {
-			case let .failure(error):
-				completion(error)
-				return
-			case let .success(postData):
-				let response = String(decoding: postData, as: UTF8.self)
+		let response = String(decoding: postData, as: UTF8.self)
 
-				if retries > 0, response.hasPrefix("Version mismatch") {
-					// update the bad element and retry
-					DLog("Upload error: \(response)")
-					// "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld"
-					let scanner = Scanner(string: response)
-					if let _ = scanner.scanString("Version mismatch: Provided"),
-					   let localVersion = scanner.scanInt(),
-					   let _ = scanner.scanString(", server had:"),
-					   let serverVersion = scanner.scanInt(),
-					   let _ = scanner.scanString("of"),
-					   let objType = scanner.scanCharacters(from: CharacterSet.alphanumerics),
-					   let objId = scanner.scanInt64()
-					{
-						print("Updating object from version \(localVersion) to \(serverVersion)")
-						let objType = objType.lowercased()
-						var url3 = OSM_SERVER.apiURL + "api/0.6/\(objType)/\(objId)"
-						if objType == "way" || objType == "relation" {
-							url3 = url3 + "/full"
-						}
-						Task {
-							do {
-								let data = try await OsmDownloader.osmData(forUrl: url3)
-								await MainActor.run {
-									// update the bad element
-									try? self.merge(data, savingToDatabase: true)
-									// try again:
-									self.generateXMLandUploadChangeset(
-										changesetID,
-										retries: retries - 1,
-										completion: completion)
-								}
-							} catch {
-								await MainActor.run {
-									completion(error)
-								}
-							}
-						}
-						return
-					}
-				}
-
-				// we expect to receive an XML document with server updates
-				if !response.hasPrefix("<?xml") {
-					completion(OsmMapDataError.otherError(response))
-					return
-				}
-
-				let diffDoc: DDXMLDocument
-				do {
-					diffDoc = try DDXMLDocument(data: postData, options: 0)
-				} catch {
-					completion(error)
-					return
-				}
-
-				guard
-					let diffResult = diffDoc.rootElement(),
-					diffResult.name == "diffResult"
-				else {
-					completion(OsmMapDataError.otherError("Upload failed: invalid server respsonse"))
-					return
-				}
-				let timestamp = Date()
-
-				var sqlUpdate: [OsmBaseObject: Bool] = [:]
-				for element in diffResult.children ?? [] {
-					guard let element = element as? DDXMLElement else {
-						continue
-					}
-					let name = element.name
-					let oldId = Int64(element.attribute(forName: "old_id")?.stringValue ?? "0")!
-					let newId = Int64(element.attribute(forName: "new_id")?.stringValue ?? "0")!
-					let newVersion = Int(element.attribute(forName: "new_version")?.stringValue ?? "0")!
-
-					if name == "node" {
-						OsmMapData.updateObjectDictionary(
-							&nodes,
-							oldId: oldId,
-							newId: newId,
-							version: newVersion,
-							changeset: changesetID,
-							timestamp: timestamp,
-							sqlUpdate: &sqlUpdate)
-					} else if name == "way" {
-						OsmMapData.updateObjectDictionary(
-							&ways,
-							oldId: oldId,
-							newId: newId,
-							version: newVersion,
-							changeset: changesetID,
-							timestamp: timestamp,
-							sqlUpdate: &sqlUpdate)
-					} else if name == "relation" {
-						OsmMapData.updateObjectDictionary(
-							&relations,
-							oldId: oldId,
-							newId: newId,
-							version: newVersion,
-							changeset: changesetID,
-							timestamp: timestamp,
-							sqlUpdate: &sqlUpdate)
-					} else {
-						DLog("Bad upload diff document")
-					}
-				}
-
-				updateSql(sqlUpdate)
-
-				let url3 = OSM_SERVER.apiURL + "api/0.6/changeset/\(changesetID)/close"
-				putRequest(url: url3, method: "PUT", xml: nil) { result in
-					switch result {
-					case .success:
-						completion(nil)
-					case let .failure(error):
-						completion(error)
-					}
-				}
-
-				// reset undo stack after upload so user can't accidently undo a commit (wouldn't work anyhow because we don't undo version numbers on objects)
-				undoManager.removeAllActions()
+		if retries > 0, response.hasPrefix("Version mismatch") {
+			// update the bad element and retry
+			DLog("Upload error: \(response)")
+			// "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld"
+			let scanner = Scanner(string: response)
+			guard let _ = scanner.scanString("Version mismatch: Provided"),
+			      let localVersion = scanner.scanInt(),
+			      let _ = scanner.scanString(", server had:"),
+			      let serverVersion = scanner.scanInt(),
+			      let _ = scanner.scanString("of"),
+			      let objType2 = scanner.scanCharacters(from: CharacterSet.alphanumerics),
+			      let objId = scanner.scanInt64()
+			else {
+				throw OsmMapDataError.badServerUpdateValue
 			}
+			print("Updating object from version \(localVersion) to \(serverVersion)")
+			let objType = objType2.lowercased()
+			var url3 = OSM_SERVER.apiURL + "api/0.6/\(objType)/\(objId)"
+			if objType == "way" || objType == "relation" {
+				url3 = url3 + "/full"
+			}
+
+			let data = try await OsmDownloader.osmData(forUrl: url3)
+			try await MainActor.run {
+				// update the bad element
+				try self.merge(data, savingToDatabase: true)
+			}
+			// try again:
+			try await self.generateXMLandUploadChangeset(changesetID,
+														 generator: generator,
+			                                             retries: retries - 1)
+			return
+		}
+
+		// we expect to receive an XML document with server updates
+		if !response.hasPrefix("<?xml") {
+			throw OsmMapDataError.otherError(response)
+		}
+
+		let diffDoc: DDXMLDocument = try DDXMLDocument(data: postData, options: 0)
+
+		guard
+			let diffResult = diffDoc.rootElement(),
+			diffResult.name == "diffResult"
+		else {
+			throw OsmMapDataError.otherError("Upload failed: invalid server respsonse")
+		}
+		let timestamp = Date()
+
+		var sqlUpdate: [OsmBaseObject: Bool] = [:]
+		for element in diffResult.children ?? [] {
+			guard let element = element as? DDXMLElement else {
+				continue
+			}
+			let name = element.name
+			let oldId = Int64(element.attribute(forName: "old_id")?.stringValue ?? "0")!
+			let newId = Int64(element.attribute(forName: "new_id")?.stringValue ?? "0")!
+			let newVersion = Int(element.attribute(forName: "new_version")?.stringValue ?? "0")!
+
+			if name == "node" {
+				OsmMapData.updateObjectDictionary(
+					&nodes,
+					oldId: oldId,
+					newId: newId,
+					version: newVersion,
+					changeset: changesetID,
+					timestamp: timestamp,
+					sqlUpdate: &sqlUpdate)
+			} else if name == "way" {
+				OsmMapData.updateObjectDictionary(
+					&ways,
+					oldId: oldId,
+					newId: newId,
+					version: newVersion,
+					changeset: changesetID,
+					timestamp: timestamp,
+					sqlUpdate: &sqlUpdate)
+			} else if name == "relation" {
+				OsmMapData.updateObjectDictionary(
+					&relations,
+					oldId: oldId,
+					newId: newId,
+					version: newVersion,
+					changeset: changesetID,
+					timestamp: timestamp,
+					sqlUpdate: &sqlUpdate)
+			} else {
+				DLog("Bad upload diff document")
+			}
+		}
+
+		updateSql(sqlUpdate)
+
+		let url3 = OSM_SERVER.apiURL + "api/0.6/changeset/\(changesetID)/close"
+		_ = try await putRequest(url: url3, method: "PUT", xml: nil)
+
+		// reset undo stack after upload so user can't accidently undo a commit (wouldn't work anyhow because we don't undo version numbers on objects)
+		await MainActor.run {
+			undoManager.removeAllActions()
 		}
 	}
 
 	// upload xml generated by mapData
 	func generateXMLandUploadChangeset(_ changesetID: Int64,
-	                                   retries: Int,
-	                                   completion: @escaping (_ error: Error?) -> Void)
+									   generator: String,
+	                                   retries: Int) async throws
 	{
 		guard
 			let xmlChanges = OsmXmlGenerator.createXmlFor(nodes: nodes.values,
 			                                              ways: ways.values,
-			                                              relations: relations.values)
+			                                              relations: relations.values,
+														  generator: generator)
 		else {
-			completion(OsmMapDataError.badXML)
-			return
+			throw OsmMapDataError.badXML
 		}
 		OsmMapData.addChangesetId(changesetID, toXML: xmlChanges)
-		uploadChangeset(xml: xmlChanges, changesetID: changesetID, retries: retries, completion: completion)
+		try await uploadChangeset(xml: xmlChanges,
+								  changesetID: changesetID,
+								  generator: generator,
+								  retries: retries)
 	}
 
 	static func updateObjectDictionary<T: OsmBaseObject>(
@@ -1017,8 +994,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		object.serverUpdate(ident: newId,
 		                    version: newVersion,
 		                    changeset: changeset,
-		                    timestamp: timestamp,
-		                    user: AppDelegate.shared.userName)
+		                    timestamp: timestamp)
 		sqlUpdate[object] = true // mark for insertion
 
 		if oldId != newId {
@@ -1038,15 +1014,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		return output
 	}
 
-	func putRequest(
-		url: String,
-		method: String,
-		xml: DDXMLDocument?,
-		completion: @escaping (Result<Data, Error>) -> Void)
+	func putRequest(url: String,
+	                method: String,
+	                xml: DDXMLDocument?) async throws -> Data
 	{
 		guard var request = OSM_SERVER.oAuth2?.urlRequest(string: url) else {
-			completion(.failure(OsmMapDataError.badURL(url)))
-			return
+			throw OsmMapDataError.badURL(url)
 		}
 		request.setUserAgent()
 		request.httpMethod = method
@@ -1060,18 +1033,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
 		let immutableRequest = request
 
-		Task {
-			let result: Result<Data, Error>
-			do {
-				let data = try await URLSession.shared.data(with: immutableRequest)
-				result = .success(data)
-			} catch {
-				result = .failure(error)
-			}
-			await MainActor.run {
-				completion(result)
-			}
-		}
+		return try await URLSession.shared.data(with: immutableRequest)
 	}
 
 	enum OsmServerError: LocalizedError {
@@ -1085,14 +1047,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	// create a new changeset to upload to
-	func openNewChangeset(
-		withComment comment: String,
-		source: String,
-		imagery: String,
-		locale: String,
-		completion: @escaping (Result<Int64, Error>) -> Void)
+	func openNewChangeset(withComment comment: String,
+	                      source: String,
+	                      imagery: String,
+	                      locale: String) async throws -> Int64
 	{
-		let creator = "\(AppDelegate.appName) \(AppDelegate.appVersion)"
+		let creator = "\(await AppDelegate.appName) \(await AppDelegate.appVersion)"
 		var tags = [
 			"created_by": creator
 		]
@@ -1108,25 +1068,21 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		if locale.count != 0 {
 			tags["locale"] = locale
 		}
-		if let xmlCreate = OsmXmlGenerator.createXml(withType: "changeset", tags: tags) {
-			let url = OSM_SERVER.apiURL + "api/0.6/changeset/create"
-			putRequest(url: url, method: "PUT", xml: xmlCreate) { result in
-				switch result {
-				case let .failure(error):
-					completion(.failure(error))
-					return
-				case let .success(putData):
-					let responseString = String(decoding: putData, as: UTF8.self)
-					if let changeset = Int64(responseString) {
-						// The response string only contains of the digits 0 through 9.
-						// Assume that the request was successful and that the server responded with a changeset ID.
-						completion(.success(changeset))
-					} else {
-						// The response did not only contain digits; treat this as an error.
-						completion(.failure(OsmServerError.changesetIdNotDecimal(responseString)))
-					}
-				}
-			}
+		guard
+			let xmlCreate = OsmXmlGenerator.createXml(withType: "changeset", tags: tags)
+		else {
+			throw OsmMapDataError.otherError("Failed to create OSM XML for creating a new changeset.")
+		}
+		let url = OSM_SERVER.apiURL + "api/0.6/changeset/create"
+		let putData = try await putRequest(url: url, method: "PUT", xml: xmlCreate)
+		let responseString = String(decoding: putData, as: UTF8.self)
+		if let changeset = Int64(responseString) {
+			// The response string only contains of the digits 0 through 9.
+			// Assume that the request was successful and that the server responded with a changeset ID.
+			return changeset
+		} else {
+			// The response did not only contain digits; treat this as an error.
+			throw OsmServerError.changesetIdNotDecimal(responseString)
 		}
 	}
 
@@ -1143,49 +1099,48 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	///			- Integrate the server version into our data
 	///			- Repeat until either there is no mismatch, or retry count is reached
 	///		- Ask the server to close the changeset
-	func uploadChangeset(
-		withComment comment: String,
-		source: String,
-		imagery: String,
-		locale: String,
-		completion: @escaping (_ error: Error?) -> Void)
+	func uploadChangeset(withComment comment: String,
+	                     source: String,
+	                     imagery: String,
+						 generator: String,
+	                     locale: String) async throws
 	{
-		openNewChangeset(withComment: comment, source: source, imagery: imagery, locale: locale) { [self] result in
-			switch result {
-			case let .success(changesetID):
-				generateXMLandUploadChangeset(changesetID, retries: 20, completion: completion)
-			case let .failure(error):
-				completion(error)
-			}
-		}
+		let changesetID = try await openNewChangeset(withComment: comment,
+		                                             source: source,
+		                                             imagery: imagery,
+		                                             locale: locale)
+		try await generateXMLandUploadChangeset(changesetID,
+												generator: generator,
+												retries: 20)
 	}
 
 	// upload xml edited by user
-	func openChangesetAndUpload(
-		xml xmlChanges: DDXMLDocument,
-		comment: String,
-		source: String,
-		imagery: String,
-		locale: String,
-		completion: @escaping (_ error: Error?) -> Void)
+	func openChangesetAndUpload(xml xmlChanges: DDXMLDocument,
+	                            comment: String,
+	                            source: String,
+	                            imagery: String,
+								generator: String,
+	                            locale: String) async throws
 	{
 		consistencyCheck()
 
-		openNewChangeset(withComment: comment, source: source, imagery: imagery, locale: locale) { [self] result in
-			switch result {
-			case let .success(changesetID):
-				OsmMapData.addChangesetId(changesetID, toXML: xmlChanges)
-				uploadChangeset(xml: xmlChanges, changesetID: changesetID, retries: 0, completion: completion)
-			case let .failure(error):
-				completion(error)
-			}
-		}
+		let changesetID = try await openNewChangeset(
+			withComment: comment,
+			source: source,
+			imagery: imagery,
+			locale: locale)
+		OsmMapData.addChangesetId(changesetID, toXML: xmlChanges)
+		try await uploadChangeset(xml: xmlChanges,
+								  changesetID: changesetID,
+								  generator: generator,
+								  retries: 0)
 	}
 
 	func changesetAsAttributedString() -> NSAttributedString? {
 		guard let doc = OsmXmlGenerator.createXmlFor(nodes: nodes.values,
 		                                             ways: ways.values,
-		                                             relations: relations.values)
+		                                             relations: relations.values,
+													 generator: AppDelegate.shared.generator)
 		else {
 			return nil
 		}
@@ -1195,7 +1150,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	func changesetAsXml() -> String? {
 		guard let xml = OsmXmlGenerator.createXmlFor(nodes: nodes.values,
 		                                             ways: ways.values,
-		                                             relations: relations.values)
+		                                             relations: relations.values,
+													 generator: AppDelegate.shared.generator)
 		else {
 			return nil
 		}
@@ -1279,10 +1235,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		let modRelations = undoObjects.compactMap({ $0 as? OsmRelation })
 
 #if DEBUG
-		// verify that every modified object exists in the UndoManager
-		let n = Set<OsmNode>(nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
-		let w = Set<OsmWay>(ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
-		let r = Set<OsmRelation>(relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
+		// Verify that every modified object exists in the UndoManager.
+		let n = Set<OsmNode>(nodes.values.filter({ $0.isModified() }))
+		let w = Set<OsmWay>(ways.values.filter({ $0.isModified() }))
+		let r = Set<OsmRelation>(relations.values.filter({ $0.isModified() }))
 		assert(n.isSubset(of: modNodes))
 		assert(w.isSubset(of: modWays))
 		assert(r.isSubset(of: modRelations))
@@ -1742,6 +1698,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			newData.ways = try db.queryWays()
 			newData.relations = try db.queryRelations()
 			try mapData.merge(newData, savingToDatabase: false)
+
+			mapData.consistencyCheck()
 		} catch {
 			// database couldn't be read
 			print("Error: \(error.localizedDescription)")

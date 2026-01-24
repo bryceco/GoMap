@@ -283,8 +283,7 @@ extension MapMarkerDatabase {
 
 	func upload(note: OsmNoteMarker,
 	            close: Bool,
-	            comment: String,
-	            completion: @escaping (Result<OsmNoteMarker, Error>) -> Void)
+	            comment: String) async throws -> OsmNoteMarker
 	{
 		var allowedChars = CharacterSet.urlQueryAllowed
 		allowedChars.remove(charactersIn: "+;&")
@@ -304,25 +303,18 @@ extension MapMarkerDatabase {
 			}
 		}
 
-		mapData.putRequest(url: url, method: "POST", xml: nil, completion: { [self] result in
-			if case let .success(postData) = result,
-			   let xmlText = String(data: postData, encoding: .utf8),
-			   let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
-			   let list = try? xmlDoc.rootElement()?.nodes(forXPath: "./note") as? [DDXMLElement],
-			   let noteElement = list.first,
-			   let newNote = OsmNoteMarker(noteXml: noteElement)
-			{
-				addOrUpdate(marker: newNote)
-				completion(.success(newNote))
-			} else {
-				if case let .failure(error) = result {
-					completion(.failure(error))
-				} else {
-					completion(.failure(NSError(domain: "OsmNotesDatabase",
-					                            code: 1,
-					                            userInfo: [NSLocalizedDescriptionKey: "Update Error"])))
-				}
-			}
-		})
+		let postData = try await mapData.putRequest(url: url, method: "POST", xml: nil)
+		guard let xmlText = String(data: postData, encoding: .utf8),
+			  let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
+			  let list = try? xmlDoc.rootElement()?.nodes(forXPath: "./note") as? [DDXMLElement],
+			  let noteElement = list.first,
+			  let newNote = OsmNoteMarker(noteXml: noteElement)
+		else {
+			throw NSError(domain: "OsmNotesDatabase",
+										code: 1,
+										userInfo: [NSLocalizedDescriptionKey: "Update Error"])
+		}
+		addOrUpdate(marker: newNote)
+		return newNote
 	}
 }

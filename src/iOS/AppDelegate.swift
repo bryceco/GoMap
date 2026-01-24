@@ -108,12 +108,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	static let appName: String = Bundle.main.infoDictionary?["CFBundleDisplayName"] as! String
-
 	static let appVersion: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
-
 	static let appBuildNumber: String = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
-
 	static let bundleName = String(Bundle.main.bundleIdentifier!.split(separator: ".").last!)
+
+	var generator: String { "\(Self.appName) \(Self.appVersion)" }
+
 
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground.

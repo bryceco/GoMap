@@ -221,13 +221,11 @@ class MapMarkersView: UIView {
 	// FIXME: Move this somewhere else, but mapMarkerDatabase is private so ??
 	func upload(note: OsmNoteMarker,
 	            close: Bool,
-	            comment: String,
-	            completion: @escaping (Result<OsmNoteMarker, Error>) -> Void)
+	            comment: String) async throws -> OsmNoteMarker
 	{
-		mapMarkerDatabase.upload(note: note,
-		                         close: close,
-		                         comment: comment,
-		                         completion: completion)
+		return try await mapMarkerDatabase.upload(note: note,
+												  close: close,
+												  comment: comment)
 	}
 }
 

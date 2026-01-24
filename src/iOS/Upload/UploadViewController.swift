@@ -163,7 +163,6 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 	}
 
 	@IBAction func commit(_ sender: Any?) {
-		let appDelegate = AppDelegate.shared
 		guard
 			let oAuth = OSM_SERVER.oAuth2,
 			oAuth.isAuthorized()
@@ -195,11 +194,21 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 			return
 		}
 
+		Task { @MainActor in
+			await performCommit()
+		}
+	}
+
+	@MainActor
+	func performCommit() async {
+		let appDelegate = AppDelegate.shared
+
 		progressView.startAnimating()
 		commitButton.isEnabled = false
 		cancelButton.isEnabled = false
 		exportOscButton.isEnabled = false
 		editXmlButton.isEnabled = false
+		let generator = appDelegate.generator
 
 		commentTextView.resignFirstResponder()
 		xmlTextView.resignFirstResponder()
@@ -218,19 +227,35 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 
 		let locale = PresetLanguages.preferredLanguageCode()
 
-		let completion: ((Error?) -> Void) = { [self] error in
+		var imagery = ""
+		if appDelegate.mainView.viewState.state == MapViewState.EDITORAERIAL ||
+			appDelegate.mainView.viewState.state == MapViewState.AERIAL
+		{
+			let server = appDelegate.mainView.mapLayersView.aerialLayer.tileServer
+			if server.identifier.hasPrefix("http:") || server.identifier.hasPrefix("https:") {
+				// custom user imagery
+				imagery = sanitizedURL(server.identifier)
+				if imagery.count > 255 {
+					imagery = String(imagery.prefix(255))
+				}
+			} else {
+				imagery = server.name
+			}
+		}
+
+		@MainActor
+		func processResult(_ error: Error?) {
 			progressView.stopAnimating()
 			commitButton.isEnabled = true
 			cancelButton.isEnabled = true
-			if let error = error as? UrlSessionError,
-			   case let .badStatusCode(code, _) = error,
-			   code == 401
-			{
+
+			switch error {
+			case .some(UrlSessionError.badStatusCode(401, _)):
 				// authentication error, so redirect to login page
 				OSM_SERVER.oAuth2?.removeAuthorization()
 				performSegue(withIdentifier: "loginSegue", sender: self)
 				return
-			} else if let error = error {
+			case let .some(error):
 				let alert = UIAlertController(
 					title: NSLocalizedString("Unable to upload changes", comment: ""),
 					message: error.localizedDescription,
@@ -244,7 +269,8 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 					exportOscButton.isEnabled = true
 					editXmlButton.isEnabled = true
 				}
-			} else {
+			case .none:
+				// success!
 				dismiss(animated: true)
 
 				// flash success message
@@ -263,46 +289,29 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 			}
 		}
 
-		var imagery = ""
-		if appDelegate.mainView.viewState.state == MapViewState.EDITORAERIAL ||
-			appDelegate.mainView.viewState.state == MapViewState.AERIAL
-		{
-			let server = appDelegate.mainView.mapLayersView.aerialLayer.tileServer
-			if server.identifier.hasPrefix("http:") || server.identifier.hasPrefix("https:") {
-				// custom user imagery
-				imagery = sanitizedURL(server.identifier)
-				if imagery.count > 255 {
-					imagery = String(imagery.prefix(255))
-				}
-			} else {
-				imagery = server.name
-			}
-		}
+		do {
+			if xmlTextView.isEditable {
+				// upload user-edited text
+				let xmlText = xmlTextView.text ?? ""
+				let xmlDoc = try DDXMLDocument(xmlString: xmlText, options: 0)
 
-		if xmlTextView.isEditable {
-			// upload user-edited text
-			let xmlText = xmlTextView.text ?? ""
-			let xmlDoc: DDXMLDocument
-			do {
-				xmlDoc = try DDXMLDocument(xmlString: xmlText, options: 0)
-			} catch {
-				completion(error)
-				return
+				try await mapData?.openChangesetAndUpload(xml: xmlDoc,
+				                                          comment: comment,
+				                                          source: source,
+														  imagery: imagery,
+														  generator: generator,
+				                                          locale: locale)
+			} else {
+				// normal upload
+				try await mapData?.uploadChangeset(withComment: comment,
+				                                   source: source,
+				                                   imagery: imagery,
+												   generator: generator,
+				                                   locale: locale)
 			}
-			mapData?.openChangesetAndUpload(
-				xml: xmlDoc,
-				comment: comment,
-				source: source,
-				imagery: imagery,
-				locale: locale,
-				completion: completion)
-		} else {
-			// normal upload
-			mapData?.uploadChangeset(withComment: comment,
-			                         source: source,
-			                         imagery: imagery,
-			                         locale: locale,
-			                         completion: completion)
+			processResult(nil)
+		} catch {
+			processResult(error)
 		}
 	}
 

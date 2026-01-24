@@ -66,7 +66,7 @@ final class OsmXmlGenerator {
 	}
 
 	static func createXmlFor<N: Sequence, W: Sequence, R: Sequence>
-	(nodes: N, ways: W, relations: R) -> DDXMLDocument?
+	(nodes: N, ways: W, relations: R, generator: String) -> DDXMLDocument?
 		where N.Element == OsmNode, W.Element == OsmWay, R.Element == OsmRelation
 	{
 		let createNodeElement = DDXMLNode.element(withName: "create") as! DDXMLElement
@@ -175,29 +175,13 @@ final class OsmXmlGenerator {
 			}
 		}
 
-#if os(iOS)
-		let appDelegate = AppDelegate.shared
 		let text = """
 		<?xml version="1.0"?>\
-		<osmChange generator="\(AppDelegate.appName) \(AppDelegate.appVersion)" version="0.6"></osmChange>
+		<osmChange generator="\(generator)" version="0.6"></osmChange>
 		"""
 		let doc = try! DDXMLDocument(xmlString: text, options: 0)
 		let root = doc.rootElement()!
-#else
-		let appDelegate = NSApplication.shared.delegate as? AppDelegate
-		let root = XMLNode.element(withName: "osmChange") as? XMLElement
-		if let attribute = XMLNode.attribute(
-			withName: "generator",
-			stringValue: appDelegate?.appName ?? "") as? DDXMLNode
-		{
-			root?.addAttribute(attribute)
-		}
-		if let attribute = XMLNode.attribute(withName: "version", stringValue: "0.6") as? DDXMLNode {
-			root?.addAttribute(attribute)
-		}
-		let doc = XMLDocument(rootElement: root)
-		doc.characterEncoding = "UTF-8"
-#endif
+
 		if createNodeElement.childCount > 0 {
 			root.addChild(createNodeElement)
 		}
