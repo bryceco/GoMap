@@ -450,7 +450,7 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func updateMapLocation() {
-		if isHidden {
+		guard !isHidden && !owner.isHidden else {
 			Task {
 				await mapData.cancelCurrentDownloads()
 			}
