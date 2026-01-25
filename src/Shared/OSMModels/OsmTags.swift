@@ -362,14 +362,20 @@ final class OsmTags {
 			if line.trimmingCharacters(in: .whitespaces).isEmpty {
 				continue
 			}
+
 			// divide line by '=', but allow RHS to contain '=' (happens in URLs)
 			let parts = line.split(separator: "=", maxSplits: 1)
 			guard parts.count == 2 else {
 				return nil
 			}
-			let k = String(parts[0])
-			let v = String(parts[1])
-			result[k] = v
+			var k = parts[0]
+			var v = parts[1]
+			// allow k = v (with spaces)
+			if k.hasSuffix(" "), v.hasPrefix(" ") {
+				k = k.dropLast()
+				v = v.dropFirst()
+			}
+			result[String(k)] = String(v)
 		}
 
 		// This function detects strings that look like a key/value pair, but in fact is just a regular value
@@ -381,7 +387,6 @@ final class OsmTags {
 			{
 				return true
 			}
-
 			return false
 		}
 
