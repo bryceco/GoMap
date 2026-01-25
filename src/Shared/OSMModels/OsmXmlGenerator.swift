@@ -1,5 +1,5 @@
 //
-//  OsmUploadXML.swift
+//  OsmXmlGenerator.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 6/19/21.

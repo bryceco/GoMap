@@ -305,14 +305,14 @@ extension MapMarkerDatabase {
 
 		let postData = try await mapData.putRequest(url: url, method: "POST", xml: nil)
 		guard let xmlText = String(data: postData, encoding: .utf8),
-			  let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
-			  let list = try? xmlDoc.rootElement()?.nodes(forXPath: "./note") as? [DDXMLElement],
-			  let noteElement = list.first,
-			  let newNote = OsmNoteMarker(noteXml: noteElement)
+		      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
+		      let list = try? xmlDoc.rootElement()?.nodes(forXPath: "./note") as? [DDXMLElement],
+		      let noteElement = list.first,
+		      let newNote = OsmNoteMarker(noteXml: noteElement)
 		else {
 			throw NSError(domain: "OsmNotesDatabase",
-										code: 1,
-										userInfo: [NSLocalizedDescriptionKey: "Update Error"])
+			              code: 1,
+			              userInfo: [NSLocalizedDescriptionKey: "Update Error"])
 		}
 		addOrUpdate(marker: newNote)
 		return newNote

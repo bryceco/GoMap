@@ -171,7 +171,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 				alert.dismiss(animated: true)
 				note = newNote
 				updateShareButton()
-				done(nil)	// dismiss ourself
+				done(nil) // dismiss ourself
 
 				// remove note markers that are now resolved
 				mapMarkersView.removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })

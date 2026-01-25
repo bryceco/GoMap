@@ -114,7 +114,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 	var generator: String { "\(Self.appName) \(Self.appVersion)" }
 
-
 	func applicationWillTerminate(_ application: UIApplication) {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground.
 

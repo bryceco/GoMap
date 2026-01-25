@@ -298,15 +298,15 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 				try await mapData?.openChangesetAndUpload(xml: xmlDoc,
 				                                          comment: comment,
 				                                          source: source,
-														  imagery: imagery,
-														  generator: generator,
+				                                          imagery: imagery,
+				                                          generator: generator,
 				                                          locale: locale)
 			} else {
 				// normal upload
 				try await mapData?.uploadChangeset(withComment: comment,
 				                                   source: source,
 				                                   imagery: imagery,
-												   generator: generator,
+				                                   generator: generator,
 				                                   locale: locale)
 			}
 			processResult(nil)

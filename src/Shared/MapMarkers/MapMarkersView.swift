@@ -230,8 +230,8 @@ class MapMarkersView: UIView {
 	            comment: String) async throws -> OsmNoteMarker
 	{
 		return try await mapMarkerDatabase.upload(note: note,
-												  close: close,
-												  comment: comment)
+		                                          close: close,
+		                                          comment: comment)
 	}
 }
 
