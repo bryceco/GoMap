@@ -18,6 +18,11 @@ final class DataOverlayLayer: DrawingLayer, DrawingLayerDelegate {
 		geojsonDelegate = self
 	}
 
+	override init(layer: Any) {
+		super.init(layer: layer)
+		geojsonDelegate = self
+	}
+
 	var allCustom: [URL: GeoJSONFile] = [:]
 
 	override func layoutSublayers() {

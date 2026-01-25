@@ -28,6 +28,10 @@ final class GpxLayer: DrawingLayer, DrawingLayerDelegate {
 		fatalError()
 	}
 
+	override init(layer: Any) {
+		super.init(layer: layer)
+	}
+
 	// MARK: Properties
 
 	// Delegate function to provide GeoJSONLayer with data

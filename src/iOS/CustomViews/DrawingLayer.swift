@@ -143,6 +143,13 @@ class DrawingLayer: CALayer {
 		setNeedsLayout()
 	}
 
+	override init(layer: Any) {
+		let layer = layer as! DrawingLayer
+		viewPort = layer.viewPort
+		self.layerDict = [:]
+		super.init(layer: layer)
+	}
+
 	override var isHidden: Bool {
 		didSet {
 			if !isHidden {

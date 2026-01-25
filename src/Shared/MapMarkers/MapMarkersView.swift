@@ -33,6 +33,12 @@ class MapMarkersView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 
+	// override hittest so we don't block touches on the UIViews below us.
+	override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+		let hitView = super.hitTest(point, with: event)
+		return hitView == self ? nil : hitView
+	}
+
 	func reset() {
 		mapMarkerDatabase.removeAll()
 	}
