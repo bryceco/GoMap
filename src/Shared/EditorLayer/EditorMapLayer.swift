@@ -450,7 +450,7 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func updateMapLocation() {
-		guard !isHidden && !owner.isHidden else {
+		guard !isHidden, !owner.isHidden else {
 			Task {
 				await mapData.cancelCurrentDownloads()
 			}
@@ -471,7 +471,7 @@ final class EditorMapLayer: CALayer {
 				// present error asynchrounously so we don't interrupt the current UI action
 				DispatchQueue.main.async(execute: { [self] in
 					// if we've been hidden don't bother displaying errors
-					if !isHidden {
+					if !isHidden, !owner.isHidden {
 						display.presentError(title: nil, error: error, flash: true)
 					}
 				})
@@ -1765,7 +1765,7 @@ final class EditorMapLayer: CALayer {
 	}
 
 	override func layoutSublayers() {
-		guard !isHidden else {
+		guard !isHidden, !owner.isHidden else {
 			return
 		}
 
