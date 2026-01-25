@@ -10,26 +10,24 @@ import Foundation
 
 struct AtomicInt {
 	private var count: Int
-	private let semaphore = DispatchSemaphore(value: 1)
-	private func wait() { semaphore.wait() }
-	private func signal() { semaphore.signal() }
+	private let lock = NSLock()
 
 	init(_ count: Int) {
 		self.count = count
 	}
 
 	mutating func increment(_ delta: Int = 1) {
-		wait(); defer { signal() }
+		lock.lock(); defer { lock.unlock() }
 		count += delta
 	}
 
 	mutating func decrement() {
-		wait(); defer { signal() }
+		lock.lock(); defer { lock.unlock() }
 		count -= 1
 	}
 
 	func value() -> Int {
-		wait(); defer { signal() }
+		lock.lock(); defer { lock.unlock() }
 		return count
 	}
 }
