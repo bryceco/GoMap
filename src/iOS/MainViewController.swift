@@ -78,8 +78,7 @@ struct ViewStateAndOverlays {
 
 final class MainViewController: UIViewController, DPadDelegate,
 	UIActionSheetDelegate, UIGestureRecognizerDelegate,
-	UIContextMenuInteractionDelegate, UIPointerInteractionDelegate,
-	UIAdaptivePresentationControllerDelegate
+	UIPointerInteractionDelegate, UIAdaptivePresentationControllerDelegate
 {
 	class DisplaySettings {
 		@Notify var enableRotation: Bool = UserPrefs.shared.mapViewEnableRotation.value ?? true {
@@ -318,22 +317,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 		view.addGestureRecognizer(tapAndDragGesture)
 
 		if #available(iOS 13.4, macCatalyst 13.0, *) {
-			// mouseover support for Mac Catalyst and iPad:
-			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
-			mapView.addGestureRecognizer(hover)
-
-#if targetEnvironment(macCatalyst)
-			// right-click support for Mac Catalyst
-			let rightClick = UIContextMenuInteraction(delegate: self)
-			view.addInteraction(rightClick)
-#else
-			// right-click support for iPad:
-			let rightClick = UITapGestureRecognizer(target: self, action: #selector(handleRightClick(_:)))
-			rightClick.allowedTouchTypes = [NSNumber(integerLiteral: UITouch.TouchType.indirect.rawValue)]
-			rightClick.buttonMaskRequired = .secondary
-			view.addGestureRecognizer(rightClick)
-#endif
-
 			// pan gesture to recognize mouse-wheel scrolling (zoom) on iPad and Mac Catalyst
 			let scrollWheelGesture = UIPanGestureRecognizer(
 				target: self,
@@ -494,30 +477,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
 		// We were just displayed so update map
-	}
-
-	@available(iOS 13.0, *)
-	func contextMenuInteraction(
-		_ interaction: UIContextMenuInteraction,
-		configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration?
-	{
-		let location = interaction.location(in: mapView)
-		rightClick(at: location)
-		return nil
-	}
-
-	@objc func handleRightClick(_ recognizer: UIGestureRecognizer) {
-		let location = recognizer.location(in: mapView)
-		rightClick(at: location)
-	}
-
-	func rightClick(at location: CGPoint) {
-		// right-click is equivalent to holding + and clicking
-		mapView.rightClick(at: location)
-	}
-
-	@objc func hover(_ recognizer: UIGestureRecognizer) {
-		mapView.hover(recognizer)
 	}
 
 #if targetEnvironment(macCatalyst)
@@ -1011,7 +970,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				// treat as tap, but make sure it occured inside the button
 				let touch = recognizer.location(in: recognizer.view)
 				if recognizer.view?.bounds.contains(touch) ?? false {
-					rightClick(at: mapView.bounds.center())
+					mapView.rightClick(at: mapView.bounds.center())
 				}
 			}
 			plusButtonTimestamp = 0.0

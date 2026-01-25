@@ -39,7 +39,9 @@ struct MapLocation {
 
 // MARK: MapView
 
-final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationControllerDelegate {
+final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteractionDelegate,
+	UISheetPresentationControllerDelegate
+{
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
 
 	var voiceAnnouncement: VoiceAnnouncement?
@@ -98,6 +100,24 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 		objectRotationGesture.delegate = self
 		objectRotationGesture.isEnabled = false // disabled until needed
 		addGestureRecognizer(objectRotationGesture)
+
+		if #available(iOS 13.4, macCatalyst 13.0, *) {
+			// mouseover support for Mac Catalyst and iPad:
+			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
+			addGestureRecognizer(hover)
+
+#if targetEnvironment(macCatalyst)
+			// right-click support for Mac Catalyst
+			let rightClick = UIContextMenuInteraction(delegate: self)
+			addInteraction(rightClick)
+#else
+			// right-click support for iPad:
+			let rightClick = UITapGestureRecognizer(target: self, action: #selector(handleRightClick(_:)))
+			rightClick.allowedTouchTypes = [NSNumber(integerLiteral: UITouch.TouchType.indirect.rawValue)]
+			rightClick.buttonMaskRequired = .secondary
+			addGestureRecognizer(rightClick)
+#endif
+		}
 
 		// magnifying glass
 		magnifyingGlass = MagnifyingGlass(sourceView: self, radius: 70.0, scale: 2.0)
@@ -1033,6 +1053,21 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UISheetPresentationCon
 			endObjectRotation()
 			editorLayer.rotateFinish()
 		}
+	}
+
+	@available(iOS 13.0, *)
+	func contextMenuInteraction(
+		_ interaction: UIContextMenuInteraction,
+		configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration?
+	{
+		let location = interaction.location(in: self)
+		rightClick(at: location)
+		return nil
+	}
+
+	@objc func handleRightClick(_ recognizer: UIGestureRecognizer) {
+		let location = recognizer.location(in: self)
+		rightClick(at: location)
 	}
 
 	func rightClick(at location: CGPoint) {
