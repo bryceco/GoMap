@@ -289,8 +289,7 @@ extension MapMarkerDatabase {
 		allowedChars.remove(charactersIn: "+;&")
 		let comment = comment.addingPercentEncoding(withAllowedCharacters: allowedChars) ?? ""
 
-		var url = OSM_SERVER.apiURL + "api/0.6/notes"
-
+		var url = "api/0.6/notes"
 		if note.comments.count == 0 {
 			// brand new note
 			url += "?lat=\(note.latLon.lat)&lon=\(note.latLon.lon)&text=\(comment)"
@@ -303,7 +302,9 @@ extension MapMarkerDatabase {
 			}
 		}
 
-		let postData = try await mapData.putRequest(url: url, method: "POST", xml: nil)
+		let postData = try await OSM_SERVER.putRequest(relativeUrl: url,
+													   method: "POST",
+													   xml: nil)
 		guard let xmlText = String(data: postData, encoding: .utf8),
 		      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
 		      let list = try? xmlDoc.rootElement()?.nodes(forXPath: "./note") as? [DDXMLElement],

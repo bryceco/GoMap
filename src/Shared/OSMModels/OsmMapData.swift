@@ -840,8 +840,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	                     generator: String,
 	                     retries: Int) async throws
 	{
-		let url2 = OSM_SERVER.apiURL + "api/0.6/changeset/\(changesetID)/upload"
-		let postData = try await putRequest(url: url2, method: "POST", xml: xmlChanges)
+		let postData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(changesetID)/upload",
+													   method: "POST",
+													   xml: xmlChanges)
 
 		let response = String(decoding: postData, as: UTF8.self)
 
@@ -938,8 +939,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		updateSql(sqlUpdate)
 
-		let url3 = OSM_SERVER.apiURL + "api/0.6/changeset/\(changesetID)/close"
-		_ = try await putRequest(url: url3, method: "PUT", xml: nil)
+		_ = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(changesetID)/close",
+											method: "PUT",
+											xml: nil)
 
 		// reset undo stack after upload so user can't accidently undo a commit (wouldn't work anyhow because we don't undo version numbers on objects)
 		await MainActor.run {
@@ -1012,28 +1014,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		return output
 	}
 
-	func putRequest(url: String,
-	                method: String,
-	                xml: DDXMLDocument?) async throws -> Data
-	{
-		guard var request = OSM_SERVER.oAuth2?.urlRequest(string: url) else {
-			throw OsmMapDataError.badURL(url)
-		}
-		request.setUserAgent()
-		request.httpMethod = method
-		if let xml = xml {
-			var data = xml.xmlData(withOptions: 0)
-			data = (try? data.gzipped()) ?? data
-			request.httpBody = data
-			request.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-			request.setValue("gzip", forHTTPHeaderField: "Content-Encoding")
-		}
-		request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
-		let immutableRequest = request
-
-		return try await URLSession.shared.data(with: immutableRequest)
-	}
-
 	enum OsmServerError: LocalizedError {
 		case changesetIdNotDecimal(String)
 
@@ -1071,8 +1051,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		else {
 			throw OsmMapDataError.otherError("Failed to create OSM XML for creating a new changeset.")
 		}
-		let url = OSM_SERVER.apiURL + "api/0.6/changeset/create"
-		let putData = try await putRequest(url: url, method: "PUT", xml: xmlCreate)
+		let putData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/create",
+													  method: "PUT",
+													  xml: xmlCreate)
 		let responseString = String(decoding: putData, as: UTF8.self)
 		if let changeset = Int64(responseString) {
 			// The response string only contains of the digits 0 through 9.

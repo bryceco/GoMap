@@ -225,6 +225,32 @@ class OsmServer {
 	}
 }
 
+extension OsmServer {
+	func putRequest(relativeUrl: String,
+					method: String,
+					xml: DDXMLDocument?) async throws -> Data
+	{
+		let url = OSM_SERVER.apiURL + relativeUrl
+
+		guard var request = oAuth2?.urlRequest(string: url) else {
+			throw OsmMapDataError.badURL(url)
+		}
+		request.setUserAgent()
+		request.httpMethod = method
+		if let xml = xml {
+			var data = xml.xmlData(withOptions: 0)
+			data = (try? data.gzipped()) ?? data
+			request.httpBody = data
+			request.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
+			request.setValue("gzip", forHTTPHeaderField: "Content-Encoding")
+		}
+		request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
+		let immutableRequest = request
+
+		return try await URLSession.shared.data(with: immutableRequest)
+	}
+}
+
 let OsmServerList = [
 	OsmServer(fullName: "OpenStreetMap",
 	          serverHost: "www.openstreetmap.org",
