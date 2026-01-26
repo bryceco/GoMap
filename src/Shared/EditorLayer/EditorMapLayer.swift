@@ -1828,22 +1828,6 @@ final class EditorMapLayer: CALayer {
 		}
 	}
 
-	// MARK: Properties
-
-	override var isHidden: Bool {
-		didSet(wasHidden) {
-			if wasHidden, !isHidden {
-				updateMapLocation()
-			}
-			if !wasHidden, isHidden {
-				selectedNode = nil
-				selectedWay = nil
-				selectedRelation = nil
-				owner.removePin()
-			}
-		}
-	}
-
 	// MARK: Coding
 
 	override func encode(with coder: NSCoder) {

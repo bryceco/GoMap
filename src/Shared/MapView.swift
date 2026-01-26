@@ -68,10 +68,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	// MARK: initialization
 
-	required init?(coder: NSCoder) {
-		super.init(coder: coder)
-	}
-
 	override func awakeFromNib() {
 		super.awakeFromNib()
 
@@ -192,6 +188,20 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		editorLayer.bounds.origin = bounds.origin
 	}
 
+	override var isHidden: Bool {
+		didSet {
+			if oldValue, !isHidden {
+				// just became visible, so have editor download data for region
+				editorLayer?.updateMapLocation()
+			}
+			if isHidden {
+				unselectAll()
+			}
+			// editToolbar isn't a subview, so we have to hide/unhide it manually
+			editToolbar?.isHidden = pushPin == nil || isHidden
+		}
+	}
+
 	func didReceiveMemoryWarning() {
 		editorLayer.purgeCachedData(.soft)
 		editorLayer.mapData.archiveModifiedData()
@@ -220,7 +230,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			? SurfaceAreaOfRect(viewPort.boundingLatLonForScreen())
 			: Double.greatestFiniteMagnitude
 		var isZoomedOut = area > 2.0 * 1000 * 1000
-		if !editorLayer.isHidden,
+		if !isHidden,
 		   !editorLayer.atVisibleObjectLimit,
 		   area < 1000.0 * 1000 * 1000
 		{
@@ -304,7 +314,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	// MARK: Undo/Redo
 
 	@IBAction func undo(_ sender: Any?) {
-		if editorLayer.isHidden {
+		if isHidden {
 			MessageDisplay.shared.flashMessage(
 				title: nil,
 				message: NSLocalizedString("Editing layer not visible", comment: ""))
@@ -321,7 +331,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	}
 
 	@IBAction func redo(_ sender: Any?) {
-		if editorLayer.isHidden {
+		if isHidden {
 			MessageDisplay.shared.flashMessage(
 				title: nil,
 				message: NSLocalizedString("Editing layer not visible", comment: ""))
@@ -339,7 +349,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		case .keyboardEscape:
 			guard
 				!isHidden,
-				!editorLayer.isHidden,
 				mainView.presentedViewController == nil
 			else {
 				break
@@ -1032,7 +1041,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	// long press on map allows selection of various objects near the location
 	@IBAction func screenLongPressGesture(_ longPress: UILongPressGestureRecognizer) {
-		if longPress.state == .began, !editorLayer.isHidden {
+		if longPress.state == .began, !isHidden {
 			let point = longPress.location(in: self)
 			editorLayer.longPressAtPoint(point)
 		}
