@@ -469,9 +469,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 	}
 
-	// undo manager interface
-
-	// MARK: Undo manager
+	// MARK: Undo manager interface
 
 	@discardableResult
 	func undo() -> [String: Any]? {
