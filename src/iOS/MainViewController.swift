@@ -887,6 +887,12 @@ final class MainViewController: UIViewController, DPadDelegate,
 	var prevousPinchScale = 0.0
 
 	@objc func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
+		guard
+			mapView.isRotateObjectMode == nil
+		else {
+			return
+		}
+
 		switch pinch.state {
 		case .began:
 			prevousPinchScale = 1.0
@@ -917,7 +923,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	@objc func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
 		// Rotate screen
-		guard settings.enableRotation else {
+		guard settings.enableRotation,
+			mapView.isRotateObjectMode == nil
+		else {
 			return
 		}
 

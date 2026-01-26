@@ -36,7 +36,7 @@ extension MapViewPort {
 	}
 
 	func boundingMapRectForScreen() -> OSMRect {
-		let rc = OSMRect(AppDelegate.shared.mainView.mapLayersView.layer.bounds)
+		let rc = OSMRect(AppDelegate.shared.mainView.mapLayersView.bounds)
 		return mapTransform.boundingMapRect(forScreenRect: rc)
 	}
 
@@ -72,8 +72,8 @@ extension MapViewPort {
 	}
 
 	func adjustZoom(by ratio: CGFloat, aroundScreenPoint zoomCenter: CGPoint) {
-		guard ratio != 1.0,
-		      AppDelegate.shared.mapView.isRotateObjectMode == nil
+		guard
+			ratio != 1.0
 		else {
 			return
 		}
@@ -98,7 +98,7 @@ extension MapViewPort {
 	}
 
 	func rotate(by angle: CGFloat, aroundScreenPoint zoomCenter: CGPoint) {
-		if angle == 0.0 {
+		guard angle != 0.0 else {
 			return
 		}
 
