@@ -369,10 +369,7 @@ extension EditorMapLayer {
 			                                  	// cancel move
 			                                  	self.mapData.undo()
 			                                  	self.mapData.removeMostRecentRedo()
-			                                  	self.selectedNode = nil
-			                                  	self.selectedWay = nil
-			                                  	self.selectedRelation = nil
-			                                  	self.owner.removePin()
+												self.owner.unselectAll()
 			                                  	self.setNeedsLayout()
 			                                  }))
 			alertMove.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""),
@@ -929,9 +926,7 @@ extension EditorMapLayer {
 			}
 			multiSelectSheet.addAction(UIAlertAction(title: title, style: .default, handler: { [self] _ in
 				// processing for selecting one of multipe objects
-				self.selectedNode = nil
-				self.selectedWay = nil
-				self.selectedRelation = nil
+				self.owner.unselectAll()
 				if let node = object.isNode() {
 					// select the way containing the node, then select the node in the way
 					self.selectedWay = objects
@@ -1117,9 +1112,7 @@ extension EditorMapLayer {
 		      selectedNode == nil || selectedWay != nil
 		else {
 			// drop a new pin
-			selectedNode = nil
-			selectedWay = nil
-			selectedRelation = nil
+			owner.unselectAll()
 			owner.placePushpin(at: dropPoint, object: nil)
 			return
 		}

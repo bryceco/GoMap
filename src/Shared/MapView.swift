@@ -626,6 +626,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		editorLayer.selectedNode = nil
 		editorLayer.selectedWay = nil
 		editorLayer.selectedRelation = nil
+		tapAndDragSelections = nil
 		removePin()
 	}
 

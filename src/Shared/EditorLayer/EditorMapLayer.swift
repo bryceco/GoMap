@@ -39,6 +39,7 @@ protocol EditorMapLayerOwner: UIView {
 	func removePin()
 	func placePushpin(at: CGPoint, object: OsmBaseObject?)
 	func placePushpinForSelection(at point: CGPoint?)
+	func unselectAll()
 
 	var editToolbar: CustomSegmentedControl! { get }
 
@@ -384,10 +385,7 @@ final class EditorMapLayer: CALayer {
 
 	func purgeCachedData(_ style: MapDataPurgeStyle) {
 		// Deselect selected objects
-		owner.removePin()
-		selectedNode = nil
-		selectedWay = nil
-		selectedRelation = nil
+		owner.unselectAll()
 
 #if DEBUG
 		// Get a weak reference to every object. Once we've purged everything then all
