@@ -271,6 +271,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		locationBallView.heading = 0.0
 		locationBallView.showHeading = true
 		locationBallView.isHidden = true
+		locationBallView.layer.zPosition = ZLAYER.LOCATION_BALL.rawValue
 		locationBallView.viewPort = viewPort
 		mapLayersView.addSubview(locationBallView)
 

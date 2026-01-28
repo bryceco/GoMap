@@ -19,6 +19,7 @@ enum ZLAYER: CGFloat {
 	case ROTATEGRAPHIC = -3
 	case BLINK = 4
 	case CROSSHAIRS = 5
+	case LOCATION_BALL = 100
 }
 
 class MapLayersView: UIView {
@@ -128,7 +129,7 @@ class MapLayersView: UIView {
 		allLayers.append(dataOverlayLayer)
 
 		mapMarkersView = MapMarkersView(viewPort: viewPort,
-		                               mapData: AppDelegate.shared.mainView.mapView.mapData)
+		                                mapData: AppDelegate.shared.mainView.mapView.mapData)
 		mapMarkersView.isHidden = false
 		allLayers.append(mapMarkersView)
 
