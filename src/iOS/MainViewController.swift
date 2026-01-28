@@ -924,7 +924,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 	@objc func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
 		// Rotate screen
 		guard settings.enableRotation,
-			mapView.isRotateObjectMode == nil
+		      mapView.isRotateObjectMode == nil
 		else {
 			return
 		}

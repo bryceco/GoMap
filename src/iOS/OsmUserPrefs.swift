@@ -36,8 +36,8 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 	}
 
 	private static func allPreferences(data callback: @escaping (Data?) -> Void) {
-		let url = OSM_SERVER.apiURL + "api/0.6/user/preferences.json"
-		guard var request = OSM_SERVER.oAuth2?.urlRequest(string: url) else {
+		let url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/user/preferences.json")
+		guard var request = OSM_SERVER.oAuth2?.urlRequest(url: url) else {
 			callback(nil)
 			return
 		}
@@ -145,9 +145,9 @@ class OsmUserPrefs: CustomStringConvertible, CustomDebugStringConvertible {
 		}
 
 		for (key, value) in dict {
-			let url = OSM_SERVER.apiURL + "api/0.6/user/preferences/\(key)"
+			let url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/user/preferences/\(key)")
 			guard let oAuth2 = OSM_SERVER.oAuth2,
-			      var request = oAuth2.urlRequest(string: url)
+			      var request = oAuth2.urlRequest(url: url)
 			else {
 				callback(false)
 				return

@@ -369,7 +369,7 @@ extension EditorMapLayer {
 			                                  	// cancel move
 			                                  	self.mapData.undo()
 			                                  	self.mapData.removeMostRecentRedo()
-												self.owner.unselectAll()
+			                                  	self.owner.unselectAll()
 			                                  	self.setNeedsLayout()
 			                                  }))
 			alertMove.addAction(UIAlertAction(title: NSLocalizedString("Move", comment: ""),

@@ -75,7 +75,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	// MARK: Utility
 
 	func resetServer(_ host: OsmServer) {
-		if OSM_SERVER.apiURL.count != 0 {
+		if OSM_SERVER.apiURL.absoluteString.count != 0 {
 			// get rid of old data before connecting to new server
 			purgeSoft()
 		}
@@ -638,9 +638,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			progress.progressIncrement(1)
 
 			let rc = query.rect
-			let url = OSM_SERVER.apiURL +
-				"api/0.6/map?bbox=\(rc.origin.x),\(rc.origin.y),\(rc.origin.x + rc.size.width),\(rc.origin.y + rc.size.height)"
-
+			let url = OSM_SERVER.apiURL
+				.appendingPathComponent("api/0.6/map")
+				.appendingQueryItems(
+					[
+						"bbox": "\(rc.origin.x),\(rc.origin.y),\(rc.origin.x + rc.size.width),\(rc.origin.y + rc.size.height)"
+					])
 			Task {
 				let result: Result<OsmDownloadData, Error>
 				do {
@@ -841,8 +844,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	                     retries: Int) async throws
 	{
 		let postData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(changesetID)/upload",
-													   method: "POST",
-													   xml: xmlChanges)
+		                                               queryItems: [:],
+		                                               method: "POST",
+		                                               xml: xmlChanges)
 
 		let response = String(decoding: postData, as: UTF8.self)
 
@@ -863,9 +867,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			}
 			print("Updating object from version \(localVersion) to \(serverVersion)")
 			let objType = objType2.lowercased()
-			var url3 = OSM_SERVER.apiURL + "api/0.6/\(objType)/\(objId)"
+			var url3 = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/\(objType)/\(objId)")
 			if objType == "way" || objType == "relation" {
-				url3 = url3 + "/full"
+				url3 = url3.appendingPathComponent("full")
 			}
 
 			let data = try await OsmDownloader.osmData(forUrl: url3)
@@ -940,8 +944,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		updateSql(sqlUpdate)
 
 		_ = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(changesetID)/close",
-											method: "PUT",
-											xml: nil)
+		                                    queryItems: [:],
+		                                    method: "PUT",
+		                                    xml: nil)
 
 		// reset undo stack after upload so user can't accidently undo a commit (wouldn't work anyhow because we don't undo version numbers on objects)
 		await MainActor.run {
@@ -1052,11 +1057,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			throw OsmMapDataError.otherError("Failed to create OSM XML for creating a new changeset.")
 		}
 		let putData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/create",
-													  method: "PUT",
-													  xml: xmlCreate)
+		                                              queryItems: [:],
+		                                              method: "PUT",
+		                                              xml: xmlCreate)
 		let responseString = String(decoding: putData, as: UTF8.self)
 		if let changeset = Int64(responseString) {
-			// The response string only contains of the digits 0 through 9.
+			// The response string only contains the digits 0 through 9.
 			// Assume that the request was successful and that the server responded with a changeset ID.
 			return changeset
 		} else {

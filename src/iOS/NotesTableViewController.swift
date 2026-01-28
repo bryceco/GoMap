@@ -168,15 +168,19 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 		Task { @MainActor in
 			do {
 				let newNote = try await mapMarkersView.upload(note: note, close: resolves, comment: text)
-				alert.dismiss(animated: true)
+				alert.dismiss(animated: true, completion: {
+					self.done(nil) // dismiss ourself after alert is dismissed
+				})
+
 				note = newNote
 				updateShareButton()
-				done(nil) // dismiss ourself
 
 				// remove note markers that are now resolved
 				mapMarkersView.removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
 				mapMarkersView.updateMapMarkerButtonPositions()
 			} catch {
+				alert.dismiss(animated: true)
+
 				let alert2 = UIAlertController(title: NSLocalizedString("Error", comment: ""),
 				                               message: error.localizedDescription,
 				                               preferredStyle: .alert)
@@ -223,14 +227,17 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 
 	@IBAction func shareTapped(_ sender: Any?) {
 		guard note.comments.count > 0 else { return }
-		let urlString = OSM_SERVER.serverURL + "note/\(note.noteId)"
-		guard let url = URL(string: urlString) else { return }
+		let url = OSM_SERVER.serverURL.appendingPathComponent("note/\(note.noteId)")
 		let activityVC = UIActivityViewController(activityItems: [url], applicationActivities: nil)
 		activityVC.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
 		present(activityVC, animated: true)
 	}
 
 	@IBAction func done(_ sender: Any?) {
-		dismiss(animated: true)
+		if let nav = self.navigationController {
+			nav.dismiss(animated: true)
+		} else {
+			dismiss(animated: true)
+		}
 	}
 }

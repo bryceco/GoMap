@@ -12,10 +12,13 @@ import Foundation
 var OSM_SERVER: OsmServer = {
 	// This initialization is ugly because we want to force fetchCapabilities() to be called
 	let server = {
-		guard let serverUrl = UserPrefs.shared.osmServerUrl.value else {
+		guard
+			let serverUrl = UserPrefs.shared.osmServerUrl.value,
+			let server = OsmServer.serverForUrl(string: serverUrl)
+		else {
 			return OsmServerList.first!
 		}
-		return OsmServer.serverForUrl(serverUrl)
+		return server
 	}()
 	Task.detached {
 		await server.fetchCapabilities()
@@ -26,7 +29,7 @@ var OSM_SERVER: OsmServer = {
 		if oldValue.apiURL == OSM_SERVER.apiURL {
 			return
 		}
-		UserPrefs.shared.osmServerUrl.value = OSM_SERVER.apiURL
+		UserPrefs.shared.osmServerUrl.value = OSM_SERVER.apiURL.absoluteString
 		AppDelegate.shared.mapView.mapData.resetServer(OSM_SERVER)
 		AppDelegate.shared.userName = nil
 		Task.detached {
@@ -37,11 +40,11 @@ var OSM_SERVER: OsmServer = {
 
 class OsmServer {
 	let fullName: String // friendly name of the server
-	let serverURL: String // e.g. www.openstreetmap.com
-	let apiURL: String // e.g. api.openstreetmap.com
+	let serverURL: URL // e.g. www.openstreetmap.com
+	let apiURL: URL // e.g. api.openstreetmap.com
 	let oAuth2: OAuth2?
-	let nominatimUrl: String
-	let osmchaUrl: String?
+	let nominatimUrl: URL
+	let osmchaUrl: URL?
 
 	init(fullName: String,
 	     serverHost: String,
@@ -51,32 +54,32 @@ class OsmServer {
 	     oAuth_client_id: String)
 	{
 		self.fullName = fullName
-		apiURL = "https://" + apiHost + "/"
-		serverURL = "https://" + serverHost + "/"
-		oAuth2 = OAuth2(serverURL: URL(string: serverURL)!,
+		apiURL = URL(string: "https://" + apiHost + "/")!
+		serverURL = URL(string: "https://" + serverHost + "/")!
+		oAuth2 = OAuth2(serverURL: serverURL,
 		                basePath: "oauth2",
 		                authPath: "authorize",
 		                client_id: oAuth_client_id,
 		                scope: "read_prefs write_prefs read_gpx write_gpx write_notes write_api")
-		nominatimUrl = "https://" + nominatimHost + "/"
+		nominatimUrl = URL(string: "https://" + nominatimHost + "/")!
 		if let osmchaHost = osmchaHost {
-			osmchaUrl = "https://" + osmchaHost + "/"
+			osmchaUrl = URL(string: "https://" + osmchaHost + "/")!
 		} else {
 			osmchaUrl = nil
 		}
 	}
 
-	init(apiUrl: String) {
+	init(apiUrl url: URL) {
 		fullName = ""
-		apiURL = apiUrl
-		serverURL = ""
+		apiURL = url
+		serverURL = url
 		oAuth2 = nil
-		nominatimUrl = ""
+		nominatimUrl = url
 		osmchaUrl = nil
 	}
 
 	var taginfoUrl: URL {
-		if var comps = URLComponents(string: serverURL),
+		if var comps = URLComponents(url: serverURL, resolvingAgainstBaseURL: false),
 		   let parts = comps.host?.split(separator: ".")
 		{
 			let suffix = parts.dropFirst()
@@ -87,7 +90,7 @@ class OsmServer {
 			}
 		}
 		// This won't work but there's nothing we can do about it
-		return URL(string: serverURL) ?? URL(string: "https://example.com/error")!
+		return serverURL
 	}
 
 	static func serverNameCanonicalized(_ hostname: String) -> String {
@@ -108,9 +111,17 @@ class OsmServer {
 		return hostname
 	}
 
-	static func serverForUrl(_ url: String) -> OsmServer {
-		let url = OsmServer.serverNameCanonicalized(url)
-		if let server = OsmServerList.first(where: { $0.apiURL == url }) {
+	static func serverForUrl(string: String) -> OsmServer? {
+		let string = serverNameCanonicalized(string)
+		guard
+			let url = URL(string: string),
+			let scheme = url.scheme?.lowercased(),
+			scheme == "http" || scheme == "https",
+			url.host != nil
+		else {
+			return nil
+		}
+		if let server = OsmServerList.first(where: { $0.apiURL.host == url.host }) {
 			// it's one of our built-in servers
 			return server
 		}
@@ -204,7 +215,7 @@ class OsmServer {
 
 	func fetchCapabilities() async {
 		do {
-			let url = URL(string: apiURL + "api/0.6/capabilities.json")!
+			let url = apiURL.appendingPathComponent("api/0.6/capabilities.json")
 			let data = try await URLSession.shared.data(with: url)
 			let decoder = JSONDecoder()
 			capabilities = try decoder.decode(Capabilities.self, from: data)
@@ -227,13 +238,16 @@ class OsmServer {
 
 extension OsmServer {
 	func putRequest(relativeUrl: String,
-					method: String,
-					xml: DDXMLDocument?) async throws -> Data
+	                queryItems: [String: String],
+	                method: String,
+	                xml: DDXMLDocument?) async throws -> Data
 	{
-		let url = OSM_SERVER.apiURL + relativeUrl
+		let url = OSM_SERVER.apiURL
+			.appendingPathComponent(relativeUrl)
+			.appendingQueryItems(queryItems)
 
-		guard var request = oAuth2?.urlRequest(string: url) else {
-			throw OsmMapDataError.badURL(url)
+		guard var request = oAuth2?.urlRequest(url: url) else {
+			throw OsmMapDataError.badURL(url.absoluteString)
 		}
 		request.setUserAgent()
 		request.httpMethod = method

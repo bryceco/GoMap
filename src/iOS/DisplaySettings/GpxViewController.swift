@@ -166,9 +166,9 @@ class GpxViewController: UITableViewController {
 
 		// let progress window display before we submit work
 		Task { @MainActor in
-			let url = OSM_SERVER.apiURL + "api/0.6/gpx/create"
+			let url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/gpx/create")
 
-			guard var request = OSM_SERVER.oAuth2?.urlRequest(string: url) else { return }
+			guard var request = OSM_SERVER.oAuth2?.urlRequest(url: url) else { return }
 			request.setUserAgent()
 			let boundary = "----------------------------d10f7aa230e8"
 			request.httpMethod = "POST"

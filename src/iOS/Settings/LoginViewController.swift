@@ -12,12 +12,10 @@ final class LoginViewController: UITableViewController {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 
 	@IBAction func registerAccount(_ sender: Any) {
-		if let url = URL(string: "\(OSM_SERVER.serverURL)user/new") {
-			UIApplication.shared.open(
-				url,
-				options: [:],
-				completionHandler: nil)
-		}
+		let url = OSM_SERVER.serverURL.appendingPathComponent("user/new")
+		UIApplication.shared.open(url,
+		                          options: [:],
+		                          completionHandler: nil)
 	}
 
 	@IBAction func loginWithOAuth(_ sender: Any?) {

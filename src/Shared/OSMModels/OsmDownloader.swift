@@ -206,7 +206,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 
 enum OsmDownloader {
 	// http://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap
-	static func osmData(forUrl url: String) async throws -> OsmDownloadData {
+	static func osmData(forUrl url: URL) async throws -> OsmDownloadData {
 		let stream = try await DownloadThreadPool.osmPool.stream(forUrl: url)
 		if let error = stream.streamError {
 			throw error

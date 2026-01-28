@@ -78,6 +78,7 @@
 		026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */; };
 		02709BCA2F21B82F00B277C6 /* DraggableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02709BC92F21B82F00B277C6 /* DraggableButton.swift */; };
 		02709BCE2F2370E000B277C6 /* MapMarkersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02709BCD2F2370E000B277C6 /* MapMarkersView.swift */; };
+		02709BD32F282B2400B277C6 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02709BD12F282A8400B277C6 /* URL+Extension.swift */; };
 		02771D712BFC15C300FE9B79 /* UserFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02771D702BFC15C300FE9B79 /* UserFileList.swift */; };
 		027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FC250E9C8000C404CD /* Settings.storyboard */; };
 		027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FF250E9C8A00C404CD /* POI.storyboard */; };
@@ -431,6 +432,7 @@
 		02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HealthKitRoutes.swift; path = ../Shared/HealthKitRoutes.swift; sourceTree = "<group>"; };
 		02709BC92F21B82F00B277C6 /* DraggableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableButton.swift; sourceTree = "<group>"; };
 		02709BCD2F2370E000B277C6 /* MapMarkersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkersView.swift; sourceTree = "<group>"; };
+		02709BD12F282A8400B277C6 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		02771D702BFC15C300FE9B79 /* UserFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFileList.swift; path = ../Shared/UserFileList.swift; sourceTree = "<group>"; };
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		027AB506250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
@@ -1154,6 +1156,7 @@
 				02EF13C22E5D041800418CA4 /* UIFont+Ext.swift */,
 				02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */,
 				028365C82EFDFC22002B9E34 /* UnitFormatter.swift */,
+				02709BD12F282A8400B277C6 /* URL+Extension.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
 			);
 			name = Utility;
@@ -1543,6 +1546,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02709BD32F282B2400B277C6 /* URL+Extension.swift in Sources */,
 				028365C92EFDFF1E002B9E34 /* UnitFormatter.swift in Sources */,
 				02E9ABC02BA151AA00F0EF69 /* GoogleMaps.secret in Sources */,
 				021BC21E2D6E6E0E004631C5 /* Panoramax.swift in Sources */,

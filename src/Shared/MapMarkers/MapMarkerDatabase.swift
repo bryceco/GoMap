@@ -252,12 +252,14 @@ extension MapMarkerDatabase {
 
 	func updateNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
 		Task {
-			let url = OSM_SERVER.apiURL +
-				"api/0.6/notes?closed=0&bbox=\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
-			guard let url1 = URL(string: url),
-			      let data = try? await URLSession.shared.data(with: url1),
-			      let xmlText = String(data: data, encoding: .utf8),
-			      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
+			let bbox = "\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
+			let url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/notes")
+				.appendingQueryItems(["closed": "0",
+				                      "bbox": "\(bbox)"])
+			guard
+				let data = try? await URLSession.shared.data(with: url),
+				let xmlText = String(data: data, encoding: .utf8),
+				let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
 			else {
 				return
 			}
@@ -285,26 +287,29 @@ extension MapMarkerDatabase {
 	            close: Bool,
 	            comment: String) async throws -> OsmNoteMarker
 	{
-		var allowedChars = CharacterSet.urlQueryAllowed
-		allowedChars.remove(charactersIn: "+;&")
-		let comment = comment.addingPercentEncoding(withAllowedCharacters: allowedChars) ?? ""
+		var url = URL(string: "api/0.6/notes")!
+		let queryItems: [String: String]
 
-		var url = "api/0.6/notes"
 		if note.comments.count == 0 {
 			// brand new note
-			url += "?lat=\(note.latLon.lat)&lon=\(note.latLon.lon)&text=\(comment)"
+			queryItems = ["lat": "\(note.latLon.lat)",
+			              "lon": "\(note.latLon.lon)",
+			              "text": comment]
 		} else {
 			// existing note
 			if close {
-				url += "/\(note.noteId)/close?text=\(comment)"
+				url = url.appendingPathComponent("\(note.noteId)/close")
+				queryItems = ["text": comment]
 			} else {
-				url += "/\(note.noteId)/comment?text=\(comment)"
+				url = url.appendingPathComponent("\(note.noteId)/comment")
+				queryItems = ["text": comment]
 			}
 		}
 
-		let postData = try await OSM_SERVER.putRequest(relativeUrl: url,
-													   method: "POST",
-													   xml: nil)
+		let postData = try await OSM_SERVER.putRequest(relativeUrl: url.relativePath,
+		                                               queryItems: queryItems,
+		                                               method: "POST",
+		                                               xml: nil)
 		guard let xmlText = String(data: postData, encoding: .utf8),
 		      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
 		      let list = try? xmlDoc.rootElement()?.nodes(forXPath: "./note") as? [DDXMLElement],

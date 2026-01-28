@@ -159,9 +159,9 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		}
 
 		activityIndicator.startAnimating()
-		var url = OSM_SERVER.apiURL + "api/0.6/\(objType.string)/\(objIdent)"
+		var url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/\(objType.string)/\(objIdent)")
 		if objType != .NODE {
-			url += "/full"
+			url = url.appendingPathComponent("full")
 		}
 		Task {
 			do {
@@ -296,15 +296,14 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	}
 
 	func nominatimSearchURL(query string: String, lang: String, latLon: LatLon) -> URL? {
-		var components = URLComponents(string: OSM_SERVER.nominatimUrl + "search")
-		components?.queryItems = [
-			URLQueryItem(name: "q", value: string),
-			URLQueryItem(name: "format", value: "json"),
-			URLQueryItem(name: "limit", value: "50"),
-			URLQueryItem(name: "accept-language", value: lang),
-			URLQueryItem(name: "lat", value: String(latLon.lat)),
-			URLQueryItem(name: "lon", value: String(latLon.lon))
-		]
-		return components?.url
+		let url = OSM_SERVER.nominatimUrl
+			.appendingPathComponent("search")
+			.appendingQueryItems(["q": string,
+			                      "format": "json",
+			                      "limit": "50",
+			                      "accept-language": lang,
+			                      "lat": String(latLon.lat),
+			                      "lon": String(latLon.lon)])
+		return url
 	}
 }

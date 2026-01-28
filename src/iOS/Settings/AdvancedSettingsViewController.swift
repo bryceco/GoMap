@@ -7,17 +7,19 @@
 
 import UIKit
 
-class AdvancedSettingsViewController: UITableViewController {
+class AdvancedSettingsViewController: UITableViewController, UIAdaptivePresentationControllerDelegate {
 	@IBOutlet var hostname: UITextField!
 	@IBOutlet var switchFPS: UISwitch!
 	@IBOutlet var switchTouches: UISwitch!
 	@IBOutlet var switchMaxFPS: UISwitch!
 
-	private var originalHostname: String?
+	private var originalServer: OsmServer?
 	var hostnameButton: UIButton!
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		self.presentationController?.delegate = self
 
 		tableView.estimatedRowHeight = 44
 		tableView.rowHeight = UITableView.automaticDimension
@@ -26,7 +28,7 @@ class AdvancedSettingsViewController: UITableViewController {
 		hostnameButton = UIButton(type: .custom)
 		hostnameButton.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
 		hostnameButton.setTitle("🔽", for: .normal)
-		hostnameButton.addTarget(self, action: #selector(showSourceHistory), for: .touchUpInside)
+		hostnameButton.addTarget(self, action: #selector(showServersList), for: .touchUpInside)
 		hostname.rightView = hostnameButton
 		hostname.rightViewMode = .always
 	}
@@ -39,8 +41,8 @@ class AdvancedSettingsViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		let appDelegate = AppDelegate.shared
-		hostname.text = OSM_SERVER.apiURL
-		originalHostname = hostname.text
+		hostname.text = OSM_SERVER.apiURL.absoluteString
+		originalServer = OSM_SERVER
 
 		let app = UIApplication.shared as! MyApplication
 		switchFPS.isOn = appDelegate.mainView.fpsLabel.automatedFramerateTestActive
@@ -49,15 +51,25 @@ class AdvancedSettingsViewController: UITableViewController {
 		switchMaxFPS.isOn = UserPrefs.shared.maximizeFrameRate.value ?? false
 	}
 
+	func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+		guard
+			let server = OsmServer.serverForUrl(string: hostname.text!)
+		else {
+			// don't dismiss
+			return false
+		}
+		OSM_SERVER = server
+		AppDelegate.shared.mapView.unselectAll()
+		AppDelegate.shared.mapView.setNeedsLayout()
+		return true
+	}
+
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 
-		if hostname.text != originalHostname {
-			AppDelegate.shared.mapView.unselectAll()
-
-			OSM_SERVER = OsmServer.serverForUrl(hostname.text!)
-			AppDelegate.shared.mapView.setNeedsLayout()
-		}
+		OSM_SERVER = OsmServer.serverForUrl(string: hostname.text!) ?? OsmServerList.first!
+		AppDelegate.shared.mapView.unselectAll()
+		AppDelegate.shared.mapView.setNeedsLayout()
 	}
 
 	@IBAction func switchShowFPS(_ sender: Any) {
@@ -83,14 +95,13 @@ class AdvancedSettingsViewController: UITableViewController {
 		}
 	}
 
-	@IBAction func showSourceHistory(_ sender: Any) {
-		let actionSheet = UIAlertController(
-			title: nil,
-			message: nil,
-			preferredStyle: .actionSheet)
+	@IBAction func showServersList(_ sender: Any) {
+		let actionSheet = UIAlertController(title: nil,
+		                                    message: nil,
+		                                    preferredStyle: .actionSheet)
 		for server in OsmServerList {
 			actionSheet.addAction(UIAlertAction(title: server.fullName, style: .default, handler: { _ in
-				self.hostname.text = server.apiURL
+				self.hostname.text = server.apiURL.absoluteString
 				self.textFieldReturn(self.hostname)
 			}))
 		}
