@@ -181,7 +181,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		result = OsmDownloadData()
 	}
 
-	func parseStream(_ stream: InputStream) async throws -> OsmDownloadData {
+	func parseStream(_ stream: InputStream) throws -> OsmDownloadData {
 		defer {
 			stream.close()
 		}
@@ -212,7 +212,7 @@ enum OsmDownloader {
 			throw error
 		}
 		let parser = OsmDownloadParser()
-		let result = try await parser.parseStream(stream)
+		let result = try parser.parseStream(stream)
 		return result
 	}
 }
