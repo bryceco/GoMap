@@ -1422,7 +1422,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
-        <target state="translated">Za tvoju lokaciju su dostupne bolje pozadinske slike. Želiš li prijeći na njih?</target>
+        <target state="translated">Za tvoje mjesto su dostupne bolje pozadinske slike. Želiš li prijeći na njih?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
@@ -1718,7 +1718,7 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Ensure Location Services is enabled and you have granted this application access.
 
 Error: %@</source>
-        <target state="translated">Osiguraj da je prikaz uređivača vidljiv i da prikazuje objekte u lokalnom području
+        <target state="translated">Provjeri jesu li usluge lociranja uključene i je li ova aplikacija ima dozvolu za pristup.
 
 Greška: %@</target>
         <note/>
@@ -1900,6 +1900,7 @@ Greška: %@</target>
       </trans-unit>
       <trans-unit id="Location updated to the location and orientation stored in the photo." xml:space="preserve">
         <source>Location updated to the location and orientation stored in the photo.</source>
+        <target state="translated">Mjesto je aktualizirano mjestu i orijentaciji koji su spremljeni u fotografiji.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
@@ -2176,6 +2177,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Open Image File" xml:space="preserve">
         <source>Open Image File</source>
+        <target state="translated">Otvori slikovnu datoteku</target>
         <note/>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -2551,6 +2553,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="The selected image file does not contain location information." xml:space="preserve">
         <source>The selected image file does not contain location information.</source>
+        <target state="translated">Odabrana slikovna datoteka ne sadrži podatke o mjestu.</target>
         <note/>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
@@ -2640,7 +2643,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
-        <target state="translated">Uključi usluge određivanja mjesta, kako bi %@ utvrdio tvoje mjesto</target>
+        <target state="translated">Uključi usluge lociranja, kako bi %@ odredio tvoje mjesto</target>
         <note/>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
@@ -3117,7 +3120,7 @@ Za poboljšanje performance, izbriši predmemoriju (u postavci „Prikaz”).</t
       </trans-unit>
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
         <source>Unfortunately the selected image does not contain location information.</source>
-        <target state="translated">Nažalost, odabrana slika ne sadrži informacije o mjestu.</target>
+        <target state="translated">Nažalost odabrana slika ne sadrži informacije o mjestu.</target>
         <note/>
       </trans-unit>
     </body>
