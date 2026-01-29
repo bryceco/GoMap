@@ -127,6 +127,7 @@
 		02ACBD1F16717BBB00BB4414 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */; };
 		02ACBD2116717BC500BB4414 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBD2016717BC500BB4414 /* CoreLocation.framework */; };
 		02AEBEAF294ABE0700009163 /* KeyValueTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */; };
+		02AF69142F2B53A70000ABA2 /* OsmMapDataArchiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AF69132F2B53A70000ABA2 /* OsmMapDataArchiver.swift */; };
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
 		02B2E25E2C3F3DC600815F08 /* DarkModeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2E25D2C3F3DC600815F08 /* DarkModeImage.swift */; };
 		02B5669D294F9D7E00710632 /* MagnifyingGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */; };
@@ -478,6 +479,7 @@
 		02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueTableCell.swift; sourceTree = "<group>"; };
+		02AF69132F2B53A70000ABA2 /* OsmMapDataArchiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmMapDataArchiver.swift; sourceTree = "<group>"; };
 		02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingPlaceholderImage.png; path = ../Shared/BingPlaceholderImage.png; sourceTree = "<group>"; };
 		02B2E25D2C3F3DC600815F08 /* DarkModeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeImage.swift; sourceTree = "<group>"; };
 		02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifyingGlass.swift; sourceTree = "<group>"; };
@@ -1217,6 +1219,7 @@
 				024909CA267D99190027E531 /* OsmDownloader.swift */,
 				0288169D265895FA00C30EA2 /* OsmMapData.swift */,
 				0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */,
+				02AF69132F2B53A70000ABA2 /* OsmMapDataArchiver.swift */,
 				C3D096EE263EBE5D00E3B129 /* OsmMember.swift */,
 				C3D096EF263EBE5D00E3B129 /* OsmNode.swift */,
 				C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */,
@@ -1660,6 +1663,7 @@
 				02A59EDD297E444500B0A676 /* PresetAddressFormat.swift in Sources */,
 				02EF13C32E5D041800418CA4 /* UIFont+Ext.swift in Sources */,
 				C31315232644292700C0AD86 /* LocationBallView.swift in Sources */,
+				02AF69142F2B53A70000ABA2 /* OsmMapDataArchiver.swift in Sources */,
 				ED964A012601D6A900EC0A60 /* POICommonTagsViewController.swift in Sources */,
 				0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */,
 				0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */,
