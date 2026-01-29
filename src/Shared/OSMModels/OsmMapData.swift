@@ -1696,9 +1696,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		return mapData
 	}
+}
 
-	// MARK: Consistency checking
+// MARK: Consistency checking
 
+extension OsmMapData {
 	func consistencyCheckRelationMembers() {
 		// make sure that parentRelations is correct for every relation member
 		var allMembers = Set<OsmBaseObject>()
