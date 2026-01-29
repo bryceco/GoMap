@@ -303,7 +303,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nažalost, odabrana slika ne sadrži informacije o mjestu."
+            "value" : "Nažalost odabrana slika ne sadrži informacije o mjestu."
           }
         },
         "id" : {

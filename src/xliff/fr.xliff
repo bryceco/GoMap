@@ -152,7 +152,11 @@
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
         <source>Title</source>
         <target state="translated">Titre</target>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr";</note>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
+      <trans-unit id="vwW-V6-kvw.text" xml:space="preserve">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "vwW-V6-kvw"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
         <source>Niagara Falls</source>
@@ -212,7 +216,6 @@
       </trans-unit>
       <trans-unit id="3k9-ML-Zea.normalTitle" xml:space="preserve">
         <source>Mapnik</source>
-        <target state="needs-translation">Mapnik</target>
         <note>Class = "UIButton"; normalTitle = "Mapnik"; ObjectID = "3k9-ML-Zea";</note>
       </trans-unit>
       <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
@@ -262,7 +265,6 @@
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
         <source>12:00:00</source>
-        <target state="needs-translation">12:00:00</target>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
@@ -436,8 +438,6 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
-        <target state="needs-translation">http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
- </target>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
@@ -2285,6 +2285,10 @@ Never delete old tracks</note>
         <source>Settings</source>
         <target state="translated">Paramètres</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Settings…" xml:space="preserve">
+        <source>Settings…</source>
+        <note>Settings menu item in Mac menu bar</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>

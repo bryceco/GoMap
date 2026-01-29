@@ -905,6 +905,12 @@
             "value" : "Quercus "
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eiche "
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -6743,6 +6749,12 @@
             "value" : "genus:en"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus:en"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -7980,6 +7992,12 @@
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "natural"
+          }
+        },
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "natural"
@@ -9432,6 +9450,12 @@
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus"
+          }
+        },
+        "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "genus"

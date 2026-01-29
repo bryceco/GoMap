@@ -11,6 +11,12 @@
             "value" : "Štítek"
           }
         },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",

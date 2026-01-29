@@ -35,6 +35,12 @@
             "value" : "kasutajanimi"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "erabiltzaile izena"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63,6 +69,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ім'я користувача"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用户名"
           }
         },
         "zh-Hant" : {
@@ -2963,6 +2975,12 @@
             "value" : "Phóng to để Sửa đổi"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缩放以编辑"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3193,8 +3211,8 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "解决"
+            "state" : "translated",
+            "value" : "反馈与处理"
           }
         },
         "zh-Hant" : {
@@ -4130,7 +4148,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "指定一个名称（如\"纽约\"）、一个包含经纬度坐标的URL或其他文本，或一个OSM对象引用（如\"way 51014987\"）："
+            "value" : "指定一个名称（如\"纽约\"）、一个包含经纬度坐标的URL或文本，或一个OSM对象索引（例\"way 51014987\"）："
           }
         },
         "zh-Hant" : {
@@ -4197,6 +4215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "17/06/2014 17:54 UTC"
           }
         },
         "hr" : {

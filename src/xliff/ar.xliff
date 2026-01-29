@@ -146,7 +146,11 @@
       </trans-unit>
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
         <source>Title</source>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr";</note>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
+      <trans-unit id="vwW-V6-kvw.text" xml:space="preserve">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "vwW-V6-kvw"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
         <source>Niagara Falls</source>
@@ -2650,6 +2654,10 @@ Never delete old tracks</note>
         <source>Settings</source>
         <target state="translated">الإعدادات</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Settings…" xml:space="preserve">
+        <source>Settings…</source>
+        <note>Settings menu item in Mac menu bar</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>

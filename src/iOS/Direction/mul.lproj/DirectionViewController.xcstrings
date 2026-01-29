@@ -155,6 +155,12 @@
             "value" : "Розташуйте пристрій паралельно до напрямку руху обʼєкта."
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请将手机对准目标方向。"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "needs_review",

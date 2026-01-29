@@ -22,7 +22,6 @@
       </trans-unit>
       <trans-unit id="2Ka-IT-DQC.normalTitle" xml:space="preserve">
         <source>Bing attribution</source>
-        <target state="needs-translation">Bing atribuzioa</target>
         <note>Class = "UIButton"; normalTitle = "Bing attribution"; ObjectID = "2Ka-IT-DQC";</note>
       </trans-unit>
       <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
@@ -151,7 +150,11 @@
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
         <source>Title</source>
         <target state="translated">Titulu</target>
-        <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr";</note>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
+      <trans-unit id="vwW-V6-kvw.text" xml:space="preserve">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "vwW-V6-kvw"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
         <source>Niagara Falls</source>
@@ -205,7 +208,6 @@
       </trans-unit>
       <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
         <source>Clear Cache</source>
-        <target state="needs-translation">Katxe hustu</target>
         <note>Class = "UILabel"; text = "Clear Cache"; ObjectID = "2ZY-zi-luF";</note>
       </trans-unit>
       <trans-unit id="3k9-ML-Zea.normalTitle" xml:space="preserve">
@@ -2065,6 +2067,10 @@ Never delete old tracks</note>
       <trans-unit id="Settings" xml:space="preserve">
         <source>Settings</source>
         <note/>
+      </trans-unit>
+      <trans-unit id="Settings…" xml:space="preserve">
+        <source>Settings…</source>
+        <note>Settings menu item in Mac menu bar</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
         <source>Share</source>

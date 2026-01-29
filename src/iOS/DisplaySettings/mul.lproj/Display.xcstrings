@@ -581,6 +581,12 @@
             "value" : "Mapnik"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标准地图"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1625,6 +1631,12 @@
             "value" : "Базова мапа"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "底图"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1823,6 +1835,18 @@
             "value" : "HealthKiti marsruudid:"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit bideak:"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Routes HealthKit :"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1844,7 +1868,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Маршруты Apple Здоровье"
+            "value" : "Маршруты Apple Здоровье:"
           }
         },
         "ta" : {
@@ -2391,6 +2415,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sõbralik nimi"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Izen ulergarria"
           }
         },
         "fi" : {
@@ -3080,7 +3110,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Записывать в фоновом режиме"
+            "value" : "Записывать в фоновом режиме:"
           }
         },
         "ta" : {
@@ -3480,6 +3510,12 @@
           }
         },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12:00:00"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "12:00:00"
@@ -4149,6 +4185,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Üksikasjad"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xehetasunak"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Détails"
           }
         },
         "hr" : {
@@ -5067,6 +5115,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Liiklusteed"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Errebideak"
           }
         },
         "fr" : {
@@ -6909,6 +6963,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Maakasutus"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lur erabiltze"
           }
         },
         "fi" : {
@@ -10637,6 +10697,12 @@
             "value" : "Luba pööramine"
           }
         },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapa itzulket"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -11168,7 +11234,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Удалять треки через"
+            "value" : "Удалять треки через:"
           }
         },
         "ta" : {

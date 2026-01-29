@@ -21585,7 +21585,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Za tvoju lokaciju su dostupne bolje pozadinske slike. Želiš li prijeći na njih?"
+            "value" : "Za tvoje mjesto su dostupne bolje pozadinske slike. Želiš li prijeći na njih?"
           }
         },
         "ja" : {
@@ -31090,7 +31090,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Osiguraj da je prikaz uređivača vidljiv i da prikazuje objekte u lokalnom području\n\nGreška: %@"
+            "value" : "Provjeri jesu li usluge lociranja uključene i je li ova aplikacija ima dozvolu za pristup.\n\nGreška: %@"
           }
         },
         "ja" : {
@@ -35710,7 +35710,38 @@
       }
     },
     "Location updated to the location and orientation stored in the photo." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Der Standort wurde auf den Standort und die Ausrichtung aktualisiert, die im Foto gespeichert sind."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mjesto je aktualizirano mjestu i orijentaciji koji su spremljeni u fotografiji."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Местоположение обновлено в соответствии с местоположением и ориентацией, сохраненными на фотографии."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Розташування оновлено відповідно до розташування та орієнтації, збережених на фотографії."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "依據照片的位置與方向更新位置。"
+          }
+        }
+      }
     },
     "Login successful" : {
       "localizations" : {
@@ -43526,7 +43557,38 @@
       }
     },
     "Open Image File" : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilddatei öffnen"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otvori slikovnu datoteku"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Откройте файл изображения"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відкрити файл зображення"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開啟影像檔案"
+          }
+        }
+      }
     },
     "Open Settings" : {
       "comment" : "Open the iOS Settings app",
@@ -53260,7 +53322,44 @@
       }
     },
     "The selected image file does not contain location information." : {
-
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die ausgewählte Bilddatei hat keine Standortinfos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L'image sélectionnée ne contient pas de localisation."
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Odabrana slikovna datoteka ne sadrži podatke o mjestu."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбранный файл изображения не содержит информации о местоположении."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вибраний файл зображення не містить інформації про місцезнаходження."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選取的影像並未有位置資訊。"
+          }
+        }
+      }
     },
     "The selected way must be completely visible" : {
       "localizations" : {
@@ -55369,7 +55468,7 @@
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uključi usluge određivanja mjesta, kako bi %@ utvrdio tvoje mjesto"
+            "value" : "Uključi usluge lociranja, kako bi %@ odredio tvoje mjesto"
           }
         },
         "id" : {
