@@ -279,7 +279,15 @@ extension RenderInfo {
 		if (primary == "leisure" && primaryValue == "track") || tags["leisure"] == "track" {
 			r.lineColor = DynamicColor(red: 0.898, green: 0.722, blue: 0.169, alpha: 1.0)
 		}
-		if (primary == "highway" && primaryValue == "steps") || (primary == "highway" && primaryValue == "ladder") {
+		if primary == "highway" && primaryValue == "ladder" {
+			r.lineColor = DynamicColor(red: 0.435, green: 0.122, blue: 0.122, alpha: 1.0)
+			r.lineCap = .butt
+			r.lineDashPattern = [1.5, 1.5]
+			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.casingCap = .round
+			r.casingDashPattern = nil
+		}
+		if primary == "highway" && primaryValue == "steps" {
 			r.lineColor = DynamicColor(red: 0.506, green: 0.824, blue: 0.361, alpha: 1.0)
 			r.lineCap = .butt
 			r.lineDashPattern = [1.5, 1.5]
