@@ -527,6 +527,13 @@ extension GpxViewController: UIDocumentPickerDelegate {
 		picker.delegate = self
 		picker.allowsMultipleSelection = true
 		picker.shouldShowFileExtensions = true
+
+		if let iCloud = FileManager.default.url(forUbiquityContainerIdentifier: nil) {
+			picker.directoryURL = iCloud
+		} else if let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first {
+			picker.directoryURL = documentsURL
+		}
+
 		present(picker, animated: true)
 	}
 
@@ -536,7 +543,7 @@ extension GpxViewController: UIDocumentPickerDelegate {
 		for url in urls {
 			do {
 				let data = try Data(contentsOf: url)
-				try gpxTracks.loadGPXData(data, name: url.lastPathComponent)
+				try gpxTracks.loadGpxTrack(with: data, name: url.lastPathComponent)
 			} catch {
 				print("\(error)")
 			}

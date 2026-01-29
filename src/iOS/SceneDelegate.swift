@@ -78,7 +78,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 		func openGPX(data: Data, name: String) {
 			do {
-				let track = try AppState.shared.gpxTracks.loadGPXData(data, name: name)
+				let track = try AppState.shared.gpxTracks.loadGpxTrack(with: data, name: name)
 				if let center = track?.center() {
 					mainView.settings.displayGpxTracks = true // ensure GPX tracks are visible
 					mainView.viewPort.centerOn(latLon: center, metersWide: nil)

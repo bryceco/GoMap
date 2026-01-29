@@ -1,5 +1,5 @@
 //
-//  OsmNote.swift
+//  OsmNoteMarker.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 9/16/21.
@@ -115,5 +115,9 @@ final class OsmNoteMarker: MapMarker {
 		self.dateCreated = dateCreated
 		self.comments = comments
 		super.init(latLon: LatLon(latitude: lat, longitude: lon))
+	}
+
+	override func handleButtonPress(in mainView: MainViewController, markerView: MapMarkersView) {
+		mainView.performSegue(withIdentifier: "NotesSegue", sender: self)
 	}
 }

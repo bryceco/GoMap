@@ -23,13 +23,16 @@ class MapMarker {
 	weak var ignorable: MapMarkerIgnoreListProtocol?
 	var button: UIButton?
 
-	// a unique identifier for a marker across multiple downloads
-	var markerIdentifier: String {
-		fatalError()
-	}
-
 	deinit {
 		button?.removeFromSuperview()
+	}
+
+	// override in subclass
+	var markerIdentifier: String { fatalError() }
+
+	func handleButtonPress(in mainView: MainViewController, markerView: MapMarkersView) {
+		// override in subclass
+		fatalError()
 	}
 
 	func reuseButtonFrom(_ other: MapMarker) {

@@ -26,4 +26,10 @@ final class GeoJsonMarker: MapMarker {
 	}
 
 	override var buttonLabel: String { "G" }
+
+	override func handleButtonPress(in mainView: MainViewController, markerView: MapMarkersView) {
+		let title = "GeoJSON"
+		let alert = AlertPopup(title: title, message: self.description)
+		mainView.present(alert, animated: true)
+	}
 }

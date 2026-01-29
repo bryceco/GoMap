@@ -68,7 +68,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 
 		// add to list of previous tracks
 		if activeTrack.points.count > 1 {
-			savedTracks.insert(activeTrack, at: 0)
+			savedTracks = [activeTrack] + savedTracks // do assignment to trigger notification
 		}
 
 		save(toDisk: activeTrack)
@@ -103,7 +103,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 	func delete(track: GpxTrack) {
 		let path = URL(fileURLWithPath: saveDirectory()).appendingPathComponent(track.fileName()).path
 		try? FileManager.default.removeItem(atPath: path)
-		savedTracks.removeAll { $0 === track }
+		savedTracks = savedTracks.filter { $0 !== track } // assign to trigger notification
 		uploadedTracks.removeValue(forKey: track.name)
 		onChangeTracks.notify()
 	}
@@ -307,9 +307,8 @@ final class GpxTracks: DiskCacheSizeProtocol {
 	}
 
 	// Load a GPX trace from an external source
-	// Returns a location on the track, suitable for display
 	@discardableResult
-	func loadGPXData(_ data: Data, name: String) throws -> GpxTrack? {
+	func loadGpxTrack(with data: Data, name: String) throws -> GpxTrack? {
 		let newTrack = try GpxTrack(xmlData: data)
 		if name != "" {
 			newTrack.name = name

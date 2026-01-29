@@ -32,4 +32,30 @@ final class QuestMarker: MapMarker {
 		self.object = object
 		self.ignorable = ignorable
 	}
+
+	override func handleButtonPress(in mainView: MainViewController, markerView: MapMarkersView) {
+		if mainView.mapView.isHidden {
+			let alert = AlertPopup(title: "\(self.object!.friendlyDescription())",
+			                       message: quest.title)
+			alert.addAction(title: "OK", handler: nil)
+			mainView.present(alert, animated: true)
+		} else {
+			let onClose = {
+				// Need to update the QuestMarker icon
+				markerView.updateRegion(withDelay: 0.0, including: [.quest])
+			}
+			let vc = QuestSolverController.instantiate(marker: self,
+			                                           object: self.object!,
+			                                           onClose: onClose)
+			if #available(iOS 15.0, *),
+			   let sheet = vc.sheetPresentationController
+			{
+				sheet.selectedDetentIdentifier = .large
+				sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+				sheet.detents = [.medium(), .large()]
+				sheet.delegate = mainView.mapView
+			}
+			mainView.present(vc, animated: true)
+		}
+	}
 }

@@ -65,7 +65,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		return ignoreList.shouldIgnore(marker: marker)
 	}
 
-	func ignore(marker: MapMarker, reason: IgnoreReason) {
+	func ignore(marker: MapMarker, reason: MapMarkerIgnoreReason) {
 		markerForIdentifier.removeValue(forKey: marker.markerIdentifier)
 		ignoreList.ignore(marker: marker, reason: reason)
 	}
@@ -103,28 +103,42 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	                           including: MapMarkerSet,
 	                           completion: @escaping () -> Void)
 	{
+		// Fixme markers
 		if including.contains(.fixme) {
 			removeMarkers(where: { ($0 as? FixmeMarker)?.shouldHide() ?? false })
 			updateFixmeMarkers(forRegion: box, mapData: mapData)
 		} else {
 			removeMarkers(where: { $0 is FixmeMarker })
 		}
+
+		// Quest markers
 		if including.contains(.quest) {
 			updateQuestMarkers(forRegion: box, mapData: mapData)
 		} else {
 			removeMarkers(where: { $0 is QuestMarker })
 		}
+
+		// Gpx markers
 		if including.contains(.gpx) {
+			if including == .gpx {
+				// if we deleted a gpx track we get called to refresh markers, but
+				// we don't remove old markers normally. But if we're precisely
+				// requesting an update for .gpx then do a full refresh.
+				removeMarkers(where: { $0 is WayPointMarker })
+			}
 			updateGpxWaypointMarkers()
 		} else {
 			removeMarkers(where: { $0 is WayPointMarker })
 		}
+
+		// Geojson waypoint markers
 		if including.contains(.geojson) {
 			updateGeoJSONMarkers(forRegion: box)
 		} else {
 			removeMarkers(where: { $0 is GeoJsonMarker })
 		}
 
+		// Notes markers
 		if including.contains(.notes) {
 			removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
 			updateNoteMarkers(forRegion: box, completion: completion)
@@ -132,6 +146,7 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		} else {
 			removeMarkers(where: { $0 is OsmNoteMarker })
 		}
+
 		completion()
 	}
 

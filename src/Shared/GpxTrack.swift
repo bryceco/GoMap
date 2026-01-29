@@ -69,7 +69,15 @@ final class GpxPoint: NSObject, NSSecureCoding {
 			case "name":
 				name = child.stringValue ?? ""
 			case "desc":
-				description = child.stringValue ?? ""
+				// description might be a regular string or an HTML string
+				let hasHTMLElements = child.children?.contains { node in node.kind == XMLElementKind } ?? false
+				if hasHTMLElements {
+					// HTML tags: get inner XML
+					description = child.children?.map { $0.xmlString }.joined() ?? ""
+				} else {
+					// plain text or CDATA
+					description = child.stringValue ?? ""
+				}
 			case "extensions":
 				if let children = child.children {
 					extensions = children

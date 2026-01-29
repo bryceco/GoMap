@@ -21,6 +21,12 @@ class MapMarkersView: UIView {
 		viewPort.mapTransform.onChange.subscribe(self) { [weak self] in
 			self?.updateMapMarkerButtonPositions()
 		}
+
+		AppState.shared.gpxTracks.onChangeTracks.subscribe(self) { [weak self] in
+			// if we import a new track it might contain waypoints
+			self?.updateRegion(withDelay: 0.0, including: .gpx)
+		}
+
 		/*
 		 LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] _ in
 		 	self?.updateMapMarkerButtonPositions()
@@ -135,96 +141,18 @@ class MapMarkersView: UIView {
 			let mapView = mainView.mapView
 		else { return }
 
-		var object: OsmBaseObject?
-		if let marker = marker as? KeepRightMarker {
-			object = marker.object(from: mapMarkerDatabase.mapData)
-		} else {
-			object = marker.object
-		}
-
-		if !mapView.isHidden,
-		   let object = object
+		if let object = marker.object,
+		   !mapView.isHidden
 		{
 			let pt = object.latLonOnObject(forLatLon: marker.latLon)
 			let point = viewPort.mapTransform.screenPoint(forLatLon: pt, birdsEye: true)
 			mapView.selectObject(object, pinAt: point)
 		}
 
-		if (marker is WayPointMarker) || (marker is KeepRightMarker) || (marker is GeoJsonMarker) {
-			let comment: NSAttributedString
-			let title: String
-			switch marker {
-			case let marker as WayPointMarker:
-				title = "Waypoint"
-				comment = marker.description
-			case let marker as GeoJsonMarker:
-				title = "GeoJSON"
-				comment = NSAttributedString(string: marker.description)
-			case let marker as KeepRightMarker:
-				title = "Keep Right"
-				comment = NSAttributedString(string: marker.description)
-			default:
-				title = ""
-				comment = NSAttributedString(string: "")
-			}
-
-			let alert = AlertPopup(title: title, message: comment)
-			if let marker = marker as? KeepRightMarker {
-				alert.addAction(
-					title: NSLocalizedString("Ignore", comment: ""),
-					handler: {
-						// they want to hide this button from now on
-						marker.ignore()
-						mapView.unselectAll()
-					})
-			}
-			mainView.present(alert, animated: true)
-		} else if let object = object {
-			// Fixme marker or Quest marker
-			if !mapView.isHidden {
-				if let marker = marker as? QuestMarker {
-					let onClose = {
-						// Need to update the QuestMarker icon
-						self.updateRegion(withDelay: 0.0, including: [.quest])
-					}
-					let vc = QuestSolverController.instantiate(marker: marker,
-					                                           object: object,
-					                                           onClose: onClose)
-					if #available(iOS 15.0, *),
-					   let sheet = vc.sheetPresentationController
-					{
-						sheet.selectedDetentIdentifier = .large
-						sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-						sheet.detents = [.medium(), .large()]
-						sheet.delegate = mapView
-					}
-					mainView.present(vc, animated: true)
-				} else {
-					mapView.presentTagEditor(nil)
-				}
-			} else {
-				let text: String
-				if let fixme = marker as? FixmeMarker,
-				   let object = fixme.object
-				{
-					text = FixmeMarker.fixmeTag(object) ?? ""
-				} else if let quest = marker as? QuestMarker {
-					text = quest.quest.title
-				} else {
-					text = ""
-				}
-				let alert = UIAlertController(title: "\(object.friendlyDescription())",
-				                              message: text,
-				                              preferredStyle: .alert)
-				alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-				mainView.present(alert, animated: true)
-			}
-		} else if let note = marker as? OsmNoteMarker {
-			mainView.performSegue(withIdentifier: "NotesSegue", sender: note)
-		}
+		marker.handleButtonPress(in: mainView, markerView: self)
 	}
 
-	// FIXME: Move this somewhere else, but mapMarkerDatabase is private so ??
+	// FIXME: Move this somewhere else since it is specific to Notes, but mapMarkerDatabase is private so ??
 	func upload(note: OsmNoteMarker,
 	            close: Bool,
 	            comment: String) async throws -> OsmNoteMarker

@@ -1,5 +1,5 @@
 //
-//  KeepRight.swift
+//  KeepRightMarker.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 9/16/21.
@@ -84,5 +84,18 @@ final class KeepRightMarker: MapMarker {
 
 	func shouldHide() -> Bool {
 		return ignorable!.shouldIgnore(marker: self)
+	}
+
+	override func handleButtonPress(in mainView: MainViewController, markerView: MapMarkersView) {
+		let title = "Keep Right"
+		let alert = AlertPopup(title: title, message: self.description)
+		alert.addAction(
+			title: NSLocalizedString("Ignore", comment: ""),
+			handler: {
+				// they want to hide this button from now on
+				self.ignore()
+				mainView.mapView.unselectAll()
+			})
+		mainView.present(alert, animated: true)
 	}
 }

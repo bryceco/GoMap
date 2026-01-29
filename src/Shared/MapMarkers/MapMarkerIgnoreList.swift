@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum IgnoreReason: Codable {
+enum MapMarkerIgnoreReason: Codable {
 	case userRequest
 	case userRequestUntil(Date)
 }
@@ -16,11 +16,11 @@ enum IgnoreReason: Codable {
 protocol MapMarkerIgnoreListProtocol: AnyObject {
 	func shouldIgnore(ident: String) -> Bool
 	func shouldIgnore(marker: MapMarker) -> Bool
-	func ignore(marker: MapMarker, reason: IgnoreReason)
+	func ignore(marker: MapMarker, reason: MapMarkerIgnoreReason)
 }
 
 final class MapMarkerIgnoreList: MapMarkerIgnoreListProtocol, Codable {
-	private typealias IgnoreDict = [String: IgnoreReason]
+	private typealias IgnoreDict = [String: MapMarkerIgnoreReason]
 
 	init() {
 		ignoreList = readIgnoreList()
@@ -36,14 +36,14 @@ final class MapMarkerIgnoreList: MapMarkerIgnoreListProtocol, Codable {
 		return shouldIgnore(ident: marker.markerIdentifier)
 	}
 
-	func ignore(marker: MapMarker, reason: IgnoreReason) {
+	func ignore(marker: MapMarker, reason: MapMarkerIgnoreReason) {
 		ignoreList[marker.markerIdentifier] = reason
 		writeIgnoreList()
 		marker.button?.removeFromSuperview()
 		marker.button = nil
 	}
 
-	private func readIgnoreList() -> [String: IgnoreReason] {
+	private func readIgnoreList() -> [String: MapMarkerIgnoreReason] {
 		let path = ArchivePath.mapMarkerIgnoreList.url()
 		guard let data = try? Data(contentsOf: path) else {
 			return [:]

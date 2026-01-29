@@ -28,6 +28,10 @@ class AlertPopup: UIViewController {
 		modalTransitionStyle = .crossDissolve
 	}
 
+	convenience init(title: String, message: String) {
+		self.init(title: title, message: NSAttributedString(string: message))
+	}
+
 	@available(*, unavailable)
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
