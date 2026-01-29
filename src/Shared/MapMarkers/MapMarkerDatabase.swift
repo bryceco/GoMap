@@ -98,10 +98,10 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	}
 
 	// External callers should use the "withDelay" variant of this
+	@MainActor
 	private func updateMarkers(forRegion box: OSMRect,
 	                           mapData: OsmMapData,
-	                           including: MapMarkerSet,
-	                           completion: @escaping () -> Void)
+	                           including: MapMarkerSet) async
 	{
 		// Fixme markers
 		if including.contains(.fixme) {
@@ -141,24 +141,20 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 		// Notes markers
 		if including.contains(.notes) {
 			removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
-			updateNoteMarkers(forRegion: box, completion: completion)
-			return // don't call completion until async finishes
+			await updateNoteMarkers(forRegion: box)
 		} else {
 			removeMarkers(where: { $0 is OsmNoteMarker })
 		}
-
-		completion()
 	}
 
-	func updateRegion(
-		withDelay delay: TimeInterval,
-		including: MapMarkerSet,
-		completion: @escaping () -> Void)
+	func updateRegion(withDelay delay: TimeInterval,
+	                  including: MapMarkerSet,
+	                  completion: @escaping () -> Void)
 	{
 		// Schedule work to be done in a short while, but if we're called before then
 		// cancel that operation and schedule a new one.
 		pendingUpdateTask?.cancel()
-		pendingUpdateTask = Task { @MainActor in
+		let task = Task { @MainActor in
 			// Suspend for delay (in nanoseconds)
 			let delayNs = UInt64((delay + 0.25) * 1000_000000)
 			try? await Task.sleep(nanoseconds: delayNs)
@@ -171,12 +167,14 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 			}
 			// Don't update excessively large regions
 			let bbox = AppDelegate.shared.mainView.viewPort.boundingLatLonForScreen()
-			guard bbox.size.width * bbox.size.height <= 0.25 else { return }
+			guard
+				bbox.size.width * bbox.size.height <= 0.25
+			else { return }
 
-			await MainActor.run {
-				self.updateMarkers(forRegion: bbox, mapData: mapData, including: including, completion: completion)
-			}
+			await self.updateMarkers(forRegion: bbox, mapData: mapData, including: including)
+			completion()
 		}
+		pendingUpdateTask = task
 	}
 
 	func mapMarker(forButtonId buttonId: Int) -> MapMarker? {
@@ -265,7 +263,7 @@ extension MapMarkerDatabase {
 		}
 	}
 
-	func updateNoteMarkers(forRegion box: OSMRect, completion: @escaping () -> Void) {
+	func updateNoteMarkers(forRegion box: OSMRect) async {
 		Task {
 			let bbox = "\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
 			let url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/notes")
@@ -293,7 +291,6 @@ extension MapMarkerDatabase {
 				for note in newNotes {
 					addOrUpdate(marker: note)
 				}
-				completion()
 			}
 		}
 	}
