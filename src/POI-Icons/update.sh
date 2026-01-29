@@ -5,9 +5,9 @@
 # Convert them from SVG to PDF
 # Build an asset catalog containing the images
 
-NAME=(temaki 									maki)
-GIT=(https://github.com/ideditor/temaki.git		https://github.com/mapbox/maki.git)
-FILES=('icons/*.svg'							'icons/*.svg')
+NAME=(temaki 									maki								roentgen)
+GIT=(https://github.com/ideditor/temaki.git		https://github.com/mapbox/maki.git	https://github.com/enzet/Roentgen.git)
+FILES=('icons/*.svg'							'icons/*.svg'						'icons/*.svg')
 
 # fetch icons from repositories
 for index in "${!NAME[@]}"; do
@@ -39,16 +39,10 @@ for f in "${presetIcons[@]}"; do
 		f2=${f:3}
 		echo $f2
 		curl -fLsS --output ./$f "https://raw.githubusercontent.com/openstreetmap/iD/develop/svg/iD-sprite/presets/$f2"
-	fi
-	if [[ $f = "roentgen-"* ]]; then
-		f2=${f:9}
-		echo $f2
-		curl -fLsS --output ./$f "https://raw.githubusercontent.com/openstreetmap/iD/develop/svg/roentgen/$f2"
-	fi
-	if [[ $f = "fas-"* ]]; then
+	elif [[ $f = "far-"* || $f = "fas-"* ]]; then
 		f2=${f:4}
 		echo $f2
-		curl -fLsS --output ./$f "https://raw.githubusercontent.com/openstreetmap/iD/develop/svg/fontawesome/fas-$f2"
+		curl -fLsS --output ./$f "https://raw.githubusercontent.com/openstreetmap/iD/develop/svg/fontawesome/$f"
 	fi
 done
 
