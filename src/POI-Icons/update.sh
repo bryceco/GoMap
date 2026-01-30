@@ -9,6 +9,8 @@ NAME=(temaki 									maki								roentgen)
 GIT=(https://github.com/ideditor/temaki.git		https://github.com/mapbox/maki.git	https://github.com/enzet/Roentgen.git)
 FILES=('icons/*.svg'							'icons/*.svg'						'icons/*.svg')
 
+ID_SVG="https://raw.githubusercontent.com/openstreetmap/iD/develop/svg"
+
 # fetch icons from repositories
 for index in "${!NAME[@]}"; do
 	name=${NAME[index]}
@@ -38,11 +40,12 @@ for f in "${presetIcons[@]}"; do
 	if [[ $f = "iD-"* ]]; then
 		f2=${f:3}
 		echo $f2
-		curl -fLsS --output ./$f "https://raw.githubusercontent.com/openstreetmap/iD/develop/svg/iD-sprite/presets/$f2"
+		curl -fLsS --output ./$f "$ID_SVG/iD-sprite/presets/$f2" ||\
+		curl -fLsS --output ./$f "$ID_SVG/iD-sprite/fields/crossing_markings/$f2"
 	elif [[ $f = "far-"* || $f = "fas-"* ]]; then
 		f2=${f:4}
 		echo $f2
-		curl -fLsS --output ./$f "https://raw.githubusercontent.com/openstreetmap/iD/develop/svg/fontawesome/$f"
+		curl -fLsS --output ./$f "$ID_SVG/fontawesome/$f"
 	fi
 done
 

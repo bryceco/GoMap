@@ -19,6 +19,9 @@ for file in glob.glob('./*.json'):
 	#	print(v)
 		if 'icon' in v:
 			print(v['icon'])
+		if 'icons' in v:
+			for v1 in v['icons'].values():
+				print(v1)
 	#	print('')
 	#	print(v['icon'])
 	#	for i2,(k2,v2) in enumerate(v.items()):

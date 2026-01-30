@@ -98,7 +98,9 @@ class POIPresetValuePickerController: UITableViewController {
 			cell.detailTextLabel?.text = descriptions[tag] ?? ""
 		}
 		if images.count > 0 {
-			cell.imageView?.image = images[tag] ?? placeholderImage
+			let image = images[tag] ?? placeholderImage
+			let image2 = image.scaledTo(width: nil, height: 32)
+			cell.imageView?.image = image2
 		}
 
 		let tabController = tabBarController as? POITabBarController

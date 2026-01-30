@@ -83,7 +83,7 @@ final class PresetField: CustomDebugStringConvertible {
 	var autoSuggestions: Bool { (jsonDict["autoSuggestions"] as! Bool?) ?? true }
 	var replacement: String? { jsonDict["replacement"] as! String? }
 	var reference: [String: String]? { jsonDict["reference"] as! [String: String]? }
-	var icons: [String: String]? { jsonDict["icons"] as! [String: String]? }
+	var icons: [String: String]? { crossRef(for: "iconsCrossReference").jsonDict["icons"] as! [String: String]? }
 	var universal: Bool { (jsonDict["universal"] as! Bool?) ?? false }
 	var caseSensitive: Bool { ((jsonDict["caseSensitive"] as! Int?) ?? 0) != 0 }
 
@@ -114,7 +114,7 @@ final class PresetField: CustomDebugStringConvertible {
 		return PresetTranslations.shared.options(for: crossRef(for: "stringsCrossReference"))
 	}
 
-	var types: [String: String]? { // rename to options
+	var types: [String: String]? {
 		return PresetTranslations.shared.types(for: crossRef(for: "stringsCrossReference"))
 	}
 
