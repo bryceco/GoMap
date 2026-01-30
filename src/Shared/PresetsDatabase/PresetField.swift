@@ -60,9 +60,15 @@ final class PresetField: CustomDebugStringConvertible {
 	let jsonDict: [String: Any]
 
 	init?(identifier: String, json: [String: Any]) {
-		guard json["type"] is String else { return nil }
+		guard json["type"] is String else {
+			return nil
+		}
 		self.identifier = identifier
 		jsonDict = json
+		guard self.usage != "changeset" else {
+			// we might be able to ignore other values as well, maybe "manual"
+			return nil
+		}
 #if DEBUG
 		// validate that we don't encounter any types that aren't supported
 		_ = self.type
@@ -85,6 +91,7 @@ final class PresetField: CustomDebugStringConvertible {
 	var geometry: [String]? { jsonDict["geometry"] as! [String]? }
 	var prerequisiteTag: [String: String]? { jsonDict["prerequisiteTag"] as! [String: String]? }
 	var locationSet: LocationSet? { LocationSet(withJson: jsonDict["locationSet"]) }
+	var usage: String? { jsonDict["usage"] as! String? }
 
 	// localizable strings
 	var localizedLabel: String? {
