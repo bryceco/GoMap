@@ -162,7 +162,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 			let geom = points.count >= 2
 				? GeoJSONGeometry(geometry: .lineString(points: points.map { $0.latLon }))
 				: nil
-			geoJSONFeature = GeoJSONFeature(type: "Feature",
+			geoJSONFeature = GeoJSONFeature(type: .Feature,
 			                                id: name,
 			                                geometry: geom,
 			                                properties: nil)

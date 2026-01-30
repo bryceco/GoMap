@@ -127,7 +127,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				// Load GeoJSON into user custom data layer
 				MainActor.runAfter(nanoseconds: 100_000000) {
 					do {
-						let geo = try GeoJSONFile(data: data)
+						let geo = try GeoJSONFeatureCollection(data: data)
 						try geoJsonList.add(name: url.lastPathComponent, data: data)
 						if let loc = geo.firstPoint() {
 							mainView.viewPort.centerOn(latLon: loc, metersWide: nil)

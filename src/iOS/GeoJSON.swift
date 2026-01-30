@@ -18,9 +18,13 @@ enum GeoJsonError: Error {
 	case invalidGeometryType(String)
 }
 
-struct GeoJSONFile: Decodable {
-	let type: String // e.g. "FeatureCollection"
+struct GeoJSONFeatureCollection: Decodable {
+	let type: FeatureCollectionType // always "FeatureCollection"
 	let features: [GeoJSONFeature]
+
+	enum FeatureCollectionType: String, Codable {
+		case FeatureCollection
+	}
 
 	init(data: Data) throws {
 		self = try JSONDecoder().decode(Self.self, from: data)
@@ -42,12 +46,16 @@ struct GeoJSONFile: Decodable {
 }
 
 struct GeoJSONFeature: Decodable {
-	let type: String // e.g. "Feature"
+	let type: FeatureType // always "Feature"
 	let id: String? // String or Number
 	let geometry: GeoJSONGeometry?
 	let properties: AnyJSON?
 
-	init(type: String,
+	enum FeatureType: String, Codable {
+		case Feature
+	}
+
+	init(type: FeatureType,
 	     id: String?,
 	     geometry: GeoJSONGeometry?,
 	     properties: AnyJSON?)
@@ -58,11 +66,12 @@ struct GeoJSONFeature: Decodable {
 		self.properties = properties
 	}
 
+	// Use this for an empty Feature
 	init() {
-		type = "Feature"
-		id = nil
-		geometry = nil
-		properties = nil
+		self.init(type: .Feature,
+		          id: nil,
+		          geometry: nil,
+		          properties: nil)
 	}
 
 	init(from decoder: Decoder) throws {
@@ -73,7 +82,7 @@ struct GeoJSONFeature: Decodable {
 			case properties
 		}
 		let container = try decoder.container(keyedBy: CodingKeys.self)
-		type = try container.decode(String.self, forKey: .type)
+		type = try container.decode(FeatureType.self, forKey: .type)
 		do {
 			id = try container.decodeIfPresent(String.self, forKey: .id)
 		} catch {
@@ -124,14 +133,24 @@ extension LatLon {
 }
 
 struct GeoJSONGeometry: Codable {
-	let geometryPoints: GeometryType
+	let geometryPoints: Geometry
 	let latLonBezierPath: UIBezierPath?
 	let uuid = UUID()
 
 	typealias LineString = [LatLon]
 	typealias Polygon = [[LatLon]]
 
-	enum GeometryType: Codable {
+	enum GeometryType: String, Codable {
+		case Point
+		case MultiPoint
+		case LineString
+		case MultiLineString
+		case Polygon
+		case MultiPolygon
+		case GeometryCollection
+	}
+
+	enum Geometry: Codable {
 		case point(points: LatLon)
 		case multiPoint(points: [LatLon])
 		case lineString(points: LineString)
@@ -157,31 +176,29 @@ struct GeoJSONGeometry: Codable {
 		init(from decoder: Decoder) throws {
 			do {
 				let container = try decoder.container(keyedBy: CodingKeys.self)
-				let type = try container.decode(String.self, forKey: .type)
+				let type = try container.decode(GeometryType.self, forKey: .type)
 				switch type {
-				case "Point":
+				case .Point:
 					let points = try container.decode(LatLon.self, forKey: .coordinates)
 					self = .point(points: points)
-				case "MultiPoint":
+				case .MultiPoint:
 					let points = try container.decode([LatLon].self, forKey: .coordinates)
 					self = .multiPoint(points: points)
-				case "LineString":
+				case .LineString:
 					let points = try container.decode([LatLon].self, forKey: .coordinates)
 					self = .lineString(points: points)
-				case "MultiLineString":
+				case .MultiLineString:
 					let points = try container.decode([[LatLon]].self, forKey: .coordinates)
 					self = .multiLineString(points: points)
-				case "Polygon":
+				case .Polygon:
 					let points = try container.decode([[LatLon]].self, forKey: .coordinates)
 					self = .polygon(points: points)
-				case "MultiPolygon":
+				case .MultiPolygon:
 					let points = try container.decode([[[LatLon]]].self, forKey: .coordinates)
 					self = .multiPolygon(points: points)
-				case "GeometryCollection":
+				case .GeometryCollection:
 					let points = try container.decode([GeoJSONGeometry].self, forKey: .geometries)
 					self = .geometryCollection(points: points)
-				default:
-					throw GeoJsonError.invalidGeometryType(type)
 				}
 			} catch {
 				print("\(error)")
@@ -237,32 +254,31 @@ struct GeoJSONGeometry: Codable {
 		init(json: [String: Any]) throws {
 			guard
 				let type = json["type"] as? String,
+				let type = GeometryType(rawValue: type),
 				let points = json["coordinates"]
 			else {
 				throw GeoJsonError.missingType
 			}
 			switch type {
-			case "Point":
-				self = try GeometryType(pointJSON: points)
-			case "MultiPoint":
-				self = try GeometryType(multiPointJSON: points)
-			case "LineString":
-				self = try GeometryType(lineStringJSON: points)
-			case "MultiLineString":
-				self = try GeometryType(multiLineStringJSON: points)
-			case "Polygon":
-				self = try GeometryType(polygonJSON: points)
-			case "MultiPolygon":
-				self = try GeometryType(multiPolygonJSON: points)
-			case "GeometryCollection":
-				self = try GeometryType(geometryCollectionJSON: points)
-			default:
-				throw GeoJsonError.invalidGeometryType(type)
+			case .Point:
+				self = try Geometry(pointJSON: points)
+			case .MultiPoint:
+				self = try Geometry(multiPointJSON: points)
+			case .LineString:
+				self = try Geometry(lineStringJSON: points)
+			case .MultiLineString:
+				self = try Geometry(multiLineStringJSON: points)
+			case .Polygon:
+				self = try Geometry(polygonJSON: points)
+			case .MultiPolygon:
+				self = try Geometry(multiPolygonJSON: points)
+			case .GeometryCollection:
+				self = try Geometry(geometryCollectionJSON: points)
 			}
 		}
 	}
 
-	init(geometry: GeometryType) {
+	init(geometry: Geometry) {
 		geometryPoints = geometry
 		do {
 			latLonBezierPath = try geometryPoints.bezierPath()
@@ -273,7 +289,7 @@ struct GeoJSONGeometry: Codable {
 	}
 
 	init(geometry: [String: Any]) throws {
-		try self.init(geometry: GeometryType(json: geometry))
+		try self.init(geometry: Geometry(json: geometry))
 	}
 
 	init?(geometry: [String: Any]?) throws {
@@ -283,7 +299,7 @@ struct GeoJSONGeometry: Codable {
 
 	init(from decoder: Decoder) throws {
 		do {
-			try self.init(geometry: GeometryType(from: decoder))
+			try self.init(geometry: Geometry(from: decoder))
 		} catch {
 			print("\(error)")
 			throw error
@@ -327,7 +343,7 @@ struct GeoJSONGeometry: Codable {
 
 // MARK: Bezier path stuff
 
-extension GeoJSONGeometry.GeometryType {
+extension GeoJSONGeometry.Geometry {
 	private static func cgForPoint(_ point: LatLon) -> CGPoint {
 		return CGPoint(x: point.lon, y: point.lat)
 	}

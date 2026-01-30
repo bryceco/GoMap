@@ -122,7 +122,7 @@ class DataOverlaysController: UITableViewController {
 				// jump to the location
 				guard
 					indexPath.row < geoJsonList.count,
-					let geoJson = try? GeoJSONFile(url: geoJsonList[indexPath.row].url),
+					let geoJson = try? GeoJSONFeatureCollection(url: geoJsonList[indexPath.row].url),
 					let latLon = geoJson.firstPoint(),
 					let mainView = AppDelegate.shared.mainView
 				else { return }

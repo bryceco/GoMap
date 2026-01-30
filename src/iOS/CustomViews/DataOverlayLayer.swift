@@ -23,7 +23,7 @@ final class DataOverlayLayer: DrawingLayer, DrawingLayerDelegate {
 		geojsonDelegate = self
 	}
 
-	var allCustom: [URL: GeoJSONFile] = [:]
+	var allCustom: [URL: GeoJSONFeatureCollection] = [:]
 
 	override func layoutSublayers() {
 		let previous = Set(allCustom.keys)
@@ -34,7 +34,7 @@ final class DataOverlayLayer: DrawingLayer, DrawingLayerDelegate {
 		for url in current {
 			if allCustom[url] == nil {
 				do {
-					allCustom[url] = try GeoJSONFile(url: url)
+					allCustom[url] = try GeoJSONFeatureCollection(url: url)
 				} catch {
 					print("\(error)")
 				}

@@ -136,13 +136,11 @@ final class PresetsDatabase {
 		DispatchQueue.global(qos: .userInitiated).async {
 			do {
 				let data = try Self.dataForFile("nsi_geojson.json")
-				let geoJson = try GeoJSONFile(data: data)
+				let geoJson = try GeoJSONFeatureCollection(data: data)
 				var featureDict = [String: GeoJSONGeometry]()
 				for feature in geoJson.features {
-					if feature.type == "Feature" {
-						let name = try unwrap(feature.id)
-						featureDict[name] = feature.geometry
-					}
+					let name = try unwrap(feature.id)
+					featureDict[name] = feature.geometry
 				}
 				DispatchQueue.main.async {
 					self.nsiGeoJson = featureDict
