@@ -319,7 +319,8 @@ final class EditorFilters {
 			}
 
 			if self.showOthers, !matchAny {
-				if object.isWay() != nil, object.parentRelations.count == 1,
+				if object.isWay() != nil,
+				   object.parentRelations.count == 1,
 				   object.parentRelations[0].isMultipolygon()
 				{
 					return false // follow parent filter instead

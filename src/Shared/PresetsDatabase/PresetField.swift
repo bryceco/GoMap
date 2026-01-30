@@ -93,6 +93,10 @@ final class PresetField: CustomDebugStringConvertible {
 	var locationSet: LocationSet? { LocationSet(withJson: jsonDict["locationSet"]) }
 	var usage: String? { jsonDict["usage"] as! String? }
 
+	// restrictions
+	var urlFormat: String? { jsonDict["urlFormat"] as! String? }
+	var pattern: String? { jsonDict["pattern"] as! String? }
+
 	// localizable strings
 	var localizedLabel: String? {
 		return PresetTranslations.shared.label(for: crossRef(for: "label"))
