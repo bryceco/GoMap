@@ -7,6 +7,7 @@
     <body>
       <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
         <source>username</source>
+        <target state="translated">nama pengguna</target>
         <note>Class = "UIButton"; normalTitle = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -115,6 +116,7 @@
       </trans-unit>
       <trans-unit id="ach-1A-88x.text" xml:space="preserve">
         <source>Changeset comment goes here</source>
+        <target state="translated">Komentar changeset ditulis di sini</target>
         <note>Class = "UITextView"; text = "Changeset comment goes here"; ObjectID = "ach-1A-88x";</note>
       </trans-unit>
       <trans-unit id="gdu-Sf-XrE.title" xml:space="preserve">
@@ -148,6 +150,7 @@
       </trans-unit>
       <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
         <source>2014-06-17 17:54 UTC</source>
+        <target state="translated">2014-06-17 17:54 UTC</target>
         <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
       </trans-unit>
       <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
@@ -157,6 +160,7 @@
       </trans-unit>
       <trans-unit id="vwW-V6-kvw.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Judul</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vwW-V6-kvw"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
@@ -173,6 +177,7 @@
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
         <source>Point your phone in the direction the object faces.</source>
+        <target state="translated">Arahkan ponsel Anda ke arah hadap objek tersebut.</target>
         <note>Class = "UILabel"; text = "Point your phone in the direction the object faces."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
@@ -206,6 +211,7 @@
       </trans-unit>
       <trans-unit id="1f0-8q-yCi.text" xml:space="preserve">
         <source>GPX Tracks</source>
+        <target state="translated">Lintasan GPX</target>
         <note>Class = "UILabel"; text = "GPX Tracks"; ObjectID = "1f0-8q-yCi";</note>
       </trans-unit>
       <trans-unit id="2ZY-zi-luF.text" xml:space="preserve">
@@ -215,6 +221,7 @@
       </trans-unit>
       <trans-unit id="3k9-ML-Zea.normalTitle" xml:space="preserve">
         <source>Mapnik</source>
+        <target state="translated">Mapnik</target>
         <note>Class = "UIButton"; normalTitle = "Mapnik"; ObjectID = "3k9-ML-Zea";</note>
       </trans-unit>
       <trans-unit id="4s8-Bj-JOX.normalTitle" xml:space="preserve">
@@ -229,6 +236,7 @@
       </trans-unit>
       <trans-unit id="7df-49-qTa.text" xml:space="preserve">
         <source>Rail Features</source>
+        <target state="translated">Fitur Rel</target>
         <note>Class = "UILabel"; text = "Rail Features"; ObjectID = "7df-49-qTa";</note>
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
@@ -238,6 +246,7 @@
       </trans-unit>
       <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
         <source>Aerial Imagery</source>
+        <target state="translated">Citra Udara</target>
         <note>Class = "UINavigationItem"; title = "Aerial Imagery"; ObjectID = "8HT-Bc-Q2z";</note>
       </trans-unit>
       <trans-unit id="8es-4f-sj3.headerTitle" xml:space="preserve">
@@ -247,10 +256,12 @@
       </trans-unit>
       <trans-unit id="8iI-nH-O9H.title" xml:space="preserve">
         <source>Basemap</source>
+        <target state="translated">Peta dasar</target>
         <note>Class = "UINavigationItem"; title = "Basemap"; ObjectID = "8iI-nH-O9H";</note>
       </trans-unit>
       <trans-unit id="186-0W-Nrr.title" xml:space="preserve">
         <source>Display</source>
+        <target state="translated">Tampilan</target>
         <note>Class = "UINavigationItem"; title = "Display"; ObjectID = "186-0W-Nrr";</note>
       </trans-unit>
       <trans-unit id="DmO-dW-3Fh.text" xml:space="preserve">
@@ -260,6 +271,7 @@
       </trans-unit>
       <trans-unit id="EHa-L5-Hcz.text" xml:space="preserve">
         <source>12:00:00</source>
+        <target state="translated">12:00:00</target>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
@@ -269,30 +281,37 @@
       </trans-unit>
       <trans-unit id="Idx-2G-6F7.text" xml:space="preserve">
         <source>Power Features</source>
+        <target state="translated">Fitur Kelistrikan</target>
         <note>Class = "UILabel"; text = "Power Features"; ObjectID = "Idx-2G-6F7";</note>
       </trans-unit>
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
         <source>Paths</source>
+        <target state="translated">Jalur</target>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Object Filters</source>
+        <target state="translated">Filter Objek</target>
         <note>Class = "UILabel"; text = "Object Filters"; ObjectID = "LxX-tl-ZLH";</note>
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
+        <target state="translated">Editor dengan Citra Udara</target>
         <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
       </trans-unit>
       <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
         <source>Aerial Provider</source>
+        <target state="translated">Penyedia Citra Udara</target>
         <note>Class = "UINavigationItem"; title = "Aerial Provider"; ObjectID = "MZF-am-tCM";</note>
       </trans-unit>
       <trans-unit id="MeQ-4N-FqC.text" xml:space="preserve">
         <source>GPX Tracks you record or download will be automatically deleted after:</source>
+        <target state="translated">Lintasan GPX yang Anda rekam atau unduh akan dihapus secara otomatis setelah:</target>
         <note>Class = "UILabel"; text = "GPX Tracks you record or download will be automatically deleted after:"; ObjectID = "MeQ-4N-FqC";</note>
       </trans-unit>
       <trans-unit id="O0U-6M-7AT.text" xml:space="preserve">
         <source>Quests</source>
+        <target state="translated">Tugas</target>
         <note>Class = "UILabel"; text = "Quests"; ObjectID = "O0U-6M-7AT";</note>
       </trans-unit>
       <trans-unit id="OiJ-GU-gZ3.title" xml:space="preserve">
@@ -302,22 +321,27 @@
       </trans-unit>
       <trans-unit id="Okg-2D-O6U.text" xml:space="preserve">
         <source>Landuse</source>
+        <target state="translated">Penggunaan lahan</target>
         <note>Class = "UILabel"; text = "Landuse"; ObjectID = "Okg-2D-O6U";</note>
       </trans-unit>
       <trans-unit id="PSE-3C-cDx.text" xml:space="preserve">
         <source>Notes and Fixmes</source>
+        <target state="translated">Catatan dan Fixme</target>
         <note>Class = "UILabel"; text = "Notes and Fixmes"; ObjectID = "PSE-3C-cDx";</note>
       </trans-unit>
       <trans-unit id="RJU-Z2-QFh.headerTitle" xml:space="preserve">
         <source>Interactions</source>
+        <target state="translated">Interaksi</target>
         <note>Class = "UITableViewSection"; headerTitle = "Interactions"; ObjectID = "RJU-Z2-QFh";</note>
       </trans-unit>
       <trans-unit id="RK2-Uw-eHM.text" xml:space="preserve">
         <source>Basemap only</source>
+        <target state="translated">Hanya peta dasar</target>
         <note>Class = "UILabel"; text = "Basemap only"; ObjectID = "RK2-Uw-eHM";</note>
       </trans-unit>
       <trans-unit id="RxO-IV-UE7.text" xml:space="preserve">
         <source>Service Roads</source>
+        <target state="translated">Jalan Layanan</target>
         <note>Class = "UILabel"; text = "Service Roads"; ObjectID = "RxO-IV-UE7";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.footerTitle" xml:space="preserve">
@@ -326,6 +350,11 @@
 Warning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.
 
 Clear the Basemap or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed.</source>
+        <target state="translated">Hapus cache data OSM jika status aplikasi menjadi tidak sinkron dengan server OSM. Ini dapat terjadi jika orang lain mengubah data yang sedang Anda edit, atau jika salah satu unggahan Anda gagal di tengah jalan sehingga mencegah Anda mengunggah data tambahan.
+
+Peringatan: Menghapus cache OSM akan menyebabkan Anda kehilangan perubahan apa pun yang belum diunggah.
+
+Hapus cache ubin Peta dasar atau Lapisan untuk mengunduh ubin terbaru yang mencerminkan perubahan yang sebelumnya telah Anda kirimkan. Perubahan Anda mungkin memerlukan waktu hingga 24 jam untuk diproses.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Clear the OSM data cache if the application state becomes out of sync with the OSM server. This may occur if someone else changes data you are editing, or if one of your uploads fails midway through preventing you from uploading additional data. \n\nWarning: Clearing the OSM cache will cause you to lose any changes that have not yet been uploaded.\n\nClear the Basemap or Overlay tile caches  to download the latest tiles that reflect changes you've previously submitted. Your changes may take up to 24 hours to be processed."; ObjectID = "SNa-W1-wga";</note>
       </trans-unit>
       <trans-unit id="SNa-W1-wga.headerTitle" xml:space="preserve">
@@ -335,6 +364,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Sdv-R2-za8.normalTitle" xml:space="preserve">
         <source>Import</source>
+        <target state="translated">Impor</target>
         <note>Class = "UIButton"; normalTitle = "Import"; ObjectID = "Sdv-R2-za8";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
@@ -359,6 +389,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
+        <target state="translated">Jika menentukan URL WMS, Anda juga harus menyediakan proyeksi yang digunakan</target>
         <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.headerTitle" xml:space="preserve">
@@ -368,10 +399,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target state="translated">Ubin Citra Udara</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
         <source>HealthKit routes:</source>
+        <target state="translated">Rute HealthKit:</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
@@ -396,6 +429,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="cpv-m2-oDm.headerTitle" xml:space="preserve">
         <source>Friendly Name</source>
+        <target state="translated">Nama Ramah</target>
         <note>Class = "UITableViewSection"; headerTitle = "Friendly Name"; ObjectID = "cpv-m2-oDm";</note>
       </trans-unit>
       <trans-unit id="dIe-MC-t44.text" xml:space="preserve">
@@ -411,6 +445,8 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="dzT-B4-za3.placeholder" xml:space="preserve">
         <source>http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
  </source>
+        <target state="translated">http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png
+ </target>
         <note>Class = "UITextField"; placeholder = "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "; ObjectID = "dzT-B4-za3";</note>
       </trans-unit>
       <trans-unit id="eLW-GB-ugG.text" xml:space="preserve">
@@ -440,6 +476,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="fVu-8o-Ldq.text" xml:space="preserve">
         <source>Details</source>
+        <target state="translated">Rincian</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
@@ -484,6 +521,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="nzU-It-UAv.text" xml:space="preserve">
         <source>Data Overlays</source>
+        <target state="translated">Lapisan Data</target>
         <note>Class = "UILabel"; text = "Data Overlays"; ObjectID = "nzU-It-UAv";</note>
       </trans-unit>
       <trans-unit id="oSD-0y-Vt0.title" xml:space="preserve">
@@ -513,10 +551,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="r78-B4-pAU.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target state="translated">Ubin Citra Udara</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "r78-B4-pAU";</note>
       </trans-unit>
       <trans-unit id="rWF-4C-sRA.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Judul</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "rWF-4C-sRA";</note>
       </trans-unit>
       <trans-unit id="scg-Po-M3L.headerTitle" xml:space="preserve">
@@ -561,6 +601,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="v6h-g5-fka.text" xml:space="preserve">
         <source>12/22/20, 7:55 PM</source>
+        <target state="translated">12/22/20, 7:55 PM</target>
         <note>Class = "UILabel"; text = "12/22/20, 7:55 PM"; ObjectID = "v6h-g5-fka";</note>
       </trans-unit>
       <trans-unit id="voF-Yf-33h.text" xml:space="preserve">
@@ -585,6 +626,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.footerTitle" xml:space="preserve">
         <source>A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL</source>
+        <target state="translated">URL TMS dengan penampung {x}, {y}, dan {z}, atau URL WMS</target>
         <note>Class = "UITableViewSection"; footerTitle = "A TMS URL with {x}, {y} and {z} placeholders, or a WMS URL"; ObjectID = "zD6-m4-1PD";</note>
       </trans-unit>
       <trans-unit id="zD6-m4-1PD.headerTitle" xml:space="preserve">
@@ -606,14 +648,17 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>GpxWidget</source>
+        <target state="translated">WidgetGpx</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>GpxWidgetExtension</source>
+        <target state="translated">EkstensiWidgetGpx</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
         <source>Copyright © 2024 Bryce Cogswell. All rights reserved.</source>
+        <target state="translated">Hak Cipta © 2024 Bryce Cogswell. Semua hak dilindungi undang-undang.</target>
         <note>Copyright (human-readable)</note>
       </trans-unit>
     </body>
@@ -625,66 +670,82 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
     <body>
       <trans-unit id="%@" xml:space="preserve">
         <source>%@</source>
+        <target state="translated">%@</target>
         <note/>
       </trans-unit>
       <trans-unit id="%@ %@" xml:space="preserve">
         <source>%1$@ %2$@</source>
+        <target state="translated">%1$@ %2$@</target>
         <note/>
       </trans-unit>
       <trans-unit id="%@ %lld" xml:space="preserve">
         <source>%1$@ %2$lld</source>
+        <target state="translated">%1$@ %2$lld</target>
         <note from="auto-generated">A compact leading view for a dynamic island.</note>
       </trans-unit>
       <trans-unit id="%@ Stop" xml:space="preserve">
         <source>%@ Stop</source>
+        <target state="translated">%@ Berhenti</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld" xml:space="preserve">
         <source>%lld</source>
+        <target state="translated">%lld</target>
         <note from="auto-generated">A label displaying the number of points recorded in a GPX track.</note>
       </trans-unit>
       <trans-unit id="Duration" xml:space="preserve">
         <source>Duration</source>
+        <target state="translated">Durasi</target>
         <note from="auto-generated">A caption displayed underneath the duration of a track.</note>
       </trans-unit>
       <trans-unit id="GPX Trace" xml:space="preserve">
         <source>GPX Trace</source>
+        <target state="translated">Jejak GPX</target>
         <note from="auto-generated">A caption displayed below the name of the app.</note>
       </trans-unit>
       <trans-unit id="Go Map!!" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note from="auto-generated">A label displayed on the lock screen/banner UI of the widget</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
+        <target state="translated">Jeda GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
+        <target state="translated">Jeda perekaman lintasan GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Points" xml:space="preserve">
         <source>Points</source>
+        <target state="translated">Titik</target>
         <note from="auto-generated">A unit displayed underneath the number of GPX points recorded.</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
+        <target state="translated">Mulai GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
+        <target state="translated">Mulai merekam lintasan GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Started at %@" xml:space="preserve">
         <source>Started at %@</source>
+        <target state="translated">Dimulai pada %@</target>
         <note from="auto-generated">A subheading displaying when the user started tracking.</note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
+        <target state="translated">Hentikan GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
+        <target state="translated">Hentikan perekaman lintasan GPX.</target>
         <note/>
       </trans-unit>
     </body>
@@ -752,10 +813,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="NSHealthShareUsageDescription" xml:space="preserve">
         <source>Routes from your workouts can be imported as GPX routes.</source>
+        <target state="translated">Rute dari latihan Anda dapat diimpor sebagai rute GPX.</target>
         <note>Privacy - Health Share Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHealthUpdateUsageDescription" xml:space="preserve">
         <source>Health information is never updated.</source>
+        <target state="translated">Informasi kesehatan tidak pernah diperbarui.</target>
         <note>Privacy - Health Update Usage Description</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -830,6 +893,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m²</source>
+        <target state="translated">%.0f m²</target>
         <note>area in m^2</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
@@ -884,17 +948,17 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="new">%1$#@meters@, %2$#@nodes@</target>
+        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$ld meters</source>
-        <target state="new">%1$ld meters</target>
+        <target state="translated">%1$ld meter</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
-        <target state="new">%2$ld nodes</target>
+        <target state="translated">%2$ld simpul</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
@@ -904,22 +968,22 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="new">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
+        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="new">%ld meters</target>
+        <target state="translated">%ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="new">%ld points</target>
+        <target state="translated">%ld titik</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.other" xml:space="preserve">
         <source>%ld waypoints</source>
-        <target state="new">%ld waypoints</target>
+        <target state="translated">%ld titik rute</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
@@ -935,18 +999,18 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
-        <target state="new">%1$#@routes@ imported,
-%2$#@duplicates@ skipped</target>
+        <target state="translated">%1$#@routes@ diimpor,
+%2$#@duplicates@ dilewati</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.other" xml:space="preserve">
         <source>%2$ld duplicates</source>
-        <target state="new">%2$ld duplicates</target>
+        <target state="translated">%2$ld duplikat</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.other" xml:space="preserve">
         <source>%1$ld new routes</source>
-        <target state="new">%1$ld new routes</target>
+        <target state="translated">%1$ld rute baru</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
@@ -956,7 +1020,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.other" xml:space="preserve">
         <source>%lu tiles needed</source>
-        <target state="new">%lu tiles needed</target>
+        <target state="translated">%lu ubin diperlukan</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
@@ -1001,26 +1065,32 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
+        <target state="translated">Lintasan GPX merekam jalur Anda saat Anda bepergian sepanjang jalan atau jalur setapak</target>
         <note/>
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
         <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
+        <target state="translated">Salinan semua tugas yang ditentukan pengguna telah disalin ke clipboard dalam format JSON. Anda dapat menempelkannya di suatu tempat untuk menyimpan salinan atau mengirimkannya kepada orang lain.</target>
         <note/>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
+        <target state="translated">Relasi tempat simpul ini menjadi anggota belum sepenuhnya diunduh</target>
         <note/>
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
+        <target state="translated">Terima</target>
         <note/>
       </trans-unit>
       <trans-unit id="Add Building Type" xml:space="preserve">
         <source>Add Building Type</source>
+        <target state="translated">Tambahkan Jenis Bangunan</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Highway Surface" xml:space="preserve">
         <source>Add Highway Surface</source>
+        <target state="translated">Tambahkan Permukaan Jalan Raya</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
@@ -1030,38 +1100,47 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Add Opening Hours" xml:space="preserve">
         <source>Add Opening Hours</source>
+        <target state="translated">Tambahkan Jam Buka</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Panoramax Photo" xml:space="preserve">
         <source>Add Panoramax Photo</source>
+        <target state="translated">Tambahkan Foto Panoramax</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
+        <target state="translated">Tambahkan Jenis Parkir</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Sidewalk Surface" xml:space="preserve">
         <source>Add Sidewalk Surface</source>
+        <target state="translated">Tambahkan Permukaan Trotoar</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Speed Limit" xml:space="preserve">
         <source>Add Speed Limit</source>
+        <target state="translated">Tambahkan Batas Kecepatan</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Telephone Number" xml:space="preserve">
         <source>Add Telephone Number</source>
+        <target state="translated">Tambahkan Nomor Telepon</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Website" xml:space="preserve">
         <source>Add Website</source>
+        <target state="translated">Tambahkan Situs Web</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
+        <target state="translated">Tambahkan anggota dalam</target>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
+        <target state="translated">Tambahkan anggota luar</target>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
@@ -1071,18 +1150,22 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
         <source>Adding members:</source>
+        <target state="translated">Menambahkan anggota:</target>
         <note/>
       </trans-unit>
       <trans-unit id="Additional imagery" xml:space="preserve">
         <source>Additional imagery</source>
+        <target state="translated">Citra tambahan</target>
         <note/>
       </trans-unit>
       <trans-unit id="Advanced Quest Builder" xml:space="preserve">
         <source>Advanced Quest Builder</source>
+        <target state="translated">Pembangun Tugas Lanjutan</target>
         <note/>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
+        <target state="translated">Hanya citra udara</target>
         <note/>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
@@ -1097,14 +1180,17 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
         <source>An error occured while exporting: %@</source>
+        <target state="translated">Terjadi kesalahan saat mengekspor: %@</target>
         <note>Show an error message</note>
       </trans-unit>
       <trans-unit id="An error occured while importing: %@" xml:space="preserve">
         <source>An error occured while importing: %@</source>
+        <target state="translated">Terjadi kesalahan saat mengimpor: %@</target>
         <note>Show an error message</note>
       </trans-unit>
       <trans-unit id="Area" xml:space="preserve">
         <source>Area</source>
+        <target state="translated">Area</target>
         <note>Area of an object in m^2
 Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
@@ -1135,22 +1221,27 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
+        <target state="translated">Login buruk</target>
         <note/>
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
+        <target state="translated">Citra latar belakang yang lebih baik tersedia untuk lokasi Anda. Apakah Anda ingin beralih ke citra tersebut?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
+        <target state="translated">Citra yang lebih baik tersedia</target>
         <note/>
       </trans-unit>
       <trans-unit id="Build a New Quest" xml:space="preserve">
         <source>Build a New Quest</source>
+        <target state="translated">Buat Tugas Baru</target>
         <note/>
       </trans-unit>
       <trans-unit id="Building" xml:space="preserve">
         <source>Building</source>
+        <target state="translated">Bangunan</target>
         <note>The object is a building</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
@@ -1160,6 +1251,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
+        <target state="translated">Cache dipangkas</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
@@ -1179,18 +1271,22 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
         <source>Can't delete way that is part of a Route or similar relation</source>
+        <target state="translated">Tidak dapat menghapus garis yang merupakan bagian dari Rute atau relasi serupa</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't extend way" xml:space="preserve">
         <source>Can't extend way</source>
+        <target state="translated">Tidak dapat memperpanjang garis</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
         <source>Can't remove Turn Restriction 'via' node</source>
+        <target state="translated">Tidak dapat menghapus simpul 'via' pada Pembatasan Belok</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
+        <target state="translated">Tidak dapat menghapus simpul Pembatasan Belok yang menghubungkan 'to'/'from' ke 'via'</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
@@ -1200,10 +1296,12 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
         <source>Can't remove component of a Route or similar relation</source>
+        <target state="translated">Tidak dapat menghapus komponen dari Rute atau relasi serupa</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
+        <target state="translated">Tidak dapat menghapus simpul pada garis 'via' Pembatasan Belok</target>
         <note/>
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
@@ -1218,34 +1316,42 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
         <source>Cannot connect an inner way to an outer way</source>
+        <target state="translated">Tidak dapat menghubungkan garis dalam ke garis luar</target>
         <note/>
       </trans-unit>
       <trans-unit id="Change" xml:space="preserve">
         <source>Change</source>
+        <target state="translated">Ubah</target>
         <note/>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
         <source>Changeset</source>
+        <target state="translated">Changeset</target>
         <note>OSM changeset identifier</note>
       </trans-unit>
       <trans-unit id="Choose Existing Photo" xml:space="preserve">
         <source>Choose Existing Photo</source>
+        <target state="translated">Pilih Foto yang Ada</target>
         <note>Text displayed in an action sheet when the user wants to upload a photograph from their photo library.</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
+        <target state="translated">Hapus Semua</target>
         <note/>
       </trans-unit>
       <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
         <source>Clear Basemap Tiles</source>
+        <target state="translated">Hapus Ubin Peta Dasar</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Data Caches" xml:space="preserve">
         <source>Clear Data Caches</source>
+        <target state="translated">Hapus Cache Data</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
         <source>Clear OSM Data</source>
+        <target state="translated">Hapus Data OSM</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
@@ -1265,10 +1371,12 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
+        <target state="translated">Menghubungkan simpul akan merusak sebuah relasi</target>
         <note/>
       </trans-unit>
       <trans-unit id="Copied" xml:space="preserve">
         <source>Copied</source>
+        <target state="translated">Disalin</target>
         <note>text was copied to the system clipboard</note>
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
@@ -1300,18 +1408,22 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
+        <target state="translated">Buat baris pada tabel untuk setiap pasangan kunci/nilai dan apakah objek yang cocok harus disertakan atau dikecualikan. Biarkan nilai kosong untuk menunjukkan bahwa kunci tidak ada. Gunakan key=* untuk mencocokkan nilai apa pun.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
+        <target state="translated">Lintasan Saat Ini</target>
         <note>current GPX track</note>
       </trans-unit>
       <trans-unit id="Database error" xml:space="preserve">
         <source>Database error</source>
+        <target state="translated">Kesalahan basis data</target>
         <note/>
       </trans-unit>
       <trans-unit id="Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." xml:space="preserve">
         <source>Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</source>
+        <target state="translated">Tentukan fitur kustom Anda sendiri dengan kombinasi tag unik untuk menambahkan dengan cepat jenis objek khusus. Ini dapat dicari di Tag Umum.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
@@ -1328,6 +1440,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
+        <target state="translated">Hapus %@?</target>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
@@ -1347,6 +1460,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Discard" xml:space="preserve">
         <source>Discard</source>
+        <target state="translated">Buang</target>
         <note>Discard changes</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
@@ -1356,10 +1470,12 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Display options" xml:space="preserve">
         <source>Display options</source>
+        <target state="translated">Opsi tampilan</target>
         <note/>
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
+        <target state="translated">Jarak: %1$@ ± %2$@ meter</target>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
@@ -1389,24 +1505,31 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
         <source>Editing layer not visible</source>
+        <target state="translated">Lapisan pengeditan tidak terlihat</target>
         <note/>
       </trans-unit>
       <trans-unit id="Editor only" xml:space="preserve">
         <source>Editor only</source>
+        <target state="translated">Hanya editor</target>
         <note/>
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
         <source>Editor with Aerial</source>
+        <target state="translated">Editor dengan Citra Udara</target>
         <note/>
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
         <source>Ensure Location Services is enabled and you have granted this application access.
 
 Error: %@</source>
+        <target state="translated">Pastikan Layanan Lokasi diaktifkan dan Anda telah memberikan aplikasi ini akses.
+
+Kesalahan: %@</target>
         <note/>
       </trans-unit>
       <trans-unit id="Ensure the editor view is visible and displays objects in the local area" xml:space="preserve">
         <source>Ensure the editor view is visible and displays objects in the local area</source>
+        <target state="translated">Pastikan tampilan editor terlihat dan menampilkan objek di area setempat</target>
         <note/>
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
@@ -1426,46 +1549,57 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
+        <target state="translated">Memperpanjang 'via' pada Pembatasan Belok akan merusak relasi</target>
         <note/>
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">
         <source>Extending a way which belongs to a Route or similar relation may damage the relation</source>
+        <target state="translated">Memperpanjang garis yang merupakan bagian dari Rute atau relasi serupa dapat merusak relasi</target>
         <note/>
       </trans-unit>
       <trans-unit id="Extract Node" xml:space="preserve">
         <source>Extract Node</source>
+        <target state="translated">Ekstrak Simpul</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
         <source>Filters</source>
+        <target state="translated">Filter</target>
         <note>Header for quest filters section</note>
       </trans-unit>
       <trans-unit id="GPX" xml:space="preserve">
         <source>GPX</source>
+        <target state="translated">GPX</target>
         <note>The name of a GPX file</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
+        <target state="translated">Unggah GPX Selesai</target>
         <note/>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
+        <target state="translated">Unggah GPX Gagal</target>
         <note/>
       </trans-unit>
       <trans-unit id="GeoJSON" xml:space="preserve">
         <source>GeoJSON</source>
+        <target state="translated">GeoJSON</target>
         <note>The name of a GeoJSON file</note>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
         <source>Geometry</source>
+        <target state="translated">Geometri</target>
         <note/>
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
         <source>HealthKit</source>
+        <target state="translated">HealthKit</target>
         <note>iOS HealthKit framework</note>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
+        <target state="translated">Ketinggian: %1$@ ± %2$@ meter</target>
         <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
@@ -1475,10 +1609,12 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Icon" xml:space="preserve">
         <source>Icon</source>
+        <target state="translated">Ikon</target>
         <note/>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
+        <target state="translated">Pengenal</target>
         <note>OSM node/way/relation identifier</note>
       </trans-unit>
       <trans-unit id="Ignore" xml:space="preserve">
@@ -1488,18 +1624,22 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Import" xml:space="preserve">
         <source>Import</source>
+        <target state="translated">Impor</target>
         <note/>
       </trans-unit>
       <trans-unit id="Import Error" xml:space="preserve">
         <source>Import Error</source>
+        <target state="translated">Kesalahan Impor</target>
         <note/>
       </trans-unit>
       <trans-unit id="Import GPX" xml:space="preserve">
         <source>Import GPX</source>
+        <target state="translated">Impor GPX</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
         <source>Import Quests</source>
+        <target state="translated">Impor Tugas</target>
         <note/>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
@@ -1519,10 +1659,12 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
+        <target state="translated">Penggabungan akan membuat Pembatasan Belok yang menaungi garis ini menjadi tidak valid</target>
         <note/>
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
+        <target state="translated">Kunci</target>
         <note>The tag keys section of a quest definition</note>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
@@ -1552,6 +1694,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Line" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Garis</target>
         <note>Object geometry: a way (but not an area)</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
@@ -1561,6 +1704,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Location updated to the location and orientation stored in the photo." xml:space="preserve">
         <source>Location updated to the location and orientation stored in the photo.</source>
+        <target state="translated">Lokasi diperbarui ke lokasi dan orientasi yang tersimpan dalam foto.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
@@ -1575,6 +1719,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
         <source>Mail delivery is not available on this device</source>
+        <target state="translated">Pengiriman email tidak tersedia di perangkat ini</target>
         <note/>
       </trans-unit>
       <trans-unit id="Make Circular" xml:space="preserve">
@@ -1604,6 +1749,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
+        <target state="translated">Ukur Arah</target>
         <note/>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
@@ -1623,6 +1769,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Missing way to connect to" xml:space="preserve">
         <source>Missing way to connect to</source>
+        <target state="translated">Tidak ada garis untuk dihubungkan</target>
         <note/>
       </trans-unit>
       <trans-unit id="Modified" xml:space="preserve">
@@ -1646,6 +1793,9 @@ Error: %@</source>
         <source>Modifying the raw XML data allows you to correct errors that prevent uploading.
 
 It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.</source>
+        <target state="translated">Memodifikasi data XML mentah memungkinkan Anda memperbaiki kesalahan yang mencegah pengunggahan.
+
+Ini adalah operasi tingkat lanjut yang hanya boleh dilakukan jika Anda memiliki pemahaman menyeluruh tentang format changeset OSM.</target>
         <note/>
       </trans-unit>
       <trans-unit id="More..." xml:space="preserve">
@@ -1675,10 +1825,12 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">Nama</target>
         <note/>
       </trans-unit>
       <trans-unit id="Needs Survey" xml:space="preserve">
         <source>Needs Survey</source>
+        <target state="translated">Perlu Survei</target>
         <note>Quest for objects that aren't recently updated</note>
       </trans-unit>
       <trans-unit id="Network error" xml:space="preserve">
@@ -1724,10 +1876,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
+        <target state="translated">Tidak ada lintasan aktif</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="No match" xml:space="preserve">
         <source>No match</source>
+        <target state="translated">Tidak ada yang cocok</target>
         <note>No value available</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
@@ -1747,6 +1901,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Node Attributes" xml:space="preserve">
         <source>Node Attributes</source>
+        <target state="translated">Atribut Simpul</target>
         <note/>
       </trans-unit>
       <trans-unit id="Node Tags" xml:space="preserve">
@@ -1781,6 +1936,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Number of recent items to display" xml:space="preserve">
         <source>Number of recent items to display</source>
+        <target state="translated">Jumlah item terbaru yang akan ditampilkan</target>
         <note/>
       </trans-unit>
       <trans-unit id="OK" xml:space="preserve">
@@ -1795,6 +1951,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Old value: %@" xml:space="preserve">
         <source>Old value: %@</source>
+        <target state="translated">Nilai lama: %@</target>
         <note>previous tag value</note>
       </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
@@ -1824,6 +1981,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Open Image File" xml:space="preserve">
         <source>Open Image File</source>
+        <target state="translated">Buka Berkas Gambar</target>
         <note/>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -1843,11 +2001,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
         <source>Paste the JSON for your quests into the field below</source>
+        <target state="translated">Tempel JSON untuk tugas Anda ke kolom di bawah ini</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
-        <target state="new">Pasting %ld characters, maximum tag length is 255</target>
+        <target state="translated">Menempelkan %ld karakter, panjang tag maksimum adalah 255</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
@@ -1857,14 +2016,17 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
+        <target state="translated">Jeda GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
+        <target state="translated">Jeda perekaman lintasan GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
+        <target state="translated">Foto tidak tersedia</target>
         <note/>
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
@@ -1874,10 +2036,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
+        <target state="translated">Titik</target>
         <note>Object geometry: a node</note>
       </trans-unit>
       <trans-unit id="Predefined" xml:space="preserve">
         <source>Predefined</source>
+        <target state="translated">Telah ditentukan sebelumnya</target>
         <note>Items that are built into the app</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -1892,6 +2056,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
+        <target state="translated">Berikan simbol satu karakter (emoji atau karakter unicode) untuk mengidentifikasi tugas ini:</target>
         <note/>
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
@@ -1901,14 +2066,17 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Quest" xml:space="preserve">
         <source>Quest</source>
+        <target state="translated">Tugas</target>
         <note>The current Quest the user is answering</note>
       </trans-unit>
       <trans-unit id="Quest Definition Error" xml:space="preserve">
         <source>Quest Definition Error</source>
+        <target state="translated">Kesalahan Definisi Tugas</target>
         <note/>
       </trans-unit>
       <trans-unit id="Quests were imported successfully." xml:space="preserve">
         <source>Quests were imported successfully.</source>
+        <target state="translated">Tugas berhasil diimpor.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
@@ -2003,10 +2171,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Save" xml:space="preserve">
         <source>Save</source>
+        <target state="translated">Simpan</target>
         <note>Save changes</note>
       </trans-unit>
       <trans-unit id="Save or discard your changes" xml:space="preserve">
         <source>Save or discard your changes</source>
+        <target state="translated">Simpan atau buang perubahan Anda</target>
         <note/>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
@@ -2021,6 +2191,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
         <source>Select the language used for Presets. Other app content will use your default language.</source>
+        <target state="translated">Pilih bahasa yang digunakan untuk Preset. Konten aplikasi lainnya akan menggunakan bahasa bawaan Anda.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
@@ -2045,6 +2216,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Settings…" xml:space="preserve">
         <source>Settings…</source>
+        <target state="translated">Pengaturan…</target>
         <note>Settings menu item in Mac menu bar</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
@@ -2065,10 +2237,12 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the %@ file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the %@ file</source>
+        <target state="translated">Maaf, terjadi kesalahan saat memuat berkas %@</target>
         <note>Argument is a file type like 'GPX' or 'GeoJSON'</note>
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">
         <source>Space</source>
+        <target state="translated">Ruang</target>
         <note>Space key on the keyboard</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
@@ -2088,10 +2262,12 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
+        <target state="translated">Mulai GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
+        <target state="translated">Mulai merekam lintasan GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
@@ -2101,10 +2277,12 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
+        <target state="translated">Hentikan GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
+        <target state="translated">Hentikan perekaman lintasan GPX.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
@@ -2114,10 +2292,12 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Success" xml:space="preserve">
         <source>Success</source>
+        <target state="translated">Berhasil</target>
         <note/>
       </trans-unit>
       <trans-unit id="Tag Key" xml:space="preserve">
         <source>Tag Key</source>
+        <target state="translated">Kunci Tag</target>
         <note/>
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
@@ -2127,6 +2307,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
+        <target state="translated">Ambil Foto Baru</target>
         <note/>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
@@ -2146,6 +2327,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="The nodes have conflicting roles in parent relations" xml:space="preserve">
         <source>The nodes have conflicting roles in parent relations</source>
+        <target state="translated">Simpul memiliki peran yang bertentangan dalam relasi induk</target>
         <note/>
       </trans-unit>
       <trans-unit id="The object does not contain any tags" xml:space="preserve">
@@ -2160,6 +2342,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="The selected image file does not contain location information." xml:space="preserve">
         <source>The selected image file does not contain location information.</source>
+        <target state="translated">Berkas gambar yang dipilih tidak berisi informasi lokasi.</target>
         <note/>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
@@ -2169,6 +2352,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
+        <target state="translated">Garis target ambigu</target>
         <note/>
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
@@ -2203,18 +2387,22 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
+        <target state="translated">Aplikasi ini belum mendukung pengeditan pembatasan belok tanpa simpul sebagai anggota 'via'</target>
         <note/>
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
         <source>This device is not able to provide heading data.</source>
+        <target state="translated">Perangkat ini tidak dapat menyediakan data arah hadap.</target>
         <note/>
       </trans-unit>
       <trans-unit id="This feature is only available on iOS 15 or later" xml:space="preserve">
         <source>This feature is only available on iOS 15 or later</source>
+        <target state="translated">Fitur ini hanya tersedia pada iOS 15 atau yang lebih baru</target>
         <note/>
       </trans-unit>
       <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
         <source>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</source>
+        <target state="translated">Halaman ini memungkinkan Anda merancang tugas dengan kriteria yang lebih spesifik daripada halaman Pembangun Tugas biasa.</target>
         <note/>
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
@@ -2239,6 +2427,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Travel from %@" xml:space="preserve">
         <source>Travel from %@</source>
+        <target state="translated">Perjalanan dari %@</target>
         <note/>
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
@@ -2248,16 +2437,21 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
+        <target state="translated">Pembatasan Belok</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.&#10;&#10;Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route." xml:space="preserve">
         <source>Turn restrictions specify which roads you can turn onto when entering an intersection from a given direction.
 
 Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.</source>
+        <target state="translated">Pembatasan belok menentukan jalan mana yang dapat Anda belok saat memasuki persimpangan dari arah tertentu.
+
+Pilih jalan raya tempat Anda mendekati persimpangan, lalu ketuk sebuah panah untuk mengubah apakah jalan tujuan merupakan rute yang diizinkan.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Type" xml:space="preserve">
         <source>Type</source>
+        <target state="translated">Jenis</target>
         <note>The 'Type' header in Common Tags</note>
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
@@ -2282,10 +2476,12 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Undo" xml:space="preserve">
         <source>Undo</source>
+        <target state="translated">Urungkan</target>
         <note/>
       </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
         <source>Unknown role</source>
+        <target state="translated">Peran tidak dikenal</target>
         <note>relation role=* tag</note>
       </trans-unit>
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
@@ -2300,6 +2496,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Update '%@' tag" xml:space="preserve">
         <source>Update '%@' tag</source>
+        <target state="translated">Perbarui tag '%@'</target>
         <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
@@ -2334,6 +2531,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="User-defined imagery" xml:space="preserve">
         <source>User-defined imagery</source>
+        <target state="translated">Citra buatan pengguna</target>
         <note/>
       </trans-unit>
       <trans-unit id="Version" xml:space="preserve">
@@ -2343,6 +2541,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Vertex" xml:space="preserve">
         <source>Vertex</source>
+        <target state="translated">Verteks</target>
         <note>Object geometry: a node that is part of a way</note>
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
@@ -2352,37 +2551,48 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Way Attributes" xml:space="preserve">
         <source>Way Attributes</source>
+        <target state="translated">Atribut Garis</target>
         <note/>
       </trans-unit>
       <trans-unit id="Way Tags" xml:space="preserve">
         <source>Way Tags</source>
+        <target state="translated">Tag Garis</target>
         <note/>
       </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
         <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
+        <target state="translated">Apa nama tugas ini? Ini paling baik ditulis dalam bentuk tindakan seperti 'Tambahkan Permukaan':</target>
         <note/>
       </trans-unit>
       <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
         <source>What tag key is modified by this quest?</source>
+        <target state="translated">Kunci tag apa yang dimodifikasi oleh tugas ini?</target>
         <note/>
       </trans-unit>
       <trans-unit id="What types of objects does this quest apply to?" xml:space="preserve">
         <source>What types of objects does this quest apply to?</source>
+        <target state="translated">Jenis objek apa yang berlaku untuk tugas ini?</target>
         <note/>
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
         <source>You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.
 
 To continue press Commit once again, otherwise press Cancel.</source>
+        <target state="translated">Anda akan membuat perubahan pada basis data OpenStreetMap langsung. Perubahan Anda akan terlihat oleh semua orang di seluruh dunia.
+
+Untuk melanjutkan tekan Commit sekali lagi, jika tidak tekan Batal.</target>
         <note/>
       </trans-unit>
       <trans-unit id="You can define custom fields for presets. A field is a single key/value pair associated with a feature." xml:space="preserve">
         <source>You can define custom fields for presets. A field is a single key/value pair associated with a feature.</source>
+        <target state="translated">Anda dapat menentukan bidang kustom untuk preset. Sebuah bidang adalah satu pasangan kunci/nilai yang terkait dengan sebuah fitur.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="You can navigate to a relation member only if it is already downloaded.&#10;These members are marked with '&gt;'." xml:space="preserve">
         <source>You can navigate to a relation member only if it is already downloaded.
 These members are marked with '&gt;'.</source>
+        <target state="translated">Anda dapat menavigasi ke anggota relasi hanya jika sudah diunduh.
+Anggota ini ditandai dengan '&gt;'.</target>
         <note/>
       </trans-unit>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
@@ -2392,33 +2602,40 @@ These members are marked with '&gt;'.</source>
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
         <source>You must save or discard changes to the current object before editing its associated relation</source>
+        <target state="translated">Anda harus menyimpan atau membuang perubahan pada objek saat ini sebelum mengedit relasi yang terkait dengannya</target>
         <note/>
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.other" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="new">You've uploaded %ld changesets with this version of Go Map!!
+        <target state="translated">Anda telah mengunggah %ld changeset dengan versi Go Map!! ini!
 
-Rate this app?</target>
+Nilai aplikasi ini?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">
         <source>Your OSM data cache is getting large, which may lead to slow startup and shutdown times.
 
 You may want to clear the cache (under Display settings) to improve performance.</source>
+        <target state="translated">Cache data OSM Anda semakin besar, yang dapat menyebabkan waktu mulai dan keluar menjadi lambat.
+
+Anda mungkin ingin menghapus cache (di Pengaturan Tampilan) untuk meningkatkan kinerja.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Zoom to Edit" xml:space="preserve">
         <source>Zoom to Edit</source>
+        <target state="translated">Perbesar untuk Mengedit</target>
         <note/>
       </trans-unit>
       <trans-unit id="add node to way" xml:space="preserve">
         <source>add node to way</source>
+        <target state="translated">tambahkan simpul ke garis</target>
         <note/>
       </trans-unit>
       <trans-unit id="add object to relation" xml:space="preserve">
         <source>add object to relation</source>
+        <target state="translated">tambahkan objek ke relasi</target>
         <note/>
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
@@ -2463,6 +2680,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="delete node from way" xml:space="preserve">
         <source>delete node from way</source>
+        <target state="translated">hapus simpul dari garis</target>
         <note/>
       </trans-unit>
       <trans-unit id="delete object from relation" xml:space="preserve">
@@ -2487,6 +2705,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="delete way" xml:space="preserve">
         <source>delete way</source>
+        <target state="translated">hapus garis</target>
         <note/>
       </trans-unit>
       <trans-unit id="duplicate" xml:space="preserve">
@@ -2496,30 +2715,37 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ft" xml:space="preserve">
         <source>ft</source>
+        <target state="translated">ft</target>
         <note>Height or width in feet, please abbreviate</note>
       </trans-unit>
       <trans-unit id="kg" xml:space="preserve">
         <source>kg</source>
+        <target state="translated">kg</target>
         <note>Weight in kilograms, please abbreviate</note>
       </trans-unit>
       <trans-unit id="km" xml:space="preserve">
         <source>km</source>
+        <target state="translated">km</target>
         <note>Distance in kilometers, please abbreviate</note>
       </trans-unit>
       <trans-unit id="km/h" xml:space="preserve">
         <source>km/h</source>
+        <target state="translated">km/jam</target>
         <note>kilometers per hour speed, please abbreviate</note>
       </trans-unit>
       <trans-unit id="lbs" xml:space="preserve">
         <source>lbs</source>
+        <target state="translated">lbs</target>
         <note>Weight in pounds, please abbreviate</note>
       </trans-unit>
       <trans-unit id="lt" xml:space="preserve">
         <source>lt</source>
+        <target state="translated">lt</target>
         <note>Weight in long tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="m" xml:space="preserve">
         <source>m</source>
+        <target state="translated">m</target>
         <note>Height or width in meters, please abbreviate</note>
       </trans-unit>
       <trans-unit id="meters" xml:space="preserve">
@@ -2529,6 +2755,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="mi" xml:space="preserve">
         <source>mi</source>
+        <target state="translated">mi</target>
         <note>Distance in miles, please abbreviate</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
@@ -2538,18 +2765,22 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="mph" xml:space="preserve">
         <source>mph</source>
+        <target state="translated">mph</target>
         <note>miles per hour speed, please abbreviate</note>
       </trans-unit>
       <trans-unit id="no" xml:space="preserve">
         <source>no</source>
+        <target state="translated">tidak</target>
         <note/>
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
+        <target state="translated">simpul %@</target>
         <note/>
       </trans-unit>
       <trans-unit id="node %@ (in way)" xml:space="preserve">
         <source>node %@ (in way)</source>
+        <target state="translated">simpul %@ (di garis)</target>
         <note/>
       </trans-unit>
       <trans-unit id="other object" xml:space="preserve">
@@ -2569,10 +2800,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="st" xml:space="preserve">
         <source>st</source>
+        <target state="translated">st</target>
         <note>Weight in short tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="t" xml:space="preserve">
         <source>t</source>
+        <target state="translated">t</target>
         <note>Weight in metric tons, please abbreviate</note>
       </trans-unit>
       <trans-unit id="update relation members" xml:space="preserve">
@@ -2582,6 +2815,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="vintage %@" xml:space="preserve">
         <source>vintage %@</source>
+        <target state="translated">vintage %@</target>
         <note>Year aerial imagery was created</note>
       </trans-unit>
       <trans-unit id="vintage %@ - %@" xml:space="preserve">
@@ -2591,10 +2825,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
+        <target state="translated">garis %@</target>
         <note/>
       </trans-unit>
       <trans-unit id="yes" xml:space="preserve">
         <source>yes</source>
+        <target state="translated">ya</target>
         <note/>
       </trans-unit>
     </body>
@@ -2616,6 +2852,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="cy3-gz-fvk.text" xml:space="preserve">
         <source>Go Map!! will open at the location the photo was taken.</source>
+        <target state="translated">Go Map!! akan terbuka pada lokasi tempat foto diambil.</target>
         <note>Class = "UILabel"; text = "Go Map!! will open at the location the photo was taken."; ObjectID = "cy3-gz-fvk";</note>
       </trans-unit>
     </body>
@@ -2627,10 +2864,12 @@ You may want to clear the cache (under Display settings) to improve performance.
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">Go Map!!</target>
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>PhotoShare</source>
+        <target state="translated">PhotoShare</target>
         <note>Bundle name</note>
       </trans-unit>
     </body>
@@ -2647,6 +2886,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="The URL content isn't recognized." xml:space="preserve">
         <source>The URL content isn't recognized.</source>
+        <target state="translated">Konten URL tidak dikenali.</target>
         <note>Error message when sharing a URL to Go Map!!</note>
       </trans-unit>
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
@@ -2688,14 +2928,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="6VA-gm-L0S.title" xml:space="preserve">
         <source>Point of Interest</source>
+        <target state="translated">Titik Menarik</target>
         <note>Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S";</note>
       </trans-unit>
       <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve">
         <source>Quercus </source>
+        <target state="translated">Quercus </target>
         <note>Class = "UITextField"; placeholder = "Quercus "; ObjectID = "6yC-L7-V38"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">kunci</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "6zU-bk-hWw";</note>
       </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
@@ -2720,6 +2963,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve">
         <source>broadleaved </source>
+        <target state="translated">berdaun lebar </target>
         <note>Class = "UITextField"; placeholder = "broadleaved "; ObjectID = "AAx-p2-Mzh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
@@ -2734,6 +2978,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="CBg-8X-VJp.normalTitle" xml:space="preserve">
         <source>Area</source>
+        <target state="translated">Area</target>
         <note>Class = "UIButton"; normalTitle = "Area"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
@@ -2743,6 +2988,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
         <source>The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard.</source>
+        <target state="translated">Preset akan tersedia saat mengedit objek yang cocok dengan kombinasi kunci/nilai ini. Biarkan salah satunya kosong untuk wildcard.</target>
         <note>Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.headerTitle" xml:space="preserve">
@@ -2752,6 +2998,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="DhX-ri-fx9.normalTitle" xml:space="preserve">
         <source>Vertex</source>
+        <target state="translated">Verteks</target>
         <note>Class = "UIButton"; normalTitle = "Vertex"; ObjectID = "DhX-ri-fx9";</note>
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
@@ -2801,14 +3048,17 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Lhz-HA-Q6j.title" xml:space="preserve">
         <source>Custom Feature</source>
+        <target state="translated">Fitur Kustom</target>
         <note>Class = "UINavigationItem"; title = "Custom Feature"; ObjectID = "Lhz-HA-Q6j";</note>
       </trans-unit>
       <trans-unit id="MU8-ia-Kco.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">kunci</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "MU8-ia-Kco";</note>
       </trans-unit>
       <trans-unit id="Nxm-fU-1eX.placeholder" xml:space="preserve">
         <source>natural</source>
+        <target state="translated">natural</target>
         <note>Class = "UITextField"; placeholder = "natural"; ObjectID = "Nxm-fU-1eX";</note>
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
@@ -2838,18 +3088,22 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.footerTitle" xml:space="preserve">
         <source>Tags to add when selecting this feature.</source>
+        <target state="translated">Tag yang akan ditambahkan saat memilih fitur ini.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Tags to add when selecting this feature."; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.headerTitle" xml:space="preserve">
         <source>Feature Tags</source>
+        <target state="translated">Tag Fitur</target>
         <note>Class = "UITableViewSection"; headerTitle = "Feature Tags"; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="ScT-zG-GwL.text" xml:space="preserve">
         <source>Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object.</source>
+        <target state="translated">Warisi preset dari fitur ini. Jika tidak ada, maka memilih fitur ini akan menggabungkan (bukan mengganti) tag ke objek target.</target>
         <note>Class = "UILabel"; text = "Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object."; ObjectID = "ScT-zG-GwL";</note>
       </trans-unit>
       <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">Nama</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "TJk-hO-Ejc";</note>
       </trans-unit>
       <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
@@ -2859,6 +3113,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="UJ1-oM-H4Z.title" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Kembali</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "UJ1-oM-H4Z";</note>
       </trans-unit>
       <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
@@ -2873,6 +3128,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="WXF-5S-E8m.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Judul</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "WXF-5S-E8m";</note>
       </trans-unit>
       <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
@@ -2886,6 +3142,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Garis</target>
         <note>Class = "UIButton"; normalTitle = "Line"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
@@ -2909,6 +3166,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ZNr-2O-LuN.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">kunci</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "ZNr-2O-LuN";</note>
       </trans-unit>
       <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
@@ -2927,6 +3185,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="bF4-TU-MTA.text" xml:space="preserve">
         <source>Add New</source>
+        <target state="translated">Tambah Baru</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "bF4-TU-MTA"; Note = "Add user-defined tagging preset";</note>
       </trans-unit>
       <trans-unit id="cN9-3h-H3l.title" xml:space="preserve">
@@ -2936,6 +3195,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="cNV-jf-zYM.title" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">Fitur Kustom</target>
         <note>Class = "UINavigationItem"; title = "Custom Features"; ObjectID = "cNV-jf-zYM";</note>
       </trans-unit>
       <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
@@ -2965,6 +3225,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve">
         <source>tree </source>
+        <target state="translated">pohon </target>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
@@ -2974,6 +3235,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
         <source>Point</source>
+        <target state="translated">Titik</target>
         <note>Class = "UIButton"; normalTitle = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
@@ -2982,6 +3244,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve">
         <source>Oak</source>
+        <target state="translated">Ek</target>
         <note>Class = "UITextField"; placeholder = "Oak"; ObjectID = "ftg-j1-Ep9"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
@@ -3010,6 +3273,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="j2j-qT-aHG.placeholder" xml:space="preserve">
         <source>leaf_type</source>
+        <target state="translated">leaf_type</target>
         <note>Class = "UITextField"; placeholder = "leaf_type"; ObjectID = "j2j-qT-aHG";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
@@ -3029,6 +3293,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="l2k-lT-vHS.placeholder" xml:space="preserve">
         <source>genus:en</source>
+        <target state="translated">genus:en</target>
         <note>Class = "UITextField"; placeholder = "genus:en"; ObjectID = "l2k-lT-vHS";</note>
       </trans-unit>
       <trans-unit id="lPv-s6-uEz.title" xml:space="preserve">
@@ -3063,10 +3328,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="nil-45-Wvp.normalTitle" xml:space="preserve">
         <source>ⓘ</source>
+        <target state="translated">ⓘ</target>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "nil-45-Wvp";</note>
       </trans-unit>
       <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">nilai </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
@@ -3094,10 +3361,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="pNE-0W-9Qa.normalTitle" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">Fitur Kustom</target>
         <note>Class = "UIButton"; normalTitle = "Custom Features"; ObjectID = "pNE-0W-9Qa";</note>
       </trans-unit>
       <trans-unit id="pqN-F1-JGm.placeholder" xml:space="preserve">
         <source>Oak Tree</source>
+        <target state="translated">Pohon Ek</target>
         <note>Class = "UITextField"; placeholder = "Oak Tree"; ObjectID = "pqN-F1-JGm";</note>
       </trans-unit>
       <trans-unit id="pxY-di-zg7.placeholder" xml:space="preserve">
@@ -3107,10 +3376,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="qTY-bY-Dwe.placeholder" xml:space="preserve">
         <source>genus</source>
+        <target state="translated">genus</target>
         <note>Class = "UITextField"; placeholder = "genus"; ObjectID = "qTY-bY-Dwe";</note>
       </trans-unit>
       <trans-unit id="sGi-dQ-1v0.text" xml:space="preserve">
         <source>Feature type:</source>
+        <target state="translated">Jenis fitur:</target>
         <note>Class = "UILabel"; text = "Feature type:"; ObjectID = "sGi-dQ-1v0";</note>
       </trans-unit>
       <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve">
@@ -3129,6 +3400,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">nilai </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
@@ -3148,6 +3420,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve">
         <source>value </source>
+        <target state="translated">nilai </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
@@ -3162,6 +3435,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="zqH-07-JEp.title" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">Batal</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "zqH-07-JEp";</note>
       </trans-unit>
     </body>
@@ -3188,6 +3462,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.footerTitle" xml:space="preserve">
         <source>If you are mapping somewhere with limited connectivity you can download the aerial and/or basemap tiles for the next two higher zoom levels that are in the current view area.</source>
+        <target state="translated">Jika Anda memetakan di suatu tempat dengan konektivitas terbatas, Anda dapat mengunduh ubin citra udara dan/atau peta dasar untuk dua tingkat zoom yang lebih tinggi berikutnya yang berada dalam area tampilan saat ini.</target>
         <note>Class = "UITableViewSection"; footerTitle = "If you are mapping somewhere with limited connectivity you can download the aerial and/or basemap tiles for the next two higher zoom levels that are in the current view area."; ObjectID = "2TW-mO-uX2";</note>
       </trans-unit>
       <trans-unit id="2TW-mO-uX2.headerTitle" xml:space="preserve">
@@ -3202,6 +3477,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="3AM-Eb-jch.text" xml:space="preserve">
         <source>Maximize FPS</source>
+        <target state="translated">Maksimalkan FPS</target>
         <note>Class = "UILabel"; text = "Maximize FPS"; ObjectID = "3AM-Eb-jch"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="3qk-15-BUc.text" xml:space="preserve">
@@ -3211,10 +3487,12 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="5mG-fF-znF.text" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">Nama</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "5mG-fF-znF";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.footerTitle" xml:space="preserve">
         <source>Select a server if you would like to edit data located on an alternate OSM server.</source>
+        <target state="translated">Pilih server jika Anda ingin mengedit data yang berada di server OSM alternatif.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Select a server if you would like to edit data located on an alternate OSM server."; ObjectID = "6GT-p2-rPO";</note>
       </trans-unit>
       <trans-unit id="6GT-p2-rPO.headerTitle" xml:space="preserve">
@@ -3229,6 +3507,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="7it-6c-BVW.headerTitle" xml:space="preserve">
         <source>OpenStreetMap account</source>
+        <target state="translated">Akun OpenStreetMap</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "7it-6c-BVW";</note>
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
@@ -3248,6 +3527,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="AEl-sZ-ech.text" xml:space="preserve">
         <source>Enables &gt; 60 FPS</source>
+        <target state="translated">Mengaktifkan &gt; 60 FPS</target>
         <note>Class = "UILabel"; text = "Enables &gt; 60 FPS"; ObjectID = "AEl-sZ-ech"; Note = "Display the user's touches when they tap the screen";</note>
       </trans-unit>
       <trans-unit id="AHZ-L8-yUA.title" xml:space="preserve">
@@ -3281,6 +3561,26 @@ http://www.sjjb.co.uk/mapicons
 Other icons by Glyphish:
 http://glyphish.com
 </source>
+        <target state="translated">Hak Cipta © 2012-2024 Bryce Cogswell. 
+Semua hak dilindungi undang-undang.
+
+Data OpenStreetMap dilisensikan di bawah Open Data Commons Open Database License (ODbL):
+https://www.openstreetmap.com/copyright
+
+Hak cipta citra udara Bing Microsoft dan pemasoknya:
+https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx
+
+Hak cipta citra udara Mapbox Mapbox dan pemasoknya: https://www.mapbox.com/tos
+
+Penguraian XML berkat KissXML oleh Robbie Hanson:
+https://github.com/robbiehanson/KissXML
+
+Ikon peta oleh SJJB:
+http://www.sjjb.co.uk/mapicons
+
+Ikon lainnya oleh Glyphish:
+http://glyphish.com
+</target>
         <note>Class = "UITextView"; text = "Copyright © 2012-2024 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMap data is licensed under the Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"; ObjectID = "BHr-ta-k6F";</note>
       </trans-unit>
       <trans-unit id="CHj-a3-gC9.text" xml:space="preserve">
@@ -3290,6 +3590,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="DVR-54-ure.text" xml:space="preserve">
         <source>-</source>
+        <target state="translated">-</target>
         <note>Class = "UILabel"; text = "-"; ObjectID = "DVR-54-ure";</note>
       </trans-unit>
       <trans-unit id="DY5-Ls-XZ1.normalTitle" xml:space="preserve">
@@ -3342,6 +3643,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Sxo-RO-d9L.text" xml:space="preserve">
         <source>-</source>
+        <target state="translated">-</target>
         <note>Class = "UILabel"; text = "-"; ObjectID = "Sxo-RO-d9L";</note>
       </trans-unit>
       <trans-unit id="TGa-tJ-nrC.text" xml:space="preserve">
@@ -3381,10 +3683,12 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="WpM-6Q-OOf.normalTitle" xml:space="preserve">
         <source>Sign Out</source>
+        <target state="translated">Keluar</target>
         <note>Class = "UIButton"; normalTitle = "Sign Out"; ObjectID = "WpM-6Q-OOf";</note>
       </trans-unit>
       <trans-unit id="Wrw-fc-hCg.text" xml:space="preserve">
         <source>Changesets</source>
+        <target state="translated">Changeset</target>
         <note>Class = "UILabel"; text = "Changesets"; ObjectID = "Wrw-fc-hCg";</note>
       </trans-unit>
       <trans-unit id="ags-Mx-c1q.text" xml:space="preserve">
@@ -3394,6 +3698,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="b22-oG-lnl.title" xml:space="preserve">
         <source>Account Info</source>
+        <target state="translated">Info Akun</target>
         <note>Class = "UINavigationItem"; title = "Account Info"; ObjectID = "b22-oG-lnl"; Note = "OSM account information";</note>
       </trans-unit>
       <trans-unit id="bt0-CH-HbH.normalTitle" xml:space="preserve">
@@ -3403,6 +3708,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="dIM-oE-zAg.normalTitle" xml:space="preserve">
         <source>Sign In</source>
+        <target state="translated">Masuk</target>
         <note>Class = "UIButton"; normalTitle = "Sign In"; ObjectID = "dIM-oE-zAg";</note>
       </trans-unit>
       <trans-unit id="dbi-X6-Day.headerTitle" xml:space="preserve">
@@ -3427,6 +3733,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="i8N-Ya-Wr2.normalTitle" xml:space="preserve">
         <source>Refresh Account</source>
+        <target state="translated">Segarkan Akun</target>
         <note>Class = "UIButton"; normalTitle = "Refresh Account"; ObjectID = "i8N-Ya-Wr2";</note>
       </trans-unit>
       <trans-unit id="iR4-av-Q7M.text" xml:space="preserve">
@@ -3506,6 +3813,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="zuh-G8-yy9.text" xml:space="preserve">
         <source>Slack - Discussion</source>
+        <target state="translated">Slack - Diskusi</target>
         <note>Class = "UILabel"; text = "Slack - Discussion"; ObjectID = "zuh-G8-yy9"; Note = "For opening the Slack app";</note>
       </trans-unit>
     </body>
@@ -3517,6 +3825,7 @@ http://glyphish.com
     <body>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
         <source>Label</source>
+        <target state="translated">Label</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4";</note>
       </trans-unit>
     </body>
@@ -3538,6 +3847,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="Idd-0q-a3f.normalTitle" xml:space="preserve">
         <source>🔽</source>
+        <target state="translated">🔽</target>
         <note>Class = "UIButton"; normalTitle = "🔽"; ObjectID = "Idd-0q-a3f";</note>
       </trans-unit>
       <trans-unit id="Mdj-M0-0mZ.title" xml:space="preserve">
@@ -3577,6 +3887,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="xNB-pJ-M20.text" xml:space="preserve">
         <source>Describe your changes... </source>
+        <target state="translated">Jelaskan perubahan Anda... </target>
         <note>Class = "UILabel"; text = "Describe your changes... "; ObjectID = "xNB-pJ-M20";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
