@@ -2545,6 +2545,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Settings…" xml:space="preserve">
         <source>Settings…</source>
+        <target state="translated">Настройки…</target>
         <note>Settings menu item in Mac menu bar</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
