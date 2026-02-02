@@ -161,6 +161,7 @@
       </trans-unit>
       <trans-unit id="vwW-V6-kvw.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Заголовок</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vwW-V6-kvw"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
@@ -987,7 +988,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$#@megabytes@ , %2$#@files@</source>
-        <target state="needs-review-l10n">%1$#@megabytes@ МБ, %2$#@files@</target>
+        <target state="translated">%1$#@мегабайт@ , %2$#@файлов@</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.few" xml:space="preserve">
@@ -1127,12 +1128,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
-        <target state="translated">%1$#@meters@, %2$#@points@</target>
+        <target state="needs-translation">%1$#@meters@, %2$#@points@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
+        <target state="needs-translation">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.few" xml:space="preserve">
