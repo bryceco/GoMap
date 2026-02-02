@@ -1289,8 +1289,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 		CATransaction.begin()
 		CATransaction.setAnimationDuration(0.5)
 
+#if HAS_LOCATOR_LAYER
 		mapLayersView.locatorLayer.isHidden = !newOverlays.contains(.LOCATOR)
 			|| mapLayersView.locatorLayer.tileServer.apiKey == ""
+#endif
 
 		aerialAlignmentButton.isHidden = true
 		dPadView.isHidden = true
