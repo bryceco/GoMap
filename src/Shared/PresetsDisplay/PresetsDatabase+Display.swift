@@ -223,14 +223,14 @@ extension PresetsDatabase {
 		let presetValues: [PresetDisplayValue] = options.flatMap { optionList in
 			optionList.map { value in
 				switch localizedOptions?[value] {
-				case let .longText(titleDesc):
+				case let .titleAndDesc(titleDesc):
 					let name = titleDesc.title ?? OsmTags.PrettyTag(value)
 					return PresetDisplayValue(
 						name: name,
 						details: titleDesc.description,
 						icon: icons?[value],
 						tagValue: value)
-				case let .shortText(name):
+				case let .titleOnly(name):
 					return PresetDisplayValue(name: name, details: nil, icon: icons?[value], tagValue: value)
 				case nil:
 					let name = OsmTags.PrettyTag(value)
@@ -279,13 +279,13 @@ extension PresetsDatabase {
 		}
 		let presetValues = [
 			PresetDisplayValue(name: PresetTranslations.shared.yesForLocale,
-							   details: nil,
-							   icon: nil,
-							   tagValue: valueYes),
+			                   details: nil,
+			                   icon: nil,
+			                   tagValue: valueYes),
 			PresetDisplayValue(name: PresetTranslations.shared.noForLocale,
-							   details: nil,
-							   icon: nil,
-							   tagValue: valueNo)
+			                   details: nil,
+			                   icon: nil,
+			                   tagValue: valueNo)
 		]
 		let tag = PresetDisplayKey(
 			name: label,

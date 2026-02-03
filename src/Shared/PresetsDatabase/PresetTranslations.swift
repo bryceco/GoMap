@@ -162,23 +162,24 @@ class PresetTranslations: Codable {
 			let description: String?
 		}
 
-		case shortText(String)
-		case longText(TitleDescription)
+		case titleOnly(String)
+		case titleAndDesc(TitleDescription)
+
 		var title: String? {
 			switch self {
-			case let .shortText(string): return string
-			case let .longText(strings): return strings.title
+			case let .titleOnly(string): return string
+			case let .titleAndDesc(strings): return strings.title
 			}
 		}
 
 		init(from decoder: Decoder) throws {
 			let container = try decoder.singleValueContainer()
 			if let strings = try? container.decode(TitleDescription.self) {
-				self = .longText(strings)
+				self = .titleAndDesc(strings)
 				return
 			}
-			if let strings = try? container.decode(String.self) {
-				self = .shortText(strings)
+			if let string = try? container.decode(String.self) {
+				self = .titleOnly(string)
 				return
 			}
 			throw DecodingError.dataCorruptedError(in: container,
@@ -188,9 +189,9 @@ class PresetTranslations: Codable {
 		func encode(to encoder: Encoder) throws {
 			var singleValueContainer = encoder.singleValueContainer()
 			switch self {
-			case let .shortText(string):
+			case let .titleOnly(string):
 				try singleValueContainer.encode(string)
-			case let .longText(strings):
+			case let .titleAndDesc(strings):
 				try singleValueContainer.encode(strings)
 			}
 		}
