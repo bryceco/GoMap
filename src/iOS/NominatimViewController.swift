@@ -107,7 +107,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	func jumpTo(lat: Double, lon: Double, zoom: Double?) {
 		let mainView = AppDelegate.shared.mainView!
 
-		// disable GPS
+		// disable GPS (alternately we could set userOverrodeLocationPosition instead)
 		while mainView.gpsState != GPS_STATE.NONE {
 			mainView.toggleLocationButton()
 		}
