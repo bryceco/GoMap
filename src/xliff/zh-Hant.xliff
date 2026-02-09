@@ -161,6 +161,7 @@
       </trans-unit>
       <trans-unit id="vwW-V6-kvw.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">標題</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vwW-V6-kvw"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
@@ -1644,7 +1645,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
         <source>In order to measure height, please enable camera access in the app's settings.</source>
-        <target state="translated">為了要測量高度，請在 iOS 的設定中開啟 Go Map 的相機使用權限。</target>
+        <target state="translated">為了要測量高度，請在設定中開啟應用程式的相機使用權限。</target>
         <note/>
       </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
@@ -2216,6 +2217,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Settings…" xml:space="preserve">
         <source>Settings…</source>
+        <target state="translated">設定…</target>
         <note>Settings menu item in Mac menu bar</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
@@ -2525,7 +2527,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
         <source>User</source>
-        <target state="translated">OSM 帳號</target>
+        <target state="translated">帳號</target>
         <note>OSM user name</note>
       </trans-unit>
       <trans-unit id="User-defined imagery" xml:space="preserve">
@@ -2577,9 +2579,9 @@ Select the highway from which you are approaching the intersection, then tap an 
         <source>You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.
 
 To continue press Commit once again, otherwise press Cancel.</source>
-        <target state="translated">您即將要修改真的 OSM 資料庫，全世界所有人都會看到您的修改。
+        <target state="translated">您即將要修改即時 live 的開放街圖資料庫，全世界所有人都會看到您的修改。
 
-如要繼續請請再次點擊提交，否則請點擊取消。</target>
+如要繼續請請再次點一下提交，否則請點一下取消。</target>
         <note/>
       </trans-unit>
       <trans-unit id="You can define custom fields for presets. A field is a single key/value pair associated with a feature." xml:space="preserve">
