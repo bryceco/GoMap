@@ -52,7 +52,7 @@ extension MapViewPort {
 }
 
 // MARK: Resize & movement
-let DisplayLinkHeading = "Heading"
+private let DisplayLinkHeading = "Heading"
 let DisplayLinkPanning = "Panning" // disable gestures inside toolbar buttons
 
 extension MapViewPort {
