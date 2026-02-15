@@ -698,6 +698,11 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	func addParentRelation(_ parentRelation: OsmRelation, undo: MyUndoManager?) {
+#if DEBUG
+		if let current = AppDelegate.shared.mapView?.mapData.relations[parentRelation.ident] {
+			DbgAssert(current === parentRelation)
+		}
+#endif
 		if parentRelations.contains(parentRelation) {
 			return
 		}
@@ -707,11 +712,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 				selector: #selector(removeParentRelation(_:undo:)),
 				objects: [parentRelation, undo!])
 		}
-#if DEBUG
-		if let current = AppDelegate.shared.mapView?.mapData.relations[parentRelation.ident] {
-			DbgAssert(current === parentRelation)
-		}
-#endif
 		parentRelations.append(parentRelation)
 	}
 

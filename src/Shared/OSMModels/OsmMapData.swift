@@ -710,51 +710,51 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 #endif
 
-		for node in newData.nodes {
-			if let current = nodes[node.ident] {
-				if current.version < node.version {
+		for newNode in newData.nodes {
+			if let currentNode = nodes[newNode.ident] {
+				if currentNode.version < newNode.version {
 					// already exists, so do an in-place update
-					let bbox = current.boundingBox
-					current.serverUpdate(with: node)
-					spatial.updateMember(current, fromBox: bbox, undo: nil)
-					newNodes.append(current)
+					let bbox = currentNode.boundingBox
+					currentNode.serverUpdate(with: newNode)
+					spatial.updateMember(currentNode, fromBox: bbox, undo: nil)
+					newNodes.append(currentNode)
 				}
 			} else {
-				nodes[node.ident] = node
-				spatial.addMember(node, undo: nil)
-				newNodes.append(node)
+				nodes[newNode.ident] = newNode
+				spatial.addMember(newNode, undo: nil)
+				newNodes.append(newNode)
 			}
 		}
 
-		for way in newData.ways {
-			if let current = ways[way.ident] {
-				if current.version < way.version {
-					let bbox = current.boundingBox
-					current.serverUpdate(with: way)
-					try current.resolveToMapData(self)
-					spatial.updateMember(current, fromBox: bbox, undo: nil)
-					newWays.append(current)
+		for newWay in newData.ways {
+			if let currentWay = ways[newWay.ident] {
+				if currentWay.version < newWay.version {
+					let bbox = currentWay.boundingBox
+					currentWay.serverUpdate(with: newWay)
+					try currentWay.resolveToMapData(self)
+					spatial.updateMember(currentWay, fromBox: bbox, undo: nil)
+					newWays.append(currentWay)
 				}
 			} else {
-				ways[way.ident] = way
-				try way.resolveToMapData(self)
-				spatial.addMember(way, undo: nil)
-				newWays.append(way)
+				ways[newWay.ident] = newWay
+				try newWay.resolveToMapData(self)
+				spatial.addMember(newWay, undo: nil)
+				newWays.append(newWay)
 			}
 		}
 
-		for relation in newData.relations {
-			if let current = relations[relation.ident] {
-				if current.version < relation.version {
-					let bbox = current.boundingBox
-					current.serverUpdate(with: relation)
-					spatial.updateMember(current, fromBox: bbox, undo: nil)
-					newRelations.append(current)
+		for newRelation in newData.relations {
+			if let currentRelation = relations[newRelation.ident] {
+				if currentRelation.version < newRelation.version {
+					let bbox = currentRelation.boundingBox
+					currentRelation.serverUpdate(with: newRelation)
+					spatial.updateMember(currentRelation, fromBox: bbox, undo: nil)
+					newRelations.append(currentRelation)
 				}
 			} else {
-				relations[relation.ident] = relation
-				spatial.addMember(relation, undo: nil)
-				newRelations.append(relation)
+				relations[newRelation.ident] = newRelation
+				spatial.addMember(newRelation, undo: nil)
+				newRelations.append(newRelation)
 			}
 		}
 
@@ -1704,7 +1704,7 @@ extension OsmMapData {
 	func consistencyCheckRelationMembers() {
 		// make sure that parentRelations is correct for every relation member
 		var allMembers = Set<OsmBaseObject>()
-		for (_, relation) in relations {
+		for relation in relations.values {
 			for member in relation.members {
 				if let object = member.obj {
 					assert(object.parentRelations.contains(relation))
