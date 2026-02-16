@@ -68,13 +68,14 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		DbgAssert(mapData.relations[ident] === self)
 		var needsRedraw = false
 		for member in members {
-			if member.obj != nil {
+			guard member.obj == nil else {
 				// already resolved
 				DbgAssert(member.obj!.parentRelations.contains(self))
 				continue
 			}
 
-			if member.isWay() {
+			switch member.type {
+			case .WAY:
 				if let way = mapData.ways[member.ref] {
 					member.resolveRef(to: way)
 					way.addParentRelation(self, undo: nil)
@@ -82,7 +83,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 				} else {
 					// way is not in current view
 				}
-			} else if member.isNode() {
+			case .NODE:
 				if let node = mapData.nodes[member.ref] {
 					member.resolveRef(to: node)
 					node.addParentRelation(self, undo: nil)
@@ -90,7 +91,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 				} else {
 					// node is not in current view
 				}
-			} else if member.isRelation() {
+			case .RELATION:
 				if let rel = mapData.relations[member.ref] {
 					member.resolveRef(to: rel)
 					rel.addParentRelation(self, undo: nil)
@@ -98,8 +99,6 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 				} else {
 					// relation is not in current view
 				}
-			} else {
-				assertionFailure()
 			}
 		}
 		if needsRedraw {
@@ -108,7 +107,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		return needsRedraw
 	}
 
-	// convert references to objects back to NSNumber
+	// remove object pointers in members
 	func deresolveRefs() {
 		for member in members {
 			if let obj = member.obj {

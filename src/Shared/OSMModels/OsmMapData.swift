@@ -640,10 +640,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			let rc = query.rect
 			let url = OSM_SERVER.apiURL
 				.appendingPathComponent("api/0.6/map")
-				.appendingQueryItems(
-					[
-						"bbox": "\(rc.origin.x),\(rc.origin.y),\(rc.origin.x + rc.size.width),\(rc.origin.y + rc.size.height)"
-					])
+				.appendingQueryItems([
+					"bbox": "\(rc.origin.x),\(rc.origin.y),\(rc.origin.x + rc.size.width),\(rc.origin.y + rc.size.height)"
+				])
 			Task {
 				let result: Result<OsmDownloadData, Error>
 				do {
@@ -699,6 +698,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		newRelations.reserveCapacity(newData.relations.count)
 
 #if DEBUG
+		consistencyCheck()
+#endif
+
+#if DEBUG
 		for value in nodes.values {
 			assert(value.constructed())
 		}
@@ -713,6 +716,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		for newNode in newData.nodes {
 			if let currentNode = nodes[newNode.ident] {
 				if currentNode.version < newNode.version {
+#if DEBUG
+					print("update node \(newNode.ident): \(currentNode.version) -> \(newNode.version)")
+#endif
 					// already exists, so do an in-place update
 					let bbox = currentNode.boundingBox
 					currentNode.serverUpdate(with: newNode)
@@ -729,6 +735,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		for newWay in newData.ways {
 			if let currentWay = ways[newWay.ident] {
 				if currentWay.version < newWay.version {
+#if DEBUG
+					print("update way \(newWay.ident): \(currentWay.version) -> \(newWay.version)")
+#endif
 					let bbox = currentWay.boundingBox
 					currentWay.serverUpdate(with: newWay)
 					try currentWay.resolveToMapData(self)
@@ -746,6 +755,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		for newRelation in newData.relations {
 			if let currentRelation = relations[newRelation.ident] {
 				if currentRelation.version < newRelation.version {
+#if DEBUG
+					print("update relation \(newRelation.ident): \(currentRelation.version) -> \(newRelation.version)")
+#endif
 					let bbox = currentRelation.boundingBox
 					currentRelation.serverUpdate(with: newRelation)
 					spatial.updateMember(currentRelation, fromBox: bbox, undo: nil)
@@ -794,6 +806,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 #endif
 
+		consistencyCheck()
+
 		// store new nodes in database
 		if save {
 			sqlSave(
@@ -810,8 +824,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				AppDelegate.shared.mapView.discardStaleData()
 			}
 		}
-
-		consistencyCheck()
 	}
 
 	// MARK: Upload
@@ -1397,6 +1409,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		var t = CACurrentMediaTime()
 
+		// deresolve relation references before starting, because if we delete a relation
+		// we don't want a reference to be left dangling in parentRelations:
+		for relation in relations.values {
+			relation.deresolveRefs()
+		}
+
 		var didExpand = false
 		while true {
 			guard let newOldest = region.discardOldestQuads(fraction, oldest: oldest)
@@ -1506,20 +1524,20 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// remove objects from spatial that are no longer in a dictionary
 		spatial.deleteObjects(withPredicate: { [self] obj in
-			if obj.isNode() != nil {
+			switch obj {
+			case is OsmNode:
 				return nodes[obj.ident] == nil
-			} else if obj.isWay() != nil {
+			case is OsmWay:
 				return ways[obj.ident] == nil
-			} else if obj.isRelation() != nil {
+			case is OsmRelation:
 				return relations[obj.ident] == nil
-			} else {
+			default:
 				return true
 			}
 		})
 
 		// fixup relation references
-		for (_, relation) in relations {
-			relation.deresolveRefs()
+		for relation in relations.values {
 			_ = relation.resolveToMapData(self)
 		}
 
@@ -1707,6 +1725,14 @@ extension OsmMapData {
 		for relation in relations.values {
 			for member in relation.members {
 				if let object = member.obj {
+					switch member.type {
+					case .NODE:
+						assert(nodes[object.ident] === object)
+					case .WAY:
+						assert(ways[object.ident] === object)
+					case .RELATION:
+						assert(relations[object.ident] === object)
+					}
 					assert(object.parentRelations.contains(relation))
 					allMembers.insert(object)
 				}

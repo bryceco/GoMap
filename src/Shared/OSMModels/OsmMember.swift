@@ -30,11 +30,11 @@ final class OsmMember: NSObject, NSSecureCoding {
 		self.obj = obj
 		ref = obj.ident
 		self.role = role
-		if obj.isNode() != nil {
+		if obj is OsmNode {
 			type = .NODE
-		} else if obj.isWay() != nil {
+		} else if obj is OsmWay {
 			type = .WAY
-		} else if obj.isRelation() != nil {
+		} else if obj is OsmRelation {
 			type = .RELATION
 		} else {
 			fatalError()
@@ -49,6 +49,13 @@ final class OsmMember: NSObject, NSSecureCoding {
 	func resolveRef(to object: OsmBaseObject) {
 		precondition(ref == object.ident)
 		obj = object
+#if DEBUG
+		if let mapData = AppDelegate.shared.mapView?.mapData,
+		   let relation = mapData.relations[object.ident]
+		{
+			assert(relation === obj)
+		}
+#endif
 	}
 
 	func isNode() -> Bool {

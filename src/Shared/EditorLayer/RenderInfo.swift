@@ -98,9 +98,8 @@ final class RenderInfo {
 		var tags = object.tags
 		// if the object is part of a rendered relation then inherit that relation's tags
 		if object is OsmWay,
-		   object.parentRelations.count != 0,
-		   !object.hasInterestingTags(),
-		   let parent = object.parentRelations.first(where: { $0.isBoundary() })
+		   let parent = object.parentRelations.first(where: { $0.isBoundary() }),
+		   !object.hasInterestingTags()
 		{
 			tags = parent.tags
 		}

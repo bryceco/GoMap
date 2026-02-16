@@ -1493,21 +1493,20 @@ final class EditorMapLayer: CALayer {
 		a.reserveCapacity(4000)
 		mapData.enumerateObjects(inRegion: box, block: { obj in
 			var show = obj.isShown
-			if show == TRISTATE.UNKNOWN {
+			if show == .UNKNOWN {
+				// resolve visibility status
 				if !obj.deleted {
 					if let node = obj as? OsmNode {
 						if node.wayCount == 0 || node.hasInterestingTags() {
-							show = TRISTATE.YES
+							show = .YES
 						}
-					} else if obj.isWay() != nil {
-						show = TRISTATE.YES
-					} else if obj.isRelation() != nil {
-						show = TRISTATE.YES
+					} else {
+						show = .YES
 					}
 				}
-				obj.isShown = show == TRISTATE.YES ? TRISTATE.YES : TRISTATE.NO
+				obj.isShown = show == .YES ? .YES : .NO
 			}
-			if show == TRISTATE.YES {
+			if show == .YES {
 				a.append(obj)
 			}
 		})
