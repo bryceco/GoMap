@@ -687,15 +687,26 @@ func metersToDegrees(meters: Double, latitude: Double) -> Double {
 	return degrees
 }
 
-// area in square meters
-func SurfaceAreaOfRect(_ latLon: OSMRect) -> Double {
-	// http://mathforum.org/library/drmath/view/63767.html
-	let lon1 = latLon.origin.x * .pi / 180.0
-	let lat1 = latLon.origin.y * .pi / 180.0
-	let lon2: Double = (latLon.origin.x + latLon.size.width) * .pi / 180.0
-	let lat2: Double = (latLon.origin.y + latLon.size.height) * .pi / 180.0
-	let A = EarthRadius * EarthRadius * abs(sin(lat1) - sin(lat2)) * abs(lon1 - lon2)
-	return A
+/// Returns the approximate Earth surface area visible (in square meters)
+/// on a 430×932 pt display at a given Web Mercator zoom level.
+///
+/// - Parameter zoomLevel: Web Mercator zoom level (0–22)
+/// - Returns: Approximate visible area in square meters
+func visibleEarthAreaAt(zoom: Double) -> Double
+{
+	let earthSurfaceAreaM2: Double = 5.1e14  // ~510,000,000 km² in m²
+
+	// Display dimensions for typical iPhone
+	let displayWidth: Double  = 430
+	let displayHeight: Double = 932
+
+	// At zoom level z, the full Web Mercator world is (256 × 2^z) pixels on each side
+	let worldPixels = 256.0 * pow(2.0, zoom)
+
+	// Fraction of the world's projected area visible on screen
+	let fractionVisible = (displayWidth * displayHeight) / (worldPixels * worldPixels)
+
+	return earthSurfaceAreaM2 * fractionVisible
 }
 
 // http://www.movable-type.co.uk/scripts/latlong.html

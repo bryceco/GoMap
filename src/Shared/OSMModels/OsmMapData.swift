@@ -615,8 +615,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	///	- We submit the rect to the server
 	///	- Once we've successfully fetched the data for the rect we tell the QuadMap that it can mark the given QuadBoxes as downloaded
 	func downloadMissingData(inRect rect: OSMRect,
-	                         withProgress progress: MapViewProgress,
-	                         didChange: @escaping (_ error: Error?) -> Void)
+							 withProgress progress: MapViewProgress,
+							 didUpdate: @escaping (_ error: Error?) -> Void)
 	{
 		// get list of new quads to fetch
 		let newQuads = region.missingQuads(forRect: rect)
@@ -659,10 +659,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 						print("Downloaded \(data.nodes.count + data.ways.count + data.relations.count) objects")
 						try? self.merge(data, savingToDatabase: true)
 						didGetData = true
-						didChange(nil) // data was updated
+						didUpdate(nil) // data was updated
 					case let .failure(error):
 						didGetData = false
-						didChange(error) // error fetching data
+						didUpdate(error) // error fetching data
 					}
 
 					for quadBox in query.quadList {

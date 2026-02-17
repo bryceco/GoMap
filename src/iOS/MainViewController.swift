@@ -67,7 +67,7 @@ struct ViewStateAndOverlays {
 		}
 	}
 
-	var zoomedOut = false {
+	var zoomedOut = true {	// initial value is true since viewPort transform initial value is identity
 		didSet {
 			if oldValue != zoomedOut {
 				onChange.notify(self)
@@ -158,6 +158,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
 
+	var isInitialized: Bool = false
+
 	let viewPort = MapViewPortObject()
 
 	// This contains the user's general vicinity. Although it contains a lat/lon it only
@@ -197,6 +199,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 		AppDelegate.shared.mainView = self
 
 		// configure MapView
+		// in the storyboard mapView is embedded in MainView, but we're going
+		// to make it a child of MapLayersView instead:
 		mapView.setUpChildViews(with: self)
 		mapView.removeFromSuperview()
 
@@ -327,15 +331,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 			view.addGestureRecognizer(scrollWheelGesture)
 		}
 
-		// get current location
-		do {
-			try viewPort.loadFromUserDefaults()
-		} catch {
-			viewPort.mapTransform.transform = .identity
-			// turn on GPS which will move us to current location
-			gpsState = .LOCATION
-		}
-
 		// Bindings
 
 		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
@@ -369,6 +364,23 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		updateAerialAttributionButton()
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		if !isInitialized {
+			isInitialized = true
+
+			// Don't set viewPort until layout has occurred for child views.
+			do {
+				try viewPort.loadFromUserDefaults()
+			} catch {
+				viewPort.mapTransform.transform = .identity
+				// turn on GPS which will move us to current location
+				gpsState = .LOCATION
+			}
+		}
 	}
 
 	func setupAccessibility() {
@@ -1271,28 +1283,24 @@ final class MainViewController: UIViewController, DPadDelegate,
 		// 	Editor only --> Basemap
 		//	Editor+Aerial --> Aerial+Locator
 		let newState: MapViewState
-		if state.zoomedOut && state.state == .EDITOR {
-			newState = .BASEMAP
-		} else if state.zoomedOut && state.state == .EDITORAERIAL {
-			newState = .AERIAL
-		} else {
-			newState = state.state
-		}
-
 		let newOverlays: MapViewOverlays
-		if state.zoomedOut && newState == .EDITORAERIAL {
+		switch (state.zoomedOut, state.state) {
+		case (true, .EDITOR):
+			newState = .BASEMAP
+			newOverlays = state.overlayMask
+		case (true, .EDITORAERIAL):
+			newState = .AERIAL
 			newOverlays = state.overlayMask.union(.LOCATOR)
-		} else {
+		default:
+			newState = state.state
 			newOverlays = state.overlayMask
 		}
 
 		CATransaction.begin()
 		CATransaction.setAnimationDuration(0.5)
 
-#if HAS_LOCATOR_LAYER
 		mapLayersView.locatorLayer.isHidden = !newOverlays.contains(.LOCATOR)
 			|| mapLayersView.locatorLayer.tileServer.apiKey == ""
-#endif
 
 		aerialAlignmentButton.isHidden = true
 		dPadView.isHidden = true

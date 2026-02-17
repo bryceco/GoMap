@@ -37,6 +37,7 @@ extension MapViewPort {
 
 	func boundingMapRectForScreen() -> OSMRect {
 		let rc = OSMRect(AppDelegate.shared.mainView.mapLayersView.bounds)
+		DbgAssert(rc.size.width != 0)	// Don't call before child views have been layed out
 		return mapTransform.boundingMapRect(forScreenRect: rc)
 	}
 

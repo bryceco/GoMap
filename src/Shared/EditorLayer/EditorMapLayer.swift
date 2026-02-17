@@ -448,7 +448,8 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func updateMapLocation() {
-		guard !isHidden, !owner.isHidden else {
+		guard !isHidden, !owner.isHidden, AppDelegate.shared.mainView.isInitialized else {
+			// user zoomed out and we got hidden, so immediately stop downloading
 			Task {
 				await mapData.cancelCurrentDownloads()
 			}
@@ -464,7 +465,7 @@ final class EditorMapLayer: CALayer {
 			return
 		}
 
-		mapData.downloadMissingData(inRect: box, withProgress: progress, didChange: { [weak self] error in
+		mapData.downloadMissingData(inRect: box, withProgress: progress, didUpdate: { [weak self] error in
 			guard let self else { return }
 			if let error {
 				// if we've been hidden don't bother displaying errors

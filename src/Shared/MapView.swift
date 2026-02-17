@@ -190,7 +190,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	override var isHidden: Bool {
 		didSet {
-			if oldValue, !isHidden {
+			if oldValue, !isHidden, AppDelegate.shared.mainView.isInitialized {
 				// just became visible, so have editor download data for region
 				editorLayer?.updateMapLocation()
 			}
@@ -224,19 +224,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		unblinkObject()
 
 		// Determine if we've zoomed out enough to disable editing
-		// We can only compute a precise surface area size at high zoom since it's possible
-		// for the screen to be larger than the earth
-		let area = viewPort.mapTransform.zoom() > 8
-			? SurfaceAreaOfRect(viewPort.boundingLatLonForScreen())
-			: Double.greatestFiniteMagnitude
-		var isZoomedOut = area > 2.0 * 1000 * 1000
-		if !isHidden,
-		   !editorLayer.atVisibleObjectLimit,
-		   area < 1000.0 * 1000 * 1000
-		{
-			isZoomedOut = false
-		}
-		mainView.viewState.zoomedOut = isZoomedOut
+		updateIsZoomedOut()
 
 		// notify user if pushpin goes off-screen
 		if let pushPin {
@@ -251,6 +239,21 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			}
 			pushPinIsOnscreen = isInside
 		}
+	}
+
+	func updateIsZoomedOut() {
+		// Determine if we've zoomed out enough to disable editing
+		let area = visibleEarthAreaAt(zoom: viewPort.mapTransform.zoom())
+
+		var isZoomedOut = area > 2.0 * 1000 * 1000
+		if !isHidden,
+		   editorLayer.shownObjects.count > 0, // ensure it is initialized
+		   !editorLayer.atVisibleObjectLimit,
+		   area < 1000.0 * 1000 * 1000
+		{
+			isZoomedOut = false
+		}
+		mainView.viewState.zoomedOut = isZoomedOut
 	}
 
 	// MARK: Rotate object
