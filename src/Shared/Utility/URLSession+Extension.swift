@@ -64,6 +64,7 @@ extension URLSession {
 	func data(with url: URL) async throws -> Data {
 		var request = URLRequest(url: url)
 		request.setUserAgent()
+		request.setReferrer()
 		return try await URLSession.shared.data(with: request)
 	}
 }
@@ -81,5 +82,11 @@ extension URLRequest {
 
 	mutating func setUserAgent() {
 		setValue(Self.appUserAgentString, forHTTPHeaderField: "User-Agent")
+	}
+
+	mutating func setReferrer() {
+		if url?.host?.hasSuffix(".mapbox.com") ?? false {
+			setValue("https://www.openstreetmap.org/", forHTTPHeaderField: "Referer")
+		}
 	}
 }

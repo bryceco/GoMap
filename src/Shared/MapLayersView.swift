@@ -8,8 +8,6 @@
 
 import UIKit
 
-let HAS_LOCATOR_LAYER = false
-
 enum ZLAYER: CGFloat {
 	case AERIAL = -100
 	case BASEMAP = -98
@@ -49,9 +47,7 @@ class MapLayersView: UIView {
 	var basemapLayer: (MapLayersView.LayerOrView & DiskCacheSizeProtocol)!
 	// transparent foreground layers
 	private(set) var gpxLayer: GpxLayer!
-#if HAS_LOCATOR_LAYER
 	private(set) var locatorLayer: MercatorTileLayer!
-#endif
 	private(set) var dataOverlayLayer: DataOverlayLayer!
 	private(set) var quadDownloadLayer: QuadDownloadLayer?
 	private(set) var mapMarkersView: MapMarkersView!
@@ -109,14 +105,12 @@ class MapLayersView: UIView {
 			allLayers.append(layer)
 		}
 
-#if HAS_LOCATOR_LAYER
 		// this option needs to be set before the editor is initialized
 		locatorLayer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
 		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
 		locatorLayer.tileServer = TileServer.mapboxLocator
 		locatorLayer.isHidden = true
 		allLayers.append(locatorLayer)
-#endif
 
 		aerialLayer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
 		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue

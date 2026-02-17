@@ -50,8 +50,8 @@ extension TileServerList {
 		private let json: [String: Any]
 		var attribution: Attribution? { get throws { try Attribution(json["attribution"]) }}
 		var category: Category? { get throws {
-			let cat = try json["category"] --> String?.self
-			return cat != nil ? try Category(string: cat!) : nil
+			guard let cat = try json["category"] --> String?.self else { return nil }
+			return try Category(string: cat)
 		}}
 		var icon: String? { get throws { try json["icon"] --> String?.self } }
 		var id: String { get throws { try json["id"] --> String.self }}
