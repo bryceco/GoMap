@@ -10,7 +10,6 @@ import Foundation
 import ImageIO
 
 public struct EXIFInfo {
-	var x: MapLocation?
 	let latitude: Double
 	let longitude: Double
 	let altitude: Double?
