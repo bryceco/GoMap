@@ -615,8 +615,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	///	- We submit the rect to the server
 	///	- Once we've successfully fetched the data for the rect we tell the QuadMap that it can mark the given QuadBoxes as downloaded
 	func downloadMissingData(inRect rect: OSMRect,
-							 withProgress progress: MapViewProgress,
-							 didUpdate: @escaping (_ error: Error?) -> Void)
+	                         withProgress progress: MapViewProgress,
+	                         didUpdate: @escaping (_ error: Error?) -> Void)
 	{
 		// get list of new quads to fetch
 		let newQuads = region.missingQuads(forRect: rect)
@@ -1373,6 +1373,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		})
 	}
 
+	// Returns true if any objects were discarded
 	func discardStaleData(maxObjects: Int = 100000, maxAge: Int = 24 * 60 * 60) -> Bool {
 #if DEBUG
 		let minTimeBetweenDiscards = 5.0 // seconds
@@ -1393,10 +1394,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		// remove objects if they are too old, or we have too many:
 		var oldest = Date(timeIntervalSinceNow: -Double(maxAge))
 
-		// get rid of old quads marked as downloaded
+		// figure out what fraction of objects we should trim to get under the threshold.
 		var fraction = Double(nodes.count + ways.count + relations.count) / Double(maxObjects)
 		if fraction <= 1.0 {
-			// the number of objects is acceptable
+			// The number of objects is acceptable. We can still trim based on age.
 			fraction = 0.0
 		} else {
 			fraction = 1.0 - 1.0 / fraction
@@ -1405,19 +1406,27 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			}
 		}
 
-		consistencyCheck()
+		defer {
+			consistencyCheck()
+		}
 
 		var t = CACurrentMediaTime()
 
-		// deresolve relation references before starting, because if we delete a relation
-		// we don't want a reference to be left dangling in parentRelations:
-		for relation in relations.values {
-			relation.deresolveRefs()
+		func deresolveRelations() {
+			// deresolve relation references before starting, because if we delete a relation
+			// we don't want a reference to be left dangling in parentRelations:
+			for relation in relations.values {
+				relation.deresolveRefs()
+			}
 		}
+
+		var didDeresolveRelations = false
 
 		var didExpand = false
 		while true {
-			guard let newOldest = region.discardOldestQuads(fraction, oldest: oldest)
+			guard
+				// get rid of old quads marked as downloaded
+				let newOldest = region.discardOldestQuads(fraction, oldest: oldest)
 			else {
 				if !didExpand {
 					return false // nothing to discard
@@ -1495,6 +1504,13 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				}
 			}
 
+			if !didDeresolveRelations,
+			   removeNodes.count + removeWays.count + removeRelations.count > 0
+			{
+				deresolveRelations()
+				didDeresolveRelations = true
+			}
+
 			// remove from dictionaries
 			for k in removeNodes {
 				nodes.removeValue(forKey: k)
@@ -1508,9 +1524,13 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 			print(String(format: "remove %ld objects", removeNodes.count + removeWays.count + removeRelations.count))
 
+			// If after deleting some objects we aren't much larger than the maximum then we're done
 			if Double(nodes.count + ways.count + relations.count) < (Double(maxObjects) * 1.3) {
 				// good enough
-				if !didExpand, removeNodes.count + removeWays.count + removeRelations.count == 0 {
+				if !didExpand,
+				   !didDeresolveRelations,
+				   removeNodes.count + removeWays.count + removeRelations.count == 0
+				{
 					previousDiscardDate = now
 					return false
 				}
@@ -1540,8 +1560,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		for relation in relations.values {
 			_ = relation.resolveToMapData(self)
 		}
-
-		consistencyCheck()
 
 		t = CACurrentMediaTime() - t
 		print("Discard sweep time = \(t)")

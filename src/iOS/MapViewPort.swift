@@ -37,7 +37,7 @@ extension MapViewPort {
 
 	func boundingMapRectForScreen() -> OSMRect {
 		let rc = OSMRect(AppDelegate.shared.mainView.mapLayersView.bounds)
-		DbgAssert(rc.size.width != 0)	// Don't call before child views have been layed out
+		DbgAssert(rc.size.width != 0) // Don't call before child views have been layed out
 		return mapTransform.boundingMapRect(forScreenRect: rc)
 	}
 
@@ -225,10 +225,9 @@ extension MapViewPort {
 	// MARK: Set location
 	// Try not to call this directly, since scale isn't something exposed.
 	// Use one of the centerOn() functions instead.
-	func setTransformFor(
-		latLon: LatLon,
-		scale newScale: Double? = nil,
-		rotation: Double? = nil)
+	func setTransformFor(latLon: LatLon,
+	                     scale newScale: Double? = nil,
+	                     rotation: Double? = nil)
 	{
 		// Current matrix
 		let old = mapTransform.transform
