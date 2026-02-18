@@ -236,14 +236,25 @@ extension MapViewPort {
 		let currentScale = mapTransform.scale()
 		let scale = newScale ?? currentScale
 
-		// Compute uniform scale factor
-		let factor = scale / currentScale
+		let a, b, c, d: Double
 
-		// Scale the matrix without touching rotation
-		let a = old.a * factor
-		let b = old.b * factor
-		let c = old.c * factor
-		let d = old.d * factor
+		if let rotation = rotation {
+			// Build rotation+scale matrix from scratch
+			let angle = -rotation
+			let cos = Foundation.cos(angle)
+			let sin = Foundation.sin(angle)
+			a = cos * scale
+			b = sin * scale
+			c = -sin * scale
+			d = cos * scale
+		} else {
+			// Scale the matrix without touching rotation
+			let factor = scale / currentScale
+			a = old.a * factor
+			b = old.b * factor
+			c = old.c * factor
+			d = old.d * factor
+		}
 
 		// Compute translation to center on the new lat/lon
 		let pt = MapTransform.mapPoint(forLatLon: latLon)
