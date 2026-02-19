@@ -367,14 +367,23 @@ final class MercatorTileLayer: CALayer {
 			zoomLevel = tileServer.maxZoom
 		}
 
-		let zoom = Double(1 << zoomLevel) / 256.0
-		let tileNorth = Int(floor(rect.origin.y * zoom))
-		let tileWest = Int(floor(rect.origin.x * zoom))
-		let tileSouth = Int(ceil((rect.origin.y + rect.size.height) * zoom))
-		let tileEast = Int(ceil((rect.origin.x + rect.size.width) * zoom))
+		func tileValue(_ value: Double) -> Int? {
+			guard
+				value.isFinite,
+				value >= 0.0,
+				value <= 5_000000.0
+			else { return nil }
+			return Int(value)
+		}
 
-		if (tileEast - tileWest) * (tileSouth - tileNorth) > 4000 {
-			DLog("Bad tile transform: \((tileEast - tileWest) * (tileSouth - tileNorth))")
+		let zoom = Double(1 << zoomLevel) / 256.0
+		guard
+			let tileNorth = tileValue(floor(rect.origin.y * zoom)),
+			let tileWest = tileValue(floor(rect.origin.x * zoom)),
+			let tileSouth = tileValue(ceil((rect.origin.y + rect.size.height) * zoom)),
+			let tileEast = tileValue(ceil((rect.origin.x + rect.size.width) * zoom)),
+			(tileEast - tileWest) * (tileSouth - tileNorth) < 4000
+		else {
 			return // something is wrong
 		}
 
