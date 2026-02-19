@@ -512,7 +512,14 @@ extension EditorMapLayer {
 					var wall1 = Self.WallForPoint(point1, rect: viewRect)
 					let wall2 = Self.WallForPoint(point2, rect: viewRect)
 
+					var loopCount = 0
 					wall_loop: while true {
+						// sanity check so we don't loop endlessly and run out of memory
+						loopCount += 1
+						if loopCount > 100 {
+							return nil
+						}
+
 						switch wall1 {
 						case .LEFT:
 							if wall2 == .LEFT, point1.y > point2.y {
