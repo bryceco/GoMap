@@ -49,7 +49,9 @@ static inline void DbgAssert(bool condition) {
 	_selector	= [coder decodeObjectForKey:@"selector"];
 	_objects	= [coder decodeObjectForKey:@"objects"];
 	_group		= [coder decodeIntegerForKey:@"group"];
-	assert( _target && _selector && _objects );
+	assert( _target );
+	assert( _selector );
+	assert( _objects );
 	return self;
 }
 
