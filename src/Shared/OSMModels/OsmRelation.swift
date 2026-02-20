@@ -443,6 +443,9 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		var bestPoint = target
 		var bestDistance = 10_000000.0
 		for object in allMemberObjects() {
+			// we already have the complete set of members recursively, so ignore relations here
+			guard !(object is OsmRelation) else { continue }
+
 			let pt = object.latLonOnObject(forLatLon: target)
 			let dist = OSMPoint(target).distanceToPoint(OSMPoint(pt))
 			if dist < bestDistance {
