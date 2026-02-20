@@ -252,6 +252,10 @@ class GpxViewController: UITableViewController {
 		navigationItem.rightBarButtonItem = editButtonItem
 
 		updateEditButton()
+	}
+
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
 
 		if let track = gpxTracks.activeTrack {
 			startTimer(forStart: track.creationDate)
@@ -272,8 +276,16 @@ class GpxViewController: UITableViewController {
 		timer = Timer(fire: date, interval: 1.0, repeats: true, block: { [weak self] timer in
 			guard let self = self else { return }
 			if gpxTracks.activeTrack != nil {
-				let index = IndexPath(row: 0, section: SECTION_ACTIVE_TRACK)
-				self.tableView?.reloadRows(at: [index], with: .none)
+				DispatchQueue.main.async { [weak self] in
+					let index = IndexPath(row: 0, section: SECTION_ACTIVE_TRACK)
+					guard
+						let tableView = self?.tableView,
+						tableView.window != nil, // must be on-screen
+						index.section < tableView.numberOfSections,
+						index.row < tableView.numberOfRows(inSection: index.section)
+					else { return }
+					tableView.reloadRows(at: [index], with: .none)
+				}
 			} else {
 				timer.invalidate()
 				self.timer = nil
