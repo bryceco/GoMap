@@ -154,11 +154,12 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 	func updateCompletionTableView() {
 		if filteredCompletions.count != 0 {
 			if completionTableView == nil {
-				let cell: UITableViewCell = superviewOfType()!
-				let tableView: UITableView = cell.superviewOfType()!
-
+				guard
+					let cell: UITableViewCell = superviewOfType(),
+					let tableView: UITableView = cell.superviewOfType(),
+					let indexPath = tableView.indexPath(for: cell)
+				else { return }
 				// scroll cell to top
-				let indexPath = tableView.indexPath(for: cell)!
 				tableView.scrollToRow(at: indexPath, at: .top, animated: false)
 
 				if #available(iOS 15, *),
