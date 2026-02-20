@@ -383,8 +383,10 @@ class KeyValueTableSection {
 	}
 
 	func keyValueEditingEnded(for pair: KeyValueTableCell) -> KeyValue? {
-		guard let tableView = tableView,
-		      let indexPath = tableView.indexPath(for: pair)
+		guard
+			let tableView = tableView,
+			let indexPath = tableView.indexPath(for: pair),
+			indexPath.row < tags.count
 		else { return nil }
 
 		let kv = (k: pair.key, v: pair.value)
