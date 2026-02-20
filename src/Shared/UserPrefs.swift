@@ -34,7 +34,11 @@ class Pref<T>: PrefProtocol {
 			{
 				return obj2
 			}
+#if DEBUG // separate these because a user had a crash
 			return UserDefaults.standard.value(forKey: key) as! T?
+#else
+			return UserDefaults.standard.value(forKey: key) as? T
+#endif
 		}
 		set {
 			UserDefaults.standard.set(newValue, forKey: key)
