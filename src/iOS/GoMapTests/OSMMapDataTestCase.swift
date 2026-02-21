@@ -26,11 +26,13 @@ class OSMMapDataTestCase: XCTestCase {
 	func testSetServerShouldAddThePathSeparatorSuffixIfItDoesNotExist() {
 		let hostname = "https://example.com"
 		let hostnameWithPathSeparatorSuffix = "\(hostname)/"
-		XCTAssertEqual(OsmServer.serverForUrl(hostname).apiURL, hostnameWithPathSeparatorSuffix)
+		XCTAssertEqual(OsmServer.serverForUrl(string: hostname)?.serverURL.absoluteString,
+					   hostnameWithPathSeparatorSuffix)
 	}
 
 	func testSetServerShouldNotAddThePathSeparatorSuffixIfItAlreadyExists() {
 		let hostname = "https://example.com/"
-		XCTAssertEqual(OsmServer.serverForUrl(hostname).apiURL, hostname)
+		XCTAssertEqual(OsmServer.serverForUrl(string: hostname)?.serverURL.absoluteString,
+					   hostname)
 	}
 }

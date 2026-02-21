@@ -25,7 +25,7 @@ class PresetKeyTagCase: XCTestCase {
 		                              keyboard: .default,
 		                              capitalize: .none,
 		                              autocorrect: .no,
-		                              presets: [firstPreset, secondPreset])
+									  presetValues: [firstPreset, secondPreset])
 
 		XCTAssertEqual(tagKey.placeholder, placeholder)
 	}
@@ -45,7 +45,7 @@ class PresetKeyTagCase: XCTestCase {
 		                              keyboard: .default,
 		                              capitalize: .none,
 		                              autocorrect: .no,
-		                              presets: [firstPreset, secondPreset])
+									  presetValues: [firstPreset, secondPreset])
 
 		XCTAssertEqual(tagKey.placeholder, "\(firstPresetName), \(secondPresentName)...")
 	}
