@@ -84,16 +84,16 @@ extension EditorMapLayer {
 
 	private static func WallForPoint(_ pt: CGPoint, rect: CGRect) -> SIDE {
 		let delta = 0.01
-		if fabs(pt.x - rect.origin.x) < delta {
+		if abs(pt.x - rect.origin.x) < delta {
 			return .LEFT
 		}
-		if fabs(pt.y - rect.origin.y) < delta {
+		if abs(pt.y - rect.origin.y) < delta {
 			return .TOP
 		}
-		if fabs(pt.x - rect.origin.x - rect.size.width) < delta {
+		if abs(pt.x - rect.origin.x - rect.size.width) < delta {
 			return .RIGHT
 		}
-		if fabs(pt.y - rect.origin.y - rect.size.height) < delta {
+		if abs(pt.y - rect.origin.y - rect.size.height) < delta {
 			return .BOTTOM
 		}
 		fatalError()

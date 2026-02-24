@@ -1241,7 +1241,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		switch gpsState {
 		case GPS_STATE.NONE:
 			// if the user hasn't rotated the screen then start facing north, otherwise follow heading
-			if fabs(viewPort.mapTransform.rotation()) < 0.0001 {
+			if abs(viewPort.mapTransform.rotation()) < 0.0001 {
 				gpsState = .LOCATION
 			} else {
 				gpsState = .HEADING

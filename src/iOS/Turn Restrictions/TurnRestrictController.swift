@@ -451,15 +451,15 @@ class TurnRestrictController: UIViewController {
 	class func turnTypeForIntersection(from fromHwy: TurnRestrictHwyView, to toHwy: TurnRestrictHwyView) -> String {
 		let angle = toHwy.turnAngleDegrees(from: fromHwy.endPoint) // -180..180
 
-		if fabs(angle) < 23.0 {
+		if abs(angle) < 23.0 {
 			return "straight_on"
 		} else if toHwy.wayObj.isOneWay != ONEWAY.NONE,
 		          fromHwy.wayObj.isOneWay != ONEWAY.NONE,
-		          fabs(fabs(angle) - 180.0) < 40.0
+		          abs(abs(angle) - 180.0) < 40.0
 		{
 			// more likely a u-turn if both are one-way
 			return "u_turn"
-		} else if fabs(fabs(angle) - 180.0) < 23.0 {
+		} else if abs(abs(angle) - 180.0) < 23.0 {
 			return "u_turn"
 		} else if angle < 0.0 {
 			return "left_turn"

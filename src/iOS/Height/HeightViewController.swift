@@ -384,7 +384,7 @@ class HeightViewController: UIViewController {
 		// get camera tilt
 		var pitch = motion.attitude.pitch
 		let yaw = motion.attitude.yaw
-		if fabs(yaw - direction) < .pi / 2 {
+		if abs(yaw - direction) < .pi / 2 {
 			pitch = .pi / 2 - pitch
 		} else {
 			pitch = pitch - .pi / 2
