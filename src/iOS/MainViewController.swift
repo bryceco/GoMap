@@ -67,7 +67,7 @@ struct ViewStateAndOverlays {
 		}
 	}
 
-	var zoomedOut = true {	// initial value is true since viewPort transform initial value is identity
+	var zoomedOut = true { // initial value is true since viewPort transform initial value is identity
 		didSet {
 			if oldValue != zoomedOut {
 				onChange.notify(self)
@@ -78,7 +78,7 @@ struct ViewStateAndOverlays {
 
 final class MainViewController: UIViewController, DPadDelegate,
 	UIActionSheetDelegate, UIGestureRecognizerDelegate,
-	UIPointerInteractionDelegate, UIAdaptivePresentationControllerDelegate
+	UIAdaptivePresentationControllerDelegate
 {
 	class DisplaySettings {
 		@Notify var enableRotation: Bool = UserPrefs.shared.mapViewEnableRotation.value ?? true {
@@ -158,7 +158,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
 
-	var isInitialized: Bool = false
+	var isInitialized = false
 
 	let viewPort = MapViewPortObject()
 
@@ -669,7 +669,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				// pointer interaction when using a mouse
 				if #available(iOS 13.4, *) {
 					if !button.interactions.contains(where: { $0.isKind(of: UIPointerInteraction.self) }) {
-						let interaction = UIPointerInteraction(delegate: self)
+						let interaction = UIPointerInteraction()
 						button.interactions.append(interaction)
 					}
 				}
@@ -679,20 +679,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 		// special handling for aerial logo button
 		if #available(iOS 13.4, *) {
 			if !aerialServiceLogo.interactions.contains(where: { $0.isKind(of: UIPointerInteraction.self) }) {
-				let interaction = UIPointerInteraction(delegate: self)
+				let interaction = UIPointerInteraction()
 				aerialServiceLogo.interactions.append(interaction)
 			}
 		}
-	}
-
-	/// Change the button/cursor shape when hovering over a button with a mouse on iPad
-	@available(iOS 13.4, *)
-	func pointerInteraction(_ interaction: UIPointerInteraction, styleFor: UIPointerRegion) -> UIPointerStyle? {
-		if let interactionView = interaction.view {
-			let targetedPreview = UITargetedPreview(view: interactionView)
-			return UIPointerStyle(effect: UIPointerEffect.automatic(targetedPreview))
-		}
-		return nil
 	}
 
 	@objc func makeButtonHighlight(_ button: UIView) {
