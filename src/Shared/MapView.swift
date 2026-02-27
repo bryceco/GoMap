@@ -39,9 +39,7 @@ struct MapLocation {
 
 // MARK: MapView
 
-final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteractionDelegate,
-	UISheetPresentationControllerDelegate
-{
+final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteractionDelegate {
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
 
 	var voiceAnnouncement: VoiceAnnouncement?
@@ -925,22 +923,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		layer.addSublayer(blinkLayer)
 	}
 
-	// This gets called when the user changes the size of a sheet
-	@available(iOS 15.0, *)
-	func sheetPresentationControllerDidChangeSelectedDetentIdentifier(
-		_ sheetPresentationController: UISheetPresentationController)
-	{
-		// if they are switching to a medium sheet size then adjust the map to be centered in the upper screen
-		if sheetPresentationController.selectedDetentIdentifier == .medium,
-		   let pin = pushPin?.arrowPoint
-		{
-			let newPin = CGPoint(x: bounds.midX,
-			                     y: (bounds.minY + bounds.center().y) / 2)
-			let translation = newPin.minus(pin)
-			viewPort.adjustOrigin(by: translation)
-		}
-	}
-
 	// MARK: Gesture Recognizers
 
 	func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
@@ -1118,6 +1100,27 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	}
 
 	func updateSpeechBalloonPosition() {}
+}
+
+@available(iOS 15.0, *)
+extension MapView: UISheetPresentationControllerDelegate {
+
+	// This gets called when the user changes the size of a sheet,
+	// Currently used when solving Quests. The popup can be slid half-way
+	// down the screen, and we want the pushpin to be centered in the top half.
+	func sheetPresentationControllerDidChangeSelectedDetentIdentifier(
+		_ sheetPresentationController: UISheetPresentationController)
+	{
+		// if they are switching to a medium sheet size then adjust the map to be centered in the upper screen
+		if sheetPresentationController.selectedDetentIdentifier == .medium,
+		   let pin = pushPin?.arrowPoint
+		{
+			let newPin = CGPoint(x: bounds.midX,
+			                     y: (bounds.minY + bounds.center().y) / 2)
+			let translation = newPin.minus(pin)
+			viewPort.adjustOrigin(by: translation)
+		}
+	}
 }
 
 // add extensions to provide selective access to the underlying EditorLayer
