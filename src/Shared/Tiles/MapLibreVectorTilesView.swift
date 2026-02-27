@@ -59,11 +59,41 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 	deinit {}
 
 	func mapView(_ map: MLNMapView, didFinishLoading style: MLNStyle) {
-		let locale = Locale(identifier: PresetLanguages.preferredLanguageCode())
-		style.localizeLabels(into: locale)
+		let preferredKeys = preferredLanguageCodes()
+		let args = preferredKeys.map { NSExpression(forKeyPath: $0) }
+		let coalesceExpr = NSExpression(forFunction: "mgl_coalesce:",
+		                                arguments: [NSExpression(forAggregate: args)])
+		for layer in style.layers {
+			guard
+				let symbolLayer = layer as? MLNSymbolStyleLayer
+			else {
+				continue
+			}
+			symbolLayer.text = coalesceExpr
+		}
 	}
 
 	func mapViewDidFinishLoadingMap(_ mapView: MLNMapView) {}
+
+	private func preferredLanguageCodes() -> [String] {
+		var keys: [String] = []
+		func addKey(_ key: String) {
+			if !keys.contains(key) {
+				keys.append(key)
+			}
+		}
+		// Walk the user's preferred languages and add name: variants
+		for lang in Locale.preferredLanguages {
+			let full = lang.replacingOccurrences(of: "-", with: "_")
+			addKey("name:\(full)")
+			if let base = full.split(separator: "_").first {
+				addKey("name:\(base)")
+			}
+		}
+		addKey("name")
+		addKey("name:en")
+		return keys
+	}
 
 	func setPreferredFrameRate() {
 		if #available(iOS 15.0, *) {
