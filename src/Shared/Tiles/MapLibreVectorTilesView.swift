@@ -84,10 +84,12 @@ class MapLibreVectorTilesView: MLNMapView, MLNMapViewDelegate {
 		}
 		// Walk the user's preferred languages and add name: variants
 		for lang in Locale.preferredLanguages {
-			let full = lang.replacingOccurrences(of: "-", with: "_")
-			addKey("name:\(full)")
-			if let base = full.split(separator: "_").first {
-				addKey("name:\(base)")
+			let parts = lang.split(separator: "-")
+			for i in (1...parts.count).reversed() {
+				addKey("name:\(parts.prefix(i).joined(separator: "-"))")
+				if i == 2, parts.count >= 3, let region = parts.last {
+					addKey("name:\(parts[0])-\(region)")
+				}
 			}
 		}
 		addKey("name")
