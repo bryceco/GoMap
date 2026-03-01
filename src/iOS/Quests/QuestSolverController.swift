@@ -28,6 +28,9 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 		tableView.allowsMultipleSelection = editKeys.count > 1
 		navigationItem.rightBarButtonItem?.isEnabled = false
 		tableView.separatorStyle = .none
+
+		tableView.sectionHeaderHeight = UITableView.automaticDimension
+		tableView.estimatedSectionHeaderHeight = 28
 	}
 
 	override func viewDidAppear(_ animated: Bool) {
@@ -210,6 +213,13 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1 + editKeys.count + 1
+	}
+
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		if self.tableView(tableView, titleForHeaderInSection: section) == nil {
+			return 0
+		}
+		return UITableView.automaticDimension
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
