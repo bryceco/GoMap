@@ -79,13 +79,18 @@ class TagInfo {
 				}
 			} else {
 				for v in results {
-					let inWiki = ((v["in_wiki"] as? NSNumber) ?? 0) == 1
-					if !inWiki, ((v["fraction"] as? NSNumber)?.doubleValue ?? 0.0) < 0.01 {
+					guard
+						let fraction = (v["fraction"] as? NSNumber)?.doubleValue,
+						fraction >= 0.001
+					else {
 						continue // it's a very uncommon value, so ignore it
 					}
-					if let val = v["value"] as? String {
-						resultList.append(val)
+					guard
+						let val = v["value"] as? String
+					else {
+						continue
 					}
+					resultList.append(val)
 				}
 			}
 			if resultList.count > 0 {
