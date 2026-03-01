@@ -8,7 +8,8 @@ DIST="https://raw.githubusercontent.com/openstreetmap/id-tagging-schema/main/dis
 presets=(preset_categories
 		preset_defaults
 		fields
-		presets)
+		presets
+		deprecated)
 
 for preset in ${presets[*]}; do
 	echo $preset

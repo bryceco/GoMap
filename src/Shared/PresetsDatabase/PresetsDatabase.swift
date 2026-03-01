@@ -48,6 +48,7 @@ final class PresetsDatabase {
 	let presetDefaults: [GEOMETRY: [String]] // map a geometry to a set of features/categories
 	let presetCategories: [String: PresetCategory] // map a top-level category ("building") to a set of specific features ("building/retail")
 	let presetFields: [String: PresetField] // possible values for a preset key ("oneway=")
+	let deprecations: DeprecatedTags
 
 	lazy var taginfoCache = TagInfo()
 
@@ -67,6 +68,9 @@ final class PresetsDatabase {
 		presetFields = try cast(Self.jsonForFile("fields.json"), to: [String: Any].self)
 			.compactMapValuesWithKeys({ k, v in
 				try PresetField(identifier: k, json: cast(v, to: [String: Any].self)) })
+
+		// deprecated tags
+		deprecations = try DeprecatedTags(from: Self.dataForFile("deprecated.json"))
 
 		// address formats
 		presetAddressFormats = try JSONDecoder().decode([PresetAddressFormat].self,

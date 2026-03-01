@@ -27,7 +27,7 @@ class PresetDisplayKey: NSObject, NSSecureCoding, Codable {
 	init(
 		name: String,
 		type: PresetType,
-		tagKey tag: String,
+		tagKey: String,
 		defaultValue: String?,
 		placeholder: String?,
 		keyboard: UIKeyboardType,
@@ -37,14 +37,16 @@ class PresetDisplayKey: NSObject, NSSecureCoding, Codable {
 	{
 		self.name = name
 		self.type = type
-		tagKey = tag
+		self.tagKey = tagKey
 		self.placeholder = placeholder
 			?? PresetDisplayKey.placeholderForPresets(presetValues)
 			?? PresetTranslations.shared.unknownForLocale
 		keyboardType = keyboard
 		autocapitalizationType = capitalize
 		autocorrectType = autocorrect
-		self.presetValues = presetValues
+		self.presetValues = presetValues?.filter({
+			!PresetsDatabase.shared.deprecations.contains(key: tagKey, value: $0.tagValue)
+		})
 		self.defaultValue = defaultValue
 	}
 
