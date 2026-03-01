@@ -230,7 +230,7 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 			return self
 		}
 
-		if #available(iOS 13.0, macCatalyst 13.0, *),
+		if #available(iOS 13.0, *),
 		   // also hit the arrow point if they're using a mouse
 		   let isIndirect = (UIApplication.shared as? MyApplication)?.currentEventIsIndirect,
 		   isIndirect,

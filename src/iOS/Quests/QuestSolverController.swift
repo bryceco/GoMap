@@ -345,39 +345,38 @@ extension QuestSolverController {
 	}
 
 	func isOpeningHours(key: PresetDisplayKey) -> Bool {
-#if !targetEnvironment(macCatalyst)
-#if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
-		if #available(iOS 14.0, *) {
-			return isOpeningHours(key.tagKey)
+		guard
+			traitCollection.hasRearCamera,
+			#available(iOS 14.0, *)
+		else {
+			return false
 		}
-#endif
-#endif
-		return false
+		return isOpeningHours(key.tagKey)
 	}
 
 	@objc func recognizeOpeningHours(_ sender: Any?) {
-#if !targetEnvironment(macCatalyst)
-#if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
-		if #available(iOS 14.0, *) {
-			guard
-				let cell: UITableViewCell = (sender as? UIView)?.superviewOfType(),
-				let cell = cell as? QuestSolverTextEntryCell
-			else {
-				return
-			}
-			let vc = OpeningHoursRecognizerController.with(
-				onAccept: { newValue in
-					cell.textField?.text = newValue
-					self.navigationItem.rightBarButtonItem?.isEnabled = true
-					self.navigationController?.popViewController(animated: true)
-				}, onCancel: {
-					self.navigationController?.popViewController(animated: true)
-				}, onRecognize: { _ in
-				})
-			self.navigationController?.pushViewController(vc, animated: true)
+		guard
+			traitCollection.hasRearCamera,
+			#available(iOS 14.0, *)
+		else {
+			return
 		}
-#endif
-#endif
+		guard
+			let cell: UITableViewCell = (sender as? UIView)?.superviewOfType(),
+			let cell = cell as? QuestSolverTextEntryCell
+		else {
+			return
+		}
+		let vc = OpeningHoursRecognizerController.with(
+			onAccept: { newValue in
+				cell.textField?.text = newValue
+				self.navigationItem.rightBarButtonItem?.isEnabled = true
+				self.navigationController?.popViewController(animated: true)
+			}, onCancel: {
+				self.navigationController?.popViewController(animated: true)
+			}, onRecognize: { _ in
+			})
+		self.navigationController?.pushViewController(vc, animated: true)
 	}
 
 	@IBAction func infoButtonPressed(_ sender: Any?) {

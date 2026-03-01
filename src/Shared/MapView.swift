@@ -100,17 +100,17 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
 			addGestureRecognizer(hover)
 
-#if targetEnvironment(macCatalyst)
-			// right-click support for Mac Catalyst
-			let rightClick = UIContextMenuInteraction(delegate: self)
-			addInteraction(rightClick)
-#else
-			// right-click support for iPad:
-			let rightClick = UITapGestureRecognizer(target: self, action: #selector(handleRightClick(_:)))
-			rightClick.allowedTouchTypes = [NSNumber(integerLiteral: UITouch.TouchType.indirect.rawValue)]
-			rightClick.buttonMaskRequired = .secondary
-			addGestureRecognizer(rightClick)
-#endif
+			if traitCollection.isRunningOnMac {
+				// right-click support for Mac
+				let rightClick = UIContextMenuInteraction(delegate: self)
+				addInteraction(rightClick)
+			} else {
+				// right-click support for iPad:
+				let rightClick = UITapGestureRecognizer(target: self, action: #selector(handleRightClick(_:)))
+				rightClick.allowedTouchTypes = [NSNumber(integerLiteral: UITouch.TouchType.indirect.rawValue)]
+				rightClick.buttonMaskRequired = .secondary
+				addGestureRecognizer(rightClick)
+			}
 		}
 
 		// magnifying glass
@@ -344,7 +344,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	// MARK: Key presses
 
-#if targetEnvironment(macCatalyst)
+	@available(iOS 13.4, *)
 	func keypressAction(key: UIKey) {
 		switch key.keyCode {
 		case .keyboardEscape:
@@ -359,7 +359,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			break
 		}
 	}
-#endif
 
 	@objc override func copy(_ sender: Any?) {
 		editorLayer.performEdit(EDIT_ACTION.COPYTAGS)

@@ -251,13 +251,13 @@ class CustomActionSheetController: UIViewController {
 		}
 	}
 
-#if targetEnvironment(macCatalyst)
 	override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-		if presses.contains(where: { $0.key?.keyCode == .keyboardEscape }) {
+		if #available(iOS 13.4, *),
+		   presses.contains(where: { $0.key?.keyCode == .keyboardEscape })
+		{
 			dismiss(animated: true)
 			return
 		}
 		super.pressesBegan(presses, with: event)
 	}
-#endif
 }

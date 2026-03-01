@@ -492,7 +492,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		// We were just displayed so update map
 	}
 
-#if targetEnvironment(macCatalyst)
+	@available(iOS 13.4, *)
 	func keypressAction(key: UIKey) {
 		let size = view.bounds.size
 		let delta = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
@@ -502,14 +502,15 @@ final class MainViewController: UIViewController, DPadDelegate,
 		case .keyboardDownArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: -delta.y))
 		case .keyboardUpArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: delta.y))
 		default:
-			// pass it down
 			mapView.keypressAction(key: key)
 		}
 	}
 
-	var keypressTimers: [UIKey: Timer] = [:]
+	// Maintain timers for repeated keypress handling
+	var keypressTimers: [AnyHashable: Timer] = [:]
+
 	override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-		if #available(macCatalyst 13.4, *) {
+		if #available(iOS 13.4, *) {
 			for press in presses {
 				if let key = press.key {
 					keypressAction(key: key)
@@ -526,20 +527,25 @@ final class MainViewController: UIViewController, DPadDelegate,
 					}
 				}
 			}
+		} else {
+			super.pressesBegan(presses, with: event)
 		}
 	}
 
 	override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-		for press in presses {
-			if let key = press.key {
-				if let timer = keypressTimers[key] {
-					timer.invalidate()
-					keypressTimers.removeValue(forKey: key)
+		if #available(iOS 13.4, *) {
+			for press in presses {
+				if let key = press.key {
+					if let timer = keypressTimers[key] {
+						timer.invalidate()
+						keypressTimers.removeValue(forKey: key)
+					}
 				}
 			}
+		} else {
+			super.pressesEnded(presses, with: event)
 		}
 	}
-#endif
 
 	// MARK: Button configuration
 

@@ -354,11 +354,13 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 	}
 
 	private func getHeightButton() -> UIView? {
-		guard key == "height",
-		      !ProcessInfo.processInfo.isMacCatalystApp
+		guard
+			key == "height",
+			traitCollection.hasRearCamera
 		else {
 			return nil
 		}
+
 		let button = UIButton(type: .contactAdd)
 		button.addTarget(self, action: #selector(setHeight(_:)), for: .touchUpInside)
 		return button
@@ -450,19 +452,16 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 	// MARK: Opening Hours button
 
 	private func getOpeningHoursButton() -> UIView? {
-#if !targetEnvironment(macCatalyst)
-#if arch(arm64) || arch(x86_64) // old architectures don't support SwiftUI
-		if #available(iOS 14.0, *) {
-			guard OsmTags.isKey(key, variantOf: "opening_hours") else {
-				return nil
-			}
-			let button = UIButton(type: .contactAdd)
-			button.addTarget(self, action: #selector(openingHours(_:)), for: .touchUpInside)
-			return button
+		guard
+			#available(iOS 14.0, *), // also validates SwiftUI is available
+			traitCollection.hasRearCamera,
+			OsmTags.isKey(key, variantOf: "opening_hours")
+		else {
+			return nil
 		}
-#endif
-#endif
-		return nil
+		let button = UIButton(type: .contactAdd)
+		button.addTarget(self, action: #selector(openingHours(_:)), for: .touchUpInside)
+		return button
 	}
 
 	@available(iOS 14.0, *)
@@ -484,19 +483,17 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 
 	var panoramaxKey: String?
 	private func getPhotographButton() -> UIView? {
-#if targetEnvironment(macCatalyst)
-		return nil // camera not available
-#else
-		if #available(iOS 13.0, *),
-		   OsmTags.isKey(key, variantOf: "panoramax")
-		{
-			let button = UIButton(type: .custom)
-			button.setImage(UIImage(systemName: "camera"), for: .normal)
-			button.addTarget(self, action: #selector(openPanoramaxViewController(_:)), for: .touchUpInside)
-			return button
+		guard
+			traitCollection.hasRearCamera,
+			#available(iOS 13.0, *), // required by camera control
+			OsmTags.isKey(key, variantOf: "panoramax")
+		else {
+			return nil // camera not available
 		}
-		return nil
-#endif
+		let button = UIButton(type: .custom)
+		button.setImage(UIImage(systemName: "camera"), for: .normal)
+		button.addTarget(self, action: #selector(openPanoramaxViewController(_:)), for: .touchUpInside)
+		return button
 	}
 
 	func panoramaxUpdate(photoID: String) {

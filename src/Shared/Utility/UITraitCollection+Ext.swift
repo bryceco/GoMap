@@ -9,17 +9,29 @@
 import UIKit
 
 extension UITraitCollection {
+
+	/// Returns true when running on a Mac (Catalyst, Designed for iPad, or native Mac idiom),
+	var isRunningOnMac: Bool {
+		if #available(iOS 14.0, *),
+		   ProcessInfo.processInfo.isiOSAppOnMac
+		{
+			return true
+		}
+		return ProcessInfo.processInfo.isMacCatalystApp
+	}
+
 	/// Returns false when running on a Mac (Catalyst, Designed for iPad, or native Mac idiom),
 	/// where no on-screen keyboard is shown.
 	var usesOnScreenKeyboard: Bool {
-		if ProcessInfo.processInfo.isMacCatalystApp {
-			return false
-		}
 		if #available(iOS 14.0, *),
-		   ProcessInfo.processInfo.isiOSAppOnMac || userInterfaceIdiom == .mac
+		   userInterfaceIdiom == .mac
 		{
 			return false
 		}
-		return true
+		return !isRunningOnMac
+	}
+
+	var hasRearCamera: Bool {
+		return !isRunningOnMac
 	}
 }
