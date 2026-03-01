@@ -78,7 +78,9 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 			autocorrectionType = preset.autocorrectType
 			keyboardType = preset.keyboardType
 
-			if preset.keyboardType == .phonePad {
+			if preset.keyboardType == .phonePad,
+			   traitCollection.usesOnScreenKeyboard
+			{
 				inputAccessoryView = TelephoneToolbar(forTextField: self, frame: frame)
 			}
 		} else {
@@ -87,7 +89,9 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 				autocapitalizationType = .sentences
 			case "phone", "contact:phone", "fax", "contact:fax":
 				keyboardType = .phonePad
-				inputAccessoryView = TelephoneToolbar(forTextField: self, frame: frame)
+				if traitCollection.usesOnScreenKeyboard {
+					inputAccessoryView = TelephoneToolbar(forTextField: self, frame: frame)
+				}
 			case "maxspeed":
 				keyboardType = .numbersAndPunctuation
 			default:

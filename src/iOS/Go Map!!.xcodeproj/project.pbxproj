@@ -68,6 +68,7 @@
 		02505C5929A52EA80078D60D /* QuestDefinitionWithFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */; };
 		02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */; };
 		02572B732F10D8C400216EE3 /* MessageDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02572B722F10D8C400216EE3 /* MessageDisplay.swift */; };
+		025BD4422F53BF6E00CB0D35 /* UITraitCollection+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025BD4412F53BF6E00CB0D35 /* UITraitCollection+Ext.swift */; };
 		025CCA12271244B800074726 /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 025CCA11271244B800074726 /* KissXML */; };
 		025F004F2E453002003A68FA /* TypeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025F004E2E453002003A68FA /* TypeCast.swift */; };
 		0260E05F2BE30D4700975570 /* CompassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0260E05E2BE30D4700975570 /* CompassButton.swift */; };
@@ -426,6 +427,7 @@
 		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "../POI-Icons"; sourceTree = "<group>"; };
 		02572B722F10D8C400216EE3 /* MessageDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDisplay.swift; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
+		025BD4412F53BF6E00CB0D35 /* UITraitCollection+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+Ext.swift"; sourceTree = "<group>"; };
 		025F004E2E453002003A68FA /* TypeCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCast.swift; sourceTree = "<group>"; };
 		0260E05E2BE30D4700975570 /* CompassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassButton.swift; sourceTree = "<group>"; };
 		0262175A2F08533D00594D88 /* PresetTranslations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetTranslations.swift; sourceTree = "<group>"; };
@@ -1157,6 +1159,7 @@
 				025F004E2E453002003A68FA /* TypeCast.swift */,
 				02EF13C22E5D041800418CA4 /* UIFont+Ext.swift */,
 				02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */,
+				025BD4412F53BF6E00CB0D35 /* UITraitCollection+Ext.swift */,
 				028365C82EFDFC22002B9E34 /* UnitFormatter.swift */,
 				02709BD12F282A8400B277C6 /* URL+Extension.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
@@ -1710,6 +1713,7 @@
 				ED56E5EC26028B5F000B368C /* FilterObjectsViewController.swift in Sources */,
 				C341E15C2639DF440022E983 /* NearbyMappersViewController.swift in Sources */,
 				021FADC52585951E00F6E1C0 /* PresetDisplayGroup.swift in Sources */,
+				025BD4422F53BF6E00CB0D35 /* UITraitCollection+Ext.swift in Sources */,
 				02EF13C12E5ABF7600418CA4 /* CustomActionSheetController.swift in Sources */,
 				02C8C56526F446FD003B0122 /* MapMarker.swift in Sources */,
 				02CE3CE7299187C100DDACE0 /* TelephoneToolbar.swift in Sources */,
