@@ -17,7 +17,7 @@ final class LocationBallView: UIView, MapPositionedView {
 
 	var location: LatLon = .zero
 
-	func updateLocation(_ location: CLLocation) {
+	func updateGpsLocation(_ location: CLLocation) {
 		guard
 			location.horizontalAccuracy >= 0,
 			location.horizontalAccuracy < 1000

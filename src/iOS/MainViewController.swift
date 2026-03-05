@@ -334,8 +334,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 		// Bindings
 
 		LocationProvider.shared.onChangeLocation.subscribe(self) { [weak self] location in
-			self?.locationUpdated(to: location)
-			self?.locationBallView.updateLocation(location)
+			self?.gpsLocationUpdated(to: location)
+			self?.locationBallView.updateGpsLocation(location)
 		}
 
 		LocationProvider.shared.onChangeSmoothHeading.subscribe(self) { [weak self] heading, accuracy in
@@ -361,6 +361,16 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		AppState.shared.tileServerList.onChange.subscribe(self) { [weak self] in
 			self?.promptForBetterBackgroundImagery()
+		}
+
+		viewPort.mapTransform.onChange.subscribe(self) { [weak self] in
+			self?.updateCurrentRegionForLocationUsingCountryCoder()
+			self?.checkForChangedTileOverlayLayers()
+
+			self?.promptForBetterBackgroundImagery()
+
+			// This does an expensive update of map markers, debounced
+			self?.updateMapMarkers()
 		}
 
 		updateAerialAttributionButton()
@@ -1106,7 +1116,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
-	private func locationUpdated(to newLocation: CLLocation) {
+	private func gpsLocationUpdated(to newLocation: CLLocation) {
 		if let voiceAnnouncement = mapView.voiceAnnouncement,
 		   !mapView.isHidden
 		{
@@ -1130,12 +1140,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 				                  metersWide: 20.0)
 			}
 		}
-
-		updateCurrentRegionForLocationUsingCountryCoder()
-		checkForChangedTileOverlayLayers()
-
-		// This does an expensive update of map markers, debounced
-		updateMapMarkers()
 	}
 
 	func moveToLocation(_ location: MapLocation) {
@@ -1183,7 +1187,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		let latLon = viewPort.screenCenterLatLon()
 		if let plist = UserPrefs.shared.latestAerialCheckLatLon.value,
 		   let prevLatLon = LatLon(plist),
-		   GreatCircleDistance(latLon, prevLatLon) < 10 * 1000
+		   GreatCircleDistance(latLon, prevLatLon) < 1000
 		{
 			return
 		}
