@@ -175,6 +175,7 @@
                                         <constraint firstAttribute="trailing" secondItem="Sdv-R2-za8" secondAttribute="trailing" constant="20" symbolic="YES" id="9V6-68-IFp"/>
                                         <constraint firstAttribute="bottom" secondItem="ahv-4V-kjV" secondAttribute="bottom" constant="11.5" id="CWL-OB-SYg"/>
                                         <constraint firstItem="ahv-4V-kjV" firstAttribute="leading" secondItem="gdj-3f-0AT" secondAttribute="leading" constant="20" symbolic="YES" id="Fl8-d2-9j8"/>
+                                        <constraint firstItem="6ur-iy-RLA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ahv-4V-kjV" secondAttribute="trailing" constant="8" symbolic="YES" id="Xd1-Ei-Pqe"/>
                                         <constraint firstItem="Sdv-R2-za8" firstAttribute="leading" secondItem="6ur-iy-RLA" secondAttribute="trailing" constant="8" symbolic="YES" id="YDf-an-sqe"/>
                                         <constraint firstItem="Sdv-R2-za8" firstAttribute="centerY" secondItem="gdj-3f-0AT" secondAttribute="centerY" id="e3g-n3-OZJ"/>
                                         <constraint firstItem="6ur-iy-RLA" firstAttribute="centerY" secondItem="gdj-3f-0AT" secondAttribute="centerY" id="hiu-0b-uir"/>
@@ -792,7 +793,6 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
                                                 <constraint firstItem="7ga-PZ-MfV" firstAttribute="centerY" secondItem="Zkm-AI-QCD" secondAttribute="centerY" id="fTP-l7-JAJ"/>
                                                 <constraint firstAttribute="bottom" secondItem="uZo-P0-sR7" secondAttribute="bottom" constant="11" id="kP5-kW-Mam"/>
                                                 <constraint firstItem="uZo-P0-sR7" firstAttribute="top" secondItem="Zkm-AI-QCD" secondAttribute="top" constant="11" id="w7o-i8-IaB"/>
-                                                <constraint firstItem="uZo-P0-sR7" firstAttribute="leading" secondItem="Zkm-AI-QCD" secondAttribute="leading" constant="20" id="x4z-cs-N0b"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
