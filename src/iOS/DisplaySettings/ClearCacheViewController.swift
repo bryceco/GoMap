@@ -30,6 +30,11 @@ class ClearCacheViewController: UITableViewController {
 		tableView.rowHeight = UITableView.automaticDimension
 		tableView.estimatedRowHeight = 44
 
+		tableView.sectionHeaderHeight = UITableView.automaticDimension
+		tableView.estimatedSectionHeaderHeight = 28
+		tableView.sectionFooterHeight = UITableView.automaticDimension
+		tableView.estimatedSectionFooterHeight = 28
+
 		automaticCacheManagement.isOn = AppDelegate.shared.mainView.settings.enableAutomaticCacheManagement
 	}
 
@@ -40,6 +45,21 @@ class ClearCacheViewController: UITableViewController {
 	}
 
 	// MARK: - Table view delegate
+
+	// Need this so things look correct on Mac
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		if self.tableView(tableView, titleForHeaderInSection: section) == nil {
+			return 0
+		}
+		return UITableView.automaticDimension
+	}
+
+	override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		if self.tableView(tableView, titleForFooterInSection: section) == nil {
+			return 0
+		}
+		return UITableView.automaticDimension
+	}
 
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
 	                        forRowAt indexPath: IndexPath)
