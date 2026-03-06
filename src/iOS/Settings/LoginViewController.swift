@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class LoginViewController: UITableViewController {
+final class LoginViewController: TableViewControllerMac {
 	@IBOutlet var activityIndicator: UIActivityIndicatorView!
 
 	@IBAction func registerAccount(_ sender: Any) {

@@ -141,7 +141,7 @@ private let SECTION_CONFIGURE = 0
 private let SECTION_ACTIVE_TRACK = 1
 private let SECTION_PREVIOUS_TRACKS = 2
 
-class GpxViewController: UITableViewController {
+class GpxViewController: TableViewControllerMac {
 	private var timer: Timer?
 	@IBOutlet var navigationBar: UINavigationBar!
 

@@ -105,6 +105,7 @@
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
 		02930750268BFB6700B2A326 /* QuadDownloadLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */; };
 		0293B2CD2F53DDB100044DDE /* DeprecatedTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293B2CC2F53DDB100044DDE /* DeprecatedTags.swift */; };
+		0293B2CF2F5B620F00044DDE /* TableViewControllerMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293B2CE2F5B620F00044DDE /* TableViewControllerMac.swift */; };
 		0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */; };
 		0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB2299D84F7002EED90 /* MaxarAerial.secret */; };
 		02969EBA2DF630A6003BA34A /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02969EB92DF630A6003BA34A /* Array+Extension.swift */; };
@@ -462,6 +463,7 @@
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
 		0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadDownloadLayer.swift; sourceTree = "<group>"; };
 		0293B2CC2F53DDB100044DDE /* DeprecatedTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeprecatedTags.swift; sourceTree = "<group>"; };
+		0293B2CE2F5B620F00044DDE /* TableViewControllerMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerMac.swift; sourceTree = "<group>"; };
 		0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerIgnoreList.swift; sourceTree = "<group>"; };
 		0293FEB2299D84F7002EED90 /* MaxarAerial.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MaxarAerial.secret; sourceTree = "<group>"; };
 		02969EB92DF630A6003BA34A /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
@@ -920,6 +922,7 @@
 				02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				02E9DCD72F0E34B300F372A9 /* PresetsDisplay */,
+				0293B2CE2F5B620F00044DDE /* TableViewControllerMac.swift */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
 				02771D702BFC15C300FE9B79 /* UserFileList.swift */,
@@ -1666,6 +1669,7 @@
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
 				02CC01D12584195E004444EF /* PresetFeature.swift in Sources */,
 				02505C5529A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift in Sources */,
+				0293B2CF2F5B620F00044DDE /* TableViewControllerMac.swift in Sources */,
 				02A59EDD297E444500B0A676 /* PresetAddressFormat.swift in Sources */,
 				02EF13C32E5D041800418CA4 /* UIFont+Ext.swift in Sources */,
 				C31315232644292700C0AD86 /* LocationBallView.swift in Sources */,

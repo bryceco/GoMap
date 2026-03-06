@@ -15,7 +15,7 @@ class UserDataTableCell: UITableViewCell {
 	@IBOutlet var onOff: UISwitch!
 }
 
-class DataOverlaysController: UITableViewController {
+class DataOverlaysController: TableViewControllerMac {
 	enum Section: Int {
 		case geojsonSection = 0
 		case predefinedSection = 1

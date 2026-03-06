@@ -22,7 +22,7 @@ class OfflineTableViewCell: UITableViewCell {
 	}
 }
 
-class OfflineViewController: UITableViewController {
+class OfflineViewController: TableViewControllerMac {
 	@IBOutlet var aerialCell: OfflineTableViewCell!
 	@IBOutlet var basemapCell: OfflineTableViewCell!
 	var activityCount = 0

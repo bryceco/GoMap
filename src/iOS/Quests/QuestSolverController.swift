@@ -15,7 +15,7 @@ class QuestSolverTextEntryCell: UITableViewCell {
 private let NUMBER_OF_HEADERS = 2 // feature name + quest name
 private let NUMBER_OF_FOOTERS = 2 // ignore + open tag editor
 
-class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
+class QuestSolverController: TableViewControllerMac, PresetValueTextFieldOwner {
 	var questMarker: QuestMarker!
 	var object: OsmBaseObject!
 	var presetFeature: PresetFeature?
@@ -213,13 +213,6 @@ class QuestSolverController: UITableViewController, PresetValueTextFieldOwner {
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
 		return 1 + editKeys.count + 1
-	}
-
-	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		if self.tableView(tableView, titleForHeaderInSection: section) == nil {
-			return 0
-		}
-		return UITableView.automaticDimension
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

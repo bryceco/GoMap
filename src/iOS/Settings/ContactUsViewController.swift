@@ -10,7 +10,7 @@ import MessageUI
 import SafariServices
 import UIKit
 
-class ContactUsViewController: UITableViewController, MFMailComposeViewControllerDelegate {
+class ContactUsViewController: TableViewControllerMac, MFMailComposeViewControllerDelegate {
 	@IBOutlet var sendMailCell: UITableViewCell!
 	@IBOutlet var testFlightCell: UITableViewCell!
 	@IBOutlet var githubCell: UITableViewCell!

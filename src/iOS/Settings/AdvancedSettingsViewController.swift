@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AdvancedSettingsViewController: UITableViewController, UIAdaptivePresentationControllerDelegate {
+class AdvancedSettingsViewController: TableViewControllerMac, UIAdaptivePresentationControllerDelegate {
 	@IBOutlet var hostname: UITextField!
 	@IBOutlet var switchFPS: UISwitch!
 	@IBOutlet var switchTouches: UISwitch!
