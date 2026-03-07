@@ -982,8 +982,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		case .changed:
 			mainView.userOverrodeLocationZoom = true
 
-			DisplayLink.shared.removeName(DisplayLinkPanning)
-
 			let delta = tapAndDrag.translation(in: self)
 			let scale = 1.0 - delta.y * 0.01
 			let zoomCenter = viewPort.screenCenterPoint()

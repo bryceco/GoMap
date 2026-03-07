@@ -184,6 +184,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	public var userOverrodeLocationZoom = false {
 		didSet {
+			if userOverrodeLocationZoom {
+				cancelPanInertia()
+			}
 			centerOnGPSButton.isHidden = !userOverrodeLocationZoom || gpsState == .NONE
 		}
 	}
@@ -844,12 +847,18 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
+	static let DisplayLinkPanningInertia = "DisplayLinkPanningInertia"
+
+	func cancelPanInertia() {
+		DisplayLink.shared.removeName(Self.DisplayLinkPanningInertia)
+	}
+
 	@objc func handlePanGesture(_ pan: UIPanGestureRecognizer) {
 		userOverrodeLocationPosition = true
 
 		if pan.state == .began {
 			// start pan
-			DisplayLink.shared.removeName(DisplayLinkPanning)
+			DisplayLink.shared.removeName(Self.DisplayLinkPanningInertia)
 			// disable frame rate test if active
 			fpsLabel.automatedFramerateTestActive = false
 		} else if pan.state == .changed {
@@ -871,25 +880,28 @@ final class MainViewController: UIViewController, DPadDelegate,
 			let duration = 0.5
 
 			// finish pan with inertia
-			let initialVelecity = pan.velocity(in: self.view)
-			if hypot(initialVelecity.x, initialVelecity.y) < 100.0 {
+			let initialVelocity = pan.velocity(in: self.view)
+			guard hypot(initialVelocity.x, initialVelocity.y) >= 100.0 else {
 				// don't use inertia for small movements because it interferes with dropping the pin precisely
-			} else {
-				let startTime = CACurrentMediaTime()
-				let displayLink = DisplayLink.shared
-				displayLink.addName(DisplayLinkPanning, block: {
-					let timeOffset = CACurrentMediaTime() - startTime
-					if timeOffset >= duration {
-						displayLink.removeName(DisplayLinkPanning)
-					} else {
-						var translation = CGPoint()
-						let t = timeOffset / duration // time [0..1]
-						translation.x = CGFloat(1 - t) * initialVelecity.x * CGFloat(displayLink.duration())
-						translation.y = CGFloat(1 - t) * initialVelecity.y * CGFloat(displayLink.duration())
-						self.viewPort.adjustOrigin(by: translation)
-					}
-				})
+				return
 			}
+			let startTime = CACurrentMediaTime()
+			let displayLink = DisplayLink.shared
+			displayLink.addName(Self.DisplayLinkPanningInertia, block: { [weak self] in
+				guard let self else {
+					displayLink.removeName(Self.DisplayLinkPanningInertia)
+					return
+				}
+				let t = (CACurrentMediaTime() - startTime) / duration
+				guard t < 1.0 else {
+					displayLink.removeName(Self.DisplayLinkPanningInertia)
+					return
+				}
+				let dt = CGFloat(displayLink.duration())
+				let translation = CGPoint(x: CGFloat(1 - t) * initialVelocity.x * dt,
+				                          y: CGFloat(1 - t) * initialVelocity.y * dt)
+				self.viewPort.adjustOrigin(by: translation)
+			})
 		} else if pan.state == .failed {
 			DLog("pan gesture failed")
 		} else {
@@ -919,7 +931,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		case .changed:
 			userOverrodeLocationZoom = true
 
-			DisplayLink.shared.removeName(DisplayLinkPanning)
+			DisplayLink.shared.removeName(Self.DisplayLinkPanningInertia)
 
 #if targetEnvironment(macCatalyst)
 			// On Mac we want to zoom around the screen center, not the cursor.
