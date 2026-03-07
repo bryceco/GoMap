@@ -75,7 +75,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	final var renderInfo: RenderInfo?
 	private(set) final var modifyCount: Int32 = 0
 	private(set) final var parentRelations: [OsmRelation] = []
-	final var observer: ((OsmBaseObject) -> Void)?
+	final var notificationService = NotificationService<OsmBaseObject>()
 
 	override init() {
 		ident = 0
@@ -410,6 +410,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		timestamp = Self.rfc3339DateFormatter().string(from: date)
 	}
 
+	/// Invalidates all cached rendering state for this object, forcing a full re-render on the next draw cycle.
 	func clearCachedProperties() {
 		renderInfo = nil
 		isShown = .UNKNOWN
@@ -421,11 +422,9 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		}
 		shapeLayers = nil
 
-		if let observer = observer {
-			// need to do this async because changes won't have been applied to the object yet
-			DispatchQueue.main.async {
-				observer(self)
-			}
+		// need to do this async because changes won't have been applied to the object yet
+		DispatchQueue.main.async {
+			self.notificationService.notify(self)
 		}
 	}
 

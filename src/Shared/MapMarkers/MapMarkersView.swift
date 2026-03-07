@@ -95,7 +95,7 @@ class MapMarkersView: UIView {
 			if let object = marker.object {
 				// If marker is associated with an object then the marker needs to be
 				// updated when the object changes:
-				object.observer = { obj in
+				object.notificationService.subscribe(self) { obj in
 					let markers = self.mapMarkerDatabase.refreshMarkersFor(object: obj)
 					for marker in markers {
 						_ = self.updateButtonPositionForMapMarker(marker: marker, hidden: false)

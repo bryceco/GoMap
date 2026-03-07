@@ -8,31 +8,28 @@
 
 import Foundation
 
+private let notificationServiceQueue = DispatchQueue(label: "com.gomap.notificationservice")
+
 final class NotificationService<T> {
 	private struct Subscriber {
 		weak var object: AnyObject?
 		let callback: (T) -> Void
 	}
 
-	private let queue = DispatchQueue(label: "com.gomap.notificationservice")
 	private var subscribers: [Subscriber] = []
 
 	func subscribe(_ observer: AnyObject, handler: @escaping (T) -> Void) {
-		queue.sync {
-#if DEBUG
-			if subscribers.contains(where: { $0.object === observer }) {
-				print("NotificationService: Duplicate subscription for \(observer)")
-				fatalError()
-			}
-#endif
-			subscribers = subscribers.filter { $0.object !== observer && $0.object != nil }
+		notificationServiceQueue.sync {
+			// remove previous instances of observer, or missing observers, if any
+			subscribers.removeAll(where: { $0.object === observer || $0.object == nil })
+			// add the new callback
 			subscribers.append(Subscriber(object: observer, callback: handler))
 		}
 	}
 
 	func unsubscribe(_ observer: AnyObject) {
-		queue.sync {
-			subscribers = subscribers.filter { $0.object !== observer && $0.object != nil }
+		notificationServiceQueue.sync {
+			subscribers.removeAll(where: { $0.object === observer || $0.object == nil })
 		}
 	}
 
@@ -40,7 +37,7 @@ final class NotificationService<T> {
 		if Thread.isMainThread {
 			// Synchronous path for main thread
 			var currentSubscribers: [Subscriber] = []
-			queue.sync {
+			notificationServiceQueue.sync {
 				if self.subscribers.contains(where: { $0.object == nil }) {
 					// This is rare, so only do if necessary
 					self.subscribers = self.subscribers.filter { $0.object != nil }
@@ -52,7 +49,7 @@ final class NotificationService<T> {
 			}
 		} else {
 			// Async path for background threads
-			queue.async {
+			notificationServiceQueue.async {
 				self.subscribers = self.subscribers.filter { $0.object != nil }
 				for subscriber in self.subscribers {
 					DispatchQueue.main.async {
