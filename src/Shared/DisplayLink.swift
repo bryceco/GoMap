@@ -12,8 +12,17 @@ import UIKit
 final class DisplayLink {
 	static let shared = DisplayLink()
 
+	enum AnimationId {
+		case rotateScreenSmoothing // smoothly rotates the screen when compass is enabled/disabled
+		case automatedFramerateTest // automatically pans the screen during FPS test
+		case fpsLabelUpdate // updates the FPS test label
+		case compassSmoothHeading // smooths compass heading to reduce jitter
+		case pinDragScroll // pans the screen when pushpin is dragged to edge
+		case screenPanningInertia // applies inertia after user pan gesture ends
+	}
+
 	var displayLink: CADisplayLink!
-	var blockDict: [String: () -> Void] = [:]
+	var blockDict: [AnimationId: () -> Void] = [:]
 
 	private static let g_shared = DisplayLink()
 
@@ -36,29 +45,29 @@ final class DisplayLink {
 	}
 
 	@objc func step() {
-		for (_, block) in blockDict {
+		for block in blockDict.values {
 			block()
 		}
 	}
 
-	func duration() -> Double {
+	var duration: CFTimeInterval {
 		return displayLink.duration
 	}
 
-	func timestamp() -> CFTimeInterval {
+	var timestamp: CFTimeInterval {
 		return displayLink.timestamp
 	}
 
-	func addName(_ name: String, block: @escaping () -> Void) {
+	func add(_ name: AnimationId, block: @escaping () -> Void) {
 		blockDict[name] = block
 		displayLink.isPaused = false
 	}
 
-	func hasName(_ name: String) -> Bool {
+	func has(_ name: AnimationId) -> Bool {
 		return blockDict[name] != nil
 	}
 
-	func removeName(_ name: String) {
+	func remove(_ name: AnimationId) {
 		blockDict.removeValue(forKey: name)
 
 		if blockDict.count == 0 {

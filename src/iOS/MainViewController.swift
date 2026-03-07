@@ -847,10 +847,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
-	static let DisplayLinkPanningInertia = "DisplayLinkPanningInertia"
-
 	func cancelPanInertia() {
-		DisplayLink.shared.removeName(Self.DisplayLinkPanningInertia)
+		DisplayLink.shared.remove(.screenPanningInertia)
 	}
 
 	@objc func handlePanGesture(_ pan: UIPanGestureRecognizer) {
@@ -858,7 +856,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		if pan.state == .began {
 			// start pan
-			DisplayLink.shared.removeName(Self.DisplayLinkPanningInertia)
+			DisplayLink.shared.remove(.screenPanningInertia)
 			// disable frame rate test if active
 			fpsLabel.automatedFramerateTestActive = false
 		} else if pan.state == .changed {
@@ -887,17 +885,17 @@ final class MainViewController: UIViewController, DPadDelegate,
 			}
 			let startTime = CACurrentMediaTime()
 			let displayLink = DisplayLink.shared
-			displayLink.addName(Self.DisplayLinkPanningInertia, block: { [weak self] in
+			displayLink.add(.screenPanningInertia, block: { [weak self] in
 				guard let self else {
-					displayLink.removeName(Self.DisplayLinkPanningInertia)
+					displayLink.remove(.screenPanningInertia)
 					return
 				}
 				let t = (CACurrentMediaTime() - startTime) / duration
 				guard t < 1.0 else {
-					displayLink.removeName(Self.DisplayLinkPanningInertia)
+					displayLink.remove(.screenPanningInertia)
 					return
 				}
-				let dt = CGFloat(displayLink.duration())
+				let dt = CGFloat(displayLink.duration)
 				let translation = CGPoint(x: CGFloat(1 - t) * initialVelocity.x * dt,
 				                          y: CGFloat(1 - t) * initialVelocity.y * dt)
 				self.viewPort.adjustOrigin(by: translation)
@@ -930,8 +928,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 			fallthrough
 		case .changed:
 			userOverrodeLocationZoom = true
-
-			DisplayLink.shared.removeName(Self.DisplayLinkPanningInertia)
 
 #if targetEnvironment(macCatalyst)
 			// On Mac we want to zoom around the screen center, not the cursor.

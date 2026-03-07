@@ -25,7 +25,7 @@ final class FpsLabel: UILabel {
 			}
 			if showFPS {
 				isHidden = false
-				DisplayLink.shared.addName("FpsLabel", block: {
+				DisplayLink.shared.add(.fpsLabelUpdate, block: {
 					self.frameUpdated()
 				})
 
@@ -40,7 +40,7 @@ final class FpsLabel: UILabel {
 			} else {
 				text = nil
 				isHidden = true
-				DisplayLink.shared.removeName("FpsLabel")
+				DisplayLink.shared.remove(.fpsLabelUpdate)
 				timer?.cancel()
 			}
 		}
@@ -94,19 +94,17 @@ final class FpsLabel: UILabel {
 	}
 }
 
-private let AUTOSCROLL_DISPLAYLINK_NAME = "autoScroll"
-
 extension FpsLabel {
 
 	var automatedFramerateTestActive: Bool {
 		get {
-			return DisplayLink.shared.hasName(AUTOSCROLL_DISPLAYLINK_NAME)
+			return DisplayLink.shared.has(.automatedFramerateTest)
 		}
 		set(enable) {
 			let displayLink = DisplayLink.shared
 			let mainView = AppDelegate.shared.mainView!
 
-			if enable == displayLink.hasName(AUTOSCROLL_DISPLAYLINK_NAME) {
+			if enable == displayLink.has(.automatedFramerateTest) {
 				// unchanged
 				return
 			}
@@ -126,7 +124,7 @@ extension FpsLabel {
 				let startTime = CACurrentMediaTime()
 				let periodSeconds = 2.0
 
-				displayLink.addName(AUTOSCROLL_DISPLAYLINK_NAME, block: {
+				displayLink.add(.automatedFramerateTest, block: {
 					let offset = 1.0 - fmod((CACurrentMediaTime() - startTime) / periodSeconds, 1.0)
 					let origin = LatLon(lon: startLatLon.lon + cos(offset * 2.0 * .pi) * radius2.x,
 					                    lat: startLatLon.lat + sin(offset * 2.0 * .pi) * radius2.y)
@@ -136,7 +134,7 @@ extension FpsLabel {
 				})
 			} else {
 				showFPS = false
-				displayLink.removeName(AUTOSCROLL_DISPLAYLINK_NAME)
+				displayLink.remove(.automatedFramerateTest)
 			}
 		}
 	}

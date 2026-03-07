@@ -128,7 +128,7 @@ extension MapViewPort {
 
 		let duration = 0.4
 		var prevHeading: Double = 0
-		DisplayLink.shared.addName(DisplayLinkHeading, block: { [weak self] in
+		DisplayLink.shared.add(.rotateScreenSmoothing, block: { [weak self] in
 			guard let self else { return }
 
 			var elapsedTime = CACurrentMediaTime() - startTime
@@ -150,7 +150,7 @@ extension MapViewPort {
 			self.rotate(by: CGFloat(miniHeading - prevHeading), aroundScreenPoint: center)
 			prevHeading = miniHeading
 			if elapsedTime >= duration {
-				DisplayLink.shared.removeName(DisplayLinkHeading)
+				DisplayLink.shared.remove(.rotateScreenSmoothing)
 			}
 		})
 	}

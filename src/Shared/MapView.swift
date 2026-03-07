@@ -687,7 +687,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		switch state {
 		case .ended, .cancelled, .failed:
 
-			DisplayLink.shared.removeName("dragScroll")
+			DisplayLink.shared.remove(.pinDragScroll)
 			let isRotate = self.isRotateObjectMode != nil
 			if isRotate {
 				self.endObjectRotation()
@@ -739,7 +739,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 				// scroll the screen to keep pushpin on-screen
 				var prevTime = TimeInterval(CACurrentMediaTime())
-				DisplayLink.shared.addName("dragScroll", block: { [self] in
+				DisplayLink.shared.add(.pinDragScroll, block: { [self] in
 					let now = TimeInterval(CACurrentMediaTime())
 					let duration = now - prevTime
 					prevTime = now
@@ -761,7 +761,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 					                                     visible: !self.mainView.mapLayersView.aerialLayer.isHidden)
 				})
 			} else {
-				DisplayLink.shared.removeName("dragScroll")
+				DisplayLink.shared.remove(.pinDragScroll)
 			}
 
 			// move the object

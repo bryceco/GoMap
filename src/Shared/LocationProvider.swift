@@ -170,7 +170,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 
 		self.currentHeading = newHeading
 
-		DisplayLink.shared.addName("smoothHeading", block: { [self] in
+		DisplayLink.shared.add(.compassSmoothHeading, block: { [self] in
 			var delta = heading - self.smoothHeading
 			if delta > .pi {
 				delta -= 2 * .pi
@@ -184,7 +184,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 				self.smoothHeading += delta
 			}
 			if heading == self.smoothHeading {
-				DisplayLink.shared.removeName("smoothHeading")
+				DisplayLink.shared.remove(.compassSmoothHeading)
 			}
 		})
 	}
