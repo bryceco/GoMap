@@ -170,6 +170,9 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 
 		self.currentHeading = newHeading
 
+		if DisplayLink.shared.has(.rotateScreenSmoothing) {
+			return
+		}
 		DisplayLink.shared.add(.compassSmoothHeading, block: { [self] in
 			var delta = heading - self.smoothHeading
 			if delta > .pi {

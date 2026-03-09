@@ -175,19 +175,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 	var addNodeButtonLongPressGestureRecognizer: UILongPressGestureRecognizer?
 	var plusButtonTimestamp: TimeInterval = 0.0
 
-	// Set true when the user moved the screen manually, so GPS updates shouldn't recenter screen on user
+	/// Set to true when the user moved the screen manually, so GPS updates won't recenter screen on user.
 	public var userOverrodeLocationPosition = false {
 		didSet {
 			centerOnGPSButton.isHidden = !userOverrodeLocationPosition || gpsState == .NONE
-		}
-	}
-
-	public var userOverrodeLocationZoom = false {
-		didSet {
-			if userOverrodeLocationZoom {
-				cancelPanInertia()
-			}
-			centerOnGPSButton.isHidden = !userOverrodeLocationZoom || gpsState == .NONE
 		}
 	}
 
@@ -927,7 +918,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 			prevousPinchScale = 1.0
 			fallthrough
 		case .changed:
-			userOverrodeLocationZoom = true
+			cancelPanInertia()
 
 #if targetEnvironment(macCatalyst)
 			// On Mac we want to zoom around the screen center, not the cursor.
@@ -1084,6 +1075,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	// MARK: GPS and Location-based updates
 
+	var isFirstGpsUpdate = true
+
 	var gpsState: GPS_STATE = .NONE {
 		didSet {
 			if gpsState != oldValue {
@@ -1094,8 +1087,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 					mapView.voiceAnnouncement?.enabled = false
 					AppState.shared.gpxTracks.endActiveTrack(continuingCurrentTrack: false)
 				} else {
-					userOverrodeLocationPosition = false
-					userOverrodeLocationZoom = false
+					if oldValue == .NONE {
+						isFirstGpsUpdate = true
+					}
+					userOverrodeLocationPosition = false // gps was turned on
 					locationBallView.isHidden = false
 					LocationProvider.shared.start()
 					mapView.voiceAnnouncement?.enabled = true
@@ -1124,6 +1119,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
+	/// Called to indicate that GPS has provided us with an update to our location.
 	private func gpsLocationUpdated(to newLocation: CLLocation) {
 		if let voiceAnnouncement = mapView.voiceAnnouncement,
 		   !mapView.isHidden
@@ -1138,15 +1134,20 @@ final class MainViewController: UIViewController, DPadDelegate,
 		if !userOverrodeLocationPosition,
 		   UIApplication.shared.applicationState == .active
 		{
-			// move view to center on new location
-			if userOverrodeLocationZoom {
-				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
-				                  zoom: nil,
-				                  rotation: nil)
-			} else {
+			// Move view to center on new location.
+
+			// If the user just turned on GPS then we set an explicit zoom level and orient north,
+			// otherwise we only change the position.
+			guard !isFirstGpsUpdate else {
+				isFirstGpsUpdate = false
 				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
 				                  metersWide: 20.0)
+				return
 			}
+
+			viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
+			                  zoom: nil,
+			                  rotation: nil)
 		}
 	}
 

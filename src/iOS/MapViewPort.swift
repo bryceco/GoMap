@@ -128,6 +128,7 @@ extension MapViewPort {
 
 		let duration = 0.4
 		var prevHeading: Double = 0
+		DisplayLink.shared.remove(.compassSmoothHeading)
 		DisplayLink.shared.add(.rotateScreenSmoothing, block: { [weak self] in
 			guard let self else { return }
 
@@ -276,6 +277,10 @@ extension MapViewPort {
 		                rotation: rotation)
 	}
 
+	/// Centers on a location specified by the user, such as a selected GPX track, etc. where zoom and orientation is
+	/// alway expected to change.
+	/// GPS should be disabled when called.
+	/// Heading is always set to North.
 	func centerOn(latLon: LatLon, metersWide: Double?) {
 		let metersWide = metersWide ?? 20.0
 		let degrees = metersToDegrees(meters: metersWide, latitude: latLon.lat)

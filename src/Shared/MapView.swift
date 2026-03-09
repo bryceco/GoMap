@@ -964,7 +964,9 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	var tapAndDragSelections: Selections?
 	var tapAndDragPushpinLatLon: LatLon?
 
-	@objc func handleTapAndDragGesture(_ tapAndDrag: TapAndDragGesture) {
+	// The gesture for this is in MainViewController with other gesture handlers,
+	// but the implementation is here because it is tightly coupled to the editor layer.
+	func handleTapAndDragGesture(_ tapAndDrag: TapAndDragGesture) {
 		// do single-finger zooming
 		switch tapAndDrag.state {
 		case .began:
@@ -980,8 +982,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 				self.tapAndDragSelections = nil
 			}
 		case .changed:
-			mainView.userOverrodeLocationZoom = true
-
 			let delta = tapAndDrag.translation(in: self)
 			let scale = 1.0 - delta.y * 0.01
 			let zoomCenter = viewPort.screenCenterPoint()
