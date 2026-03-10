@@ -16,7 +16,6 @@ final class DisplayLink {
 		case rotateScreenSmoothing // smoothly rotates the screen when compass is enabled/disabled
 		case automatedFramerateTest // automatically pans the screen during FPS test
 		case fpsLabelUpdate // updates the FPS test label
-		case compassSmoothHeading // smooths compass heading to reduce jitter
 		case pinDragScroll // pans the screen when pushpin is dragged to edge
 		case screenPanningInertia // applies inertia after user pan gesture ends
 	}

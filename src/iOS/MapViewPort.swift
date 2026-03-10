@@ -9,6 +9,8 @@
 import CoreLocation
 import UIKit
 
+enum ViewPortRotationStyle { case none, smallShift, largeShift }
+
 // Allows other layers of the map to view changes to the map view
 protocol MapViewPort: AnyObject {
 	var mapTransform: MapTransform { get }
@@ -97,12 +99,11 @@ extension MapViewPort {
 		mapTransform.transform = t
 	}
 
-	func rotate(by angle: CGFloat, aroundScreenPoint zoomCenter: CGPoint) {
+	private func rotate(by angle: CGFloat, around center: CGPoint) {
 		guard angle != 0.0 else {
 			return
 		}
-
-		let offset = mapTransform.mapPoint(forScreenPoint: OSMPoint(zoomCenter), birdsEye: false)
+		let offset = mapTransform.mapPoint(forScreenPoint: OSMPoint(center), birdsEye: false)
 		var t = mapTransform.transform
 		t = t.translatedBy(dx: offset.x, dy: offset.y)
 		t = t.rotatedBy(Double(angle))
@@ -110,9 +111,12 @@ extension MapViewPort {
 		mapTransform.transform = t
 	}
 
-	func animateRotation(by deltaHeading: Double, aroundPoint center: CGPoint) {
-		var deltaHeading = deltaHeading
+	func rotate(by deltaHeading: Double,
+	            around center: CGPoint,
+	            animation: ViewPortRotationStyle)
+	{
 		// don't rotate the long way around
+		var deltaHeading = deltaHeading
 		while deltaHeading < -.pi {
 			deltaHeading += 2 * .pi
 		}
@@ -124,20 +128,25 @@ extension MapViewPort {
 			return
 		}
 
-		let startTime = CACurrentMediaTime()
+		switch animation {
+		case .none:
+			self.rotate(by: deltaHeading, around: center)
 
-		let duration = 0.4
-		var prevHeading: Double = 0
-		DisplayLink.shared.remove(.compassSmoothHeading)
-		DisplayLink.shared.add(.rotateScreenSmoothing, block: { [weak self] in
-			guard let self else { return }
+		case .smallShift:
+			var currentDelta = 0.0
+			DisplayLink.shared.add(.rotateScreenSmoothing, block: { [weak self] in
+				guard let self else { return }
+				var delta = deltaHeading - currentDelta
+				if abs(delta) < 0.0001 {
+					DisplayLink.shared.remove(.rotateScreenSmoothing)
+				} else {
+					delta *= 0.15
+				}
+				currentDelta += delta
+				self.rotate(by: delta, around: center)
+			})
 
-			var elapsedTime = CACurrentMediaTime() - startTime
-			if elapsedTime > duration {
-				elapsedTime = CFTimeInterval(duration) // don't want to over-rotate
-			}
-			// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
-			// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
+		case .largeShift:
 			func easeInOutQuad(_ t: Double, _ b: Double, _ c: Double, _ d: Double) -> Double {
 				var t = t
 				t /= d / 2
@@ -147,13 +156,27 @@ extension MapViewPort {
 				t -= 1
 				return -c / 2 * (t * (t - 2) - 1) + b
 			}
-			let miniHeading = easeInOutQuad(elapsedTime, 0, deltaHeading, duration)
-			self.rotate(by: CGFloat(miniHeading - prevHeading), aroundScreenPoint: center)
-			prevHeading = miniHeading
-			if elapsedTime >= duration {
-				DisplayLink.shared.remove(.rotateScreenSmoothing)
-			}
-		})
+
+			let duration = 0.4
+			var prevHeading: Double = 0
+			let startTime = CACurrentMediaTime()
+			DisplayLink.shared.add(.rotateScreenSmoothing, block: { [weak self] in
+				guard let self else { return }
+
+				var elapsedTime = CACurrentMediaTime() - startTime
+				if elapsedTime > duration {
+					elapsedTime = CFTimeInterval(duration) // don't want to over-rotate
+				}
+				// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
+				// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
+				let miniHeading = easeInOutQuad(elapsedTime, 0, deltaHeading, duration)
+				self.rotate(by: CGFloat(miniHeading - prevHeading), around: center)
+				prevHeading = miniHeading
+				if elapsedTime >= duration {
+					DisplayLink.shared.remove(.rotateScreenSmoothing)
+				}
+			})
+		}
 	}
 
 	func rotateBirdsEye(by angle: Double) {
@@ -190,11 +213,9 @@ extension MapViewPort {
 		// Rotate to face current compass heading
 		let center = screenCenterPoint()
 		let screenAngle = mapTransform.rotation()
-		animateRotation(by: -(screenAngle + heading), aroundPoint: center)
-	}
-
-	func rotateToNorth() {
-		rotateToHeading(0.0)
+		rotate(by: -(screenAngle + heading),
+		       around: center,
+		       animation: .largeShift)
 	}
 }
 

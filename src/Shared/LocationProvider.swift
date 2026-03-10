@@ -24,7 +24,12 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 		}
 	}
 
-	private(set) var currentHeading: CLHeading? {
+	struct Heading {
+		var heading: Double // radians, north up
+		var accuracy: Double // radians
+	}
+
+	private(set) var currentHeading: Heading? {
 		didSet {
 			if let currentHeading {
 				onChangeHeading.notify(currentHeading)
@@ -32,14 +37,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 		}
 	}
 
-	private(set) var smoothHeading = 0.0 {
-		didSet {
-			onChangeSmoothHeading.notify((smoothHeading, currentHeading?.headingAccuracy ?? 0.0))
-		}
-	}
-
-	let onChangeHeading = NotificationService<CLHeading>()
-	let onChangeSmoothHeading = NotificationService<(heading: Double, accuracy: Double)>()
+	let onChangeHeading = NotificationService<Heading>()
 	let onChangeLocation = NotificationService<CLLocation>()
 
 	var allowsBackgroundLocationUpdates: Bool {
@@ -144,7 +142,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 		self.currentLocation = newLocation
 	}
 
-	static func headingAdjustedForInterfaceOrientation(_ clHeading: CLHeading) -> Double {
+	private static func headingAdjustedForInterfaceOrientation(_ clHeading: CLHeading) -> Double {
 		var heading = clHeading.trueHeading * .pi / 180
 		if let scene = UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first {
 			switch scene.interfaceOrientation {
@@ -166,30 +164,8 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 	// MARK: CLLocationManagerDelegate
 
 	func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-		let heading = Self.headingAdjustedForInterfaceOrientation(newHeading)
-
-		self.currentHeading = newHeading
-
-		if DisplayLink.shared.has(.rotateScreenSmoothing) {
-			return
-		}
-		DisplayLink.shared.add(.compassSmoothHeading, block: { [self] in
-			var delta = heading - self.smoothHeading
-			if delta > .pi {
-				delta -= 2 * .pi
-			} else if delta < -.pi {
-				delta += 2 * .pi
-			}
-			delta *= 0.15
-			if abs(delta) < 0.0001 {
-				self.smoothHeading = heading
-			} else {
-				self.smoothHeading += delta
-			}
-			if heading == self.smoothHeading {
-				DisplayLink.shared.remove(.compassSmoothHeading)
-			}
-		})
+		self.currentHeading = Heading(heading: Self.headingAdjustedForInterfaceOrientation(newHeading),
+		                              accuracy: newHeading.headingAccuracy * .pi / 180)
 	}
 
 	func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

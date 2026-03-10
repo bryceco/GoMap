@@ -332,8 +332,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 			self?.locationBallView.updateGpsLocation(location)
 		}
 
-		LocationProvider.shared.onChangeSmoothHeading.subscribe(self) { [weak self] heading, accuracy in
-			self?.headingChanged(heading, accuracy: accuracy)
+		LocationProvider.shared.onChangeHeading.subscribe(self) { [weak self] heading in
+			self?.headingChanged(heading.heading,
+			                     accuracy: heading.accuracy)
 		}
 
 		settings.$enableRotation.subscribe(self) { [weak self] newValue in
@@ -342,7 +343,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 				// remove rotation
 				let centerPoint = viewPort.screenCenterPoint()
 				let angle = CGFloat(viewPort.mapTransform.rotation())
-				viewPort.animateRotation(by: -angle, aroundPoint: centerPoint)
+				viewPort.rotate(by: -angle,
+				                around: centerPoint,
+				                animation: .largeShift)
 			}
 		}
 
@@ -960,7 +963,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 			let centerPoint = rotationGesture.location(in: mapView)
 #endif
 			let angle = rotationGesture.rotation
-			viewPort.rotate(by: angle, aroundScreenPoint: centerPoint)
+			viewPort.rotate(by: angle,
+			                around: centerPoint,
+			                animation: .none)
 			rotationGesture.rotation = 0.0
 
 			if gpsState == .HEADING {
@@ -1103,20 +1108,27 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
+	/// Called when GPS indicates a new heading. Updates location ball or screen rotation.
+	/// - Parameters:
+	///   - heading: The user's current heading, in radians, measured clockwise from true north.
+	///   - accuracy: The estimated heading accuracy, in radians. Larger values indicate less
+	///     certainty; passed through to the location ball for visual display.
 	func headingChanged(_ heading: Double, accuracy: Double) {
 		let screenAngle = viewPort.mapTransform.rotation()
 
 		if gpsState == .HEADING {
-			// rotate to new heading
+			// rotate view to new heading
 			let center = viewPort.screenCenterPoint()
 			let delta = -(heading + screenAngle)
-			viewPort.rotate(by: CGFloat(delta), aroundScreenPoint: center)
-		} else {
-			// rotate location ball
-			locationBallView.headingAccuracy = CGFloat(accuracy * (.pi / 180))
-			locationBallView.showHeading = true
-			locationBallView.heading = CGFloat(heading + screenAngle - .pi / 2)
+			viewPort.rotate(by: delta,
+			                around: center,
+			                animation: .smallShift)
 		}
+
+		// update location ball
+		locationBallView.headingAccuracy = CGFloat(accuracy)
+		locationBallView.heading = heading
+		locationBallView.showHeading = true
 	}
 
 	/// Called to indicate that GPS has provided us with an update to our location.
@@ -1149,6 +1161,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 			                  zoom: nil,
 			                  rotation: nil)
 		}
+
+		locationBallView.updateLocation(LatLon(newLocation.coordinate))
 	}
 
 	func moveToLocation(_ location: MapLocation) {
@@ -1263,17 +1277,16 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	@IBAction func compassPressed(_ sender: Any?) {
 		switch gpsState {
+		case .NONE:
+			viewPort.rotateToHeading(0.0)
 		case .HEADING:
 			gpsState = .LOCATION
-			viewPort.rotateToNorth()
+			viewPort.rotateToHeading(0.0)
 		case .LOCATION:
 			gpsState = .HEADING
-			if let clHeading = LocationProvider.shared.currentHeading {
-				let heading = LocationProvider.headingAdjustedForInterfaceOrientation(clHeading)
+			if let heading = LocationProvider.shared.currentHeading?.heading {
 				viewPort.rotateToHeading(heading)
 			}
-		case .NONE:
-			viewPort.rotateToNorth()
 		}
 	}
 
