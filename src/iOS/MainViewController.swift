@@ -1084,27 +1084,26 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	var gpsState: GPS_STATE = .NONE {
 		didSet {
-			if gpsState != oldValue {
-				if gpsState == .NONE {
-					centerOnGPSButton.isHidden = true
-					LocationProvider.shared.stop()
-					locationBallView.isHidden = true
-					mapView.voiceAnnouncement?.enabled = false
-					AppState.shared.gpxTracks.endActiveTrack(continuingCurrentTrack: false)
-				} else {
-					if oldValue == .NONE {
-						isFirstGpsUpdate = true
-					}
-					userOverrodeLocationPosition = false // gps was turned on
-					locationBallView.isHidden = false
-					LocationProvider.shared.start()
-					mapView.voiceAnnouncement?.enabled = true
-					if oldValue == .NONE {
-						// because recording GPX tracks is cheap we record them any time GPS is enabled
-						AppState.shared.gpxTracks.startNewTrack(continuingCurrentTrack: false)
-					}
+			if gpsState == .NONE {
+				centerOnGPSButton.isHidden = true
+				LocationProvider.shared.stop()
+				locationBallView.isHidden = true
+				mapView.voiceAnnouncement?.enabled = false
+				AppState.shared.gpxTracks.endActiveTrack(continuingCurrentTrack: false)
+			} else {
+				if oldValue == .NONE {
+					isFirstGpsUpdate = true
+				}
+				userOverrodeLocationPosition = false // gps was turned on
+				locationBallView.isHidden = false
+				LocationProvider.shared.start()
+				mapView.voiceAnnouncement?.enabled = true
+				if oldValue == .NONE {
+					// because recording GPX tracks is cheap we record them any time GPS is enabled
+					AppState.shared.gpxTracks.startNewTrack(continuingCurrentTrack: false)
 				}
 			}
+			updateGpsButtonState()
 		}
 	}
 
@@ -1153,7 +1152,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 			guard !isFirstGpsUpdate else {
 				isFirstGpsUpdate = false
 				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
-				                  metersWide: 20.0)
+				                  metersWide: 20.0,
+				                  orientNorth: gpsState != .HEADING)
 				return
 			}
 
@@ -1272,7 +1272,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 		case GPS_STATE.LOCATION, GPS_STATE.HEADING:
 			gpsState = .NONE
 		}
-		updateGpsButtonState()
 	}
 
 	@IBAction func compassPressed(_ sender: Any?) {

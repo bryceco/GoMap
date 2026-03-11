@@ -302,12 +302,12 @@ extension MapViewPort {
 	/// alway expected to change.
 	/// GPS should be disabled when called.
 	/// Heading is always set to North.
-	func centerOn(latLon: LatLon, metersWide: Double?) {
+	func centerOn(latLon: LatLon, metersWide: Double?, orientNorth: Bool) {
 		let metersWide = metersWide ?? 20.0
 		let degrees = metersToDegrees(meters: metersWide, latitude: latLon.lat)
 		let scale = 360 / (degrees / 2)
 		setTransformFor(latLon: latLon,
 		                scale: scale,
-		                rotation: 0.0)
+		                rotation: orientNorth ? 0.0 : nil)
 	}
 }

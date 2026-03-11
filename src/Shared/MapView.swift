@@ -658,7 +658,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 		if mainView.viewState.zoomedOut {
 			// set location and zoom in
-			viewPort.centerOn(latLon: loc, metersWide: 30.0)
+			viewPort.centerOn(latLon: loc, metersWide: 30.0, orientNorth: false)
 		} else if !bounds.contains(pushPin!.arrowPoint) {
 			// set location without changing zoom
 			viewPort.centerOn(latLon: loc,

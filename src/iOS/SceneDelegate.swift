@@ -81,7 +81,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 				let track = try AppState.shared.gpxTracks.loadGpxTrack(with: data, name: name)
 				if let center = track?.center() {
 					mainView.settings.displayGpxTracks = true // ensure GPX tracks are visible
-					mainView.viewPort.centerOn(latLon: center, metersWide: nil)
+					mainView.viewPort.centerOn(latLon: center,
+					                           metersWide: nil,
+					                           orientNorth: true)
 					mainView.updateMapMarkers(including: [.gpx])
 				}
 			} catch {
@@ -130,7 +132,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 						let geo = try GeoJSONFeatureCollection(data: data)
 						try geoJsonList.add(name: url.lastPathComponent, data: data)
 						if let loc = geo.firstPoint() {
-							mainView.viewPort.centerOn(latLon: loc, metersWide: nil)
+							mainView.viewPort.centerOn(latLon: loc,
+							                           metersWide: nil,
+							                           orientNorth: true)
 							mainView.mapLayersView.displayDataOverlayLayers = true
 						}
 					} catch {

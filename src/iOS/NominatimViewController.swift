@@ -119,7 +119,9 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		{
 			mainView.viewPort.centerOn(latLon: latLon, zoom: zoom, rotation: 0.0)
 		} else {
-			mainView.viewPort.centerOn(latLon: latLon, metersWide: 50.0)
+			mainView.viewPort.centerOn(latLon: latLon,
+			                           metersWide: 50.0,
+			                           orientNorth: true)
 		}
 
 		dismiss(animated: true)

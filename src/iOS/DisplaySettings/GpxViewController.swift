@@ -484,7 +484,7 @@ class GpxViewController: TableViewControllerMac {
 			gpxTracks.selectedTrack = gpxTracks.activeTrack
 			if let trackPt = gpxTracks.selectedTrack?.center() {
 				let viewPort = AppDelegate.shared.mainView.viewPort
-				viewPort.centerOn(latLon: trackPt, metersWide: nil)
+				viewPort.centerOn(latLon: trackPt, metersWide: nil, orientNorth: true)
 			}
 			navigationController?.dismiss(animated: true)
 		} else if indexPath.section == SECTION_CONFIGURE {
@@ -501,7 +501,7 @@ class GpxViewController: TableViewControllerMac {
 			gpxTracks.selectedTrack = track
 			if let center = track.center() {
 				let viewPort = AppDelegate.shared.mainView.viewPort
-				viewPort.centerOn(latLon: center, metersWide: nil)
+				viewPort.centerOn(latLon: center, metersWide: nil, orientNorth: true)
 			}
 			AppDelegate.shared.mainView.settings.displayGpxTracks = true
 			navigationController?.dismiss(animated: true)
