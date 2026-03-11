@@ -1151,15 +1151,15 @@ final class MainViewController: UIViewController, DPadDelegate,
 			// otherwise we only change the position.
 			guard !isFirstGpsUpdate else {
 				isFirstGpsUpdate = false
-				viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
-				                  metersWide: 20.0,
-				                  orientNorth: gpsState != .HEADING)
+				viewPort.centerOn2(latLon: LatLon(newLocation.coordinate),
+				                   metersWide: 20.0,
+				                   orientNorth: gpsState != .HEADING)
 				return
 			}
 
-			viewPort.centerOn(latLon: LatLon(newLocation.coordinate),
-			                  zoom: nil,
-			                  rotation: nil)
+			viewPort.centerOn2(latLon: LatLon(newLocation.coordinate),
+			                   zoom: nil,
+			                   rotation: nil)
 		}
 
 		locationBallView.updateLocation(LatLon(newLocation.coordinate))
@@ -1169,12 +1169,31 @@ final class MainViewController: UIViewController, DPadDelegate,
 		let zoom = location.zoom > 0 ? location.zoom : 21.0
 		let latLon = LatLon(latitude: location.latitude, longitude: location.longitude)
 		let rotation = location.direction * .pi / 180.0
-		viewPort.centerOn(latLon: latLon,
-		                  zoom: zoom,
-		                  rotation: rotation)
+		centerOn(latLon: latLon,
+		         zoom: zoom,
+		         rotation: rotation)
 		if let state = location.view {
 			viewState.state = state
 		}
+	}
+
+	// center without changing zoom or rotation, such as when pressing the Center button
+	func centerOn(latLon: LatLon, zoom: Double?, rotation: Double?) {
+		userOverrodeLocationPosition = true
+		if gpsState == .HEADING {
+			gpsState = .LOCATION
+		}
+		viewPort.centerOn2(latLon: latLon, zoom: zoom, rotation: rotation)
+	}
+
+	/// Centers on a location specified by the user, such as a selected GPX track, etc. where
+	/// zoom and orientation is expected to change.
+	func centerOn(latLon: LatLon, metersWide: Double?, orientNorth: Bool) {
+		userOverrodeLocationPosition = true
+		if gpsState == .HEADING {
+			gpsState = .LOCATION
+		}
+		viewPort.centerOn2(latLon: latLon, metersWide: metersWide, orientNorth: orientNorth)
 	}
 
 	private func updateCurrentRegionForLocationUsingCountryCoder() {
@@ -1292,9 +1311,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 	@IBAction func centerOnGPS(_ sender: Any) {
 		if let location = LocationProvider.shared.currentLocation {
 			userOverrodeLocationPosition = false
-			viewPort.centerOn(latLon: LatLon(location.coordinate),
-			                  zoom: nil, // don't change zoom
-			                  rotation: nil) // don't change rotation
+			viewPort.centerOn2(latLon: LatLon(location.coordinate),
+			                   zoom: nil, // don't change zoom
+			                   rotation: nil) // don't change rotation
 		}
 	}
 

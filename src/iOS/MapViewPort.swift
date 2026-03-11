@@ -286,7 +286,7 @@ extension MapViewPort {
 	}
 
 	// center without changing zoom or rotation, such as when pressing the Center button
-	func centerOn(latLon: LatLon, zoom: Double?, rotation: Double?) {
+	func centerOn2(latLon: LatLon, zoom: Double?, rotation: Double?) {
 		let scale: Double?
 		if let zoom {
 			scale = pow(2.0, zoom)
@@ -302,7 +302,7 @@ extension MapViewPort {
 	/// alway expected to change.
 	/// GPS should be disabled when called.
 	/// Heading is always set to North.
-	func centerOn(latLon: LatLon, metersWide: Double?, orientNorth: Bool) {
+	func centerOn2(latLon: LatLon, metersWide: Double?, orientNorth: Bool) {
 		let metersWide = metersWide ?? 20.0
 		let degrees = metersToDegrees(meters: metersWide, latitude: latLon.lat)
 		let scale = 360 / (degrees / 2)

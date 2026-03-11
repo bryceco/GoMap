@@ -107,21 +107,19 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	func jumpTo(lat: Double, lon: Double, zoom: Double?) {
 		let mainView = AppDelegate.shared.mainView!
 
-		// disable GPS (alternately we could set userOverrodeLocationPosition instead)
-		while mainView.gpsState != GPS_STATE.NONE {
-			mainView.toggleLocationButton()
-		}
 		let latLon = LatLon(latitude: lat, longitude: lon)
 
 		if let zoom = zoom,
 		   zoom > 1,
 		   zoom < 24
 		{
-			mainView.viewPort.centerOn(latLon: latLon, zoom: zoom, rotation: 0.0)
+			mainView.centerOn(latLon: latLon,
+			                  zoom: zoom,
+			                  rotation: 0.0)
 		} else {
-			mainView.viewPort.centerOn(latLon: latLon,
-			                           metersWide: 50.0,
-			                           orientNorth: true)
+			mainView.centerOn(latLon: latLon,
+			                  metersWide: 50.0,
+			                  orientNorth: true)
 		}
 
 		dismiss(animated: true)

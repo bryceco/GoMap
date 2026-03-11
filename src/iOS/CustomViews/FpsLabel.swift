@@ -130,7 +130,7 @@ extension FpsLabel {
 					                    lat: startLatLon.lat + sin(offset * 2.0 * .pi) * radius2.y)
 					let zoomFrac = (1.0 + cos(offset * 2.0 * .pi)) * 0.5
 					let zoom = startZoom * (1 + zoomFrac * 0.01)
-					mainView.viewPort.centerOn(latLon: origin, zoom: zoom, rotation: nil)
+					mainView.centerOn(latLon: origin, zoom: zoom, rotation: nil)
 				})
 			} else {
 				showFPS = false

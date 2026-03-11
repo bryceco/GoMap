@@ -127,9 +127,9 @@ class DataOverlaysController: TableViewControllerMac {
 					let mainView = AppDelegate.shared.mainView
 				else { return }
 				self.dismiss(animated: true)
-				mainView.viewPort.centerOn(latLon: latLon,
-				                           metersWide: nil,
-				                           orientNorth: true)
+				mainView.centerOn(latLon: latLon,
+				                  metersWide: nil,
+				                  orientNorth: true)
 			}
 		}
 	}
