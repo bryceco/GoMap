@@ -100,7 +100,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
 			addGestureRecognizer(hover)
 
-			if traitCollection.isRunningOnMac {
+			if AppEnvironment.isRunningOnMac {
 				// right-click support for Mac
 				let rightClick = UIContextMenuInteraction(delegate: self)
 				addInteraction(rightClick)

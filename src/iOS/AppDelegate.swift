@@ -120,9 +120,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Turn off GPS so we gracefully end GPX trace.
 		AppDelegate.shared.mainView.gpsState = .NONE
 
-#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
+#if canImport(ActivityKit)
 		// Remove any live activities
-		if #available(iOS 16.2, *) {
+		if !AppEnvironment.isRunningOnMac,
+		   #available(iOS 16.2, *)
+		{
 			GpxTrackWidgetManager.endAllActivitiesSynchronously()
 		}
 #endif

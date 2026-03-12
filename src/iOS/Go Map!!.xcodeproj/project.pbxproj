@@ -21,6 +21,7 @@
 		02079803299470FB00D3C654 /* QuestBuilder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02079802299470FB00D3C654 /* QuestBuilder.storyboard */; };
 		02092ECF29E32DD40095042B /* UserPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02092ECE29E32DD40095042B /* UserPrefs.swift */; };
 		02092ED129E8ADB70095042B /* ArchivePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02092ED029E8ADB70095042B /* ArchivePath.swift */; };
+		020E0E212F6374A500A9D27C /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E0E202F6374A500A9D27C /* AppEnvironment.swift */; };
 		020E160B267A82050037DE49 /* TileServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E160A267A82050037DE49 /* TileServer.swift */; };
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
@@ -68,7 +69,6 @@
 		02505C5929A52EA80078D60D /* QuestDefinitionWithFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */; };
 		02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */; };
 		02572B732F10D8C400216EE3 /* MessageDisplay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02572B722F10D8C400216EE3 /* MessageDisplay.swift */; };
-		025BD4422F53BF6E00CB0D35 /* UITraitCollection+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025BD4412F53BF6E00CB0D35 /* UITraitCollection+Ext.swift */; };
 		025CCA12271244B800074726 /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 025CCA11271244B800074726 /* KissXML */; };
 		025F004F2E453002003A68FA /* TypeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025F004E2E453002003A68FA /* TypeCast.swift */; };
 		0260E05F2BE30D4700975570 /* CompassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0260E05E2BE30D4700975570 /* CompassButton.swift */; };
@@ -378,6 +378,7 @@
 		02079802299470FB00D3C654 /* QuestBuilder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuestBuilder.storyboard; sourceTree = "<group>"; };
 		02092ECE29E32DD40095042B /* UserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserPrefs.swift; path = ../Shared/UserPrefs.swift; sourceTree = "<group>"; };
 		02092ED029E8ADB70095042B /* ArchivePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePath.swift; sourceTree = "<group>"; };
+		020E0E202F6374A500A9D27C /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
 		020EC41E2EA9D6B9005B94D9 /* AlertPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPopup.swift; sourceTree = "<group>"; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
@@ -429,7 +430,6 @@
 		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "../POI-Icons"; sourceTree = "<group>"; };
 		02572B722F10D8C400216EE3 /* MessageDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDisplay.swift; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
-		025BD4412F53BF6E00CB0D35 /* UITraitCollection+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITraitCollection+Ext.swift"; sourceTree = "<group>"; };
 		025F004E2E453002003A68FA /* TypeCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCast.swift; sourceTree = "<group>"; };
 		0260E05E2BE30D4700975570 /* CompassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassButton.swift; sourceTree = "<group>"; };
 		0262175A2F08533D00594D88 /* PresetTranslations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetTranslations.swift; sourceTree = "<group>"; };
@@ -894,6 +894,7 @@
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				020E0E202F6374A500A9D27C /* AppEnvironment.swift */,
 				0210AE082F1A2C770031F047 /* AppState.swift */,
 				02B52E7828CAA8F800CB55F3 /* CustomViews */,
 				02F5329B267AD0A50088DF41 /* Database */,
@@ -1165,7 +1166,6 @@
 				025F004E2E453002003A68FA /* TypeCast.swift */,
 				02EF13C22E5D041800418CA4 /* UIFont+Ext.swift */,
 				02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */,
-				025BD4412F53BF6E00CB0D35 /* UITraitCollection+Ext.swift */,
 				028365C82EFDFC22002B9E34 /* UnitFormatter.swift */,
 				02709BD12F282A8400B277C6 /* URL+Extension.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
@@ -1593,6 +1593,7 @@
 				02BB355D29B6A55D00FB52E5 /* OsmUserPrefs.swift in Sources */,
 				C3D096AE263D4BFB00E3B129 /* UploadViewController.swift in Sources */,
 				0288169E265895FA00C30EA2 /* OsmMapData+Edit.swift in Sources */,
+				020E0E212F6374A500A9D27C /* AppEnvironment.swift in Sources */,
 				02092ECF29E32DD40095042B /* UserPrefs.swift in Sources */,
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */,
@@ -1721,7 +1722,6 @@
 				0293B2CD2F53DDB100044DDE /* DeprecatedTags.swift in Sources */,
 				C341E15C2639DF440022E983 /* NearbyMappersViewController.swift in Sources */,
 				021FADC52585951E00F6E1C0 /* PresetDisplayGroup.swift in Sources */,
-				025BD4422F53BF6E00CB0D35 /* UITraitCollection+Ext.swift in Sources */,
 				02EF13C12E5ABF7600418CA4 /* CustomActionSheetController.swift in Sources */,
 				02C8C56526F446FD003B0122 /* MapMarker.swift in Sources */,
 				02CE3CE7299187C100DDACE0 /* TelephoneToolbar.swift in Sources */,

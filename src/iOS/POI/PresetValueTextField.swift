@@ -79,7 +79,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 			keyboardType = preset.keyboardType
 
 			if preset.keyboardType == .phonePad,
-			   traitCollection.usesOnScreenKeyboard
+			   AppEnvironment.usesOnScreenKeyboard
 			{
 				inputAccessoryView = TelephoneToolbar(forTextField: self, frame: frame)
 			}
@@ -89,7 +89,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 				autocapitalizationType = .sentences
 			case "phone", "contact:phone", "fax", "contact:fax":
 				keyboardType = .phonePad
-				if traitCollection.usesOnScreenKeyboard {
+				if AppEnvironment.usesOnScreenKeyboard {
 					inputAccessoryView = TelephoneToolbar(forTextField: self, frame: frame)
 				}
 			case "maxspeed":
@@ -356,7 +356,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 	private func getHeightButton() -> UIView? {
 		guard
 			key == "height",
-			traitCollection.hasRearCamera
+			AppEnvironment.hasRearCamera
 		else {
 			return nil
 		}
@@ -454,7 +454,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 	private func getOpeningHoursButton() -> UIView? {
 		guard
 			#available(iOS 14.0, *), // also validates SwiftUI is available
-			traitCollection.hasRearCamera,
+			AppEnvironment.hasRearCamera,
 			OsmTags.isKey(key, variantOf: "opening_hours")
 		else {
 			return nil
@@ -484,7 +484,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 	var panoramaxKey: String?
 	private func getPhotographButton() -> UIView? {
 		guard
-			traitCollection.hasRearCamera,
+			AppEnvironment.hasRearCamera,
 			#available(iOS 13.0, *), // required by camera control
 			OsmTags.isKey(key, variantOf: "panoramax")
 		else {

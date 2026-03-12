@@ -339,7 +339,7 @@ extension QuestSolverController {
 
 	func isOpeningHours(key: PresetDisplayKey) -> Bool {
 		guard
-			traitCollection.hasRearCamera,
+			AppEnvironment.hasRearCamera,
 			#available(iOS 14.0, *)
 		else {
 			return false
@@ -349,7 +349,7 @@ extension QuestSolverController {
 
 	@objc func recognizeOpeningHours(_ sender: Any?) {
 		guard
-			traitCollection.hasRearCamera,
+			AppEnvironment.hasRearCamera,
 			#available(iOS 14.0, *)
 		else {
 			return
