@@ -366,6 +366,11 @@ class GpxViewController: TableViewControllerMac {
 				let cell = tableView.dequeueReusableCell(
 					withIdentifier: "GpxTrackBackgroundCollection",
 					for: indexPath) as! GpxTrackBackgroundCollection
+				guard !AppEnvironment.isRunningOnMac else {
+					cell.enableBackground.isOn = false
+					cell.enableBackground.isEnabled = false
+					return cell
+				}
 				cell.enableBackground.isOn = gpxTracks.recordTracksInBackground
 				return cell
 			case 2:
