@@ -100,17 +100,9 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
 			addGestureRecognizer(hover)
 
-			if AppEnvironment.isRunningOnMac {
-				// right-click support for Mac
-				let rightClick = UIContextMenuInteraction(delegate: self)
-				addInteraction(rightClick)
-			} else {
-				// right-click support for iPad:
-				let rightClick = UITapGestureRecognizer(target: self, action: #selector(handleRightClick(_:)))
-				rightClick.allowedTouchTypes = [NSNumber(integerLiteral: UITouch.TouchType.indirect.rawValue)]
-				rightClick.buttonMaskRequired = .secondary
-				addGestureRecognizer(rightClick)
-			}
+			// right-click mouse support for mac and iPad
+			let rightClick = UIContextMenuInteraction(delegate: self)
+			addInteraction(rightClick)
 		}
 
 		// magnifying glass
