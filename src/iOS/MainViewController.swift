@@ -297,15 +297,19 @@ final class MainViewController: UIViewController, DPadDelegate,
 		view.addGestureRecognizer(tap)
 
 		let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+		if #available(iOS 13.4, *) {
+			// support two-finger pan on trackpad
+			pan.allowedScrollTypesMask = .continuous
+		}
 		pan.delegate = self
 		view.addGestureRecognizer(pan)
 
-		let pinch = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+		let pinch = PinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
 		pinch.delegate = self
 		view.addGestureRecognizer(pinch)
 
 		// two-finger rotation
-		let rotate = UIRotationGestureRecognizer(target: self, action: #selector(handleRotationGesture(_:)))
+		let rotate = RotationGestureRecognizer(target: self, action: #selector(handleRotationGesture(_:)))
 		view.addGestureRecognizer(rotate)
 
 		// Support zoom via tap and drag
@@ -316,11 +320,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 		view.addGestureRecognizer(tapAndDragGesture)
 
 		if #available(iOS 13.4, macCatalyst 13.0, *) {
-			// pan gesture to recognize mouse-wheel scrolling (zoom) on iPad and Mac Catalyst
+			// use pan gesture to recognize mouse-wheel scrolling (zoom) on iPad and Mac Catalyst
 			let scrollWheelGesture = UIPanGestureRecognizer(
 				target: self,
 				action: #selector(handleScrollWheelGesture(_:)))
-			scrollWheelGesture.allowedScrollTypesMask = .discrete
+			scrollWheelGesture.allowedScrollTypesMask = .discrete // mouse-wheel only, not trackpad
 			scrollWheelGesture.maximumNumberOfTouches = 0
 			view.addGestureRecognizer(scrollWheelGesture)
 		}
@@ -869,9 +873,12 @@ final class MainViewController: UIViewController, DPadDelegate,
 			pan.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
 		} else if pan.state == .ended || pan.state == .cancelled {
 			// cancelled occurs when we throw an error dialog
-			let duration = 0.5
 
-			// finish pan with inertia
+// finish pan with inertia
+#if targetEnvironment(macCatalyst)
+			// mac provides it's own inertia
+			return
+#endif
 			let initialVelocity = pan.velocity(in: self.view)
 			guard hypot(initialVelocity.x, initialVelocity.y) >= 100.0 else {
 				// don't use inertia for small movements because it interferes with dropping the pin precisely
@@ -879,6 +886,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 			}
 			let startTime = CACurrentMediaTime()
 			let displayLink = DisplayLink.shared
+			let duration = 0.5
 			displayLink.add(.screenPanningInertia, block: { [weak self] in
 				guard let self else {
 					displayLink.remove(.screenPanningInertia)
@@ -909,7 +917,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 	// we need to track the previous scale
 	var prevousPinchScale = 0.0
 
-	@objc func handlePinchGesture(_ pinch: UIPinchGestureRecognizer) {
+	@objc func handlePinchGesture(_ pinch: PinchGestureRecognizer) {
 		guard
 			mapView.isRotateObjectMode == nil
 		else {
@@ -923,15 +931,16 @@ final class MainViewController: UIViewController, DPadDelegate,
 		case .changed:
 			cancelPanInertia()
 
-#if targetEnvironment(macCatalyst)
 			// On Mac we want to zoom around the screen center, not the cursor.
 			// This is better determined by testing for indirect touches, but
 			// that information isn't exposed by the gesture recognizer.
-			// If we're zooming via mouse then we'll follow the zoom path, not the pinch path.
-			let zoomCenter = viewPort.screenCenterPoint()
-#else
-			let zoomCenter = pinch.location(in: mapView)
-#endif
+			let zoomCenter: CGPoint
+			if pinch.isTrackpad {
+				// If we're zooming via mouse then we'll follow the zoom path, not the pinch path.
+				zoomCenter = viewPort.screenCenterPoint()
+			} else {
+				zoomCenter = pinch.location(in: mapView)
+			}
 			let scale = pinch.scale / prevousPinchScale
 			viewPort.adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
 			prevousPinchScale = pinch.scale
@@ -942,7 +951,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
-	@objc func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
+	@objc func handleRotationGesture(_ rotationGesture: RotationGestureRecognizer) {
 		// Rotate screen
 		guard settings.enableRotation,
 		      mapView.isRotateObjectMode == nil
@@ -954,14 +963,14 @@ final class MainViewController: UIViewController, DPadDelegate,
 		case .began:
 			break // ignore
 		case .changed:
-#if targetEnvironment(macCatalyst)
-			// On Mac we want to rotate around the screen center, not the cursor.
-			// This is better determined by testing for indirect touches, but
-			// that information isn't exposed by the gesture recognizer.
-			let centerPoint = viewPort.screenCenterPoint()
-#else
-			let centerPoint = rotationGesture.location(in: mapView)
-#endif
+			let centerPoint: CGPoint
+			if rotationGesture.isTrackpad || AppEnvironment.isRunningOnMac {
+				// The user isn't using a touch-screen, so rotate around screen center
+				centerPoint = viewPort.screenCenterPoint()
+			} else {
+				// Rotate around the point the user is touching.
+				centerPoint = rotationGesture.location(in: mapView)
+			}
 			let angle = rotationGesture.rotation
 			viewPort.rotate(by: angle,
 			                around: centerPoint,
@@ -982,13 +991,23 @@ final class MainViewController: UIViewController, DPadDelegate,
 		mapView.handleTapAndDragGesture(tapAndDrag)
 	}
 
+	private var scrollWheelPosition: CGPoint = .zero
+
 	@objc func handleScrollWheelGesture(_ pan: UIPanGestureRecognizer) {
-		if pan.state == .changed {
+		switch pan.state {
+		case .began:
+			scrollWheelPosition = pan.location(in: mapView)
+		case .changed:
 			let delta = pan.translation(in: mapView)
-			var center = pan.location(in: mapView)
-			center.y -= delta.y
+			pan.setTranslation(.zero, in: mapView)
+			// ignore momentum tail: OS delivers decaying scroll events after wheel stops
+			guard abs(delta.y) > 1.0 else { return }
+
 			let zoom = delta.y >= 0 ? (1000.0 + delta.y) / 1000.0 : 1000.0 / (1000.0 - delta.y)
-			viewPort.adjustZoom(by: zoom, aroundScreenPoint: center)
+			viewPort.adjustZoom(by: zoom,
+			                    aroundScreenPoint: scrollWheelPosition)
+		default:
+			break
 		}
 	}
 

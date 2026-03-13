@@ -22,6 +22,8 @@
 		02092ECF29E32DD40095042B /* UserPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02092ECE29E32DD40095042B /* UserPrefs.swift */; };
 		02092ED129E8ADB70095042B /* ArchivePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02092ED029E8ADB70095042B /* ArchivePath.swift */; };
 		020E0E212F6374A500A9D27C /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E0E202F6374A500A9D27C /* AppEnvironment.swift */; };
+		020E0E232F637C4B00A9D27C /* PinchGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E0E222F637C4B00A9D27C /* PinchGestureRecognizer.swift */; };
+		020E0E252F637CB200A9D27C /* RotationGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E0E242F637CB200A9D27C /* RotationGestureRecognizer.swift */; };
 		020E160B267A82050037DE49 /* TileServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020E160A267A82050037DE49 /* TileServer.swift */; };
 		020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */; };
 		020EBA7A26507B50001D56F4 /* PersistentWebCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */; };
@@ -379,6 +381,8 @@
 		02092ECE29E32DD40095042B /* UserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserPrefs.swift; path = ../Shared/UserPrefs.swift; sourceTree = "<group>"; };
 		02092ED029E8ADB70095042B /* ArchivePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePath.swift; sourceTree = "<group>"; };
 		020E0E202F6374A500A9D27C /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		020E0E222F637C4B00A9D27C /* PinchGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchGestureRecognizer.swift; sourceTree = "<group>"; };
+		020E0E242F637CB200A9D27C /* RotationGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationGestureRecognizer.swift; sourceTree = "<group>"; };
 		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
 		020EC41E2EA9D6B9005B94D9 /* AlertPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPopup.swift; sourceTree = "<group>"; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
@@ -861,9 +865,11 @@
 				C3004F4C263A6306006BF313 /* NominatimViewController.swift */,
 				C341E1592639DF210022E983 /* NotesTableViewController.swift */,
 				02CB2409265DB7D600835F32 /* OpeningHours */,
+				020E0E222F637C4B00A9D27C /* PinchGestureRecognizer.swift */,
 				02A3598F2704E51700101369 /* POI */,
 				028F504619BA2F460093C423 /* presets */,
 				02CB523C299097C3007F758D /* Quests */,
+				020E0E242F637CB200A9D27C /* RotationGestureRecognizer.swift */,
 				02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */,
 				0244399529CA9A02009FC2D0 /* Settings */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
@@ -1570,6 +1576,7 @@
 				EDB2C3A62609E6E100C08293 /* LoginViewController.swift in Sources */,
 				647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */,
 				021FADD225873CC000F6E1C0 /* PresetDisplayKeyUserDefined.swift in Sources */,
+				020E0E232F637C4B00A9D27C /* PinchGestureRecognizer.swift in Sources */,
 				02CBF3C82BE85829000DE2AD /* GpxTrackWidgetManager.swift in Sources */,
 				ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */,
 				026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */,
@@ -1595,6 +1602,7 @@
 				0288169E265895FA00C30EA2 /* OsmMapData+Edit.swift in Sources */,
 				020E0E212F6374A500A9D27C /* AppEnvironment.swift in Sources */,
 				02092ECF29E32DD40095042B /* UserPrefs.swift in Sources */,
+				020E0E252F637CB200A9D27C /* RotationGestureRecognizer.swift in Sources */,
 				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
 				02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */,
 				02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */,
