@@ -5,6 +5,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"username\"; ObjectID = \"1tR-eI-DSh\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "uživatelské jméno"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -45,6 +51,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "korisničko ime"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nama pengguna"
           }
         },
         "it" : {
@@ -1341,6 +1353,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ovdje upiši komentar za skup promjena"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Komentar changeset ditulis di sini"
           }
         },
         "it" : {
@@ -4229,6 +4247,12 @@
             "value" : "2014-06-17 17:54 UTC"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4523,10 +4547,40 @@
       "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"vwW-V6-kvw\"; Note = \"Placeholder - do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Title"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Title"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Judul"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заголовок"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標題"
           }
         }
       }

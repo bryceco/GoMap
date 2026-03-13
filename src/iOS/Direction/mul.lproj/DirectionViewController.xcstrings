@@ -71,6 +71,12 @@
             "value" : "Postavi uređaj paralelno sa smjerom objekta."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arahkan ponsel Anda ke arah hadap objek tersebut."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",

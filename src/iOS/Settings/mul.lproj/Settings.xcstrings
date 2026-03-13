@@ -515,6 +515,12 @@
             "value" : "Ako mapiraš negdje s ograničenom povezanošću, možeš preuzeti aerofotografije i/ili Mapnik pločice za sljedeće dvije veće razine zumiranja, koje se nalaze u trenutačnom području prikaza."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jika Anda memetakan di suatu tempat dengan konektivitas terbatas, Anda dapat mengunduh ubin citra udara dan/atau peta dasar untuk dua tingkat zoom yang lebih tinggi berikutnya yang berada dalam area tampilan saat ini."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -899,6 +905,12 @@
             "value" : "Maksimiraj broj sličica u sekundi"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maksimalkan FPS"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1145,6 +1157,12 @@
             "value" : "Ime"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nama"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1251,6 +1269,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odaberi server ako želiš uređivati podatke koji se nalaze na alternativnom OSM serveru."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pilih server jika Anda ingin mengedit data yang berada di server OSM alternatif."
           }
         },
         "it" : {
@@ -1695,6 +1719,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OpenStreetMap račun"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Akun OpenStreetMap"
           }
         },
         "ja" : {
@@ -2229,6 +2259,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktivira > 60 sličica u sekundi"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mengaktifkan > 60 FPS"
           }
         },
         "it" : {
@@ -2777,6 +2813,12 @@
             "value" : "Podaci računa"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info Akun"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2877,6 +2919,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Autorska prava © 2012. – 2024. Bryce Cogswell.\nSva prava pridržana.\n\nOpenStreetMap podaci licencirani su pod Open Data Commons licencom za otvorenu bazu podataka (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nAutorska prava za Bing aerofotografije drži Microsoft i njegovi dobavljači:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nAutorska prava za Mapbox aerofotografije drži Mapbox i njegovi dobavljači: https://www.mapbox.com/tos\n\nXML obrada od Robbieja Hansona KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nKod za obradu EFIX-a Copyright © 2010. – 2015. Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nIkone kartata od SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOstale ikone od Glyphish:\nhttp://glyphish.com\n"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hak Cipta © 2012-2024 Bryce Cogswell. \nSemua hak dilindungi undang-undang.\n\nData OpenStreetMap dilisensikan di bawah Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nHak cipta citra udara Bing Microsoft dan pemasoknya:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nHak cipta citra udara Mapbox Mapbox dan pemasoknya: https://www.mapbox.com/tos\n\nPenguraian XML berkat KissXML oleh Robbie Hanson:\nhttps://github.com/robbiehanson/KissXML\n\nIkon peta oleh SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nIkon lainnya oleh Glyphish:\nhttp://glyphish.com\n"
           }
         },
         "it" : {
@@ -3449,6 +3497,12 @@
             "value" : "Prijava"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masuk"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3630,6 +3684,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "id" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -4767,6 +4827,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktualiziraj račun"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Segarkan Akun"
           }
         },
         "it" : {
@@ -7457,6 +7523,12 @@
             "value" : "-"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8741,6 +8813,12 @@
             "value" : "Odjava"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keluar"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8829,6 +8907,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Skupovi promjena"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Changeset"
           }
         },
         "it" : {
@@ -9231,6 +9315,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Slack – Diskusija"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slack - Diskusi"
           }
         },
         "it" : {

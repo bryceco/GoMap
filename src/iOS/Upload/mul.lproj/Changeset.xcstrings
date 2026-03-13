@@ -665,6 +665,12 @@
             "value" : "🔽"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔽"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1503,6 +1509,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opiši svoje promjene … "
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelaskan perubahan Anda... "
           }
         },
         "ja" : {

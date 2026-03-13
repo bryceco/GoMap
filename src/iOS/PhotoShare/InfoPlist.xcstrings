@@ -41,6 +41,12 @@
             "value" : "Go Map!!"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -120,6 +126,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PhotoShare"
+          }
+        },
+        "id" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PhotoShare"

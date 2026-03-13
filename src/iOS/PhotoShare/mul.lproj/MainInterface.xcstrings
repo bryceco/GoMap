@@ -209,6 +209,12 @@
             "value" : "Go Map!! će se otvoriti na mjestu gdje je fotografija snimljena."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!! akan terbuka pada lokasi tempat foto diambil."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",

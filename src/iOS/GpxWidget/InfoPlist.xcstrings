@@ -47,6 +47,12 @@
             "value" : "GpxWidget"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WidgetGpx"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -123,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GpxWidgetExtension"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "EkstensiWidgetGpx"
           }
         },
         "it" : {
@@ -207,6 +219,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Autorska prava © 2024. Bryce Cogswell. Sva prava pridržana."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hak Cipta © 2024 Bryce Cogswell. Semua hak dilindungi undang-undang."
           }
         },
         "it" : {

@@ -71,6 +71,12 @@
             "value" : "GPX staze"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lintasan GPX"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -551,6 +557,12 @@
             "value" : "Mapnik"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -987,6 +999,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Željezničke funkcije"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fitur Rel"
           }
         },
         "it" : {
@@ -1457,6 +1475,12 @@
             "value" : "Aerofotografije"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Citra Udara"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1601,6 +1625,12 @@
             "value" : "Osnovna karta"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Peta dasar"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1707,6 +1737,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prikaz"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tampilan"
           }
         },
         "it" : {
@@ -1851,6 +1887,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HealthKit rute:"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rute HealthKit:"
           }
         },
         "it" : {
@@ -2439,6 +2481,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prilagođeno ime"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nama Ramah"
           }
         },
         "it" : {
@@ -3197,6 +3245,12 @@
             "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3462,6 +3516,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12:00:00"
+          }
+        },
+        "id" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "12:00:00"
@@ -4203,6 +4263,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detalji"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rincian"
           }
         },
         "it" : {
@@ -5285,6 +5351,12 @@
             "value" : "Energetske funkcije"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fitur Kelistrikan"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5559,6 +5631,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Staze"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jalur"
           }
         },
         "ja" : {
@@ -6029,6 +6107,12 @@
             "value" : "Aktiviraj filtre"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter Objek"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -6185,6 +6269,12 @@
             "value" : "GPX staze koje snimaš ili preuzimaš će se automatski izbrisati nakon:"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lintasan GPX yang Anda rekam atau unduh akan dihapus secara otomatis setelah:"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6315,6 +6405,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uređivač s aerofotografijama"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Editor dengan Citra Udara"
           }
         },
         "it" : {
@@ -6467,6 +6563,12 @@
             "value" : "Pružatelj aerofotografija"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penyedia Citra Udara"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6599,6 +6701,12 @@
             "value" : "Prekrivanja podataka"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lapisan Data"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6693,6 +6801,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zadaci"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tugas"
           }
         },
         "ja" : {
@@ -6987,6 +7101,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Namjena zemljišta"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Penggunaan lahan"
           }
         },
         "it" : {
@@ -7607,6 +7727,12 @@
             "value" : "Bilješke i ispravci"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Catatan dan Fixme"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8033,6 +8159,12 @@
             "value" : "Pločice aerofotografije"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ubin Citra Udara"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8121,6 +8253,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Interakcije"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Interaksi"
           }
         },
         "it" : {
@@ -8267,6 +8405,12 @@
             "value" : "Samo osnovna karta"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hanya peta dasar"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8361,6 +8505,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Naslov"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Judul"
           }
         },
         "it" : {
@@ -8469,6 +8619,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uslužne ceste"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jalan Layanan"
           }
         },
         "it" : {
@@ -8759,6 +8915,12 @@
             "value" : "Uvoz"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impor"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8865,6 +9027,12 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Izbriši predmemoriju podataka OSM-a, ako dođe do neusklađenosti između programa i OSM poslužitelja. To se može dogoditi, ako netko drugi promijeni podatke koje uređuješ ili ako jedan od tvojih prijenosa ne uspije te onemogućuje prijenos dodatnih podataka.\n\nUpozorenje: Brisanjem predmemorije OSM-a izgubit ćeš sve promjene koje još nisu prenesene.\n\nIzbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih pločica koje odražavaju tvoje prethodno poslane promjene. Obrada tvojih promjena može potrajati do 24 sata."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hapus cache data OSM jika status aplikasi menjadi tidak sinkron dengan server OSM. Ini dapat terjadi jika orang lain mengubah data yang sedang Anda edit, atau jika salah satu unggahan Anda gagal di tengah jalan sehingga mencegah Anda mengunggah data tambahan.\n\nPeringatan: Menghapus cache OSM akan menyebabkan Anda kehilangan perubahan apa pun yang belum diunggah.\n\nHapus cache ubin Peta dasar atau Lapisan untuk mengunduh ubin terbaru yang mencerminkan perubahan yang sebelumnya telah Anda kirimkan. Perubahan Anda mungkin memerlukan waktu hingga 24 jam untuk diproses."
           }
         },
         "it" : {
@@ -10427,6 +10595,12 @@
             "value" : "12/22/20, 7:55 PM"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12/22/20, 7:55 PM"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11651,6 +11825,12 @@
             "value" : "URL adresa TMS protokola s rezerviranim mjestima {x}, {y} i {z} ili URL adresa WMS protokola"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL TMS dengan penampung {x}, {y}, dan {z}, atau URL WMS"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12119,6 +12299,12 @@
             "value" : "Ako odrešuješ URL adresu WMS protokola, moraš navesti i korištenu projekciju"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jika menentukan URL WMS, Anda juga harus menyediakan proyeksi yang digunakan"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12399,6 +12585,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pločice aerofotografije"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ubin Citra Udara"
           }
         },
         "it" : {

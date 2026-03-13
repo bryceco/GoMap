@@ -35,6 +35,12 @@
             "value" : "Etiketa"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",

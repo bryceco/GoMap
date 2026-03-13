@@ -182,6 +182,12 @@
             "value" : "Sadržaj URL adrese nije prepoznat."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konten URL tidak dikenali."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",

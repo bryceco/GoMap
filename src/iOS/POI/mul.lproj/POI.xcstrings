@@ -815,6 +815,12 @@
             "value" : "Točka interesa"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titik Menarik"
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -929,6 +935,12 @@
             "value" : "Quercus "
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quercus "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -993,6 +1005,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ključ"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kunci"
           }
         },
         "ja" : {
@@ -1691,6 +1709,12 @@
             "value" : "širokolisno "
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "berdaun lebar "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2171,6 +2195,12 @@
             "value" : "Dodaj novi"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambah Baru"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2393,6 +2423,12 @@
             "value" : "Područje"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Area"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2613,6 +2649,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prilagođene funkcije"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fitur Kustom"
           }
         },
         "ja" : {
@@ -3269,6 +3311,12 @@
             "value" : "Predodređena postavka bit će dostupna prilikom uređivanja objekata koji odgovaraju ovoj kombinaciji ključa/vrijednosti. Ostavi bilo koje polje praznim za upotrebu zamjenskog znaka."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preset akan tersedia saat mengedit objek yang cocok dengan kombinasi kunci/nilai ini. Biarkan salah satunya kosong untuk wildcard."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3467,6 +3515,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Vertex\"; ObjectID = \"DhX-ri-fx9\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vertex"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3495,6 +3549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Putna točka"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verteks"
           }
         },
         "ja" : {
@@ -3861,6 +3921,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "stablo "
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pohon "
           }
         },
         "ja" : {
@@ -4379,6 +4445,12 @@
             "value" : "Točka"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titik"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4677,6 +4749,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hrast"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ek"
           }
         },
         "ja" : {
@@ -5855,6 +5933,12 @@
             "value" : "vrsta lišća"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "leaf_type"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6773,6 +6857,12 @@
             "value" : "genus:hr"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus:en"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6837,6 +6927,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prilagođena funkcija"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fitur Kustom"
           }
         },
         "ja" : {
@@ -7505,6 +7601,12 @@
             "value" : "ključ"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kunci"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7727,6 +7829,12 @@
             "value" : "ⓘ"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7931,6 +8039,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"value \"; ObjectID = \"nrU-9j-jfm\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "hodnota "
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7953,6 +8067,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "vrijednost "
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nilai "
           }
         },
         "ja" : {
@@ -8013,6 +8133,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "prirodno"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "natural"
           }
         },
         "ja" : {
@@ -9047,6 +9173,12 @@
             "value" : "Prilagođene funkcije"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fitur Kustom"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9111,6 +9243,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hrast"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pohon Ek"
           }
         },
         "ja" : {
@@ -9480,6 +9618,12 @@
           }
         },
         "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus"
+          }
+        },
+        "id" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "genus"
@@ -9863,6 +10007,12 @@
             "value" : "Oznake koje treba dodati prilikom odabira ove funkcije."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag yang akan ditambahkan saat memilih fitur ini."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9929,6 +10079,12 @@
             "value" : "Oznake funkcija"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag Fitur"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9987,6 +10143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Naslijedi unaprijed postavljene postavke ove funkcije. Ako ih nema, biranje ove funkcije će spojit (ne zamijeniti) oznake na ciljnom objektu."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Warisi preset dari fitur ini. Jika tidak ada, maka memilih fitur ini akan menggabungkan (bukan mengganti) tag ke objek target."
           }
         },
         "ru" : {
@@ -10053,6 +10215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vrsta funkcije:"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jenis fitur:"
           }
         },
         "ja" : {
@@ -10469,6 +10637,12 @@
             "value" : "Ime"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nama"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10649,6 +10823,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"value \"; ObjectID = \"u2W-Xt-qyS\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "value "
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10671,6 +10851,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "vrijednost "
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nilai "
           }
         },
         "ja" : {
@@ -10743,6 +10929,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Natrag"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kembali"
           }
         },
         "ja" : {
@@ -11705,6 +11897,12 @@
             "value" : "Linija"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Garis"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11925,6 +12123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Naslov"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Judul"
           }
         },
         "ja" : {
@@ -12299,6 +12503,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"value \"; ObjectID = \"xRb-oM-jei\"; Note = \"Placeholder - Do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "value "
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12321,6 +12531,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "vrijednost "
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nilai "
           }
         },
         "ja" : {
@@ -12545,6 +12761,12 @@
             "value" : "ključ"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kunci"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12765,6 +12987,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Odustani"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Batal"
           }
         },
         "ja" : {

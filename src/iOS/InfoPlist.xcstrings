@@ -921,6 +921,12 @@
             "value" : "Rute tvojih treninga mogu se uvesti kao GPX rute."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rute dari latihan Anda dapat diimpor sebagai rute GPX."
+          }
+        },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1015,6 +1021,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Podaci o zdravlju se nikada ne aktualiziraju."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informasi kesehatan tidak pernah diperbarui."
           }
         },
         "ja" : {
