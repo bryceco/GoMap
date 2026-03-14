@@ -5804,7 +5804,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@мегабайт@ , %2$#@файлов@"
+            "value" : "%#@megabytes@ , %#@files@"
           },
           "substitutions" : {
             "files" : {

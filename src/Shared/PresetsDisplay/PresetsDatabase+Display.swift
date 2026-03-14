@@ -498,11 +498,12 @@ extension PresetsDatabase {
 			}
 			keysForCountry = keysForCountry.flatMap({ $0.components(separatedBy: "+") })
 
+			let labels = field.labels
 			let placeholders = field.placeholders
 			var addrs: [PresetKeyOrGroup] = []
 			for addressKey in keysForCountry {
 				let name: String
-				let placeholder = placeholders?[addressKey] as? String
+				let placeholder = (labels?[addressKey] as? String) ?? (placeholders?[addressKey] as? String)
 				if let placeholder = placeholder, placeholder != "123" {
 					name = placeholder
 				} else {

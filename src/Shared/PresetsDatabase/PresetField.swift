@@ -110,6 +110,10 @@ final class PresetField: CustomDebugStringConvertible {
 		return PresetTranslations.shared.placeholders(for: crossRef(for: "placeholders"))
 	}
 
+	var labels: [String: String]? {
+		return PresetTranslations.shared.labels(for: crossRef(for: "labels"))
+	}
+
 	var localizedOptions: [String: PresetTranslations.Option]? { // rename to options
 		return PresetTranslations.shared.options(for: crossRef(for: "stringsCrossReference"))
 	}
