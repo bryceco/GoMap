@@ -17906,6 +17906,9 @@
         }
       }
     },
+    "Add node" : {
+
+    },
     "add node to way" : {
       "localizations" : {
         "ar" : {
@@ -19952,6 +19955,9 @@
           }
         }
       }
+    },
+    "Aerial alignment" : {
+
     },
     "Aerial only" : {
       "localizations" : {
@@ -25072,6 +25078,9 @@
           }
         }
       }
+    },
+    "Compass" : {
+      "comment" : "Compass button label"
     },
     "computing size..." : {
       "localizations" : {
@@ -30223,6 +30232,9 @@
         }
       }
     },
+    "Down" : {
+      "comment" : "Move up/down buttons"
+    },
     "duplicate" : {
       "comment" : "create a duplicate",
       "localizations" : {
@@ -32818,6 +32830,9 @@
         }
       }
     },
+    "GPS" : {
+      "comment" : "GPS button label"
+    },
     "GPX" : {
       "comment" : "The name of a GPX file",
       "localizations" : {
@@ -33416,6 +33431,9 @@
           }
         }
       }
+    },
+    "Help" : {
+      "comment" : "Help button label"
     },
     "I'll do it!" : {
       "comment" : "rate the app now",
@@ -35580,6 +35598,7 @@
       }
     },
     "Left" : {
+      "comment" : "Move left/right buttons",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -49675,6 +49694,7 @@
       }
     },
     "Right" : {
+      "comment" : "Move left/right buttons",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -50290,6 +50310,9 @@
           }
         }
       }
+    },
+    "Search" : {
+      "comment" : "Search button label"
     },
     "Select a highway approaching the intersection" : {
       "localizations" : {
@@ -57792,6 +57815,9 @@
           }
         }
       }
+    },
+    "Up" : {
+      "comment" : "Move up/down buttons"
     },
     "Update" : {
       "comment" : "update an osm note",

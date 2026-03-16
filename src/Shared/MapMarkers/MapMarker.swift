@@ -29,6 +29,7 @@ class MapMarker {
 
 	// override in subclass
 	var markerIdentifier: String { fatalError() }
+	var accessibilityLabel: String?
 
 	func handleButtonPress(in mainView: MainViewController, markerView: MapMarkersView) {
 		// override in subclass
@@ -75,6 +76,7 @@ class MapMarker {
 				button.setTitle(buttonLabel, for: .normal)
 			}
 		}
+		button.accessibilityLabel = accessibilityLabel
 		self.button = button
 		return button
 	}

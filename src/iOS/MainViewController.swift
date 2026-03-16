@@ -401,6 +401,12 @@ final class MainViewController: UIViewController, DPadDelegate,
 		settingsButton.accessibilityLabel = NSLocalizedString("Settings", comment: "")
 		uploadButton.accessibilityLabel = NSLocalizedString("Upload your changes", comment: "")
 		displayButton.accessibilityLabel = NSLocalizedString("Display options", comment: "")
+		searchButton.accessibilityLabel = NSLocalizedString("Search", comment: "Search button label")
+		addNodeButton.accessibilityLabel = NSLocalizedString("Add node", comment: "")
+		locationButton.accessibilityLabel = NSLocalizedString("GPS", comment: "GPS button label")
+		helpButton.accessibilityLabel = NSLocalizedString("Help", comment: "Help button label")
+		aerialAlignmentButton.accessibilityLabel = NSLocalizedString("Aerial alignment", comment: "")
+		compassButton.accessibilityLabel = NSLocalizedString("Compass", comment: "Compass button label")
 	}
 
 	func applicationWillEnterBackground() {

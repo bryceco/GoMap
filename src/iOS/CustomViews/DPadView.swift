@@ -121,6 +121,11 @@ class DPadView: UIView {
 		                                           width: buttonSize.width,
 		                                           height: buttonSize.height),
 		                             dir: .down)
+		leftButton.accessibilityLabel = NSLocalizedString("Left", comment: "Move left/right buttons")
+		rightButton.accessibilityIdentifier = NSLocalizedString("Right", comment: "Move left/right buttons")
+		upButton.accessibilityIdentifier = NSLocalizedString("Up", comment: "Move up/down buttons")
+		downButton.accessibilityIdentifier = NSLocalizedString("Down", comment: "Move up/down buttons")
+
 		for button in [leftButton, rightButton, upButton, downButton] {
 			button.addTarget(self, action: #selector(buttonPress(_:)), for: .touchUpInside)
 			addSubview(button)
