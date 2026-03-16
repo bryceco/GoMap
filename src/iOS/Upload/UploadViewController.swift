@@ -374,13 +374,11 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 	}
 
 	// this is for navigating from the changeset back to the location of the modified object
-	func textView(
-		_ textView: UITextView,
-		shouldInteractWith url: URL,
-		in characterRange: NSRange,
-		interaction: UITextItemInteraction) -> Bool
+	func textView(_ textView: UITextView,
+	              shouldInteractWith url: URL,
+	              in characterRange: NSRange,
+	              interaction: UITextItemInteraction) -> Bool
 	{
-		let appDelegate = AppDelegate.shared
 		let name = url.absoluteString
 		if name.count == 0 {
 			return false
@@ -397,6 +395,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		default:
 			return false
 		}
+		let appDelegate = AppDelegate.shared
 		guard let object = appDelegate.mapView.mapData.object(withExtendedIdentifier: extendedId)
 		else { return false }
 		appDelegate.mapView.selectObject(object)

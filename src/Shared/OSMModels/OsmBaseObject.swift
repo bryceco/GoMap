@@ -26,24 +26,22 @@ let PATH_SCALING = (256 * 256.0)
 typealias OsmIdentifier = Int64
 
 struct OsmExtendedIdentifier: Equatable, Hashable {
-	static let identMask = (Int64(1) << 62) - 1
+	private static let typeWidth = 2
+	private static let identWidth = Int64.bitWidth - typeWidth // 62
+	private static let typeMask = (1 << typeWidth) - 1 // 0b11
+
 	private let rawValue: Int64
 
 	init(_ type: OSM_TYPE, _ ident: OsmIdentifier) {
-		rawValue = (Int64(type.rawValue) << 62) | (ident & OsmExtendedIdentifier.identMask)
-	}
-
-	init(_ obj: OsmBaseObject) {
-		self.init(obj.osmType, obj.ident)
+		rawValue = (ident << Self.typeWidth) | Int64(type.rawValue & Self.typeMask)
 	}
 
 	var type: OSM_TYPE {
-		return OSM_TYPE(rawValue: Int(rawValue >> 62) & 3)!
+		OSM_TYPE(rawValue: Int(rawValue) & Self.typeMask)!
 	}
 
 	var ident: OsmIdentifier {
-		let ident = OsmIdentifier(rawValue & OsmExtendedIdentifier.identMask)
-		return (ident << 2) >> 2 // sign-extend
+		rawValue >> Self.typeWidth // arithmetic shift sign-extends automatically
 	}
 }
 
@@ -192,7 +190,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	var osmType: OSM_TYPE { return self is OsmNode ? .NODE : self is OsmWay ? .WAY : .RELATION }
 
 	var extendedIdentifier: OsmExtendedIdentifier {
-		return OsmExtendedIdentifier(self)
+		return OsmExtendedIdentifier(osmType, ident)
 	}
 
 	override var debugDescription: String {
