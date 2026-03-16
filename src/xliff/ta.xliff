@@ -7,6 +7,7 @@
     <body>
       <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
         <source>username</source>
+        <target state="translated">பயனர் பெயர்</target>
         <note>Class = "UIButton"; normalTitle = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
@@ -155,6 +156,7 @@
       </trans-unit>
       <trans-unit id="vwW-V6-kvw.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">தலைப்பு</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vwW-V6-kvw"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
@@ -470,6 +472,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="fVu-8o-Ldq.text" xml:space="preserve">
         <source>Details</source>
+        <target state="translated">விவரங்கள்</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
@@ -544,6 +547,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="r78-B4-pAU.text" xml:space="preserve">
         <source>Aerial Tiles</source>
+        <target state="translated">வான்வழி ஓடுகள்</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "r78-B4-pAU";</note>
       </trans-unit>
       <trans-unit id="rWF-4C-sRA.text" xml:space="preserve">
@@ -645,7 +649,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
         <source>GpxWidgetExtension</source>
-        <target state="translated">GPXWIDGETEXTENSION</target>
+        <target state="translated">Gpxநிரல்பலகைநீட்டிப்பு</target>
         <note>Bundle name</note>
       </trans-unit>
       <trans-unit id="NSHumanReadableCopyright" xml:space="preserve">
@@ -667,30 +671,37 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%@ %@" xml:space="preserve">
         <source>%1$@ %2$@</source>
+        <target state="translated">%1$@ %2$@</target>
         <note/>
       </trans-unit>
       <trans-unit id="%@ %lld" xml:space="preserve">
         <source>%1$@ %2$lld</source>
+        <target state="translated">%1$@ %2$lld</target>
         <note from="auto-generated">A compact leading view for a dynamic island.</note>
       </trans-unit>
       <trans-unit id="%@ Stop" xml:space="preserve">
         <source>%@ Stop</source>
+        <target state="translated">%@ நிறுத்து</target>
         <note/>
       </trans-unit>
       <trans-unit id="%lld" xml:space="preserve">
         <source>%lld</source>
+        <target state="translated">%lld</target>
         <note from="auto-generated">A label displaying the number of points recorded in a GPX track.</note>
       </trans-unit>
       <trans-unit id="Duration" xml:space="preserve">
         <source>Duration</source>
+        <target state="translated">கால அளவு</target>
         <note from="auto-generated">A caption displayed underneath the duration of a track.</note>
       </trans-unit>
       <trans-unit id="GPX Trace" xml:space="preserve">
         <source>GPX Trace</source>
+        <target state="translated">GPX ட்ரேச்</target>
         <note from="auto-generated">A caption displayed below the name of the app.</note>
       </trans-unit>
       <trans-unit id="Go Map!!" xml:space="preserve">
         <source>Go Map!!</source>
+        <target state="translated">கோ மேப்!!</target>
         <note from="auto-generated">A label displayed on the lock screen/banner UI of the widget</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
@@ -705,6 +716,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Points" xml:space="preserve">
         <source>Points</source>
+        <target state="translated">பிரிவகம்</target>
         <note from="auto-generated">A unit displayed underneath the number of GPX points recorded.</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
@@ -719,6 +731,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Started at %@" xml:space="preserve">
         <source>Started at %@</source>
+        <target state="translated">%@ இல் தொடங்கியது</target>
         <note from="auto-generated">A subheading displaying when the user started tracking.</note>
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
@@ -1428,6 +1441,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Clear Data Caches" xml:space="preserve">
         <source>Clear Data Caches</source>
+        <target state="translated">டேட்டா கேச்களை அழிக்கவும்</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
@@ -1489,7 +1503,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
-        <target state="translated">ஒவ்வொரு விசை/மதிப்பு சோடிக்கும் அட்டவணையில் ஒரு வரிசையை உருவாக்கவும், பொருந்தக்கூடிய பொருள்கள் சேர்க்கப்பட வேண்டுமா அல்லது விலக்கப்பட வேண்டுமா. விசை இல்லை என்பதைக் குறிக்க மதிப்பை காலியாக விடவும். எந்த மதிப்பையும் பொருத்த KEY =* ஐப் பயன்படுத்தவும்.</target>
+        <target state="translated">ஒவ்வொரு விசை/மதிப்பு சோடிக்கும் அட்டவணையில் ஒரு வரிசையை உருவாக்கவும், பொருந்தக்கூடிய பொருள்கள் சேர்க்கப்பட வேண்டுமா அல்லது விலக்கப்பட வேண்டுமா. விசை இல்லை என்பதைக் குறிக்க மதிப்பைக் காலியாக விடவும். எந்த மதிப்பையும் பொருத்த திறவுகோல்=* ஐப் பயன்படுத்தவும்.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
@@ -1715,6 +1729,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Import GPX" xml:space="preserve">
         <source>Import GPX</source>
+        <target state="translated">GPX ஐ இறக்குமதி செய்யவும்</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
@@ -1784,6 +1799,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Location updated to the location and orientation stored in the photo." xml:space="preserve">
         <source>Location updated to the location and orientation stored in the photo.</source>
+        <target state="translated">புகைப்படத்தில் சேமிக்கப்பட்டுள்ள இருப்பிடம் மற்றும் நோக்குநிலைக்கு இருப்பிடம் புதுப்பிக்கப்பட்டது.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
@@ -1960,6 +1976,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No match" xml:space="preserve">
         <source>No match</source>
+        <target state="translated">பொருத்தம் இல்லை</target>
         <note>No value available</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
@@ -2059,6 +2076,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Open Image File" xml:space="preserve">
         <source>Open Image File</source>
+        <target state="translated">படக் கோப்பைத் திறக்கவும்</target>
         <note/>
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
@@ -2113,6 +2131,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
+        <target state="translated">புகைப்படம் கிடைக்கவில்லை</target>
         <note/>
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
@@ -2127,6 +2146,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Predefined" xml:space="preserve">
         <source>Predefined</source>
+        <target state="translated">முன் வரையறுக்கப்பட்டது</target>
         <note>Items that are built into the app</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -2301,6 +2321,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Settings…" xml:space="preserve">
         <source>Settings…</source>
+        <target state="translated">அமைப்புகள்…</target>
         <note>Settings menu item in Mac menu bar</note>
       </trans-unit>
       <trans-unit id="Share" xml:space="preserve">
@@ -2426,6 +2447,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="The selected image file does not contain location information." xml:space="preserve">
         <source>The selected image file does not contain location information.</source>
+        <target state="translated">தேர்ந்தெடுக்கப்பட்ட படக் கோப்பில் இருப்பிடத் செய்தி இல்லை.</target>
         <note/>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
@@ -2470,7 +2492,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
-        <target state="translated">இந்த பயன்பாடு இன்னும் 'VIA' உறுப்பினர் என முனை இல்லாமல் திருத்துதல் திருப்புமுனைகளை ஆதரிக்கவில்லை</target>
+        <target state="translated">இந்தப் பயன்பாடு இன்னும் 'வழி' உறுப்பினர் என முனை இல்லாமல் திருத்துதல் திருப்புமுனைகளை ஆதரிக்கவில்லை</target>
         <note/>
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
@@ -3185,6 +3207,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="ScT-zG-GwL.text" xml:space="preserve">
         <source>Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object.</source>
+        <target state="translated">இந்த அம்சத்தின் முன்னமைவுகளைப் பெறவும். எதுவும் இல்லை என்றால், இந்த அம்சத்தைத் தேர்ந்தெடுப்பது இலக்கு பொருளில் குறிச்சொற்களை ஒன்றிணைக்கும் (மாற்றாது).</target>
         <note>Class = "UILabel"; text = "Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object."; ObjectID = "ScT-zG-GwL";</note>
       </trans-unit>
       <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
@@ -3900,6 +3923,7 @@ http://glyphish.com
     <body>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
         <source>Label</source>
+        <target state="translated">சிட்டை</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "qP9-Sc-sc4";</note>
       </trans-unit>
     </body>
