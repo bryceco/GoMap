@@ -47,6 +47,12 @@
             "value" : "Метка"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "சிட்டை"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",

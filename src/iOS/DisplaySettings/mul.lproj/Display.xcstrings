@@ -4283,6 +4283,12 @@
             "value" : "Подробности"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "விவரங்கள்"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8175,6 +8181,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Тайлы аэрофотосъёмки"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "வான்வழி ஓடுகள்"
           }
         },
         "uk" : {

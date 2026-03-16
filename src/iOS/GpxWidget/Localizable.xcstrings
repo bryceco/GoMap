@@ -146,6 +146,12 @@
             "value" : "%1$@ %2$@"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -207,6 +213,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$lld"
+          }
+        },
+        "ta" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ %2$lld"
@@ -282,6 +294,12 @@
             "value" : "%@ Стоп"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ நிறுத்து"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -343,6 +361,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "ta" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
@@ -420,6 +444,12 @@
             "value" : "Длительность"
           }
         },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கால அளவு"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -490,6 +520,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Go Map!!"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "கோ மேப்!!"
           }
         },
         "uk" : {
@@ -568,6 +604,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Трек GPX"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX ட்ரேச்"
           }
         },
         "uk" : {
@@ -816,6 +858,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Точек"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "பிரிவகம்"
           }
         },
         "uk" : {
@@ -1082,6 +1130,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Начато в %@"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ இல் தொடங்கியது"
           }
         },
         "uk" : {
