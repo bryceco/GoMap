@@ -517,6 +517,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		{
 			dest.key = presetKey.tagKey
 			dest.presetValueList = presetKey.presetValues ?? []
+			dest.isMultiSelect = presetKey.type == .semiCombo
 			dest.onSetValue = { [weak self] value in
 				self?.updateTagDict(withValue: value, forKey: presetKey.tagKey)
 			}

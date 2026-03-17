@@ -12,8 +12,11 @@ class POIPresetValuePickerController: UITableViewController {
 	var key = ""
 	var presetValueList: [PresetDisplayValue] = []
 	var onSetValue: ((String) -> Void)?
+	var isMultiSelect = false
 	var descriptions: [String: String] = [:]
 	var images: [String: UIImage] = [:]
+
+	private var selectedValues: [String] = []
 
 	let placeholderImage = UIImage().scaledTo(width: ImageWidth, height: ImageWidth / 2)
 
@@ -63,6 +66,40 @@ class POIPresetValuePickerController: UITableViewController {
 
 		tableView.estimatedRowHeight = UITableView.automaticDimension
 		tableView.rowHeight = UITableView.automaticDimension
+
+		if let value = (tabBarController as? POITabBarController)?.keyValueDict[key] {
+			if isMultiSelect {
+				// semicolon-separated tag value
+				selectedValues = value.split(separator: ";")
+					.map { $0.trimmingCharacters(in: .whitespaces) }
+					.filter { !$0.isEmpty }
+			} else {
+				selectedValues = [value]
+			}
+		}
+
+		if isMultiSelect {
+			navigationItem.leftBarButtonItem = UIBarButtonItem(
+				barButtonSystemItem: .cancel,
+				target: self,
+				action: #selector(cancelTapped))
+
+			navigationItem.rightBarButtonItem = UIBarButtonItem(
+				barButtonSystemItem: .done,
+				target: self,
+				action: #selector(doneTapped))
+		}
+	}
+
+	@objc private func cancelTapped() {
+		navigationController?.popViewController(animated: true)
+	}
+
+	@objc private func doneTapped() {
+		// Preserve display order rather than Set's arbitrary order.
+		let values = selectedValues.joined(separator: ";")
+		onSetValue?(values)
+		navigationController?.popViewController(animated: true)
 	}
 
 	// MARK: - Table view data source
@@ -103,16 +140,29 @@ class POIPresetValuePickerController: UITableViewController {
 			cell.imageView?.image = image2
 		}
 
-		let tabController = tabBarController as? POITabBarController
-		let selected = tabController?.keyValueDict[key] == preset.tagValue
-		cell.accessoryType = selected ? .checkmark : .none
+		if isMultiSelect {
+			cell.accessoryType = selectedValues.contains(preset.tagValue) ? .checkmark : .none
+		} else {
+			let tabController = tabBarController as? POITabBarController
+			let selected = tabController?.keyValueDict[key] == preset.tagValue
+			cell.accessoryType = selected ? .checkmark : .none
+		}
 
 		return cell
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let preset = presetValueList[indexPath.row]
-		onSetValue?(preset.tagValue)
-		navigationController?.popViewController(animated: true)
+		if isMultiSelect {
+			if let i = selectedValues.firstIndex(of: preset.tagValue) {
+				selectedValues.remove(at: i)
+			} else {
+				selectedValues.append(preset.tagValue)
+			}
+			tableView.reloadRows(at: [indexPath], with: .automatic)
+		} else {
+			onSetValue?(preset.tagValue)
+			navigationController?.popViewController(animated: true)
+		}
 	}
 }
