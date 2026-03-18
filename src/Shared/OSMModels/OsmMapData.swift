@@ -125,12 +125,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	func object(withExtendedIdentifier ext: OsmExtendedIdentifier) -> OsmBaseObject? {
-		let ident: OsmIdentifier = ext.ident
-		let type: OSM_TYPE = ext.type
-		switch type {
-		case .NODE: return nodes[ident]
-		case .WAY: return ways[ident]
-		case .RELATION: return relations[ident]
+		switch ext.type {
+		case .NODE: return nodes[ext.ident]
+		case .WAY: return ways[ext.ident]
+		case .RELATION: return relations[ext.ident]
 		}
 	}
 
@@ -786,13 +784,17 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		for node in newData.nodes {
 			node.setConstructed()
+			node.mapData = self
 		}
 		for way in newData.ways {
 			way.setConstructed()
+			way.mapData = self
 		}
 		for relation in newData.relations {
 			relation.setConstructed()
+			relation.mapData = self
 		}
+		invalidateParentRelationCache()
 
 #if DEBUG
 		for value in nodes.values {
@@ -1693,6 +1695,18 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		periodicSaveTimer = nil
 	}
 
+	func setObjectMapDataReferences() {
+		for n in nodes.values {
+			n.mapData = self
+		}
+		for w in ways.values {
+			w.mapData = self
+		}
+		for r in relations.values {
+			r.mapData = self
+		}
+	}
+
 	static func withArchivedData() throws -> OsmMapData {
 		let archiver = OsmMapDataArchiver()
 		let mapData = try archiver.loadArchive()
@@ -1700,6 +1714,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			print("spatial accidentally saved, please fix")
 			mapData.spatial.rootQuad.reset()
 		}
+
+		mapData.setObjectMapDataReferences()
 
 		// rebuild spatial database
 		mapData.enumerateObjects(usingBlock: { obj in
@@ -1731,6 +1747,42 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 
 		return mapData
+	}
+
+	// Parent relations structure
+
+	private var _parentRelationCache: [OsmExtendedIdentifier: [OsmRelation]]?
+
+	func parentRelations(for object: OsmExtendedIdentifier) -> [OsmRelation] {
+		if _parentRelationCache == nil {
+			_parentRelationCache = buildParentRelationCache()
+		}
+		return _parentRelationCache![object] ?? []
+	}
+
+	func invalidateParentRelationCache() {
+		_parentRelationCache = nil
+	}
+
+	private func buildParentRelationCache() -> [OsmExtendedIdentifier: [OsmRelation]] {
+		var cache: [OsmExtendedIdentifier: [OsmRelation]] = [:]
+		for relation in relations.values {
+			for member in relation.members {
+				guard let obj = member.obj else { continue }
+				cache[obj.extendedIdentifier, default: []].append(relation)
+			}
+		}
+#if DEBUG && false
+		print("\nParent Relations:")
+		for (id, parents) in cache {
+			let obj = object(withExtendedIdentifier: id)!
+			print("\(obj.friendlyDescription()):")
+			for parent in parents {
+				print("    \(parent.friendlyDescription())")
+			}
+		}
+#endif
+		return cache
 	}
 }
 

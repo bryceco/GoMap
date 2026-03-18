@@ -66,11 +66,11 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 
 	func resolveToMapData(_ mapData: OsmMapData) -> Bool {
 		DbgAssert(mapData.relations[ident] === self)
+		mapData.invalidateParentRelationCache()
 		var needsRedraw = false
 		for member in members {
 			guard member.obj == nil else {
 				// already resolved
-				DbgAssert(member.obj!.parentRelations.contains(self))
 				continue
 			}
 
@@ -78,7 +78,6 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 			case .WAY:
 				if let way = mapData.ways[member.ref] {
 					member.resolveRef(to: way)
-					way.addParentRelation(self, undo: nil)
 					needsRedraw = true
 				} else {
 					// way is not in current view
@@ -86,7 +85,6 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 			case .NODE:
 				if let node = mapData.nodes[member.ref] {
 					member.resolveRef(to: node)
-					node.addParentRelation(self, undo: nil)
 					needsRedraw = true
 				} else {
 					// node is not in current view
@@ -94,7 +92,6 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 			case .RELATION:
 				if let rel = mapData.relations[member.ref] {
 					member.resolveRef(to: rel)
-					rel.addParentRelation(self, undo: nil)
 					needsRedraw = true
 				} else {
 					// relation is not in current view
@@ -113,9 +110,9 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 			if let obj = member.obj {
 				assert(member.ref == obj.ident)
 				member.deresolveRef()
-				obj.removeParentRelation(self, undo: nil)
 			}
 		}
+		mapData?.invalidateParentRelationCache()
 	}
 
 	func assignMembers(_ newMembers: [OsmMember], undo: MyUndoManager?) {
@@ -124,20 +121,8 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 			incrementModifyCount(undo!)
 			undo!.registerUndo(withTarget: self, selector: #selector(assignMembers(_:undo:)), objects: [members, undo!])
 		}
-
-		// figure out which members changed and update their relation parents
-		var old = Set<OsmBaseObject>(members.compactMap({ $0.obj }))
-		var new = Set<OsmBaseObject>(newMembers.compactMap({ $0.obj }))
-		let common = old.intersection(new)
-		new.subtract(common) // added items
-		old.subtract(common) // removed items
-		for obj in old {
-			obj.removeParentRelation(self, undo: nil)
-		}
-		for obj in new {
-			obj.addParentRelation(self, undo: nil)
-		}
 		members = newMembers
+		mapData?.invalidateParentRelationCache()
 	}
 
 	func removeMemberAtIndex(_ index: Int, undo: MyUndoManager) {
@@ -148,9 +133,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 			selector: #selector(addMember(_:atIndex:undo:)),
 			objects: [member, NSNumber(value: index), undo])
 		members.remove(at: index)
-		if let obj = member.obj {
-			obj.removeParentRelation(self, undo: nil)
-		}
+		mapData?.invalidateParentRelationCache()
 	}
 
 	func addMember(_ member: OsmMember, atIndex index: Int, undo: MyUndoManager?) {
@@ -163,9 +146,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 				objects: [NSNumber(value: index), undo!])
 		}
 		members.insert(member, at: index)
-		if let obj = member.obj {
-			obj.addParentRelation(self, undo: nil)
-		}
+		mapData?.invalidateParentRelationCache()
 	}
 
 	override func serverUpdate(with newerVersion: OsmBaseObject) {

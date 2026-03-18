@@ -773,8 +773,8 @@ extension OsmMapData {
 			let wayB = createWay()
 			setTags(wayA.tags, for: wayB)
 
-			let wayIsOuter = (wayA.isSimpleMultipolygonOuterMember() ? wayA.parentRelations
-				.last : nil) // only 1 parent relation if it is simple
+			let wayIsOuter = (wayA.isSimpleMultipolygonOuterMember()
+				? wayA.parentRelations.last : nil) // only 1 parent relation if it is simple
 
 			if wayA.isClosed() {
 				// remove duplicated node

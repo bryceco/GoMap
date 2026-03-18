@@ -41,4 +41,8 @@ enum OSM_TYPE: Int {
 		default: throw OsmObjectError.invalidObjectType
 		}
 	}
+
+	var debugDescription: String {
+		return string
+	}
 }

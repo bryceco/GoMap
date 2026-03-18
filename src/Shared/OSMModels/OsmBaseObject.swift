@@ -43,6 +43,10 @@ struct OsmExtendedIdentifier: Equatable, Hashable {
 	var ident: OsmIdentifier {
 		rawValue >> Self.typeWidth // arithmetic shift sign-extends automatically
 	}
+
+	var debugDescription: String {
+		"\(type.string)-\(ident)"
+	}
 }
 
 enum GEOMETRY: String, Codable {
@@ -61,6 +65,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	private(set) final var changeset: OsmIdentifier
 	private(set) final var uid: Int
 	private(set) final var visible: Bool
+	final weak var mapData: OsmMapData?
 
 	final var isShown = TRISTATE.UNKNOWN
 
@@ -72,8 +77,11 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	final var renderInfo: RenderInfo?
 	private(set) final var modifyCount: Int32 = 0
-	private(set) final var parentRelations: [OsmRelation] = []
 	final var notificationService = NotificationService<OsmBaseObject>()
+
+	var parentRelations: [OsmRelation] {
+		return mapData?.parentRelations(for: extendedIdentifier) ?? []
+	}
 
 	override init() {
 		ident = 0
@@ -692,40 +700,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	func copy(with zone: NSZone? = nil) -> Any {
 		return self
-	}
-
-	func addParentRelation(_ parentRelation: OsmRelation, undo: MyUndoManager?) {
-#if DEBUG
-		if let current = AppDelegate.shared.mapView?.mapData.relations[parentRelation.ident] {
-			DbgAssert(current === parentRelation)
-		}
-#endif
-		if parentRelations.contains(parentRelation) {
-			return
-		}
-		if _constructed, undo != nil {
-			undo!.registerUndo(
-				withTarget: self,
-				selector: #selector(removeParentRelation(_:undo:)),
-				objects: [parentRelation, undo!])
-		}
-		parentRelations.append(parentRelation)
-	}
-
-	func removeParentRelation(_ parentRelation: OsmRelation, undo: MyUndoManager?) {
-		if _constructed, undo != nil {
-			undo!.registerUndo(
-				withTarget: self,
-				selector: #selector(addParentRelation(_:undo:)),
-				objects: [parentRelation, undo!])
-		}
-		guard let index = parentRelations.firstIndex(of: parentRelation) else {
-			// This happens if the relation contains an object as a member
-			// multiple times, in which case we'll try to remove the parent
-			// multiple times.
-			return
-		}
-		parentRelations.remove(at: index)
 	}
 
 	private func computeGeometry() -> GEOMETRY {
