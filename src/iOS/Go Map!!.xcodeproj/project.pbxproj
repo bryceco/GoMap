@@ -13,7 +13,6 @@
 		0202C5FE2E3BFD7500649F26 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202C5FD2E3BFD7500649F26 /* CustomSegmentedControl.swift */; };
 		0202C6002E3C348400649F26 /* ButtonClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202C5FF2E3C348400649F26 /* ButtonClosure.swift */; };
 		0203473D26695B2A000A7C3D /* EditorMapLayer+Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */; };
-		0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203473E266C1EDD000A7C3D /* ExternalGPS.swift */; };
 		02034743266C2CB9000A7C3D /* MapMarkerDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */; };
 		0203B06429B3D62900B020DF /* OsmType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203B06329B3D62900B020DF /* OsmType.swift */; };
 		0203B06529B3D62900B020DF /* OsmType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0203B06329B3D62900B020DF /* OsmType.swift */; };
@@ -372,7 +371,6 @@
 		0202C5FD2E3BFD7500649F26 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		0202C5FF2E3C348400649F26 /* ButtonClosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonClosure.swift; path = ../../Shared/Utility/ButtonClosure.swift; sourceTree = "<group>"; };
 		0203473C26695B2A000A7C3D /* EditorMapLayer+Edit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Edit.swift"; sourceTree = "<group>"; };
-		0203473E266C1EDD000A7C3D /* ExternalGPS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ExternalGPS.swift; path = ../Shared/ExternalGPS.swift; sourceTree = "<group>"; };
 		02034742266C2CB9000A7C3D /* MapMarkerDatabase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapMarkerDatabase.swift; sourceTree = "<group>"; };
 		0203B06329B3D62900B020DF /* OsmType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmType.swift; sourceTree = "<group>"; };
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
@@ -908,7 +906,6 @@
 				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
 				02F53299267ACFBB0088DF41 /* EditorLayer */,
 				02D2768F2E8B289400A21863 /* EXIFInfo.swift */,
-				0203473E266C1EDD000A7C3D /* ExternalGPS.swift */,
 				0200FECC2908B0EB002C3F94 /* GeoJSON.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				02225DA629EB3AE900859F9D /* GpxTrack.swift */,
@@ -1613,7 +1610,6 @@
 				ED91352526020945006A637A /* OfflineViewController.swift in Sources */,
 				ED9649DB2601CB7A00EC0A60 /* SettingsViewController.swift in Sources */,
 				0235349B294A9BDD00ED5BBE /* MostRecentlyUsed.swift in Sources */,
-				0203473F266C1EDD000A7C3D /* ExternalGPS.swift in Sources */,
 				C365A563263FC53F007DEC94 /* TurnRestrictHwyView.swift in Sources */,
 				C3D096B3263D618E00E3B129 /* HeightViewController.swift in Sources */,
 				02E049BB2651BAB90028B57F /* UndoManager.swift in Sources */,
