@@ -39,7 +39,7 @@ struct MapLocation {
 
 // MARK: MapView
 
-final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteractionDelegate {
+final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteractionDelegate, RightClickHandling {
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
 
 	var voiceAnnouncement: VoiceAnnouncement?
@@ -99,11 +99,28 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			// mouseover support for Mac Catalyst and iPad:
 			let hover = UIHoverGestureRecognizer(target: self, action: #selector(hover(_:)))
 			addGestureRecognizer(hover)
-
-			// right-click mouse support for mac and iPad
-			let rightClick = UIContextMenuInteraction(delegate: self)
-			addInteraction(rightClick)
 		}
+
+#if targetEnvironment(macCatalyst)
+		// right-click mouse support for Mac Catalyst
+		let rightClick = UIContextMenuInteraction(delegate: self)
+		addInteraction(rightClick)
+#else
+		if #available(iOS 14.0, *),
+		   ProcessInfo.processInfo.isiOSAppOnMac
+		{
+			// We're running Designed for iPad on Mac
+			// Handled by low level code in MyApplication
+		} else if #available(iOS 13.4, *) {
+			// Regular iPad with mouse support
+			// This works on iPad with mouse, but not with Designed for iPad on Mac.
+			let rightClickRecognizer = RightClickGestureRecognizer(target: self,
+			                                                       action: #selector(handleRightClick(_:)))
+			addGestureRecognizer(rightClickRecognizer)
+		} else {
+			// not supported
+		}
+#endif
 
 		// magnifying glass
 		magnifyingGlass = MagnifyingGlass(sourceView: self, radius: 70.0, scale: 2.0)

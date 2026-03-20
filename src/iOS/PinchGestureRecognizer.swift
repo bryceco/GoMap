@@ -11,7 +11,7 @@ import UIKit.UIGestureRecognizerSubclass
 
 class PinchGestureRecognizer: UIPinchGestureRecognizer {
 
-	/// True when the pinch originated from a trackpad rather than direct touch.
+	/// True when the pinch originated from a trackpad/mouse rather than direct touch.
 	private(set) var _isTrackpad = false
 
 	var isTrackpad: Bool {

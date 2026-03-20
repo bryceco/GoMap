@@ -172,6 +172,7 @@
 		02CE3CE7299187C100DDACE0 /* TelephoneToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */; };
 		02CE3CE929919FC400DDACE0 /* MapPinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE829919FC400DDACE0 /* MapPinButton.swift */; };
 		02CE3CEB2991B5FA00DDACE0 /* QuestIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */; };
+		02D1ABA12F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D1ABA02F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift */; };
 		02D276902E8B289400A21863 /* EXIFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2768F2E8B289400A21863 /* EXIFInfo.swift */; };
 		02D276912E8B289400A21863 /* EXIFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2768F2E8B289400A21863 /* EXIFInfo.swift */; };
 		02D2FD4F29B016BC00483F4D /* PresetValueTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */; };
@@ -531,6 +532,7 @@
 		02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneToolbar.swift; sourceTree = "<group>"; };
 		02CE3CE829919FC400DDACE0 /* MapPinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinButton.swift; sourceTree = "<group>"; };
 		02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = QuestIcons.xcassets; sourceTree = "<group>"; };
+		02D1ABA02F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightClickGestureRecognizer.swift; sourceTree = "<group>"; };
 		02D2768F2E8B289400A21863 /* EXIFInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EXIFInfo.swift; path = ../Shared/EXIFInfo.swift; sourceTree = SOURCE_ROOT; };
 		02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetValueTextField.swift; sourceTree = "<group>"; };
 		02D5B5F2248F154D00FEE448 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -926,6 +928,7 @@
 				02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				02E9DCD72F0E34B300F372A9 /* PresetsDisplay */,
+				02D1ABA02F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift */,
 				0293B2CE2F5B620F00044DDE /* TableViewControllerMac.swift */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
@@ -1659,6 +1662,7 @@
 				02B5669D294F9D7E00710632 /* MagnifyingGlass.swift in Sources */,
 				0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */,
 				023320A42BE1DB9900E3311A /* DPadView.swift in Sources */,
+				02D1ABA12F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift in Sources */,
 				ED9649C12601C33E00EC0A60 /* AdvancedSettingsViewController.swift in Sources */,
 				C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */,
 				02CA15512824A6B40047B0E5 /* String+Ext.swift in Sources */,

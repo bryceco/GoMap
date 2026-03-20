@@ -10,6 +10,10 @@ import UIKit
 
 private let TOUCH_RADIUS: CGFloat = 22
 
+protocol RightClickHandling {
+	func rightClick(at location: CGPoint)
+}
+
 class MyApplication: UIApplication {
 	private var touches: [UITouch: (UIWindow, TimeInterval)] = [:]
 	private var touchImage: UIImage?
@@ -42,9 +46,36 @@ class MyApplication: UIApplication {
 	var currentEventIsIndirect = false
 
 	override func sendEvent(_ event: UIEvent) {
+
 		if let touch = event.allTouches?.first {
 			currentEventIsIndirect = touch.type != .direct
 		}
+
+		// Special case for handling mouse right-clicks for Designed for iPad on Mac
+		if #available(iOS 14.0, *),
+		   ProcessInfo.processInfo.isiOSAppOnMac, // only when on Mac and not Catalyst
+		   event.type == .touches,
+		   event.buttonMask.contains(.secondary),	// right-click
+		   let touch = event.allTouches?.first,
+		   touch.type == .indirectPointer,	// mouse or track pad event
+		   touch.phase == .began,
+		   let window = connectedScenes
+		   .compactMap({ $0 as? UIWindowScene })
+		   .flatMap({ $0.windows })
+		   .first(where: { $0.isKeyWindow }),
+		   let view = window.hitTest(touch.location(in: window), with: event)
+		{
+			// walk responder chain looking for protocol handler
+			var responder: UIResponder? = view
+			while let r = responder {
+				if let handler = r as? RightClickHandling {
+					handler.rightClick(at: touch.location(in: r as? UIView))
+					break
+				}
+				responder = r.next
+			}
+		}
+
 		super.sendEvent(event)
 
 		if !showTouchCircles {
