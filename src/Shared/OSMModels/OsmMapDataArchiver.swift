@@ -62,7 +62,9 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 		                                                UndoAction.self,
 		                                                NSDictionary.self,
 		                                                NSMutableData.self,
-		                                                NSArray.self],
+		                                                NSArray.self,
+		                                                NSString.self,
+		                                                NSNumber.self],
 		                                           forKey: "OsmMapData") as? OsmMapData
 		else {
 			print("Couldn't decode archive file")
