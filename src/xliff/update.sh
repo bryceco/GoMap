@@ -57,5 +57,8 @@ git status
 # Commit locally
 git commit -m "Update XLIFF files"
 
+# Push our changes so weblate can pull them from our repository
+git push
+
 # Tell weblate to pull latest XLIFFs
 curl -d operation=pull -H "Authorization: Token $WEBLATE_TOKEN" $WEBLATE_REPO
