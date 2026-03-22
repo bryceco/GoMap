@@ -286,6 +286,9 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                 <state key="normal" title="Center"/>
+                                <attributedString key="userComments">
+                                    <fragment content="Center the screen on user's current location"/>
+                                </attributedString>
                                 <connections>
                                     <action selector="centerOnGPS:" destination="2" eventType="touchUpInside" id="opu-L6-1pL"/>
                                 </connections>
