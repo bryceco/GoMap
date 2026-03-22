@@ -1,26 +1,24 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
+import sys
+import xml.etree.ElementTree as ET
 
-# Look though an xliff file and delete translation units that contain Note = Placholder
+ET.register_namespace('', 'urn:oasis:names:tc:xliff:document:1.2')
 
-import sys, os
-from xml.dom.minidom import parse
+def process_xliff(path):
+    tree = ET.parse(path)
+    root = tree.getroot()
+    ns = {'x': 'urn:oasis:names:tc:xliff:document:1.2'}
 
-filename = sys.argv[1]
-document = parse(filename)
+    changed = 0
+    for unit in root.findall('.//x:trans-unit', ns):
+        note = unit.find('x:note', ns)
+        if note is not None and 'Placeholder' in (note.text or ''):
+            unit.set('translate', 'no')
+            changed += 1
 
-tag = "Note = \"Placeholder -".lower()
-# print(tag)
+    if changed:
+        tree.write(path, encoding='unicode', xml_declaration=True)
+        print(f"{path}: marked {changed} unit(s) as translate='no'")
 
-notes = document.getElementsByTagName("note")
-for note in notes:
-	child = note.firstChild
-	if child != None:
-		value = child.nodeValue
-		if tag in value.lower():
-			# print(value)
-			# Remove the parent
-			transUnit = note.parentNode
-			body = transUnit.parentNode
-			body.removeChild(transUnit)
-print(document.toprettyxml(indent=" ",newl=""))
-
+for path in sys.argv[1:]:
+    process_xliff(path)

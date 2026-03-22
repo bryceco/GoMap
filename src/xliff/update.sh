@@ -44,6 +44,9 @@ xcodebuild -exportLocalizations -localizationPath $TMP_XLIFF -project "$PROJECT"
 # Copy XLIFF files back here
 cp $TMP_XLIFF/*/Localized\ Contents/*.xliff .
 
+# Look for notes containing "Placeholder - do not translate" and mark them with translate="no"
+./fixPlaceholder.py *.xliff
+
 # Make sure newly added strings are tracked by git
 find .. -name '*.strings' -print0 | xargs -0 git add
 git add *.xliff
