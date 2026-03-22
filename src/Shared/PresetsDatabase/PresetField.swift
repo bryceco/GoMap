@@ -72,6 +72,7 @@ final class PresetField: CustomDebugStringConvertible {
 #if DEBUG
 		// validate that we don't encounter any types that aren't supported
 		_ = self.type
+		_ = self.options
 #endif
 	}
 
