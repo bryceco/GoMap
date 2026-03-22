@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
-      <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
+      <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve" translate="no">
         <source>username</source>
         <target state="translated">用户名</target>
         <note>Class = "UIButton"; normalTitle = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
@@ -45,7 +45,7 @@
         <target state="translated">66.6 FPS</target>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
-      <trans-unit id="DFj-Vi-kBz.normalTitle" xml:space="preserve">
+      <trans-unit id="DFj-Vi-kBz.normalTitle" xml:space="preserve" translate="no">
         <source>(0,0)</source>
         <note>Class = "UIButton"; normalTitle = "(0,0)"; ObjectID = "DFj-Vi-kBz"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -69,11 +69,11 @@
         <target state="translated">居中</target>
         <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz";</note>
       </trans-unit>
-      <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
+      <trans-unit id="HeZ-95-3K1.text" xml:space="preserve" translate="no">
         <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
-      <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve">
+      <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve" translate="no">
         <source>-</source>
         <note>Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -92,7 +92,7 @@
         <target state="translated">反馈与处理</target>
         <note>Class = "UIButton"; normalTitle = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
-      <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
+      <trans-unit id="PHk-s9-onx.text" xml:space="preserve" translate="no">
         <source>Various comments...</source>
         <note>Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -106,7 +106,7 @@
         <target state="translated">指定一个名称（如"纽约"）、一个包含经纬度坐标的URL或文本，或一个OSM对象索引（例"way 51014987"）：</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
-      <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
+      <trans-unit id="VNE-ee-a7u.text" xml:space="preserve" translate="no">
         <source>action</source>
         <note>Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -125,7 +125,7 @@
         <target state="translated">子标题</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK";</note>
       </trans-unit>
-      <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
+      <trans-unit id="nU5-T2-ADn.text" xml:space="preserve" translate="no">
         <source>A Error Message Flashing Z</source>
         <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -149,11 +149,11 @@
         <target state="translated">2014年6月17日17时54分（协调世界时）</target>
         <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
       </trans-unit>
-      <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
+      <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve" translate="no">
         <source>Title</source>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
-      <trans-unit id="vwW-V6-kvw.text" xml:space="preserve">
+      <trans-unit id="vwW-V6-kvw.text" xml:space="preserve" translate="no">
         <source>Title</source>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vwW-V6-kvw"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -166,7 +166,7 @@
   </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -174,11 +174,11 @@
         <target state="translated">请将手机对准目标方向。</target>
         <note>Class = "UILabel"; text = "Point your phone in the direction the object faces."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
-      <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
+      <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve" translate="no">
         <source>320</source>
         <note>Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
-      <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve">
+      <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve" translate="no">
         <source>Update "direction" tag</source>
         <note>Class = "UIButton"; normalTitle = "Update \"direction\" tag"; ObjectID = "Yt9-h6-KKC"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -187,7 +187,7 @@
         <target state="translated">取消</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
-      <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
+      <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve" translate="no">
         <source>Old value: 42</source>
         <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -195,7 +195,7 @@
   </file>
   <file original="DisplaySettings/Base.lproj/Display.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -223,7 +223,7 @@
         <target state="translated">99天</target>
         <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
       </trans-unit>
-      <trans-unit id="5JJ-aN-eAg.text" xml:space="preserve">
+      <trans-unit id="5JJ-aN-eAg.text" xml:space="preserve" translate="no">
         <source>Details Label</source>
         <note>Class = "UILabel"; text = "Details Label"; ObjectID = "5JJ-aN-eAg"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -272,7 +272,7 @@
         <target state="translated">12:00:00</target>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
-      <trans-unit id="ErU-hB-dqk.text" xml:space="preserve">
+      <trans-unit id="ErU-hB-dqk.text" xml:space="preserve" translate="no">
         <source>Size Label</source>
         <note>Class = "UILabel"; text = "Size Label"; ObjectID = "ErU-hB-dqk"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -290,7 +290,7 @@
         <target state="translated">路径</target>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
       </trans-unit>
-      <trans-unit id="KFp-Us-thh.text" xml:space="preserve">
+      <trans-unit id="KFp-Us-thh.text" xml:space="preserve" translate="no">
         <source>Details Label</source>
         <note>Class = "UILabel"; text = "Details Label"; ObjectID = "KFp-Us-thh"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -400,7 +400,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">GPX轨迹</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
-      <trans-unit id="ZFi-dJ-qjx.text" xml:space="preserve">
+      <trans-unit id="ZFi-dJ-qjx.text" xml:space="preserve" translate="no">
         <source>Aerial Tiles</source>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "ZFi-dJ-qjx"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -414,7 +414,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">WMS 投影</target>
         <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
-      <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
+      <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve" translate="no">
         <source>Aerial Tiles</source>
         <target state="translated">航拍影像瓦片</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; Note = "Placeholder - do not translate";</note>
@@ -424,7 +424,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">运动健康路线：</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
       </trans-unit>
-      <trans-unit id="bDu-nw-QGM.text" xml:space="preserve">
+      <trans-unit id="bDu-nw-QGM.text" xml:space="preserve" translate="no">
         <source>Aerial Tiles</source>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "bDu-nw-QGM"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -497,7 +497,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">详情</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
       </trans-unit>
-      <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
+      <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve" translate="no">
         <source>Details Label</source>
         <target state="needs-review-l10n">详情</target>
         <note>Class = "UILabel"; text = "Details Label"; ObjectID = "g2G-5j-Y4q"; Note = "Placeholder - do not translate";</note>
@@ -522,7 +522,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">交通道路</target>
         <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
       </trans-unit>
-      <trans-unit id="il1-Gs-nr3.text" xml:space="preserve">
+      <trans-unit id="il1-Gs-nr3.text" xml:space="preserve" translate="no">
         <source>Size Label</source>
         <note>Class = "UILabel"; text = "Size Label"; ObjectID = "il1-Gs-nr3"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -541,7 +541,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="translated">背景</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
       </trans-unit>
-      <trans-unit id="mbV-RK-BWD.text" xml:space="preserve">
+      <trans-unit id="mbV-RK-BWD.text" xml:space="preserve" translate="no">
         <source>Size Label</source>
         <note>Class = "UILabel"; text = "Size Label"; ObjectID = "mbV-RK-BWD"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -672,7 +672,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="GpxWidget/InfoPlist.xcstrings" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -692,17 +692,17 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="GpxWidget/Localizable.xcstrings" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="%@" xml:space="preserve">
         <source>%@</source>
         <target state="translated">%@</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="%@ %@" xml:space="preserve">
         <source>%1$@ %2$@</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="%@ %lld" xml:space="preserve">
         <source>%1$@ %2$lld</source>
@@ -710,7 +710,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%@ Stop" xml:space="preserve">
         <source>%@ Stop</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="%lld" xml:space="preserve">
         <source>%lld</source>
@@ -734,12 +734,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
         <target state="translated">停用 GPX</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
         <target state="translated">暂停轨迹记录。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Points" xml:space="preserve">
         <source>Points</source>
@@ -749,12 +749,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
         <target state="translated">启用GPX</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
         <target state="translated">开始轨迹记录。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Started at %@" xml:space="preserve">
         <source>Started at %@</source>
@@ -764,18 +764,18 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
         <target state="translated">终止GPX</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
         <target state="translated">停止轨迹记录。</target>
-        <note/>
+        <note />
       </trans-unit>
     </body>
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -802,7 +802,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="InfoPlist.xcstrings" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -811,7 +811,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <note>Bundle display name</note>
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
-        <source/>
+        <source />
         <note>Get Info string</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -822,7 +822,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="GPS Exchange Format (GPX)" xml:space="preserve">
         <source>GPS Exchange Format (GPX)</source>
         <target state="translated">GPS数据交换格式（GPX）</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="NSBluetoothPeripheralUsageDescription" xml:space="preserve">
         <source>Connect to external Bluetooth GPS devices</source>
@@ -873,46 +873,46 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
   </file>
   <file original="Localizable.xcstrings" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="" xml:space="preserve">
-        <source/>
-        <note/>
+        <source />
+        <note />
       </trans-unit>
-      <trans-unit id="&#9;Relation " xml:space="preserve">
+      <trans-unit id="&#09;Relation " xml:space="preserve">
         <source>	Relation </source>
         <target state="translated">	关系 </target>
-        <note/>
+        <note />
       </trans-unit>
-      <trans-unit id="&#9;Way " xml:space="preserve">
+      <trans-unit id="&#09;Way " xml:space="preserve">
         <source>	Way </source>
         <target state="translated">	线 </target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d members)
 </source>
         <target state="translated"> (%d 个成员)
 </target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d nodes)
 </source>
         <target state="translated"> (%d 个节点)
 </target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
         <source> (node)</source>
         <target state="translated"> (节点)</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id=" (way)" xml:space="preserve">
         <source> (way)</source>
         <target state="translated"> (线)</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="%.0f m^2" xml:space="preserve">
         <source>%.0f m²</source>
@@ -952,7 +952,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="%@ (relation)" xml:space="preserve">
         <source>%@ (relation)</source>
         <target state="translated">%@ (关系)</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="%@ meters" xml:space="preserve">
         <source>%@ meters</source>
@@ -1048,27 +1048,27 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="(new object)" xml:space="preserve">
         <source>(new object)</source>
         <target state="translated">(新建对象)</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="(node in way)" xml:space="preserve">
         <source>(node in way)</source>
         <target state="translated">(路径中的节点)</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="(node)" xml:space="preserve">
         <source>(node)</source>
         <target state="translated">(节点)</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="(relation %@)" xml:space="preserve">
         <source>(relation %@)</source>
         <target state="translated">(关系 %@)</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="(way)" xml:space="preserve">
         <source>(way)</source>
         <target state="translated">(路径)</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="+ Button Position" xml:space="preserve">
         <source>+ Button Position</source>
@@ -1088,21 +1088,21 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
         <target state="translated">当您沿着道路或小径行驶时，GPX轨迹会记录您的路径</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
         <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
         <target state="translated">节点所属的关系没有完全下载</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
         <target state="translated">接受</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Add Building Type" xml:space="preserve">
         <source>Add Building Type</source>
@@ -1156,7 +1156,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Add node" xml:space="preserve">
         <source>Add node</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
@@ -1166,48 +1166,48 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
         <target state="translated">添加路径到复杂多边形吗？</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
         <source>Adding members:</source>
         <target state="translated">添加成员:</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Additional imagery" xml:space="preserve">
         <source>Additional imagery</source>
         <target state="translated">其他图像</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Advanced Quest Builder" xml:space="preserve">
         <source>Advanced Quest Builder</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Aerial alignment" xml:space="preserve">
         <source>Aerial alignment</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
         <target state="translated">只有卫星影像</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
         <target state="translated">所有标签</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="All cached data including aerial imagery tiles, TagInfo and Wiki data, etc." xml:space="preserve">
         <source>All cached data including aerial imagery tiles, TagInfo and Wiki data, etc.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
         <target state="translated">所有选择</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="All map tiles for the currently selected base map (Mapnik, Americana, etc)." xml:space="preserve">
         <source>All map tiles for the currently selected base map (Mapnik, Americana, etc).</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
         <source>An error occured while exporting: %@</source>
@@ -1225,7 +1225,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
         <target state="translated">注意</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
@@ -1250,22 +1250,22 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
         <target state="translated">登录错误</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
         <target state="translated">您所在位置有更好的背景图像可用，是否要切换？</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
         <target state="translated">有更好的图像可用</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Build a New Quest" xml:space="preserve">
         <source>Build a New Quest</source>
         <target state="translated">建立新任务</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Building" xml:space="preserve">
         <source>Building</source>
@@ -1275,12 +1275,12 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
         <target state="translated">缓存大小警告</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
         <target state="translated">缓存裁剪</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Caches" xml:space="preserve">
         <source>Caches</source>
@@ -1289,56 +1289,56 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
         <target state="translated">只能给复杂多边形添加路径</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
         <source>Can't delete node that is part of a relation</source>
         <target state="translated">不能删除关系中的节点</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
         <source>Can't delete relation that is not a multipolygon</source>
         <target state="translated">无法删除不是复杂多边形的关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
         <source>Can't delete way that is part of a Route or similar relation</source>
         <target state="translated">无法删除属于道路或其他关系中的路径</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Can't extend way" xml:space="preserve">
         <source>Can't extend way</source>
         <target state="translated">无法延伸路径</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
         <source>Can't remove Turn Restriction 'via' node</source>
         <target state="translated">无法删除“转弯”限制的中间节点</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
         <target state="translated">无法删除连接起点/终点到中间节点的转弯限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
         <source>Can't remove Turn Restriction to/from way</source>
         <target state="translated">无法删除连接道路的转弯限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
         <source>Can't remove component of a Route or similar relation</source>
         <target state="translated">无法删除路由组件或类似关联关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
         <source>Cancel</source>
         <target state="translated">取消</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
@@ -1348,12 +1348,12 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
         <source>Cannot connect an inner way to an outer way</source>
         <target state="translated">内层路径无法与外层路径连接</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Change" xml:space="preserve">
         <source>Change</source>
         <target state="translated">更改</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
         <source>Changeset</source>
@@ -1368,7 +1368,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
         <target state="translated">清除所有</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
         <source>Clear Basemap Tiles</source>
@@ -1388,7 +1388,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
         <target state="translated">提交</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Compass" xml:space="preserve">
         <source>Compass</source>
@@ -1397,17 +1397,17 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
         <target state="translated">配置</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Confirm move" xml:space="preserve">
         <source>Confirm move</source>
         <target state="translated">确认移动</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
         <target state="translated">连接节点会破坏关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Copied" xml:space="preserve">
         <source>Copied</source>
@@ -1422,14 +1422,14 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
         <source>Could not duplicate object</source>
         <target state="translated">无法复制对象</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Create&#10;" xml:space="preserve">
         <source>Create
 </source>
         <target state="translated">创建
 </target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Create Relation" xml:space="preserve">
         <source>Create Relation</source>
@@ -1439,12 +1439,12 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Create Relation Type" xml:space="preserve">
         <source>Create Relation Type</source>
         <target state="translated">创建关系类型</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
         <target state="translated">为每个键/值对在表中创建一行，并指定匹配对象应被包含还是排除。留空值表示键不存在。使用key=*匹配任意值。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
@@ -1454,7 +1454,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Database error" xml:space="preserve">
         <source>Database error</source>
         <target state="translated">数据库错误</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." xml:space="preserve">
         <source>Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</source>
@@ -1471,7 +1471,7 @@ Object geometry: a closed way or multipolygon)</note>
 </source>
         <target state="translated">删除
 </target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
@@ -1481,17 +1481,17 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Delete completely" xml:space="preserve">
         <source>Delete completely</source>
         <target state="translated">完全删除</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Delete failed" xml:space="preserve">
         <source>Delete failed</source>
         <target state="translated">删除失败</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
         <source>Detach from relation</source>
         <target state="translated">从关系中分离</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Discard" xml:space="preserve">
         <source>Discard</source>
@@ -1506,7 +1506,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Display options" xml:space="preserve">
         <source>Display options</source>
         <target state="translated">显示选项</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
@@ -1516,7 +1516,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Done" xml:space="preserve">
         <source>Done</source>
         <target state="translated">完成</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Down" xml:space="preserve">
         <source>Down</source>
@@ -1524,7 +1524,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Downloaded nodes, ways and relations, and any edits you have made." xml:space="preserve">
         <source>Downloaded nodes, ways and relations, and any edits you have made.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
@@ -1534,32 +1534,32 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Edit" xml:space="preserve">
         <source>Edit</source>
         <target state="translated">编辑</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Edit XML" xml:space="preserve">
         <source>Edit XML</source>
         <target state="translated">编辑XML</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
         <target state="translated">编辑禁行限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
         <source>Editing layer not visible</source>
         <target state="translated">编辑图层不可见</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Editor only" xml:space="preserve">
         <source>Editor only</source>
         <target state="translated">只有编辑图层</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
         <source>Editor with Aerial</source>
         <target state="translated">卫星影像和编辑图层</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
         <source>Ensure Location Services is enabled and you have granted this application access.
@@ -1568,12 +1568,12 @@ Error: %@</source>
         <target state="translated">请确保已启用位置服务并授予本应用访问权限。
 
 错误：%@</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Ensure the editor view is visible and displays objects in the local area" xml:space="preserve">
         <source>Ensure the editor view is visible and displays objects in the local area</source>
         <target state="translated">请确保编辑器视图可见并显示本地区域对象</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
         <source>Error</source>
@@ -1583,22 +1583,22 @@ Error: %@</source>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
         <target state="translated">连接到路径时出错</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
         <source>Error fetching metadata: %@</source>
         <target state="translated">获取元数据时出错：%@</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
         <target state="translated">扩展转向限制中的'途经点'将破坏该关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">
         <source>Extending a way which belongs to a Route or similar relation may damage the relation</source>
         <target state="translated">扩展属于路线或关联关系的路径可能损坏该关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Extract Node" xml:space="preserve">
         <source>Extract Node</source>
@@ -1622,12 +1622,12 @@ Error: %@</source>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
         <target state="translated">GPX上传完成</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
         <target state="translated">GPX上传失败</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="GeoJSON" xml:space="preserve">
         <source>GeoJSON</source>
@@ -1635,7 +1635,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
         <source>Geometry</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
         <source>HealthKit</source>
@@ -1657,7 +1657,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Icon" xml:space="preserve">
         <source>Icon</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
@@ -1667,16 +1667,16 @@ Error: %@</source>
       <trans-unit id="Ignore" xml:space="preserve">
         <source>Ignore</source>
         <target state="translated">忽略</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Import" xml:space="preserve">
         <source>Import</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Import Error" xml:space="preserve">
         <source>Import Error</source>
         <target state="translated">导入出错了</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Import GPX" xml:space="preserve">
         <source>Import GPX</source>
@@ -1684,17 +1684,17 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
         <source>Import Quests</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
         <source>In order to measure height, please enable camera access in the app's settings.</source>
         <target state="translated">为了测量高度，请在应用程序设置中启用相机访问权限。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <target state="translated">无效URL</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
@@ -1704,7 +1704,7 @@ Error: %@</source>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
         <target state="translated">连接会破坏该道路归属的转弯限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
@@ -1713,7 +1713,7 @@ Error: %@</source>
       <trans-unit id="Last updated %@" xml:space="preserve">
         <source>Last updated %@</source>
         <target state="translated">上次更新 %@</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Lat/Lon" xml:space="preserve">
         <source>Lat/Lon</source>
@@ -1733,7 +1733,7 @@ Error: %@</source>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
         <target state="translated">长度</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Line" xml:space="preserve">
         <source>Line</source>
@@ -1742,26 +1742,26 @@ Error: %@</source>
       <trans-unit id="Location unavailable" xml:space="preserve">
         <source>Location unavailable</source>
         <target state="translated">位置不可用</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Location updated to the location and orientation stored in the photo." xml:space="preserve">
         <source>Location updated to the location and orientation stored in the photo.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
         <source>Login successful</source>
         <target state="translated">登录成功</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Low memory: clearing cache" xml:space="preserve">
         <source>Low memory: clearing cache</source>
         <target state="translated">内存不足:清理缓存</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
         <source>Mail delivery is not available on this device</source>
         <target state="translated">此设备无法发送邮件</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Make Circular" xml:space="preserve">
         <source>Make Circular</source>
@@ -1780,11 +1780,11 @@ Error: %@</source>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
         <target state="translated">合并后的道路节点数上限为2000</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
@@ -1794,26 +1794,26 @@ Error: %@</source>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
         <target state="translated">测量方向</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
         <target state="translated">复杂多边关系成员</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Members" xml:space="preserve">
         <source>Members</source>
         <target state="translated">成员</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Merge Tags" xml:space="preserve">
         <source>Merge Tags</source>
         <target state="translated">合并标签</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Missing way to connect to" xml:space="preserve">
         <source>Missing way to connect to</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Modified" xml:space="preserve">
         <source>Modified</source>
@@ -1823,20 +1823,20 @@ Error: %@</source>
       <trans-unit id="Modify" xml:space="preserve">
         <source>Modify</source>
         <target state="translated">修改</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Modify&#10;" xml:space="preserve">
         <source>Modify
 </source>
         <target state="translated">修改
 </target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Modifying the raw XML data allows you to correct errors that prevent uploading.&#10;&#10;It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format." xml:space="preserve">
         <source>Modifying the raw XML data allows you to correct errors that prevent uploading.
 
 It is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="More..." xml:space="preserve">
         <source>More...</source>
@@ -1846,25 +1846,25 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Most recent" xml:space="preserve">
         <source>Most recent</source>
         <target state="translated">最近的</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Move" xml:space="preserve">
         <source>Move</source>
         <target state="translated">移动</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Move selected object?" xml:space="preserve">
         <source>Move selected object?</source>
         <target state="translated">移动所选对象？</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Multipolygon" xml:space="preserve">
         <source>Multipolygon</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Name" xml:space="preserve">
         <source>Name</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Needs Survey" xml:space="preserve">
         <source>Needs Survey</source>
@@ -1873,7 +1873,7 @@ It is an advanced operation that should only be undertaken if you have a thoroug
       <trans-unit id="Network error" xml:space="preserve">
         <source>Network error</source>
         <target state="translated">网络错误</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Never" xml:space="preserve">
         <source>Never</source>
@@ -1884,7 +1884,7 @@ Never delete old tracks</note>
       <trans-unit id="Next" xml:space="preserve">
         <source>Next</source>
         <target state="translated">下一个</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
@@ -1894,22 +1894,22 @@ Never delete old tracks</note>
       <trans-unit id="No Left Turn restriction" xml:space="preserve">
         <source>No Left Turn restriction</source>
         <target state="translated">无左转限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
         <target state="translated">无右转限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="No Straight On restriction" xml:space="preserve">
         <source>No Straight On restriction</source>
         <target state="translated">无直行限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="No U-Turn restriction" xml:space="preserve">
         <source>No U-Turn restriction</source>
         <target state="translated">无掉头限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="No active track" xml:space="preserve">
         <source>No active track</source>
@@ -1923,35 +1923,35 @@ Never delete old tracks</note>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
         <target state="translated">未找到结果</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="No tags to paste" xml:space="preserve">
         <source>No tags to paste</source>
         <target state="translated">没有标签粘贴</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Node" xml:space="preserve">
         <source>Node</source>
         <target state="translated">节点</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Node Attributes" xml:space="preserve">
         <source>Node Attributes</source>
         <target state="translated">节点属性</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Node Tags" xml:space="preserve">
         <source>Node Tags</source>
         <target state="translated">节点标签</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Node is not an element of way" xml:space="preserve">
         <source>Node is not an element of way</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Node must be the first or last node of the way" xml:space="preserve">
         <source>Node must be the first or last node of the way</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
         <source>Not found</source>
@@ -1966,17 +1966,17 @@ Never delete old tracks</note>
       <trans-unit id="Nothing to upload, no changes have been made." xml:space="preserve">
         <source>Nothing to upload, no changes have been made.</source>
         <target state="translated">没有可上传的，没任何变化。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Number of recent items to display" xml:space="preserve">
         <source>Number of recent items to display</source>
         <target state="translated">最近显示的项目数</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="OK" xml:space="preserve">
         <source>OK</source>
         <target state="translated">确定</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="OSM Data" xml:space="preserve">
         <source>OSM Data</source>
@@ -1985,7 +1985,7 @@ Never delete old tracks</note>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
         <target state="translated">修改的对象</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Old value: %@" xml:space="preserve">
         <source>Old value: %@</source>
@@ -1994,30 +1994,30 @@ Never delete old tracks</note>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
         <target state="translated">只允许左转</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Only Right Turn restriction" xml:space="preserve">
         <source>Only Right Turn restriction</source>
         <target state="translated">只许右转</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Only Straight On restriction" xml:space="preserve">
         <source>Only Straight On restriction</source>
         <target state="translated">只许直行</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Only multipolygon relations are supported" xml:space="preserve">
         <source>Only multipolygon relations are supported</source>
         <target state="translated">仅支持复杂多边形关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Only ways/multipolygons can be rotated" xml:space="preserve">
         <source>Only ways/multipolygons can be rotated</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Open Image File" xml:space="preserve">
         <source>Open Image File</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Open Settings" xml:space="preserve">
         <source>Open Settings</source>
@@ -2027,7 +2027,7 @@ Never delete old tracks</note>
       <trans-unit id="Open URL" xml:space="preserve">
         <source>Open URL</source>
         <target state="translated">打开URL</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Paste" xml:space="preserve">
         <source>Paste</source>
@@ -2036,34 +2036,34 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
         <source>Paste the JSON for your quests into the field below</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
         <target state="new">Pasting %ld characters, maximum tag length is 255</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
         <source>Pasting %ld tags</source>
         <target state="needs-review-l10n">粘贴 %ld 个标签</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
         <source>Pause recording GPX tracks.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
         <source>Please wait</source>
         <target state="translated">请稍候</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
@@ -2076,7 +2076,7 @@ Never delete old tracks</note>
       <trans-unit id="Previous" xml:space="preserve">
         <source>Previous</source>
         <target state="translated">上一个</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Previous Tracks" xml:space="preserve">
         <source>Previous Tracks</source>
@@ -2086,7 +2086,7 @@ Never delete old tracks</note>
       <trans-unit id="Provide a single-character symbol (emoji or unicode character) to identify this quest:" xml:space="preserve">
         <source>Provide a single-character symbol (emoji or unicode character) to identify this quest:</source>
         <target state="translated">请提供一个可以辨识本任务的单字符号（表情符号或 Unicode 字符）：</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Purge" xml:space="preserve">
         <source>Purge</source>
@@ -2099,15 +2099,15 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Quest Definition Error" xml:space="preserve">
         <source>Quest Definition Error</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Quests were imported successfully." xml:space="preserve">
         <source>Quests were imported successfully.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." xml:space="preserve">
         <source>Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
@@ -2117,40 +2117,40 @@ Never delete old tracks</note>
       <trans-unit id="Redo" xml:space="preserve">
         <source>Redo</source>
         <target state="translated">重做</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Relation Attributes" xml:space="preserve">
         <source>Relation Attributes</source>
         <target state="translated">关系属性</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Relation Tags" xml:space="preserve">
         <source>Relation Tags</source>
         <target state="translated">关系标签</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Relation: %@" xml:space="preserve">
         <source>Relation: %@</source>
         <target state="translated">关系: %@</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Relations" xml:space="preserve">
         <source>Relations</source>
         <target state="translated">关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
         <target state="translated">替换标签</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 3 nodes</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 4 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 4 nodes</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Restrict" xml:space="preserve">
         <source>Restrict</source>
@@ -2159,7 +2159,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Restriction: %@" xml:space="preserve">
         <source>Restriction: %@</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Results for %@ (%@)" xml:space="preserve">
         <source>Results for %@ (%@)</source>
@@ -2196,7 +2196,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Save or discard your changes" xml:space="preserve">
         <source>Save or discard your changes</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Search" xml:space="preserve">
         <source>Search</source>
@@ -2205,20 +2205,20 @@ Never delete old tracks</note>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
         <target state="translated">选择对象</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Select a highway approaching the intersection" xml:space="preserve">
         <source>Select a highway approaching the intersection</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
         <source>Select the language used for Presets. Other app content will use your default language.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Selected object is off screen" xml:space="preserve">
         <source>Selected object is off screen</source>
         <target state="translated">所选对象不在屏幕上</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Set" xml:space="preserve">
         <source>Set</source>
@@ -2233,7 +2233,7 @@ Never delete old tracks</note>
       <trans-unit id="Settings" xml:space="preserve">
         <source>Settings</source>
         <target state="translated">设置</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Settings…" xml:space="preserve">
         <source>Settings…</source>
@@ -2248,11 +2248,11 @@ Title for sharing options</note>
       <trans-unit id="Show Recent Items" xml:space="preserve">
         <source>Show Recent Items</source>
         <target state="translated">显示最近的项目</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
         <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Sorry, an error occurred while loading the %@ file" xml:space="preserve">
         <source>Sorry, an error occurred while loading the %@ file</source>
@@ -2270,7 +2270,7 @@ Title for sharing options</note>
       <trans-unit id="Standard imagery" xml:space="preserve">
         <source>Standard imagery</source>
         <target state="translated">标准影像</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Start" xml:space="preserve">
         <source>Start</source>
@@ -2279,24 +2279,24 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
         <source>Start recording GPX tracks.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Stop" xml:space="preserve">
         <source>Stop</source>
         <target state="translated">停止</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Stop GPX" xml:space="preserve">
         <source>Stop GPX</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Stop recording GPX tracks." xml:space="preserve">
         <source>Stop recording GPX tracks.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Straighten" xml:space="preserve">
         <source>Straighten</source>
@@ -2306,11 +2306,11 @@ Title for sharing options</note>
       <trans-unit id="Success" xml:space="preserve">
         <source>Success</source>
         <target state="translated">成功</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Tag Key" xml:space="preserve">
         <source>Tag Key</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Tags" xml:space="preserve">
         <source>Tags</source>
@@ -2320,130 +2320,130 @@ Title for sharing options</note>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
         <target state="translated">拍摄一张新照片</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
         <target state="translated">+按钮可以位于屏幕的左侧或右侧</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
         <source>The current location cannot be determined: </source>
         <target state="translated">无法确定当前位置： </target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The merged nodes contain conflicting tags" xml:space="preserve">
         <source>The merged nodes contain conflicting tags</source>
         <target state="translated">合并节点中存在标签冲突</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The nodes have conflicting roles in parent relations" xml:space="preserve">
         <source>The nodes have conflicting roles in parent relations</source>
         <target state="translated">当前路网节点在父级关系数据中存在角色定义冲突</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The object does not contain any tags" xml:space="preserve">
         <source>The object does not contain any tags</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
         <target state="translated">该转向限制无法删除</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The selected image file does not contain location information." xml:space="preserve">
         <source>The selected image file does not contain location information.</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
         <target state="translated">所选路径必须完整显示</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
         <target state="translated">目标路径存在歧义</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The turn contains an unrecognized turn restriction style. Proceeding will destroy it." xml:space="preserve">
         <source>The turn contains an unrecognized turn restriction style. Proceeding will destroy it.</source>
         <target state="translated">当前转向限制包含未识别样式，继续操作将导致数据丢失。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
         <target state="translated">当前路径所属关系数据未完整下载</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
         <source>The way is not sufficiently straight</source>
         <target state="translated">当前路径弯曲度不符合要求</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The way must have at least 2 nodes" xml:space="preserve">
         <source>The way must have at least 2 nodes</source>
         <target state="translated">路径必须包含至少2个路网节点</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The ways contain incompatible tags" xml:space="preserve">
         <source>The ways contain incompatible tags</source>
         <target state="translated">当前路径包含不兼容的标签数据</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
         <source>This action requires GPS to be turned on</source>
         <target state="translated">本操作需开启GPS卫星定位服务</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="This app does not yet support editing turn restrictions without a node as the 'via' member" xml:space="preserve">
         <source>This app does not yet support editing turn restrictions without a node as the 'via' member</source>
         <target state="translated">本应用暂不支持编辑无节点作为'经由点'的转向限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="This device is not able to provide heading data." xml:space="preserve">
         <source>This device is not able to provide heading data.</source>
         <target state="translated">当前设备不支持提供航向数据</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="This feature is only available on iOS 15 or later" xml:space="preserve">
         <source>This feature is only available on iOS 15 or later</source>
         <target state="translated">本功能需iOS 15及以上系统支持</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="This page allows you to design quests with more specific criteria than the regular Quest Builder page." xml:space="preserve">
         <source>This page allows you to design quests with more specific criteria than the regular Quest Builder page.</source>
         <target state="translated">本页面支持设置比常规任务构建更精确的路线条件。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="To add another member to the relation 'long press' on the way to be added" xml:space="preserve">
         <source>To add another member to the relation 'long press' on the way to be added</source>
         <target state="translated">长按待添加路线可新增关系成员</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Travel ALLOWED from %@ to %@" xml:space="preserve">
         <source>Travel ALLOWED from %@ to %@</source>
         <target state="translated">仅允许从%@前往%@</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Travel ONLY from %@ to %@" xml:space="preserve">
         <source>Travel ONLY from %@ to %@</source>
         <target state="translated">仅允许从%@前往%@</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Travel PROHIBITED from %@ to %@" xml:space="preserve">
         <source>Travel PROHIBITED from %@ to %@</source>
         <target state="translated">禁止从%@前往%@</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Travel from %@" xml:space="preserve">
         <source>Travel from %@</source>
         <target state="translated">从%@出发</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
         <target state="translated">请开启定位服务以使%@获取您的位置信息</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
         <source>Turn Restrictions</source>
@@ -2455,7 +2455,7 @@ Title for sharing options</note>
 
 Select the highway from which you are approaching the intersection, then tap an arrow to toggle whether the destination road is a permitted route.</source>
         <target state="translated">转向限制规则定义了从特定方向进入路口时可转向的道路。请选择您当前驶入路口的主干道，通过点击箭头图标切换目标道路是否允许通行。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Type" xml:space="preserve">
         <source>Type</source>
@@ -2464,11 +2464,11 @@ Select the highway from which you are approaching the intersection, then tap an 
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
         <source>U-Turn from %@ allowed</source>
         <target state="translated">允许从%@调头</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="U-Turn from %@ prohibited" xml:space="preserve">
         <source>U-Turn from %@ prohibited</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="UID" xml:space="preserve">
         <source>UID</source>
@@ -2478,12 +2478,12 @@ Select the highway from which you are approaching the intersection, then tap an 
       <trans-unit id="Unable to upload changes" xml:space="preserve">
         <source>Unable to upload changes</source>
         <target state="translated">无法上传变更</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Undo" xml:space="preserve">
         <source>Undo</source>
         <target state="translated">撤消</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Unknown role" xml:space="preserve">
         <source>Unknown role</source>
@@ -2493,7 +2493,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
         <target state="translated">不支持的转向限制类型</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Up" xml:space="preserve">
         <source>Up</source>
@@ -2517,22 +2517,22 @@ Select the highway from which you are approaching the intersection, then tap an 
       <trans-unit id="Upload complete!" xml:space="preserve">
         <source>Upload complete!</source>
         <target state="translated">上传完成！</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
         <source>Upload to OSM</source>
         <target state="translated">上传到OSM</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Upload your changes" xml:space="preserve">
         <source>Upload your changes</source>
         <target state="translated">上载你的变更</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Uploading GPX..." xml:space="preserve">
         <source>Uploading GPX...</source>
         <target state="translated">上传GPX...</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="User" xml:space="preserve">
         <source>User</source>
@@ -2542,7 +2542,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       <trans-unit id="User-defined imagery" xml:space="preserve">
         <source>User-defined imagery</source>
         <target state="translated">用户定义的影像</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Version" xml:space="preserve">
         <source>Version</source>
@@ -2556,32 +2556,32 @@ Select the highway from which you are approaching the intersection, then tap an 
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
         <target state="translated">警告</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Way Attributes" xml:space="preserve">
         <source>Way Attributes</source>
         <target state="translated">路径属性</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Way Tags" xml:space="preserve">
         <source>Way Tags</source>
         <target state="translated">路径标签</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
         <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
         <target state="translated">请以'添加表面'这类动作格式命名本任务</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="What tag key is modified by this quest?" xml:space="preserve">
         <source>What tag key is modified by this quest?</source>
         <target state="translated">本任务将修改哪个标签键？</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="What types of objects does this quest apply to?" xml:space="preserve">
         <source>What types of objects does this quest apply to?</source>
         <target state="translated">本任务适用于哪些类型的对象？</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.&#10;&#10;To continue press Commit once again, otherwise press Cancel." xml:space="preserve">
         <source>You are about to make changes to the live OpenStreetMap database. Your changes will be visible to everyone in the world.
@@ -2590,7 +2590,7 @@ To continue press Commit once again, otherwise press Cancel.</source>
         <target state="translated">您即将修改OpenStreetMap在线生产数据库。您的更改将对全球所有用户可见。
 
 如需继续，请再次点击'提交'；否则请点击'取消'。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="You can define custom fields for presets. A field is a single key/value pair associated with a feature." xml:space="preserve">
         <source>You can define custom fields for presets. A field is a single key/value pair associated with a feature.</source>
@@ -2602,17 +2602,17 @@ To continue press Commit once again, otherwise press Cancel.</source>
 These members are marked with '&gt;'.</source>
         <target state="translated">只有当关联成员已下载时，才能导航至该成员。
 这些成员会以'&gt;'符号标记。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost." xml:space="preserve">
         <source>You have made changes that have not yet been uploaded to the server. Clearing the cache will cause those changes to be lost.</source>
         <target state="translated">您已进行的更改尚未上传至服务器，清除缓存将导致这些更改丢失。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="You must save or discard changes to the current object before editing its associated relation" xml:space="preserve">
         <source>You must save or discard changes to the current object before editing its associated relation</source>
         <target state="translated">必须先保存或放弃当前对象的修改，才能编辑其关联关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
@@ -2621,7 +2621,7 @@ Rate this app?</source>
         <target state="translated">您已使用此版本的 Go Map 上传了 %ld 个变更集！！
 
 为这个应用软件评分？</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">
         <source>Your OSM data cache is getting large, which may lead to slow startup and shutdown times.
@@ -2630,85 +2630,85 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">您的OSM数据缓存正在增大，这可能导致启动和关闭速度变慢。
 
 建议清除缓存（位于显示设置中）以提升性能。</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="Zoom to Edit" xml:space="preserve">
         <source>Zoom to Edit</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="add node to way" xml:space="preserve">
         <source>add node to way</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="add object to relation" xml:space="preserve">
         <source>add object to relation</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="added to multipolygon relation" xml:space="preserve">
         <source>added to multipolygon relation</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
         <source>computing size...</source>
         <target state="translated">计算大小...</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="create node" xml:space="preserve">
         <source>create node</source>
         <target state="translated">创建节点</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="create relation" xml:space="preserve">
         <source>create relation</source>
         <target state="translated">创建关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="create turn restriction" xml:space="preserve">
         <source>create turn restriction</source>
         <target state="translated">创建转向限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="create way" xml:space="preserve">
         <source>create way</source>
         <target state="translated">创建路径</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="delete multipolygon" xml:space="preserve">
         <source>delete multipolygon</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="delete node" xml:space="preserve">
         <source>delete node</source>
         <target state="translated">删除节点</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="delete node from way" xml:space="preserve">
         <source>delete node from way</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="delete object from relation" xml:space="preserve">
         <source>delete object from relation</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="delete relation" xml:space="preserve">
         <source>delete relation</source>
         <target state="translated">删除关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="delete restriction" xml:space="preserve">
         <source>delete restriction</source>
         <target state="translated">删除限制</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="delete route" xml:space="preserve">
         <source>delete route</source>
         <target state="translated">删除路线</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="delete way" xml:space="preserve">
         <source>delete way</source>
         <target state="translated">删除路径</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="duplicate" xml:space="preserve">
         <source>duplicate</source>
@@ -2751,7 +2751,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="meters" xml:space="preserve">
         <source>meters</source>
         <target state="translated">米</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="mi" xml:space="preserve">
         <source>mi</source>
@@ -2761,7 +2761,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="move" xml:space="preserve">
         <source>move</source>
         <target state="translated">移动</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="mph" xml:space="preserve">
         <source>mph</source>
@@ -2771,31 +2771,31 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="no" xml:space="preserve">
         <source>no</source>
         <target state="translated">否</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="node %@" xml:space="preserve">
         <source>node %@</source>
         <target state="translated">节点%@</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="node %@ (in way)" xml:space="preserve">
         <source>node %@ (in way)</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="other object" xml:space="preserve">
         <source>other object</source>
         <target state="translated">其他对象</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="relation" xml:space="preserve">
         <source>relation</source>
         <target state="translated">关系</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="set tags" xml:space="preserve">
         <source>set tags</source>
         <target state="translated">设置标签</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="st" xml:space="preserve">
         <source>st</source>
@@ -2810,7 +2810,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="update relation members" xml:space="preserve">
         <source>update relation members</source>
         <target state="translated">更新关系成员</target>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="vintage %@" xml:space="preserve">
         <source>vintage %@</source>
@@ -2822,18 +2822,18 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="way %@" xml:space="preserve">
         <source>way %@</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="yes" xml:space="preserve">
         <source>yes</source>
         <target state="translated">是</target>
-        <note/>
+        <note />
       </trans-unit>
     </body>
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -2853,7 +2853,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/InfoPlist.xcstrings" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -2868,12 +2868,12 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="PhotoShare/Localizable.xcstrings" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
         <source>Processing data...</source>
-        <note/>
+        <note />
       </trans-unit>
       <trans-unit id="The URL content isn't recognized." xml:space="preserve">
         <source>The URL content isn't recognized.</source>
@@ -2883,20 +2883,20 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="Unfortunately the selected image does not contain location information." xml:space="preserve">
         <source>Unfortunately the selected image does not contain location information.</source>
         <target state="translated">遗憾的是，所选图像不包含位置信息。</target>
-        <note/>
+        <note />
       </trans-unit>
     </body>
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
-      <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
+      <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve" translate="no">
         <source>no</source>
         <note>Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve">
+      <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve" translate="no">
         <source>type</source>
         <target state="translated">类型</target>
         <note>Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Placeholder - Do not translate";</note>
@@ -2906,7 +2906,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">返回</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq";</note>
       </trans-unit>
-      <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve">
+      <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve" translate="no">
         <source>Title</source>
         <target state="translated">标题</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Placeholder - Do not translate";</note>
@@ -2921,7 +2921,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">兴趣点</target>
         <note>Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S";</note>
       </trans-unit>
-      <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve">
+      <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve" translate="no">
         <source>Quercus </source>
         <note>Class = "UITextField"; placeholder = "Quercus "; ObjectID = "6yC-L7-V38"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -2949,11 +2949,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">餐厅</target>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j";</note>
       </trans-unit>
-      <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve">
+      <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve" translate="no">
         <source>broadleaved </source>
         <note>Class = "UITextField"; placeholder = "broadleaved "; ObjectID = "AAx-p2-Mzh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
+      <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve" translate="no">
         <source>dog</source>
         <target state="translated">狗</target>
         <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Placeholder - Do not translate";</note>
@@ -2992,7 +2992,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Value 3</source>
         <note>Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE";</note>
       </trans-unit>
-      <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
+      <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve" translate="no">
         <source>designated</source>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3081,7 +3081,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">名称</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "TJk-hO-Ejc";</note>
       </trans-unit>
-      <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
+      <trans-unit id="TK4-E8-1q7.text" xml:space="preserve" translate="no">
         <source>Title</source>
         <target state="translated">标题</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Placeholder - Do not translate";</note>
@@ -3090,7 +3090,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Back</source>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "UJ1-oM-H4Z";</note>
       </trans-unit>
-      <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
+      <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve" translate="no">
         <source>relation</source>
         <target state="translated">关系</target>
         <note>Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Placeholder - Do not translate";</note>
@@ -3104,7 +3104,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Title</source>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "WXF-5S-E8m";</note>
       </trans-unit>
-      <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
+      <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve" translate="no">
         <source>Inscription</source>
         <note>Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3122,17 +3122,17 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">值7</target>
         <note>Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL";</note>
       </trans-unit>
-      <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
+      <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve" translate="no">
         <source>key</source>
         <target state="translated">键</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
+      <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve" translate="no">
         <source>Food &amp; Drink</source>
         <target state="translated">食品饮料</target>
         <note>Class = "UILabel"; text = "Food &amp; Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="XCc-6y-qYt.placeholder" xml:space="preserve">
+      <trans-unit id="XCc-6y-qYt.placeholder" xml:space="preserve" translate="no">
         <source>key</source>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3140,12 +3140,12 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>key</source>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "ZNr-2O-LuN";</note>
       </trans-unit>
-      <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
+      <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve" translate="no">
         <source>Subtitle</source>
         <target state="translated">子标题</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
+      <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve" translate="no">
         <source>ref</source>
         <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3167,7 +3167,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Custom Features</source>
         <note>Class = "UINavigationItem"; title = "Custom Features"; ObjectID = "cNV-jf-zYM";</note>
       </trans-unit>
-      <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
+      <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve" translate="no">
         <source>value</source>
         <target state="translated">值</target>
         <note>Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Placeholder - Do not translate";</note>
@@ -3177,7 +3177,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">预设键</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr";</note>
       </trans-unit>
-      <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
+      <trans-unit id="daQ-tl-pKh.text" xml:space="preserve" translate="no">
         <source>Label</source>
         <target state="translated">标签</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Placeholder - Do not translate";</note>
@@ -3192,7 +3192,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">允许带狗</target>
         <note>Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp";</note>
       </trans-unit>
-      <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve">
+      <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve" translate="no">
         <source>tree </source>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3205,21 +3205,21 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Point</source>
         <note>Class = "UIButton"; normalTitle = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
-      <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
+      <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve" translate="no">
         <source>clean</source>
         <target state="translated">清除</target>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve">
+      <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve" translate="no">
         <source>Oak</source>
         <note>Class = "UITextField"; placeholder = "Oak"; ObjectID = "ftg-j1-Ep9"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
+      <trans-unit id="gv7-b8-wUw.text" xml:space="preserve" translate="no">
         <source>Label</source>
         <target state="translated">标签</target>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="hAy-aU-g8L.text" xml:space="preserve">
+      <trans-unit id="hAy-aU-g8L.text" xml:space="preserve" translate="no">
         <source>Lorem ipsum dolor </source>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3251,7 +3251,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">预设值</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
-      <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve">
+      <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve" translate="no">
         <source>leisure </source>
         <note>Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3293,7 +3293,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>ⓘ</source>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "nil-45-Wvp";</note>
       </trans-unit>
-      <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve">
+      <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3302,11 +3302,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">值11</target>
         <note>Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl";</note>
       </trans-unit>
-      <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
+      <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve" translate="no">
         <source>leashed</source>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
+      <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve" translate="no">
         <source>park</source>
         <target state="translated">公园</target>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Placeholder - Do not translate";</note>
@@ -3342,11 +3342,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Feature type:</source>
         <note>Class = "UILabel"; text = "Feature type:"; ObjectID = "sGi-dQ-1v0";</note>
       </trans-unit>
-      <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve">
+      <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve" translate="no">
         <source>value</source>
         <note>Class = "UITextField"; placeholder = "value"; ObjectID = "sHA-cr-GLb"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
+      <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve" translate="no">
         <source>role</source>
         <target state="translated">角色</target>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Placeholder - Do not translate";</note>
@@ -3355,7 +3355,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Key</source>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf";</note>
       </trans-unit>
-      <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve">
+      <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3364,7 +3364,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="translated">预设</target>
         <note>Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE";</note>
       </trans-unit>
-      <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
+      <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve" translate="no">
         <source>yes</source>
         <target state="translated">是的</target>
         <note>Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Placeholder - Do not translate";</note>
@@ -3373,7 +3373,7 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>Value 12</source>
         <note>Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa";</note>
       </trans-unit>
-      <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve">
+      <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3395,7 +3395,7 @@ You may want to clear the cache (under Display settings) to improve performance.
   </file>
   <file original="Settings/Base.lproj/Settings.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -3523,7 +3523,7 @@ http://glyphish.com
         <target state="translated">注册新帐号</target>
         <note>Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1";</note>
       </trans-unit>
-      <trans-unit id="DiU-tt-U7H.text" xml:space="preserve">
+      <trans-unit id="DiU-tt-U7H.text" xml:space="preserve" translate="no">
         <source>Detail detail detail detail detail</source>
         <note>Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3542,7 +3542,7 @@ http://glyphish.com
         <target state="translated">标题</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "HNj-kK-OCP";</note>
       </trans-unit>
-      <trans-unit id="JbA-pC-plJ.text" xml:space="preserve">
+      <trans-unit id="JbA-pC-plJ.text" xml:space="preserve" translate="no">
         <source>Title title title title</source>
         <note>Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3738,7 +3738,7 @@ http://glyphish.com
   </file>
   <file original="Turn Restrictions/Base.lproj/TurnRestrictions.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
@@ -3749,7 +3749,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="zh-Hans" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529" />
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
@@ -3757,7 +3757,7 @@ http://glyphish.com
         <target state="translated">变化：</target>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
-      <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
+      <trans-unit id="BAY-7z-hwv.text" xml:space="preserve" translate="no">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3770,7 +3770,7 @@ http://glyphish.com
         <target state="translated">上传</target>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ";</note>
       </trans-unit>
-      <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
+      <trans-unit id="Plh-7W-ceY.text" xml:space="preserve" translate="no">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
