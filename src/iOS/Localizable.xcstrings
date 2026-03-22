@@ -20113,6 +20113,9 @@
         }
       }
     },
+    "All cached data including aerial imagery tiles, TagInfo and Wiki data, etc." : {
+
+    },
     "All choices" : {
       "localizations" : {
         "ar" : {
@@ -20272,6 +20275,9 @@
           }
         }
       }
+    },
+    "All map tiles for the currently selected base map (Mapnik, Americana, etc)." : {
+
     },
     "All Tags" : {
       "localizations" : {
@@ -22438,6 +22444,9 @@
           }
         }
       }
+    },
+    "Caches" : {
+      "comment" : "cached data"
     },
     "Can only add ways to multipolygons" : {
       "localizations" : {
@@ -24648,6 +24657,7 @@
     },
     "Clear Basemap Tiles" : {
       "comment" : "Delete cached data",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -24737,6 +24747,7 @@
     },
     "Clear Data Caches" : {
       "comment" : "Delete cached data",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -24802,6 +24813,7 @@
     },
     "Clear OSM Data" : {
       "comment" : "Delete cached data",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -30234,6 +30246,9 @@
     },
     "Down" : {
       "comment" : "Move up/down buttons"
+    },
+    "Downloaded nodes, ways and relations, and any edits you have made." : {
+
     },
     "duplicate" : {
       "comment" : "create a duplicate",
@@ -37131,6 +37146,9 @@
           }
         }
       }
+    },
+    "Map Tiles" : {
+      "comment" : "Delete cached data"
     },
     "Max nodes after joining is 2000" : {
       "localizations" : {
@@ -44577,6 +44595,9 @@
           }
         }
       }
+    },
+    "OSM Data" : {
+      "comment" : "Delete cached data"
     },
     "other object" : {
       "localizations" : {

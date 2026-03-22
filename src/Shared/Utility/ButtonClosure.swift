@@ -16,10 +16,12 @@ class ButtonClosure: UIButton {
 		addTarget(self, action: #selector(trigger), for: .touchUpInside)
 	}
 
+	required init?(coder: NSCoder) {
+		super.init(coder: coder)
+		addTarget(self, action: #selector(trigger), for: .touchUpInside)
+	}
+
 	@objc private func trigger() {
 		onTap?(self)
 	}
-
-	@available(*, unavailable)
-	required init?(coder: NSCoder) { fatalError("init(coder:) not implemented") }
 }

@@ -943,6 +943,18 @@
         }
       }
     },
+    "5JJ-aN-eAg.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Details Label\"; ObjectID = \"5JJ-aN-eAg\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Details Label"
+          }
+        }
+      }
+    },
     "7df-49-qTa.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Rail Features\"; ObjectID = \"7df-49-qTa\";",
       "extractionState" : "extracted_with_value",
@@ -1941,6 +1953,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "HealthKit 路線："
+          }
+        }
+      }
+    },
+    "bDu-nw-QGM.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"bDu-nw-QGM\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Aerial Tiles"
           }
         }
       }
@@ -4057,9 +4081,21 @@
         }
       }
     },
+    "ErU-hB-dqk.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Size Label\"; ObjectID = \"ErU-hB-dqk\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Size Label"
+          }
+        }
+      }
+    },
     "fFT-hv-mKl.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"fFT-hv-mKl\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4221,7 +4257,7 @@
     },
     "fVu-8o-Ldq.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"fVu-8o-Ldq\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -4310,168 +4346,168 @@
       }
     },
     "g2G-5j-Y4q.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"g2G-5j-Y4q\";",
+      "comment" : "Class = \"UILabel\"; text = \"Details Label\"; ObjectID = \"g2G-5j-Y4q\"; Note = \"Placeholder - do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "التفاصيل"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "التفاصيل"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Podrobnosti"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Details"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Details"
+            "value" : "Details Label"
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Detalles"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Üksikasjad"
           }
         },
         "eu" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Xehetasunak"
           }
         },
         "fi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Yksityiskohdat"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Détails"
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Detalji"
           }
         },
         "id" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Keterangan"
           }
         },
         "it" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Dettagli"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "詳細"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "तपशील"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Detaljer"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Details"
           }
         },
         "oc" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Per lo menut"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Detalhes"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Detalhes"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Подробнее"
           }
         },
         "ta" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "விவரங்கள்"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Деталі"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Chi tiết"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "详情"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "詳細內容"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "詳細內容"
           }
         }
@@ -4641,7 +4677,7 @@
     },
     "GNK-bZ-i9X.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Details\"; ObjectID = \"GNK-bZ-i9X\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -5437,6 +5473,18 @@
         }
       }
     },
+    "il1-Gs-nr3.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Size Label\"; ObjectID = \"il1-Gs-nr3\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Size Label"
+          }
+        }
+      }
+    },
     "iuk-Fk-3Fw.placeholder" : {
       "comment" : "Class = \"UITextField\"; placeholder = \"(TMS)\"; ObjectID = \"iuk-Fk-3Fw\";",
       "extractionState" : "extracted_with_value",
@@ -5721,6 +5769,30 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "路徑"
+          }
+        }
+      }
+    },
+    "KFp-Us-thh.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Details Label\"; ObjectID = \"KFp-Us-thh\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Details Label"
+          }
+        }
+      }
+    },
+    "LM2-9D-wtc.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"LM2-9D-wtc\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
           }
         }
       }
@@ -6207,6 +6279,18 @@
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "啟用過濾功能"
+          }
+        }
+      }
+    },
+    "mbV-RK-BWD.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Size Label\"; ObjectID = \"mbV-RK-BWD\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Size Label"
           }
         }
       }
@@ -8133,7 +8217,7 @@
     },
     "r78-B4-pAU.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"r78-B4-pAU\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -10075,6 +10159,18 @@
         }
       }
     },
+    "Upc-rm-bRz.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"Upc-rm-bRz\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
+          }
+        }
+      }
+    },
     "uQ3-vb-l3H.placeholder" : {
       "comment" : "Class = \"UITextField\"; placeholder = \"21\"; ObjectID = \"uQ3-vb-l3H\";",
       "extractionState" : "extracted_with_value",
@@ -11623,6 +11719,18 @@
         }
       }
     },
+    "yZe-Bk-kIy.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"yZe-Bk-kIy\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Button"
+          }
+        }
+      }
+    },
     "Z8C-Ef-iJE.title" : {
       "comment" : "Class = \"UINavigationItem\"; title = \"GPX Tracks\"; ObjectID = \"Z8C-Ef-iJE\";",
       "extractionState" : "extracted_with_value",
@@ -12085,6 +12193,18 @@
         }
       }
     },
+    "ZFi-dJ-qjx.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"ZFi-dJ-qjx\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Aerial Tiles"
+          }
+        }
+      }
+    },
     "zI2-YM-qbl.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Add New\"; ObjectID = \"zI2-YM-qbl\"; Note = \"Add new aerial imagery provider\";",
       "extractionState" : "extracted_with_value",
@@ -12536,7 +12656,7 @@
       }
     },
     "Zzc-4t-QhT.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"Zzc-4t-QhT\";",
+      "comment" : "Class = \"UILabel\"; text = \"Aerial Tiles\"; ObjectID = \"Zzc-4t-QhT\"; Note = \"Placeholder - do not translate\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {

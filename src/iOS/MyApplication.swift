@@ -55,9 +55,9 @@ class MyApplication: UIApplication {
 		if #available(iOS 14.0, *),
 		   ProcessInfo.processInfo.isiOSAppOnMac, // only when on Mac and not Catalyst
 		   event.type == .touches,
-		   event.buttonMask.contains(.secondary),	// right-click
+		   event.buttonMask.contains(.secondary), // right-click
 		   let touch = event.allTouches?.first,
-		   touch.type == .indirectPointer,	// mouse or track pad event
+		   touch.type == .indirectPointer, // mouse or track pad event
 		   touch.phase == .began,
 		   let window = connectedScenes
 		   .compactMap({ $0 as? UIWindowScene })

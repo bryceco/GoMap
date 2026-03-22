@@ -31,6 +31,13 @@ class ClearCacheViewController: TableViewControllerMac {
 		tableView.estimatedRowHeight = 44
 
 		automaticCacheManagement.isOn = AppDelegate.shared.mainView.settings.enableAutomaticCacheManagement
+
+		for row in 0..<3 {
+			let indexPath = IndexPath(row: row, section: 1)
+			let cell = tableView.cellForRow(at: indexPath)! as! ClearCacheCell
+
+			update(cell: cell, for: Row(rawValue: row)!)
+		}
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -41,68 +48,72 @@ class ClearCacheViewController: TableViewControllerMac {
 
 	// MARK: - Table view delegate
 
-	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
-	                        forRowAt indexPath: IndexPath)
-	{
-		guard let cell = cell as? ClearCacheCell else { return }
-		if indexPath.section != 1 {
-			return
-		}
-
+	private func update(cell: ClearCacheCell, for row: Row) {
 		let mapView = AppDelegate.shared.mapView!
 		let mainView = AppDelegate.shared.mainView!
 		let mapData = mapView.mapData
 
-		let title: String?
-		switch indexPath.row {
-		case Row.osmData.rawValue:
-			title = NSLocalizedString("Clear OSM Data", comment: "Delete cached data")
-		case Row.basemap.rawValue:
-			title = NSLocalizedString("Clear Basemap Tiles", comment: "Delete cached data")
-		case Row.otherCaches.rawValue:
-			title = NSLocalizedString("Clear Data Caches", comment: "Delete cached data")
-		default:
-			fatalError()
+		let title: String
+		let details: String
+		switch row {
+		case .osmData:
+			title = NSLocalizedString("OSM Data", comment: "")
+			details = NSLocalizedString(
+				"Downloaded nodes, ways and relations, and any edits you have made.",
+				comment: "")
+		case .basemap:
+			title = NSLocalizedString("Map Tiles", comment: "")
+			details = NSLocalizedString(
+				"All map tiles for the currently selected base map (Mapnik, Americana, etc).",
+				comment: "")
+		case .otherCaches:
+			title = NSLocalizedString("Caches", comment: "cached data")
+			details = NSLocalizedString(
+				"All cached data including aerial imagery tiles, TagInfo and Wiki data, etc.",
+				comment: "")
 		}
 		cell.titleLabel.text = title
-		cell.detailLabel.text = ""
+		cell.detailLabel.text = details
+		cell.sizesLabel.text = ""
+		cell.clearButton.onTap = { _ in self.deleteData(at: row) }
+		cell.clearButton.setTitle("", for: .normal)
 
-		if indexPath.row == Row.osmData.rawValue {
+		if row == .osmData {
 			let objectCount = mapData.nodeCount() + mapData.wayCount() + mapData.relationCount()
-			cell.detailLabel.text = String.localizedStringWithFormat(
+			cell.sizesLabel.text = String.localizedStringWithFormat(
 				NSLocalizedString("%ld objects", comment: "Number of tiles/objects in cache"),
 				objectCount)
 		} else {
-			cell.detailLabel.text = NSLocalizedString("computing size...", comment: "")
+			cell.sizesLabel.text = NSLocalizedString("computing size...", comment: "")
 			Task {
 				let size: Int
 				let count: Int
-				switch indexPath.row {
-				case Row.basemap.rawValue:
+				switch row {
+				case .basemap:
 					(size, count) = await mainView.mapLayersView.basemapLayer.getDiskCacheSize()
-				case Row.otherCaches.rawValue:
+				case .otherCaches:
 					(size, count) = sizeOfCachesDirectory() ?? (0, 0)
 				default:
 					fatalError()
 				}
 				await MainActor.run {
-					cell.detailLabel.text = String.localizedStringWithFormat(
+					cell.sizesLabel.text = String.localizedStringWithFormat(
 						NSLocalizedString("%.2f MB, %ld files", comment: ""),
 						Double(size) / (1024 * 1024),
 						count)
+
+					print(ByteCountFormatter())
 				}
 			}
 		}
 	}
 
-	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-		let appDelegate = AppDelegate.shared
+	override func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+		return nil
+	}
 
-		guard indexPath.section == 1,
-		      let row = Row(rawValue: indexPath.row)
-		else {
-			return
-		}
+	private func deleteData(at row: Row) {
+		let appDelegate = AppDelegate.shared
 
 		switch row {
 		case .osmData:
@@ -174,6 +185,8 @@ class ClearCacheViewController: TableViewControllerMac {
 class ClearCacheCell: UITableViewCell {
 	@IBOutlet var titleLabel: UILabel!
 	@IBOutlet var detailLabel: UILabel!
+	@IBOutlet var sizesLabel: UILabel!
+	@IBOutlet var clearButton: ButtonClosure!
 }
 
 private func sizeOfCachesDirectory() -> (size: Int, count: Int)? {

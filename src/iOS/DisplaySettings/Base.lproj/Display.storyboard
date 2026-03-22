@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24764" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24742"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -279,7 +279,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Automatic" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dIe-MC-t44">
-                                                    <rect key="frame" x="16" y="15.5" width="313" height="21"/>
+                                                    <rect key="frame" x="16" y="16" width="313" height="20"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -296,6 +296,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="7lI-JG-n42" secondAttribute="trailing" constant="16" id="0O7-8o-ZN8"/>
                                                 <constraint firstItem="dIe-MC-t44" firstAttribute="leading" secondItem="yi4-P3-Atq" secondAttribute="leading" constant="16" id="6dD-cb-6Ej"/>
                                                 <constraint firstItem="7lI-JG-n42" firstAttribute="leading" secondItem="dIe-MC-t44" secondAttribute="trailing" constant="8" id="Tgz-db-aeN"/>
+                                                <constraint firstItem="dIe-MC-t44" firstAttribute="top" secondItem="yi4-P3-Atq" secondAttribute="topMargin" constant="1" id="Yh8-9l-wWB"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <constraints>
@@ -321,102 +322,189 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Aerial Tiles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zzc-4t-QhT">
-                                                    <rect key="frame" x="16" y="3" width="87" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g2G-5j-Y4q">
-                                                    <rect key="frame" x="16" y="24.5" width="47" height="25.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="BQp-af-P9S">
+                                                    <rect key="frame" x="20" y="10" width="88.5" height="32"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Aerial Tiles" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zzc-4t-QhT">
+                                                            <rect key="frame" x="0.0" y="0.0" width="88.5" height="0.0"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <attributedString key="userComments">
+                                                                <fragment content="Placeholder - do not translate"/>
+                                                            </attributedString>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="100" verticalCompressionResistancePriority="1000" text="Details Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g2G-5j-Y4q">
+                                                            <rect key="frame" x="0.0" y="5" width="88.5" height="4"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <attributedString key="userComments">
+                                                                <fragment content="Placeholder - do not translate"/>
+                                                            </attributedString>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Size Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="il1-Gs-nr3" userLabel="Size Label">
+                                                            <rect key="frame" x="0.0" y="14" width="88.5" height="18"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="18" id="VNr-fK-yBg"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <attributedString key="userComments">
+                                                                <fragment content="Placeholder - do not translate"/>
+                                                            </attributedString>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LM2-9D-wtc" customClass="ButtonClosure" customModule="Go_Map__" customModuleProvider="target">
+                                                    <rect key="frame" x="346" y="9" width="48" height="34"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="g2G-5j-Y4q" secondAttribute="trailing" constant="15" id="1h9-2T-rpo"/>
-                                                <constraint firstItem="g2G-5j-Y4q" firstAttribute="leading" secondItem="dSD-zy-HPp" secondAttribute="leading" constant="16" id="6JI-NZ-hlx"/>
-                                                <constraint firstItem="g2G-5j-Y4q" firstAttribute="top" secondItem="Zzc-4t-QhT" secondAttribute="bottom" constant="1" id="7LR-gR-hMF"/>
-                                                <constraint firstItem="Zzc-4t-QhT" firstAttribute="leading" secondItem="dSD-zy-HPp" secondAttribute="leading" constant="16" id="XIK-Ob-Z7h"/>
-                                                <constraint firstAttribute="bottom" secondItem="g2G-5j-Y4q" secondAttribute="bottom" constant="2" id="YMA-pb-nRZ"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Zzc-4t-QhT" secondAttribute="trailing" constant="15" id="wMg-8v-dw6"/>
-                                                <constraint firstItem="Zzc-4t-QhT" firstAttribute="top" secondItem="dSD-zy-HPp" secondAttribute="top" constant="3" id="zHQ-AC-ASb"/>
+                                                <constraint firstItem="BQp-af-P9S" firstAttribute="leading" secondItem="dSD-zy-HPp" secondAttribute="leading" constant="20" symbolic="YES" id="2Bp-Te-u8y"/>
+                                                <constraint firstItem="BQp-af-P9S" firstAttribute="top" secondItem="dSD-zy-HPp" secondAttribute="top" constant="10" id="3vf-6B-K9g"/>
+                                                <constraint firstAttribute="bottom" secondItem="BQp-af-P9S" secondAttribute="bottom" constant="10" id="4jH-nt-ILH"/>
+                                                <constraint firstItem="LM2-9D-wtc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="BQp-af-P9S" secondAttribute="trailing" constant="8" symbolic="YES" id="Iek-ke-bMW"/>
+                                                <constraint firstAttribute="trailing" secondItem="LM2-9D-wtc" secondAttribute="trailing" constant="20" symbolic="YES" id="c3G-bR-xP6"/>
+                                                <constraint firstItem="LM2-9D-wtc" firstAttribute="centerY" secondItem="dSD-zy-HPp" secondAttribute="centerY" id="eTM-Iw-F0O"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="clearButton" destination="LM2-9D-wtc" id="6bF-SS-9sI"/>
                                             <outlet property="detailLabel" destination="g2G-5j-Y4q" id="Het-XU-JtW"/>
+                                            <outlet property="sizesLabel" destination="il1-Gs-nr3" id="f8H-yD-FaW"/>
                                             <outlet property="titleLabel" destination="Zzc-4t-QhT" id="b3W-1o-qTy"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClearCacheCell" id="6UD-Jd-cXg" customClass="ClearCacheCell" customModule="Go_Map__" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClearCacheCell" id="qxR-fw-UBE" customClass="ClearCacheCell" customModule="Go_Map__" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="251" width="414" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6UD-Jd-cXg" id="Eig-Nd-DJc">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qxR-fw-UBE" id="KLD-Ii-hyy">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Aerial Tiles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fFT-hv-mKl">
-                                                    <rect key="frame" x="16" y="3" width="87" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GNK-bZ-i9X">
-                                                    <rect key="frame" x="16" y="24.5" width="47" height="25.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="4vk-HZ-j5I">
+                                                    <rect key="frame" x="20" y="10" width="88.5" height="32"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Aerial Tiles" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bDu-nw-QGM">
+                                                            <rect key="frame" x="0.0" y="0.0" width="88.5" height="0.0"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <attributedString key="userComments">
+                                                                <fragment content="Placeholder - do not translate"/>
+                                                            </attributedString>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="100" verticalCompressionResistancePriority="1000" text="Details Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5JJ-aN-eAg">
+                                                            <rect key="frame" x="0.0" y="3" width="88.5" height="8"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <attributedString key="userComments">
+                                                                <fragment content="Placeholder - do not translate"/>
+                                                            </attributedString>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Size Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbV-RK-BWD" userLabel="Size Label">
+                                                            <rect key="frame" x="0.0" y="14" width="88.5" height="18"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="18" id="FgI-QG-oLh"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <attributedString key="userComments">
+                                                                <fragment content="Placeholder - do not translate"/>
+                                                            </attributedString>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Upc-rm-bRz" customClass="ButtonClosure" customModule="Go_Map__" customModuleProvider="target">
+                                                    <rect key="frame" x="346" y="9" width="48" height="34"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="fFT-hv-mKl" firstAttribute="top" secondItem="Eig-Nd-DJc" secondAttribute="top" constant="3" id="FJw-p5-CQw"/>
-                                                <constraint firstAttribute="bottom" secondItem="GNK-bZ-i9X" secondAttribute="bottom" constant="2" id="OQg-Ez-vrX"/>
-                                                <constraint firstItem="fFT-hv-mKl" firstAttribute="leading" secondItem="Eig-Nd-DJc" secondAttribute="leading" constant="16" id="Ub0-ln-Mom"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="GNK-bZ-i9X" secondAttribute="trailing" constant="15" id="V0g-Hu-zrg"/>
-                                                <constraint firstItem="GNK-bZ-i9X" firstAttribute="top" secondItem="fFT-hv-mKl" secondAttribute="bottom" constant="1" id="gSc-dL-aLi"/>
-                                                <constraint firstItem="GNK-bZ-i9X" firstAttribute="leading" secondItem="Eig-Nd-DJc" secondAttribute="leading" constant="16" id="hoj-z5-bEq"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fFT-hv-mKl" secondAttribute="trailing" constant="15" id="zTl-MR-KQq"/>
+                                                <constraint firstAttribute="trailing" secondItem="Upc-rm-bRz" secondAttribute="trailing" constant="20" symbolic="YES" id="2TB-Dv-GoO"/>
+                                                <constraint firstItem="4vk-HZ-j5I" firstAttribute="top" secondItem="KLD-Ii-hyy" secondAttribute="top" constant="10" id="44I-cu-skF"/>
+                                                <constraint firstAttribute="bottom" secondItem="4vk-HZ-j5I" secondAttribute="bottom" constant="10" id="E6S-zA-xJe"/>
+                                                <constraint firstItem="Upc-rm-bRz" firstAttribute="centerY" secondItem="KLD-Ii-hyy" secondAttribute="centerY" id="khx-1u-ibe"/>
+                                                <constraint firstItem="Upc-rm-bRz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="4vk-HZ-j5I" secondAttribute="trailing" constant="8" symbolic="YES" id="laY-77-xBi"/>
+                                                <constraint firstItem="4vk-HZ-j5I" firstAttribute="leading" secondItem="KLD-Ii-hyy" secondAttribute="leading" constant="20" symbolic="YES" id="xiS-1o-mZp"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="detailLabel" destination="GNK-bZ-i9X" id="fMB-dh-uAL"/>
-                                            <outlet property="titleLabel" destination="fFT-hv-mKl" id="GDY-7g-fJy"/>
+                                            <outlet property="clearButton" destination="Upc-rm-bRz" id="67Z-Eh-yBk"/>
+                                            <outlet property="detailLabel" destination="5JJ-aN-eAg" id="YNV-gd-nVG"/>
+                                            <outlet property="sizesLabel" destination="mbV-RK-BWD" id="uY7-N6-ilI"/>
+                                            <outlet property="titleLabel" destination="bDu-nw-QGM" id="ekT-4a-IHZ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClearCacheCell" id="Q7M-3m-rXI" customClass="ClearCacheCell" customModule="Go_Map__" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ClearCacheCell" id="qDv-dd-wcG" customClass="ClearCacheCell" customModule="Go_Map__" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="303" width="414" height="52"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Q7M-3m-rXI" id="5M8-rv-chF">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="qDv-dd-wcG" id="sAn-yc-R5T">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="52"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Aerial Tiles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="r78-B4-pAU">
-                                                    <rect key="frame" x="16" y="3" width="87" height="20.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fVu-8o-Ldq">
-                                                    <rect key="frame" x="16" y="24.5" width="47" height="25.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="M3e-nF-UD4">
+                                                    <rect key="frame" x="20" y="10" width="88.5" height="32"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Aerial Tiles" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZFi-dJ-qjx">
+                                                            <rect key="frame" x="0.0" y="0.0" width="88.5" height="0.0"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <attributedString key="userComments">
+                                                                <fragment content="Placeholder - do not translate"/>
+                                                            </attributedString>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="100" verticalCompressionResistancePriority="1000" text="Details Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFp-Us-thh">
+                                                            <rect key="frame" x="0.0" y="3" width="88.5" height="8"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <attributedString key="userComments">
+                                                                <fragment content="Placeholder - do not translate"/>
+                                                            </attributedString>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Size Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ErU-hB-dqk" userLabel="Size Label">
+                                                            <rect key="frame" x="0.0" y="14" width="88.5" height="18"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="18" id="Iug-G8-De4"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <attributedString key="userComments">
+                                                                <fragment content="Placeholder - do not translate"/>
+                                                            </attributedString>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yZe-Bk-kIy" customClass="ButtonClosure" customModule="Go_Map__" customModuleProvider="target">
+                                                    <rect key="frame" x="346" y="9" width="48" height="34"/>
+                                                    <state key="normal" title="Button"/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="r78-B4-pAU" secondAttribute="trailing" constant="15" id="5XH-B1-wwF"/>
-                                                <constraint firstAttribute="bottom" secondItem="fVu-8o-Ldq" secondAttribute="bottom" constant="2" id="Eca-01-msQ"/>
-                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fVu-8o-Ldq" secondAttribute="trailing" constant="15" id="FcZ-dk-LMQ"/>
-                                                <constraint firstItem="r78-B4-pAU" firstAttribute="leading" secondItem="5M8-rv-chF" secondAttribute="leading" constant="16" id="NHR-2c-UvO"/>
-                                                <constraint firstItem="r78-B4-pAU" firstAttribute="top" secondItem="5M8-rv-chF" secondAttribute="top" constant="3" id="PLe-w1-ZgL"/>
-                                                <constraint firstItem="fVu-8o-Ldq" firstAttribute="top" secondItem="r78-B4-pAU" secondAttribute="bottom" constant="1" id="S3Q-y7-XoH"/>
-                                                <constraint firstItem="fVu-8o-Ldq" firstAttribute="leading" secondItem="5M8-rv-chF" secondAttribute="leading" constant="16" id="udq-Qb-gGU"/>
+                                                <constraint firstItem="M3e-nF-UD4" firstAttribute="top" secondItem="sAn-yc-R5T" secondAttribute="top" constant="10" id="JOJ-Jn-rSV"/>
+                                                <constraint firstItem="yZe-Bk-kIy" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="M3e-nF-UD4" secondAttribute="trailing" constant="8" symbolic="YES" id="fLI-io-m8v"/>
+                                                <constraint firstItem="yZe-Bk-kIy" firstAttribute="centerY" secondItem="sAn-yc-R5T" secondAttribute="centerY" id="lEw-jg-DAI"/>
+                                                <constraint firstItem="M3e-nF-UD4" firstAttribute="leading" secondItem="sAn-yc-R5T" secondAttribute="leading" constant="20" symbolic="YES" id="oqd-wP-b5B"/>
+                                                <constraint firstAttribute="trailing" secondItem="yZe-Bk-kIy" secondAttribute="trailing" constant="20" symbolic="YES" id="rnF-l3-6wB"/>
+                                                <constraint firstAttribute="bottom" secondItem="M3e-nF-UD4" secondAttribute="bottom" constant="10" id="w6L-vn-3gM"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="detailLabel" destination="fVu-8o-Ldq" id="m1N-If-5f5"/>
-                                            <outlet property="titleLabel" destination="r78-B4-pAU" id="Z8A-2K-gbS"/>
+                                            <outlet property="clearButton" destination="yZe-Bk-kIy" id="kgW-Ib-1Fs"/>
+                                            <outlet property="detailLabel" destination="KFp-Us-thh" id="FhQ-qy-otQ"/>
+                                            <outlet property="sizesLabel" destination="ErU-hB-dqk" id="hvs-3m-QCg"/>
+                                            <outlet property="titleLabel" destination="ZFi-dJ-qjx" id="aI9-OU-AXS"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1613,6 +1701,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
     </inferredMetricsTieBreakers>
     <resources>
         <image name="702-share.png" width="21" height="28"/>
+        <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="groupTableViewBackgroundColor">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
