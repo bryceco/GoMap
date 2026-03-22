@@ -1994,7 +1994,7 @@
       }
     },
     "Fo4-Nq-pAz.normalTitle" : {
-      "comment" : "Class = \"UIButton\"; normalTitle = \"Center\"; ObjectID = \"Fo4-Nq-pAz\";",
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Center\"; ObjectID = \"Fo4-Nq-pAz\"; Note = \"Center the screen on user's current location\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "ar" : {

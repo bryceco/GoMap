@@ -14,9 +14,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	           willConnectTo session: UISceneSession,
 	           options connectionOptions: UIScene.ConnectionOptions)
 	{
-		// open any URLs that we were passed
-		for urlContext in connectionOptions.urlContexts {
-			_ = openUrl(urlContext.url)
+		// Open any URLs that we were passed. Since we just launched we need to wait
+		// for the main window to be set up.
+		let urlContexts = connectionOptions.urlContexts
+		DispatchQueue.main.async {
+			self.handleURLContexts(urlContexts)
 		}
 	}
 
@@ -70,6 +72,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 		MessageDisplay.shared.showAlert(NSLocalizedString("Open Image File", comment: ""),
 		                                message: message)
+	}
+
+	private func handleURLContexts(_ urlContexts: Set<UIOpenURLContext>) {
+		for urlContext in urlContexts {
+			_ = openUrl(urlContext.url)
+		}
 	}
 
 	func openUrl(_ url: URL) -> Bool {
@@ -198,9 +206,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	}
 
 	func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-		for urlContext in URLContexts {
-			_ = openUrl(urlContext.url)
-		}
+		handleURLContexts(URLContexts)
 	}
 
 	var gpsLastActive = Date.distantPast
