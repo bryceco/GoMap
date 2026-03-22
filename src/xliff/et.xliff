@@ -224,6 +224,10 @@
         <target state="translated">99 päeva</target>
         <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
       </trans-unit>
+      <trans-unit id="5JJ-aN-eAg.text" xml:space="preserve">
+        <source>Details Label</source>
+        <note>Class = "UILabel"; text = "Details Label"; ObjectID = "5JJ-aN-eAg"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
         <source>Projection</source>
         <target state="translated">Projektsioon</target>
@@ -269,6 +273,10 @@
         <target state="translated">12:00:00</target>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
+      <trans-unit id="ErU-hB-dqk.text" xml:space="preserve">
+        <source>Size Label</source>
+        <note>Class = "UILabel"; text = "Size Label"; ObjectID = "ErU-hB-dqk"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
         <source>Details</source>
         <target state="translated">Üksikasjad</target>
@@ -283,6 +291,14 @@
         <source>Paths</source>
         <target state="translated">Rajad</target>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
+      </trans-unit>
+      <trans-unit id="KFp-Us-thh.text" xml:space="preserve">
+        <source>Details Label</source>
+        <note>Class = "UILabel"; text = "Details Label"; ObjectID = "KFp-Us-thh"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
+      <trans-unit id="LM2-9D-wtc.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "LM2-9D-wtc";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Object Filters</source>
@@ -362,6 +378,10 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <target state="translated">Impordi</target>
         <note>Class = "UIButton"; normalTitle = "Import"; ObjectID = "Sdv-R2-za8";</note>
       </trans-unit>
+      <trans-unit id="Upc-rm-bRz.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "Upc-rm-bRz";</note>
+      </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
         <target state="translated">Muud</target>
@@ -382,6 +402,10 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <target state="translated">GPX rajad</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
+      <trans-unit id="ZFi-dJ-qjx.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "ZFi-dJ-qjx"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
         <target state="translated">WMS URL-i määramisel tuleb esitada ka kasutatud projektsioon</target>
@@ -395,12 +419,16 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
         <target state="translated">Aerofotode paanid</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
         <source>HealthKit routes:</source>
         <target state="translated">HealthKiti marsruudid:</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
+      </trans-unit>
+      <trans-unit id="bDu-nw-QGM.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "bDu-nw-QGM"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
@@ -475,9 +503,9 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
-        <source>Details</source>
-        <target state="translated">Üksikasjad</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
+        <source>Details Label</source>
+        <target state="needs-review-l10n">Üksikasjad</target>
+        <note>Class = "UILabel"; text = "Details Label"; ObjectID = "g2G-5j-Y4q"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
         <source>Points</source>
@@ -499,6 +527,10 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <target state="translated">Liiklusteed</target>
         <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
       </trans-unit>
+      <trans-unit id="il1-Gs-nr3.text" xml:space="preserve">
+        <source>Size Label</source>
+        <note>Class = "UILabel"; text = "Size Label"; ObjectID = "il1-Gs-nr3"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
         <source>(TMS)</source>
         <target state="translated">(TMS)</target>
@@ -513,6 +545,10 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <source>Background</source>
         <target state="translated">Taust</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
+      </trans-unit>
+      <trans-unit id="mbV-RK-BWD.text" xml:space="preserve">
+        <source>Size Label</source>
+        <note>Class = "UILabel"; text = "Size Label"; ObjectID = "mbV-RK-BWD"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="nzU-It-UAv.text" xml:space="preserve">
         <source>Data Overlays</source>
@@ -613,6 +649,10 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <source>Reset</source>
         <target state="translated">Lähtesta</target>
         <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
+      </trans-unit>
+      <trans-unit id="yZe-Bk-kIy.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "yZe-Bk-kIy";</note>
       </trans-unit>
       <trans-unit id="yue-km-52a.text" xml:space="preserve">
         <source>Name</source>
@@ -1221,6 +1261,10 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <target state="translated">Sisemise liikme lisamine</target>
         <note>Add to relation</note>
       </trans-unit>
+      <trans-unit id="Add node" xml:space="preserve">
+        <source>Add node</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
         <target state="translated">Välise liikme lisamine</target>
@@ -1245,6 +1289,10 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <source>Advanced Quest Builder</source>
         <note/>
       </trans-unit>
+      <trans-unit id="Aerial alignment" xml:space="preserve">
+        <source>Aerial alignment</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
         <target state="translated">Ainult aerofotod</target>
@@ -1255,9 +1303,17 @@ Tühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid
         <target state="translated">Kõik sildid</target>
         <note/>
       </trans-unit>
+      <trans-unit id="All cached data including aerial imagery tiles, TagInfo and Wiki data, etc." xml:space="preserve">
+        <source>All cached data including aerial imagery tiles, TagInfo and Wiki data, etc.</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
         <target state="translated">Kõik valikud</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="All map tiles for the currently selected base map (Mapnik, Americana, etc)." xml:space="preserve">
+        <source>All map tiles for the currently selected base map (Mapnik, Americana, etc).</source>
         <note/>
       </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
@@ -1335,6 +1391,10 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Cache trimmed</source>
         <target state="translated">Puhver korrastatud</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Caches" xml:space="preserve">
+        <source>Caches</source>
+        <note>cached data</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
@@ -1440,6 +1500,10 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Commit</source>
         <target state="translated">Rakenda</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Compass" xml:space="preserve">
+        <source>Compass</source>
+        <note>Compass button label</note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
@@ -1563,6 +1627,14 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="translated">Valmis</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Down" xml:space="preserve">
+        <source>Down</source>
+        <note>Move up/down buttons</note>
+      </trans-unit>
+      <trans-unit id="Downloaded nodes, ways and relations, and any edits you have made." xml:space="preserve">
+        <source>Downloaded nodes, ways and relations, and any edits you have made.</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
         <target state="translated">Paljunda</target>
@@ -1646,6 +1718,10 @@ Viga: %@</target>
         <target state="translated">Filtrid</target>
         <note>Header for quest filters section</note>
       </trans-unit>
+      <trans-unit id="GPS" xml:space="preserve">
+        <source>GPS</source>
+        <note>GPS button label</note>
+      </trans-unit>
       <trans-unit id="GPX" xml:space="preserve">
         <source>GPX</source>
         <target state="translated">GPX</target>
@@ -1680,6 +1756,10 @@ Viga: %@</target>
         <source>Height: %1$@ ± %2$@ meters</source>
         <target state="translated">Kõrgus: %1$@ ± %2$@ meetrit</target>
         <note>Height of an object with an error value</note>
+      </trans-unit>
+      <trans-unit id="Help" xml:space="preserve">
+        <source>Help</source>
+        <note>Help button label</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
@@ -1759,7 +1839,7 @@ Viga: %@</target>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
         <target state="translated">Vasak</target>
-        <note/>
+        <note>Move left/right buttons</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
@@ -1809,6 +1889,10 @@ Viga: %@</target>
         <source>Make Rectangular</source>
         <target state="translated">Tee kandiliseks</target>
         <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Map Tiles" xml:space="preserve">
+        <source>Map Tiles</source>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
@@ -2021,6 +2105,10 @@ Never delete old tracks</note>
         <source>OK</source>
         <target state="translated">OK</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="OSM Data" xml:space="preserve">
+        <source>OSM Data</source>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
@@ -2243,7 +2331,7 @@ Never delete old tracks</note>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
         <target state="translated">Parem</target>
-        <note/>
+        <note>Move left/right buttons</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -2264,6 +2352,10 @@ Never delete old tracks</note>
         <source>Save or discard your changes</source>
         <target state="translated">Salvesta oma muudatused või loobu neist</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Search" xml:space="preserve">
+        <source>Search</source>
+        <note>Search button label</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
@@ -2569,6 +2661,10 @@ Vali maantee, millelt ristmikule lähened, seejärel koputa noolt, et lülitada 
         <source>Unsupported turn restriction type</source>
         <target state="translated">Toetamata pöördepiirangu liik</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Up" xml:space="preserve">
+        <source>Up</source>
+        <note>Move up/down buttons</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
         <source>Update</source>

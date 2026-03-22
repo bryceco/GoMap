@@ -234,6 +234,11 @@
         <target state="new">99 Days</target>
         <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
       </trans-unit>
+      <trans-unit id="5JJ-aN-eAg.text" xml:space="preserve">
+        <source>Details Label</source>
+        <target state="new">Details Label</target>
+        <note>Class = "UILabel"; text = "Details Label"; ObjectID = "5JJ-aN-eAg"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
         <source>Projection</source>
         <target state="new">Projection</target>
@@ -279,6 +284,11 @@
         <target state="new">12:00:00</target>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
+      <trans-unit id="ErU-hB-dqk.text" xml:space="preserve">
+        <source>Size Label</source>
+        <target state="new">Size Label</target>
+        <note>Class = "UILabel"; text = "Size Label"; ObjectID = "ErU-hB-dqk"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
         <source>Details</source>
         <target state="new">Details</target>
@@ -293,6 +303,16 @@
         <source>Paths</source>
         <target state="new">Paths</target>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
+      </trans-unit>
+      <trans-unit id="KFp-Us-thh.text" xml:space="preserve">
+        <source>Details Label</source>
+        <target state="new">Details Label</target>
+        <note>Class = "UILabel"; text = "Details Label"; ObjectID = "KFp-Us-thh"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
+      <trans-unit id="LM2-9D-wtc.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <target state="new">Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "LM2-9D-wtc";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Object Filters</source>
@@ -372,6 +392,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="new">Import</target>
         <note>Class = "UIButton"; normalTitle = "Import"; ObjectID = "Sdv-R2-za8";</note>
       </trans-unit>
+      <trans-unit id="Upc-rm-bRz.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <target state="new">Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "Upc-rm-bRz";</note>
+      </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
         <target state="new">Others</target>
@@ -392,6 +417,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="new">GPX Tracks</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
+      <trans-unit id="ZFi-dJ-qjx.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <target state="new">Aerial Tiles</target>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "ZFi-dJ-qjx"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
         <target state="new">If specifying a WMS URL you must also provide the projection used</target>
@@ -405,12 +435,17 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
         <target state="new">Aerial Tiles</target>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
         <source>HealthKit routes:</source>
         <target state="new">HealthKit routes:</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
+      </trans-unit>
+      <trans-unit id="bDu-nw-QGM.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <target state="new">Aerial Tiles</target>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "bDu-nw-QGM"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
@@ -485,9 +520,9 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
-        <source>Details</source>
-        <target state="new">Details</target>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
+        <source>Details Label</source>
+        <target state="new">Details Label</target>
+        <note>Class = "UILabel"; text = "Details Label"; ObjectID = "g2G-5j-Y4q"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
         <source>Points</source>
@@ -509,6 +544,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="new">Traffic Roads</target>
         <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
       </trans-unit>
+      <trans-unit id="il1-Gs-nr3.text" xml:space="preserve">
+        <source>Size Label</source>
+        <target state="new">Size Label</target>
+        <note>Class = "UILabel"; text = "Size Label"; ObjectID = "il1-Gs-nr3"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
         <source>(TMS)</source>
         <target state="new">(TMS)</target>
@@ -523,6 +563,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Background</source>
         <target state="new">Background</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
+      </trans-unit>
+      <trans-unit id="mbV-RK-BWD.text" xml:space="preserve">
+        <source>Size Label</source>
+        <target state="new">Size Label</target>
+        <note>Class = "UILabel"; text = "Size Label"; ObjectID = "mbV-RK-BWD"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="nzU-It-UAv.text" xml:space="preserve">
         <source>Data Overlays</source>
@@ -623,6 +668,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Reset</source>
         <target state="new">Reset</target>
         <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
+      </trans-unit>
+      <trans-unit id="yZe-Bk-kIy.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <target state="new">Button</target>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "yZe-Bk-kIy";</note>
       </trans-unit>
       <trans-unit id="yue-km-52a.text" xml:space="preserve">
         <source>Name</source>
@@ -1244,6 +1294,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="new">Add inner member</target>
         <note>Add to relation</note>
       </trans-unit>
+      <trans-unit id="Add node" xml:space="preserve">
+        <source>Add node</source>
+        <target state="new">Add node</target>
+        <note/>
+      </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
         <target state="new">Add outer member</target>
@@ -1269,6 +1324,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="new">Advanced Quest Builder</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Aerial alignment" xml:space="preserve">
+        <source>Aerial alignment</source>
+        <target state="new">Aerial alignment</target>
+        <note/>
+      </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
         <target state="new">Aerial only</target>
@@ -1279,9 +1339,19 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="new">All Tags</target>
         <note/>
       </trans-unit>
+      <trans-unit id="All cached data including aerial imagery tiles, TagInfo and Wiki data, etc." xml:space="preserve">
+        <source>All cached data including aerial imagery tiles, TagInfo and Wiki data, etc.</source>
+        <target state="new">All cached data including aerial imagery tiles, TagInfo and Wiki data, etc.</target>
+        <note/>
+      </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
         <target state="new">All choices</target>
+        <note/>
+      </trans-unit>
+      <trans-unit id="All map tiles for the currently selected base map (Mapnik, Americana, etc)." xml:space="preserve">
+        <source>All map tiles for the currently selected base map (Mapnik, Americana, etc).</source>
+        <target state="new">All map tiles for the currently selected base map (Mapnik, Americana, etc).</target>
         <note/>
       </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
@@ -1359,6 +1429,11 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Cache trimmed</source>
         <target state="new">Cache trimmed</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Caches" xml:space="preserve">
+        <source>Caches</source>
+        <target state="new">Caches</target>
+        <note>cached data</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
@@ -1464,6 +1539,11 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Commit</source>
         <target state="new">Commit</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Compass" xml:space="preserve">
+        <source>Compass</source>
+        <target state="new">Compass</target>
+        <note>Compass button label</note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
@@ -1589,6 +1669,16 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="new">Done</target>
         <note/>
       </trans-unit>
+      <trans-unit id="Down" xml:space="preserve">
+        <source>Down</source>
+        <target state="new">Down</target>
+        <note>Move up/down buttons</note>
+      </trans-unit>
+      <trans-unit id="Downloaded nodes, ways and relations, and any edits you have made." xml:space="preserve">
+        <source>Downloaded nodes, ways and relations, and any edits you have made.</source>
+        <target state="new">Downloaded nodes, ways and relations, and any edits you have made.</target>
+        <note/>
+      </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
         <target state="new">Duplicate</target>
@@ -1673,6 +1763,11 @@ Error: %@</target>
         <target state="new">Filters</target>
         <note>Header for quest filters section</note>
       </trans-unit>
+      <trans-unit id="GPS" xml:space="preserve">
+        <source>GPS</source>
+        <target state="new">GPS</target>
+        <note>GPS button label</note>
+      </trans-unit>
       <trans-unit id="GPX" xml:space="preserve">
         <source>GPX</source>
         <target state="new">GPX</target>
@@ -1707,6 +1802,11 @@ Error: %@</target>
         <source>Height: %1$@ ± %2$@ meters</source>
         <target state="new">Height: %1$@ ± %2$@ meters</target>
         <note>Height of an object with an error value</note>
+      </trans-unit>
+      <trans-unit id="Help" xml:space="preserve">
+        <source>Help</source>
+        <target state="new">Help</target>
+        <note>Help button label</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
@@ -1786,7 +1886,7 @@ Error: %@</target>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
         <target state="new">Left</target>
-        <note/>
+        <note>Move left/right buttons</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
@@ -1837,6 +1937,11 @@ Error: %@</target>
         <source>Make Rectangular</source>
         <target state="new">Make Rectangular</target>
         <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Map Tiles" xml:space="preserve">
+        <source>Map Tiles</source>
+        <target state="new">Map Tiles</target>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
@@ -2049,6 +2154,11 @@ Never delete old tracks</note>
         <source>OK</source>
         <target state="new">OK</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="OSM Data" xml:space="preserve">
+        <source>OSM Data</source>
+        <target state="new">OSM Data</target>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
@@ -2273,7 +2383,7 @@ Never delete old tracks</note>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
         <target state="new">Right</target>
-        <note/>
+        <note>Move left/right buttons</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -2294,6 +2404,11 @@ Never delete old tracks</note>
         <source>Save or discard your changes</source>
         <target state="new">Save or discard your changes</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Search" xml:space="preserve">
+        <source>Search</source>
+        <target state="new">Search</target>
+        <note>Search button label</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
@@ -2604,6 +2719,11 @@ Select the highway from which you are approaching the intersection, then tap an 
         <source>Unsupported turn restriction type</source>
         <target state="new">Unsupported turn restriction type</target>
         <note/>
+      </trans-unit>
+      <trans-unit id="Up" xml:space="preserve">
+        <source>Up</source>
+        <target state="new">Up</target>
+        <note>Move up/down buttons</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
         <source>Update</source>

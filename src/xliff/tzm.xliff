@@ -194,6 +194,10 @@
         <source>99 Days</source>
         <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
       </trans-unit>
+      <trans-unit id="5JJ-aN-eAg.text" xml:space="preserve">
+        <source>Details Label</source>
+        <note>Class = "UILabel"; text = "Details Label"; ObjectID = "5JJ-aN-eAg"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="5hB-2Y-Wgl.text" xml:space="preserve">
         <source>Projection</source>
         <note>Class = "UILabel"; text = "Projection"; ObjectID = "5hB-2Y-Wgl";</note>
@@ -230,6 +234,10 @@
         <source>12:00:00</source>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
+      <trans-unit id="ErU-hB-dqk.text" xml:space="preserve">
+        <source>Size Label</source>
+        <note>Class = "UILabel"; text = "Size Label"; ObjectID = "ErU-hB-dqk"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="GNK-bZ-i9X.text" xml:space="preserve">
         <source>Details</source>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "GNK-bZ-i9X";</note>
@@ -241,6 +249,14 @@
       <trans-unit id="Jz1-GP-Wbe.text" xml:space="preserve">
         <source>Paths</source>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
+      </trans-unit>
+      <trans-unit id="KFp-Us-thh.text" xml:space="preserve">
+        <source>Details Label</source>
+        <note>Class = "UILabel"; text = "Details Label"; ObjectID = "KFp-Us-thh"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
+      <trans-unit id="LM2-9D-wtc.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "LM2-9D-wtc";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
         <source>Object Filters</source>
@@ -302,6 +318,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Import</source>
         <note>Class = "UIButton"; normalTitle = "Import"; ObjectID = "Sdv-R2-za8";</note>
       </trans-unit>
+      <trans-unit id="Upc-rm-bRz.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "Upc-rm-bRz";</note>
+      </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
         <source>Others</source>
         <note>Class = "UILabel"; text = "Others"; ObjectID = "Uum-Wn-9CF";</note>
@@ -318,6 +338,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>GPX Tracks</source>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
+      <trans-unit id="ZFi-dJ-qjx.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "ZFi-dJ-qjx"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="Zn9-Sg-9fS.footerTitle" xml:space="preserve">
         <source>If specifying a WMS URL you must also provide the projection used</source>
         <note>Class = "UITableViewSection"; footerTitle = "If specifying a WMS URL you must also provide the projection used"; ObjectID = "Zn9-Sg-9fS";</note>
@@ -328,11 +352,15 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
-        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT";</note>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
         <source>HealthKit routes:</source>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
+      </trans-unit>
+      <trans-unit id="bDu-nw-QGM.text" xml:space="preserve">
+        <source>Aerial Tiles</source>
+        <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "bDu-nw-QGM"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="bmY-Hw-jv6.footerTitle" xml:space="preserve">
         <source>Go Map!! will automatically discard old data to optimize performance.</source>
@@ -392,8 +420,8 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
       </trans-unit>
       <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
-        <source>Details</source>
-        <note>Class = "UILabel"; text = "Details"; ObjectID = "g2G-5j-Y4q";</note>
+        <source>Details Label</source>
+        <note>Class = "UILabel"; text = "Details Label"; ObjectID = "g2G-5j-Y4q"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="gdL-Os-R6R.text" xml:space="preserve">
         <source>Points</source>
@@ -411,6 +439,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Traffic Roads</source>
         <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
       </trans-unit>
+      <trans-unit id="il1-Gs-nr3.text" xml:space="preserve">
+        <source>Size Label</source>
+        <note>Class = "UILabel"; text = "Size Label"; ObjectID = "il1-Gs-nr3"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
       <trans-unit id="iuk-Fk-3Fw.placeholder" xml:space="preserve">
         <source>(TMS)</source>
         <note>Class = "UITextField"; placeholder = "(TMS)"; ObjectID = "iuk-Fk-3Fw";</note>
@@ -422,6 +454,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="lwG-AE-nIZ.headerTitle" xml:space="preserve">
         <source>Background</source>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
+      </trans-unit>
+      <trans-unit id="mbV-RK-BWD.text" xml:space="preserve">
+        <source>Size Label</source>
+        <note>Class = "UILabel"; text = "Size Label"; ObjectID = "mbV-RK-BWD"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="nzU-It-UAv.text" xml:space="preserve">
         <source>Data Overlays</source>
@@ -502,6 +538,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id="wev-ax-u4C.headerTitle" xml:space="preserve">
         <source>Reset</source>
         <note>Class = "UITableViewSection"; headerTitle = "Reset"; ObjectID = "wev-ax-u4C";</note>
+      </trans-unit>
+      <trans-unit id="yZe-Bk-kIy.normalTitle" xml:space="preserve">
+        <source>Button</source>
+        <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "yZe-Bk-kIy";</note>
       </trans-unit>
       <trans-unit id="yue-km-52a.text" xml:space="preserve">
         <source>Name</source>
@@ -1060,6 +1100,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Add inner member</source>
         <note>Add to relation</note>
       </trans-unit>
+      <trans-unit id="Add node" xml:space="preserve">
+        <source>Add node</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
         <note>Add to relation</note>
@@ -1080,6 +1124,10 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>Advanced Quest Builder</source>
         <note/>
       </trans-unit>
+      <trans-unit id="Aerial alignment" xml:space="preserve">
+        <source>Aerial alignment</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
         <note/>
@@ -1088,8 +1136,16 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <source>All Tags</source>
         <note/>
       </trans-unit>
+      <trans-unit id="All cached data including aerial imagery tiles, TagInfo and Wiki data, etc." xml:space="preserve">
+        <source>All cached data including aerial imagery tiles, TagInfo and Wiki data, etc.</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
+        <note/>
+      </trans-unit>
+      <trans-unit id="All map tiles for the currently selected base map (Mapnik, Americana, etc)." xml:space="preserve">
+        <source>All map tiles for the currently selected base map (Mapnik, Americana, etc).</source>
         <note/>
       </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
@@ -1152,6 +1208,10 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
         <note/>
+      </trans-unit>
+      <trans-unit id="Caches" xml:space="preserve">
+        <source>Caches</source>
+        <note>cached data</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
@@ -1236,6 +1296,10 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
         <note/>
+      </trans-unit>
+      <trans-unit id="Compass" xml:space="preserve">
+        <source>Compass</source>
+        <note>Compass button label</note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
@@ -1335,6 +1399,14 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Done</source>
         <note/>
       </trans-unit>
+      <trans-unit id="Down" xml:space="preserve">
+        <source>Down</source>
+        <note>Move up/down buttons</note>
+      </trans-unit>
+      <trans-unit id="Downloaded nodes, ways and relations, and any edits you have made." xml:space="preserve">
+        <source>Downloaded nodes, ways and relations, and any edits you have made.</source>
+        <note/>
+      </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
         <note>Edit action</note>
@@ -1401,6 +1473,10 @@ Error: %@</source>
         <source>Filters</source>
         <note>Header for quest filters section</note>
       </trans-unit>
+      <trans-unit id="GPS" xml:space="preserve">
+        <source>GPS</source>
+        <note>GPS button label</note>
+      </trans-unit>
       <trans-unit id="GPX" xml:space="preserve">
         <source>GPX</source>
         <note>The name of a GPX file</note>
@@ -1428,6 +1504,10 @@ Error: %@</source>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
         <note>Height of an object with an error value</note>
+      </trans-unit>
+      <trans-unit id="Help" xml:space="preserve">
+        <source>Help</source>
+        <note>Help button label</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
@@ -1491,7 +1571,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
-        <note/>
+        <note>Move left/right buttons</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
@@ -1532,6 +1612,10 @@ Error: %@</source>
       <trans-unit id="Make Rectangular" xml:space="preserve">
         <source>Make Rectangular</source>
         <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Map Tiles" xml:space="preserve">
+        <source>Map Tiles</source>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
@@ -1700,6 +1784,10 @@ Never delete old tracks</note>
       <trans-unit id="OK" xml:space="preserve">
         <source>OK</source>
         <note/>
+      </trans-unit>
+      <trans-unit id="OSM Data" xml:space="preserve">
+        <source>OSM Data</source>
+        <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
         <source>Object modified</source>
@@ -1883,7 +1971,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Right" xml:space="preserve">
         <source>Right</source>
-        <note/>
+        <note>Move left/right buttons</note>
       </trans-unit>
       <trans-unit id="Right side" xml:space="preserve">
         <source>Right side</source>
@@ -1900,6 +1988,10 @@ Never delete old tracks</note>
       <trans-unit id="Save or discard your changes" xml:space="preserve">
         <source>Save or discard your changes</source>
         <note/>
+      </trans-unit>
+      <trans-unit id="Search" xml:space="preserve">
+        <source>Search</source>
+        <note>Search button label</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
         <source>Select Object</source>
@@ -2147,6 +2239,10 @@ Select the highway from which you are approaching the intersection, then tap an 
       <trans-unit id="Unsupported turn restriction type" xml:space="preserve">
         <source>Unsupported turn restriction type</source>
         <note/>
+      </trans-unit>
+      <trans-unit id="Up" xml:space="preserve">
+        <source>Up</source>
+        <note>Move up/down buttons</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
         <source>Update</source>
