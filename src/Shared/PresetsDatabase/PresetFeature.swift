@@ -257,6 +257,7 @@ class PresetFeature: CustomDebugStringConvertible {
 			tags.removeValue(forKey: key)
 		}
 
+#if false // iD reverted this, so we're reverting it also
 		// Find fields that belongs to presets in oldFeature and don't exist in presets in new feature
 		// and delete them. This will do things like remove the "cuisine" tag when a restaurant is
 		// retagged as a shop.
@@ -267,6 +268,7 @@ class PresetFeature: CustomDebugStringConvertible {
 				tags.removeValue(forKey: key)
 			}
 		}
+#endif
 
 		// add new feature tags
 		for (key, value) in addTags {
