@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 // A key along with information about possible values
-class PresetDisplayKey: NSObject, NSSecureCoding, Codable {
+class PresetDisplayKey: NSObject, Codable {
 	public class var supportsSecureCoding: Bool { return true }
 
 	let name: String // name of the preset, e.g. Hours
@@ -50,17 +50,8 @@ class PresetDisplayKey: NSObject, NSSecureCoding, Codable {
 		self.defaultValue = defaultValue
 	}
 
-	// This is used only for user-defined keys, call from
+	// This is used only for user-defined keys, called from
 	// PresetKeyUserDefined() super.init()
-	func encode(with coder: NSCoder) {
-		coder.encode(name, forKey: "name")
-		coder.encode(tagKey, forKey: "tagKey")
-		coder.encode(placeholder, forKey: "placeholder")
-		coder.encode(presetValues, forKey: "presetList")
-		coder.encode(keyboardType.rawValue, forKey: "keyboardType")
-		coder.encode(autocapitalizationType.rawValue, forKey: "capitalize")
-	}
-
 	required init?(coder: NSCoder) {
 		if let name = coder.decodeObject(forKey: "name") as? String,
 		   let tagKey = coder.decodeObject(forKey: "tagKey") as? String,
@@ -88,21 +79,31 @@ class PresetDisplayKey: NSObject, NSSecureCoding, Codable {
 		case name
 		case tagKey
 		case presetList
+		case presetType
 	}
 
+	// This is used only for user-defined keys, called from
+	// it's encoder
 	func encode(to encoder: Encoder) throws {
 		var container = encoder.container(keyedBy: CodingKeys.self)
 		try container.encode(name, forKey: .name)
 		try container.encode(tagKey, forKey: .tagKey)
 		try container.encode(presetValues, forKey: .presetList)
+		try container.encode(type, forKey: .presetType)
 	}
 
+	// This is used only for user-defined keys, called from
+	// its decoder
 	required init(from decoder: Decoder) throws {
 		let container = try decoder.container(keyedBy: CodingKeys.self)
 		name = try container.decode(String.self, forKey: .name)
 		tagKey = try container.decode(String.self, forKey: .tagKey)
 		presetValues = try container.decode([PresetDisplayValue].self, forKey: .presetList)
-		type = .combo
+		// originally we didn't save 'type' so it may not exist.
+		// If it exists then use it, otherwise infer the type from the number of presets provided
+		type = (try? container.decode(PresetType.self, forKey: .presetType)) ??
+			((presetValues?.count ?? 0) > 0 ? .combo : .text)
+
 		defaultValue = nil
 		placeholder = PresetDisplayKey.placeholderForPresets(presetValues)
 			?? PresetTranslations.shared.unknownForLocale

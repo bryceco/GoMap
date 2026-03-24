@@ -31,6 +31,7 @@ final class PresetDisplayKeyUserDefined: PresetDisplayKey {
 	init(appliesToKey: String, // empty string is possible
 	     appliesToValue: String, // empty string is possible
 	     name: String,
+	     type: PresetType,
 	     tagKey key: String,
 	     placeholder: String?,
 	     keyboard: UIKeyboardType,
@@ -41,7 +42,7 @@ final class PresetDisplayKeyUserDefined: PresetDisplayKey {
 		self.appliesToKey = appliesToKey
 		self.appliesToValue = appliesToValue
 		super.init(name: name,
-		           type: presetValues.count > 0 ? .combo : .text,
+		           type: type,
 		           tagKey: key,
 		           defaultValue: nil,
 		           placeholder: placeholder,
@@ -49,12 +50,6 @@ final class PresetDisplayKeyUserDefined: PresetDisplayKey {
 		           capitalize: capitalize,
 		           autocorrect: autocorrect,
 		           presetValues: presetValues)
-	}
-
-	override func encode(with coder: NSCoder) {
-		super.encode(with: coder)
-		coder.encode(appliesToKey, forKey: "appliesToKey")
-		coder.encode(appliesToValue, forKey: "appliesToValue")
 	}
 
 	// MARK: Codable

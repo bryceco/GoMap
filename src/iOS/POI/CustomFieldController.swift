@@ -13,6 +13,7 @@ class CustomFieldController: UITableViewController {
 	@IBOutlet var appliesToTagField: UITextField!
 	@IBOutlet var appliesToValueField: UITextField!
 	@IBOutlet var keyField: UITextField!
+	@IBOutlet var usesSemiCombo: UISwitch!
 	@IBOutlet var value1Field: UITextField!
 	@IBOutlet var value2Field: UITextField!
 	@IBOutlet var value3Field: UITextField!
@@ -55,6 +56,14 @@ class CustomFieldController: UITableViewController {
 				presetValues.append(preset)
 			}
 		}
+		let type: PresetType
+		if presetValues.count == 0 {
+			type = .text
+		} else if presetValues.count >= 2, usesSemiCombo.isOn {
+			type = .semiCombo
+		} else {
+			type = .combo
+		}
 		let keyboard: UIKeyboardType = .default
 		let capitalize: UITextAutocapitalizationType = .none
 		let autocorrect: UITextAutocorrectionType = .no
@@ -63,6 +72,7 @@ class CustomFieldController: UITableViewController {
 			appliesToKey: appliesToKey,
 			appliesToValue: appliesToVal,
 			name: name,
+			type: type,
 			tagKey: key,
 			placeholder: nil,
 			keyboard: keyboard,
@@ -79,6 +89,9 @@ class CustomFieldController: UITableViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
+
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = 44
 
 		valueFieldList = [
 			value1Field,
@@ -99,6 +112,7 @@ class CustomFieldController: UITableViewController {
 		appliesToTagField.text = customField?.appliesToKey ?? ""
 		appliesToValueField.text = customField?.appliesToValue ?? ""
 		keyField.text = customField?.tagKey ?? ""
+		usesSemiCombo.isOn = customField?.type == .semiCombo
 
 		var idx = 0
 		for textField in valueFieldList {
