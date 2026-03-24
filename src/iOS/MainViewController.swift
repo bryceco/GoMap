@@ -1478,6 +1478,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 		updateAerialAlignmentButton()
 	}
 
+	func dPadReset() {
+		mapLayersView.aerialLayer.imageryOffsetMeters = .zero
+		updateAerialAlignmentButton()
+	}
+
 	// MARK: Other stuff
 
 	func setAerialTileServer(_ service: TileServer) {

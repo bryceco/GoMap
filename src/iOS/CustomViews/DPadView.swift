@@ -26,6 +26,7 @@ private class ArrowButton: UIButton {
 
 protocol DPadDelegate {
 	func dPadPress(_ shift: CGPoint)
+	func dPadReset()
 }
 
 class DPadView: UIView {
@@ -130,6 +131,9 @@ class DPadView: UIView {
 			button.addTarget(self, action: #selector(buttonPress(_:)), for: .touchUpInside)
 			addSubview(button)
 		}
+
+		let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(_:)))
+		addGestureRecognizer(longPressRecognizer)
 	}
 
 	@objc func buttonPress(_ sender: Any) {
@@ -146,6 +150,12 @@ class DPadView: UIView {
 			move = CGPoint(x: 0, y: -1)
 		}
 		delegate?.dPadPress(move)
+	}
+
+	@objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+		if gesture.state == .began {
+			delegate?.dPadReset()
+		}
 	}
 
 	override init(frame: CGRect) {
