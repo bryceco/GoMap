@@ -282,13 +282,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		setupAccessibility()
 
-		// initialize map markers database
-		updateMapMarkers(delay: 1.0, including: [])
-		AppState.shared.gpxTracks.onChangeTracks.subscribe(self) { [weak self] in
-			// if we import a new track it might contain waypoints
-			self?.updateMapMarkers(including: .gpx)
-		}
-
 		// long press for quick access to aerial imagery
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayButtonLongPressGesture(_:)))
 		displayButton.addGestureRecognizer(longPress)
@@ -451,6 +444,13 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 			// If the current imagery doesn't cover this location switch to Bing.
 			promptForBetterBackgroundImagery()
+
+			// initialize map markers database
+			updateMapMarkers(delay: 1.0, including: [])
+			AppState.shared.gpxTracks.onChangeTracks.subscribe(self) { [weak self] in
+				// if we import a new track it might contain waypoints
+				self?.updateMapMarkers(including: .gpx)
+			}
 		}
 	}
 
@@ -1843,6 +1843,29 @@ final class MainViewController: UIViewController, DPadDelegate,
 		MessageDisplay.shared.flashMessage(title: nil,
 		                                   message: NSLocalizedString("Low memory: clearing cache", comment: ""))
 		mapView.didReceiveMemoryWarning()
+	}
+
+	// MARK: - Inspector
+
+	/// Shows the POI tag editor as a side panel (regular width) or modal (compact width).
+	func showInspector() {
+#if true
+		let poiStoryboard = UIStoryboard(name: "POI", bundle: nil)
+		let poiVC = poiStoryboard.instantiateViewController(withIdentifier: "poiTabBar") as! POITabBarController
+		splitViewController?.setViewController(poiVC, for: .secondary)
+		splitViewController?.show(.secondary)
+#else
+		if let splitViewController,
+		   AppEnvironment.isRunningOnMac || traitCollection.horizontalSizeClass == .regular
+		{
+			let poiStoryboard = UIStoryboard(name: "POI", bundle: nil)
+			let poiVC = poiStoryboard.instantiateViewController(withIdentifier: "poiTabBar") as! POITabBarController
+			splitViewController.setViewController(poiVC, for: .secondary)
+			splitViewController.show(.secondary)
+		} else {
+			performSegue(withIdentifier: "poiSegue", sender: nil)
+		}
+#endif
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

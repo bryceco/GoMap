@@ -541,7 +541,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	}
 
 	@IBAction func presentTagEditor(_ sender: Any?) {
-		mainView.performSegue(withIdentifier: "poiSegue", sender: nil)
+		mainView.showInspector()
 	}
 
 	// Turn restriction panel

@@ -300,8 +300,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		} else if indexPath.section == 1 {
 			// Relations
 			if indexPath.row == relations.count {
-				let cell = tableView.dequeueReusableCell(withIdentifier: "AddCell", for: indexPath)
-				return cell
+				return tableView.dequeueReusableCell(withIdentifier: "AddCell", for: indexPath)
 			}
 			let cell = tableView.dequeueReusableCell(
 				withIdentifier: "RelationCell",
@@ -498,15 +497,14 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 	@IBAction func cancel(_ sender: Any) {
 		view.endEditing(true)
-		dismiss(animated: true)
+		(tabBarController as? POITabBarController)?.closeInspector()
 	}
 
 	@IBAction func done(_ sender: Any) {
-		dismiss(animated: true)
 		saveState()
-
 		let tabController = tabBarController as? POITabBarController
 		tabController?.commitChanges()
+		tabController?.closeInspector()
 	}
 
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {

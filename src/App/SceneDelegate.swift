@@ -26,6 +26,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	           willConnectTo session: UISceneSession,
 	           options connectionOptions: UIScene.ConnectionOptions)
 	{
+		if let windowScene = scene as? UIWindowScene {
+			let window = UIWindow(windowScene: windowScene)
+
+			let mainStoryboard = UIStoryboard(name: "MainStoryboard", bundle: nil)
+			let mainVC = mainStoryboard.instantiateInitialViewController() as! MainViewController
+
+			let splitVC = UISplitViewController(style: .doubleColumn)
+			splitVC.setViewController(mainVC, for: .primary)
+			splitVC.preferredSplitBehavior = .tile
+			splitVC.preferredPrimaryColumnWidthFraction = 0.65
+
+			window.rootViewController = splitVC
+			window.makeKeyAndVisible()
+			self.window = window
+		}
+
 		// Open any URLs that we were passed. Since we just launched we need to wait
 		// for the main window to be set up.
 		let urlContexts = connectionOptions.urlContexts
@@ -268,7 +284,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 	func sceneWillEnterForeground(_ scene: UIScene) {
-		let mainView = AppDelegate.shared.mainView!
+		// mainView may be nil on cold launch if viewDidLoad hasn't run yet; skip in that case.
+		guard let mainView = AppDelegate.shared.mainView else { return }
 		if mainView.gpsState != .NONE {
 			if AppState.shared.gpxTracks.recordTracksInBackground,
 			   mainView.settings.displayGpxTracks

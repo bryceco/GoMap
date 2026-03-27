@@ -206,7 +206,17 @@ class POITabBarController: UITabBarController {
 
 	@objc func escapeKeyPress(_ keyCommand: UIKeyCommand?) {
 		selectedViewController?.view.endEditing(true)
-		selectedViewController?.dismiss(animated: true)
+		closeInspector()
+	}
+
+	/// Closes the POI inspector. Hides the split view secondary column when in a split view,
+	/// or dismisses the modal when presented modally (compact size class).
+	func closeInspector() {
+		if let splitVC = splitViewController {
+			splitVC.hide(.secondary)
+		} else {
+			dismiss(animated: true)
+		}
 	}
 
 	/// Hides the POI attributes tab bar item when the user is adding a new item, since it doesn't have any attributes yet.
@@ -262,12 +272,16 @@ class POITabBarController: UITabBarController {
 			mapView.placePushpin(at: newPoint, object: object)
 		}
 
-		// dismiss ourself and switch to the new object
+		// close the inspector and reopen it for the newly selected object
 		mapView.refreshPushpinText() // update pushpin description to the new object
-		let presenter = presentingViewController
-		dismiss(animated: true) {
-			if let presenter {
-				presenter.performSegue(withIdentifier: "poiSegue", sender: nil)
+		if splitViewController != nil {
+			// Split view mode: replace the inspector content for the new selection
+			AppDelegate.shared.mainView.showInspector()
+		} else {
+			// Modal mode: dismiss then re-present
+			let presenter = presentingViewController
+			dismiss(animated: true) {
+				presenter?.performSegue(withIdentifier: "poiSegue", sender: nil)
 			}
 		}
 	}

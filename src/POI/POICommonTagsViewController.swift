@@ -351,11 +351,9 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				// customization buttons
 				switch indexPath.row {
 				case 0:
-					let cell = tableView.dequeueReusableCell(withIdentifier: "CustomFeatures", for: indexPath)
-					return cell
+					return tableView.dequeueReusableCell(withIdentifier: "CustomFeatures", for: indexPath)
 				case 1:
-					let cell = tableView.dequeueReusableCell(withIdentifier: "CustomFields", for: indexPath)
-					return cell
+					return tableView.dequeueReusableCell(withIdentifier: "CustomFields", for: indexPath)
 				default:
 					fatalError("unexpected customize button row \(indexPath.row)")
 				}
@@ -630,15 +628,14 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	@IBAction func cancel(_ sender: Any) {
-		dismiss(animated: true)
+		(tabBarController as? POITabBarController)!.closeInspector()
 	}
 
 	@IBAction func done(_ sender: Any) {
 		view.endEditing(true)
-		dismiss(animated: true)
-
 		let tabController = tabBarController as? POITabBarController
 		tabController?.commitChanges()
+		tabController?.closeInspector()
 	}
 
 	// MARK: - Table view delegate
