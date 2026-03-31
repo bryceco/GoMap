@@ -452,6 +452,12 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 				}
 			}
 
+			if let splitViewController = mainView.splitViewController,
+			   !splitViewController.isCollapsed	{
+				editControlActions.removeAll { $0 == .EDITTAGS }
+				mainView.showInspector()
+			}
+
 			func editToolbarItemForAction(_ action: EDIT_ACTION) -> UIControl {
 				if action == .PASTETAGS,
 				   #available(iOS 16.0, *),
@@ -509,6 +515,8 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			actions.append(spacer2)
 
 			editToolbar.controls = actions
+		} else {
+			mainView.hideInspector()
 		}
 	}
 
@@ -697,8 +705,8 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	}
 
 	func removePin() {
-		if let pushpinView = pushPin {
-			pushpinView.removeFromSuperview()
+		if let pushPin {
+			pushPin.removeFromSuperview()
 		}
 		pushPin = nil
 		updateEditControl()

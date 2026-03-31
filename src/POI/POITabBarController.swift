@@ -117,22 +117,44 @@ class POITabBarController: UITabBarController {
 	private var macSegControls: [UISegmentedControl] = []
 #endif
 
+	/// The tabs from the storyboard, so configure() can rebuild the tab list for a new selection.
+	private var baseViewControllers: [UIViewController] = []
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		baseViewControllers = viewControllers ?? []
+
+#if targetEnvironment(macCatalyst)
+		setupMacTabSwitcher()
+		preferredContentSize = CGSize(width: 750, height: 620)
+#else
+		if #available(iOS 17, *) {
+			// On iPad UITabBar may render incorrectly; forcing compact keeps it consistent.
+			// See https://forums.developer.apple.com/forums/thread/759478
+			traitOverrides.horizontalSizeClass = .compact
+		}
+#endif
+	}
+
+	/// Loads the currently selected map object into the tabs. Called each time the
+	/// inspector is shown, since in split view the same instance is reused.
+	func configure() {
+		loadViewIfNeeded()
 
 		let appDelegate = AppDelegate.shared
 		let selection = appDelegate.mapView.selectedPrimary
 		self.selection = selection
 		keyValueDict = selection?.tags ?? [:]
 		relationList = selection?.parentRelations ?? []
+		removedMembers = []
 
 		rebuildAutocompleteTagKeys()
 
+		var vcList = baseViewControllers
+		tabIDs = [.commonTags, .allTags, .attributes]
 		if selection == nil {
 			// don't show attributes page
-			var vcList = viewControllers!
 			vcList.removeLast()
-			self.viewControllers = vcList
 			tabIDs.removeLast()
 		}
 		if #available(iOS 15.0, *),
@@ -145,24 +167,33 @@ class POITabBarController: UITabBarController {
 				title: NSLocalizedString("Relations", comment: "Title of the page listing relation members"),
 				image: UIImage(systemName: "point.3.connected.trianglepath.dotted"),
 				selectedImage: nil)
-			viewControllers?.append(nav)
+			vcList.append(nav)
 			tabIDs.append(.relations)
 		}
+		viewControllers = vcList
 		selectedIndex = tabIDs.firstIndex(where: { $0.rawValue == UserPrefs.shared.poiTabIndex.value }) ?? 0
+
+		for vc in viewControllers ?? [] {
+			guard
+				let vc = vc as? UINavigationController,
+				let vc = vc.topViewController
+			else { continue }
+
+			switch vc {
+			case let vc as POICommonTagsViewController:
+				vc.loadViewIfNeeded()
+				vc.updatePresets()
+			case let vc as POIAllTagsViewController:
+				break
+			case let vc as POIAttributesViewController:
+				break
+			default:
+				break
+			}
+		}
 
 		// hide attributes tab on new objects
 		updatePOIAttributesTabBarItemVisibility(withSelectedObject: selection)
-
-#if targetEnvironment(macCatalyst)
-		setupMacTabSwitcher()
-		preferredContentSize = CGSize(width: 750, height: 620)
-#else
-		if #available(iOS 17, *) {
-			// On iPad UITabBar may render incorrectly; forcing compact keeps it consistent.
-			// See https://forums.developer.apple.com/forums/thread/759478
-			traitOverrides.horizontalSizeClass = .compact
-		}
-#endif
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -214,6 +245,7 @@ class POITabBarController: UITabBarController {
 	func closeInspector() {
 		if let splitVC = splitViewController {
 			splitVC.hide(.secondary)
+			AppDelegate.shared.mainView.hideInspector()
 		} else {
 			dismiss(animated: true)
 		}

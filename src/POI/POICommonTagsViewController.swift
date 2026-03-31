@@ -97,9 +97,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	override func viewDidLoad() {
-		// have to update presets before call super because super asks for the number of sections
 		extraTags = KeyValueTableSection(tableView: tableView)
-		updatePresets()
 
 		super.viewDidLoad()
 

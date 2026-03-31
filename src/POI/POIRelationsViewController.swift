@@ -384,11 +384,12 @@ class POIRelationsViewController: UIHostingController<POIRelationsView> {
 	}
 
 	@objc func cancel(_ sender: Any?) {
-		dismiss(animated: true)
+		(tabBarController as? POITabBarController)?.closeInspector()
 	}
 
 	@objc func done(_ sender: Any?) {
-		dismiss(animated: true)
-		(tabBarController as? POITabBarController)?.commitChanges()
+		let tabController = tabBarController as? POITabBarController
+		tabController?.commitChanges()
+		tabController?.closeInspector()
 	}
 }

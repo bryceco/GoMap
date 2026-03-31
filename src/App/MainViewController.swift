@@ -1849,23 +1849,18 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	/// Shows the POI tag editor as a side panel (regular width) or modal (compact width).
 	func showInspector() {
-#if true
-		let poiStoryboard = UIStoryboard(name: "POI", bundle: nil)
-		let poiVC = poiStoryboard.instantiateViewController(withIdentifier: "poiTabBar") as! POITabBarController
-		splitViewController?.setViewController(poiVC, for: .secondary)
-		splitViewController?.show(.secondary)
-#else
-		if let splitViewController,
-		   AppEnvironment.isRunningOnMac || traitCollection.horizontalSizeClass == .regular
-		{
+		if let secondary = splitViewController?.viewController(for: .secondary) as? POITabBarController {
+			secondary.configure()
+		} else {
 			let poiStoryboard = UIStoryboard(name: "POI", bundle: nil)
 			let poiVC = poiStoryboard.instantiateViewController(withIdentifier: "poiTabBar") as! POITabBarController
-			splitViewController.setViewController(poiVC, for: .secondary)
-			splitViewController.show(.secondary)
-		} else {
-			performSegue(withIdentifier: "poiSegue", sender: nil)
+			splitViewController?.setViewController(poiVC, for: .secondary)
 		}
-#endif
+		splitViewController?.show(.secondary)
+	}
+
+	func hideInspector() {
+		splitViewController?.setViewController(nil, for: .secondary)
 	}
 
 	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
