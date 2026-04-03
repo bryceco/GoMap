@@ -12,6 +12,7 @@
 --disable blankLinesAtStartOfScope
 --disable docComments
 --disable preferKeyPath,trailingClosures
+--disable redundantProperty
 --disable redundantPublic
 --disable redundantSelf
 --disable redundantStaticSelf
