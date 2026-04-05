@@ -227,14 +227,14 @@ class WikiPage {
 		return result
 	}
 
-	private func entity(in entities: [String: Any]?, withTitlePrefix prefixList: [String]) -> [String: Any]? {
+	private func entity(in entities: [String: Any]?, withTitlePrefix titlePrefix: String) -> [String: Any]? {
 		return entities?.values.first(where: {
 			if let q = $0 as? [String: Any],
 			   let links = q["sitelinks"] as? [String: Any],
 			   let wiki = links["wiki"] as? [String: Any],
 			   let title = wiki["title"] as? String
 			{
-				return prefixList.contains(where: { title.hasPrefix($0) })
+				return title.hasPrefix(titlePrefix)
 			}
 			return false
 		}) as? [String: Any]
@@ -249,11 +249,14 @@ class WikiPage {
 		// fetch the language code in use, if any
 		let langWiki = wikiLanguageCodeFor(languageCode: language)
 		var langQID = ""
-		if let entity = entity(in: entities, withTitlePrefix: ["Locale:"]) {
+		if let entity = entity(in: entities, withTitlePrefix: "Locale:") {
 			langQID = entity["id"] as? String ?? ""
 		}
 
-		guard let entity = entity(in: entities, withTitlePrefix: ["Key:", "Tag:"]) else { return nil }
+		guard
+			let entity = entity(in: entities, withTitlePrefix: "Tag:")
+			?? entity(in: entities, withTitlePrefix: "Key:")
+		else { return nil }
 
 		// fetch the description text
 		var description = ""
