@@ -31,12 +31,12 @@ jobs:
         run: |
           cd src/iOS
           xcodebuild test \
-            -scheme GoMapTests \
-            -destination 'platform=iOS Simulator,name=Any iOS Simulator Device' \
+            -scheme GoMapTests 
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
             -allowProvisioningUpdates \
             OTHER_SWIFT_FLAGS="-Xfrontend -strict-concurrency=minimal"
           xcodebuild test \
             -scheme GoMapUITests \
-            -destination 'platform=iOS Simulator,name=Any iOS Simulator Device' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro' \
             -allowProvisioningUpdates \
             OTHER_SWIFT_FLAGS="-Xfrontend -strict-concurrency=minimal"
