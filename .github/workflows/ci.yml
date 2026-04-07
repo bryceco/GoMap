@@ -16,12 +16,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Select newest Xcode
-        run: |
-          LATEST=$(ls /Applications | grep Xcode_ | sort -V | tail -n 1)
-          echo "Using $LATEST"
-          sudo xcode-select -s "/Applications/$LATEST/Contents/Developer"
-
+      - name: Select recent Xcode
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: '>=26.3'
+          
       - name: Get swift version
         run: |
           ls /Applications
@@ -33,11 +32,11 @@ jobs:
           cd src/iOS
           xcodebuild test \
             -scheme GoMapTests \
-            -destination 'platform=iOS Simulator,OS=26.1,name=iPhone 17 Pro' \
+            -destination 'platform=iOS Simulator,name=Any iOS Simulator Device' \
             -allowProvisioningUpdates \
             OTHER_SWIFT_FLAGS="-Xfrontend -strict-concurrency=minimal"
           xcodebuild test \
             -scheme GoMapUITests \
-            -destination 'platform=iOS Simulator,OS=26.1,name=iPhone 17 Pro' \
+            -destination 'platform=iOS Simulator,name=Any iOS Simulator Device' \
             -allowProvisioningUpdates \
             OTHER_SWIFT_FLAGS="-Xfrontend -strict-concurrency=minimal"
