@@ -16,7 +16,9 @@
 --disable redundantPublic
 --disable redundantSelf
 --disable redundantStaticSelf
+--disable redundantType
 --disable redundantVariable
+--disable wrapFunctionBodies
 --disable wrapPropertyBodies
 --disable wrapSingleLineComments
 --elseposition same-line
