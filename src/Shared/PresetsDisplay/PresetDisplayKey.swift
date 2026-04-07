@@ -7,7 +7,6 @@
 //
 //
 
-import Foundation
 import UIKit
 
 // A key along with information about possible values

@@ -8,7 +8,6 @@
 
 import Compression
 import CoreLocation
-import Foundation
 import KissXML
 import UIKit
 

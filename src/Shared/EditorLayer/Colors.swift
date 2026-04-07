@@ -6,10 +6,9 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-final class Colors {
+enum Colors {
 	static func cssColorForColorName(_ string: String) -> UIColor? {
 		guard string.count > 0 else { return nil }
 

@@ -7,8 +7,6 @@
 //
 
 import CoreText
-import Foundation
-import QuartzCore
 import UIKit
 
 private struct TextLoc {

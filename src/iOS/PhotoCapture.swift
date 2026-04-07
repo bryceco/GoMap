@@ -7,7 +7,6 @@
 //
 
 import CoreLocation
-import Foundation
 import UIKit
 
 private func dataFor(image: UIImage, location: CLLocation?, heading: CLHeading?) -> Data? {
@@ -128,7 +127,7 @@ private class CameraOverlayView: UIView {
 			acceptButton.setTitle("Use Photo", for: .normal)
 			retakeButton.setTitle("Retake", for: .normal)
 		}
-		[shutterButton, cancelButton, retakeButton, acceptButton].forEach { button in
+		for button in [shutterButton, cancelButton, retakeButton, acceptButton] {
 			button.translatesAutoresizingMaskIntoConstraints = false
 			addSubview(button)
 		}

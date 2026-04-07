@@ -19,7 +19,6 @@
 //  Created by Boris Verkhovskiy on 2024-03-30.
 //
 
-import Foundation
 import UIKit
 
 extension RenderInfo {

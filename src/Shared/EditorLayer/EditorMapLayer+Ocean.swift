@@ -7,7 +7,6 @@
 //
 
 import CoreGraphics
-import Foundation
 import UIKit
 
 extension OSMPoint: Hashable {

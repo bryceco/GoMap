@@ -6,7 +6,6 @@
 //  Copyright © 2022 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class TextPairTableCell: UITableViewCell {

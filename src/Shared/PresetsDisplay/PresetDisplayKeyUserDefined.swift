@@ -6,7 +6,6 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 // A preset the user defined as a custom field

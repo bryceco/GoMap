@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Bryce Cogswell. All rights reserved.
 //
 
-import QuartzCore
 import UIKit
 
 class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {

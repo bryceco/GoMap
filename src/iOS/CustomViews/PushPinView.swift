@@ -7,7 +7,6 @@
 //
 
 import CoreLocation
-import QuartzCore
 import UIKit
 
 typealias PushPinViewDragCallback = (PushPinView, UIGestureRecognizer.State, CGFloat, CGFloat) -> Void

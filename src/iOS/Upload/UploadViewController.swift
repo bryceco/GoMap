@@ -8,7 +8,6 @@
 
 import KissXML
 import MessageUI
-import QuartzCore
 import UIKit
 
 func sanitizedURL(_ urlString: String) -> String {

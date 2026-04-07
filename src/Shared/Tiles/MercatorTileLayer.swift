@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-import QuartzCore
 import UIKit
 
 @inline(__always) private func modulus(_ a: Int, _ n: Int) -> Int {

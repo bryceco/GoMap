@@ -6,7 +6,6 @@
 //  Copyright © 2023 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
 import SafariServices
 import UIKit
 

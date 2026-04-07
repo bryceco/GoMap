@@ -6,7 +6,6 @@
 //  Copyright (c) 2012 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class SpeechBalloonView: UIView {

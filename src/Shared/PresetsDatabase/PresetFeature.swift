@@ -6,7 +6,6 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 // A feature-defining tag such as amenity=shop

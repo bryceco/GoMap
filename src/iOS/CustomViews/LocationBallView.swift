@@ -7,7 +7,6 @@
 //
 
 import CoreLocation
-import QuartzCore
 import UIKit
 
 final class LocationBallView: UIView, MapPositionedView {

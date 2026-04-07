@@ -6,7 +6,6 @@
 //  Copyright © 2024 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 let BasemapServerList: [TileServer] = [

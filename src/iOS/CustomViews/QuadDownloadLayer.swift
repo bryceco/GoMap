@@ -6,7 +6,6 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
-import QuartzCore
 import UIKit
 
 /// This class is used only for debugging.
