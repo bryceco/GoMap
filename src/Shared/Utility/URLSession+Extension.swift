@@ -26,17 +26,6 @@ enum UrlSessionError: LocalizedError {
 	}
 }
 
-enum URLError2: Error {
-	case invalidURL(String)
-
-	var localizedDescription: String {
-		switch self {
-		case let .invalidURL(urlString):
-			return "Invalid URL: \(urlString)"
-		}
-	}
-}
-
 extension URLSession {
 	// Wraps up the various failure conditions as a thrown error
 	func data(with request: URLRequest) async throws -> Data {
