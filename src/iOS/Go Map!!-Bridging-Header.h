@@ -6,4 +6,3 @@
 @class OsmBaseObject;
 
 #import "UndoAction.h"
-#import "DDXML.h"

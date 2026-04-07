@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KissXML
 import UIKit
 
 final class OsmXmlGenerator {

@@ -8,6 +8,7 @@
 
 import CoreGraphics
 import Foundation
+import KissXML
 
 final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	private var pendingUpdateTask: Task<Void, Never>?

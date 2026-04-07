@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KissXML
 
 // A keep-right entry. These use XML just like a GPS waypoint, but with an extension to define OSM data.
 final class KeepRightMarker: MapMarker {

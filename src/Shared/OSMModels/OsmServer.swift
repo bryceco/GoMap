@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KissXML
 
 // "https://api.openstreetmap.org/"
 var OSM_SERVER: OsmServer = {

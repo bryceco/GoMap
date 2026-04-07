@@ -8,6 +8,7 @@
 
 import CoreLocation.CLLocation
 import Foundation
+import KissXML
 
 final class GpxPoint: NSObject, NSSecureCoding {
 	static let supportsSecureCoding = true

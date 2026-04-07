@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import KissXML
 
 final class OsmNoteComment {
 	let date: String
