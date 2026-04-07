@@ -6,9 +6,8 @@
 //  Copyright © 2019 Bryce Cogswell. All rights reserved.
 //
 
-import XCTest
-
 @testable import Go_Map__
+import XCTest
 
 class PresetKeyTagCase: XCTestCase {
 	func testInitWithPresetsShouldPreferThePlaceholderParameterIfProvided() {
@@ -25,7 +24,7 @@ class PresetKeyTagCase: XCTestCase {
 		                              keyboard: .default,
 		                              capitalize: .none,
 		                              autocorrect: .no,
-									  presetValues: [firstPreset, secondPreset])
+		                              presetValues: [firstPreset, secondPreset])
 
 		XCTAssertEqual(tagKey.placeholder, placeholder)
 	}
@@ -45,7 +44,7 @@ class PresetKeyTagCase: XCTestCase {
 		                              keyboard: .default,
 		                              capitalize: .none,
 		                              autocorrect: .no,
-									  presetValues: [firstPreset, secondPreset])
+		                              presetValues: [firstPreset, secondPreset])
 
 		XCTAssertEqual(tagKey.placeholder, "\(firstPresetName), \(secondPresentName)...")
 	}

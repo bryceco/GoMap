@@ -9,7 +9,7 @@
 import Foundation
 
 extension MainActor {
-	static func runAfter(nanoseconds: UInt64, operation: @escaping @MainActor() -> Void) {
+	static func runAfter(nanoseconds: UInt64, operation: @escaping @MainActor () -> Void) {
 		Task { @MainActor in
 			try? await Task.sleep(nanoseconds: nanoseconds)
 			operation()

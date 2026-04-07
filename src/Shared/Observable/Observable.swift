@@ -10,7 +10,7 @@ public class ImmutableObservable<T> {
 
 	fileprivate var _value: T {
 		didSet {
-			observers.values.forEach { observer, dispatchQueue in
+			for (observer, dispatchQueue) in observers.values {
 				if let dispatchQueue = dispatchQueue {
 					dispatchQueue.async {
 						observer(self.value, oldValue)

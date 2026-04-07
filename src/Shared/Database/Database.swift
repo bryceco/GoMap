@@ -587,7 +587,7 @@ final class Database {
 				timestamp: timestamp,
 				tags: tags)
 
-			let nodeRefs = [OsmIdentifier].init(repeating: -1, count: Int(nodecount))
+			let nodeRefs = [OsmIdentifier](repeating: -1, count: Int(nodecount))
 			way.constructNodeList(nodeRefs)
 
 			ways[way.ident] = way
@@ -680,8 +680,8 @@ final class Database {
 			guard let relation = relations[ident] else {
 				throw DatabaseError.relationReferencedByMemberDoesNotExist
 			}
-			let member = OsmMember(
-				type: try OSM_TYPE(string: type),
+			let member = try OsmMember(
+				type: OSM_TYPE(string: type),
 				ref: ref,
 				role: role)
 

@@ -55,22 +55,23 @@ class HealthKitRoutes {
 				sampleType: HKSeriesType.workoutRoute(),
 				predicate: predicate,
 				limit: HKObjectQueryNoLimit,
-				sortDescriptors: [sortByDate]) { _, samples, error in
-					if let error = error {
-						completion(.failure(error))
-						return
-					}
-
-					// Process the route data (samples) here
-					if let routes = samples as? [HKWorkoutRoute] {
-						completion(.success(routes))
-					} else {
-						completion(.failure(
-							NSError(domain: "com.example.healthkit",
-							        code: 2,
-							        userInfo: [NSLocalizedDescriptionKey: "No route data found."])))
-					}
+				sortDescriptors: [sortByDate])
+			{ _, samples, error in
+				if let error = error {
+					completion(.failure(error))
+					return
 				}
+
+				// Process the route data (samples) here
+				if let routes = samples as? [HKWorkoutRoute] {
+					completion(.success(routes))
+				} else {
+					completion(.failure(
+						NSError(domain: "com.example.healthkit",
+						        code: 2,
+						        userInfo: [NSLocalizedDescriptionKey: "No route data found."])))
+				}
+			}
 
 			// Execute the query
 			self.healthStore.execute(routeQuery)

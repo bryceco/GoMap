@@ -6,10 +6,9 @@
 //  Copyright © 2019 Bryce Cogswell. All rights reserved.
 //
 
-import XCTest
-
 import CoreLocation
 @testable import Go_Map__
+import XCTest
 
 class MeasureDirectionViewModelTestCase: XCTestCase {
 	private var viewModel: MeasureDirectionViewModel!

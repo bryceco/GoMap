@@ -7,7 +7,6 @@
 //
 
 import Foundation
-
 @testable import Go_Map__
 
 class HeadingProviderMock: HeadingProviding {

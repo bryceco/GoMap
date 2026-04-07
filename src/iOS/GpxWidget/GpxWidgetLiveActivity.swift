@@ -147,8 +147,8 @@ struct GpxWidgetLiveActivity: Widget {
 			} minimal: {
 				Image("AppIconTransparent")
 					.resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 24, height: 24)
+					.aspectRatio(contentMode: .fit)
+					.frame(width: 24, height: 24)
 			}
 		}
 	}

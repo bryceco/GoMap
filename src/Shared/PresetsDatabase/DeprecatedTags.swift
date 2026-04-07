@@ -8,16 +8,15 @@
 
 import Foundation
 
-class DeprecatedTags
-{
+class DeprecatedTags {
 	struct Entry: Decodable {
 		let old: [String: String]
 		let replace: [String: String]?
 	}
+
 	let entries: [Entry]
 
-	required init(from data: Data) throws
-	{
+	required init(from data: Data) throws {
 		let list = try JSONDecoder().decode([Entry].self, from: data)
 		entries = list.filter { $0.old.count == 1 }
 	}

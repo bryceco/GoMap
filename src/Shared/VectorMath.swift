@@ -692,12 +692,11 @@ func metersToDegrees(meters: Double, latitude: Double) -> Double {
 ///
 /// - Parameter zoomLevel: Web Mercator zoom level (0–22)
 /// - Returns: Approximate visible area in square meters
-func visibleEarthAreaAt(zoom: Double) -> Double
-{
-	let earthSurfaceAreaM2: Double = 5.1e14  // ~510,000,000 km² in m²
+func visibleEarthAreaAt(zoom: Double) -> Double {
+	let earthSurfaceAreaM2: Double = 5.1e14 // ~510,000,000 km² in m²
 
 	// Display dimensions for typical iPhone
-	let displayWidth: Double  = 430
+	let displayWidth: Double = 430
 	let displayHeight: Double = 932
 
 	// At zoom level z, the full Web Mercator world is (256 × 2^z) pixels on each side

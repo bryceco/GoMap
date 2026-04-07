@@ -1,5 +1,5 @@
 //
-//  GeoJSONList.swift
+//  UserFileList.swift
 //  Go Map!!
 //
 //  Created by Bryce Cogswell on 5/20/24.

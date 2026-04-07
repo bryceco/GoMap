@@ -101,7 +101,7 @@ func jsonAsPrettyString(_ json: Any) -> String? {
 		return jsonAsPrettyString(object)
 	}
 	guard let data = try? JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted]),
-		  let string = String(data: data, encoding: .utf8)
+	      let string = String(data: data, encoding: .utf8)
 	else {
 		return nil
 	}

@@ -1,5 +1,5 @@
 //
-//  BingMapsGeometry.swift
+//  TileQuadKey.swift
 //  OpenStreetMap
 //
 //  Created by Bryce Cogswell on 9/26/12.
