@@ -982,11 +982,16 @@ extension EditorMapLayer {
 			// both a node and way are selected but selected node is not an endpoint (or way is closed),
 			// so we will create a new way "T" from that node
 			prevNode = selectedNode // use the existing node selected by user
-			way = createWay(with: selectedNode) // create a new way extending off of it
+			way = createWay(with: prevNode) // create a new way extending off of it
 		} else {
 			// we're either extending a way from it's end, or creating a new way with
 			// the pushpin as one end of it and crosshairs (or mouse click) as the other
-			prevNode = selectedNode ?? createNode(atScreenPoint: pinPoint)
+			if let selectedNode {
+				// we are extending an existing way
+				prevNode = selectedNode
+			} else {
+				prevNode = createNode(atScreenPoint: pinPoint)
+			}
 			way = selectedWay ?? createWay(with: prevNode)
 		}
 
@@ -1107,8 +1112,9 @@ extension EditorMapLayer {
 		// we are either creating a brand new node unconnected to an existing way,
 		// converting a dropped pin to a way by adding a new node
 		// or adding a node to a selected way/node combination
-		guard let pushpinView = owner.pushpinView(),
-		      selectedNode == nil || selectedWay != nil
+		guard
+			let pushpinView = owner.pushpinView(),
+			selectedNode == nil || selectedWay != nil
 		else {
 			// drop a new pin
 			owner.unselectAll()
@@ -1116,11 +1122,12 @@ extension EditorMapLayer {
 			return
 		}
 
-		let prevPointIsOffScreen = !bounds.contains(pushpinView.arrowPoint)
-		let offscreenWarning: (() -> Void) = {
+		func offscreenWarning() {
 			self.display.flashMessage(title: nil,
 			                          message: NSLocalizedString("Selected object is off screen", comment: ""))
 		}
+
+		let prevPointIsOffScreen = !bounds.contains(pushpinView.arrowPoint)
 
 		if let selectedWay = selectedWay,
 		   let selectedNode = selectedNode
