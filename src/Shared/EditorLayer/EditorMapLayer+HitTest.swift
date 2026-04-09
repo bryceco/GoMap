@@ -12,7 +12,7 @@ import CoreLocation
 extension EditorMapLayer {
 	// MARK: Hit Testing
 
-	@inline(__always) private static func HitTestLineSegment(
+	private static func HitTestLineSegment(
 		_ point: LatLon,
 		_ maxDegrees: OSMSize,
 		_ coord1: LatLon,

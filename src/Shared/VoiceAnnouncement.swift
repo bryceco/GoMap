@@ -214,7 +214,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 	}
 }
 
-@inline(__always) private func OSMPointFromCoordinate(_ coord: LatLon) -> OSMPoint {
+private func OSMPointFromCoordinate(_ coord: LatLon) -> OSMPoint {
 	let point = OSMPoint(x: coord.lon, y: coord.lat)
 	return point
 }

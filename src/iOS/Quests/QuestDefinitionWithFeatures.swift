@@ -157,7 +157,6 @@ struct QuestDefinitionWithFeatures: QuestDefinition {
 		}
 
 		// check whether candidate object matches all tags in feature
-		@inline(__always)
 		func matchTagsOf(candidate: [String: String], to feature: [String: String]) -> Bool {
 			// check whether candidate object matches all tags in feature
 			for kv in feature {

@@ -11,12 +11,12 @@ import CoreLocation
 import Foundation
 
 /// Convert from latitude to Mercator projected latitude
-@inline(__always) public func lat2latp(_ a: Double) -> Double {
+public func lat2latp(_ a: Double) -> Double {
 	return 180 / .pi * log(tan(.pi / 4 + a * (.pi / 180) / 2))
 }
 
 /// Convert Mercator projected latitude to latitude
-@inline(__always) public func latp2lat(_ a: Double) -> Double {
+public func latp2lat(_ a: Double) -> Double {
 	return 180 / .pi * (2 * atan(exp(a * .pi / 180)) - .pi / 2)
 }
 

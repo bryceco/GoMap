@@ -8,7 +8,7 @@
 
 import UIKit
 
-@inline(__always) private func modulus(_ a: Int, _ n: Int) -> Int {
+private func modulus(_ a: Int, _ n: Int) -> Int {
 	var m = a % n
 	if m < 0 {
 		m += n

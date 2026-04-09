@@ -29,55 +29,55 @@ extension CoreGraphics.CGPoint: Swift.Hashable {
 extension CGPoint {
 	static let zero = CGPoint(x: 0.0, y: 0.0)
 
-	@inline(__always) func withOffset(_ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
+	func withOffset(_ dx: CGFloat, _ dy: CGFloat) -> CGPoint {
 		return CGPoint(x: x + dx,
 		               y: y + dy)
 	}
 
-	@inline(__always) func minus(_ b: CGPoint) -> CGPoint {
+	func minus(_ b: CGPoint) -> CGPoint {
 		return CGPoint(x: x - b.x,
 		               y: y - b.y)
 	}
 
-	@inline(__always) func plus(_ b: CGPoint) -> CGPoint {
+	func plus(_ b: CGPoint) -> CGPoint {
 		return CGPoint(x: x + b.x,
 		               y: y + b.y)
 	}
 
-	@inline(__always) init(_ pt: OSMPoint) {
+	init(_ pt: OSMPoint) {
 		self.init(x: pt.x,
 		          y: pt.y)
 	}
 }
 
-@inline(__always) func Dot(_ a: OSMPoint, _ b: OSMPoint) -> Double {
+func Dot(_ a: OSMPoint, _ b: OSMPoint) -> Double {
 	return a.x * b.x + a.y * b.y
 }
 
-@inline(__always) func MagSquared(_ a: OSMPoint) -> Double {
+func MagSquared(_ a: OSMPoint) -> Double {
 	return a.x * a.x + a.y * a.y
 }
 
-@inline(__always) func Mag(_ a: OSMPoint) -> Double {
+func Mag(_ a: OSMPoint) -> Double {
 	return hypot(a.x, a.y)
 }
 
-@inline(__always) func Add(_ a: OSMPoint, _ b: OSMPoint) -> OSMPoint {
+func Add(_ a: OSMPoint, _ b: OSMPoint) -> OSMPoint {
 	return OSMPoint(x: a.x + b.x,
 	                y: a.y + b.y)
 }
 
-@inline(__always) func Sub(_ a: OSMPoint, _ b: OSMPoint) -> OSMPoint {
+func Sub(_ a: OSMPoint, _ b: OSMPoint) -> OSMPoint {
 	return OSMPoint(x: a.x - b.x,
 	                y: a.y - b.y)
 }
 
-@inline(__always) func Mult(_ a: OSMPoint, _ c: Double) -> OSMPoint {
+func Mult(_ a: OSMPoint, _ c: Double) -> OSMPoint {
 	return OSMPoint(x: a.x * c,
 	                y: a.y * c)
 }
 
-@inline(__always) func CrossMag(_ a: OSMPoint, _ b: OSMPoint) -> Double {
+func CrossMag(_ a: OSMPoint, _ b: OSMPoint) -> Double {
 	return a.x * b.y - a.y * b.x
 }
 
@@ -108,13 +108,12 @@ func IntersectionOfTwoVectors(_ pos1: OSMPoint, _ dir1: OSMPoint, _ pos2: OSMPoi
 // MARK: CGRect
 
 extension CGRect {
-	@inline(__always) func center() -> CGPoint {
-		let c = CGPoint(x: origin.x + size.width / 2,
-		                y: origin.y + size.height / 2)
-		return c
+	func center() -> CGPoint {
+		return CGPoint(x: origin.x + size.width / 2,
+					   y: origin.y + size.height / 2)
 	}
 
-	@inline(__always) init(_ rc: OSMRect) {
+	init(_ rc: OSMRect) {
 		self.init(x: rc.origin.x,
 		          y: rc.origin.y,
 		          width: rc.size.width,
@@ -195,19 +194,19 @@ struct OSMPoint: Equatable, Codable {
 extension OSMPoint {
 	static let zero = OSMPoint(x: 0.0, y: 0.0)
 
-	@inline(__always) init(_ pt: CGPoint) {
+	init(_ pt: CGPoint) {
 		self.init(x: Double(pt.x), y: Double(pt.y))
 	}
 
-	@inline(__always) init(_ loc: LatLon) {
+	init(_ loc: LatLon) {
 		self.init(x: loc.lon, y: loc.lat)
 	}
 
-	@inline(__always) public static func ==(_ a: OSMPoint, _ b: OSMPoint) -> Bool {
+	public static func ==(_ a: OSMPoint, _ b: OSMPoint) -> Bool {
 		return a.x == b.x && a.y == b.y
 	}
 
-	@inline(__always) func withTransform(_ t: OSMTransform) -> OSMPoint {
+	func withTransform(_ t: OSMTransform) -> OSMPoint {
 #if TRANSFORM_3D
 		let zp = 0.0
 		var x = t.m11 * pt.x + t.m21 * pt.y + t.m31 * zp + t.m41
@@ -232,13 +231,13 @@ extension OSMPoint {
 #endif
 	}
 
-	@inline(__always) func unitVector() -> OSMPoint {
+	func unitVector() -> OSMPoint {
 		let d = Mag(self)
 		return OSMPoint(x: x / d,
 		                y: y / d)
 	}
 
-	@inline(__always) func distanceToPoint(_ b: OSMPoint) -> Double {
+	func distanceToPoint(_ b: OSMPoint) -> Double {
 		return Mag(Sub(self, b))
 	}
 
@@ -301,11 +300,11 @@ struct OSMSize: Equatable, Codable {
 extension OSMSize {
 	static let zero = OSMSize(width: 0.0, height: 0.0)
 
-	@inline(__always) init(_ sz: CGSize) {
+	init(_ sz: CGSize) {
 		self.init(width: Double(sz.width), height: Double(sz.height))
 	}
 
-	@inline(__always) public static func ==(_ a: OSMSize, _ b: OSMSize) -> Bool {
+	public static func ==(_ a: OSMSize, _ b: OSMSize) -> Bool {
 		return a.width == b.width && a.height == b.height
 	}
 }
@@ -326,32 +325,32 @@ struct OSMRect: Equatable, Codable {
 extension OSMRect {
 	static let zero = OSMRect(origin: OSMPoint(x: 0.0, y: 0.0), size: OSMSize(width: 0.0, height: 0.0))
 
-	@inline(__always) init(x: Double, y: Double, width: Double, height: Double) {
+	init(x: Double, y: Double, width: Double, height: Double) {
 		self.init(origin: OSMPoint(x: x, y: y), size: OSMSize(width: width, height: height))
 	}
 
-	@inline(__always) init(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) {
+	init(x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat) {
 		self.init(
 			origin: OSMPoint(x: Double(x), y: Double(y)),
 			size: OSMSize(width: Double(width), height: Double(height)))
 	}
 
-	@inline(__always) init(origin: CGPoint, size: CGSize) {
+	init(origin: CGPoint, size: CGSize) {
 		self.init(origin: OSMPoint(origin), size: OSMSize(size))
 	}
 
-	@inline(__always) init(_ cg: CGRect) {
+	init(_ cg: CGRect) {
 		self.init(x: cg.origin.x, y: cg.origin.y, width: cg.size.width, height: cg.size.height)
 	}
 
-	@inline(__always) func containsPoint(_ pt: OSMPoint) -> Bool {
+	func containsPoint(_ pt: OSMPoint) -> Bool {
 		return pt.x >= origin.x &&
 			pt.x <= origin.x + size.width &&
 			pt.y >= origin.y &&
 			pt.y <= origin.y + size.height
 	}
 
-	@inline(__always) func intersectsRect(_ b: OSMRect) -> Bool {
+	func intersectsRect(_ b: OSMRect) -> Bool {
 		if origin.x >= b.origin.x + b.size.width { return false }
 		if origin.y >= b.origin.y + b.size.height { return false }
 		if origin.x + size.width < b.origin.x { return false }
@@ -359,14 +358,14 @@ extension OSMRect {
 		return true
 	}
 
-	@inline(__always) func containsRect(_ b: OSMRect) -> Bool {
+	func containsRect(_ b: OSMRect) -> Bool {
 		return origin.x <= b.origin.x &&
 			origin.y <= b.origin.y &&
 			origin.x + size.width >= b.origin.x + b.size.width &&
 			origin.y + size.height >= b.origin.y + b.size.height
 	}
 
-	@inline(__always) func union(_ b: OSMRect) -> OSMRect {
+	func union(_ b: OSMRect) -> OSMRect {
 		let minX = Double(min(origin.x, b.origin.x))
 		let minY = Double(min(origin.y, b.origin.y))
 		let maxX = Double(max(origin.x + size.width, b.origin.x + b.size.width))
@@ -375,11 +374,11 @@ extension OSMRect {
 		return r
 	}
 
-	@inline(__always) public static func ==(_ a: OSMRect, _ b: OSMRect) -> Bool {
+	public static func ==(_ a: OSMRect, _ b: OSMRect) -> Bool {
 		return a.origin == b.origin && a.size == b.size
 	}
 
-	@inline(__always) func withTransform(_ transform: OSMTransform) -> OSMRect {
+	func withTransform(_ transform: OSMTransform) -> OSMRect {
 		var p1 = origin
 		var p2 = OSMPoint(x: origin.x + size.width, y: origin.y + size.height)
 		p1 = p1.withTransform(transform)
@@ -398,7 +397,7 @@ extension OSMRect {
 		        OSMPoint(x: origin.x, y: origin.y + size.height)]
 	}
 
-	@inline(__always) func offsetBy(dx: Double, dy: Double) -> OSMRect {
+	func offsetBy(dx: Double, dy: Double) -> OSMRect {
 		var rect = self
 		rect.origin.x += dx
 		rect.origin.y += dy
@@ -444,7 +443,7 @@ extension OSMTransform {
 #endif
 
 	/// Rotation around Z-axis
-	@inline(__always) func rotation() -> Double {
+	func rotation() -> Double {
 #if TRANSFORM_3D
 		return atan2(m12, m11)
 #else
@@ -453,7 +452,7 @@ extension OSMTransform {
 	}
 
 	// Scaling factor: 1.0 == identity
-	@inline(__always) func scale() -> Double {
+	func scale() -> Double {
 #if TRANSFORM_3D
 		let d = sqrt(m11 * m11 + m12 * m12 + m13 * m13)
 		return d
@@ -463,7 +462,7 @@ extension OSMTransform {
 #endif
 	}
 
-	@inline(__always) func zoom() -> Double {
+	func zoom() -> Double {
 		let scaleX = scale()
 		return log2(scaleX)
 	}
@@ -493,7 +492,7 @@ extension OSMTransform {
 	}
 
 	// Return CGFloat equivalent
-	@inline(__always) func cgAffineTransform() -> CGAffineTransform {
+	func cgAffineTransform() -> CGAffineTransform {
 #if TRANSFORM_3D
 		return CATransform3DGetAffineTransform(self)
 #else
@@ -508,14 +507,14 @@ extension OSMTransform {
 #endif
 	}
 
-	@inline(__always) static func ==(_ t1: OSMTransform, _ t2: OSMTransform) -> Bool {
+	static func ==(_ t1: OSMTransform, _ t2: OSMTransform) -> Bool {
 		var t1 = t1
 		var t2 = t2
 		return memcmp(&t1, &t2, MemoryLayout.size(ofValue: t1)) == 0
 	}
 
 	/// Returns the unit vector for (1.0,0.0) rotated by the current transform
-	@inline(__always) func unitX() -> OSMPoint {
+	func unitX() -> OSMPoint {
 #if TRANSFORM_3D
 		let p = UnitVector(OSMPoint(m11, m12))
 		return p
@@ -524,7 +523,7 @@ extension OSMTransform {
 #endif
 	}
 
-	@inline(__always) func translation() -> OSMPoint {
+	func translation() -> OSMPoint {
 #if TRANSFORM_3D
 		let p = OSMPoint(m41, m42)
 		return p
@@ -533,7 +532,7 @@ extension OSMTransform {
 #endif
 	}
 
-	@inline(__always) func scaledBy(_ scale: Double) -> OSMTransform {
+	func scaledBy(_ scale: Double) -> OSMTransform {
 #if TRANSFORM_3D
 		return CATransform3DScale(self, CGFloat(scale), CGFloat(scale), CGFloat(scale))
 #else
@@ -546,7 +545,7 @@ extension OSMTransform {
 #endif
 	}
 
-	@inline(__always) func translatedBy(dx: Double, dy: Double) -> OSMTransform {
+	func translatedBy(dx: Double, dy: Double) -> OSMTransform {
 #if TRANSFORM_3D
 		return CATransform3DTranslate(self, CGFloat(dx), CGFloat(dy), 0)
 #else
@@ -557,7 +556,7 @@ extension OSMTransform {
 #endif
 	}
 
-	@inline(__always) func scaledBy(scaleX: Double, scaleY: Double) -> OSMTransform {
+	func scaledBy(scaleX: Double, scaleY: Double) -> OSMTransform {
 #if TRANSFORM_3D
 		return CATransform3DScale(self, CGFloat(scale), CGFloat(scaleY), 1.0)
 #else
@@ -570,7 +569,7 @@ extension OSMTransform {
 #endif
 	}
 
-	@inline(__always) func rotatedBy(_ angle: Double) -> OSMTransform {
+	func rotatedBy(_ angle: Double) -> OSMTransform {
 #if TRANSFORM_3D
 		return CATransform3DRotate(self, CGFloat(angle), 0, 0, 1)
 #else
@@ -581,7 +580,7 @@ extension OSMTransform {
 #endif
 	}
 
-	@inline(__always) static func translation(_ dx: Double, _ dy: Double) -> OSMTransform {
+	static func translation(_ dx: Double, _ dy: Double) -> OSMTransform {
 #if TRANSFORM_3D
 		return CATransform3DMakeTranslation(CGFloat(dx), CGFloat(dy), 0)
 #else
@@ -590,7 +589,7 @@ extension OSMTransform {
 #endif
 	}
 
-	@inline(__always) func concat(_ b: OSMTransform) -> OSMTransform {
+	func concat(_ b: OSMTransform) -> OSMTransform {
 #if TRANSFORM_3D
 		return CATransform3DConcat(self, b)
 #else
@@ -644,7 +643,7 @@ struct LatLon: Equatable, Codable {
 		self.init(lon: pt.x, lat: pt.y)
 	}
 
-	@inline(__always) public static func ==(_ a: LatLon, _ b: LatLon) -> Bool {
+	public static func ==(_ a: LatLon, _ b: LatLon) -> Bool {
 		return a.lon == b.lon && a.lat == b.lat
 	}
 
@@ -667,7 +666,7 @@ struct LatLon: Equatable, Codable {
 /// Radius in meters
 let EarthRadius = 6_378137.0
 
-@inline(__always) func radiansFromDegrees(_ degrees: Double) -> Double {
+func radiansFromDegrees(_ degrees: Double) -> Double {
 	return degrees * (.pi / 180)
 }
 
