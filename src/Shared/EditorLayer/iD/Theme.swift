@@ -19,6 +19,7 @@
 //  Created by Boris Verkhovskiy on 2024-03-30.
 //
 
+import Foundation
 import UIKit
 
 extension RenderInfo {
@@ -31,8 +32,10 @@ extension RenderInfo {
 	                  tags: [String: String]) -> RenderInfo
 	{
 		let r = RenderInfo(key: primary ?? "", value: primaryValue)
-		if (tags["barrier"] == "hedge") || (primary == "landuse" && primaryValue == "flowerbed") ||
-			(primary == "landuse" && primaryValue == "forest") || (primary == "landuse" && primaryValue == "grass") ||
+		if (tags["barrier"] == "hedge") ||
+			(primary == "landuse" && primaryValue == "flowerbed") ||
+			(primary == "landuse" && primaryValue == "forest") ||
+			(primary == "landuse" && primaryValue == "grass") ||
 			(primary == "landuse" && primaryValue == "recreation_ground") ||
 			(primary == "landuse" && primaryValue == "village_green") ||
 			((primary == "leisure" && primaryValue == "garden") || tags["leisure"] == "garden") ||
@@ -42,46 +45,69 @@ extension RenderInfo {
 			((primary == "leisure" && primaryValue == "pitch") || tags["leisure"] == "pitch") ||
 			((primary == "leisure" && primaryValue == "track") || tags["leisure"] == "track") ||
 			(primary == "natural") ||
-			(primary == "natural" && primaryValue == "wood") || (tags["golf"] == "tee") ||
+			(primary == "natural" && primaryValue == "wood") ||
+			(tags["golf"] == "tee") ||
 			(tags["golf"] == "fairway") ||
-			(tags["golf"] == "rough") || (tags["golf"] == "green")
+			(tags["golf"] == "rough") ||
+			(tags["golf"] == "green")
 		{
 			r.lineColor = DynamicColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 1.0)
 			r.areaColor = DynamicColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 0.3)
 		}
-		if (primary == "amenity" && primaryValue == "fountain") ||
-			((primary == "leisure" && primaryValue == "swimming_pool") || tags["leisure"] == "swimming_pool") ||
-			(primary == "natural" && primaryValue == "bay") || (primary == "natural" && primaryValue == "strait") ||
+		if primary == "amenity" && primaryValue == "fountain" {
+			r.lineColor = DynamicColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 1.0)
+		}
+		if primary == "landuse" && primaryValue == "basin" {
+			r.areaColor = DynamicColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 1.0)
+		}
+		if ((primary == "leisure" && primaryValue == "swimming_pool") || tags["leisure"] == "swimming_pool") ||
+			(primary == "natural" && primaryValue == "bay") ||
+			(primary == "natural" && primaryValue == "strait") ||
 			(primary == "natural" && primaryValue == "water")
 		{
 			r.lineColor = DynamicColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 1.0)
+		}
+		if (primary == "amenity" && primaryValue == "fountain") ||
+			(primary == "landuse" && primaryValue == "basin") ||
+			((primary == "leisure" && primaryValue == "swimming_pool") || tags["leisure"] == "swimming_pool") ||
+			(primary == "natural" && primaryValue == "bay") ||
+			(primary == "natural" && primaryValue == "strait") ||
+			(primary == "natural" && primaryValue == "water")
+		{
 			r.areaColor = DynamicColor(red: 0.467, green: 0.827, blue: 0.871, alpha: 0.3)
 		}
 		if ((primary == "leisure" && primaryValue == "track") || tags["leisure"] == "track") ||
-			(primary == "natural" && primaryValue == "beach") || (primary == "natural" && primaryValue == "sand") ||
+			(primary == "natural" && primaryValue == "beach") ||
+			(primary == "natural" && primaryValue == "sand") ||
 			(primary == "natural" && primaryValue == "scrub") ||
 			(primary == "amenity" && primaryValue == "childcare") ||
 			(primary == "amenity" && primaryValue == "kindergarten") ||
-			(primary == "amenity" && primaryValue == "school") || (primary == "amenity" && primaryValue == "college") ||
+			(primary == "amenity" && primaryValue == "school") ||
+			(primary == "amenity" && primaryValue == "college") ||
 			(primary == "amenity" && primaryValue == "university") ||
 			(primary == "amenity" && primaryValue == "research_institute")
 		{
 			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 0.58, alpha: 0.75)
 			r.areaColor = DynamicColor(red: 1.0, green: 1.0, blue: 0.58, alpha: 0.25)
 		}
-		if (primary == "landuse" && primaryValue == "residential") || (status == "construction") {
+		if (primary == "landuse" && primaryValue == "residential") ||
+			(status == "construction")
+		{
 			r.lineColor = DynamicColor(red: 0.769, green: 0.741, blue: 0.098, alpha: 1.0)
 			r.areaColor = DynamicColor(red: 0.769, green: 0.741, blue: 0.098, alpha: 0.3)
 		}
 		if (primary == "landuse" && primaryValue == "retail") ||
 			(primary == "landuse" && primaryValue == "commercial") ||
-			(primary == "landuse" && primaryValue == "landfill") || (primary == "military") ||
+			(primary == "landuse" && primaryValue == "landfill") ||
+			(primary == "military") ||
 			(primary == "landuse" && primaryValue == "military")
 		{
 			r.lineColor = DynamicColor(red: 0.839, green: 0.533, blue: 0.102, alpha: 1.0)
 			r.areaColor = DynamicColor(red: 0.839, green: 0.533, blue: 0.102, alpha: 0.3)
 		}
-		if (primary == "landuse" && primaryValue == "industrial") || (primary == "power" && primaryValue == "plant") {
+		if (primary == "landuse" && primaryValue == "industrial") ||
+			(primary == "power" && primaryValue == "plant")
+		{
 			r.lineColor = DynamicColor(red: 0.894, green: 0.643, blue: 0.961, alpha: 1.0)
 			r.areaColor = DynamicColor(red: 0.894, green: 0.643, blue: 0.961, alpha: 0.3)
 		}
@@ -91,7 +117,8 @@ extension RenderInfo {
 		}
 		if (primary == "landuse" && primaryValue == "cemetery") ||
 			(primary == "landuse" && primaryValue == "farmland") ||
-			(primary == "landuse" && primaryValue == "meadow") || (primary == "landuse" && primaryValue == "orchard") ||
+			(primary == "landuse" && primaryValue == "meadow") ||
+			(primary == "landuse" && primaryValue == "orchard") ||
 			(primary == "landuse" && primaryValue == "vineyard")
 		{
 			r.lineColor = DynamicColor(red: 0.749, green: 0.91, blue: 0.247, alpha: 1.0)
@@ -103,21 +130,26 @@ extension RenderInfo {
 			r.lineColor = DynamicColor(red: 0.961, green: 0.863, blue: 0.729, alpha: 1.0)
 			r.areaColor = DynamicColor(red: 0.961, green: 0.863, blue: 0.729, alpha: 0.3)
 		}
-		if (primary == "amenity" && primaryValue == "parking") || (primary == "landuse" && primaryValue == "railway") ||
+		if (primary == "amenity" && primaryValue == "parking") ||
+			(primary == "landuse" && primaryValue == "railway") ||
 			(primary == "landuse" && primaryValue == "quarry") ||
 			((primary == "man_made" && primaryValue == "adit") || tags["man_made"] == "adit") ||
 			((primary == "man_made" && primaryValue == "groyne") || tags["man_made"] == "groyne") ||
 			((primary == "man_made" && primaryValue == "breakwater") || tags["man_made"] == "breakwater") ||
 			(primary == "natural" && primaryValue == "bare_rock") ||
 			(primary == "natural" && primaryValue == "cave_entrance") ||
-			(primary == "natural" && primaryValue == "cliff") || (primary == "natural" && primaryValue == "rock") ||
-			(primary == "natural" && primaryValue == "scree") || (primary == "natural" && primaryValue == "stone") ||
-			(primary == "natural" && primaryValue == "shingle") || (primary == "waterway" && primaryValue == "dam") ||
+			(primary == "natural" && primaryValue == "cliff") ||
+			(primary == "natural" && primaryValue == "rock") ||
+			(primary == "natural" && primaryValue == "scree") ||
+			(primary == "natural" && primaryValue == "stone") ||
+			(primary == "natural" && primaryValue == "shingle") ||
+			(primary == "waterway" && primaryValue == "dam") ||
 			(primary == "waterway" && primaryValue == "weir")
 		{
 			r.lineColor = DynamicColor(red: 0.667, green: 0.667, blue: 0.667, alpha: 1.0)
 		}
-		if (primary == "amenity" && primaryValue == "parking") || (primary == "landuse" && primaryValue == "railway") ||
+		if (primary == "amenity" && primaryValue == "parking") ||
+			(primary == "landuse" && primaryValue == "railway") ||
 			(primary == "landuse" && primaryValue == "quarry") ||
 			((primary == "man_made" && primaryValue == "adit") || tags["man_made"] == "adit") ||
 			((primary == "man_made" && primaryValue == "groyne") || tags["man_made"] == "groyne") ||
@@ -125,9 +157,12 @@ extension RenderInfo {
 			(primary == "natural" && primaryValue == "bare_rock") ||
 			(primary == "natural" && primaryValue == "cliff") ||
 			(primary == "natural" && primaryValue == "cave_entrance") ||
-			(primary == "natural" && primaryValue == "rock") || (primary == "natural" && primaryValue == "scree") ||
-			(primary == "natural" && primaryValue == "stone") || (primary == "natural" && primaryValue == "shingle") ||
-			(primary == "waterway" && primaryValue == "dam") || (primary == "waterway" && primaryValue == "weir")
+			(primary == "natural" && primaryValue == "rock") ||
+			(primary == "natural" && primaryValue == "scree") ||
+			(primary == "natural" && primaryValue == "stone") ||
+			(primary == "natural" && primaryValue == "shingle") ||
+			(primary == "waterway" && primaryValue == "dam") ||
+			(primary == "waterway" && primaryValue == "weir")
 		{
 			r.areaColor = DynamicColor(red: 0.549, green: 0.549, blue: 0.549, alpha: 0.5)
 		}
@@ -144,7 +179,8 @@ extension RenderInfo {
 			r.casingWidth = 5.0
 		}
 		if (primary == "highway" && primaryValue == "motorway") ||
-			(primary == "highway" && primaryValue == "motorway_link") || has(tags, "motorway")
+			(primary == "highway" && primaryValue == "motorway_link") ||
+			has(tags, "motorway")
 		{
 			r.lineColor = DynamicColor(red: 0.812, green: 0.125, blue: 0.506, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
@@ -157,70 +193,93 @@ extension RenderInfo {
 			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "primary") ||
-			(primary == "highway" && primaryValue == "primary_link") || has(tags, "primary")
+			(primary == "highway" && primaryValue == "primary_link") ||
+			has(tags, "primary")
 		{
 			r.lineColor = DynamicColor(red: 0.976, green: 0.596, blue: 0.024, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "secondary") ||
-			(primary == "highway" && primaryValue == "secondary_link") || has(tags, "secondary")
+			(primary == "highway" && primaryValue == "secondary_link") ||
+			has(tags, "secondary")
 		{
 			r.lineColor = DynamicColor(red: 0.953, green: 0.953, blue: 0.071, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "tertiary") ||
-			(primary == "highway" && primaryValue == "tertiary_link") || has(tags, "tertiary")
+			(primary == "highway" && primaryValue == "tertiary_link") ||
+			has(tags, "tertiary")
 		{
 			r.lineColor = DynamicColor(red: 1.0, green: 0.976, blue: 0.702, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.439, green: 0.216, blue: 0.184, alpha: 1.0)
 		}
-		if (primary == "highway" && primaryValue == "residential") || has(tags, "residential") {
+		if (primary == "highway" && primaryValue == "residential") ||
+			has(tags, "residential")
+		{
 			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
 		}
-		if (primary == "highway" && primaryValue == "unclassified") || has(tags, "unclassified") {
+		if (primary == "highway" && primaryValue == "unclassified") ||
+			has(tags, "unclassified")
+		{
 			r.lineColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
 		}
 		if (primary == "highway" && primaryValue == "living_street") ||
 			(primary == "highway" && primaryValue == "bus_guideway") ||
-			(primary == "highway" && primaryValue == "service") || (primary == "highway" && primaryValue == "track") ||
-			(primary == "highway" && primaryValue == "road")
+			(primary == "highway" && primaryValue == "service") ||
+			(primary == "highway" && primaryValue == "track") ||
+			(primary == "highway" && primaryValue == "road") ||
+			(primary == "highway" && primaryValue == "motorway_link") ||
+			(primary == "highway" && primaryValue == "trunk_link") ||
+			(primary == "highway" && primaryValue == "primary_link") ||
+			(primary == "highway" && primaryValue == "secondary_link") ||
+			(primary == "highway" && primaryValue == "tertiary_link")
 		{
 			r.lineWidth = 2.5
 			r.casingWidth = 3.5
 		}
-		if (primary == "highway" && primaryValue == "path") || (primary == "highway" && primaryValue == "footway") ||
+		if (primary == "highway" && primaryValue == "path") ||
+			(primary == "highway" && primaryValue == "footway") ||
 			(primary == "highway" && primaryValue == "cycleway") ||
 			(primary == "highway" && primaryValue == "bridleway") ||
 			(primary == "highway" && primaryValue == "corridor") ||
 			(primary == "highway" && primaryValue == "ladder") ||
+			(primary == "highway" && primaryValue == "via_ferrata") ||
 			(primary == "highway" && primaryValue == "steps")
 		{
 			r.lineWidth = 1.5
 			r.casingWidth = 2.5
 		}
-		if (primary == "highway" && primaryValue == "living_street") || has(tags, "living_street") {
+		if (primary == "highway" && primaryValue == "living_street") ||
+			has(tags, "living_street")
+		{
 			r.lineColor = DynamicColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 		}
-		if (primary == "highway" && primaryValue == "corridor") || has(tags, "corridor") {
+		if (primary == "highway" && primaryValue == "corridor") ||
+			has(tags, "corridor")
+		{
 			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.lineDashPattern = [1, 4]
 			r.casingColor = DynamicColor(red: 0.549, green: 0.816, blue: 0.373, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
-		if (primary == "highway" && primaryValue == "pedestrian") || has(tags, "pedestrian") {
+		if (primary == "highway" && primaryValue == "pedestrian") ||
+			has(tags, "pedestrian")
+		{
 			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.lineWidth = 1.75
 			r.lineCap = .butt
-			r.lineDashPattern = [4, 4]
+			r.lineDashPattern = [3, 3]
 			r.casingColor = DynamicColor(red: 0.6, green: 0.533, blue: 0.533, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
-		if (primary == "highway" && primaryValue == "road") || has(tags, "road") {
+		if (primary == "highway" && primaryValue == "road") ||
+			has(tags, "road")
+		{
 			r.lineColor = DynamicColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
@@ -228,22 +287,27 @@ extension RenderInfo {
 			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
-		if (primary == "highway" && primaryValue == "bus_guideway") || has(tags, "service") {
+		if primary == "highway" && primaryValue == "bus_guideway" {
 			r.lineColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
-		if (primary == "highway" && primaryValue == "track") || has(tags, "track") {
+		if (primary == "highway" && primaryValue == "track") ||
+			has(tags, "track")
+		{
 			r.lineColor = DynamicColor(red: 0.773, green: 0.71, blue: 0.624, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.455, green: 0.435, blue: 0.435, alpha: 1.0)
 		}
-		if (primary == "highway" && primaryValue == "path") || (primary == "highway" && primaryValue == "footway") ||
+		if (primary == "highway" && primaryValue == "path") ||
+			(primary == "highway" && primaryValue == "footway") ||
 			(primary == "highway" && primaryValue == "cycleway") ||
 			(primary == "highway" && primaryValue == "bridleway")
 		{
 			r.lineCap = .butt
 			r.lineDashPattern = [3, 3]
 		}
-		if has(tags, "crossing") || (tags["footway"] == "access_aisle") || (tags["public_transport"] == "platform") ||
+		if has(tags, "crossing") ||
+			(tags["footway"] == "access_aisle") ||
+			(tags["public_transport"] == "platform") ||
 			(primary == "highway" && primaryValue == "platform") ||
 			(primary == "railway" && primaryValue == "platform") ||
 			(primary == "railway" && primaryValue == "platform_edge") ||
@@ -264,7 +328,8 @@ extension RenderInfo {
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
-		if (primary == "highway" && primaryValue == "path") || (primary == "highway" && primaryValue == "footway") ||
+		if (primary == "highway" && primaryValue == "path") ||
+			(primary == "highway" && primaryValue == "footway") ||
 			(primary == "highway" && primaryValue == "bus_stop")
 		{
 			r.lineColor = DynamicColor(red: 0.6, green: 0.533, blue: 0.533, alpha: 1.0)
@@ -278,21 +343,31 @@ extension RenderInfo {
 		if (primary == "leisure" && primaryValue == "track") || tags["leisure"] == "track" {
 			r.lineColor = DynamicColor(red: 0.898, green: 0.722, blue: 0.169, alpha: 1.0)
 		}
-		if primary == "highway" && primaryValue == "ladder" {
-			r.lineColor = DynamicColor(red: 0.435, green: 0.122, blue: 0.122, alpha: 1.0)
+		if (primary == "highway" && primaryValue == "steps") ||
+			(primary == "highway" && primaryValue == "ladder")
+		{
 			r.lineCap = .butt
 			r.lineDashPattern = [1.5, 1.5]
+		}
+		if primary == "highway" && primaryValue == "steps" {
+			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+			r.casingCap = .round
+			r.casingDashPattern = nil
+		}
+		if primary == "highway" && primaryValue == "ladder" {
+			r.lineColor = DynamicColor(red: 0.435, green: 0.122, blue: 0.122, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
 			r.casingCap = .round
 			r.casingDashPattern = nil
 		}
 		if primary == "highway" && primaryValue == "steps" {
 			r.lineColor = DynamicColor(red: 0.506, green: 0.824, blue: 0.361, alpha: 1.0)
-			r.lineCap = .butt
-			r.lineDashPattern = [1.5, 1.5]
-			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
-			r.casingCap = .round
-			r.casingDashPattern = nil
+		}
+		if primary == "highway" && primaryValue == "via_ferrata" {
+			r.lineColor = DynamicColor(red: 0.435, green: 0.122, blue: 0.122, alpha: 1.0)
+			r.lineWidth = 2.5
+			r.lineCap = .round
+			r.lineDashPattern = [0, 4.5]
 		}
 		if primary == "aeroway" {
 			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -302,7 +377,9 @@ extension RenderInfo {
 		if primary == "aeroway" && primaryValue == "runway" {
 			r.areaColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.6)
 		}
-		if (primary == "aeroway" && primaryValue == "taxiway") || has(tags, "taxiway") {
+		if (primary == "aeroway" && primaryValue == "taxiway") ||
+			has(tags, "taxiway")
+		{
 			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 0.0, alpha: 1.0)
 			r.lineWidth = 2.5
 			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
@@ -321,7 +398,7 @@ extension RenderInfo {
 			r.lineColor = DynamicColor(red: 0.933, green: 0.933, blue: 0.933, alpha: 1.0)
 			r.lineWidth = 1.0
 			r.lineCap = .butt
-			r.lineDashPattern = [6, 6]
+			r.lineDashPattern = [5, 4]
 			r.casingColor = DynamicColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1.0)
 			r.casingWidth = 3.5
 		}
@@ -329,7 +406,8 @@ extension RenderInfo {
 			r.lineColor = DynamicColor(red: 0.733, green: 0.733, blue: 0.733, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.133, green: 0.133, blue: 0.133, alpha: 1.0)
 		}
-		if (primary == "waterway" && primaryValue == "dock") || (primary == "waterway" && primaryValue == "boatyard") ||
+		if (primary == "waterway" && primaryValue == "dock") ||
+			(primary == "waterway" && primaryValue == "boatyard") ||
 			(primary == "waterway" && primaryValue == "fuel")
 		{
 			r.lineColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
@@ -340,7 +418,9 @@ extension RenderInfo {
 			r.lineWidth = 2.5
 			r.casingWidth = 3.5
 		}
-		if (primary == "waterway" && primaryValue == "river") || (primary == "waterway" && primaryValue == "flowline") {
+		if (primary == "waterway" && primaryValue == "river") ||
+			(primary == "waterway" && primaryValue == "flowline")
+		{
 			r.casingWidth = 5.0
 		}
 		if primary == "waterway" && primaryValue == "river" {
@@ -353,12 +433,15 @@ extension RenderInfo {
 		if primary == "waterway" && primaryValue == "ditch" {
 			r.lineColor = DynamicColor(red: 0.2, green: 0.6, blue: 0.667, alpha: 1.0)
 		}
-		if (primary == "aerialway") || (primary == "attraction" && primaryValue == "summer_toboggan") ||
-			(primary == "attraction" && primaryValue == "water_slide") || (tags["golf"] == "cartpath") ||
+		if (primary == "aerialway") ||
+			(primary == "attraction" && primaryValue == "summer_toboggan") ||
+			(primary == "attraction" && primaryValue == "water_slide") ||
+			(tags["golf"] == "cartpath") ||
 			((primary == "man_made" && primaryValue == "pipeline") || tags["man_made"] == "pipeline") ||
 			(primary == "natural" && primaryValue == "tree_row") ||
 			(primary == "roller_coaster" && primaryValue == "track") ||
-			(primary == "roller_coaster" && primaryValue == "support") || (primary == "piste:type")
+			(primary == "roller_coaster" && primaryValue == "support") ||
+			(primary == "piste:type")
 		{
 			r.lineWidth = 2.5
 			r.casingWidth = 3.5
@@ -376,6 +459,12 @@ extension RenderInfo {
 		if primary == "piste:type" {
 			r.lineColor = DynamicColor(red: 0.667, green: 0.6, blue: 0.867, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.267, green: 0.267, blue: 0.267, alpha: 1.0)
+		}
+		if tags["climbing"] == "route" {
+			r.lineColor = DynamicColor(red: 0.435, green: 0.122, blue: 0.122, alpha: 1.0)
+			r.lineWidth = 1.5
+			r.lineCap = .round
+			r.lineDashPattern = [0, 3.5]
 		}
 		if primary == "attraction" && primaryValue == "summer_toboggan" {
 			r.lineColor = DynamicColor(red: 0.62, green: 0.62, blue: 0.62, alpha: 1.0)
@@ -436,13 +525,18 @@ extension RenderInfo {
 			r.casingCap = .butt
 			r.casingDashPattern = nil
 		}
-		if has(tags, "tunnel") || (tags["location"] == "underground") || (tags["location"] == "underwater") {
+		if has(tags, "tunnel") ||
+			(tags["location"] == "underground") ||
+			(tags["location"] == "underwater")
+		{
 			r.lineOpacity = 0.3
 			r.casingOpacity = 0.5
 			r.casingCap = .butt
 			r.casingDashPattern = nil
 		}
-		if has(tags, "embankment") || has(tags, "cutting") {
+		if has(tags, "embankment") ||
+			has(tags, "cutting")
+		{
 			r.casingColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
 			r.casingOpacity = 0.5
 			r.casingWidth = 11.0
@@ -488,6 +582,11 @@ extension RenderInfo {
 			r.lineWidth = 2.125
 			r.casingWidth = 3.125
 		}
+		if ((primary == "highway" && primaryValue == "pedestrian") && has(tags, "oneway")) ||
+			(has(tags, "pedestrian") && has(tags, "oneway"))
+		{
+			r.lineDashPattern = [3, 3, 3, 9]
+		}
 		if (primary == "highway" && primaryValue == "service") && has(tags, "service") {
 			r.lineColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
 			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
@@ -500,6 +599,13 @@ extension RenderInfo {
 		}
 		if (primary == "highway" && primaryValue == "service") && tags["service"] == "emergency_access" {
 			r.lineColor = DynamicColor(red: 0.867, green: 0.698, blue: 0.667, alpha: 1.0)
+		}
+		if ((primary == "highway" && primaryValue == "path") && has(tags, "oneway")) ||
+			((primary == "highway" && primaryValue == "footway") && has(tags, "oneway")) ||
+			((primary == "highway" && primaryValue == "cycleway") && has(tags, "oneway")) ||
+			((primary == "highway" && primaryValue == "bridleway") && has(tags, "oneway"))
+		{
+			r.lineDashPattern = [3, 3, 3, 9]
 		}
 		if ((primary == "highway" && primaryValue == "footway") && tags["public_transport"] == "platform") ||
 			((primary == "highway" && primaryValue == "footway") &&
@@ -516,6 +622,9 @@ extension RenderInfo {
 		}
 		if (primary == "highway" && primaryValue == "footway") && tags["footway"] == "sidewalk" {
 			r.lineColor = DynamicColor(red: 0.831, green: 0.706, blue: 0.706, alpha: 1.0)
+		}
+		if (primary == "highway" && primaryValue == "cycleway") && tags["foot"] == "designated" {
+			r.lineColor = DynamicColor(red: 0.706, green: 0.345, blue: 0.929, alpha: 1.0)
 		}
 		if primary == "highway" && tags["crossing"] == "unmarked" {
 			r.lineDashPattern = [3, 2]
@@ -536,6 +645,9 @@ extension RenderInfo {
 			r.lineColor = DynamicColor(red: 0.298, green: 0.267, blue: 0.267, alpha: 1.0)
 			r.lineDashPattern = [2, 1]
 		}
+		if primary == "railway" && has(tags, "oneway") {
+			r.lineDashPattern = [5, 13]
+		}
 		if (primary == "railway" && (primary == "railway" && primaryValue == "platform_edge")) ||
 			(primary == "railway" && (primary == "railway" && primaryValue == "platform"))
 		{
@@ -547,6 +659,10 @@ extension RenderInfo {
 		}
 		if primary == "railway" && status == "disused" {
 			r.casingColor = DynamicColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1.0)
+		}
+		if primary == "railway" && has(tags, "service") {
+			r.lineColor = DynamicColor(red: 0.867, green: 0.8, blue: 0.667, alpha: 1.0)
+			r.casingColor = DynamicColor(red: 0.4, green: 0.4, blue: 0.4, alpha: 1.0)
 		}
 		if primary == "waterway" && primary == "waterway" && primaryValue != "dam" {
 			r.lineColor = DynamicColor(red: 0.467, green: 0.867, blue: 0.867, alpha: 1.0)
@@ -580,7 +696,9 @@ extension RenderInfo {
 		{
 			r.casingWidth = 5.0
 		}
-		if (has(tags, "bridge") && surface == "unpaved") || (has(tags, "bridge") && surface == "semipaved") {
+		if (has(tags, "bridge") && surface == "unpaved") ||
+			(has(tags, "bridge") && surface == "semipaved")
+		{
 			r.casingColor = DynamicColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0)
 		}
 		if status != nil && status != "disused" {
@@ -588,6 +706,20 @@ extension RenderInfo {
 			r.lineDashPattern = [3.5, 1.5]
 			r.casingCap = .butt
 			r.casingDashPattern = [3.5, 1.5]
+		}
+		if (primary == "highway" && primaryValue == "cycleway") && tags["foot"] == "designated" && !has(
+			tags,
+			"crossing")
+		{
+			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+		}
+		if (primary == "highway" && primaryValue == "path") && tags["bicycle"] == "designated" && tags["foot"] ==
+			"designated"
+		{
+			r.lineColor = DynamicColor(red: 0.706, green: 0.345, blue: 0.929, alpha: 1.0)
+		}
+		if primary == "highway" && tags["crossing"] == "unmarked" && has(tags, "oneway") {
+			r.lineDashPattern = [3, 2, 3, 10]
 		}
 		if primary == "railway" && status != nil && !has(tags, "service") {
 			r.lineColor = DynamicColor(red: 0.933, green: 0.933, blue: 0.933, alpha: 1.0)
@@ -605,12 +737,18 @@ extension RenderInfo {
 			r.casingCap = .butt
 			r.casingDashPattern = nil
 		}
+		if (primary == "highway" && primaryValue == "path") && tags["bicycle"] == "designated" && tags["foot"] ==
+			"designated" && !has(
+				tags,
+				"crossing")
+		{
+			r.casingColor = DynamicColor(red: 1.0, green: 1.0, blue: 1.0, alpha: 1.0)
+		}
 		if (primary == "highway" && tags["construction"] == "path" && status != nil && status == "construction") ||
 			(primary == "highway" && tags["construction"] == "footway" && status != nil && status == "construction") ||
 			(primary == "highway" && tags["construction"] == "cycleway" && status != nil && status == "construction") ||
-			(
-				primary == "highway" && tags["construction"] == "bridleway" && status != nil && status ==
-					"construction") ||
+			(primary == "highway" && tags["construction"] == "bridleway" && status != nil && status ==
+				"construction") ||
 			(primary == "highway" && tags["construction"] == "corridor" && status != nil && status == "construction") ||
 			(primary == "highway" && tags["construction"] == "steps" && status != nil && status == "construction") ||
 			(primary == "highway" && tags["construction"] == "ladder" && status != nil && status == "construction")

@@ -203,7 +203,7 @@ def to_swift_fn(styles, indent=0):
             if_stms.append(if_stm)
         if len(if_stms) > 1:
             if_stms = ["(" + if_stm + ")" for if_stm in if_stms]
-            rendered_if = " || ".join(if_stms)
+            rendered_if = (" ||\n" + "\t" * indent + "   ").join(if_stms)
         else:
             rendered_if = if_stms[0]
         res += "\t" * indent + "if " + rendered_if + " {\n"
