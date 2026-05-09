@@ -238,7 +238,7 @@
       </trans-unit>
       <trans-unit id="7ga-PZ-MfV.placeholder" xml:space="preserve">
         <source>-1..3,7</source>
-        <target state="needs-translation">-1..3,7</target>
+        <target state="translated">-1..3,7</target>
         <note>Class = "UITextField"; placeholder = "-1..3,7"; ObjectID = "7ga-PZ-MfV";</note>
       </trans-unit>
       <trans-unit id="8HT-Bc-Q2z.title" xml:space="preserve">
@@ -1200,199 +1200,248 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
       </trans-unit>
       <trans-unit id="A GPX Track records your path as you travel along a road or trail" xml:space="preserve">
         <source>A GPX Track records your path as you travel along a road or trail</source>
+        <target state="translated">Bir GPX İzi, bir yol veya patika boyunca ilerlerken geçtiğiniz güzergâhı kaydeder</target>
         <note/>
       </trans-unit>
       <trans-unit id="A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else." xml:space="preserve">
         <source>A copy of all user-defined quests has been copied to the clipboard in JSON format. You can paste it somewhere to keep a copy or send it to someone else.</source>
+        <target state="translated">Kullanıcı tarafından tanımlanan tüm görevlerin bir kopyası JSON biçiminde panoya kopyalandı. Bir kopyasını saklamak veya başka birine göndermek için istediğiniz yere yapıştırabilirsiniz.</target>
         <note/>
       </trans-unit>
       <trans-unit id="A relation the node belongs to is not fully downloaded" xml:space="preserve">
         <source>A relation the node belongs to is not fully downloaded</source>
+        <target state="translated">Düğümün bağlı olduğu bir ilişki tamamen indirilmedi</target>
         <note/>
       </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
+        <target state="translated">Kabul Et</target>
         <note/>
       </trans-unit>
       <trans-unit id="Add Building Type" xml:space="preserve">
         <source>Add Building Type</source>
+        <target state="translated">Bina Türü Ekle</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Highway Surface" xml:space="preserve">
         <source>Add Highway Surface</source>
+        <target state="translated">Yol Zemin Türü Ekle</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
+        <target state="translated">Not Ekle</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Add Opening Hours" xml:space="preserve">
         <source>Add Opening Hours</source>
+        <target state="translated">Açılış Saatlerini Ekle</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Panoramax Photo" xml:space="preserve">
         <source>Add Panoramax Photo</source>
+        <target state="translated">Panoramax Fotoğraf Ekle</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Parking Type" xml:space="preserve">
         <source>Add Parking Type</source>
+        <target state="translated">Park Türü Ekle</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Sidewalk Surface" xml:space="preserve">
         <source>Add Sidewalk Surface</source>
+        <target state="translated">Kaldırım Zemin Türü Ekle</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Speed Limit" xml:space="preserve">
         <source>Add Speed Limit</source>
+        <target state="translated">Hız Limiti Ekle</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Telephone Number" xml:space="preserve">
         <source>Add Telephone Number</source>
+        <target state="translated">Telefon Numarası Ekle</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add Website" xml:space="preserve">
         <source>Add Website</source>
+        <target state="translated">Web Sayfası Ekle</target>
         <note>A type of quest</note>
       </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
+        <target state="translated">İç Üye Ekle</target>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add node" xml:space="preserve">
         <source>Add node</source>
+        <target state="translated">Düğüm Ekle</target>
         <note/>
       </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
         <source>Add outer member</source>
+        <target state="translated">Dış Bileşen Ekle</target>
         <note>Add to relation</note>
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
+        <target state="translated">Yolu çoklu poligona ekle?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Adding members:" xml:space="preserve">
         <source>Adding members:</source>
+        <target state="translated">Eklenen üyeler:</target>
         <note/>
       </trans-unit>
       <trans-unit id="Additional imagery" xml:space="preserve">
         <source>Additional imagery</source>
+        <target state="translated">Ek görüntü</target>
         <note/>
       </trans-unit>
       <trans-unit id="Advanced Quest Builder" xml:space="preserve">
         <source>Advanced Quest Builder</source>
+        <target state="translated">Gelişmiş Görev Oluşturucu</target>
         <note/>
       </trans-unit>
       <trans-unit id="Aerial alignment" xml:space="preserve">
         <source>Aerial alignment</source>
+        <target state="translated">Hava Görüntüsü Hizalama</target>
         <note/>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
         <source>Aerial only</source>
+        <target state="translated">Yalnızca Hava Görüntüsü</target>
         <note/>
       </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
+        <target state="translated">Tüm Etiketler</target>
         <note/>
       </trans-unit>
       <trans-unit id="All cached data including aerial imagery tiles, TagInfo and Wiki data, etc." xml:space="preserve">
         <source>All cached data including aerial imagery tiles, TagInfo and Wiki data, etc.</source>
+        <target state="translated">Önbelleğe alınmış tüm veriler: hava görüntüsü karoları, TagInfo ve Wiki verileri vb.</target>
         <note/>
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
+        <target state="translated">Tüm seçimler</target>
         <note/>
       </trans-unit>
       <trans-unit id="All map tiles for the currently selected base map (Mapnik, Americana, etc)." xml:space="preserve">
         <source>All map tiles for the currently selected base map (Mapnik, Americana, etc).</source>
+        <target state="translated">Şu anda seçili temel haritaya ait tüm harita karoları (Mapnik, Americana vb.).</target>
         <note/>
       </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
         <source>An error occured while exporting: %@</source>
+        <target state="translated">Dışa aktarma sırasında bir hata oluştu: %@</target>
         <note>Show an error message</note>
       </trans-unit>
       <trans-unit id="An error occured while importing: %@" xml:space="preserve">
         <source>An error occured while importing: %@</source>
+        <target state="translated">İçe aktarma sırasında bir hata oluştu: %@</target>
         <note>Show an error message</note>
       </trans-unit>
       <trans-unit id="Area" xml:space="preserve">
         <source>Area</source>
+        <target state="translated">Alan</target>
         <note>Area of an object in m^2
 Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
+        <target state="translated">Dikkat</target>
         <note/>
       </trans-unit>
       <trans-unit id="Attributes" xml:space="preserve">
         <source>Attributes</source>
+        <target state="translated">Öznitelikler</target>
         <note>node/way/relation attributes</note>
       </trans-unit>
       <trans-unit id="Automatic" xml:space="preserve">
         <source>Automatic</source>
+        <target state="translated">Otomatik</target>
         <note>Automatic selection of presets languages</note>
       </trans-unit>
       <trans-unit id="Back" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Geri</target>
         <note>back button</note>
       </trans-unit>
       <trans-unit id="Background imagery %@" xml:space="preserve">
         <source>Background imagery %@</source>
+        <target state="translated">Arkaplan görüntüsü %@</target>
         <note>identifies current aerial imagery</note>
       </trans-unit>
       <trans-unit id="Bad login" xml:space="preserve">
         <source>Bad login</source>
+        <target state="translated">Hatalı giriş</target>
         <note/>
       </trans-unit>
       <trans-unit id="Better background imagery is available for your location. Would you like to change to it?" xml:space="preserve">
         <source>Better background imagery is available for your location. Would you like to change to it?</source>
+        <target state="translated">Konumunuz için daha iyi bir arkaplan görüntüsü mevcut. Buna geçmek ister misiniz?</target>
         <note/>
       </trans-unit>
       <trans-unit id="Better imagery available" xml:space="preserve">
         <source>Better imagery available</source>
+        <target state="translated">Daha iyi görüntü mevcut</target>
         <note/>
       </trans-unit>
       <trans-unit id="Build a New Quest" xml:space="preserve">
         <source>Build a New Quest</source>
+        <target state="translated">Yeni Bir Görev Oluştur</target>
         <note/>
       </trans-unit>
       <trans-unit id="Building" xml:space="preserve">
         <source>Building</source>
+        <target state="translated">Bina</target>
         <note>The object is a building</note>
       </trans-unit>
       <trans-unit id="Cache size warning" xml:space="preserve">
         <source>Cache size warning</source>
+        <target state="translated">Önbellek boyutu uyarısı</target>
         <note/>
       </trans-unit>
       <trans-unit id="Cache trimmed" xml:space="preserve">
         <source>Cache trimmed</source>
+        <target state="translated">Önbellek temizlendi</target>
         <note/>
       </trans-unit>
       <trans-unit id="Caches" xml:space="preserve">
         <source>Caches</source>
+        <target state="translated">Önbellek Verileri</target>
         <note>cached data</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
         <source>Can only add ways to multipolygons</source>
+        <target state="translated">Çoklu poligonlara yalnızca yollar eklenebilir</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't delete node that is part of a relation" xml:space="preserve">
         <source>Can't delete node that is part of a relation</source>
+        <target state="translated">Bir ilişkinin parçası olan düğüm silinemez</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't delete relation that is not a multipolygon" xml:space="preserve">
         <source>Can't delete relation that is not a multipolygon</source>
+        <target state="translated">Çoklu poligon olmayan ilişki silinemez</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't delete way that is part of a Route or similar relation" xml:space="preserve">
         <source>Can't delete way that is part of a Route or similar relation</source>
+        <target state="translated">Rota ya da benzeri bir ilişkinin parçası olan yol silinemez</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't extend way" xml:space="preserve">
         <source>Can't extend way</source>
+        <target state="translated">Yol genişletilemiyor</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction 'via' node" xml:space="preserve">
         <source>Can't remove Turn Restriction 'via' node</source>
+        <target state="translated">Dönüş Kısıtlaması 'via' düğümü kaldırılamaz</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
@@ -1405,254 +1454,320 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Can't remove component of a Route or similar relation" xml:space="preserve">
         <source>Can't remove component of a Route or similar relation</source>
+        <target state="translated">Rota ya da benzeri bir ilişkinin parçası silinemez</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove node in Turn Restriction 'via' way" xml:space="preserve">
         <source>Can't remove node in Turn Restriction 'via' way</source>
+        <target state="translated">Dönüş Kısıtlaması 'via' yolundaki düğüm kaldırılamaz</target>
         <note/>
       </trans-unit>
       <trans-unit id="Cancel" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">İptal</target>
         <note/>
       </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
+        <target state="translated">Mesaj oluşturulamıyor</target>
         <note>e-mail message</note>
       </trans-unit>
       <trans-unit id="Cannot connect an inner way to an outer way" xml:space="preserve">
         <source>Cannot connect an inner way to an outer way</source>
+        <target state="translated">Bir iç yol bir dış yola bağlanamaz</target>
         <note/>
       </trans-unit>
       <trans-unit id="Change" xml:space="preserve">
         <source>Change</source>
+        <target state="translated">Değiştir</target>
         <note/>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
         <source>Changeset</source>
+        <target state="translated">Değişiklik Kümesi</target>
         <note>OSM changeset identifier</note>
       </trans-unit>
       <trans-unit id="Choose Existing Photo" xml:space="preserve">
         <source>Choose Existing Photo</source>
+        <target state="translated">Mevcut Fotoğrafı Seç</target>
         <note>Text displayed in an action sheet when the user wants to upload a photograph from their photo library.</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
+        <target state="translated">Hepsini Temizle</target>
         <note/>
       </trans-unit>
       <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
         <source>Clear Basemap Tiles</source>
+        <target state="translated">Temel Harita Karolarını Temizle</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear Data Caches" xml:space="preserve">
         <source>Clear Data Caches</source>
+        <target state="translated">Önbelleğe Alınmış Verileri Temizle</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Clear OSM Data" xml:space="preserve">
         <source>Clear OSM Data</source>
+        <target state="translated">OpenStreetMap Verilerini Temizle</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
+        <target state="translated">Kaydet</target>
         <note/>
       </trans-unit>
       <trans-unit id="Compass" xml:space="preserve">
         <source>Compass</source>
+        <target state="translated">Pusula</target>
         <note>Compass button label</note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
         <source>Configure</source>
+        <target state="translated">Yapılandır</target>
         <note/>
       </trans-unit>
       <trans-unit id="Confirm move" xml:space="preserve">
         <source>Confirm move</source>
+        <target state="translated">Taşıma işlemini onayla</target>
         <note/>
       </trans-unit>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
+        <target state="translated">Düğümlerin bağlanması ilişki yapısını bozabilir</target>
         <note/>
       </trans-unit>
       <trans-unit id="Copied" xml:space="preserve">
         <source>Copied</source>
+        <target state="translated">Kopyalandı</target>
         <note>text was copied to the system clipboard</note>
       </trans-unit>
       <trans-unit id="Copy Tags" xml:space="preserve">
         <source>Copy Tags</source>
+        <target state="translated">Etiketleri Kopyala</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Could not duplicate object" xml:space="preserve">
         <source>Could not duplicate object</source>
+        <target state="translated">Nesne kopyalanamadı</target>
         <note/>
       </trans-unit>
       <trans-unit id="Create&#10;" xml:space="preserve">
         <source>Create
 </source>
+        <target state="translated">Oluştur
+</target>
         <note/>
       </trans-unit>
       <trans-unit id="Create Relation" xml:space="preserve">
         <source>Create Relation</source>
+        <target state="translated">İlişki Oluştur</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Create Relation Type" xml:space="preserve">
         <source>Create Relation Type</source>
+        <target state="translated">İlişki Türü Oluştur</target>
         <note/>
       </trans-unit>
       <trans-unit id="Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." xml:space="preserve">
         <source>Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value.</source>
+        <target state="translated">Her anahtar/değer çifti için tabloda bir satır oluşturun ve eşleşen nesnelerin dahil mi yoksa hariç mi tutulacağını belirtin. Anahtarın mevcut olmadığını belirtmek için değeri boş bırakın. Herhangi bir değeri eşleştirmek için key=* kullanın.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Current Track" xml:space="preserve">
         <source>Current Track</source>
+        <target state="translated">Güncel İz</target>
         <note>current GPX track</note>
       </trans-unit>
       <trans-unit id="Database error" xml:space="preserve">
         <source>Database error</source>
+        <target state="translated">Veritabanı hatası</target>
         <note/>
       </trans-unit>
       <trans-unit id="Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags." xml:space="preserve">
         <source>Define your own custom features with unique tag combinations to quickly add special types of objects. These can be searched for in Common Tags.</source>
+        <target state="translated">Özel nesne türlerini hızlıca eklemek için benzersiz etiket birleşimleriyle kendi özel detaylarınızı tanımlayın. Bunlar Yaygın Etiketler içinde aranabilir.</target>
         <note>POI editor presets</note>
       </trans-unit>
       <trans-unit id="Delete" xml:space="preserve">
         <source>Delete</source>
+        <target state="translated">Sil</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Delete&#10;" xml:space="preserve">
         <source>Delete
 </source>
+        <target state="translated">Sil
+</target>
         <note/>
       </trans-unit>
       <trans-unit id="Delete %@?" xml:space="preserve">
         <source>Delete %@?</source>
+        <target state="translated">Sil %@?</target>
         <note>Confirm deleting a node/way</note>
       </trans-unit>
       <trans-unit id="Delete completely" xml:space="preserve">
         <source>Delete completely</source>
+        <target state="translated">Tamamen sil</target>
         <note/>
       </trans-unit>
       <trans-unit id="Delete failed" xml:space="preserve">
         <source>Delete failed</source>
+        <target state="translated">Silme işlemi başarısız</target>
         <note/>
       </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
         <source>Detach from relation</source>
+        <target state="translated">İlişkiden Ayır</target>
         <note/>
       </trans-unit>
       <trans-unit id="Discard" xml:space="preserve">
         <source>Discard</source>
+        <target state="translated">Yoksay</target>
         <note>Discard changes</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
+        <target state="translated">Bağlantıyı Kes</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Display options" xml:space="preserve">
         <source>Display options</source>
+        <target state="translated">Görüntüleme seçenekleri</target>
         <note/>
       </trans-unit>
       <trans-unit id="Distance: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Distance: %1$@ ± %2$@ meters</source>
+        <target state="translated">Uzaklık: %1$@ ± %2$@ metre</target>
         <note>Distance to an object with an error value</note>
       </trans-unit>
       <trans-unit id="Done" xml:space="preserve">
         <source>Done</source>
+        <target state="translated">Yapıldı</target>
         <note/>
       </trans-unit>
       <trans-unit id="Down" xml:space="preserve">
         <source>Down</source>
+        <target state="translated">Aşağı</target>
         <note>Move up/down buttons</note>
       </trans-unit>
       <trans-unit id="Downloaded nodes, ways and relations, and any edits you have made." xml:space="preserve">
         <source>Downloaded nodes, ways and relations, and any edits you have made.</source>
+        <target state="translated">İndirilen düğümler, yollar ve ilişkiler ile yaptığınız tüm düzenlemeler.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
+        <target state="translated">Kopyala</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Edit" xml:space="preserve">
         <source>Edit</source>
+        <target state="translated">Düzenle</target>
         <note/>
       </trans-unit>
       <trans-unit id="Edit XML" xml:space="preserve">
         <source>Edit XML</source>
+        <target state="translated">XML Düzenle</target>
         <note/>
       </trans-unit>
       <trans-unit id="Edit restrictions" xml:space="preserve">
         <source>Edit restrictions</source>
+        <target state="translated">Kısıtlamaları düzenle</target>
         <note/>
       </trans-unit>
       <trans-unit id="Editing layer not visible" xml:space="preserve">
         <source>Editing layer not visible</source>
+        <target state="translated">Düzenleme katmanı görünmüyor</target>
         <note/>
       </trans-unit>
       <trans-unit id="Editor only" xml:space="preserve">
         <source>Editor only</source>
+        <target state="translated">Yalnızca Editör</target>
         <note/>
       </trans-unit>
       <trans-unit id="Editor with Aerial" xml:space="preserve">
         <source>Editor with Aerial</source>
+        <target state="translated">Hava Görüntüsü ile Editör</target>
         <note/>
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
         <source>Ensure Location Services is enabled and you have granted this application access.
 
 Error: %@</source>
+        <target state="translated">Konum Servislerinin etkin olduğundan ve bu uygulamaya erişim izni verdiğinizden emin olun.
+
+Hata: %@</target>
         <note/>
       </trans-unit>
       <trans-unit id="Ensure the editor view is visible and displays objects in the local area" xml:space="preserve">
         <source>Ensure the editor view is visible and displays objects in the local area</source>
+        <target state="translated">Düzenleyici görünümünün açık olduğundan ve bulunduğunuz bölgedeki nesneleri görüntülediğinden emin olun</target>
         <note/>
       </trans-unit>
       <trans-unit id="Error" xml:space="preserve">
         <source>Error</source>
+        <target state="translated">Hata</target>
         <note>Error dialog title</note>
       </trans-unit>
       <trans-unit id="Error connecting to way" xml:space="preserve">
         <source>Error connecting to way</source>
+        <target state="translated">Yola bağlanırken hata oluştu</target>
         <note/>
       </trans-unit>
       <trans-unit id="Error fetching metadata: %@" xml:space="preserve">
         <source>Error fetching metadata: %@</source>
+        <target state="translated">Üst veriler alınırken hata oluştu: %@</target>
         <note/>
       </trans-unit>
       <trans-unit id="Extending a 'via' in a Turn Restriction will break the relation" xml:space="preserve">
         <source>Extending a 'via' in a Turn Restriction will break the relation</source>
+        <target state="translated">Bir Dönüş Kısıtlamasındaki 'via' ögesini uzatmak ilişkiyi bozacaktır</target>
         <note/>
       </trans-unit>
       <trans-unit id="Extending a way which belongs to a Route or similar relation may damage the relation" xml:space="preserve">
         <source>Extending a way which belongs to a Route or similar relation may damage the relation</source>
+        <target state="translated">Bir Rota veya benzeri ilişkiye ait yolu uzatmak ilişkiye zarar verebilir</target>
         <note/>
       </trans-unit>
       <trans-unit id="Extract Node" xml:space="preserve">
         <source>Extract Node</source>
+        <target state="translated">Düğümü Ayır</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
         <source>Filters</source>
+        <target state="translated">Filtreler</target>
         <note>Header for quest filters section</note>
       </trans-unit>
       <trans-unit id="GPS" xml:space="preserve">
         <source>GPS</source>
+        <target state="translated">GPS</target>
         <note>GPS button label</note>
       </trans-unit>
       <trans-unit id="GPX" xml:space="preserve">
         <source>GPX</source>
+        <target state="translated">GPX</target>
         <note>The name of a GPX file</note>
       </trans-unit>
       <trans-unit id="GPX Upload Complete" xml:space="preserve">
         <source>GPX Upload Complete</source>
+        <target state="translated">GPX Yüklemesi Tamamlandı</target>
         <note/>
       </trans-unit>
       <trans-unit id="GPX Upload Failed" xml:space="preserve">
         <source>GPX Upload Failed</source>
+        <target state="translated">GPX Yüklemesi Başarısız</target>
         <note/>
       </trans-unit>
       <trans-unit id="GeoJSON" xml:space="preserve">
         <source>GeoJSON</source>
+        <target state="translated">GeoJSON</target>
         <note>The name of a GeoJSON file</note>
       </trans-unit>
       <trans-unit id="Geometry" xml:space="preserve">
         <source>Geometry</source>
+        <target state="translated">Geometri</target>
         <note/>
       </trans-unit>
       <trans-unit id="HealthKit" xml:space="preserve">
@@ -1662,134 +1777,167 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
+        <target state="translated">Yükseklik: %1$@ ± %2$@ metre</target>
         <note>Height of an object with an error value</note>
       </trans-unit>
       <trans-unit id="Help" xml:space="preserve">
         <source>Help</source>
+        <target state="translated">Yardım</target>
         <note>Help button label</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
+        <target state="translated">Ben hallederim!</target>
         <note>rate the app now</note>
       </trans-unit>
       <trans-unit id="Icon" xml:space="preserve">
         <source>Icon</source>
+        <target state="translated">Simge</target>
         <note/>
       </trans-unit>
       <trans-unit id="Identifier" xml:space="preserve">
         <source>Identifier</source>
+        <target state="translated">Tanımlayıcı</target>
         <note>OSM node/way/relation identifier</note>
       </trans-unit>
       <trans-unit id="Ignore" xml:space="preserve">
         <source>Ignore</source>
+        <target state="translated">Yoksay</target>
         <note/>
       </trans-unit>
       <trans-unit id="Import" xml:space="preserve">
         <source>Import</source>
+        <target state="translated">Dışa Aktar</target>
         <note/>
       </trans-unit>
       <trans-unit id="Import Error" xml:space="preserve">
         <source>Import Error</source>
+        <target state="translated">Dışa Aktarma Hatası</target>
         <note/>
       </trans-unit>
       <trans-unit id="Import GPX" xml:space="preserve">
         <source>Import GPX</source>
+        <target state="translated">GPX İçe Aktar</target>
         <note>GPX track</note>
       </trans-unit>
       <trans-unit id="Import Quests" xml:space="preserve">
         <source>Import Quests</source>
+        <target state="translated">Görevleri İçe Aktar</target>
         <note/>
       </trans-unit>
       <trans-unit id="In order to measure height, please enable camera access in the app's settings." xml:space="preserve">
         <source>In order to measure height, please enable camera access in the app's settings.</source>
+        <target state="translated">Yüksekliği ölçmek için uygulama ayarlarında kamera erişimine izin verin.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
+        <target state="translated">Geçersiz URL</target>
         <note/>
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
         <source>Join</source>
+        <target state="translated">Katıl</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Joining would invalidate a Turn Restriction the way belongs to" xml:space="preserve">
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
+        <target state="translated">Birleştirme işlemi, yolun bağlı olduğu Dönüş Kısıtlamasını geçersiz kılacaktır</target>
         <note/>
       </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
+        <target state="translated">Anahtarlar</target>
         <note>The tag keys section of a quest definition</note>
       </trans-unit>
       <trans-unit id="Last updated %@" xml:space="preserve">
         <source>Last updated %@</source>
+        <target state="translated">Son güncelleme %@</target>
         <note/>
       </trans-unit>
       <trans-unit id="Lat/Lon" xml:space="preserve">
         <source>Lat/Lon</source>
+        <target state="translated">Enlem/Boylam</target>
         <note>coordinates</note>
       </trans-unit>
       <trans-unit id="Left" xml:space="preserve">
         <source>Left</source>
+        <target state="translated">Sol</target>
         <note>Move left/right buttons</note>
       </trans-unit>
       <trans-unit id="Left side" xml:space="preserve">
         <source>Left side</source>
+        <target state="translated">Sol taraf</target>
         <note>Left-hand side of screen</note>
       </trans-unit>
       <trans-unit id="Length" xml:space="preserve">
         <source>Length</source>
+        <target state="translated">Uzunluk</target>
         <note/>
       </trans-unit>
       <trans-unit id="Line" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Doğru</target>
         <note>Object geometry: a way (but not an area)</note>
       </trans-unit>
       <trans-unit id="Location unavailable" xml:space="preserve">
         <source>Location unavailable</source>
+        <target state="translated">Konum kullanılamıyor</target>
         <note/>
       </trans-unit>
       <trans-unit id="Location updated to the location and orientation stored in the photo." xml:space="preserve">
         <source>Location updated to the location and orientation stored in the photo.</source>
+        <target state="translated">Konum, fotoğrafta kayıtlı konum ve yönelime güncellendi.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Login successful" xml:space="preserve">
         <source>Login successful</source>
+        <target state="translated">Oturum açma başarılı</target>
         <note/>
       </trans-unit>
       <trans-unit id="Low memory: clearing cache" xml:space="preserve">
         <source>Low memory: clearing cache</source>
+        <target state="translated">Düşük bellek: önbellek temizleniyor</target>
         <note/>
       </trans-unit>
       <trans-unit id="Mail delivery is not available on this device" xml:space="preserve">
         <source>Mail delivery is not available on this device</source>
+        <target state="translated">Bu cihazda e-posta gönderimi kullanılamıyor</target>
         <note/>
       </trans-unit>
       <trans-unit id="Make Circular" xml:space="preserve">
         <source>Make Circular</source>
+        <target state="translated">Dairesel yap</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Make Rectangular" xml:space="preserve">
         <source>Make Rectangular</source>
+        <target state="translated">Dikdörtgen yap</target>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Map Tiles" xml:space="preserve">
         <source>Map Tiles</source>
+        <target state="translated">Harita Karoları</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
         <source>Max nodes after joining is 2000</source>
+        <target state="translated">Birleştirme sonrası en fazla düğüm sayısı 2000</target>
         <note/>
       </trans-unit>
       <trans-unit id="Maximum way length is 2000 nodes" xml:space="preserve">
         <source>Maximum way length is 2000 nodes</source>
+        <target state="translated">Maksimum yol uzunluğu 2000 düğümdür</target>
         <note/>
       </trans-unit>
       <trans-unit id="Maybe later..." xml:space="preserve">
         <source>Maybe later...</source>
+        <target state="translated">Belki daha sonra...</target>
         <note>rate the app later</note>
       </trans-unit>
       <trans-unit id="Measure Direction" xml:space="preserve">
         <source>Measure Direction</source>
+        <target state="translated">Yönü Ölç</target>
         <note/>
       </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
