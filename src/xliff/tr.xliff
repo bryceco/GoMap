@@ -1446,6 +1446,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction node connecting 'to'/'from' to 'via'" xml:space="preserve">
         <source>Can't remove Turn Restriction node connecting 'to'/'from' to 'via'</source>
+        <target state="translated">Başlangıç/bitiş noktalarını ara düğümlere bağlayan yönlendirme kısıtlamaları silinemez</target>
         <note/>
       </trans-unit>
       <trans-unit id="Can't remove Turn Restriction to/from way" xml:space="preserve">
@@ -2636,10 +2637,12 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Travel from %@" xml:space="preserve">
         <source>Travel from %@</source>
+        <target state="translated">%@ konumundan seyahat</target>
         <note/>
       </trans-unit>
       <trans-unit id="Turn On Location Services to Allow %@ to Determine Your Location" xml:space="preserve">
         <source>Turn On Location Services to Allow %@ to Determine Your Location</source>
+        <target state="translated">%@, konumunuzu belirlemesi için konum hizmetlerinin açık olması gerekiyor</target>
         <note/>
       </trans-unit>
       <trans-unit id="Turn Restrictions" xml:space="preserve">
@@ -2663,10 +2666,12 @@ Kavşağa hangi otoyoldan yaklaştığınızı seçin, ardından bir oka dokunar
       </trans-unit>
       <trans-unit id="U-Turn from %@ allowed" xml:space="preserve">
         <source>U-Turn from %@ allowed</source>
+        <target state="translated">%@ konumundan U dönüşüne izin verilir</target>
         <note/>
       </trans-unit>
       <trans-unit id="U-Turn from %@ prohibited" xml:space="preserve">
         <source>U-Turn from %@ prohibited</source>
+        <target state="translated">%@ konumundan U dönüşü yasaktır</target>
         <note/>
       </trans-unit>
       <trans-unit id="UID" xml:space="preserve">
