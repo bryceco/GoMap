@@ -457,6 +457,11 @@ class GpxViewController: TableViewControllerMac {
 		commit editingStyle: UITableViewCell.EditingStyle,
 		forRowAt indexPath: IndexPath)
 	{
+		guard
+			// shouldn't need this, but user reported a crash in background
+			indexPath.row >= 0 && indexPath.row < gpxTracks.savedTracks.count
+		else { return }
+
 		if editingStyle == .delete {
 			// Delete the row from the data source
 			let track = gpxTracks.savedTracks[indexPath.row]
