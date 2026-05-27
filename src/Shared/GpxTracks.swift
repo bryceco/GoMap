@@ -81,9 +81,9 @@ final class GpxTracks: DiskCacheSizeProtocol {
 			// make sure save directory exists
 			var time = TimeInterval(CACurrentMediaTime())
 			let dir = saveDirectory()
-			let path = URL(fileURLWithPath: dir).appendingPathComponent(track.fileName())
+			let path = dir.appendingPathComponent(track.fileName())
 			do {
-				try FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true, attributes: nil)
+				try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true, attributes: nil)
 				let data = try NSKeyedArchiver.archivedData(withRootObject: track, requiringSecureCoding: true)
 				try data.write(to: path)
 			} catch {
@@ -100,11 +100,15 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		}
 	}
 
-	func delete(track: GpxTrack) {
-		let path = URL(fileURLWithPath: saveDirectory()).appendingPathComponent(track.fileName()).path
-		try? FileManager.default.removeItem(atPath: path)
-		savedTracks = savedTracks.filter { $0 !== track } // assign to trigger notification
+	private func deleteFile(for track: GpxTrack) {
+		let path = saveDirectory().appendingPathComponent(track.fileName())
+		try? FileManager.default.removeItem(at: path)
 		uploadedTracks.removeValue(forKey: track.name)
+	}
+
+	func delete(track: GpxTrack) {
+		deleteFile(for: track)
+		savedTracks = savedTracks.filter { $0 !== track } // assign to trigger notification
 		onChangeTracks.notify()
 	}
 
@@ -186,8 +190,8 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		}
 	}
 
-	func saveDirectory() -> String {
-		return ArchivePath.gpxPoints.path()
+	func saveDirectory() -> URL {
+		return ArchivePath.gpxPoints.url()
 	}
 
 	// MARK: Caching
@@ -224,7 +228,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 			: Date(timeIntervalSinceNow: TimeInterval(-expirationDays * 24 * 60 * 60))
 
 		let dir = saveDirectory()
-		var files = (try? FileManager.default.contentsOfDirectory(atPath: dir)) ?? []
+		var files = (try? FileManager.default.contentsOfDirectory(atPath: dir.path)) ?? []
 
 		// file names are timestamps, so sort increasing newest first
 		files = files.sorted { $0.compare($1, options: .caseInsensitive) == .orderedAscending }.reversed()
@@ -233,7 +237,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 			guard file.hasSuffix(".track") else {
 				return nil
 			}
-			let url = URL(fileURLWithPath: dir).appendingPathComponent(file)
+			let url = dir.appendingPathComponent(file)
 			guard
 				let data = try? Data(contentsOf: url, options: .alwaysMapped),
 				let track = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [GpxTrack.self,
@@ -247,7 +251,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 
 			if track.creationDate.timeIntervalSince(deleteIfCreatedBefore) < 0 {
 				// skip because its too old
-				delete(track: track)
+				deleteFile(for: track)
 				return nil
 			}
 			return track
@@ -258,10 +262,10 @@ final class GpxTracks: DiskCacheSizeProtocol {
 	func getDiskCacheSize() async -> (size: Int, count: Int) {
 		var size = 0
 		let dir = saveDirectory()
-		let files = (try? FileManager.default.contentsOfDirectory(atPath: dir)) ?? []
+		let files = (try? FileManager.default.contentsOfDirectory(atPath: dir.path)) ?? []
 		for file in files {
 			if file.hasSuffix(".track") {
-				let path = URL(fileURLWithPath: dir).appendingPathComponent(file).path
+				let path = dir.appendingPathComponent(file).path
 				var status = stat()
 				stat((path as NSString).fileSystemRepresentation, &status)
 				size += (Int(status.st_size) + 511) & -512
@@ -278,8 +282,8 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		endActiveTrack(continuingCurrentTrack: false)
 
 		let dir = saveDirectory()
-		try? FileManager.default.removeItem(atPath: dir)
-		try? FileManager.default.createDirectory(atPath: dir, withIntermediateDirectories: true, attributes: nil)
+		try? FileManager.default.removeItem(at: dir)
+		try? FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true, attributes: nil)
 
 		if active {
 			startNewTrack(continuingCurrentTrack: false)
