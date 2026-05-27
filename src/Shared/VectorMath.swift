@@ -110,7 +110,7 @@ func IntersectionOfTwoVectors(_ pos1: OSMPoint, _ dir1: OSMPoint, _ pos2: OSMPoi
 extension CGRect {
 	func center() -> CGPoint {
 		return CGPoint(x: origin.x + size.width / 2,
-					   y: origin.y + size.height / 2)
+		               y: origin.y + size.height / 2)
 	}
 
 	init(_ rc: OSMRect) {

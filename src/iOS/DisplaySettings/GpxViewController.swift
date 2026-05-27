@@ -459,7 +459,7 @@ class GpxViewController: TableViewControllerMac {
 	{
 		guard
 			// shouldn't need this, but user reported a crash in background
-			indexPath.row >= 0 && indexPath.row < gpxTracks.savedTracks.count
+			indexPath.row >= 0, indexPath.row < gpxTracks.savedTracks.count
 		else { return }
 
 		if editingStyle == .delete {
