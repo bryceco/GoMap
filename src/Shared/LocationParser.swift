@@ -41,25 +41,24 @@ class LocationParser {
 		// Parse degrees, minutes, seconds:
 		guard let degrees = scanner.scanInt(), // Degrees (integer),
 		      scanner.scanString("°") != nil, // followed by °,
-		      let minutes = scanner.scanInt(), // minutes (integer)
-		      scanner.scanAnyCharacter(from: "'′") != nil // followed by '
+		      let minutes = scanner.scanDouble(), // minutes (integer or decimal)
+		      scanner.scanAnyCharacter(from: "'′’'") != nil // followed by '
 		else {
 			return nil
 		}
-		// optional seconds
+		// optional seconds (absent when minutes are decimal, e.g. 52.6')
 		let seconds: Double
 		let index = scanner.currentIndex
 		if let tempSeconds = scanner.scanDouble(), // seconds (floating point),
-		   scanner.scanAnyCharacter(from: "\"″") != nil // followed by "
+		   scanner.scanAnyCharacter(from: "\"″\u{201D}\u{201C}") != nil // followed by "
 		{
 			seconds = tempSeconds
-			// got seconds too
 		} else {
 			seconds = 0.0
 			scanner.currentIndex = index
 		}
 
-		let value = Double(abs(degrees)) + Double(minutes) / 60.0 + seconds / 3600.0
+		let value = Double(abs(degrees)) + minutes / 60.0 + seconds / 3600.0
 		return degrees >= 0 ? value : -value
 	}
 
