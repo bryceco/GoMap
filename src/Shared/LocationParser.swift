@@ -112,6 +112,7 @@ class LocationParser {
 	class func mapLocationFrom(string: String) -> MapLocation? {
 		// first try parsing as a URL
 		let text = string.trimmingCharacters(in: .whitespacesAndNewlines)
+			.replacingOccurrences(of: "\u{2212}", with: "-")
 		if let url = Self.urlFor(string: text),
 		   let loc = Self.mapLocationFrom(url: url)
 		{
