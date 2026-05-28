@@ -2,7 +2,7 @@
 
 # Look though the nsi-presets file and download all referenced brand images
 
-import sys, os, json, requests, cv2, getopt
+import sys, os, json, requests, cv2, getopt, time
 
 skip = 0
 
@@ -59,13 +59,21 @@ for ident,fields in dict.items():
 			# print(cnt,ident,"already uploaded")
 			continue
 
-		try:
-			response = requests.get(url, headers=headers, stream=True)
-		except:
-			print(cnt,url,"--> *** Error ***")
-			continue
+		response = None
+		while True:
+			try:
+				response = requests.get(url, headers=headers, stream=True)
+			except:
+				print(cnt,url,"--> *** Error ***")
+				break
+			if response.status_code == 429:
+				delay = int(response.headers.get("Retry-After", 60))
+				print(cnt,url,"*** 429 - retrying in",delay,"seconds")
+				time.sleep(delay)
+				continue
+			break
 
-		if response.status_code == 200:
+		if response is not None and response.status_code == 200:
 			contentType=response.headers["Content-Type"]
 			ext=types.get(contentType,"")
 			ident=ident+ext
