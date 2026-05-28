@@ -77,6 +77,10 @@ class ClearCacheViewController: TableViewControllerMac {
 		cell.sizesLabel.text = ""
 		cell.clearButton.onTap = { _ in self.deleteData(at: row) }
 		cell.clearButton.setTitle("", for: .normal)
+		cell.clearButton.tintColor = .systemRed
+		if let image = cell.clearButton.image(for: .normal) {
+			cell.clearButton.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
+		}
 
 		if row == .osmData {
 			let objectCount = mapData.nodeCount() + mapData.wayCount() + mapData.relationCount()
