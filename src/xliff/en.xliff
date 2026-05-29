@@ -1520,21 +1520,6 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="new">Clear All</target>
         <note />
       </trans-unit>
-      <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
-        <source>Clear Basemap Tiles</source>
-        <target state="new">Clear Basemap Tiles</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear Data Caches" xml:space="preserve">
-        <source>Clear Data Caches</source>
-        <target state="new">Clear Data Caches</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear OSM Data" xml:space="preserve">
-        <source>Clear OSM Data</source>
-        <target state="new">Clear OSM Data</target>
-        <note>Delete cached data</note>
-      </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
         <target state="new">Commit</target>

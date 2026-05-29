@@ -1494,21 +1494,6 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="translated">அனைத்தையும் அழிக்கவும்</target>
         <note />
       </trans-unit>
-      <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
-        <source>Clear Basemap Tiles</source>
-        <target state="translated">தெளிவான பேச்மேப் ஓடுகள்</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear Data Caches" xml:space="preserve">
-        <source>Clear Data Caches</source>
-        <target state="translated">டேட்டா கேச்களை அழிக்கவும்</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear OSM Data" xml:space="preserve">
-        <source>Clear OSM Data</source>
-        <target state="translated">OSM தரவை அழிக்கவும்</target>
-        <note>Delete cached data</note>
-      </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
         <target state="translated">கமிட்</target>

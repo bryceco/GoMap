@@ -1406,21 +1406,6 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="translated">Hapus Semua</target>
         <note />
       </trans-unit>
-      <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
-        <source>Clear Basemap Tiles</source>
-        <target state="translated">Hapus Ubin Peta Dasar</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear Data Caches" xml:space="preserve">
-        <source>Clear Data Caches</source>
-        <target state="translated">Hapus Cache Data</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear OSM Data" xml:space="preserve">
-        <source>Clear OSM Data</source>
-        <target state="translated">Hapus Data OSM</target>
-        <note>Delete cached data</note>
-      </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
         <target state="translated">Kommit</target>

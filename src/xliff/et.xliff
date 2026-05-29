@@ -1485,21 +1485,6 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="translated">Eemalda kõik</target>
         <note />
       </trans-unit>
-      <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
-        <source>Clear Basemap Tiles</source>
-        <target state="translated">Kustuta aluskaardi paanid</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear Data Caches" xml:space="preserve">
-        <source>Clear Data Caches</source>
-        <target state="translated">Kustuta puhverdatud andmed</target>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear OSM Data" xml:space="preserve">
-        <source>Clear OSM Data</source>
-        <target state="translated">Tühjenda OSM-andmed</target>
-        <note>Delete cached data</note>
-      </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
         <target state="translated">Rakenda</target>

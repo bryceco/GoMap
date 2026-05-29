@@ -1468,19 +1468,6 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="translated">Pulisci tutto</target>
         <note />
       </trans-unit>
-      <trans-unit id="Clear Basemap Tiles" xml:space="preserve">
-        <source>Clear Basemap Tiles</source>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear Data Caches" xml:space="preserve">
-        <source>Clear Data Caches</source>
-        <note>Delete cached data</note>
-      </trans-unit>
-      <trans-unit id="Clear OSM Data" xml:space="preserve">
-        <source>Clear OSM Data</source>
-        <target state="translated">Pulisci Dati OSM</target>
-        <note>Delete cached data</note>
-      </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
         <note />
