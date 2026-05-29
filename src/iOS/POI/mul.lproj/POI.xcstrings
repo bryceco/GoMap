@@ -413,6 +413,12 @@
             "value" : "பின்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -573,6 +579,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பண்புக்கூறுகள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nitelikler"
           }
         },
         "uk" : {
@@ -869,6 +881,12 @@
             "value" : "ஆர்வத்தின் புள்ளி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önemli Nokta"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1031,10 +1049,22 @@
             "value" : "விசை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "anahtar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ключ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "键"
           }
         },
         "zh-Hant" : {
@@ -1173,6 +1203,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "தலைப்பு"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlık"
           }
         },
         "uk" : {
@@ -1337,6 +1373,12 @@
             "value" : "ஆம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evet"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1493,6 +1535,12 @@
             "value" : "அனைத்து குறிச்சொற்களும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm Etiketler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1647,6 +1695,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "உணவகம்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restoran"
           }
         },
         "uk" : {
@@ -2123,6 +2177,12 @@
             "value" : "உள்ளமைக்கவும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yapılandır"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2219,10 +2279,22 @@
             "value" : "புதியதைச் சேர்க்கவும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni Ekle"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Додати нове"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增"
           }
         },
         "zh-Hant" : {
@@ -2351,6 +2423,12 @@
             "value" : "புதியதைச் சேர்க்கவும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni Ekle"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2438,7 +2516,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Кнопка"
+            "value" : "Область"
           }
         },
         "ta" : {
@@ -2447,10 +2525,22 @@
             "value" : "பகுதி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alan"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Площа"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "面积"
           }
         },
         "zh-Hant" : {
@@ -2585,6 +2675,12 @@
             "value" : "அனைத்து குறிச்சொற்களும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tüm Etiketler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2675,10 +2771,22 @@
             "value" : "தனிப்பயன் நற்பொருத்தங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Özellikler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Користувацькі функції"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义要素"
           }
         },
         "zh-Hant" : {
@@ -2933,6 +3041,12 @@
             "value" : "முன்னமைக்கப்பட்ட விசை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önceden Ayarlanmış Anahtar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3081,6 +3195,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மதிப்பு 8"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 8"
           }
         },
         "uk" : {
@@ -3359,6 +3479,12 @@
             "value" : "இந்த விசை/மதிப்பு கலவையுடன் பொருந்தக்கூடிய பொருள்களைத் திருத்தும்போது முன்னமைவு கிடைக்கும். வைல்டு கார்டுக்கு காலியாக விடவும்."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu anahtar/değer çiftine uyan nesneleri düzenlerken bu ön ayar kullanılabilir olacaktır. Her ikisini de boş bırakarak joker karakter olarak kullanabilirsiniz."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3369,6 +3495,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Thẻ đặt trước có sẵn khi sửa đổi các đối tượng khớp với đôi chìa khóa/giá trị này. Để trống chìa khóa hoặc giá trị để không hạn chế."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑与此键/值组合匹配的对象时，将提供此预设。任一项留空均表示通配。"
           }
         },
         "zh-Hant" : {
@@ -3485,6 +3617,12 @@
             "value" : "பொருந்தும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Şunlar için geçerlidir:"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3495,6 +3633,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Áp dụng cho"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "适用于"
           }
         },
         "zh-Hant" : {
@@ -3542,7 +3686,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nupp"
+            "value" : "Sõlm"
           }
         },
         "hr" : {
@@ -3575,10 +3719,22 @@
             "value" : "வெர்டெக்ச்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Köşe"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вершина"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "顶点"
           }
         },
         "zh-Hant" : {
@@ -3705,6 +3861,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மதிப்பு 9"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 9"
           }
         },
         "uk" : {
@@ -3855,6 +4017,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "நாய்கள் அனுமதிக்கப்படுகின்றன"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Köpekler Girebilir"
           }
         },
         "uk" : {
@@ -4085,6 +4253,12 @@
             "value" : "விசை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anahtar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4095,6 +4269,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chìa khóa"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "键"
           }
         },
         "zh-Hant" : {
@@ -4233,6 +4413,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பண்புக்கூறுகள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nitelikler"
           }
         },
         "uk" : {
@@ -4385,6 +4571,12 @@
             "value" : "மதிப்பு 3"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 3"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4395,6 +4587,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Giá trị 3"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值3"
           }
         },
         "zh-Hant" : {
@@ -4439,6 +4637,12 @@
             "value" : "Punto"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punkt"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4469,10 +4673,22 @@
             "value" : "புள்ளியம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nokta"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Точка"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点"
           }
         },
         "zh-Hant" : {
@@ -4901,6 +5117,12 @@
             "value" : "தனிப்பயன் குறிச்சொற்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Etiketler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5037,6 +5259,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "தனிப்பயன் புலங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Alanlar"
           }
         },
         "uk" : {
@@ -5405,6 +5633,12 @@
             "value" : "மதிப்பு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "değer"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5559,6 +5793,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பின்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
           }
         },
         "uk" : {
@@ -5717,6 +5957,12 @@
             "value" : "பண்புக்கூறுகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nitelikler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5873,6 +6119,12 @@
             "value" : "மாற்றங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişiklik Seti"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5927,6 +6179,12 @@
             "value" : "leaf_type"
           }
         },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lehestiku tüüp"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5957,10 +6215,22 @@
             "value" : "இலை_ வகை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "yaprak_tipi"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "тип_листка"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "叶类型"
           }
         },
         "zh-Hant" : {
@@ -6087,6 +6357,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மதிப்பு 1"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 1"
           }
         },
         "uk" : {
@@ -6239,6 +6515,12 @@
             "value" : "POI வகை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "POI Türü"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6383,6 +6665,12 @@
             "value" : "முன்னமைவுக்கான சாத்தியமான மதிப்புகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ön ayarın alınabilecek değerleri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6393,6 +6681,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Các giá trị cho phép cho thẻ đặt trước"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "预设的可能值"
           }
         },
         "zh-Hant" : {
@@ -6519,6 +6813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "முன்னமைக்கப்பட்ட மதிப்புகள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önceden ayarlanmış değerler"
           }
         },
         "uk" : {
@@ -6791,6 +7091,12 @@
             "value" : "பின்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6881,6 +7187,12 @@
             "value" : "வகை: இல்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cins:en"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6965,10 +7277,22 @@
             "value" : "தனிப்பயன் நற்பொருத்தம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Özellik"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Спеціальна функція"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义要素"
           }
         },
         "zh-Hant" : {
@@ -7095,6 +7419,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மதிப்பு 5"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 5"
           }
         },
         "uk" : {
@@ -7253,6 +7583,12 @@
             "value" : "பொதுவான குறிச்சொற்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sık Kullanılan Etiketler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7401,6 +7737,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பொதுவான குறிச்சொற்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sık kullanılan etiketler"
           }
         },
         "uk" : {
@@ -7553,6 +7895,12 @@
             "value" : "பெயர்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7637,10 +7985,22 @@
             "value" : "விசை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "anahtar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ключ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "键"
           }
         },
         "zh-Hant" : {
@@ -7769,6 +8129,12 @@
             "value" : "மதிப்பு 4"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 4"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7877,7 +8243,19 @@
             "value" : "ⓘ"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"
@@ -8013,6 +8391,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மதிப்பு 2"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 2"
           }
         },
         "uk" : {
@@ -8171,10 +8555,22 @@
             "value" : "இயற்கை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doğal"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "природний"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "natural"
           }
         },
         "zh-Hant" : {
@@ -8301,6 +8697,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மதிப்பு 11"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 11"
           }
         },
         "uk" : {
@@ -8681,6 +9083,12 @@
             "value" : "பெயர்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8817,6 +9225,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "தனிப்பயன் புலம்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Alan"
           }
         },
         "uk" : {
@@ -8981,6 +9395,12 @@
             "value" : "வகை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tür"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9119,6 +9539,12 @@
             "value" : "தனிப்பயன் புலங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Alanlar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9209,10 +9635,22 @@
             "value" : "தனிப்பயன் நற்பொருத்தங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Özellikler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Користувацькі функції"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义功能"
           }
         },
         "zh-Hant" : {
@@ -9281,10 +9719,22 @@
             "value" : "ஓக் மரம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meşe Ağacı"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дерево Oak"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "橡树"
           }
         },
         "zh-Hant" : {
@@ -9417,6 +9867,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "உணவகம்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Restoran"
           }
         },
         "uk" : {
@@ -9563,6 +10019,12 @@
             "value" : "புலம் பெயர்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alan Adı"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -9659,10 +10121,22 @@
             "value" : "இனம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cins"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "рід"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "属"
           }
         },
         "zh-Hant" : {
@@ -9789,6 +10263,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மதிப்பு 6"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 6"
           }
         },
         "uk" : {
@@ -9947,6 +10427,12 @@
             "value" : "ரத்துசெய்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10043,10 +10529,22 @@
             "value" : "இந்த அம்சத்தைத் தேர்ந்தெடுக்கும்போது சேர்க்க வேண்டிய குறிச்சொற்கள்."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu özelliği seçerken eklenecek etiketler."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Теги, які потрібно додати під час вибору цієї функції."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择此要素时要添加的标签。"
           }
         },
         "zh-Hant" : {
@@ -10115,10 +10613,22 @@
             "value" : "அம்ச குறிச்சொற்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özellik Etiketleri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Теги функцій"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要素标签"
           }
         },
         "zh-Hant" : {
@@ -10173,6 +10683,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "இந்த அம்சத்தின் முன்னமைவுகளைப் பெறவும். எதுவும் இல்லை என்றால், இந்த அம்சத்தைத் தேர்ந்தெடுப்பது இலக்கு பொருளில் குறிச்சொற்களை ஒன்றிணைக்கும் (மாற்றாது)."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu özelliğin ön ayarlarını devral. Eğer ön ayar yoksa bu özelliğin seçilmesi etiketleri hedef nesneye birleştirir (değiştirmez)."
           }
         },
         "uk" : {
@@ -10259,10 +10775,22 @@
             "value" : "அம்ச வகை:"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özellik türü:"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Тип функції:"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特征类型："
           }
         },
         "zh-Hant" : {
@@ -10589,6 +11117,12 @@
             "value" : "விசை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anahtar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10599,6 +11133,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Chìa khóa"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "键"
           }
         },
         "zh-Hant" : {
@@ -10677,6 +11217,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பெயர்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad"
           }
         },
         "uk" : {
@@ -10973,10 +11519,22 @@
             "value" : "பின்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Назад"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "返回"
           }
         },
         "zh-Hant" : {
@@ -11237,6 +11795,12 @@
             "value" : "முன்னமைவுகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ön Ayarlar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11373,6 +11937,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "சக்கர நாற்காலி அணுகல்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tekerlekli Sandalye Erişimi"
           }
         },
         "uk" : {
@@ -11699,6 +12269,12 @@
             "value" : "மதிப்பு 12"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 12"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11709,6 +12285,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Giá trị 12"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 12"
           }
         },
         "zh-Hant" : {
@@ -11843,6 +12425,12 @@
             "value" : "மதிப்பு 10"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 10"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11906,7 +12494,7 @@
         "et" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nupp"
+            "value" : "Joon"
           }
         },
         "hr" : {
@@ -11939,10 +12527,22 @@
             "value" : "வரி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Satır"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Лінія"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "线"
           }
         },
         "zh-Hant" : {
@@ -12071,6 +12671,12 @@
             "value" : "மதிப்பு 7"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 7"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12167,10 +12773,22 @@
             "value" : "தலைப்பு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlık"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Назви"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标题"
           }
         },
         "zh-Hant" : {
@@ -12713,6 +13331,12 @@
             "value" : "மதிப்பு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12803,10 +13427,22 @@
             "value" : "விசை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "anahtar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ключ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "键"
           }
         },
         "zh-Hant" : {
@@ -12935,6 +13571,12 @@
             "value" : "ⓘ"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13031,10 +13673,22 @@
             "value" : "ரத்துசெய்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Скасувати"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         },
         "zh-Hant" : {

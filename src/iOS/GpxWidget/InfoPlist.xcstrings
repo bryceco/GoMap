@@ -77,6 +77,12 @@
             "value" : "Gpxwidget"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidget"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -161,10 +167,22 @@
             "value" : "Gpxநிரல்பலகைநீட்டிப்பு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidgetExtension"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GpxWidgetExtension"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gpx 组件扩展"
           }
         },
         "zh-Hant" : {
@@ -249,6 +267,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பதிப்புரிமை © 2024 பிரைச் கோக்ச்வெல். அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telif Hakkı © 2024 Bryce Cogswell. Tüm hakları saklıdır."
           }
         },
         "uk" : {

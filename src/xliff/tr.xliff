@@ -2,10 +2,10 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
-      <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve" translate="no">
+      <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
         <source>username</source>
         <note>Class = "UIButton"; normalTitle = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -44,7 +44,7 @@
         <target state="translated">66.6 FPS</target>
         <note>Class = "UILabel"; text = "66.6 FPS"; ObjectID = "9t5-wq-j1u";</note>
       </trans-unit>
-      <trans-unit id="DFj-Vi-kBz.normalTitle" xml:space="preserve" translate="no">
+      <trans-unit id="DFj-Vi-kBz.normalTitle" xml:space="preserve">
         <source>(0,0)</source>
         <note>Class = "UIButton"; normalTitle = "(0,0)"; ObjectID = "DFj-Vi-kBz"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -66,13 +66,13 @@
       <trans-unit id="Fo4-Nq-pAz.normalTitle" xml:space="preserve">
         <source>Center</source>
         <target state="translated">Ortala</target>
-        <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz";</note>
+        <note>Class = "UIButton"; normalTitle = "Center"; ObjectID = "Fo4-Nq-pAz"; Note = "Center the screen on user's current location";</note>
       </trans-unit>
-      <trans-unit id="HeZ-95-3K1.text" xml:space="preserve" translate="no">
+      <trans-unit id="HeZ-95-3K1.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
-      <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve" translate="no">
+      <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve">
         <source>-</source>
         <note>Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -91,7 +91,7 @@
         <target state="translated">Yorum Yap&amp; Çöz</target>
         <note>Class = "UIButton"; normalTitle = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
       </trans-unit>
-      <trans-unit id="PHk-s9-onx.text" xml:space="preserve" translate="no">
+      <trans-unit id="PHk-s9-onx.text" xml:space="preserve">
         <source>Various comments...</source>
         <note>Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -105,7 +105,7 @@
         <target state="translated">Bir yer adı girin ("New York"), bir URL ya da enlem/boylam koordinatları içeren başka bir metin girin veya bir OSM nesnesine referans verin ("yol 51014987"):</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
-      <trans-unit id="VNE-ee-a7u.text" xml:space="preserve" translate="no">
+      <trans-unit id="VNE-ee-a7u.text" xml:space="preserve">
         <source>action</source>
         <note>Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -124,7 +124,7 @@
         <target state="translated">Alt Başlık</target>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "l7S-YL-RKK";</note>
       </trans-unit>
-      <trans-unit id="nU5-T2-ADn.text" xml:space="preserve" translate="no">
+      <trans-unit id="nU5-T2-ADn.text" xml:space="preserve">
         <source>A Error Message Flashing Z</source>
         <note>Class = "UILabel"; text = "A Error Message Flashing Z"; ObjectID = "nU5-T2-ADn"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -148,11 +148,11 @@
         <target state="translated">17-06-2014 17:54 UTC</target>
         <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
       </trans-unit>
-      <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve" translate="no">
+      <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve">
         <source>Title</source>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
-      <trans-unit id="vwW-V6-kvw.text" xml:space="preserve" translate="no">
+      <trans-unit id="vwW-V6-kvw.text" xml:space="preserve">
         <source>Title</source>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "vwW-V6-kvw"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -165,7 +165,7 @@
   </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -173,11 +173,11 @@
         <target state="translated">Telefonunuzu nesnenin baktığı yöne doğru tutun.</target>
         <note>Class = "UILabel"; text = "Point your phone in the direction the object faces."; ObjectID = "4vY-m2-xMW";</note>
       </trans-unit>
-      <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve" translate="no">
+      <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve">
         <source>320</source>
         <note>Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
-      <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve" translate="no">
+      <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve">
         <source>Update "direction" tag</source>
         <note>Class = "UIButton"; normalTitle = "Update \"direction\" tag"; ObjectID = "Yt9-h6-KKC"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -186,7 +186,7 @@
         <target state="translated">İptal</target>
         <note>Class = "UIButton"; normalTitle = "Cancel"; ObjectID = "exg-Jc-FOH";</note>
       </trans-unit>
-      <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve" translate="no">
+      <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve">
         <source>Old value: 42</source>
         <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -194,7 +194,7 @@
   </file>
   <file original="DisplaySettings/Base.lproj/Display.storyboard" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -222,7 +222,7 @@
         <target state="translated">99 Gün</target>
         <note>Class = "UIButton"; normalTitle = "99 Days"; ObjectID = "4s8-Bj-JOX";</note>
       </trans-unit>
-      <trans-unit id="5JJ-aN-eAg.text" xml:space="preserve" translate="no">
+      <trans-unit id="5JJ-aN-eAg.text" xml:space="preserve">
         <source>Details Label</source>
         <note>Class = "UILabel"; text = "Details Label"; ObjectID = "5JJ-aN-eAg"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -271,7 +271,7 @@
         <target state="translated">12:00:00</target>
         <note>Class = "UILabel"; text = "12:00:00"; ObjectID = "EHa-L5-Hcz";</note>
       </trans-unit>
-      <trans-unit id="ErU-hB-dqk.text" xml:space="preserve" translate="no">
+      <trans-unit id="ErU-hB-dqk.text" xml:space="preserve">
         <source>Size Label</source>
         <note>Class = "UILabel"; text = "Size Label"; ObjectID = "ErU-hB-dqk"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -290,7 +290,7 @@
         <target state="translated">Patikalar</target>
         <note>Class = "UILabel"; text = "Paths"; ObjectID = "Jz1-GP-Wbe";</note>
       </trans-unit>
-      <trans-unit id="KFp-Us-thh.text" xml:space="preserve" translate="no">
+      <trans-unit id="KFp-Us-thh.text" xml:space="preserve">
         <source>Details Label</source>
         <note>Class = "UILabel"; text = "Details Label"; ObjectID = "KFp-Us-thh"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -402,7 +402,7 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
         <target state="translated">GPX İzleri</target>
         <note>Class = "UINavigationItem"; title = "GPX Tracks"; ObjectID = "Z8C-Ef-iJE";</note>
       </trans-unit>
-      <trans-unit id="ZFi-dJ-qjx.text" xml:space="preserve" translate="no">
+      <trans-unit id="ZFi-dJ-qjx.text" xml:space="preserve">
         <source>Aerial Tiles</source>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "ZFi-dJ-qjx"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -416,7 +416,7 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
         <target state="translated">WMS Projeksiyonu</target>
         <note>Class = "UITableViewSection"; headerTitle = "WMS Projection"; ObjectID = "Zn9-Sg-9fS";</note>
       </trans-unit>
-      <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve" translate="no">
+      <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve">
         <source>Aerial Tiles</source>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -425,7 +425,7 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
         <target state="translated">HealthKit rotaları:</target>
         <note>Class = "UILabel"; text = "HealthKit routes:"; ObjectID = "ahv-4V-kjV";</note>
       </trans-unit>
-      <trans-unit id="bDu-nw-QGM.text" xml:space="preserve" translate="no">
+      <trans-unit id="bDu-nw-QGM.text" xml:space="preserve">
         <source>Aerial Tiles</source>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "bDu-nw-QGM"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -501,7 +501,7 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
         <target state="translated">Detaylar</target>
         <note>Class = "UILabel"; text = "Details"; ObjectID = "fVu-8o-Ldq";</note>
       </trans-unit>
-      <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve" translate="no">
+      <trans-unit id="g2G-5j-Y4q.text" xml:space="preserve">
         <source>Details Label</source>
         <note>Class = "UILabel"; text = "Details Label"; ObjectID = "g2G-5j-Y4q"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -525,7 +525,7 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
         <target state="translated">Trafik Yolları</target>
         <note>Class = "UILabel"; text = "Traffic Roads"; ObjectID = "hkr-kO-jbt";</note>
       </trans-unit>
-      <trans-unit id="il1-Gs-nr3.text" xml:space="preserve" translate="no">
+      <trans-unit id="il1-Gs-nr3.text" xml:space="preserve">
         <source>Size Label</source>
         <note>Class = "UILabel"; text = "Size Label"; ObjectID = "il1-Gs-nr3"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -544,7 +544,7 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
         <target state="translated">Arkaplan</target>
         <note>Class = "UITableViewSection"; headerTitle = "Background"; ObjectID = "lwG-AE-nIZ";</note>
       </trans-unit>
-      <trans-unit id="mbV-RK-BWD.text" xml:space="preserve" translate="no">
+      <trans-unit id="mbV-RK-BWD.text" xml:space="preserve">
         <source>Size Label</source>
         <note>Class = "UILabel"; text = "Size Label"; ObjectID = "mbV-RK-BWD"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
@@ -677,7 +677,7 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
   </file>
   <file original="GpxWidget/InfoPlist.xcstrings" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -699,7 +699,7 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
   </file>
   <file original="GpxWidget/Localizable.xcstrings" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="%@" xml:space="preserve">
@@ -786,7 +786,7 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -813,7 +813,7 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
   </file>
   <file original="InfoPlist.xcstrings" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -823,7 +823,6 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
       </trans-unit>
       <trans-unit id="CFBundleGetInfoString" xml:space="preserve">
         <source/>
-        <target state="new"/>
         <note>Get Info string</note>
       </trans-unit>
       <trans-unit id="CFBundleName" xml:space="preserve">
@@ -885,12 +884,11 @@ Daha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolar�
   </file>
   <file original="Localizable.xcstrings" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="" xml:space="preserve">
         <source/>
-        <target state="new"/>
         <note/>
       </trans-unit>
       <trans-unit id="&#9;Relation " xml:space="preserve">
@@ -3061,7 +3059,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -3083,7 +3081,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
   </file>
   <file original="PhotoShare/InfoPlist.xcstrings" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -3100,7 +3098,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
   </file>
   <file original="PhotoShare/Localizable.xcstrings" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -3122,14 +3120,14 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
-      <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
         <source>no</source>
         <note>Class = "UITextField"; placeholder = "no"; ObjectID = "0mW-YK-ajm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="0zS-QM-zwQ.placeholder" xml:space="preserve">
         <source>type</source>
         <note>Class = "UITextField"; placeholder = "type"; ObjectID = "0zS-QM-zwQ"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3138,7 +3136,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Geri</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "1Yx-Ce-yfq";</note>
       </trans-unit>
-      <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve" translate="no">
+      <trans-unit id="2Q5-Vd-FED.text" xml:space="preserve">
         <source>Title</source>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "2Q5-Vd-FED"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3152,7 +3150,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Önemli Nokta</target>
         <note>Class = "UITableViewController"; title = "Point of Interest"; ObjectID = "6VA-gm-L0S";</note>
       </trans-unit>
-      <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve">
         <source>Quercus </source>
         <note>Class = "UITextField"; placeholder = "Quercus "; ObjectID = "6yC-L7-V38"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3181,11 +3179,11 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Restoran</target>
         <note>Class = "UITextField"; placeholder = "Restaurant"; ObjectID = "436-kv-L7j";</note>
       </trans-unit>
-      <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve">
         <source>broadleaved </source>
         <note>Class = "UITextField"; placeholder = "broadleaved "; ObjectID = "AAx-p2-Mzh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve">
         <source>dog</source>
         <note>Class = "UITextField"; placeholder = "dog"; ObjectID = "Ak4-ru-E4V"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3229,7 +3227,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Değer 3</target>
         <note>Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE";</note>
       </trans-unit>
-      <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve">
         <source>designated</source>
         <note>Class = "UITextField"; placeholder = "designated"; ObjectID = "Fe2-dc-zgA"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3262,6 +3260,10 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <source>Back</source>
         <target state="translated">Geri</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE";</note>
+      </trans-unit>
+      <trans-unit id="LAL-tL-bub.text" xml:space="preserve">
+        <source>Uses semi-colon seperated values (e.g. pizza;kebab for cuisine)</source>
+        <note>Class = "UILabel"; text = "Uses semi-colon seperated values (e.g. pizza;kebab for cuisine)"; ObjectID = "LAL-tL-bub"; Note = "This is used for tags like cuisine=italian;pizza.";</note>
       </trans-unit>
       <trans-unit id="Lhz-HA-Q6j.title" xml:space="preserve">
         <source>Custom Feature</source>
@@ -3323,7 +3325,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Ad</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "TJk-hO-Ejc";</note>
       </trans-unit>
-      <trans-unit id="TK4-E8-1q7.text" xml:space="preserve" translate="no">
+      <trans-unit id="TK4-E8-1q7.text" xml:space="preserve">
         <source>Title</source>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "TK4-E8-1q7"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3332,7 +3334,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Geri</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "UJ1-oM-H4Z";</note>
       </trans-unit>
-      <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="Urd-9O-Mte.placeholder" xml:space="preserve">
         <source>relation</source>
         <note>Class = "UITextField"; placeholder = "relation"; ObjectID = "Urd-9O-Mte"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3346,7 +3348,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Başlık</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "WXF-5S-E8m";</note>
       </trans-unit>
-      <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve" translate="no">
+      <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve">
         <source>Inscription</source>
         <note>Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3365,15 +3367,15 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Değer 7</target>
         <note>Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL";</note>
       </trans-unit>
-      <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="X1y-nK-nVJ.placeholder" xml:space="preserve">
         <source>key</source>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "X1y-nK-nVJ"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve" translate="no">
+      <trans-unit id="XBV-Ie-LDT.text" xml:space="preserve">
         <source>Food &amp; Drink</source>
         <note>Class = "UILabel"; text = "Food &amp; Drink"; ObjectID = "XBV-Ie-LDT"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="XCc-6y-qYt.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="XCc-6y-qYt.placeholder" xml:space="preserve">
         <source>key</source>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "XCc-6y-qYt"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3382,11 +3384,11 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">anahtar</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "ZNr-2O-LuN";</note>
       </trans-unit>
-      <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve" translate="no">
+      <trans-unit id="ZYn-TK-k7d.text" xml:space="preserve">
         <source>Subtitle</source>
         <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "ZYn-TK-k7d"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="aCs-vS-YXj.placeholder" xml:space="preserve">
         <source>ref</source>
         <note>Class = "UITextField"; placeholder = "ref"; ObjectID = "aCs-vS-YXj"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3410,7 +3412,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Özel Özellikler</target>
         <note>Class = "UINavigationItem"; title = "Custom Features"; ObjectID = "cNV-jf-zYM";</note>
       </trans-unit>
-      <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="cP3-lR-lzM.placeholder" xml:space="preserve">
         <source>value</source>
         <note>Class = "UITextField"; placeholder = "value"; ObjectID = "cP3-lR-lzM"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3419,7 +3421,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Önceden Ayarlanmış Anahtar</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset Key"; ObjectID = "cTf-Rc-vqr";</note>
       </trans-unit>
-      <trans-unit id="daQ-tl-pKh.text" xml:space="preserve" translate="no">
+      <trans-unit id="daQ-tl-pKh.text" xml:space="preserve">
         <source>Label</source>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "daQ-tl-pKh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3433,7 +3435,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Köpekler Girebilir</target>
         <note>Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp";</note>
       </trans-unit>
-      <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve">
         <source>tree </source>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3447,19 +3449,19 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Nokta</target>
         <note>Class = "UIButton"; normalTitle = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
-      <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve">
         <source>clean</source>
         <note>Class = "UITextField"; placeholder = "clean"; ObjectID = "foC-aN-GtH"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve">
         <source>Oak</source>
         <note>Class = "UITextField"; placeholder = "Oak"; ObjectID = "ftg-j1-Ep9"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="gv7-b8-wUw.text" xml:space="preserve" translate="no">
+      <trans-unit id="gv7-b8-wUw.text" xml:space="preserve">
         <source>Label</source>
         <note>Class = "UILabel"; text = "Label"; ObjectID = "gv7-b8-wUw"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="hAy-aU-g8L.text" xml:space="preserve" translate="no">
+      <trans-unit id="hAy-aU-g8L.text" xml:space="preserve">
         <source>Lorem ipsum dolor </source>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor "; ObjectID = "hAy-aU-g8L"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3493,7 +3495,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Önceden ayarlanmış değerler</target>
         <note>Class = "UITableViewSection"; headerTitle = "Preset values"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
-      <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="kPA-ky-U48.placeholder" xml:space="preserve">
         <source>leisure </source>
         <note>Class = "UITextField"; placeholder = "leisure "; ObjectID = "kPA-ky-U48"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3537,7 +3539,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">ⓘ</target>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "nil-45-Wvp";</note>
       </trans-unit>
-      <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve">
         <source>value </source>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3546,11 +3548,11 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Değer 11</target>
         <note>Class = "UILabel"; text = "Value 11"; ObjectID = "o63-qY-4vl";</note>
       </trans-unit>
-      <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="oC6-w7-cwN.placeholder" xml:space="preserve">
         <source>leashed</source>
         <note>Class = "UITextField"; placeholder = "leashed"; ObjectID = "oC6-w7-cwN"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="okh-JP-aKZ.placeholder" xml:space="preserve">
         <source>park</source>
         <note>Class = "UITextField"; placeholder = "park"; ObjectID = "okh-JP-aKZ"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3589,11 +3591,11 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Özellik türü:</target>
         <note>Class = "UILabel"; text = "Feature type:"; ObjectID = "sGi-dQ-1v0";</note>
       </trans-unit>
-      <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="sHA-cr-GLb.placeholder" xml:space="preserve">
         <source>value</source>
         <note>Class = "UITextField"; placeholder = "value"; ObjectID = "sHA-cr-GLb"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
-      <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve">
         <source>role</source>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3602,7 +3604,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Anahtar</target>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "teB-9L-Nrf";</note>
       </trans-unit>
-      <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve">
         <source>value </source>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3611,7 +3613,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Ön Ayarlar</target>
         <note>Class = "UINavigationItem"; title = "Presets"; ObjectID = "v1b-PG-XxE";</note>
       </trans-unit>
-      <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="vpk-jC-yxl.placeholder" xml:space="preserve">
         <source>yes</source>
         <note>Class = "UITextField"; placeholder = "yes"; ObjectID = "vpk-jC-yxl"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3620,7 +3622,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
         <target state="translated">Değer 12</target>
         <note>Class = "UILabel"; text = "Value 12"; ObjectID = "wFE-f1-sQa";</note>
       </trans-unit>
-      <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve" translate="no">
+      <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve">
         <source>value </source>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3643,7 +3645,7 @@ Performansı artırmak için önbelleği (Ekran ayarları altında) temizlemek i
   </file>
   <file original="Settings/Base.lproj/Settings.storyboard" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -3799,7 +3801,7 @@ http://glyphish.com
         <target state="translated">Yeni hesap oluştur</target>
         <note>Class = "UIButton"; normalTitle = "Register new account"; ObjectID = "DY5-Ls-XZ1";</note>
       </trans-unit>
-      <trans-unit id="DiU-tt-U7H.text" xml:space="preserve" translate="no">
+      <trans-unit id="DiU-tt-U7H.text" xml:space="preserve">
         <source>Detail detail detail detail detail</source>
         <note>Class = "UILabel"; text = "Detail detail detail detail detail"; ObjectID = "DiU-tt-U7H"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -3818,7 +3820,7 @@ http://glyphish.com
         <target state="translated">Başlık</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "HNj-kK-OCP";</note>
       </trans-unit>
-      <trans-unit id="JbA-pC-plJ.text" xml:space="preserve" translate="no">
+      <trans-unit id="JbA-pC-plJ.text" xml:space="preserve">
         <source>Title title title title</source>
         <note>Class = "UILabel"; text = "Title title title title"; ObjectID = "JbA-pC-plJ"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -4021,7 +4023,7 @@ http://glyphish.com
   </file>
   <file original="Turn Restrictions/Base.lproj/TurnRestrictions.storyboard" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
@@ -4033,7 +4035,7 @@ http://glyphish.com
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="tr" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
@@ -4041,7 +4043,7 @@ http://glyphish.com
         <target state="translated">Değişiklikler:</target>
         <note>Class = "UILabel"; text = "Changes:"; ObjectID = "ArV-4u-j7D";</note>
       </trans-unit>
-      <trans-unit id="BAY-7z-hwv.text" xml:space="preserve" translate="no">
+      <trans-unit id="BAY-7z-hwv.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "BAY-7z-hwv"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
@@ -4055,7 +4057,7 @@ http://glyphish.com
         <target state="translated">Yükle</target>
         <note>Class = "UINavigationItem"; title = "Upload"; ObjectID = "Mdj-M0-0mZ";</note>
       </trans-unit>
-      <trans-unit id="Plh-7W-ceY.text" xml:space="preserve" translate="no">
+      <trans-unit id="Plh-7W-ceY.text" xml:space="preserve">
         <source>Lorem ipsum dolor sit er elit lamet,</source>
         <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet,"; ObjectID = "Plh-7W-ceY"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>

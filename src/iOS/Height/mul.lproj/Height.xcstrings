@@ -131,6 +131,12 @@
             "value" : "உயரம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükselik"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -293,6 +299,12 @@
             "value" : "ரத்துசெய்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -447,6 +459,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "உயரம் அமைக்கவும்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yüksekliği Ayarla"
           }
         },
         "uk" : {
@@ -609,6 +627,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "தூரம்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uzaklık"
           }
         },
         "uk" : {

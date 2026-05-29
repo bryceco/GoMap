@@ -149,6 +149,12 @@
             "value" : "உங்கள் சாதனத்தை பொருளின் திசைக்கு இணையாக வைக்கவும்."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefonunuzu nesnenin baktığı yöne doğru tutun."
+          }
+        },
         "tzm" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -327,6 +333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ரத்துசெய்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
           }
         },
         "tzm" : {

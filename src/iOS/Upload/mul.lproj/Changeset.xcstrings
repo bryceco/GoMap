@@ -137,6 +137,12 @@
             "value" : "மாற்றங்கள்:"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişiklikler:"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -425,6 +431,12 @@
             "value" : "கமிட்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydet"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -587,6 +599,12 @@
             "value" : "தொகு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düzenle"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -707,7 +725,19 @@
             "value" : "🔽"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔽"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔽"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "🔽"
@@ -843,6 +873,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மாற்றங்கள்:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişiklik seti yorumu:"
           }
         },
         "uk" : {
@@ -1011,6 +1047,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பதிவேற்றும்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükle"
           }
         },
         "uk" : {
@@ -1289,6 +1331,12 @@
             "value" : "சர்வே, பிங், முதலியன."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "anket, Bing vb."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1299,6 +1347,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "khảo sát, Bing, v.v."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "调查, Bing, 等等。"
           }
         },
         "zh-Hant" : {
@@ -1445,6 +1499,12 @@
             "value" : "ஏற்றுமதி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dışa Aktar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1535,10 +1595,22 @@
             "value" : "உங்கள் மாற்றங்களை விவரிக்கவும் ... "
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişikliklerinizi açıklayın... "
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Опишіть свої зміни... "
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "描述你做出的变更... "
           }
         },
         "zh-Hant" : {
@@ -1695,6 +1767,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ஆதாரம்:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaynak:"
           }
         },
         "uk" : {

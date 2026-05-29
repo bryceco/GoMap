@@ -105,10 +105,22 @@
             "value" : "தரவு செயலாக்க ..."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veriler işleniyor..."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Обробка даних..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在处理数据…"
           }
         },
         "zh-Hant" : {
@@ -228,6 +240,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "முகவரி உள்ளடக்கம் அங்கீகரிக்கப்படவில்லை."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL içeriği tanınmıyor."
           }
         },
         "uk" : {
@@ -358,6 +376,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "துரதிர்ச்டவசமாக தேர்ந்தெடுக்கப்பட்ட படத்தில் இருப்பிடத் செய்தி இல்லை."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maalesef seçilen resimde konum bilgisi bulunmamaktadır."
           }
         },
         "uk" : {

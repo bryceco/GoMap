@@ -71,7 +71,19 @@
             "value" : "வரைபடத்திற்குச் செல்லுங்கள் !!"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Go Map!!"
@@ -155,7 +167,19 @@
             "value" : "புகைப்படங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PhotoShare"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PhotoShare"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PhotoShare"

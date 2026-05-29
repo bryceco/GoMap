@@ -76,6 +76,12 @@
             "value" : "%@"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -152,7 +158,19 @@
             "value" : "%1$@ %2$@"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ %2$@"
@@ -224,7 +242,19 @@
             "value" : "%1$@ %2$lld"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$lld"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$lld"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ %2$lld"
@@ -300,10 +330,22 @@
             "value" : "%@ நிறுத்து"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Durdur"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ Стій"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ 终止"
           }
         },
         "zh-Hant" : {
@@ -372,7 +414,19 @@
             "value" : "%lld"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
@@ -448,6 +502,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "கால அளவு"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Süre"
           }
         },
         "uk" : {
@@ -526,6 +586,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "கோ மேப்!!"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
           }
         },
         "uk" : {
@@ -612,6 +678,12 @@
             "value" : "GPX ட்ரேச்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX İzi"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -692,6 +764,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "சிபிஎக்ச் இடைநிறுத்தவும்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX'i duraklat"
           }
         },
         "uk" : {
@@ -782,6 +860,12 @@
             "value" : "சிபிஎக்ச் தடங்களை பதிவு செய்தல்."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX izlerini kaydetmeyi duraklat."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -864,6 +948,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பிரிவகம்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noktalar"
           }
         },
         "uk" : {
@@ -960,6 +1050,12 @@
             "value" : "சிபிஎக்ச் தொடங்கவும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX'i başlat"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1054,6 +1150,12 @@
             "value" : "சிபிஎக்ச் தடங்களை பதிவு செய்யத் தொடங்குங்கள்."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX iz kaydını başlat."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1136,6 +1238,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ இல் தொடங்கியது"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ tarihinde başlatıldı"
           }
         },
         "uk" : {
@@ -1232,6 +1340,12 @@
             "value" : "சிபிஎக்ச் நிறுத்துங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX’i durdur"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1318,6 +1432,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "சிபிஎக்ச் தடங்களை பதிவு செய்வதை நிறுத்துங்கள்."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX iz kaydını sonlandır."
           }
         },
         "uk" : {

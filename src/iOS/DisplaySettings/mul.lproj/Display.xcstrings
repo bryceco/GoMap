@@ -137,6 +137,12 @@
             "value" : "சிபிஎக்ச் தடங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX izleri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -311,6 +317,12 @@
             "value" : "ரத்துசெய்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -479,6 +491,12 @@
             "value" : "தெளிவான தற்காலிக சேமிப்பு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önbelleği Temizle"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -585,6 +603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மேப்னிக்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
           }
         },
         "uk" : {
@@ -747,6 +771,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "99 நாட்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "99 Gün"
           }
         },
         "uk" : {
@@ -917,6 +947,12 @@
             "value" : "திட்டம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Projeksiyon"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1071,6 +1107,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ரயில் நற்பொருத்தங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Demiryolu Özellikleri"
           }
         },
         "uk" : {
@@ -1235,6 +1277,12 @@
             "value" : "-1..3,7"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-1..3,7"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1383,6 +1431,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மேலடுக்குகள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Üst Katmanlar"
           }
         },
         "uk" : {
@@ -1553,6 +1607,12 @@
             "value" : "வான்வழி படங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hava Çekimi Görüntüleri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1665,6 +1725,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பேச்மேப்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temel Harita"
           }
         },
         "uk" : {
@@ -1817,6 +1883,12 @@
             "value" : "காட்சி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Görüntüle"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1929,6 +2001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "எல்த்கிட் வழிகள்:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit rotaları:"
           }
         },
         "uk" : {
@@ -2093,6 +2171,12 @@
             "value" : "வரைபடத்திற்குச் செல்லுங்கள் !! செயல்திறனை மேம்படுத்த பழைய தரவை தானாக நிராகரிக்கும்."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!! performansı artırmak için eski verileri otomatik olarak kaldırır."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2241,6 +2325,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "கேச் மேலாண்மை"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önbellek Yönetimi"
           }
         },
         "uk" : {
@@ -2405,6 +2495,12 @@
             "value" : "தலைப்பு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlık"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2567,6 +2663,12 @@
             "value" : "நட்பு பெயர்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kullanıcı Dostu Ad"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2577,6 +2679,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tên Thường"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示名称"
           }
         },
         "zh-Hant" : {
@@ -2715,6 +2823,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பொருள்களைக் காட்டு"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nesneleri Göster"
           }
         },
         "uk" : {
@@ -2879,6 +2993,12 @@
             "value" : "ரத்துசெய்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3041,6 +3161,12 @@
             "value" : "தானியங்கி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otomatik"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3191,6 +3317,12 @@
             "value" : "பின்னணியில் சேகரிக்கவும்:"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arkaplanda veri topla:"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3311,7 +3443,19 @@
             "value" : "http: // {சுவிட்ச்: a, b, c} .tile.org/{z}/{x}/{y} .png\n "
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
@@ -3461,6 +3605,12 @@
             "value" : "பிங்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bing"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3593,6 +3743,12 @@
             "value" : "12:00:00"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12:00:00"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3644,7 +3800,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Knopf"
+            "value" : "Schaltfläche"
           }
         },
         "en" : {
@@ -3753,6 +3909,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பொத்தான்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buton"
           }
         },
         "uk" : {
@@ -3905,6 +4067,12 @@
             "value" : "நிலை + பொத்தான் ஆன் "
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konum + Buton açık "
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4047,6 +4215,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ஆசிரியர் மட்டும்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sadece editör"
           }
         },
         "uk" : {
@@ -4223,6 +4397,12 @@
             "value" : "வான்வழி ஓடுகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hava Görüntüsü Karoları"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4323,6 +4503,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "விவரங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detaylar"
           }
         },
         "uk" : {
@@ -4643,6 +4829,12 @@
             "value" : "பிரிவகம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noktalar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4809,6 +5001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "விவரங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detaylar"
           }
         },
         "uk" : {
@@ -4979,6 +5177,12 @@
             "value" : "விவரம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detay"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5147,6 +5351,12 @@
             "value" : "சிட்டை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etiket"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5309,6 +5519,12 @@
             "value" : "போக்குவரத்து சாலைகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Trafik Yolları"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5453,10 +5669,22 @@
             "value" : "ஆற்றல் நற்பொருத்தங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gelişmiş Özellikler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Енергоощадження"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "电力要素"
           }
         },
         "zh-Hant" : {
@@ -5589,6 +5817,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "(டி.எம்.எச்)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(TMS)"
           }
         },
         "uk" : {
@@ -5747,6 +5981,12 @@
             "value" : "பாதைகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Patikalar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5789,10 +6029,52 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"LM2-9D-wtc\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schaltfläche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nupp"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buton"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按钮"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按鈕"
           }
         }
       }
@@ -5925,6 +6207,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "கடந்த/எதிர்காலம்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçmiş/Gelecek"
           }
         },
         "uk" : {
@@ -6089,6 +6377,12 @@
             "value" : "பின்னணி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arkaplan"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6145,8 +6439,8 @@
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Filter aktivieren"
+            "state" : "translated",
+            "value" : "Objektfilter"
           }
         },
         "en" : {
@@ -6249,6 +6543,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பொருள் வடிப்பான்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nesne Filtreleri"
           }
         },
         "uk" : {
@@ -6413,6 +6713,12 @@
             "value" : "நீங்கள் பதிவுசெய்யும் அல்லது பதிவிறக்கும் சிபிஎக்ச் தடங்கள் தானாகவே நீக்கப்படும்:"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaydettiğiniz veya indirdiğiniz GPX izleri şu süreden sonra otomatik olarak silinir:"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6555,6 +6861,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "வான்வழி கொண்ட ஆசிரியர்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Havadan Görüntülü Editör"
           }
         },
         "uk" : {
@@ -6713,6 +7025,12 @@
             "value" : "வான்வழி வழங்குநர்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Havadan Görüntü Sağlayıcısı"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6819,6 +7137,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "தரவு மேலடுக்குகள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Veri Üst Katmanları"
           }
         },
         "uk" : {
@@ -6935,10 +7259,22 @@
             "value" : "தேடல்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Görevler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Квести"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "任务"
           }
         },
         "zh-Hant" : {
@@ -7089,6 +7425,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ரத்துசெய்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
           }
         },
         "uk" : {
@@ -7247,6 +7589,12 @@
             "value" : "கவரும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arazi Kullanımı"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7401,6 +7749,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "சிபிஎக்ச் தடங்களை உள்ளமைக்கவும்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX İzlerini Ayarla"
           }
         },
         "uk" : {
@@ -7563,6 +7917,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "கட்டிடங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Binalar"
           }
         },
         "uk" : {
@@ -7733,6 +8093,12 @@
             "value" : "பின்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7863,6 +8229,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "குறிப்புகள் மற்றும் பிழைத்திருத்தங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Notlar ve Düzeltmeler"
           }
         },
         "uk" : {
@@ -8027,6 +8399,12 @@
             "value" : "எல்லைகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sınırlar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8183,6 +8561,12 @@
             "value" : "கட்டுப்பாடுகளைத் திருப்புங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dönüş Kısıtlamaları"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8271,6 +8655,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "வான்வழி ஓடுகள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hava Görüntüsü Karoları"
           }
         },
         "uk" : {
@@ -8417,6 +8807,12 @@
             "value" : "இடைவினைகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Etkileşimler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8531,6 +8927,12 @@
             "value" : "பேச்மேப் மட்டுமே"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sadece temel harita"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8631,6 +9033,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "தலைப்பு"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlık"
           }
         },
         "uk" : {
@@ -8775,6 +9183,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பணி சாலைகள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Servis Yolları"
           }
         },
         "uk" : {
@@ -8933,6 +9347,12 @@
             "value" : "பொருள்களை வடிகட்டவும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nesneleri Filtrele"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9039,6 +9459,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "இறக்குமதி"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İçe Aktar"
           }
         },
         "uk" : {
@@ -9177,6 +9603,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OSM தரவு தற்காலிக சேமிப்பை அழிக்கவும், பயன்பாட்டு நிலை OSM சேவையகத்துடன் ஒத்திசைக்கப்படவில்லை. நீங்கள் திருத்தும் தரவை வேறொருவர் மாற்றினால் அல்லது கூடுதல் தரவைப் பதிவேற்றுவதைத் தடுப்பதன் மூலம் உங்கள் பதிவேற்றங்களில் ஒன்று நடுப்பகுதியில் தோல்வியுற்றால் இது ஏற்படலாம்.\n\n எச்சரிக்கை: ஓஎச்எம் தற்காலிக சேமிப்பை அழிப்பது இதுவரை பதிவேற்றப்படாத எந்த மாற்றங்களையும் இழக்க நேரிடும்.\n\n நீங்கள் முன்பு சமர்ப்பித்த மாற்றங்களை பிரதிபலிக்கும் அண்மைக் கால ஓடுகளைப் பதிவிறக்க பேச்மேப் அல்லது மேலடுக்கு ஓடு தற்காலிக சேமிப்புகளை அழிக்கவும். உங்கள் மாற்றங்கள் செயலாக்க 24 மணிநேரம் வரை ஆகலாம்."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uygulama durumu, OSM sunucusuyla eşzamanlı değilse OSM veri önbelleğini temizleyin. Bu, başka birinin düzenlediğiniz veriyi değiştirmesi veya bir yüklemenin yarıda kalarak yeni veri yüklemenizi engellemesi durumunda olabilir.\n\nUyarı: OSM önbelleğini temizlemek, henüz yüklenmemiş değişikliklerin kaybolmasına yol açar.\n\nDaha önce gönderdiğiniz değişiklikleri yansıtan en güncel harita karolarını indirmek için Temel Harita veya Üst Katman önbelleklerini temizleyin. Değişikliklerinizin işlenmesi 24 saate kadar sürebilir."
           }
         },
         "uk" : {
@@ -9333,6 +9765,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "நிராகரிக்க & புதுப்பிக்கவும்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vazgeç & Yenile"
           }
         },
         "uk" : {
@@ -9497,6 +9935,12 @@
             "value" : "முகவரி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "URL"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9657,6 +10101,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "தெளிவான தற்காலிக சேமிப்பு"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önbelleği Temizle"
           }
         },
         "uk" : {
@@ -9821,6 +10271,12 @@
             "value" : "பின்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9975,6 +10431,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "நீர் நற்பொருத்தங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Su Özellikleri"
           }
         },
         "uk" : {
@@ -10133,6 +10595,12 @@
             "value" : "வான்வழி மட்டும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sadece havadan görüntü"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10163,10 +10631,58 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"Upc-rm-bRz\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schaltfläche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nupp"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tombol"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buton"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按钮"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按鈕"
           }
         }
       }
@@ -10296,6 +10812,12 @@
           }
         },
         "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "21"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "21"
@@ -10469,6 +10991,12 @@
             "value" : "மற்றவர்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diğerleri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10631,6 +11159,12 @@
             "value" : "கட்டிட நிலை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bina Seviyesi"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10743,6 +11277,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "12/22/20, இரவு 7:55 மணி"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "22.12.2020 19:55"
           }
         },
         "uk" : {
@@ -10901,6 +11441,12 @@
             "value" : "அதிகபட்ச சூம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maks. Büyütme"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11055,6 +11601,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "வரைபட சுழற்சி"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harita Döndürme"
           }
         },
         "uk" : {
@@ -11213,6 +11765,12 @@
             "value" : "போர்ட்லேண்ட் சி.ஐ.எச்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portlandia GIS"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11223,6 +11781,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sở GIS Trung ương"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Portlandia GIS"
           }
         },
         "zh-Hant" : {
@@ -11375,6 +11939,12 @@
             "value" : "மீட்டமை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sıfırla"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11523,6 +12093,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "தடங்களை நீக்கு:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İzleri şu süreden sonra sil:"
           }
         },
         "uk" : {
@@ -11687,6 +12263,12 @@
             "value" : "பெயர்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11723,10 +12305,58 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Button\"; ObjectID = \"yZe-Bk-kIy\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tlačítko"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schaltfläche"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
             "value" : "Button"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nupp"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tombol"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Кнопка"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buton"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按钮"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按鈕"
           }
         }
       }
@@ -11859,6 +12489,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "சிபிஎக்ச் தடங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX İzleri"
           }
         },
         "uk" : {
@@ -12003,6 +12639,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "{x}, {y} மற்றும் {z} பிளேச்ஓல்டர்கள், அல்லது ஒரு WMS URL உடன் ஒரு TMS முகவரி"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "{x}, {y} ve {z} yer tutucularına sahip bir TMS URL’si ya da bir WMS URL’si"
           }
         },
         "uk" : {
@@ -12159,6 +12801,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ஓடு சேவையகத்தின் வார்ப்புரு முகவரி"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Karo sunucusunun şablon URL’si"
           }
         },
         "uk" : {
@@ -12341,6 +12989,12 @@
             "value" : "புதியதைச் சேர்க்கவும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni Ekle"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12485,6 +13139,12 @@
             "value" : "WMS முகவரி ஐக் குறிப்பிடினால், நீங்கள் பயன்படுத்தப்படும் திட்டத்தையும் வழங்க வேண்டும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir WMS URL girildiğinde kullanılan projeksiyon da belirtilmelidir"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12627,6 +13287,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "WMS திட்டம்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "WMS Projeksiyonu"
           }
         },
         "uk" : {

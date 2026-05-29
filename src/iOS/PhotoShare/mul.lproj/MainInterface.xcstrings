@@ -125,7 +125,19 @@
             "value" : "சரி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tamam"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -257,10 +269,22 @@
             "value" : "வரைபடத்திற்குச் செல்லுங்கள் !! புகைப்படம் எடுக்கப்பட்ட இடத்தில் திறக்கப்படும்."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!, fotoğrafın çekildiği konumda açılacaktır."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Go Map!! відкриє локацію де було зроблено світлину."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!! 将在照片拍摄地点打开。"
           }
         },
         "zh-Hant" : {
@@ -405,6 +429,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ரத்துசெய்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
           }
         },
         "uk" : {

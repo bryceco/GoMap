@@ -113,6 +113,12 @@
             "value" : "பேச்மேப் ஓடுகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temel Harita Karoları"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -275,6 +281,12 @@
             "value" : "என்னிடம் கணக்கு இல்லை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesabım yok"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -425,6 +437,12 @@
             "value" : "வரவு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Katkıda Bulunanlar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -563,10 +581,22 @@
             "value" : "வரையறுக்கப்பட்ட இணைப்புடன் நீங்கள் எங்காவது மேப்பிங் செய்தால், தற்போதைய பார்வை பகுதியில் இருக்கும் அடுத்த இரண்டு உயர் சூம் நிலைகளுக்கு வான்வழி மற்றும்/அல்லது பேச்மேப் ஓடுகளை பதிவிறக்கம் செய்யலாம்."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İnternet bağlantısının sınırlı olduğu bir bölgede harita oluşturuyorsanız mevcut görüntüleme alanındaki bir sonraki iki üst yakınlaştırma düzeyi için hava fotoğrafı ve/veya temel harita karolarını indirebilirsiniz."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
             "value" : "Якщо ви мапите у місцях з поганим звʼязком, ви можете завантажити аерофото і тайли Mapnik двох наступних рівнів збільшення для місцини яка відкрита у редакторі."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果您在网络连接受限的地方进行地图绘制，您可以下载当前视图区域中接下来两个更高缩放级别的航拍图和/或底图图块。"
           }
         },
         "zh-Hant" : {
@@ -695,10 +725,22 @@
             "value" : "பெரிதாக்கப்பட்ட ஓடுகளை பதிவிறக்கவும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yakınlaştırılmış harita karolarını indir"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Завантажити збільшені тайли"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下载放大后的图块"
           }
         },
         "zh-Hant" : {
@@ -839,6 +881,12 @@
             "value" : "தொடுதல்களைக் காட்டு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dokunuşları Göster"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -935,10 +983,22 @@
             "value" : "FPS ஐ அதிகரிக்கவும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FPS'yi en üst düzeye çıkar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Максимізувати FPS"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最大帧数"
           }
         },
         "zh-Hant" : {
@@ -1079,6 +1139,12 @@
             "value" : "விவரங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detaylar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1187,10 +1253,22 @@
             "value" : "பெயர்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Назва"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名称"
           }
         },
         "zh-Hant" : {
@@ -1323,6 +1401,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மாற்று OSM சேவையகத்தில் அமைந்துள்ள தரவைத் திருத்த விரும்பினால் சேவையகத்தைத் தேர்ந்தெடுக்கவும்."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başka bir OSM sunucusunda bulunan verileri düzenlemek istiyorsanız bir sunucu seçin."
           }
         },
         "uk" : {
@@ -1479,6 +1563,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OpenStreetMap சேவையகம்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap Sunucusu"
           }
         },
         "uk" : {
@@ -1643,6 +1733,12 @@
             "value" : "விவரம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detay"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1745,10 +1841,22 @@
             "value" : "OpenStreetMap கணக்கு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap hesabı"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Обліковка OpenStreetMap"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开放街图账号"
           }
         },
         "zh-Hant" : {
@@ -1889,6 +1997,12 @@
             "value" : "OpenStreetMap உள்நுழைவு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap Girişi"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2022,6 +2136,12 @@
           }
         },
         "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "api.openstreetmap.org"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "api.openstreetmap.org"
@@ -2189,6 +2309,12 @@
             "value" : "முன்னமைவு மொழி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ön Ayarlar Dili"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "needs_review",
@@ -2297,10 +2423,22 @@
             "value" : "& Gt; 60 எஃப்.பி.எச்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "60 FPS'nin üzerinde performans sağlar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Застосовує > 60 FPS"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用 > 60 FPS"
           }
         },
         "zh-Hant" : {
@@ -2439,6 +2577,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "எங்களை தொடர்புகொள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bize Ulaşın"
           }
         },
         "uk" : {
@@ -2597,6 +2741,12 @@
             "value" : "அமைப்புகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayarlar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2747,6 +2897,12 @@
             "value" : "வான்வழி ஓடுகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hava Görüntüsü Karoları"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2757,6 +2913,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mảnh Không ảnh"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "空照瓦片"
           }
         },
         "zh-Hant" : {
@@ -2843,10 +3005,22 @@
             "value" : "கணக்கு செய்தி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesap Bilgileri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Інформація про обліковку"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "账号信息"
           }
         },
         "zh-Hant" : {
@@ -2967,6 +3141,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பதிப்புரிமை © 2012-2024 பிரைச் கோக்ச்வெல்.\n அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.\n\n ஓபன்ச்ட்ரீட்மேப் தரவு திறந்த தரவு காமன்ச் திறந்த தரவுத்தள உரிமத்தின் (ODBL) கீழ் உரிமம் பெற்றது:\n https://www.openstreetmap.com/copyright\n\n பிங் ஏரியல் இமேசரி பதிப்புரிமை மைக்ரோசாப்ட் மற்றும் அதன் சப்ளையர்கள்:\n https://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\n மேபாக்ச் வான்வழி படங்கள் பதிப்புரிமை மேப் பாக்ச் மற்றும் அதன் சப்ளையர்கள்: https://www.mapbox.com/tos\n\n ராபி ஆன்சனின் கிச்எக்ச்எம்எல்லின் எக்ச்எம்எல் பாகுபடுத்தல் மரியாதை:\n https://github.com/robbiehanson/kissxml\n\n SJJB ஆல் வரைபட சின்னங்கள்:\n http://www.sjjb.co.uk/mapicons\n\n கிளிஃபிசின் பிற சின்னங்கள்:\n http://glyphish.com\n"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telif hakkı © 2012-2024 Bryce Cogswell. \nTüm hakları saklıdır.\n\nOpenStreetMap verileri, Open Data Commons Açık Veritabanı Lisansı (ODbL) kapsamında lisanslanmıştır:\nhttps://www.openstreetmap.com/copyright\n\nBing hava görüntüleri telif hakkı Microsoft ve tedarikçilerine aittir:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox hava görüntüleri telif hakkı Mapbox ve tedarikçilerine aittir: https://www.mapbox.com/tos\n\nXML ayrıştırma, Robbie Hanson'ın KissXML'i tarafından sağlanmıştır:\nhttps://github.com/robbiehanson/KissXML\n\nHarita simgeleri SJJB tarafından hazırlanmıştır:\nhttp://www.sjjb.co.uk/mapicons\n\nDiğer simgeler Glyphish tarafından hazırlanmıştır:\nhttp://glyphish.com\n"
           }
         },
         "uk" : {
@@ -3117,6 +3297,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "தொடங்கு"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başla"
           }
         },
         "uk" : {
@@ -3275,6 +3461,12 @@
             "value" : "வலைபெயர்ப்பு - மொழிபெயர்ப்புகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weblate - Çeviriler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3419,6 +3611,12 @@
             "value" : "பிழை அறிக்கைகள் & பரிந்துரைகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hata Raporları ve Öneriler"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3545,10 +3743,22 @@
             "value" : "விடுபதிகை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giriş Yap"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Увійти"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录"
           }
         },
         "zh-Hant" : {
@@ -3713,7 +3923,19 @@
             "value" : "-"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -3855,6 +4077,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "புதிய கணக்கை பதிவு செய்யுங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni hesap oluştur"
           }
         },
         "uk" : {
@@ -4013,6 +4241,12 @@
             "value" : "நற்சான்றிதழ்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yetki Belgeleri"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4143,6 +4377,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "திரை பதிவுக்கான தொடுதல்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ekran kaydı için dokunma hareketleri"
           }
         },
         "uk" : {
@@ -4295,6 +4535,12 @@
             "value" : "மேம்பட்ட அமைப்புகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gelişmiş Ayarlar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4443,6 +4689,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மேம்பட்ட"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gelişmiş"
           }
         },
         "uk" : {
@@ -4599,6 +4851,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மேம்பட்ட அமைப்புகள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gelişmiş Ayarlar"
           }
         },
         "uk" : {
@@ -4763,6 +5021,12 @@
             "value" : "தலைப்பு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlık"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4859,10 +5123,22 @@
             "value" : "கணக்கைப் புதுப்பிக்கவும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hesabı Yenile"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Оновити обліковку"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刷新账号"
           }
         },
         "zh-Hant" : {
@@ -5007,6 +5283,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "முன்னமைவு மொழி"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ön Ayarlar Dili"
           }
         },
         "uk" : {
@@ -5163,6 +5445,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "மின்னஞ்சல் கருத்து"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-posta ile Geri Bildirim"
           }
         },
         "uk" : {
@@ -5399,6 +5687,12 @@
             "value" : "அருகிலுள்ள மேப்பர்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yakındaki Haritacılar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5561,6 +5855,12 @@
             "value" : "வசன வரிகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alt Başlık"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5715,6 +6015,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பின்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
           }
         },
         "uk" : {
@@ -5879,6 +6185,12 @@
             "value" : "எங்களை தொடர்புகொள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bize Ulaşın"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6041,6 +6353,12 @@
             "value" : "விவரங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detaylar"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6195,6 +6513,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ஆஃப்லைனுக்குத் தயாராகுங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çevrimdışı için Hazırlan"
           }
         },
         "uk" : {
@@ -6353,6 +6677,12 @@
             "value" : "ஒரு சோதனையாளராகுங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Testçi Olun"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6507,6 +6837,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "விவரம்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Detay"
           }
         },
         "uk" : {
@@ -6665,6 +7001,12 @@
             "value" : "மற்றவை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çeşitli"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6813,6 +7155,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "புகுபதிவு"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Giriş"
           }
         },
         "uk" : {
@@ -6977,6 +7325,12 @@
             "value" : "எங்களைப் பற்றி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hakkımızda"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7139,6 +7493,12 @@
             "value" : "முன்னமைவு மொழி"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ön Ayarlar Dili"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7293,6 +7653,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ஆஃப்லைனுக்குத் தயாராகுங்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çevrimdışı için Hazırlan"
           }
         },
         "uk" : {
@@ -7451,6 +7817,12 @@
             "value" : "தொடங்கு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başla"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7547,7 +7919,19 @@
             "value" : "-"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
         "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -7683,6 +8067,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "வரவு"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Katkıda Bulunanlar"
           }
         },
         "uk" : {
@@ -7833,6 +8223,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "வரைபடத்தில் மாற்றங்களை பதிவேற்றுவதற்கு உங்களுக்கு Openstreetmap.org இல் பதிவுசெய்யப்பட்ட பயனர் பெயர் மற்றும் கடவுச்சொல் தேவை. "
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişiklikleri haritaya yüklemek için openstreetmap.org'da kayıtlı bir kullanıcı adı ve şifreye ihtiyacınız var. "
           }
         },
         "uk" : {
@@ -7991,6 +8387,12 @@
             "value" : "OpenStreetMap கணக்கு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap hesabı"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8139,6 +8541,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "டெச்ட்ஃப்ளைட் பீட்டாவில் சேரவும்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "TestFlight Beta'ya katılın"
           }
         },
         "uk" : {
@@ -8291,6 +8699,12 @@
             "value" : "FPS ஐக் காட்டு"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "FPS'yi göster"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8433,6 +8847,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பிரேம்கள்/இரண்டாவது"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kare/Saniye"
           }
         },
         "uk" : {
@@ -8583,6 +9003,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "அருகிலுள்ள மேப்பர்கள்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yakındaki Haritacılar"
           }
         },
         "uk" : {
@@ -8741,6 +9167,12 @@
             "value" : "மின்னஞ்சல் கருத்து"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "E-posta ile Geri Bildirim"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8843,10 +9275,22 @@
             "value" : "விடுபதிகை"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çıkış"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вийти"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登出"
           }
         },
         "zh-Hant" : {
@@ -8939,10 +9383,22 @@
             "value" : "மாற்றங்கள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişiklik Seti"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Набори змін"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑变更集"
           }
         },
         "zh-Hant" : {
@@ -9081,6 +9537,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "அறிவிலிமையம் - சிக்கல்கள் & மூலக் குறியீடு"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub - Sorunlar ve Kaynak Kodu"
           }
         },
         "uk" : {
@@ -9245,6 +9707,12 @@
             "value" : "உருவாக்குபவர் அமைப்புகள்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geliştirici ayarları"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9347,10 +9815,22 @@
             "value" : "மந்தமான - விவாதம்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slack - Tartışma"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Slack — дискусії"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slack - 讨论"
           }
         },
         "zh-Hant" : {

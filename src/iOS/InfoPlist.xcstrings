@@ -149,6 +149,12 @@
             "value" : "வரைபடத்திற்குச் செல்லுங்கள் !!"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
         "tzm" : {
           "stringUnit" : {
             "state" : "translated",
@@ -347,6 +353,12 @@
             "value" : "வரைபடத்திற்குச் செல்லுங்கள் !!"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
         "tzm" : {
           "stringUnit" : {
             "state" : "translated",
@@ -519,6 +531,12 @@
             "value" : "சி.பி.எச் பரிமாற்ற வடிவம் (சி.பி.எக்ச்)"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS Değişim Formatı (GPX)"
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -687,6 +705,12 @@
             "value" : "வெளிப்புற ஊடலை சி.பி.எச் சாதனங்களுடன் இணைக்கவும்"
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Harici Bluetooth GPS cihazlarına bağlan"
+          }
+        },
         "tzm" : {
           "stringUnit" : {
             "state" : "translated",
@@ -849,6 +873,12 @@
             "value" : "கட்டிடங்கள் அல்லது பொருள்களின் உயரங்களை அளவிடவும், தொடக்க நேர அறிகுறிகளில் உரை அங்கீகாரத்தை செய்யவும் கேமரா பயன்படுத்தப்படுகிறது."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kamera, binaların veya nesnelerin yüksekliğini ölçmek ve çalışma saatleri tabelalarındaki metni tanımak için kullanılır."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -951,6 +981,12 @@
             "value" : "உங்கள் உடற்பயிற்சிகளிலிருந்து வழித்தடங்களை சிபிஎக்ச் வழிகளாக இறக்குமதி செய்யலாம்."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Antrenmanlarınızdaki rotalar GPX rotaları olarak içe aktarılabilir."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1045,6 +1081,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "சுகாதார தகவல்கள் ஒருபோதும் புதுப்பிக்கப்படவில்லை."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sağlık verileri asla güncellenmez."
           }
         },
         "uk" : {
@@ -1195,6 +1237,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "பதிப்புரிமை 2012-2024 பிரைச் கோக்ச்வெல்"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telif Hakkı 2012-2024 Bryce Cogswell"
           }
         },
         "uk" : {
@@ -1351,6 +1399,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "இருப்பிட கண்காணிப்பில் எப்போதும் செயலற்ற நிலையில் சிபிஎக்ச் கோப்புகளை பதிவு செய்ய பயன்பாட்டை அனுமதிக்கிறது."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Her zaman açık konum takibi, uygulamanın pasif durumdayken GPX dosyalarını kaydetmesine izin verir."
           }
         },
         "uk" : {
@@ -1521,6 +1575,12 @@
             "value" : "உங்கள் இருப்பிடம் காண்பிக்கப்படும் மற்றும் வரைபடத்தில் பின்பற்றப்படும்."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konumunuz haritada gösterilecek ve takip edilecektir."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1677,6 +1737,12 @@
             "value" : "இருப்பிட சேவைகளை இயக்குவது பயன்பாட்டை உங்கள் அருகிலுள்ள பொருள்களைக் காண்பிக்க அனுமதிக்கிறது. நீங்கள் கணக்கெடுக்கும் தரவை எளிதாக புதுப்பிக்க அல்லது சேர்க்க இது உங்களை அனுமதிக்கிறது."
           }
         },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konum servislerini etkinleştirmek, uygulamanın çevrenizdeki nesneleri göstermesini sağlar. Bu sayede kendi yaptığınız saha çalışmasına göre verileri kolayca güncelleyebilir veya ekleyebilirsiniz."
+          }
+        },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1831,6 +1897,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "உங்கள் இருப்பிடம் காண்பிக்கப்படும் மற்றும் வரைபடத்தில் பின்பற்றப்படும்."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konumunuz haritada gösterilecek ve takip edilecektir."
           }
         },
         "uk" : {
