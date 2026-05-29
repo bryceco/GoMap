@@ -2,7 +2,7 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
   <file original="Base.lproj/MainStoryboard.storyboard" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve">
@@ -173,7 +173,7 @@
   </file>
   <file original="Direction/Base.lproj/DirectionViewController.xib" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="4vY-m2-xMW.text" xml:space="preserve">
@@ -202,7 +202,7 @@
   </file>
   <file original="DisplaySettings/Base.lproj/Display.storyboard" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="1SY-O5-qJR.title" xml:space="preserve">
@@ -304,6 +304,7 @@
       </trans-unit>
       <trans-unit id="LM2-9D-wtc.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Tlačítko</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "LM2-9D-wtc";</note>
       </trans-unit>
       <trans-unit id="LxX-tl-ZLH.text" xml:space="preserve">
@@ -386,6 +387,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="Upc-rm-bRz.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Tlačítko</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "Upc-rm-bRz";</note>
       </trans-unit>
       <trans-unit id="Uum-Wn-9CF.text" xml:space="preserve">
@@ -658,6 +660,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="yZe-Bk-kIy.normalTitle" xml:space="preserve">
         <source>Button</source>
+        <target state="translated">Tlačítko</target>
         <note>Class = "UIButton"; normalTitle = "Button"; ObjectID = "yZe-Bk-kIy";</note>
       </trans-unit>
       <trans-unit id="yue-km-52a.text" xml:space="preserve">
@@ -684,7 +687,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
   </file>
   <file original="GpxWidget/InfoPlist.xcstrings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -706,7 +709,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
   </file>
   <file original="GpxWidget/Localizable.xcstrings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="%@" xml:space="preserve">
@@ -793,7 +796,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
   </file>
   <file original="Height/Base.lproj/Height.storyboard" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="QZK-2k-kEa.normalTitle" xml:space="preserve">
@@ -820,7 +823,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
   </file>
   <file original="InfoPlist.xcstrings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -891,7 +894,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
   </file>
   <file original="Localizable.xcstrings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="" xml:space="preserve">
@@ -1478,6 +1481,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="Add node" xml:space="preserve">
         <source>Add node</source>
+        <target state="translated">Přidat bod</target>
         <note/>
       </trans-unit>
       <trans-unit id="Add outer member" xml:space="preserve">
@@ -1507,6 +1511,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="Aerial alignment" xml:space="preserve">
         <source>Aerial alignment</source>
+        <target state="translated">Vyrovnání snímků</target>
         <note/>
       </trans-unit>
       <trans-unit id="Aerial only" xml:space="preserve">
@@ -1521,6 +1526,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="All cached data including aerial imagery tiles, TagInfo and Wiki data, etc." xml:space="preserve">
         <source>All cached data including aerial imagery tiles, TagInfo and Wiki data, etc.</source>
+        <target state="translated">Všechna přednačtená data, včetně dlaždic snímků, informací o  značkách, wiki apod.</target>
         <note/>
       </trans-unit>
       <trans-unit id="All choices" xml:space="preserve">
@@ -1530,6 +1536,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="All map tiles for the currently selected base map (Mapnik, Americana, etc)." xml:space="preserve">
         <source>All map tiles for the currently selected base map (Mapnik, Americana, etc).</source>
+        <target state="translated">Všechny mapové dlaždice pro aktuálně zvolenou podkladovou mapu (Mapnik, Americana atp.).</target>
         <note/>
       </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
@@ -1610,6 +1617,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Caches" xml:space="preserve">
         <source>Caches</source>
+        <target state="translated">Mezipaměti</target>
         <note>cached data</note>
       </trans-unit>
       <trans-unit id="Can only add ways to multipolygons" xml:space="preserve">
@@ -1719,6 +1727,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Compass" xml:space="preserve">
         <source>Compass</source>
+        <target state="translated">Kompas</target>
         <note>Compass button label</note>
       </trans-unit>
       <trans-unit id="Configure" xml:space="preserve">
@@ -1847,10 +1856,12 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Down" xml:space="preserve">
         <source>Down</source>
+        <target state="translated">Dolů</target>
         <note>Move up/down buttons</note>
       </trans-unit>
       <trans-unit id="Downloaded nodes, ways and relations, and any edits you have made." xml:space="preserve">
         <source>Downloaded nodes, ways and relations, and any edits you have made.</source>
+        <target state="translated">Stažené body, cesty a relace a jakékoliv vaše úpravy.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
@@ -1939,6 +1950,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="GPS" xml:space="preserve">
         <source>GPS</source>
+        <target state="translated">GPS</target>
         <note>GPS button label</note>
       </trans-unit>
       <trans-unit id="GPX" xml:space="preserve">
@@ -1978,6 +1990,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="Help" xml:space="preserve">
         <source>Help</source>
+        <target state="translated">Nápověda</target>
         <note>Help button label</note>
       </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
@@ -2112,6 +2125,7 @@ Chyba: %@</target>
       </trans-unit>
       <trans-unit id="Map Tiles" xml:space="preserve">
         <source>Map Tiles</source>
+        <target state="translated">Mapové dlaždice</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Max nodes after joining is 2000" xml:space="preserve">
@@ -2328,6 +2342,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="OSM Data" xml:space="preserve">
         <source>OSM Data</source>
+        <target state="translated">OSM data</target>
         <note>Delete cached data</note>
       </trans-unit>
       <trans-unit id="Object modified" xml:space="preserve">
@@ -2597,6 +2612,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Search" xml:space="preserve">
         <source>Search</source>
+        <target state="translated">Hledat</target>
         <note>Search button label</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
@@ -2911,6 +2927,7 @@ Vyberte cestu, kterou přijíždíte do křížení a poté klepněte na šipku 
       </trans-unit>
       <trans-unit id="Up" xml:space="preserve">
         <source>Up</source>
+        <target state="translated">Nahoru</target>
         <note>Move up/down buttons</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
@@ -3288,7 +3305,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
   </file>
   <file original="PhotoShare/Base.lproj/MainInterface.storyboard" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="05z-LH-xEK.normalTitle" xml:space="preserve">
@@ -3310,7 +3327,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
   </file>
   <file original="PhotoShare/InfoPlist.xcstrings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="CFBundleDisplayName" xml:space="preserve">
@@ -3327,7 +3344,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
   </file>
   <file original="PhotoShare/Localizable.xcstrings" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="Processing data..." xml:space="preserve">
@@ -3349,7 +3366,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
   </file>
   <file original="POI/Base.lproj/POI.storyboard" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="0mW-YK-ajm.placeholder" xml:space="preserve">
@@ -3904,7 +3921,7 @@ Výkon můžete zlepšit pročištěním mezipaměti (volbu naleznete v nastaven
   </file>
   <file original="Settings/Base.lproj/Settings.storyboard" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="0Hk-5U-2Kg.text" xml:space="preserve">
@@ -4287,7 +4304,7 @@ https://www.r3gi.cz
   </file>
   <file original="Turn Restrictions/Base.lproj/TurnRestrictions.storyboard" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="qP9-Sc-sc4.text" xml:space="preserve">
@@ -4299,7 +4316,7 @@ https://www.r3gi.cz
   </file>
   <file original="Upload/Base.lproj/Changeset.storyboard" source-language="en" target-language="cs" datatype="plaintext">
     <header>
-      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192"/>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.3" build-num="17C529"/>
     </header>
     <body>
       <trans-unit id="ArV-4u-j7D.text" xml:space="preserve">
