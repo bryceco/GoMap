@@ -62,13 +62,13 @@ for ident,fields in dict.items():
 		response = None
 		while True:
 			try:
-				response = requests.get(url, headers=headers, stream=True)
+				response = requests.get(url, headers=headers, params={"maxlag": 5}, stream=True)
 			except:
 				print(cnt,url,"--> *** Error ***")
 				break
-			if response.status_code == 429:
+			if response.status_code in (429, 503):
 				delay = int(response.headers.get("Retry-After", 60))
-				print(cnt,url,"*** 429 - retrying in",delay,"seconds")
+				print(cnt,url,"***",response.status_code,"- retrying in",delay,"seconds")
 				time.sleep(delay)
 				continue
 			break
