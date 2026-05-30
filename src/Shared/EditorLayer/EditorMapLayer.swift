@@ -632,6 +632,47 @@ final class EditorMapLayer: CALayer {
 		})
 	}
 
+
+	private static let oneWayArrowChevronLength: Double = 15
+	private static let oneWayArrowChevronWidth: Double = 5
+	/// Along-way distance from motor chevron tip to bicycle chevron tip (motor icon + gap + bicycle icon).
+	private static let bicycleContraflowArrowLongitudinalOffset: Double = 3 * oneWayArrowChevronLength
+
+	private func makeOneWayArrowLayer(
+		at loc: OSMPoint,
+		direction dir: OSMPoint,
+		chevronLength len: Double,
+		alongWayOffset: Double,
+		fillColor: UIColor,
+		zPosition: CGFloat
+	) -> CAShapeLayerWithProperties {
+		let position = OSMPoint(x: loc.x + dir.x * alongWayOffset,
+		                        y: loc.y + dir.y * alongWayOffset)
+		let width = Self.oneWayArrowChevronWidth
+
+		let p1 = OSMPoint(x: position.x - dir.x * len + dir.y * width,
+		                  y: position.y - dir.y * len - dir.x * width)
+		let p2 = OSMPoint(x: position.x - dir.x * len - dir.y * width,
+		                  y: position.y - dir.y * len + dir.x * width)
+
+		let arrowPath = CGMutablePath()
+		arrowPath.move(to: CGPoint(x: p1.x, y: p1.y))
+		arrowPath.addLine(to: CGPoint(x: position.x, y: position.y))
+		arrowPath.addLine(to: CGPoint(x: p2.x, y: p2.y))
+		arrowPath
+			.addLine(to: CGPoint(x: CGFloat(position.x - dir.x * len * 0.5),
+			                     y: CGFloat(position.y - dir.y * len * 0.5)))
+		arrowPath.closeSubpath()
+
+		let arrow = CAShapeLayerWithProperties()
+		arrow.path = arrowPath
+		arrow.fillColor = fillColor.cgColor
+		arrow.strokeColor = UIColor.white.cgColor
+		arrow.lineWidth = 0.5
+		arrow.zPosition = zPosition
+		return arrow
+	}
+
 	// clip a way to the path inside the viewable rect so we can draw a name on it
 	func pathClipped(toViewRect way: OsmWay, length pLength: UnsafeMutablePointer<CGFloat>?) -> CGPath? {
 		var path: CGMutablePath?
@@ -1409,36 +1450,29 @@ final class EditorMapLayer: CALayer {
 			}
 			let isHighlight = highlights.contains(way)
 			if way.isOneWay != .NONE || isHighlight {
+				let showBicycleContraflow = way.allowsBicycleContraflow()
+				let arrowZ = isHighlight ? self.Z_HIGHLIGHT_ARROW : self.Z_ARROW
 				// arrow heads
 				invoke(alongScreenClippedWay: way, offset: 50, interval: 100, block: { loc, dir in
-					// draw direction arrow at loc/dir
 					let reversed = way.isOneWay == ONEWAY.BACKWARD
-					let len: Double = reversed ? -15 : 15
-					let width: Double = 5
-
-					let p1 = OSMPoint(x: loc.x - dir.x * len + dir.y * width,
-					                  y: loc.y - dir.y * len - dir.x * width)
-					let p2 = OSMPoint(x: loc.x - dir.x * len - dir.y * width,
-					                  y: loc.y - dir.y * len + dir.x * width)
-
-					let arrowPath = CGMutablePath()
-					arrowPath.move(to: CGPoint(x: p1.x, y: p1.y))
-					arrowPath.addLine(to: CGPoint(x: loc.x, y: loc.y))
-					arrowPath.addLine(to: CGPoint(x: p2.x, y: p2.y))
-					arrowPath
-						.addLine(to: CGPoint(x: CGFloat(loc.x - dir.x * len * 0.5),
-						                     y: CGFloat(loc.y - dir.y * len * 0.5)))
-					arrowPath.closeSubpath()
-
-					let arrow = CAShapeLayerWithProperties()
-					arrow.path = arrowPath
-					arrow.lineWidth = 1
-					arrow.fillColor = UIColor.black.cgColor
-					arrow.strokeColor = UIColor.white.cgColor
-					arrow.lineWidth = 0.5
-					arrow.zPosition = isHighlight ? self.Z_HIGHLIGHT_ARROW : self.Z_ARROW
-
-					layers.append(arrow)
+					let motorLen = reversed ? -Self.oneWayArrowChevronLength : Self.oneWayArrowChevronLength
+					let behindAlongWay = motorLen > 0
+						? -Self.bicycleContraflowArrowLongitudinalOffset
+						: Self.bicycleContraflowArrowLongitudinalOffset
+					if showBicycleContraflow {
+						layers.append(self.makeOneWayArrowLayer(at: loc,
+						                                        direction: dir,
+						                                        chevronLength: -motorLen,
+						                                        alongWayOffset: behindAlongWay,
+						                                        fillColor: .systemBlue,
+						                                        zPosition: arrowZ))
+					}
+					layers.append(self.makeOneWayArrowLayer(at: loc,
+					                                          direction: dir,
+					                                          chevronLength: motorLen,
+					                                          alongWayOffset: 0,
+					                                          fillColor: .black,
+					                                          zPosition: arrowZ))
 				})
 			}
 
