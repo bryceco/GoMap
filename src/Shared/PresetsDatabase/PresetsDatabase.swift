@@ -211,7 +211,10 @@ final class PresetsDatabase {
 	var localRegion = RegionInfoForLocation.none
 	var stdLocal: [PresetFeature] = []
 	var nsiLocal: [PresetFeature] = []
-	func enumeratePresetsAndNsiIn(region: RegionInfoForLocation, using block: (_ feature: PresetFeature) -> Void) {
+	func enumeratePresetsAndNsiIn(region: RegionInfoForLocation,
+	                            includeNSI: Bool = UserPrefs.shared.includeNSISuggestionsEnabled,
+	                            using block: (_ feature: PresetFeature) -> Void)
+	{
 		if region != localRegion {
 			// update cache with the current region
 			localRegion = region
@@ -221,8 +224,10 @@ final class PresetsDatabase {
 		for v in stdLocal {
 			block(v)
 		}
-		for v in nsiLocal {
-			block(v)
+		if includeNSI {
+			for v in nsiLocal {
+				block(v)
+			}
 		}
 	}
 
@@ -302,10 +307,11 @@ final class PresetsDatabase {
 
 	func featuresMatchingSearchText(_ searchText: String?,
 	                                geometry: GEOMETRY,
-	                                location: RegionInfoForLocation) -> [(PresetFeature, Int)]
+	                                location: RegionInfoForLocation,
+	                                includeNSI: Bool = UserPrefs.shared.includeNSISuggestionsEnabled) -> [(PresetFeature, Int)]
 	{
 		var list = [(PresetFeature, Int)]()
-		enumeratePresetsAndNsiIn(region: location, using: { feature in
+		enumeratePresetsAndNsiIn(region: location, includeNSI: includeNSI, using: { feature in
 			guard
 				let score = feature.matchesSearchText(searchText, geometry: geometry)
 			else {

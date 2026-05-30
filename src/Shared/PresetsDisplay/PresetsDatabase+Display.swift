@@ -24,7 +24,8 @@ extension PresetsDatabase {
 	func featuresInCategory(_ category: PresetCategory?,
 	                        matching searchText: String,
 	                        geometry: GEOMETRY,
-	                        location: RegionInfoForLocation) -> [PresetFeature]
+	                        location: RegionInfoForLocation,
+	                        includeNSI: Bool = UserPrefs.shared.includeNSISuggestionsEnabled) -> [PresetFeature]
 	{
 		var list = [(feature: PresetFeature, score: Int)]()
 		if let category = category {
@@ -37,7 +38,8 @@ extension PresetsDatabase {
 			list = Self.shared.featuresMatchingSearchText(
 				searchText,
 				geometry: geometry,
-				location: location)
+				location: location,
+				includeNSI: includeNSI)
 		}
 		list.sort(by: { obj1, obj2 -> Bool in
 			if obj1.score != obj2.score {
