@@ -13,8 +13,8 @@ private let EDIT_RELATIONS = false
 private class SectionHeaderCell: UITableViewHeaderFooterView {
 	static let reuseIdentifier = "SectionHeaderCell"
 
-	let label = UILabel()
-	let button = UIButton()
+	let titleButton = UIButton(type: .system)
+	let changeFeatureButton = UIButton(type: .system)
 
 	override init(reuseIdentifier: String?) {
 		super.init(reuseIdentifier: reuseIdentifier)
@@ -27,30 +27,73 @@ private class SectionHeaderCell: UITableViewHeaderFooterView {
 	}
 
 	func configureContents() {
-		label.translatesAutoresizingMaskIntoConstraints = false
-		button.translatesAutoresizingMaskIntoConstraints = false
+		titleButton.translatesAutoresizingMaskIntoConstraints = false
+		changeFeatureButton.translatesAutoresizingMaskIntoConstraints = false
 
-		if #available(iOS 13.0, *) {
-			label.textColor = UIColor.secondaryLabel
+		titleButton.contentHorizontalAlignment = .leading
+		titleButton.addTarget(self, action: #selector(showCommonTagsTab(_:)), for: .touchUpInside)
+		titleButton.accessibilityHint = NSLocalizedString("Shows Common Tags", comment: "")
+
+		changeFeatureButton.accessibilityLabel = NSLocalizedString("Change preset", comment: "")
+		changeFeatureButton.accessibilityHint = NSLocalizedString("Opens the preset picker", comment: "")
+		changeFeatureButton.addTarget(self, action: #selector(pickFeature(_:)), for: .touchUpInside)
+
+		if #available(iOS 15.0, *) {
+			var titleConfig = UIButton.Configuration.plain()
+			if #available(iOS 13.0, *) {
+				titleConfig.baseForegroundColor = UIColor.secondaryLabel
+			} else {
+				titleConfig.baseForegroundColor = UIColor.darkGray
+			}
+			titleConfig.contentInsets = .zero
+			titleButton.configuration = titleConfig
+
+			var featureConfig = UIButton.Configuration.plain()
+			featureConfig.image = UIImage(systemName: "chevron.right")
+			featureConfig.baseForegroundColor = UIColor.systemBlue
+			changeFeatureButton.configuration = featureConfig
 		} else {
-			label.textColor = UIColor.darkGray
+			if #available(iOS 13.0, *) {
+				titleButton.setTitleColor(UIColor.secondaryLabel, for: .normal)
+				changeFeatureButton.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+			} else {
+				titleButton.setTitleColor(UIColor.darkGray, for: .normal)
+				changeFeatureButton.setTitle(">", for: .normal)
+			}
+			changeFeatureButton.tintColor = UIColor.systemBlue
 		}
-		button.setTitle(">", for: .normal)
-		button.setTitleColor(UIColor.systemBlue, for: .normal)
-		button.addTarget(self, action: #selector(pickFeature(_:)), for: .touchUpInside)
 
-		contentView.addSubview(label)
-		contentView.addSubview(button)
+		contentView.addSubview(titleButton)
+		contentView.addSubview(changeFeatureButton)
 
 		NSLayoutConstraint.activate([
-			label.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-			label.leadingAnchor.constraint(equalToSystemSpacingAfter: contentView.leadingAnchor, multiplier: 1.0),
-			label.trailingAnchor.constraint(greaterThanOrEqualTo: button.leadingAnchor, constant: 10.0),
+			titleButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+			titleButton.leadingAnchor.constraint(equalToSystemSpacingAfter: contentView.leadingAnchor, multiplier: 1.0),
+			titleButton.trailingAnchor.constraint(greaterThanOrEqualTo: changeFeatureButton.leadingAnchor, constant: 10.0),
 
-			button.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-			button.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: 10.0),
-			button.widthAnchor.constraint(equalToConstant: 44.0)
+			changeFeatureButton.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+			changeFeatureButton.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor, constant: 10.0),
+			changeFeatureButton.widthAnchor.constraint(equalToConstant: 44.0),
+			changeFeatureButton.heightAnchor.constraint(equalToConstant: 44.0)
 		])
+	}
+
+	func setPresetTitle(_ text: String) {
+		if #available(iOS 15.0, *) {
+			var config = titleButton.configuration ?? .plain()
+			config.title = text
+			titleButton.configuration = config
+		} else {
+			titleButton.setTitle(text, for: .normal)
+		}
+		titleButton.accessibilityLabel = text
+	}
+
+	@objc func showCommonTagsTab(_ sender: Any?) {
+		guard let tabBar = tabBarController as? POITabBarController else { return }
+		UserPrefs.shared.poiTabIndex.value = 0
+		guard tabBar.selectedIndex != 0 else { return }
+		tabBar.slideTabTo(tabIndex: 0)
 	}
 
 	@objc func pickFeature(_ sender: Any?) {
@@ -467,7 +510,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			let cell: SectionHeaderCell = tableView
 				.dequeueReusableHeaderFooterView(withIdentifier: SectionHeaderCell
 					.reuseIdentifier) as! SectionHeaderCell
-			cell.label.text = currentFeature?.localizedName.uppercased() ?? "TAGS"
+			cell.setPresetTitle(currentFeature?.localizedName.uppercased() ?? "TAGS")
 			return cell
 		} else {
 			return nil
