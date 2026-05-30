@@ -35,6 +35,7 @@
 		021BC2222D7625FB004631C5 /* Panoramax.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021BC2212D7625FB004631C5 /* Panoramax.storyboard */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
 		021FADBB258591D000F6E1C0 /* PresetDisplayKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBA258591D000F6E1C0 /* PresetDisplayKey.swift */; };
+		C8E2A0012F5C000100000001 /* TagKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E2A0022F5C000100000001 /* TagKey.swift */; };
 		021FADC0258594EE00F6E1C0 /* PresetDisplayValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBF258594EE00F6E1C0 /* PresetDisplayValue.swift */; };
 		021FADC52585951E00F6E1C0 /* PresetDisplayGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADC42585951E00F6E1C0 /* PresetDisplayGroup.swift */; };
 		021FADCD25873C8200F6E1C0 /* PresetsDatabase+Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADCC25873C8200F6E1C0 /* PresetsDatabase+Display.swift */; };
@@ -238,6 +239,7 @@
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* PresetKeyTagCase.swift */; };
+		C8E2A0032F5C000100000001 /* TagKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8E2A0042F5C000100000001 /* TagKeyTests.swift */; };
 		64D74BF32253DF49004FFD20 /* DirectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D74BF12253DF49004FFD20 /* DirectionViewController.swift */; };
 		64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */; };
 		64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */; };
@@ -392,6 +394,7 @@
 		021BC2212D7625FB004631C5 /* Panoramax.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Panoramax.storyboard; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		021FADBA258591D000F6E1C0 /* PresetDisplayKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetDisplayKey.swift; sourceTree = "<group>"; };
+		C8E2A0022F5C000100000001 /* TagKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagKey.swift; sourceTree = "<group>"; };
 		021FADBF258594EE00F6E1C0 /* PresetDisplayValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetDisplayValue.swift; sourceTree = "<group>"; };
 		021FADC42585951E00F6E1C0 /* PresetDisplayGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetDisplayGroup.swift; sourceTree = "<group>"; };
 		021FADCC25873C8200F6E1C0 /* PresetsDatabase+Display.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PresetsDatabase+Display.swift"; sourceTree = "<group>"; };
@@ -600,6 +603,7 @@
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64C072F9226227D500598078 /* PresetKeyTagCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKeyTagCase.swift; sourceTree = "<group>"; };
+		C8E2A0042F5C000100000001 /* TagKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagKeyTests.swift; sourceTree = "<group>"; };
 		64D74BF12253DF49004FFD20 /* DirectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectionViewController.swift; sourceTree = "<group>"; };
 		64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSMMapDataTestCase.swift; sourceTree = "<group>"; };
 		64E21EB722651F2D004605D7 /* XCTestCase+UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+UserDefaults.swift"; sourceTree = "<group>"; };
@@ -1088,6 +1092,7 @@
 				021FADD625873D0100F6E1C0 /* PresetDisplayForFeature.swift */,
 				021FADC42585951E00F6E1C0 /* PresetDisplayGroup.swift */,
 				021FADBA258591D000F6E1C0 /* PresetDisplayKey.swift */,
+				C8E2A0022F5C000100000001 /* TagKey.swift */,
 				021FADD125873CC000F6E1C0 /* PresetDisplayKeyUserDefined.swift */,
 				021FADBF258594EE00F6E1C0 /* PresetDisplayValue.swift */,
 				021FADCC25873C8200F6E1C0 /* PresetsDatabase+Display.swift */,
@@ -1185,6 +1190,7 @@
 			children = (
 				64E21EB622651F0D004605D7 /* Helpers */,
 				64C072F9226227D500598078 /* PresetKeyTagCase.swift */,
+				C8E2A0042F5C000100000001 /* TagKeyTests.swift */,
 				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
 				64348CF6225E867800ADE7FB /* Mocks */,
 				64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */,
@@ -1640,6 +1646,7 @@
 				02CE3CE929919FC400DDACE0 /* MapPinButton.swift in Sources */,
 				EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */,
 				021FADBB258591D000F6E1C0 /* PresetDisplayKey.swift in Sources */,
+				C8E2A0012F5C000100000001 /* TagKey.swift in Sources */,
 				C381C30B263FE518003142BA /* PushPinView.swift in Sources */,
 				02CB2407265DB7CB00835F32 /* LevenshteinDistance.swift in Sources */,
 				C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */,
@@ -1807,6 +1814,7 @@
 			files = (
 				64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */,
 				64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */,
+				C8E2A0032F5C000100000001 /* TagKeyTests.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
 				64305F7423E723B200232BB9 /* LocationURLParserTestCase.swift in Sources */,

@@ -435,6 +435,9 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				cell.presetKey = .key(presetKey)
 				cell.valueField.keyboardType = presetKey.keyboardType
 				cell.valueField.autocapitalizationType = presetKey.autocapitalizationType
+				if TagKey.isNameLike(presetKey.tagKey), presetKey.autocapitalizationType == .none {
+					TagKey.applyNameLikeTraits(to: cell.valueField, presets: allPresetKeys)
+				}
 
 				cell.valueField.removeTarget(self, action: nil, for: .allEvents)
 				cell.valueField.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)

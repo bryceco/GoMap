@@ -166,12 +166,20 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 
 	func selectTextViewFor(key: String) {
 		// set text formatting options for text field
-		if let preset = keyValueCellOwner?.allPresetKeys.first(where: { key == $0.tagKey }) {
+		let presets = keyValueCellOwner?.allPresetKeys ?? []
+		if let preset = presets.first(where: { key == $0.tagKey }) {
 			if preset.type == .textarea {
 				useTextView()
+				if TagKey.isNameLike(key) {
+					if let textView = textView {
+						TagKey.applyNameLikeTraits(to: textView, presets: presets)
+					}
+				}
 			} else {
 				useTextField()
 			}
+		} else if TagKey.isNameLike(key) {
+			useTextField()
 		} else {
 			switch key {
 			case "note", "comment", "description", "fixme", "inscription", "source":

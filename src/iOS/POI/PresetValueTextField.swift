@@ -83,6 +83,12 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 			{
 				inputAccessoryView = TelephoneToolbar(forTextField: self, frame: frame)
 			}
+
+			if TagKey.isNameLike(key), preset.autocapitalizationType == .none {
+				TagKey.applyNameLikeTraits(to: self, presets: owner.allPresetKeys)
+			}
+		} else if TagKey.isNameLike(key) {
+			TagKey.applyNameLikeTraits(to: self, presets: owner.allPresetKeys)
 		} else {
 			switch key {
 			case "note", "comment", "description", "fixme", "inscription", "source":
