@@ -7,9 +7,15 @@
 //
 
 import Foundation
+import UIKit
 
 // An OSM object containing a fixme= tag
 final class FixmeMarker: MapMarker {
+	/// Same light blue as relation member highlighting in EditorMapLayer.
+	private static let relationMemberColor = UIColor(red: 66 / 255.0,
+	                                                 green: 188 / 255.0,
+	                                                 blue: 244 / 255.0,
+	                                                 alpha: 1.0)
 	let fixmeID: OsmExtendedIdentifier
 
 	override var markerIdentifier: String {
@@ -38,6 +44,28 @@ final class FixmeMarker: MapMarker {
 	}
 
 	override var buttonLabel: String { "F" }
+
+	private var isRelationMember: Bool {
+		guard let object = object else { return false }
+		return !object.parentRelations.isEmpty
+	}
+
+	override func makeButton() -> UIButton {
+		let button = super.makeButton()
+		applyButtonStyle()
+		return button
+	}
+
+	override func reuseButtonFrom(_ other: MapMarker) {
+		super.reuseButtonFrom(other)
+		applyButtonStyle()
+	}
+
+	private func applyButtonStyle() {
+		guard let button = button else { return }
+		let color = isRelationMember ? Self.relationMemberColor : .blue
+		button.layer.backgroundColor = color.cgColor
+	}
 
 	override func handleButtonPress(in mainView: MainViewController, markerView: MapMarkersView) {
 		if mainView.mapView.isHidden {
