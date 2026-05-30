@@ -27,6 +27,14 @@ private var mostRecentArray: [PresetFeature] = []
 private var mostRecentMaximum = 0
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
+	/// Persists the type-picker search query while the POI editor stays open; cleared when that editor is dismissed.
+	private static var preservedFeatureTypeSearchText: String?
+
+	/// Called when the POI attribute editor modal is dismissed (save, cancel, swipe, etc.).
+	class func clearPreservedFeatureTypeSearchText() {
+		preservedFeatureTypeSearchText = nil
+	}
+
 	private var featureList: [PresetFeatureOrCategory] = []
 	private var searchArray: [PresetFeature] = []
 	@IBOutlet var searchBar: UISearchBar!
@@ -69,6 +77,34 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			isTopLevel = true
 			featureList = PresetsDatabase.shared.featuresAndCategoriesForGeometry(geometry)
 		}
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		restorePreservedSearchIfNeeded()
+	}
+
+	/// Re-applies the in-memory search query and reloads the table (used when restoring state and from `UISearchBarDelegate`).
+	private func refreshSearchResults(for searchText: String) {
+		if searchText.isEmpty {
+			searchArray = []
+		} else {
+			let geometry = currentSelectionGeometry()
+			searchArray = PresetsDatabase.shared.featuresInCategory(
+				parentCategory,
+				matching: searchText,
+				geometry: geometry,
+				location: AppDelegate.shared.mainView.currentRegion)
+		}
+		tableView.reloadData()
+	}
+
+	private func restorePreservedSearchIfNeeded() {
+		guard let preserved = Self.preservedFeatureTypeSearchText else { return }
+		if searchBar.text != preserved {
+			searchBar.text = preserved
+		}
+		refreshSearchResults(for: preserved)
 	}
 
 	override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -241,19 +277,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		if searchText.count == 0 {
-			// no search
-			searchArray = []
-		} else {
-			// searching
-			let geometry = currentSelectionGeometry()
-			searchArray = PresetsDatabase.shared.featuresInCategory(
-				parentCategory,
-				matching: searchText,
-				geometry: geometry,
-				location: AppDelegate.shared.mainView.currentRegion)
-		}
-		tableView.reloadData()
+		Self.preservedFeatureTypeSearchText = searchText
+		refreshSearchResults(for: searchText)
 	}
 
 	@IBAction func configure(_ sender: Any) {
