@@ -36,6 +36,44 @@ class OsmNode_DirectionTestCase: XCTestCase {
 		XCTAssertEqual(node.direction?.lowerBound, direction)
 	}
 
+	func testTechnicalDirectionTagKeyPrefersDirectionOverCameraDirection() {
+		let node = OsmNode(asUserCreated: "")
+		node.constructTag("direction", value: "90")
+		node.constructTag("camera:direction", value: "180")
+
+		XCTAssertEqual(node.technicalDirectionTagKey, "direction")
+	}
+
+	func testTechnicalDirectionTagKeyUsesCameraDirectionWhenDirectionAbsent() {
+		let node = OsmNode(asUserCreated: "")
+		node.constructTag("camera:direction", value: "45")
+
+		XCTAssertEqual(node.technicalDirectionTagKey, "camera:direction")
+	}
+
+	func testTechnicalDirectionTagKeyIsNilForHighwayForwardBackward() {
+		let node = OsmNode(asUserCreated: "")
+		node.constructTag("highway", value: "stop")
+		node.constructTag("direction", value: "forward")
+
+		XCTAssertNil(node.technicalDirectionTagKey)
+		XCTAssertNil(node.direction)
+	}
+
+	func testDirectionTagValueFormatsPointBearing() {
+		let node = OsmNode(asUserCreated: "")
+		node.constructTag("direction", value: "10")
+
+		XCTAssertEqual(node.directionTagValue(forBearingDegrees: 95), "95")
+	}
+
+	func testDirectionTagValuePreservesRangeSpan() {
+		let node = OsmNode(asUserCreated: "")
+		node.constructTag("direction", value: "90-120")
+
+		XCTAssertEqual(node.directionTagValue(forBearingDegrees: 0), "0-30")
+	}
+
 	func testDirectionShouldParseCardinalDirectionToLowerBound() {
 		let key = "camera:direction"
 
