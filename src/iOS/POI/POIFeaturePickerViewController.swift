@@ -25,6 +25,7 @@ class FeaturePickerCell: UITableViewCell {
 
 private var mostRecentArray: [PresetFeature] = []
 private var mostRecentMaximum = 0
+private let nsiToggleCellReuseId = "NsiToggleCell"
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
 	private var featureList: [PresetFeatureOrCategory] = []
@@ -54,11 +55,27 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		return geometry
 	}
 
+	private var isSearching: Bool {
+		(searchBar.text?.count ?? 0) > 0
+	}
+
+	private var includeNSI: Bool {
+		UserPrefs.shared.includeNSISuggestionsEnabled
+	}
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
 		tableView.estimatedRowHeight = 44.0 // or could use UITableViewAutomaticDimension;
 		tableView.rowHeight = UITableView.automaticDimension
+
+		UserPrefs.shared.includeNSISuggestions.onChange.subscribe(self) { [weak self] _ in
+			guard let self else { return }
+			if self.isSearching {
+				self.refreshSearchResults()
+			}
+			self.tableView.reloadData()
+		}
 
 		let geometry = currentSelectionGeometry()
 		Self.loadMostRecent(forGeometry: geometry)
@@ -76,16 +93,16 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
-		if (searchBar.text?.count ?? 0) > 0 {
-			// only show one section when searching
-			return 1
+		if isSearching {
+			// search results + in-panel NSI toggle
+			return 2
 		}
 		return isTopLevel ? 2 : 1
 	}
 
 	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-		if isTopLevel {
-			return section == 0 && (searchBar.text?.count ?? 0) == 0
+		if isTopLevel, !isSearching {
+			return section == 0
 				? NSLocalizedString("Most recent", comment: "")
 				: NSLocalizedString("All choices", comment: "")
 		} else {
@@ -94,7 +111,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-		if isTopLevel, section == 1 {
+		if isTopLevel, !isSearching, section == 1 {
 			let countryCode = AppDelegate.shared.mainView.currentRegion.country
 			let locale = NSLocale.current as NSLocale
 			let countryName = locale.displayName(forKey: .countryCode, value: countryCode) ?? ""
@@ -113,8 +130,11 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		if (searchBar.text?.count ?? 0) > 0 {
-			return searchArray.count
+		if isSearching {
+			if section == 0 {
+				return searchArray.count
+			}
+			return 1
 		} else if isTopLevel, section == 0 {
 			// showing most recent list
 			let count = mostRecentArray.count
@@ -130,6 +150,10 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		if isSearching, indexPath.section == 1 {
+			return nsiToggleCell(for: tableView, at: indexPath)
+		}
+
 		let feature: PresetFeature
 		if searchArray.count > 0 {
 			feature = searchArray[indexPath.row]
@@ -149,17 +173,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			}
 		}
 
-		// If its an NSI feature then retrieve the logo icon
-		let icon = feature.nsiLogo(callback: { img in
-			// If it completes later then update any cells using it
-			for cell in self.tableView.visibleCells {
-				if let cell = cell as? FeaturePickerCell,
-				   cell.featureID == feature.featureID
-				{
-					cell.pickerImage.image = img
-				}
-			}
-		})
+		let icon = pickerIcon(for: feature)
 		let brand = "☆ "
 		let tabController = tabBarController as? POITabBarController
 		let geometry = currentSelectionGeometry()
@@ -168,9 +182,9 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			tags: tabController?.keyValueDict,
 			geometry: geometry,
 			location: AppDelegate.shared.mainView.currentRegion,
-			includeNSI: true)
+			includeNSI: includeNSI)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
-		cell.title.text = feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature.friendlyName()
+		cell.title.text = includeNSI && feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature.friendlyName()
 		cell.pickerImage.image = icon
 		if #available(iOS 13.0, *) {
 			cell.pickerImage.tintColor = UIColor.label
@@ -210,6 +224,10 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		if isSearching, indexPath.section == 1 {
+			tableView.deselectRow(at: indexPath, animated: true)
+			return
+		}
 		if searchArray.count != 0 {
 			let feature = searchArray[indexPath.row]
 			updateTags(with: feature)
@@ -242,18 +260,59 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 		if searchText.count == 0 {
-			// no search
 			searchArray = []
 		} else {
-			// searching
-			let geometry = currentSelectionGeometry()
-			searchArray = PresetsDatabase.shared.featuresInCategory(
-				parentCategory,
-				matching: searchText,
-				geometry: geometry,
-				location: AppDelegate.shared.mainView.currentRegion)
+			refreshSearchResults()
 		}
 		tableView.reloadData()
+	}
+
+	private func refreshSearchResults() {
+		let geometry = currentSelectionGeometry()
+		searchArray = PresetsDatabase.shared.featuresInCategory(
+			parentCategory,
+			matching: searchBar.text ?? "",
+			geometry: geometry,
+			location: AppDelegate.shared.mainView.currentRegion,
+			includeNSI: includeNSI)
+	}
+
+	private func pickerIcon(for feature: PresetFeature) -> UIImage? {
+		if includeNSI {
+			return feature.nsiLogo(callback: { img in
+				for cell in self.tableView.visibleCells {
+					if let cell = cell as? FeaturePickerCell,
+					   cell.featureID == feature.featureID
+					{
+						cell.pickerImage.image = img
+					}
+				}
+			})
+		}
+		return feature.iconUnscaled?.withRenderingMode(.alwaysTemplate)
+	}
+
+	private func nsiToggleCell(for tableView: UITableView, at indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(withIdentifier: nsiToggleCellReuseId)
+			?? UITableViewCell(style: .default, reuseIdentifier: nsiToggleCellReuseId)
+		cell.selectionStyle = .none
+		cell.textLabel?.text = NSLocalizedString(
+			"Brand suggestions",
+			comment: "Toggle below preset search results to include Name Suggestion Index chain/brand presets")
+		cell.textLabel?.numberOfLines = 0
+		let toggle = UISwitch()
+		toggle.isOn = includeNSI
+		toggle.addTarget(self, action: #selector(nsiSuggestionsToggled(_:)), for: .valueChanged)
+		cell.accessoryView = toggle
+		return cell
+	}
+
+	@objc private func nsiSuggestionsToggled(_ sender: UISwitch) {
+		UserPrefs.shared.includeNSISuggestions.value = sender.isOn
+		if isSearching {
+			refreshSearchResults()
+			tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+		}
 	}
 
 	@IBAction func configure(_ sender: Any) {

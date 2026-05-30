@@ -125,6 +125,8 @@ final class UserPrefs {
 	let currentBasemapSelection = Pref<String>(key: "BasemapSelectionId")
 
 	// POI presets
+	/// When false, brand/chain (NSI) presets are omitted from preset search and logo downloads.
+	let includeNSISuggestions = Pref<Bool>(key: "includeNSISuggestions", ubiquitous: true)
 	let userDefinedPresetKeys = Pref<Data>(key: "userDefinedPresetKeys", ubiquitous: true)
 	let userDefinedFeatures = Pref<Data>(key: "userDefinedFeatures", ubiquitous: true)
 	let preferredUnitsForKeys = Pref<[String: String]>(key: "preferredUnitsForKeys", ubiquitous: true)
@@ -216,5 +218,10 @@ final class UserPrefs {
 		case .LINE: return mostRecentTypes_line
 		case .POINT: return mostRecentTypes_point
 		}
+	}
+
+	/// Name Suggestion Index brand/chain presets in search (default on for parity with prior releases).
+	var includeNSISuggestionsEnabled: Bool {
+		includeNSISuggestions.value ?? true
 	}
 }
