@@ -45,8 +45,9 @@ class POIAttributesViewController: UITableViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 
-		let tabController = tabBarController as? POITabBarController
-		saveButton.isEnabled = tabController?.isTagDictChanged() ?? false
+		if let tabController = tabBarController as? POITabBarController {
+			tabController.updateSaveButton(saveButton, hasUnsavedTagChanges: tabController.isTagDictChanged())
+		}
 	}
 
 	override func numberOfSections(in tableView: UITableView) -> Int {
@@ -294,8 +295,11 @@ class POIAttributesViewController: UITableViewController {
 	@IBAction func done(_ sender: Any) {
 		dismiss(animated: true)
 
-		if let tabController = tabBarController as? POITabBarController {
-			tabController.commitChanges()
+		guard let tabController = tabBarController as? POITabBarController,
+		      tabController.isTagDictChanged()
+		else {
+			return
 		}
+		tabController.commitChanges()
 	}
 }

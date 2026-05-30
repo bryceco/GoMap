@@ -123,6 +123,21 @@ class POITabBarController: UITabBarController {
 		return isTagDictChanged(keyValueDict)
 	}
 
+	/// Keeps Done tappable (so it can dismiss with no edits) while tint reflects unsaved tag changes.
+	func updateSaveButton(_ saveButton: UIBarButtonItem, hasUnsavedTagChanges: Bool) {
+		saveButton.isEnabled = true
+		if hasUnsavedTagChanges {
+			saveButton.tintColor = nil
+		} else if #available(iOS 13.0, *) {
+			saveButton.tintColor = .tertiaryLabel
+		} else {
+			saveButton.tintColor = .lightGray
+		}
+		if #available(iOS 13.0, *) {
+			isModalInPresentation = hasUnsavedTagChanges
+		}
+	}
+
 	override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
 		guard
 			let tabIndex = tabBar.items?.firstIndex(of: item),

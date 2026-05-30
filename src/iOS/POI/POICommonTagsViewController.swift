@@ -135,10 +135,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 			tabController.keyValueDict.removeValue(forKey: key)
 		}
 
-		saveButton.isEnabled = tabController.isTagDictChanged()
-		if #available(iOS 13.0, *) {
-			tabController.isModalInPresentation = saveButton.isEnabled
-		}
+		tabController.updateSaveButton(saveButton, hasUnsavedTagChanges: tabController.isTagDictChanged())
 	}
 
 	func updateTagDict(withValue value: String, forKey key: String) {
@@ -153,10 +150,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	func updatePresets() {
 		let tabController = tabBarController as! POITabBarController
 
-		saveButton.isEnabled = tabController.isTagDictChanged()
-		if #available(iOS 13.0, *) {
-			tabController.isModalInPresentation = saveButton.isEnabled
-		}
+		tabController.updateSaveButton(saveButton, hasUnsavedTagChanges: tabController.isTagDictChanged())
 
 		if drillDownGroup == nil {
 			let dict = tabController.keyValueDict
@@ -604,8 +598,12 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		resignAll()
 		dismiss(animated: true)
 
-		let tabController = tabBarController as? POITabBarController
-		tabController?.commitChanges()
+		guard let tabController = tabBarController as? POITabBarController,
+		      tabController.isTagDictChanged()
+		else {
+			return
+		}
+		tabController.commitChanges()
 	}
 
 	// MARK: - Table view delegate
@@ -687,9 +685,8 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	@IBAction func textFieldChanged(_ textField: UITextField) {
-		saveButton.isEnabled = true
-		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = saveButton.isEnabled
+		if let tabController = tabBarController as? POITabBarController {
+			tabController.updateSaveButton(saveButton, hasUnsavedTagChanges: true)
 		}
 		if let cell: UITableViewCell = textField.superviewOfType() {
 			switch cell {
@@ -748,9 +745,8 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
-		saveButton.isEnabled = true
-		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = saveButton.isEnabled
+		if let tabController = tabBarController as? POITabBarController {
+			tabController.updateSaveButton(saveButton, hasUnsavedTagChanges: true)
 		}
 
 		// This resizes the cell to be appropriate for the content
