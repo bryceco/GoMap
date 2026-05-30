@@ -21,15 +21,12 @@ class POITabBarController: UITabBarController {
 		keyValueDict = selection?.tags ?? [:]
 		relationList = selection?.parentRelations ?? []
 
-		let hideAttributesTab = Self.shouldHideAttributesTab(for: selection)
-		var tabIndex = UserPrefs.shared.poiTabIndex.value ?? 0
-		if hideAttributesTab, tabIndex == 2 {
-			tabIndex = 0
-		}
-		if hideAttributesTab {
+		let savedIndex = UserPrefs.shared.poiTabIndex.value ?? 0
+		let resolved = Self.resolvedTabBar(savedIndex: savedIndex, selection: selection)
+		if resolved.tabCount == 2 {
 			removeAttributesTabFromViewControllers()
 		}
-		selectedIndex = tabIndex
+		selectedIndex = resolved.selectedIndex
 
 		if #available(iOS 17, *) {
 			// On MacCatalyst (and maybe iPad) UITabBar is broken.
@@ -67,9 +64,23 @@ class POITabBarController: UITabBarController {
 	}
 
 	/// Attributes are only useful for objects that exist on the server (positive OSM id).
-	private static func shouldHideAttributesTab(for selection: OsmBaseObject?) -> Bool {
+	static func shouldHideAttributesTab(for selection: OsmBaseObject?) -> Bool {
 		guard let selection else { return true }
 		return selection.ident < 0
+	}
+
+	/// Tab order: 0 Common Tags, 1 All Tags, 2 Attributes.
+	static func resolvedTabBar(
+		savedIndex: Int,
+		selection: OsmBaseObject?
+	) -> (tabCount: Int, selectedIndex: Int) {
+		let hideAttributes = shouldHideAttributesTab(for: selection)
+		let tabCount = hideAttributes ? 2 : 3
+		var selectedIndex = savedIndex
+		if hideAttributes, savedIndex == 2 {
+			selectedIndex = 0
+		}
+		return (tabCount, selectedIndex)
 	}
 
 	private func removeAttributesTabFromViewControllers() {

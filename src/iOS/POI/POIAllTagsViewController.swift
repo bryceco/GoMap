@@ -90,10 +90,17 @@ private class SectionHeaderCell: UITableViewHeaderFooterView {
 	}
 
 	@objc func showCommonTagsTab(_ sender: Any?) {
-		guard let tabBar = tabBarController as? POITabBarController else { return }
-		UserPrefs.shared.poiTabIndex.value = 0
-		guard tabBar.selectedIndex != 0 else { return }
-		tabBar.slideTabTo(tabIndex: 0)
+		var r: UIResponder = self
+		while true {
+			if let tabBar = r as? POITabBarController {
+				UserPrefs.shared.poiTabIndex.value = 0
+				guard tabBar.selectedIndex != 0 else { return }
+				tabBar.slideTabTo(tabIndex: 0)
+				return
+			}
+			guard let next = r.next else { return }
+			r = next
+		}
 	}
 
 	@objc func pickFeature(_ sender: Any?) {

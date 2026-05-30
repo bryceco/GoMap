@@ -25453,6 +25453,9 @@
         }
       }
     },
+    "Change preset" : {
+
+    },
     "Changeset" : {
       "comment" : "OSM changeset identifier",
       "localizations" : {
@@ -46841,6 +46844,9 @@
         }
       }
     },
+    "Opens the preset picker" : {
+
+    },
     "OSM Data" : {
       "comment" : "Delete cached data",
       "localizations" : {
@@ -54467,6 +54473,9 @@
           }
         }
       }
+    },
+    "Shows Common Tags" : {
+
     },
     "Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." : {
       "localizations" : {
