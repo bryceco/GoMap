@@ -101,6 +101,7 @@
 		0288169E265895FA00C30EA2 /* OsmMapData+Edit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */; };
 		0288169F265895FA00C30EA2 /* OsmMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288169D265895FA00C30EA2 /* OsmMapData.swift */; };
 		028816A12659B4A600C30EA2 /* GZip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028816A02659B4A600C30EA2 /* GZip.swift */; };
+		028ADAFC2FCE32CE007CEF4E /* UndoAction+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028ADAFB2FCE32CE007CEF4E /* UndoAction+Ext.swift */; };
 		028C51E625CB7A23004A88F7 /* TristateButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028C51E525CB7A23004A88F7 /* TristateButton.swift */; };
 		028F504719BA2F460093C423 /* presets in Resources */ = {isa = PBXBuildFile; fileRef = 028F504619BA2F460093C423 /* presets */; };
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
@@ -462,6 +463,7 @@
 		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmMapData.swift; sourceTree = "<group>"; };
 		028816A02659B4A600C30EA2 /* GZip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GZip.swift; sourceTree = "<group>"; };
 		028816A2265AD9D100C30EA2 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
+		028ADAFB2FCE32CE007CEF4E /* UndoAction+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UndoAction+Ext.swift"; sourceTree = "<group>"; };
 		028C51E525CB7A23004A88F7 /* TristateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TristateButton.swift; sourceTree = "<group>"; };
 		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
 		0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadDownloadLayer.swift; sourceTree = "<group>"; };
@@ -1248,6 +1250,7 @@
 				02E049BC2651D1750028B57F /* UndoAction.h */,
 				02E049BD2651D1750028B57F /* UndoAction.m */,
 				C381C306263FD0E8003142BA /* UndoManager.swift */,
+				028ADAFB2FCE32CE007CEF4E /* UndoAction+Ext.swift */,
 			);
 			name = OSMModels;
 			path = ../Shared/OSMModels;
@@ -1643,6 +1646,7 @@
 				C381C30B263FE518003142BA /* PushPinView.swift in Sources */,
 				02CB2407265DB7CB00835F32 /* LevenshteinDistance.swift in Sources */,
 				C3004F54263A99DD006BF313 /* POIAttributesViewController.swift in Sources */,
+				028ADAFC2FCE32CE007CEF4E /* UndoAction+Ext.swift in Sources */,
 				C3004F4D263A6306006BF313 /* NominatimViewController.swift in Sources */,
 				0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */,
 				024909C9267BF9F70027E531 /* MapTransform.swift in Sources */,
