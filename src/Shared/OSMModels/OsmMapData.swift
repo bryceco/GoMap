@@ -1830,12 +1830,15 @@ extension OsmMapData {
 		// make sure all objects are marked as constructed
 		for node in nodes.values {
 			assert(node.constructed())
+			assert(node.modifyCount >= (node.ident > 0 ? 0 : 1))
 		}
 		for way in ways.values {
 			assert(way.constructed())
+			assert(way.modifyCount >= (way.ident > 0 ? 0 : 1))
 		}
 		for relation in relations.values {
 			assert(relation.constructed())
+			assert(relation.modifyCount >= (relation.ident > 0 ? 0 : 1))
 		}
 
 		// make sure that if the undo manager is holding an object that it's consistent with mapData
