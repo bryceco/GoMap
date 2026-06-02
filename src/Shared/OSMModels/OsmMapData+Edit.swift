@@ -602,9 +602,8 @@ extension OsmMapData {
 
 			// reverse direction tags on nodes in way
 			for node in way.nodes {
-				let value = node.tags["direction"]
-				let replacement = nodeReversals[value ?? ""]
-				if replacement != "" {
+				let value = node.tags["direction"] ?? ""
+				if let replacement = nodeReversals[value] {
 					var nodeTags = node.tags
 					nodeTags["direction"] = replacement
 					setTags(nodeTags, for: node)
