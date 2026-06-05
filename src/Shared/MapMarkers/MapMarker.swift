@@ -50,6 +50,7 @@ class MapMarker {
 	}
 
 	var buttonLabel: String { "?" }
+	var buttonColor: UIColor { .blue }
 
 	func makeButton() -> UIButton {
 		let button: DraggableButton
@@ -57,7 +58,7 @@ class MapMarker {
 			button = MapPinButton(withLabel: buttonLabel)
 		} else {
 			button = DraggableButton(type: .custom)
-			button.layer.backgroundColor = UIColor.blue.cgColor
+			button.layer.backgroundColor = buttonColor.cgColor
 			button.layer.borderColor = UIColor.white.cgColor
 			if buttonLabel.count > 1 {
 				// icon button

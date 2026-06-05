@@ -6,7 +6,7 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // An OSM object containing a fixme= tag
 final class FixmeMarker: MapMarker {
@@ -37,7 +37,23 @@ final class FixmeMarker: MapMarker {
 		self.object = object
 	}
 
+	/// Same light blue as relation member highlighting in EditorMapLayer.
+	private static let relationMemberColor = UIColor(red: 66 / 255.0,
+	                                                 green: 188 / 255.0,
+	                                                 blue: 244 / 255.0,
+	                                                 alpha: 1.0)
+	private var isRelationMember: Bool {
+		guard let object else { return false }
+		return (object is OsmRelation) || !object.parentRelations.isEmpty
+	}
+
 	override var buttonLabel: String { "F" }
+	override var buttonColor: UIColor {
+		if isRelationMember {
+			return Self.relationMemberColor
+		}
+		return .blue
+	}
 
 	override func handleButtonPress(in mainView: MainViewController, markerView: MapMarkersView) {
 		if mainView.mapView.isHidden {

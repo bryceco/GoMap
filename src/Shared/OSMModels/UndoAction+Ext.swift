@@ -31,7 +31,7 @@ extension UndoAction {
 		}
 	}
 
-	@objc public override var description: String {
+	@objc override public var description: String {
 		let targetName = describeObject(target)
 		let selectorParts = selector.split(separator: ":").map(String.init)
 		let methodName = selectorParts.first ?? selector
