@@ -35,8 +35,8 @@ private class SectionHeaderCell: UITableViewHeaderFooterView {
 		} else {
 			label.textColor = UIColor.darkGray
 		}
-		button.setTitle(">", for: .normal)
-		button.setTitleColor(UIColor.systemBlue, for: .normal)
+		button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+		button.tintColor = UIColor.systemBlue
 		button.addTarget(self, action: #selector(pickFeature(_:)), for: .touchUpInside)
 
 		contentView.addSubview(label)
