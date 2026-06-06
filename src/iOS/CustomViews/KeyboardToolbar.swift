@@ -18,6 +18,7 @@ class KeyboardToolbar: UIInputView {
 		fileprivate enum Kind {
 			case title(String)
 			case icon(String)        // SF Symbol name
+			case image(UIImage)      // arbitrary UIImage
 			case done                // checkmark on iOS 26+, "Done" text on earlier versions
 			case flexibleSpace
 			case fixedSpace(CGFloat)
@@ -32,6 +33,10 @@ class KeyboardToolbar: UIInputView {
 
 		static func icon(_ symbolName: String, action: @escaping (UIButton) -> Void) -> Item {
 			Item(kind: .icon(symbolName), action: action)
+		}
+
+		static func image(_ image: UIImage, action: @escaping (UIButton) -> Void) -> Item {
+			Item(kind: .image(image), action: action)
 		}
 
 		static func done(action: @escaping (UIButton) -> Void) -> Item {
@@ -100,7 +105,7 @@ class KeyboardToolbar: UIInputView {
 
 	private static func makeView(for item: Item) -> UIView {
 		switch item.kind {
-		case .title, .icon, .done:
+		case .title, .icon, .image, .done:
 			return makeButton(for: item)
 		case .flexibleSpace:
 			let spacer = UIView()
@@ -156,7 +161,10 @@ class KeyboardToolbar: UIInputView {
 				button.setTitleColor(.label, for: .normal)
 			case .icon(let name):
 				button.setImage(UIImage(systemName: name), for: .normal)
-				button.tintColor = .label
+				button.tintColor = .systemBlue
+			case .image(let img):
+				button.setImage(img.withRenderingMode(.alwaysTemplate), for: .normal)
+				button.tintColor = .systemBlue
 			default:
 				break
 			}

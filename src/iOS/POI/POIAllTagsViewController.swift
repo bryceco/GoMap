@@ -78,7 +78,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	@IBOutlet var saveButton: UIBarButtonItem!
 	private var currentFeature: PresetFeature?
 	var currentTextField: UITextField?
-	private var prevNextToolbar: UIToolbar!
+	private var prevNextToolbar: KeyboardToolbar!
 
 	override func viewDidLoad() {
 		tags = KeyValueTableSection(tableView: tableView)
@@ -115,19 +115,12 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			title = NSLocalizedString("All Tags", comment: "")
 		}
 
-		prevNextToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 44))
-		prevNextToolbar.items = [
-			UIBarButtonItem(
-				title: NSLocalizedString("Previous", comment: ""),
-				style: .plain,
-				target: self,
-				action: #selector(tabPrevious(_:))),
-			UIBarButtonItem(
-				title: NSLocalizedString("Next", comment: ""),
-				style: .plain,
-				target: self,
-				action: #selector(tabNext(_:)))
+		let items = tabController.tabButtonItems() + [
+			.flexibleSpace,
+			.icon("arrow.left.to.line") { [weak self] _ in self?.tabPrevious(nil) },
+			.icon("arrow.right.to.line") { [weak self] _ in self?.tabNext(nil) }
 		]
+		prevNextToolbar = KeyboardToolbar(items: items)
 	}
 
 	// return nil if unchanged, else row to set focus

@@ -132,6 +132,17 @@ class POITabBarController: UITabBarController {
 		slideTabTo(tabIndex: tabIndex)
 	}
 
+	func tabButtonItems() -> [KeyboardToolbar.Item] {
+		guard let items = tabBar.items else { return [] }
+		return items.enumerated().compactMap { index, item in
+			guard let image = item.image else { return nil }
+			return .image(image) { [weak self] _ in
+				self?.view.window?.endEditing(true)
+				self?.selectedIndex = index
+			}
+		}
+	}
+
 	// Do a sliding animation of the views
 	func slideTabTo(tabIndex: Int) {
 		guard let newVC = viewControllers?[tabIndex],
