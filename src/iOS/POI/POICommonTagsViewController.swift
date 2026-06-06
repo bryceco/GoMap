@@ -414,11 +414,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 					cell.valueField.rightViewMode = .always
 				}
 
-				if UserPrefs.shared.includeNSISuggestionsEnabled,
-				   let icon = currentFeature?.nsiLogo(callback: setupIcon)
-				{
-					setupIcon(icon)
-				} else if let icon = currentFeature?.iconUnscaled?.withRenderingMode(.alwaysTemplate) {
+				if let icon = currentFeature?.nsiLogo(callback: setupIcon) {
 					setupIcon(icon)
 				} else {
 					cell.valueField.rightView = nil

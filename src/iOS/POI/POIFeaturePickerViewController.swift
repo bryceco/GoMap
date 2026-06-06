@@ -69,14 +69,6 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		tableView.estimatedRowHeight = 44.0 // or could use UITableViewAutomaticDimension;
 		tableView.rowHeight = UITableView.automaticDimension
 
-		UserPrefs.shared.includeNSISuggestions.onChange.subscribe(self) { [weak self] _ in
-			guard let self else { return }
-			if self.isSearching {
-				self.refreshSearchResults()
-			}
-			self.tableView.reloadData()
-		}
-
 		let geometry = currentSelectionGeometry()
 		Self.loadMostRecent(forGeometry: geometry)
 
@@ -184,7 +176,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			location: AppDelegate.shared.mainView.currentRegion,
 			includeNSI: includeNSI)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
-		cell.title.text = includeNSI && feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature.friendlyName()
+		cell.title.text = includeNSI && feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature
+			.friendlyName()
 		cell.pickerImage.image = icon
 		if #available(iOS 13.0, *) {
 			cell.pickerImage.tintColor = UIColor.label
@@ -297,8 +290,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			?? UITableViewCell(style: .default, reuseIdentifier: nsiToggleCellReuseId)
 		cell.selectionStyle = .none
 		cell.textLabel?.text = NSLocalizedString(
-			"Brand suggestions",
-			comment: "Toggle below preset search results to include Name Suggestion Index chain/brand presets")
+			"Include Chain/Brand names",
+			comment: "Include Name Suggestion Index (NSI) chain/brand results in search")
 		cell.textLabel?.numberOfLines = 0
 		let toggle = UISwitch()
 		toggle.isOn = includeNSI

@@ -36062,6 +36062,9 @@
         }
       }
     },
+    "Include Chain/Brand names" : {
+      "comment" : "Include Name Suggestion Index (NSI) chain/brand results in search"
+    },
     "Invalid URL" : {
       "localizations" : {
         "ar" : {

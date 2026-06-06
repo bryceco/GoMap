@@ -25,7 +25,7 @@ extension PresetsDatabase {
 	                        matching searchText: String,
 	                        geometry: GEOMETRY,
 	                        location: RegionInfoForLocation,
-	                        includeNSI: Bool = UserPrefs.shared.includeNSISuggestionsEnabled) -> [PresetFeature]
+	                        includeNSI: Bool) -> [PresetFeature]
 	{
 		var list = [(feature: PresetFeature, score: Int)]()
 		if let category = category {
