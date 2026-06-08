@@ -136,7 +136,10 @@ class POITabBarController: UITabBarController {
 		guard let items = tabBar.items else { return [] }
 		return items.enumerated().compactMap { index, item in
 			guard let image = item.image else { return nil }
-			return .image(image) { [weak self] _ in
+			let displayImage = index == selectedIndex
+				? image.withTintColor(.systemGray, renderingMode: .alwaysOriginal)
+				: image.withRenderingMode(.alwaysTemplate)
+			return .image(displayImage) { [weak self] _ in
 				self?.view.window?.endEditing(true)
 				self?.selectedIndex = index
 			}

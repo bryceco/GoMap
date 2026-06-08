@@ -163,7 +163,7 @@ class KeyboardToolbar: UIInputView {
 				button.setImage(UIImage(systemName: name), for: .normal)
 				button.tintColor = .systemBlue
 			case .image(let img):
-				button.setImage(img.withRenderingMode(.alwaysTemplate), for: .normal)
+				button.setImage(img, for: .normal)
 				button.tintColor = .systemBlue
 			default:
 				break
