@@ -129,7 +129,7 @@ class POITabBarController: UITabBarController {
 			tabIndex != selectedIndex
 		else { return }
 		UserPrefs.shared.poiTabIndex.value = tabIndex
-		slideTabTo(tabIndex: tabIndex)
+		selectedIndex = tabIndex
 	}
 
 	func tabButtonItems() -> [KeyboardToolbar.Item] {
@@ -140,26 +140,6 @@ class POITabBarController: UITabBarController {
 				self?.view.window?.endEditing(true)
 				self?.selectedIndex = index
 			}
-		}
-	}
-
-	// Do a sliding animation of the views
-	func slideTabTo(tabIndex: Int) {
-		guard let newVC = viewControllers?[tabIndex],
-		      let fromView = selectedViewController?.view,
-		      let toView = newVC.view else { return }
-		let moveRight = selectedIndex < tabIndex
-		let screenWidth = UIScreen.main.bounds.width
-		toView.frame.origin.x = moveRight ? screenWidth : -screenWidth
-
-		view.addSubview(toView)
-
-		UIView.animate(withDuration: 0.3, animations: {
-			fromView.frame.origin.x = moveRight ? -screenWidth : screenWidth
-			toView.frame.origin.x = 0
-		}) { _ in
-			fromView.removeFromSuperview()
-			self.selectedViewController = newVC
 		}
 	}
 }
