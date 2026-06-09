@@ -41,4 +41,40 @@ enum TagKey {
 		textView.autocorrectionType = autocorrectType(matchingNamePresetIn: presets)
 		textView.spellCheckingType = textView.autocorrectionType == .no ? .no : .default
 	}
+
+	/// Configure a free-form key/value value field (All Tags, Common Tags extras).
+	static func configureKeyValueField(_ textField: UITextField, key: String, presets: [PresetDisplayKey]) {
+		textField.autocorrectionType = .no
+		textField.autocapitalizationType = .none
+		textField.spellCheckingType = .no
+		if isNameLike(key) {
+			applyNameLikeTraits(to: textField, presets: presets)
+		}
+	}
+
+	/// Configure a preset-driven value field, overriding `.none` for name-like keys.
+	static func configurePresetValueField(_ textField: UITextField,
+	                                      key: String,
+	                                      preset: PresetDisplayKey,
+	                                      presets: [PresetDisplayKey])
+	{
+		textField.autocapitalizationType = preset.autocapitalizationType
+		textField.autocorrectionType = preset.autocorrectType
+		textField.spellCheckingType = preset.autocorrectType == .no ? .no : .default
+		if isNameLike(key), preset.autocapitalizationType == .none {
+			applyNameLikeTraits(to: textField, presets: presets)
+		}
+	}
+
+	/// Apply name-like traits when editing, if schema did not already specify capitalization.
+	static func applyNameLikeOverrideIfNeeded(to textField: UITextField,
+	                                            key: String,
+	                                            preset: PresetDisplayKey?,
+	                                            presets: [PresetDisplayKey])
+	{
+		guard isNameLike(key) else { return }
+		if preset == nil || preset?.autocapitalizationType == .none {
+			applyNameLikeTraits(to: textField, presets: presets)
+		}
+	}
 }

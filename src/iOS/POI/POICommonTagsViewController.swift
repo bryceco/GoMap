@@ -341,6 +341,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				cell.text1?.text = extraTags[indexPath.row].k
 				cell.text2?.text = extraTags[indexPath.row].v
 				cell.text2.key = cell.text1?.text ?? ""
+				TagKey.configureKeyValueField(cell.text2, key: cell.text2.key, presets: allPresetKeys)
 				cell.isSet.backgroundColor = cell.value == "" ? nil : Self.isSetHighlight
 				return cell
 			}
@@ -434,10 +435,10 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				cell.valueField.presetKey = presetKey
 				cell.presetKey = .key(presetKey)
 				cell.valueField.keyboardType = presetKey.keyboardType
-				cell.valueField.autocapitalizationType = presetKey.autocapitalizationType
-				if TagKey.isNameLike(presetKey.tagKey), presetKey.autocapitalizationType == .none {
-					TagKey.applyNameLikeTraits(to: cell.valueField, presets: allPresetKeys)
-				}
+				TagKey.configurePresetValueField(cell.valueField,
+				                                 key: presetKey.tagKey,
+				                                 preset: presetKey,
+				                                 presets: allPresetKeys)
 
 				cell.valueField.removeTarget(self, action: nil, for: .allEvents)
 				cell.valueField.addTarget(self, action: #selector(textFieldReturn(_:)), for: .editingDidEndOnExit)

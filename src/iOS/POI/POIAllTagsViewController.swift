@@ -322,9 +322,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			cell.text1.autocapitalizationType = .none
 			cell.text1.spellCheckingType = .no
 			cell.text2.defaultInputAccessoryView = prevNextToolbar
-			if TagKey.isNameLike(kv.k) {
-				TagKey.applyNameLikeTraits(to: cell.text2, presets: allPresetKeys)
-			}
+			TagKey.configureKeyValueField(cell.text2, key: kv.k, presets: allPresetKeys)
 
 			cell.isSet.backgroundColor = kv.k == "" || kv.v == "" ? nil : UIColor.systemBlue
 			return cell

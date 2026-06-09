@@ -178,8 +178,6 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 			} else {
 				useTextField()
 			}
-		} else if TagKey.isNameLike(key) {
-			useTextField()
 		} else {
 			switch key {
 			case "note", "comment", "description", "fixme", "inscription", "source":
