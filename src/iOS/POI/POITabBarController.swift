@@ -11,6 +11,8 @@ class POITabBarController: UITabBarController {
 	var keyValueDict = [String: String]()
 	var relationList: [OsmRelation] = []
 	var selection: OsmBaseObject?
+	/// Type-picker search query kept for the lifetime of this editor session.
+	var preservedFeatureTypeSearchText: String?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -49,7 +51,7 @@ class POITabBarController: UITabBarController {
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		if isBeingDismissed || isMovingFromParent {
-			POIFeaturePickerViewController.clearPreservedFeatureTypeSearchText()
+			preservedFeatureTypeSearchText = nil
 		}
 	}
 

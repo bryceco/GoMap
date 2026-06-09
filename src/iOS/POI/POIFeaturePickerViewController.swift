@@ -27,14 +27,6 @@ private var mostRecentArray: [PresetFeature] = []
 private var mostRecentMaximum = 0
 
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
-	/// Persists the type-picker search query while the POI editor stays open; cleared when that editor is dismissed.
-	private static var preservedFeatureTypeSearchText: String?
-
-	/// Called when the POI attribute editor modal is dismissed (save, cancel, swipe, etc.).
-	class func clearPreservedFeatureTypeSearchText() {
-		preservedFeatureTypeSearchText = nil
-	}
-
 	private var featureList: [PresetFeatureOrCategory] = []
 	private var searchArray: [PresetFeature] = []
 	@IBOutlet var searchBar: UISearchBar!
@@ -100,7 +92,10 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	private func restorePreservedSearchIfNeeded() {
-		guard let preserved = Self.preservedFeatureTypeSearchText else { return }
+		guard let tabController = tabBarController as? POITabBarController,
+		      let preserved = tabController.preservedFeatureTypeSearchText,
+		      !preserved.isEmpty
+		else { return }
 		if searchBar.text != preserved {
 			searchBar.text = preserved
 		}
@@ -277,7 +272,9 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 	}
 
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-		Self.preservedFeatureTypeSearchText = searchText
+		if let tabController = tabBarController as? POITabBarController {
+			tabController.preservedFeatureTypeSearchText = searchText.isEmpty ? nil : searchText
+		}
 		refreshSearchResults(for: searchText)
 	}
 
