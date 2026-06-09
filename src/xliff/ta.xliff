@@ -1807,6 +1807,10 @@ Error: %@</source>
         <target state="translated">உயரத்தை அளவிட, பயன்பாட்டின் அமைப்புகளில் கேமரா அணுகலை இயக்கவும்.</target>
         <note />
       </trans-unit>
+      <trans-unit id="Include Chain/Brand names" xml:space="preserve">
+        <source>Include Chain/Brand names</source>
+        <note>Include Name Suggestion Index (NSI) chain/brand results in search</note>
+      </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <target state="translated">தவறான முகவரி</target>

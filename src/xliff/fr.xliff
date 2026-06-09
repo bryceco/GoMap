@@ -1791,6 +1791,10 @@ Erreur : %@</target>
         <target state="translated">Afin de mesurer la hauteur, veuillez autoriser l'accès à l'appareil photo dans les paramètres de l'application.</target>
         <note />
       </trans-unit>
+      <trans-unit id="Include Chain/Brand names" xml:space="preserve">
+        <source>Include Chain/Brand names</source>
+        <note>Include Name Suggestion Index (NSI) chain/brand results in search</note>
+      </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <target state="translated">URL invalide</target>

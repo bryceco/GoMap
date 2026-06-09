@@ -2006,6 +2006,10 @@ Error: %@</source>
         <target state="translated">Щоб виміряти висоту, будь ласка надайде доступ до камери у налаштуваннях застосунку.</target>
         <note />
       </trans-unit>
+      <trans-unit id="Include Chain/Brand names" xml:space="preserve">
+        <source>Include Chain/Brand names</source>
+        <note>Include Name Suggestion Index (NSI) chain/brand results in search</note>
+      </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <target state="translated">Помилковий URL</target>

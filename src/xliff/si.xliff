@@ -1524,6 +1524,10 @@ Error: %@</source>
         <source>In order to measure height, please enable camera access in the app's settings.</source>
         <note />
       </trans-unit>
+      <trans-unit id="Include Chain/Brand names" xml:space="preserve">
+        <source>Include Chain/Brand names</source>
+        <note>Include Name Suggestion Index (NSI) chain/brand results in search</note>
+      </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <note />

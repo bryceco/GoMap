@@ -1825,6 +1825,10 @@ Error: %@</target>
         <target state="translated">Um Höhe zu messen, aktiviere bitte den Kamerazugriff in den App-Einstellungen.</target>
         <note />
       </trans-unit>
+      <trans-unit id="Include Chain/Brand names" xml:space="preserve">
+        <source>Include Chain/Brand names</source>
+        <note>Include Name Suggestion Index (NSI) chain/brand results in search</note>
+      </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <target state="translated">Ungültige URL</target>

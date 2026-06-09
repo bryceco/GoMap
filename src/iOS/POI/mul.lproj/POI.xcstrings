@@ -3620,7 +3620,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Şunlar için geçerlidir:"
+            "value" : "Şunlar için geçerlidir"
           }
         },
         "uk" : {
@@ -7215,6 +7215,24 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Uses semi-colon seperated values (e.g. pizza;kebab for cuisine)"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Использует значения, разделенные точкой с запятой (например, pizza;kebab для кухни)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noktalı virgülle ayrılmış değerler kullanır (ör. mutfak türü olarak pizza;kebab)"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用分號分隔值 (例如用 pizza;kebab 表示菜系 )"
           }
         }
       }

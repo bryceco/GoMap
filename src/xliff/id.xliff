@@ -1724,6 +1724,10 @@ Kesalahan: %@</target>
         <target state="translated">Untuk mengukur tinggi, mohon aktifkan akses kamera di pengaturan aplikasi.</target>
         <note />
       </trans-unit>
+      <trans-unit id="Include Chain/Brand names" xml:space="preserve">
+        <source>Include Chain/Brand names</source>
+        <note>Include Name Suggestion Index (NSI) chain/brand results in search</note>
+      </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <target state="translated">URL tidak valid</target>

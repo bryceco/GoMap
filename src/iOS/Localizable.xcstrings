@@ -4395,7 +4395,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@nodes@"
+            "value" : "%#@meters@ metre, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -6116,7 +6116,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@megabytes@ , %#@files@"
+            "value" : "%#@megabytes@ MB, %#@files@"
           },
           "substitutions" : {
             "files" : {
@@ -9512,7 +9512,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@nodes@"
+            "value" : "%#@meters@ metre, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -11233,7 +11233,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@points@"
+            "value" : "%#@meters@ metre, %#@points@"
           },
           "substitutions" : {
             "meters" : {
@@ -13556,7 +13556,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%#@meters@, %#@points@, %#@waypoints@"
+            "value" : "%#@meters@ metre, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
@@ -37259,7 +37259,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "lbs"
+            "value" : "libre"
           }
         },
         "uk" : {
@@ -42488,6 +42488,7 @@
       }
     },
     "Next" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -49213,6 +49214,7 @@
       }
     },
     "Previous" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

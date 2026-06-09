@@ -1679,6 +1679,10 @@ Error: %@</source>
         <target state="translated">為了要測量高度，請在 iOS 的設定中開啟 Go Map 的相機使用權限。</target>
         <note />
       </trans-unit>
+      <trans-unit id="Include Chain/Brand names" xml:space="preserve">
+        <source>Include Chain/Brand names</source>
+        <note>Include Name Suggestion Index (NSI) chain/brand results in search</note>
+      </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <target state="translated">無效網址</target>

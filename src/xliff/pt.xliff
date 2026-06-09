@@ -1769,6 +1769,10 @@ Erro: %@</target>
         <target state="translated">Para medir a altura, conceda o acesso à câmara nas configurações da aplicação.</target>
         <note />
       </trans-unit>
+      <trans-unit id="Include Chain/Brand names" xml:space="preserve">
+        <source>Include Chain/Brand names</source>
+        <note>Include Name Suggestion Index (NSI) chain/brand results in search</note>
+      </trans-unit>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <target state="translated">URL inválido</target>
