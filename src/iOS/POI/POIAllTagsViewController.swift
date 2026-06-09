@@ -164,10 +164,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		tags.setWithoutSorting(list)
 		tableView.reloadData()
 
-		saveButton.isEnabled = tabController.isTagDictChanged()
-		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = saveButton.isEnabled
-		}
+		tabController.updateSaveButton(saveButton, hasUnsavedTagChanges: tabController.isTagDictChanged())
 
 		return nextRow
 	}
@@ -383,10 +380,9 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		kvCell.isSet.backgroundColor = kv.k == "" || kv.v == "" ? nil : UIColor.systemBlue
 
 		let tabController = tabBarController as! POITabBarController
-		saveButton.isEnabled = tabController.isTagDictChanged(tags.keyValueDictionary())
-		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = saveButton.isEnabled
-		}
+		tabController.updateSaveButton(
+			saveButton,
+			hasUnsavedTagChanges: tabController.isTagDictChanged(tags.keyValueDictionary()))
 	}
 
 	func keyValueEditingEnded(for kvCell: KeyValueTableCell) {
@@ -518,10 +514,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 				tableView.deleteRows(at: [indexPath], with: .fade)
 			}
 
-			saveButton.isEnabled = tabController.isTagDictChanged()
-			if #available(iOS 13.0, *) {
-				tabBarController?.isModalInPresentation = saveButton.isEnabled
-			}
+			tabController.updateSaveButton(saveButton, hasUnsavedTagChanges: tabController.isTagDictChanged())
 		} else if editingStyle == .insert {
 			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 		}
@@ -533,11 +526,15 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	}
 
 	@IBAction func done(_ sender: Any) {
-		dismiss(animated: true)
 		saveState()
+		dismiss(animated: true)
 
-		let tabController = tabBarController as? POITabBarController
-		tabController?.commitChanges()
+		guard let tabController = tabBarController as? POITabBarController,
+		      tabController.isTagDictChanged()
+		else {
+			return
+		}
+		tabController.commitChanges()
 	}
 
 	override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
