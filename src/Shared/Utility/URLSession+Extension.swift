@@ -91,7 +91,7 @@ extension URLSession {
 }
 
 extension URLRequest {
-	static func appUserAgent() -> String {
+	private static func appUserAgent() -> String {
 		let appName = AppDelegate.appName
 		let appVersion = AppDelegate.appVersion
 		let systemVersion = UIDevice.current.systemVersion
