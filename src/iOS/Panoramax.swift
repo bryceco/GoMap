@@ -10,13 +10,9 @@ import CoreLocation
 import UIKit
 @preconcurrency import WebKit
 
-private enum PanoramaxResult {
-	case success(String) // Panoramax identifier
-	case error(Error)
-	case cancelled
-}
-
 protocol PanoramaxDelegate: AnyObject {
+	// Callback allowing the caller to assign the photoID of the uploaded image to
+	// the OSM object's "panoramax" tag.
 	func panoramaxUpdate(photoID: String)
 }
 
@@ -157,12 +153,33 @@ class PanoramaxServer {
 		return uploadSetID
 	}
 
-	func uploadTo(photoSet: String,
-	              photoData: Data,
-	              name: String,
-	              date: Date) async throws -> String
+	func closeUploadSet(_ uploadSetID: String) async throws -> String {
+		// Signal that all files have been uploaded
+		let completeURL = serverURL.appendingPathComponent("api/upload_sets/\(uploadSetID)/complete")
+		var completeRequest = URLRequest(url: completeURL)
+		completeRequest.httpMethod = "POST"
+		completeRequest.setUserAgent()
+		let data = try await URLSession.shared.data(with: completeRequest)
+
+		// decode the result to get the collection ID
+		let json = try JSONSerialization.jsonObject(with: data, options: [])
+		guard
+			let json = json as? [String: Any],
+			let collections = json["associated_collections"] as? [[String: Any]],
+			let first = collections.first,
+			let collectionID = first["id"] as? String
+		else {
+			throw NSError(domain: "JSON error", code: 0, userInfo: nil)
+		}
+		return collectionID
+	}
+
+	func uploadPhoto(set: String,
+	                 data: Data,
+	                 name: String,
+	                 date: Date) async throws -> String
 	{
-		let url = serverURL.appendingPathComponent("api/upload_sets/\(photoSet)/files")
+		let url = serverURL.appendingPathComponent("api/upload_sets/\(set)/files")
 		var request = URLRequest(url: url)
 		request.setUserAgent()
 		request.httpMethod = "POST"
@@ -179,7 +196,7 @@ class PanoramaxServer {
 		body.append(boundaryPrefix.data(using: .utf8)!)
 		body.append("Content-Disposition: form-data; name=\"file\"; filename=\"\(name)\"\r\n".data(using: .utf8)!)
 		body.append("Content-Type: application/octet-stream\r\n\r\n".data(using: .utf8)!)
-		body.append(photoData)
+		body.append(data)
 		body.append("\r\n".data(using: .utf8)!)
 
 		// Add capture time
@@ -199,11 +216,41 @@ class PanoramaxServer {
 		}
 		return ident
 	}
+
+	/// Uploads semantic tags to a collection or a specific photo within it.
+	/// If `photoID` is nil, tags are applied to the collection (sequence); otherwise they are applied to the individual photo.
+	func uploadSemanticTags(collectionID: String,
+	                        photoID: String?,
+	                        tags: [String: String]) async throws
+	{
+		let path = if let photoID {
+			"api/collections/\(collectionID)/items/\(photoID)"
+		} else {
+			"api/collections/\(collectionID)"
+		}
+		let url = serverURL.appendingPathComponent(path)
+
+		let payload: [String: Any] = [
+			"semantics": tags.map { ["key": $0.key, "value": $0.value] }
+		]
+		let jsonData = try JSONSerialization.data(withJSONObject: payload, options: [])
+
+		var request = URLRequest(url: url)
+		request.httpMethod = "PATCH"
+		request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+		request.httpBody = jsonData
+		request.setUserAgent()
+
+		let data = try await URLSession.shared.data(with: request)
+		let json = try JSONDecoder().decode(AnyJSON.self, from: data)
+		print(json.prettyPrinted(tabWidth: 2))
+	}
 }
 
 class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 	var panoramax: PanoramaxServer!
-	var photoID = ""
+	var photoID = "" // Provided by caller if there's a pre-existing panoramax photo to display
+	var tags: [String: String] = [:] // Provided by caller to specify tags to upload with new photos
 	var delegate: PanoramaxDelegate?
 	var location: LatLon = .zero
 	let locationManager = CLLocationManager()
@@ -365,14 +412,26 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 					}
 					throw error
 				}
-				self.photoID = try await self.panoramax.uploadTo(photoSet: photoSetID,
-				                                                 photoData: imageData,
-				                                                 name: name,
-				                                                 date: date)
+				self.photoID = try await self.panoramax.uploadPhoto(set: photoSetID,
+				                                                    data: imageData,
+				                                                    name: name,
+				                                                    date: date)
 				self.photoView.image = image
 				self.photoDate.text = Self.formattedTimestamp(date: date)
 				self.photoUser.text = AppDelegate.shared.userName
 				self.delegate?.panoramaxUpdate(photoID: photoID)
+
+				do {
+					let collectionID = try await self.panoramax.closeUploadSet(photoSetID)
+					if !tags.isEmpty {
+						try await self.panoramax.uploadSemanticTags(collectionID: collectionID,
+						                                            photoID: self.photoID,
+						                                            tags: tags)
+					}
+				} catch {
+					// If we fail to set tags we don't bother telling the user.
+					print(error)
+				}
 			} catch {
 				self.showError(error)
 			}
