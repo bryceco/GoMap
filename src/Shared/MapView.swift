@@ -275,6 +275,10 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		else {
 			return
 		}
+
+		if editorLayer.canRotateSelectedNodeDirection() {
+			editorLayer.prepareDirectionRotation()
+		}
 		removePin()
 		let rotateObjectOverlay = CAShapeLayer()
 		let radiusInner: CGFloat = 70
@@ -303,6 +307,9 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	func endObjectRotation() {
 		isRotateObjectMode?.rotateObjectOverlay.removeFromSuperlayer()
+		if editorLayer.isRotateDirectionMode {
+			editorLayer.rotateDirectionFinish()
+		}
 		placePushpinForSelection()
 		editorLayer.dragState.confirmDrag = false
 		isRotateObjectMode = nil
@@ -1048,13 +1055,23 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		}
 		// Rotate object on screen
 		if rotationGesture.state == .began {
-			editorLayer.rotateBegin()
+			if editorLayer.isRotateDirectionMode {
+				editorLayer.rotateDirectionBegin()
+			} else {
+				editorLayer.rotateBegin()
+			}
 		} else if rotationGesture.state == .changed {
-			editorLayer.rotateContinue(delta: rotationGesture.rotation, rotate: rotate)
+			if editorLayer.isRotateDirectionMode {
+				editorLayer.rotateDirectionContinue(delta: rotationGesture.rotation)
+			} else {
+				editorLayer.rotateContinue(delta: rotationGesture.rotation, rotate: rotate)
+			}
 		} else {
 			// ended
+			if !editorLayer.isRotateDirectionMode {
+				editorLayer.rotateFinish()
+			}
 			endObjectRotation()
-			editorLayer.rotateFinish()
 		}
 	}
 

@@ -178,6 +178,19 @@ final class EditorMapLayer: CALayer {
 
 	var dragState = DragState(startPoint: .zero, didMove: false, confirmDrag: false)
 
+	/// Active while rotating a node's `direction` / `camera:direction` tag (not geometry).
+	var directionRotateTagKey: String?
+	var directionRotateInitialBearing: Int?
+	var directionRotateUndoOpen = false
+
+	var isRotateDirectionMode: Bool { directionRotateTagKey != nil }
+
+	func canRotateSelectedNodeDirection() -> Bool {
+		selectedWay == nil &&
+			selectedRelation == nil &&
+			selectedNode?.technicalDirectionTagKey != nil
+	}
+
 	let objectFilters = EditorFilters()
 
 	var whiteText = false {
