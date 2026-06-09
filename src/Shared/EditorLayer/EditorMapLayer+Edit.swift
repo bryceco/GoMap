@@ -460,15 +460,19 @@ extension EditorMapLayer {
 
 	// MARK: Rotate direction tag
 
-	func rotateDirectionBegin() {
+	func prepareDirectionRotation() {
 		guard let node = selectedNode,
 		      let tagKey = node.technicalDirectionTagKey,
 		      let bearing = node.direction?.location
 		else { return }
-		mapData.beginUndoGrouping()
-		dragState.didMove = false
 		directionRotateTagKey = tagKey
 		directionRotateInitialBearing = bearing
+	}
+
+	func rotateDirectionBegin() {
+		mapData.beginUndoGrouping()
+		dragState.didMove = false
+		directionRotateUndoOpen = true
 	}
 
 	func rotateDirectionContinue(delta: CGFloat) {
@@ -493,17 +497,18 @@ extension EditorMapLayer {
 		tags[tagKey] = value
 		mapData.setTags(tags, for: node)
 		setNeedsLayout()
-		owner.didUpdateObject()
 	}
 
 	func rotateDirectionFinish() {
-		mapData.endUndoGrouping()
+		if directionRotateUndoOpen {
+			mapData.endUndoGrouping()
+			directionRotateUndoOpen = false
+		}
+		if dragState.didMove {
+			owner.didUpdateObject()
+		}
 		directionRotateTagKey = nil
 		directionRotateInitialBearing = nil
-	}
-
-	func isRotateDirectionMode() -> Bool {
-		directionRotateTagKey != nil
 	}
 
 	// MARK: Editing
@@ -723,7 +728,7 @@ extension EditorMapLayer {
 		} else if let selectedNode = selectedNode {
 			// node
 			actionList += [.DUPLICATE]
-			if selectedNode.technicalDirectionTagKey != nil {
+			if canRotateSelectedNodeDirection() {
 				actionList.append(.ROTATE)
 			}
 		} else if let selectedRelation = selectedRelation {
@@ -796,10 +801,7 @@ extension EditorMapLayer {
 				owner.placePushpinForSelection(at: nil)
 			case .ROTATE:
 				let canRotateGeometry = selectedWay != nil || (selectedRelation?.isMultipolygon() ?? false)
-				let canRotateDirection = selectedWay == nil &&
-					selectedRelation == nil &&
-					selectedNode?.technicalDirectionTagKey != nil
-				guard canRotateGeometry || canRotateDirection else {
+				guard canRotateGeometry || canRotateSelectedNodeDirection() else {
 					throw EditError.text(NSLocalizedString("Only ways/multipolygons can be rotated", comment: ""))
 				}
 				owner.startObjectRotation()

@@ -58,12 +58,6 @@ extension OsmNode {
 		return nil
 	}
 
-	/// Bearing in degrees clockwise from north for a point direction (`direction` length 0).
-	var directionPointBearing: Int? {
-		guard let range = direction, range.length == 0 else { return nil }
-		return range.location
-	}
-
 	/// OSM tag value for a bearing, preserving arc span when the current direction is a range.
 	func directionTagValue(forBearingDegrees bearing: Int) -> String? {
 		guard let range = direction else { return nil }

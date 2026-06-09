@@ -269,10 +269,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		// remove previous rotation in case user pressed Rotate button twice
 		endObjectRotation()
 
-		let isDirectionRotate = editorLayer.selectedWay == nil &&
-			editorLayer.selectedRelation == nil &&
-			editorLayer.selectedNode?.technicalDirectionTagKey != nil
-
 		guard let rotateObjectCenter = editorLayer.selectedNode?.latLon
 			?? editorLayer.selectedWay?.centerPoint()
 			?? editorLayer.selectedRelation?.centerPoint()
@@ -280,8 +276,8 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			return
 		}
 
-		if isDirectionRotate {
-			editorLayer.rotateDirectionBegin()
+		if editorLayer.canRotateSelectedNodeDirection() {
+			editorLayer.prepareDirectionRotation()
 		}
 		removePin()
 		let rotateObjectOverlay = CAShapeLayer()
@@ -311,7 +307,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	func endObjectRotation() {
 		isRotateObjectMode?.rotateObjectOverlay.removeFromSuperlayer()
-		if editorLayer.isRotateDirectionMode() {
+		if editorLayer.isRotateDirectionMode {
 			editorLayer.rotateDirectionFinish()
 		}
 		placePushpinForSelection()
@@ -1059,18 +1055,20 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		}
 		// Rotate object on screen
 		if rotationGesture.state == .began {
-			if !editorLayer.isRotateDirectionMode() {
+			if editorLayer.isRotateDirectionMode {
+				editorLayer.rotateDirectionBegin()
+			} else {
 				editorLayer.rotateBegin()
 			}
 		} else if rotationGesture.state == .changed {
-			if editorLayer.isRotateDirectionMode() {
+			if editorLayer.isRotateDirectionMode {
 				editorLayer.rotateDirectionContinue(delta: rotationGesture.rotation)
 			} else {
 				editorLayer.rotateContinue(delta: rotationGesture.rotation, rotate: rotate)
 			}
 		} else {
 			// ended
-			if !editorLayer.isRotateDirectionMode() {
+			if !editorLayer.isRotateDirectionMode {
 				editorLayer.rotateFinish()
 			}
 			endObjectRotation()
