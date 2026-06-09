@@ -17,9 +17,9 @@ class KeyboardToolbar: UIInputView {
 	struct Item {
 		fileprivate enum Kind {
 			case title(String)
-			case icon(String)        // SF Symbol name
-			case image(UIImage)      // arbitrary UIImage
-			case done                // checkmark on iOS 26+, "Done" text on earlier versions
+			case icon(String) // SF Symbol name
+			case image(UIImage) // arbitrary UIImage
+			case done // checkmark on iOS 26+, "Done" text on earlier versions
 			case flexibleSpace
 			case fixedSpace(CGFloat)
 		}
@@ -52,7 +52,7 @@ class KeyboardToolbar: UIInputView {
 
 	init(items: [Item]) {
 		super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 44),
-				   inputViewStyle: .keyboard)
+		           inputViewStyle: .keyboard)
 
 		// Set up background view we place buttons into
 		let blurView = UIVisualEffectView(effect: nil)
@@ -111,7 +111,7 @@ class KeyboardToolbar: UIInputView {
 			let spacer = UIView()
 			spacer.setContentHuggingPriority(.defaultLow, for: .horizontal)
 			return spacer
-		case .fixedSpace(let width):
+		case let .fixedSpace(width):
 			let spacer = UIView()
 			spacer.translatesAutoresizingMaskIntoConstraints = false
 			spacer.widthAnchor.constraint(equalToConstant: width).isActive = true
@@ -156,13 +156,13 @@ class KeyboardToolbar: UIInputView {
 			}
 		} else {
 			switch item.kind {
-			case .title(let string):
+			case let .title(string):
 				button.setTitle(string, for: .normal)
 				button.setTitleColor(.label, for: .normal)
-			case .icon(let name):
+			case let .icon(name):
 				button.setImage(UIImage(systemName: name), for: .normal)
 				button.tintColor = .systemBlue
-			case .image(let img):
+			case let .image(img):
 				button.setImage(img, for: .normal)
 				button.tintColor = .systemBlue
 			default:
