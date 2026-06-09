@@ -20,6 +20,17 @@ extension UIView {
 		return nil
 	}
 
+	func ancestorOfType<T: UIResponder>() -> T? {
+		var responder: UIResponder? = self
+		while let current = responder {
+			if let match = current as? T {
+				return match
+			}
+			responder = current.next
+		}
+		return nil
+	}
+
 	func subviewOfType<T: AnyObject>(where pred: (T) -> Bool) -> T? {
 		for view in subviews {
 			if let v = view as? T,
