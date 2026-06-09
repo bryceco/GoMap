@@ -608,7 +608,7 @@ final class EditorMapLayer: CALayer {
 		alongScreenClippedWay way: OsmWay,
 		offset initialOffset: Double,
 		interval: Double,
-		block: @escaping (_ pt: OSMPoint, _ direction: OSMPoint) -> Void)
+		block: @escaping (_ pt: OSMPoint, _ direction: OSMPoint, _ offsetAlongSegment: Double, _ segmentLength: Double) -> Void)
 	{
 		var offset = initialOffset
 		invoke(alongScreenClippedWay: way, block: { p1, p2, isEntry, _ in
@@ -624,7 +624,7 @@ final class EditorMapLayer: CALayer {
 				// found it
 				let pos = OSMPoint(x: p1.x + offset * dx, y: p1.y + offset * dy)
 				let dir = OSMPoint(x: dx, y: dy)
-				block(pos, dir)
+				block(pos, dir, offset, len)
 				offset += interval
 			}
 			offset -= len
@@ -632,11 +632,21 @@ final class EditorMapLayer: CALayer {
 		})
 	}
 
-
 	private static let oneWayArrowChevronLength: Double = 15
 	private static let oneWayArrowChevronWidth: Double = 5
 	/// Along-way distance from motor chevron tip to bicycle chevron tip (motor icon + gap + bicycle icon).
 	private static let bicycleContraflowArrowLongitudinalOffset: Double = 3 * oneWayArrowChevronLength
+
+	private static func canPlaceBicycleContraflowArrow(
+		behindAlongWay: Double,
+		offsetAlongSegment: Double,
+		segmentLength: Double
+	) -> Bool {
+		if behindAlongWay < 0 {
+			return offsetAlongSegment >= bicycleContraflowArrowLongitudinalOffset
+		}
+		return (segmentLength - offsetAlongSegment) >= bicycleContraflowArrowLongitudinalOffset
+	}
 
 	private func makeOneWayArrowLayer(
 		at loc: OSMPoint,
@@ -1453,25 +1463,32 @@ final class EditorMapLayer: CALayer {
 				let showBicycleContraflow = way.allowsBicycleContraflow()
 				let arrowZ = isHighlight ? self.Z_HIGHLIGHT_ARROW : self.Z_ARROW
 				// arrow heads
-				invoke(alongScreenClippedWay: way, offset: 50, interval: 100, block: { loc, dir in
-					let reversed = way.isOneWay == ONEWAY.BACKWARD
-					let motorLen = reversed ? -Self.oneWayArrowChevronLength : Self.oneWayArrowChevronLength
-					let behindAlongWay = motorLen > 0
-						? -Self.bicycleContraflowArrowLongitudinalOffset
-						: Self.bicycleContraflowArrowLongitudinalOffset
+				invoke(alongScreenClippedWay: way, offset: 50, interval: 100, block: { loc, dir, offsetAlongSegment, segmentLength in
+					let motorLen = way.isOneWay == .BACKWARD
+						? -Self.oneWayArrowChevronLength
+						: Self.oneWayArrowChevronLength
 					if showBicycleContraflow {
-						layers.append(self.makeOneWayArrowLayer(at: loc,
-						                                        direction: dir,
-						                                        chevronLength: -motorLen,
-						                                        alongWayOffset: behindAlongWay,
-						                                        fillColor: .systemBlue,
-						                                        zPosition: arrowZ))
+						let behindAlongWay = way.isOneWay == .FORWARD
+							? -Self.bicycleContraflowArrowLongitudinalOffset
+							: Self.bicycleContraflowArrowLongitudinalOffset
+						if Self.canPlaceBicycleContraflowArrow(
+							behindAlongWay: behindAlongWay,
+							offsetAlongSegment: offsetAlongSegment,
+							segmentLength: segmentLength)
+						{
+							layers.append(self.makeOneWayArrowLayer(at: loc,
+							                                        direction: dir,
+							                                        chevronLength: -motorLen,
+							                                        alongWayOffset: behindAlongWay,
+							                                        fillColor: UIColor.systemBlue,
+							                                        zPosition: arrowZ))
+						}
 					}
 					layers.append(self.makeOneWayArrowLayer(at: loc,
 					                                          direction: dir,
 					                                          chevronLength: motorLen,
 					                                          alongWayOffset: 0,
-					                                          fillColor: .black,
+					                                          fillColor: UIColor.black,
 					                                          zPosition: arrowZ))
 				})
 			}
