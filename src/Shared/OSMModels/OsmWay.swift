@@ -270,6 +270,15 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		return _isOneWay!
 	}
 
+	// https://wiki.openstreetmap.org/wiki/Key:oneway:bicycle
+	/// True when the way is one-way for general traffic but cyclists may use the opposite direction.
+	func allowsBicycleContraflow() -> Bool {
+		guard isOneWay != .NONE else {
+			return false
+		}
+		return tags["oneway:bicycle"] == "no"
+	}
+
 	// return the point on the way closest to the supplied point
 	override func latLonOnObject(forLatLon target: LatLon) -> LatLon {
 		switch nodes.count {
