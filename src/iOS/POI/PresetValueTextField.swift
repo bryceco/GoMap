@@ -98,6 +98,9 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 				if OsmTags.isKey(key, variantOf: "website") {
 					keyboardType = .URL
 				}
+				if OsmTags.isName(key) {
+					autocapitalizationType = .words
+				}
 			}
 		}
 		spellCheckingType = autocorrectionType == .no ? .no : .default

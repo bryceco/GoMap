@@ -46,6 +46,15 @@ final class OsmTags {
 		return Self.isKey(key, variantOf: "fixme") || Self.isKey(key, variantOf: "FIXME")
 	}
 
+	class func isName(_ key: String) -> Bool {
+		switch key {
+		case "name", "alt_name", "old_name":
+			return true
+		default:
+			return key.hasPrefix("name:")
+		}
+	}
+
 	static let _surveyDateSynonyms: Set<String> = [
 		"survey_date",
 		"survey:date",
