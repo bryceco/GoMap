@@ -120,6 +120,19 @@ final class EditorFilters {
 		"reservoir",
 		"salt_pond"
 	]
+	private let landuse_amenity: Set<String> = [
+		"bicycle_parking",
+		"college",
+		"grave_yard",
+		"hospital",
+		"marketplace",
+		"motorcycle_parking",
+		"parking",
+		"place_of_worship",
+		"prison",
+		"school",
+		"university"
+	]
 	func predicateForFilters() -> ((OsmBaseObject) -> Bool) {
 		var predLevel: ((OsmBaseObject) -> Bool)?
 
@@ -229,26 +242,39 @@ final class EditorFilters {
 			return object.tags["waterway"] != nil
 		}
 		let predLanduse: ((OsmBaseObject) -> Bool) = { object in
-			if object.tags.isEmpty || object.geometry() != .AREA {
+			if object.geometry() != .AREA {
 				return false
 			}
-			if !predBuildings(object),
-			   !predWater(object),
-			   object.tags["indoor"] == nil,
-			   object.tags["piste:type"] == nil
-			{
-				return true
-			}
-			return false
+			let hasLanduseTag =
+				(object.tags["amenity"].map { self.landuse_amenity.contains($0) } ?? false) ||
+				object.tags["landuse"] != nil ||
+				object.tags["leisure"] != nil ||
+				object.tags["natural"] != nil
+			return hasLanduseTag &&
+				!predBuildings(object) &&
+				object.tags["building:part"] == nil &&
+				object.tags["indoor"] == nil &&
+				object.tags["piste:type"] == nil &&
+				!predWater(object)
 		}
 		let predBoundaries: ((OsmBaseObject) -> Bool) = { object in
-			if object.tags["boundary"] != nil {
-				guard let highway = object.tags["highway"] else { return true }
-				return !(self.traffic_roads.contains(highway) ||
-					self.service_roads.contains(highway) ||
-					self.paths.contains(highway))
+			let hasBoundaryTag =
+				((object is OsmWay) && object.tags["boundary"] != nil) ||
+				(object is OsmRelation && object.tags["type"] == "boundary")
+			guard hasBoundaryTag else { return false }
+			if let highway = object.tags["highway"],
+			   self.traffic_roads.contains(highway) ||
+			   self.service_roads.contains(highway) ||
+			   self.paths.contains(highway)
+			{
+				return false
 			}
-			return false
+			return object.tags["waterway"] == nil &&
+				object.tags["railway"] == nil &&
+				object.tags["landuse"] == nil &&
+				object.tags["natural"] == nil &&
+				object.tags["building"] == nil &&
+				object.tags["power"] == nil
 		}
 		let predRail: ((OsmBaseObject) -> Bool) = { object in
 			if object.tags["railway"] != nil || (object.tags["landuse"] == "railway") {
@@ -290,7 +316,9 @@ final class EditorFilters {
 				return false
 			}
 			var matchAny = false
-			func MATCH(_ matchAny: inout Bool, _ showOthers: Bool, _ pred: (OsmBaseObject) -> Bool,
+			func MATCH(_ matchAny: inout Bool,
+			           _ showOthers: Bool,
+			           _ pred: (OsmBaseObject) -> Bool,
 			           _ show: Bool) -> Bool
 			{
 				if show || showOthers {
@@ -312,8 +340,7 @@ final class EditorFilters {
 				MATCH(&matchAny, showOthers, predBoundaries, showBoundaries) ||
 				MATCH(&matchAny, showOthers, predWater, showWater) ||
 				MATCH(&matchAny, showOthers, predRail, showRail) ||
-				MATCH(&matchAny, showOthers, predPower, showPower) ||
-				MATCH(&matchAny, showOthers, predWater, showWater)
+				MATCH(&matchAny, showOthers, predPower, showPower)
 			{
 				return true
 			}
