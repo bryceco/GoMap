@@ -56,6 +56,8 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		sourceTextField.layer.borderColor = color.cgColor
 		sourceTextField.layer.borderWidth = 2.0
 		sourceTextField.layer.cornerRadius = 10.0
+		sourceTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 7.5, height: 0))
+		sourceTextField.leftViewMode = .always
 
 		xmlTextView.layer.borderColor = color.cgColor
 		xmlTextView.layer.borderWidth = 2.0
