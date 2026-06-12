@@ -69,8 +69,11 @@
                                 <rect key="frame" x="188.5" y="308" width="37" height="37"/>
                                 <color key="color" systemColor="labelColor"/>
                             </activityIndicatorView>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="500" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="survey, Bing, etc." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ps9-Hb-Vow">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="500" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="none" placeholder="survey, Bing, etc." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ps9-Hb-Vow">
                                 <rect key="frame" x="86.5" y="272" width="307.5" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="35" id="ps9-Hb-Hgt"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
