@@ -61,6 +61,8 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		xmlTextView.layer.borderWidth = 2.0
 		xmlTextView.layer.cornerRadius = 10.0
 
+		commentTextView.returnKeyType = .done
+
 		// create button for source history
 		sourceHistoryButton = UIButton(type: .custom)
 		sourceHistoryButton.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
