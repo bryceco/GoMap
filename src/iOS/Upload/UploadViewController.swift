@@ -52,16 +52,17 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		commentContainerView.layer.borderColor = color.cgColor
 		commentContainerView.layer.borderWidth = 2.0
 		commentContainerView.layer.cornerRadius = 10.0
+		commentTextView.returnKeyType = .done
 
 		sourceTextField.layer.borderColor = color.cgColor
 		sourceTextField.layer.borderWidth = 2.0
 		sourceTextField.layer.cornerRadius = 10.0
+		sourceTextField.returnKeyType = .done
+		sourceTextField.addTarget(self, action: #selector(dismissKeyboard(_:)), for: .editingDidEndOnExit)
 
 		xmlTextView.layer.borderColor = color.cgColor
 		xmlTextView.layer.borderWidth = 2.0
 		xmlTextView.layer.cornerRadius = 10.0
-
-		commentTextView.returnKeyType = .done
 
 		// create button for source history
 		sourceHistoryButton = UIButton(type: .custom)
@@ -124,6 +125,10 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 			return false
 		}
 		return true
+	}
+
+	@objc func dismissKeyboard(_ sender: UITextField) {
+		sender.resignFirstResponder()
 	}
 
 	@IBAction func clearCommentText(_ sender: Any) {
