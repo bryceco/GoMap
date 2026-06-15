@@ -102,7 +102,7 @@
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
         <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
-        <target state="translated">Bir yer adı girin ("New York"), bir URL ya da enlem/boylam koordinatları içeren başka bir metin girin veya bir OSM nesnesine referans verin ("yol 51014987"):</target>
+        <target state="translated">Bir yer adı ("New York"), bir URL ya da enlem/boylam koordinatları içeren başka bir metin girin veya bir OSM nesnesine referans verin ("yol 51014987"):</target>
         <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
       </trans-unit>
       <trans-unit id="VNE-ee-a7u.text" xml:space="preserve" translate="no">
@@ -306,7 +306,7 @@
       </trans-unit>
       <trans-unit id="MPq-PX-jf0.text" xml:space="preserve">
         <source>Editor with Aerial</source>
-        <target state="translated">Havadan Görüntülü Editör</target>
+        <target state="translated">Havadan görüntülü editör</target>
         <note>Class = "UILabel"; text = "Editor with Aerial"; ObjectID = "MPq-PX-jf0";</note>
       </trans-unit>
       <trans-unit id="MZF-am-tCM.title" xml:space="preserve">
