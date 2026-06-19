@@ -11,6 +11,7 @@ class POITabBarController: UITabBarController {
 	var keyValueDict = [String: String]()
 	var relationList: [OsmRelation] = []
 	var selection: OsmBaseObject?
+	var preservedFeatureTypeSearchText: String?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -43,6 +44,13 @@ class POITabBarController: UITabBarController {
 			// This fixes it.
 			// See https://forums.developer.apple.com/forums/thread/759478
 			traitOverrides.horizontalSizeClass = .compact
+		}
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+		if isBeingDismissed {
+			preservedFeatureTypeSearchText = nil
 		}
 	}
 

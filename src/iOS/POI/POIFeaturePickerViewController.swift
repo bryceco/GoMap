@@ -251,11 +251,25 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		if let text = (tabBarController as? POITabBarController)?.preservedFeatureTypeSearchText,
+		   !text.isEmpty
+		{
+			searchBar.text = text
+			refreshSearchResults()
+			tableView.reloadData()
+		}
+	}
+
 	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+		let tabController = tabBarController as? POITabBarController
 		if searchText.count == 0 {
 			searchArray = []
+			tabController?.preservedFeatureTypeSearchText = nil
 		} else {
 			refreshSearchResults()
+			tabController?.preservedFeatureTypeSearchText = searchText
 		}
 		tableView.reloadData()
 	}
