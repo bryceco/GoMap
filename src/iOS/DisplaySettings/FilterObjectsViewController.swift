@@ -25,8 +25,8 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
 	@IBOutlet var switchOthers: UISwitch!
 
 	// return a list of arrays, each array containing either a single integer or a first-last pair of integers
-	class func levels(for text: String?) -> [[Double]] {
-		guard let text = text else { return [] }
+	class func levels(for text: String?) -> [[Double]]? {
+		guard let text = text else { return nil }
 		var list: [[Double]] = []
 		let scanner = Scanner(string: text)
 		scanner.charactersToBeSkipped = CharacterSet.whitespacesAndNewlines
@@ -100,7 +100,7 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
 
 	// show filter text in red if the level range is invalid
 	func setColorForText(_ text: String?) {
-		let a = FilterObjectsViewController.levels(for: text)
+		let a = FilterObjectsViewController.levels(for: text) ?? []
 		if a.count == 0 {
 			levelsText.textColor = UIColor.red
 		} else {

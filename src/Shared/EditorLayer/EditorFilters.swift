@@ -133,120 +133,119 @@ final class EditorFilters {
 		"school",
 		"university"
 	]
-	func predicateForFilters() -> ((OsmBaseObject) -> Bool) {
-		var predLevel: ((OsmBaseObject) -> Bool)?
 
-		if showLevel {
-			// set level predicate dynamically since it depends on the the text range
-			let levelFilter = FilterObjectsViewController.levels(for: showLevelRange)
-			if levelFilter.count != 0 {
-				predLevel = { object in
-					guard let objectLevel = object.tags["level"] else {
-						return true
-					}
-					var floorSet: [String]?
-					var floor = 0.0
-					if objectLevel.contains(";") {
-						floorSet = objectLevel.components(separatedBy: ";")
-					} else {
-						floor = Double(objectLevel) ?? 0.0
-					}
-					for filterRange in levelFilter {
-						if filterRange.count == 1 {
-							// filter is a single floor
-							let filterValue = filterRange[0]
-							if let floorSet = floorSet {
-								// object spans multiple floors
-								for s in floorSet {
-									let f = Double(s) ?? 0.0
-									if f == filterValue {
-										return true
-									}
-								}
-							} else {
-								if floor == filterValue {
-									return true
-								}
-							}
-						} else if filterRange.count == 2 {
-							// filter is a range
-							let filterLow = filterRange[0]
-							let filterHigh = filterRange[1]
-							if let floorSet = floorSet {
-								// object spans multiple floors
-								for s in floorSet {
-									let f = Double(s) ?? 0.0
-									if f >= filterLow, f <= filterHigh {
-										return true
-									}
-								}
-							} else {
-								// object is a single value
-								if floor >= filterLow, floor <= filterHigh {
+	func predicateForFilters() -> ((OsmBaseObject) -> Bool) {
+
+		// set level predicate dynamically since it depends on the the text range
+		var predLevel: ((OsmBaseObject) -> Bool)?
+		if showLevel,
+		   let levelFilter = FilterObjectsViewController.levels(for: showLevelRange),
+		   levelFilter.count != 0
+		{
+			predLevel = levelPredFilter
+
+			func levelPredFilter(_ object: OsmBaseObject) -> Bool {
+				guard let objectLevel = object.tags["level"] else {
+					return true
+				}
+				var floorSet: [String]?
+				var floor = 0.0
+				if objectLevel.contains(";") {
+					floorSet = objectLevel.components(separatedBy: ";")
+				} else {
+					floor = Double(objectLevel) ?? 0.0
+				}
+				for filterRange in levelFilter {
+					if filterRange.count == 1 {
+						// filter is a single floor
+						let filterValue = filterRange[0]
+						if let floorSet = floorSet {
+							// object spans multiple floors
+							for s in floorSet {
+								let f = Double(s) ?? 0.0
+								if f == filterValue {
 									return true
 								}
 							}
 						} else {
-							assertionFailure()
+							if floor == filterValue {
+								return true
+							}
 						}
+					} else if filterRange.count == 2 {
+						// filter is a range
+						let filterLow = filterRange[0]
+						let filterHigh = filterRange[1]
+						if let floorSet = floorSet {
+							// object spans multiple floors
+							for s in floorSet {
+								let f = Double(s) ?? 0.0
+								if f >= filterLow, f <= filterHigh {
+									return true
+								}
+							}
+						} else {
+							// object is a single value
+							if floor >= filterLow, floor <= filterHigh {
+								return true
+							}
+						}
+					} else {
+						assertionFailure()
 					}
-					return false
 				}
+				return false
 			}
 		}
-		let predPoints: ((OsmBaseObject) -> Bool) = { object in
+		func predPoints(_ object: OsmBaseObject) -> Bool {
 			if let node = object as? OsmNode {
 				return node.wayCount == 0
 			}
 			return false
 		}
-		let predTrafficRoads: ((OsmBaseObject) -> Bool) = { object in
+		func predTrafficRoads(_ object: OsmBaseObject) -> Bool {
 			if let tag = object.tags["highway"] {
-				return object.isWay() != nil && self.traffic_roads.contains(tag)
+				return object.isWay() != nil && traffic_roads.contains(tag)
 			}
 			return false
 		}
-		let predServiceRoads: ((OsmBaseObject) -> Bool) = { object in
+		func predServiceRoads(_ object: OsmBaseObject) -> Bool {
 			if let tag = object.tags["highway"] {
-				return object.isWay() != nil && self.service_roads.contains(tag)
+				return object.isWay() != nil && service_roads.contains(tag)
 			}
 			return false
 		}
-		let predPaths: ((OsmBaseObject) -> Bool) = { object in
-			if let tags = object.tags["highway"] {
-				return object.isWay() != nil && self.paths.contains(tags)
+		func predPaths(_ object: OsmBaseObject) -> Bool {
+			if let tag = object.tags["highway"] {
+				return object.isWay() != nil && paths.contains(tag)
 			}
 			return false
 		}
-		let predBuildings: ((OsmBaseObject) -> Bool) = { object in
+		func predBuildings(_ object: OsmBaseObject) -> Bool {
 			if let v = object.tags["building"], v != "no" {
 				return true
 			}
-			if let v = object.tags["parking"], self.parking_buildings.contains(v) {
+			if let v = object.tags["parking"], parking_buildings.contains(v) {
 				return true
 			}
 			return object.tags["building:part"] != nil ||
 				object.tags["amenity"] == "shelter"
 		}
-		let predWater: ((OsmBaseObject) -> Bool) = { object in
-			if let natural = object.tags["natural"],
-			   self.natural_water.contains(natural)
-			{
+		func predWater(_ object: OsmBaseObject) -> Bool {
+			if let natural = object.tags["natural"], natural_water.contains(natural) {
 				return true
 			}
-			if let landuse = object.tags["landuse"],
-			   self.landuse_water.contains(landuse)
-			{
+			if let landuse = object.tags["landuse"], landuse_water.contains(landuse) {
 				return true
 			}
 			return object.tags["waterway"] != nil
 		}
-		let predLanduse: ((OsmBaseObject) -> Bool) = { object in
+		func predLanduse(_ object: OsmBaseObject) -> Bool {
 			if object.geometry() != .AREA {
 				return false
 			}
 			let hasLanduseTag =
-				(object.tags["amenity"].map { self.landuse_amenity.contains($0) } ?? false) ||
+				(object.tags["amenity"].map { landuse_amenity.contains($0) } ?? false) ||
 				object.tags["landuse"] != nil ||
 				object.tags["leisure"] != nil ||
 				object.tags["natural"] != nil
@@ -257,15 +256,15 @@ final class EditorFilters {
 				object.tags["piste:type"] == nil &&
 				!predWater(object)
 		}
-		let predBoundaries: ((OsmBaseObject) -> Bool) = { object in
+		func predBoundaries(_ object: OsmBaseObject) -> Bool {
 			let hasBoundaryTag =
 				((object is OsmWay) && object.tags["boundary"] != nil) ||
 				(object is OsmRelation && object.tags["type"] == "boundary")
 			guard hasBoundaryTag else { return false }
 			if let highway = object.tags["highway"],
-			   self.traffic_roads.contains(highway) ||
-			   self.service_roads.contains(highway) ||
-			   self.paths.contains(highway)
+			   traffic_roads.contains(highway) ||
+			   service_roads.contains(highway) ||
+			   paths.contains(highway)
 			{
 				return false
 			}
@@ -276,29 +275,29 @@ final class EditorFilters {
 				object.tags["building"] == nil &&
 				object.tags["power"] == nil
 		}
-		let predRail: ((OsmBaseObject) -> Bool) = { object in
-			if object.tags["railway"] != nil || (object.tags["landuse"] == "railway") {
+		func predRail(_ object: OsmBaseObject) -> Bool {
+			if object.tags["railway"] != nil || object.tags["landuse"] == "railway" {
 				guard let highway = object.tags["highway"] else { return true }
-				return !(self.traffic_roads.contains(highway) ||
-					self.service_roads.contains(highway) ||
-					self.paths.contains(highway))
+				return !(traffic_roads.contains(highway) ||
+					service_roads.contains(highway) ||
+					paths.contains(highway))
 			}
 			return false
 		}
-		let predPower: ((OsmBaseObject) -> Bool) = { object in
+		func predPower(_ object: OsmBaseObject) -> Bool {
 			object.tags["power"] != nil
 		}
-		let predPastFuture: ((OsmBaseObject) -> Bool) = { object in
+		func predPastFuture(_ object: OsmBaseObject) -> Bool {
 			// contains a past/future tag, but not in active use as a road/path/cycleway/etc..
 			if let highway = object.tags["highway"],
-			   self.traffic_roads.contains(highway) ||
-			   self.service_roads.contains(highway) ||
-			   self.paths.contains(highway)
+			   traffic_roads.contains(highway) ||
+			   service_roads.contains(highway) ||
+			   paths.contains(highway)
 			{
 				return false
 			}
 			for (key, value) in object.tags {
-				if self.past_futures.contains(key) || self.past_futures.contains(value) {
+				if past_futures.contains(key) || past_futures.contains(value) {
 					return true
 				}
 			}
