@@ -8,16 +8,14 @@
 
 import UIKit
 
-enum ZLAYER: CGFloat {
+enum MAIN_ZLAYER: CGFloat {
 	case AERIAL = -100
 	case BASEMAP = -98
 	case LOCATOR = -50
 	case DATA = -30
-	case EDITOR = -20
+	case MAPVIEW = -20
 	case QUADDOWNLOAD = -18
 	case GPX = -15
-	case ROTATEGRAPHIC = -3
-	case BLINK = 4
 	case CROSSHAIRS = 5
 	case LOCATION_BALL = 100
 }
@@ -68,7 +66,7 @@ class MapLayersView: UIView {
 			if newValue.isVector {
 				let view = MapLibreVectorTilesView(viewPort: viewPort,
 				                                   tileServer: newValue)
-				view.layer.zPosition = ZLAYER.BASEMAP.rawValue
+				view.layer.zPosition = MAIN_ZLAYER.BASEMAP.rawValue
 				insertSubview(view, at: 0) // place at bottom so MapMarkers are above it
 				basemapLayer = view
 			} else {
@@ -76,7 +74,7 @@ class MapLayersView: UIView {
 				                              progress: mainView)
 				layer.tileServer = newValue
 				layer.supportDarkMode = true
-				layer.zPosition = ZLAYER.BASEMAP.rawValue
+				layer.zPosition = MAIN_ZLAYER.BASEMAP.rawValue
 				self.layer.addSublayer(layer)
 				basemapLayer = layer
 			}
@@ -107,24 +105,24 @@ class MapLayersView: UIView {
 
 		// this option needs to be set before the editor is initialized
 		locatorLayer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
-		locatorLayer.zPosition = ZLAYER.LOCATOR.rawValue
+		locatorLayer.zPosition = MAIN_ZLAYER.LOCATOR.rawValue
 		locatorLayer.tileServer = TileServer.mapboxLocator
 		locatorLayer.isHidden = true
 		allLayers.append(locatorLayer)
 
 		aerialLayer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
-		aerialLayer.zPosition = ZLAYER.AERIAL.rawValue
+		aerialLayer.zPosition = MAIN_ZLAYER.AERIAL.rawValue
 		aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
 		aerialLayer.isHidden = true
 		allLayers.append(aerialLayer)
 
 		gpxLayer = GpxLayer(viewPort: viewPort)
-		gpxLayer.zPosition = ZLAYER.GPX.rawValue
+		gpxLayer.zPosition = MAIN_ZLAYER.GPX.rawValue
 		gpxLayer.isHidden = true
 		allLayers.append(gpxLayer)
 
 		dataOverlayLayer = DataOverlayLayer(viewPort: viewPort)
-		dataOverlayLayer.zPosition = ZLAYER.DATA.rawValue
+		dataOverlayLayer.zPosition = MAIN_ZLAYER.DATA.rawValue
 		dataOverlayLayer.isHidden = true
 		allLayers.append(dataOverlayLayer)
 
@@ -145,7 +143,7 @@ class MapLayersView: UIView {
 
 		// implement crosshairs
 		crossHairs = CrossHairsLayer(radius: 12.0)
-		crossHairs.zPosition = ZLAYER.CROSSHAIRS.rawValue
+		crossHairs.zPosition = MAIN_ZLAYER.CROSSHAIRS.rawValue
 		layer.addSublayer(crossHairs)
 	}
 
@@ -255,7 +253,7 @@ class MapLayersView: UIView {
 				}
 
 				let layer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
-				layer.zPosition = ZLAYER.GPX.rawValue
+				layer.zPosition = MAIN_ZLAYER.GPX.rawValue
 				layer.tileServer = tileServer
 				layer.isHidden = false
 				allLayers.append(layer)
@@ -268,4 +266,14 @@ class MapLayersView: UIView {
 	func noNameLayer() -> MapLayersView.LayerOrView? {
 		return allLayers.first(where: { $0.hasTileServer === TileServer.noName })
 	}
+
+#if DEBUG
+	private func debugZ() {
+		print("---")
+		for obj in allLayers {
+			let layer = (obj as? UIView)?.layer ?? (obj as! CALayer)
+			print("\(String(describing: type(of: obj))): z = \(layer.zPosition)")
+		}
+	}
+#endif
 }

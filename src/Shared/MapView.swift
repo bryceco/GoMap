@@ -39,6 +39,13 @@ struct MapLocation {
 
 // MARK: MapView
 
+// These zPosition values are isolated from the ones in MapLayersView
+private enum EDITOR_ZLAYER: CGFloat {
+	case EDITOR = -20
+	case ROTATEGRAPHIC = -3
+	case BLINK = 4
+}
+
 final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteractionDelegate, RightClickHandling {
 	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
 
@@ -162,7 +169,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		                             viewPort: viewPort,
 		                             display: MessageDisplay.shared,
 		                             progress: mainView)
-		editorLayer.zPosition = ZLAYER.EDITOR.rawValue
+		editorLayer.zPosition = EDITOR_ZLAYER.EDITOR.rawValue
 		layer.addSublayer(editorLayer)
 
 #if false
@@ -294,7 +301,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		path.close()
 		rotateObjectOverlay.path = path.cgPath
 		rotateObjectOverlay.fillColor = UIColor(red: 0.0, green: 1.0, blue: 1.0, alpha: 0.4).cgColor
-		rotateObjectOverlay.zPosition = ZLAYER.ROTATEGRAPHIC.rawValue
+		rotateObjectOverlay.zPosition = EDITOR_ZLAYER.ROTATEGRAPHIC.rawValue
 		layer.addSublayer(rotateObjectOverlay)
 
 		isRotateObjectMode = (rotateObjectOverlay, rotateObjectCenter)
@@ -908,7 +915,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		blinkLayer.fillColor = nil
 		blinkLayer.lineWidth = 3.0
 		blinkLayer.frame = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height)
-		blinkLayer.zPosition = ZLAYER.BLINK.rawValue
+		blinkLayer.zPosition = EDITOR_ZLAYER.BLINK.rawValue
 		blinkLayer.strokeColor = UIColor.black.cgColor
 
 		let dots = CAShapeLayer()

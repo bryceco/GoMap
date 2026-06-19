@@ -197,6 +197,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		// to make it a child of MapLayersView instead:
 		mapView.setUpChildViews(with: self)
 		mapView.removeFromSuperview()
+		mapView.layer.zPosition = MAIN_ZLAYER.MAPVIEW.rawValue
 
 		// set up layers view
 		mapLayersView.initDefaultChildViews(andAlso: [mapView])
@@ -269,7 +270,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		locationBallView.heading = 0.0
 		locationBallView.showHeading = true
 		locationBallView.isHidden = true
-		locationBallView.layer.zPosition = ZLAYER.LOCATION_BALL.rawValue
+		locationBallView.layer.zPosition = MAIN_ZLAYER.LOCATION_BALL.rawValue
 		locationBallView.viewPort = viewPort
 		mapLayersView.addSubview(locationBallView)
 
