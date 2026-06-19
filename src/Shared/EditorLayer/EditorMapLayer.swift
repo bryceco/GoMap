@@ -632,6 +632,43 @@ final class EditorMapLayer: CALayer {
 		})
 	}
 
+	private static let oneWayArrowLength: Double = 15
+	private static let oneWayArrowWidth: Double = 5
+	/// Along-way distance from motor chevron tip to bicycle chevron tip (motor icon + gap + bicycle icon).
+	private static let bicycleContraflowArrowOffset: Double = 3 * oneWayArrowLength
+
+	private func makeOneWayArrowLayer(
+		at loc: OSMPoint,
+		direction dir: OSMPoint,
+		isReversed: Bool,
+		fillColor: UIColor,
+		zPosition: CGFloat) -> CAShapeLayerWithProperties
+	{
+		let width = Self.oneWayArrowWidth
+		let len = isReversed ? -Self.oneWayArrowLength : Self.oneWayArrowLength
+
+		let p1 = OSMPoint(x: loc.x - dir.x * len + dir.y * width,
+		                  y: loc.y - dir.y * len - dir.x * width)
+		let p2 = OSMPoint(x: loc.x - dir.x * len - dir.y * width,
+		                  y: loc.y - dir.y * len + dir.x * width)
+
+		let arrowPath = CGMutablePath()
+		arrowPath.move(to: CGPoint(x: p1.x, y: p1.y))
+		arrowPath.addLine(to: CGPoint(x: loc.x, y: loc.y))
+		arrowPath.addLine(to: CGPoint(x: p2.x, y: p2.y))
+		arrowPath.addLine(to: CGPoint(x: loc.x - dir.x * len * 0.5,
+		                              y: loc.y - dir.y * len * 0.5))
+		arrowPath.closeSubpath()
+
+		let arrow = CAShapeLayerWithProperties()
+		arrow.path = arrowPath
+		arrow.fillColor = fillColor.cgColor
+		arrow.strokeColor = UIColor.white.cgColor
+		arrow.lineWidth = 0.5
+		arrow.zPosition = zPosition
+		return arrow
+	}
+
 	// clip a way to the path inside the viewable rect so we can draw a name on it
 	func pathClipped(toViewRect way: OsmWay, length pLength: UnsafeMutablePointer<CGFloat>?) -> CGPath? {
 		var path: CGMutablePath?
@@ -1409,37 +1446,29 @@ final class EditorMapLayer: CALayer {
 			}
 			let isHighlight = highlights.contains(way)
 			if way.isOneWay != .NONE || isHighlight {
+				let arrowZ = isHighlight ? self.Z_HIGHLIGHT_ARROW : self.Z_ARROW
 				// arrow heads
+				let isReversed = way.isOneWay == .BACKWARD
 				invoke(alongScreenClippedWay: way, offset: 50, interval: 100, block: { loc, dir in
-					// draw direction arrow at loc/dir
-					let reversed = way.isOneWay == ONEWAY.BACKWARD
-					let len: Double = reversed ? -15 : 15
-					let width: Double = 5
-
-					let p1 = OSMPoint(x: loc.x - dir.x * len + dir.y * width,
-					                  y: loc.y - dir.y * len - dir.x * width)
-					let p2 = OSMPoint(x: loc.x - dir.x * len - dir.y * width,
-					                  y: loc.y - dir.y * len + dir.x * width)
-
-					let arrowPath = CGMutablePath()
-					arrowPath.move(to: CGPoint(x: p1.x, y: p1.y))
-					arrowPath.addLine(to: CGPoint(x: loc.x, y: loc.y))
-					arrowPath.addLine(to: CGPoint(x: p2.x, y: p2.y))
-					arrowPath
-						.addLine(to: CGPoint(x: CGFloat(loc.x - dir.x * len * 0.5),
-						                     y: CGFloat(loc.y - dir.y * len * 0.5)))
-					arrowPath.closeSubpath()
-
-					let arrow = CAShapeLayerWithProperties()
-					arrow.path = arrowPath
-					arrow.lineWidth = 1
-					arrow.fillColor = UIColor.black.cgColor
-					arrow.strokeColor = UIColor.white.cgColor
-					arrow.lineWidth = 0.5
-					arrow.zPosition = isHighlight ? self.Z_HIGHLIGHT_ARROW : self.Z_ARROW
-
-					layers.append(arrow)
+					layers.append(self.makeOneWayArrowLayer(at: loc,
+					                                        direction: dir,
+					                                        isReversed: isReversed,
+					                                        fillColor: UIColor.black,
+					                                        zPosition: arrowZ))
 				})
+				if way.allowsBicycleContraflow() {
+					// a bicycle lane that is two-way even though the street is one-way
+					let bicycleOffset = isReversed
+						? 50 + Self.bicycleContraflowArrowOffset
+						: 50 - Self.bicycleContraflowArrowOffset
+					invoke(alongScreenClippedWay: way, offset: bicycleOffset, interval: 100, block: { loc, dir in
+						layers.append(self.makeOneWayArrowLayer(at: loc,
+						                                        direction: dir,
+						                                        isReversed: !isReversed,
+						                                        fillColor: UIColor.systemBlue,
+						                                        zPosition: arrowZ))
+					})
+				}
 			}
 
 			// street names
