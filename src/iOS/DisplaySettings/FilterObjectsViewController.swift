@@ -24,36 +24,30 @@ class FilterObjectsViewController: UITableViewController, UITextFieldDelegate {
 	@IBOutlet var switchPastFuture: UISwitch!
 	@IBOutlet var switchOthers: UISwitch!
 
-	// return a list of arrays, each array containing either a single integer or a first-last pair of integers
+	// Parse a level-filter string like "-1,0,2.5..5,7..8" into [[Double]].
+	// Each element is either [value] (single level) or [lo, hi] (inclusive range).
+	// Returns nil for nil input or invalid string, and [] for empty string.
 	class func levels(for text: String?) -> [[Double]]? {
-		guard let text = text else { return nil }
+		guard let text else { return nil }
 		var list: [[Double]] = []
-		let scanner = Scanner(string: text)
-		scanner.charactersToBeSkipped = CharacterSet.whitespacesAndNewlines
-
-		if scanner.isAtEnd {
-			return list // empty list
-		}
-
-		while true {
-			guard let first = scanner.scanDouble() else {
-				return []
-			}
-			if scanner.scanString("..") != nil {
-				guard let last = scanner.scanDouble() else {
-					return []
-				}
-				list.append([first, last])
-			} else {
-				list.append([first])
-			}
-			if scanner.isAtEnd {
-				return list
-			}
-			if scanner.scanString(",") != nil {
-				return []
+		for part in text.split(separator: ",") {
+			let trimmed = part.trimmingCharacters(in: .whitespaces)
+			guard !trimmed.isEmpty else { return nil }
+			let bounds = trimmed.components(separatedBy: "..")
+			switch bounds.count {
+			case 1:
+				guard let val = Double(trimmed) else { return nil }
+				list.append([val])
+			case 2:
+				guard let lo = Double(bounds[0].trimmingCharacters(in: .whitespaces)),
+				      let hi = Double(bounds[1].trimmingCharacters(in: .whitespaces))
+				else { return nil }
+				list.append([lo, hi])
+			default:
+				return nil // e.g. "2...3"
 			}
 		}
+		return list
 	}
 
 	override func viewDidLoad() {
