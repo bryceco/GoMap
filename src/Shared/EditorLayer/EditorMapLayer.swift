@@ -179,16 +179,14 @@ final class EditorMapLayer: CALayer {
 	var dragState = DragState(startPoint: .zero, didMove: false, confirmDrag: false)
 
 	/// Active while rotating a node's `direction` / `camera:direction` tag (not geometry).
-	var directionRotateTagKey: String?
-	var directionRotateInitialBearing: Int?
-	var directionRotateUndoOpen = false
+	var nodeRotate: (key: String, direction: OsmNode.Direction)?
+	var nodeRotateUndoOpen = false
+	var isNodeRotateMode: Bool { nodeRotate != nil }
 
-	var isRotateDirectionMode: Bool { directionRotateTagKey != nil }
-
-	func canRotateSelectedNodeDirection() -> Bool {
+	func canRotateSelectedNode() -> Bool {
 		selectedWay == nil &&
 			selectedRelation == nil &&
-			selectedNode?.technicalDirectionTagKey != nil
+			selectedNode?.direction != nil
 	}
 
 	let objectFilters = EditorFilters()
@@ -1193,9 +1191,9 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func directionShapeLayer(for node: OsmNode,
-	                         withDirection direction: NSRange) -> (CALayer & LayerPropertiesProviding)
+							 withDirection direction: OsmNode.Direction) -> (CALayer & LayerPropertiesProviding)
 	{
-		let heading = Double(direction.location - 90 + direction.length / 2)
+		let heading = Double(direction.direction - 90)
 
 		let layer = CAShapeLayerWithProperties()
 
@@ -1211,7 +1209,7 @@ final class EditorMapLayer: CALayer {
 		layer.setAffineTransform(CGAffineTransform(rotationAngle: CGFloat(screenAngle)))
 
 		let radius: CGFloat = 30.0
-		let fieldOfViewRadius = Double(direction.length != 0 ? direction.length : 55)
+		let fieldOfViewRadius = Double(direction.arcWidth != 0 ? direction.arcWidth : 55)
 		let path = CGMutablePath()
 		path.addArc(
 			center: CGPoint.zero,
@@ -1245,7 +1243,8 @@ final class EditorMapLayer: CALayer {
 		if direction < 0 {
 			direction += 360
 		}
-		return directionShapeLayer(for: node, withDirection: NSRange(location: direction, length: 0))
+		return directionShapeLayer(for: node,
+								   withDirection: OsmNode.Direction(direction))
 	}
 
 	/// Determines the `CALayer` instance required to draw the direction of the given `node`.
@@ -1253,9 +1252,10 @@ final class EditorMapLayer: CALayer {
 	/// - Returns: A `CALayer` instance for rendering the given node's direction.
 	func directionShapeLayers(with node: OsmNode) -> [CALayer & LayerPropertiesProviding] {
 		if let direction = node.direction {
-			return [directionShapeLayer(for: node, withDirection: direction)]
+			return [directionShapeLayer(for: node, withDirection: direction.direction)]
 		}
 
+		// a traffic sign or signal that is part of a highway points toward the previous/next node
 		guard let highway = node.tags["highway"] else { return [] }
 
 		var directionValue: String?
@@ -1264,41 +1264,44 @@ final class EditorMapLayer: CALayer {
 		} else if highway == "stop" || highway == "give_way" {
 			directionValue = node.tags["direction"]
 		}
-		if let directionValue = directionValue {
-			enum DIR { case IS_NONE, IS_FORWARD, IS_BACKWARD, IS_BOTH, IS_ALL }
-			let isDirection: DIR = directionValue == "forward" ? .IS_FORWARD :
-				directionValue == "backward" ? .IS_BACKWARD :
-				directionValue == "both" ? .IS_BOTH :
-				directionValue == "all" ? .IS_ALL :
-				.IS_NONE
+		guard let directionValue else {
+			return []
+		}
+		enum DIR { case IS_NONE, IS_FORWARD, IS_BACKWARD, IS_BOTH, IS_ALL }
+		let isDirection: DIR = directionValue == "forward" ? .IS_FORWARD :
+		directionValue == "backward" ? .IS_BACKWARD :
+		directionValue == "both" ? .IS_BOTH :
+		directionValue == "all" ? .IS_ALL :
+			.IS_NONE
 
-			if isDirection != .IS_NONE {
-				var wayList = mapData.waysContaining(node) // this is expensive, only do if necessary
-				wayList = wayList.filter({ $0.tags["highway"] != nil })
-				if wayList.count > 0 {
-					if wayList.count > 1, isDirection != .IS_ALL {
-						return [] // the direction isn't well defined
-					}
-					var list: [CALayer & LayerPropertiesProviding] = []
-					list.reserveCapacity(2 * wayList.count) // sized for worst case
-					for way in wayList {
-						let pos = way.nodes.firstIndex(of: node)
-						if isDirection != .IS_FORWARD {
-							if let layer = directionLayerForNode(in: way, node: node, facing: (pos ?? 0) + 1) {
-								list.append(layer)
-							}
-						}
-						if isDirection != .IS_BACKWARD {
-							if let layer = directionLayerForNode(in: way, node: node, facing: (pos ?? 0) - 1) {
-								list.append(layer)
-							}
-						}
-					}
-					return list
+		guard isDirection != .IS_NONE else {
+			return []
+		}
+		var wayList = mapData.waysContaining(node) // this is expensive, only do if necessary
+		wayList = wayList.filter({ $0.tags["highway"] != nil })
+		guard wayList.count > 0 else {
+			return []
+		}
+		if wayList.count > 1, isDirection != .IS_ALL {
+			return [] // the direction isn't well defined
+		}
+
+		var list: [CALayer & LayerPropertiesProviding] = []
+		list.reserveCapacity(2 * wayList.count) // sized for worst case
+		for way in wayList {
+			let pos = way.nodes.firstIndex(of: node)
+			if isDirection != .IS_FORWARD {
+				if let layer = directionLayerForNode(in: way, node: node, facing: (pos ?? 0) + 1) {
+					list.append(layer)
+				}
+			}
+			if isDirection != .IS_BACKWARD {
+				if let layer = directionLayerForNode(in: way, node: node, facing: (pos ?? 0) - 1) {
+					list.append(layer)
 				}
 			}
 		}
-		return []
+		return list
 	}
 
 	func getShapeLayersForHighlights() -> [CALayer] {

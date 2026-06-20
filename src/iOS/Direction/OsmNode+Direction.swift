@@ -34,44 +34,79 @@ extension OsmNode {
 
 	/// The direction in which the node is facing.
 	/// If the node does not have a direction value return `nil`.
-	var direction: NSRange? {
+	var direction: (key: String, direction: Direction)? {
 		let keys = ["direction", "camera:direction"]
-		for directionKey in keys {
-			if let value = tags[directionKey],
+		for key in keys {
+			if let value = tags[key],
 			   let direction = OsmNode.directionFromString(value)
 			{
-				return direction
+				return (key, direction)
 			}
 		}
 		return nil
 	}
 
-	/// Tag key (`direction` or `camera:direction`) whose value parses as a technical bearing, if any.
-	var technicalDirectionTagKey: String? {
-		for key in ["direction", "camera:direction"] {
-			if let value = tags[key],
-			   OsmNode.directionFromString(value) != nil
-			{
-				return key
+	// start and end are always 0..359
+	struct Direction {
+		var start: Int
+		var end: Int
+
+		var direction: Int {
+			if start <= end {
+				return (start + end) / 2
+			} else {
+				// wrapped interval, e.g. 350..20
+				return Self.clamp((start + end + 360) / 2)
 			}
 		}
-		return nil
-	}
-
-	/// OSM tag value for a bearing, preserving arc span when the current direction is a range.
-	func directionTagValue(forBearingDegrees bearing: Int) -> String? {
-		guard let range = direction else { return nil }
-		let normalized = ((bearing % 360) + 360) % 360
-		if range.length == 0 {
-			return "\(normalized)"
+		var arcWidth: Int {
+			if start <= end {
+				return end - start
+			} else {
+				// Wrapped interval, e.g. 350 → 20
+				return (end + 360) - start
+			}
 		}
-		let end = (normalized + range.length) % 360
-		return "\(normalized)-\(end)"
+
+		init(start: Int, end: Int) {
+			self.start = Self.clamp(start)
+			self.end = Self.clamp(end)
+		}
+
+		init(_ direction: Int) {
+			self.init(start: direction,
+					  end: direction)
+		}
+		init(start: Float, end: Float) {
+			self.init(start: Int(start.rounded()),
+					  end: Int(end.rounded()))
+		}
+		init(_ direction: Float) {
+			self.init(start: direction,
+					  end: direction)
+		}
+
+		/// Returns a new Direction with the given start bearing and the same arc width.
+		func with(start newStart: Int) -> Direction {
+			return Direction(start: newStart,
+							 end: newStart + arcWidth)
+		}
+
+		func valueString() -> String {
+			if start == end {
+				return "\(start)"
+			}
+			return "\(start)-\(end)"
+		}
+
+		static func clamp(_ angle: Int) -> Int {
+			return ((angle % 360) + 360) % 360
+		}
 	}
 
-	private static func directionFromString(_ string: String) -> NSRange? {
+	private static func directionFromString(_ string: String) -> Direction? {
 		if let direction = Float(string) ?? cardinalDictionary[string] {
-			return NSMakeRange(Int(direction), 0)
+			return Direction(direction)
 		} else {
 			let a: [String] = string.components(separatedBy: "-")
 			if a.count == 2 {
@@ -80,11 +115,7 @@ extension OsmNode {
 				if let d1 = Float(a0) ?? cardinalDictionary[a0],
 				   let d2 = Float(a1) ?? cardinalDictionary[a1]
 				{
-					var angle = Int(d2 - d1)
-					if angle < 0 {
-						angle += 360
-					}
-					return NSMakeRange(Int(d1), angle)
+					return Direction(start: d1, end: d2)
 				}
 			}
 		}

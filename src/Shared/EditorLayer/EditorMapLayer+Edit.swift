@@ -458,27 +458,24 @@ extension EditorMapLayer {
 		mapData.endUndoGrouping()
 	}
 
-	// MARK: Rotate direction tag
+	// MARK: Rotate a node's direction tag
 
-	func prepareDirectionRotation() {
+	func prepareNodeRotation() {
 		guard let node = selectedNode,
-		      let tagKey = node.technicalDirectionTagKey,
-		      let bearing = node.direction?.location
+			  let keyDir = node.direction
 		else { return }
-		directionRotateTagKey = tagKey
-		directionRotateInitialBearing = bearing
+		nodeRotate = keyDir
 	}
 
-	func rotateDirectionBegin() {
+	func rotateNodeBegin() {
 		mapData.beginUndoGrouping()
 		dragState.didMove = false
-		directionRotateUndoOpen = true
+		nodeRotateUndoOpen = true
 	}
 
-	func rotateDirectionContinue(delta: CGFloat) {
+	func rotateNodeContinue(delta: CGFloat) {
 		guard let node = selectedNode,
-		      let tagKey = directionRotateTagKey,
-		      let initialBearing = directionRotateInitialBearing
+		      let nodeRotate
 		else { return }
 
 		if dragState.didMove {
@@ -490,25 +487,23 @@ extension EditorMapLayer {
 		}
 		dragState.didMove = true
 
-		let deltaDegrees = Int(round(Double(-delta) * 180 / .pi))
-		let bearing = ((initialBearing + deltaDegrees) % 360 + 360) % 360
-		guard let value = node.directionTagValue(forBearingDegrees: bearing) else { return }
+		let deltaDegrees = Int(round(delta * 180 / .pi))
+		let newDirection = nodeRotate.direction.with(start: nodeRotate.direction.start + deltaDegrees)
 		var tags = node.tags
-		tags[tagKey] = value
+		tags[nodeRotate.key] = newDirection.valueString()
 		mapData.setTags(tags, for: node)
 		setNeedsLayout()
 	}
 
-	func rotateDirectionFinish() {
-		if directionRotateUndoOpen {
+	func rotateNodeFinish() {
+		if nodeRotateUndoOpen {
 			mapData.endUndoGrouping()
-			directionRotateUndoOpen = false
+			nodeRotateUndoOpen = false
 		}
 		if dragState.didMove {
 			owner.didUpdateObject()
 		}
-		directionRotateTagKey = nil
-		directionRotateInitialBearing = nil
+		nodeRotate = nil
 	}
 
 	// MARK: Editing
@@ -725,10 +720,10 @@ extension EditorMapLayer {
 					actionList += [.STRAIGHTEN, .REVERSE, .DUPLICATE, .CREATE_RELATION]
 				}
 			}
-		} else if let selectedNode = selectedNode {
+		} else if selectedNode != nil {
 			// node
 			actionList += [.DUPLICATE]
-			if canRotateSelectedNodeDirection() {
+			if canRotateSelectedNode() {
 				actionList.append(.ROTATE)
 			}
 		} else if let selectedRelation = selectedRelation {
@@ -801,7 +796,7 @@ extension EditorMapLayer {
 				owner.placePushpinForSelection(at: nil)
 			case .ROTATE:
 				let canRotateGeometry = selectedWay != nil || (selectedRelation?.isMultipolygon() ?? false)
-				guard canRotateGeometry || canRotateSelectedNodeDirection() else {
+				guard canRotateGeometry || canRotateSelectedNode() else {
 					throw EditError.text(NSLocalizedString("Only ways/multipolygons can be rotated", comment: ""))
 				}
 				owner.startObjectRotation()
