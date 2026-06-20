@@ -46,6 +46,29 @@ extension OsmNode {
 		return nil
 	}
 
+	/// Tag key (`direction` or `camera:direction`) whose value parses as a technical bearing, if any.
+	var technicalDirectionTagKey: String? {
+		for key in ["direction", "camera:direction"] {
+			if let value = tags[key],
+			   OsmNode.directionFromString(value) != nil
+			{
+				return key
+			}
+		}
+		return nil
+	}
+
+	/// OSM tag value for a bearing, preserving arc span when the current direction is a range.
+	func directionTagValue(forBearingDegrees bearing: Int) -> String? {
+		guard let range = direction else { return nil }
+		let normalized = ((bearing % 360) + 360) % 360
+		if range.length == 0 {
+			return "\(normalized)"
+		}
+		let end = (normalized + range.length) % 360
+		return "\(normalized)-\(end)"
+	}
+
 	private static func directionFromString(_ string: String) -> NSRange? {
 		if let direction = Float(string) ?? cardinalDictionary[string] {
 			return NSMakeRange(Int(direction), 0)

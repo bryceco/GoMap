@@ -458,6 +458,59 @@ extension EditorMapLayer {
 		mapData.endUndoGrouping()
 	}
 
+	// MARK: Rotate direction tag
+
+	func prepareDirectionRotation() {
+		guard let node = selectedNode,
+		      let tagKey = node.technicalDirectionTagKey,
+		      let bearing = node.direction?.location
+		else { return }
+		directionRotateTagKey = tagKey
+		directionRotateInitialBearing = bearing
+	}
+
+	func rotateDirectionBegin() {
+		mapData.beginUndoGrouping()
+		dragState.didMove = false
+		directionRotateUndoOpen = true
+	}
+
+	func rotateDirectionContinue(delta: CGFloat) {
+		guard let node = selectedNode,
+		      let tagKey = directionRotateTagKey,
+		      let initialBearing = directionRotateInitialBearing
+		else { return }
+
+		if dragState.didMove {
+			mapData.endUndoGrouping()
+			silentUndo = true
+			mapData.undo()
+			silentUndo = false
+			mapData.beginUndoGrouping()
+		}
+		dragState.didMove = true
+
+		let deltaDegrees = Int(round(Double(-delta) * 180 / .pi))
+		let bearing = ((initialBearing + deltaDegrees) % 360 + 360) % 360
+		guard let value = node.directionTagValue(forBearingDegrees: bearing) else { return }
+		var tags = node.tags
+		tags[tagKey] = value
+		mapData.setTags(tags, for: node)
+		setNeedsLayout()
+	}
+
+	func rotateDirectionFinish() {
+		if directionRotateUndoOpen {
+			mapData.endUndoGrouping()
+			directionRotateUndoOpen = false
+		}
+		if dragState.didMove {
+			owner.didUpdateObject()
+		}
+		directionRotateTagKey = nil
+		directionRotateInitialBearing = nil
+	}
+
 	// MARK: Editing
 
 	func adjust(_ node: OsmNode, byScreenDistance delta: CGPoint) {
@@ -672,9 +725,12 @@ extension EditorMapLayer {
 					actionList += [.STRAIGHTEN, .REVERSE, .DUPLICATE, .CREATE_RELATION]
 				}
 			}
-		} else if selectedNode != nil {
+		} else if let selectedNode = selectedNode {
 			// node
 			actionList += [.DUPLICATE]
+			if canRotateSelectedNodeDirection() {
+				actionList.append(.ROTATE)
+			}
 		} else if let selectedRelation = selectedRelation {
 			// relation
 			if selectedRelation.isMultipolygon() {
@@ -744,7 +800,8 @@ extension EditorMapLayer {
 				selectedRelation = newObject.isRelation()
 				owner.placePushpinForSelection(at: nil)
 			case .ROTATE:
-				guard selectedWay != nil || (selectedRelation?.isMultipolygon() ?? false) else {
+				let canRotateGeometry = selectedWay != nil || (selectedRelation?.isMultipolygon() ?? false)
+				guard canRotateGeometry || canRotateSelectedNodeDirection() else {
 					throw EditError.text(NSLocalizedString("Only ways/multipolygons can be rotated", comment: ""))
 				}
 				owner.startObjectRotation()
