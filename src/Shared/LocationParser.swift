@@ -27,35 +27,49 @@ class LocationParser {
 		case lon
 	}
 
-	private static func scanNSEW(scanner: Scanner) -> (Double, LatOrLon)? {
+	private static func scanNSEW(scanner: Scanner) -> (negate: Bool, latOrLon: LatOrLon)? {
 		switch scanner.scanAnyCharacter(from: "NESW") {
-		case "N": return (1.0, .lat)
-		case "S": return (-1.0, .lat)
-		case "E": return (1.0, .lon)
-		case "W": return (-1.0, .lon)
+		case "N": return (false, .lat)
+		case "S": return (true, .lat)
+		case "E": return (false, .lon)
+		case "W": return (true, .lon)
 		default: return nil
 		}
 	}
 
+	// parse a string like "14.004°" (decimal degrees with degree symbol, no minutes/seconds)
+	private static func scanDecimalDegrees(scanner: Scanner) -> Double? {
+		let index = scanner.currentIndex
+		guard let degrees = scanner.scanDouble(),
+		      scanner.scanString("°") != nil
+		else {
+			scanner.currentIndex = index
+			return nil
+		}
+		return degrees
+	}
+
 	private static func scanDegreesMinutesSeconds(scanner: Scanner) -> Double? {
+		let index = scanner.currentIndex
 		// Parse degrees, minutes, seconds:
 		guard let degrees = scanner.scanInt(), // Degrees (integer),
 		      scanner.scanString("°") != nil, // followed by °,
 		      let minutes = scanner.scanDouble(), // minutes (integer or decimal)
-		      scanner.scanAnyCharacter(from: "'′’'") != nil // followed by '
+		      scanner.scanAnyCharacter(from: "'′''") != nil // followed by '
 		else {
+			scanner.currentIndex = index
 			return nil
 		}
 		// optional seconds (absent when minutes are decimal, e.g. 52.6')
 		let seconds: Double
-		let index = scanner.currentIndex
+		let indexBeforeSeconds = scanner.currentIndex
 		if let tempSeconds = scanner.scanDouble(), // seconds (floating point),
 		   scanner.scanAnyCharacter(from: "\"″\u{201D}\u{201C}") != nil // followed by "
 		{
 			seconds = tempSeconds
 		} else {
 			seconds = 0.0
-			scanner.currentIndex = index
+			scanner.currentIndex = indexBeforeSeconds
 		}
 
 		let value = Double(abs(degrees)) + minutes / 60.0 + seconds / 3600.0
@@ -71,29 +85,27 @@ class LocationParser {
 		scanner.charactersToBeSkipped = .whitespaces
 
 		let firstDir1 = scanNSEW(scanner: scanner)
-		guard let first = scanDegreesMinutesSeconds(scanner: scanner)
+		guard let first = scanDegreesMinutesSeconds(scanner: scanner) ?? scanDecimalDegrees(scanner: scanner)
 		else { return nil }
 		let firstDir2 = scanNSEW(scanner: scanner)
 
 		_ = scanner.scanAnyCharacter(from: "+,")
 
 		let secondDir1 = scanNSEW(scanner: scanner)
-		guard let second = scanDegreesMinutesSeconds(scanner: scanner)
+		guard let second = scanDegreesMinutesSeconds(scanner: scanner) ?? scanDecimalDegrees(scanner: scanner)
 		else { return nil }
 		let secondDir2 = scanNSEW(scanner: scanner)
 
-		// now decode the NSEW values
-		switch (firstDir1?.1, firstDir2?.1, secondDir1?.1, secondDir2?.1) {
-		case (nil, nil, nil, nil):
+		// Consolidate prefix/suffix direction for each coordinate, then decode
+		let firstDir = firstDir1 ?? firstDir2
+		let secondDir = secondDir1 ?? secondDir2
+		switch (firstDir?.latOrLon, secondDir?.latOrLon) {
+		case (nil, nil):
 			return (first, second)
-		case (.lat, nil, .lon, nil):
-			return (first * firstDir1!.0, second * secondDir1!.0)
-		case (nil, .lat, nil, .lon):
-			return (first * firstDir2!.0, second * secondDir2!.0)
-		case (.lon, nil, .lat, nil):
-			return (second * secondDir1!.0, first * firstDir1!.0)
-		case (nil, .lon, nil, .lat):
-			return (second * secondDir2!.0, first * firstDir2!.0)
+		case (.lat, .lon):
+			return (firstDir!.negate ? -first : first, secondDir!.negate ? -second : second)
+		case (.lon, .lat):
+			return (secondDir!.negate ? -second : second, firstDir!.negate ? -first : first)
 		default:
 			return nil
 		}
