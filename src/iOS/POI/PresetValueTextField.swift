@@ -530,7 +530,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		let vc = PanoramaxViewController.create()
 		vc.panoramax = PanoramaxServer(serverURL: URL(string: "https://panoramax.openstreetmap.fr")!)
 		vc.photoID = text ?? ""
-		if let tabController: POITabBarController = self.ancestorOfType(),
+		if let tabController = self.ancestorOfType(POITabBarController.self),
 		   let selection = tabController.selection
 		{
 			// specify tags we want to upload to panoramax

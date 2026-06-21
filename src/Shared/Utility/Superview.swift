@@ -20,7 +20,7 @@ extension UIView {
 		return nil
 	}
 
-	func ancestorOfType<T: UIResponder>() -> T? {
+	func ancestorOfType<T: UIResponder>(_ type: T.Type) -> T? {
 		var responder: UIResponder? = self
 		while let current = responder {
 			if let match = current as? T {
