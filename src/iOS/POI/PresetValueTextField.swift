@@ -506,7 +506,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 			return
 		}
 		guard let cell = tableView.visibleCells.compactMap({
-			let c: PresetValueTextField? = $0.subviewOfType(where: {
+			let c = $0.subviewOfType(PresetValueTextField.self, where: {
 				$0.key == self.panoramaxKey
 			})
 			return c
