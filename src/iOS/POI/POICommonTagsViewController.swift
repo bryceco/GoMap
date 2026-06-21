@@ -145,9 +145,45 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		if let indexPath = indexPathFor(key: key),
 		   setBothValuesFor(indexPath: indexPath, value: value)
 		{
+			refreshPresetsIfFieldSetChanged()
 			return
 		}
 		updateTagDictLow(withValue: value, forKey: key)
+		refreshPresetsIfFieldSetChanged()
+	}
+
+	private func refreshPresetsIfFieldSetChanged() {
+		guard drillDownGroup == nil,
+		      let tabController = tabBarController as? POITabBarController
+		else { return }
+
+		let currentSignature = allPresets?.allPresetKeys().map { $0.tagKey } ?? []
+		let object = tabController.selection
+		let geometry = object?.geometry() ?? GEOMETRY.POINT
+		// Mirror updatePresets()'s update closure so newly revealed fields whose
+		// value lists come from TagInfo still get their async refresh installed.
+		let newPresets = PresetDisplayForFeature(
+			withFeature: currentFeature,
+			objectTags: tabController.keyValueDict,
+			geometry: geometry,
+			update: { [weak self] in
+				if let self,
+				   !self.isEditing
+				{
+					self.allPresets = PresetDisplayForFeature(
+						withFeature: self.currentFeature,
+						objectTags: tabController.keyValueDict,
+						geometry: geometry,
+						update: nil)
+					self.tableView.reloadData()
+				}
+			})
+		let newSignature = newPresets.allPresetKeys().map { $0.tagKey }
+
+		if currentSignature != newSignature {
+			allPresets = newPresets
+			tableView.reloadData()
+		}
 	}
 
 	func updatePresets() {
@@ -629,9 +665,12 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		if editingStyle == .delete {
 			// user swiped to delete a cell
 			if indexPath.section == allPresets?.sectionCount() {
-				// Extra tags section
-				updateTagDict(withValue: "", forKey: extraTags[indexPath.row].k)
+				// Extra tags section. Remove from the row model before updating the
+				// tag dict, because updateTagDict() may rebuild presets/extraTags and
+				// reload the table, which would invalidate this index path.
+				let key = extraTags[indexPath.row].k
 				extraTags.remove(at: indexPath)
+				updateTagDict(withValue: "", forKey: key)
 			} else {
 				// for regular cells just set the value to ""
 				let cell = tableView.cellForRow(at: indexPath)
