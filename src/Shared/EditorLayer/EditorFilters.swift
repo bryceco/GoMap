@@ -94,14 +94,17 @@ final class EditorFilters {
 		"corridor"
 	]
 	private let past_futures: Set<String> = [
-		"proposed",
+		"proposed", "planned",
 		"construction",
-		"abandoned",
-		"dismantled",
 		"disused",
-		"razed",
-		"demolished",
-		"obliterated"
+		"abandoned", "was",
+		"dismantled", "razed", "demolished", "destroyed", "removed", "obliterated",
+		"intermittent"
+	]
+	// Keys whose values may legitimately match past_futures without indicating lifecycle status
+	private let past_futures_whitelist: [String: String] = [
+		"craft": "construction",
+		"company": "construction"
 	]
 	private let parking_buildings: Set<String> = [
 		"multi-storey",
@@ -297,7 +300,17 @@ final class EditorFilters {
 				return false
 			}
 			for (key, value) in object.tags {
-				if past_futures.contains(key) || past_futures.contains(value) {
+				// legacy tagging, e.g. highway=construction
+				if past_futures.contains(value),
+				   past_futures_whitelist[key] != value
+				{
+					return true
+				}
+				let parts = key.split(separator: ":")
+				if parts.count > 1,
+				   past_futures.contains(String(parts[0]))
+				{
+					// lifecycle tagging, e.g. demolished:building=yes
 					return true
 				}
 			}
