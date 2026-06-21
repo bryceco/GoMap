@@ -1191,7 +1191,7 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func directionShapeLayer(for node: OsmNode,
-							 withDirection direction: OsmNode.Direction) -> (CALayer & LayerPropertiesProviding)
+	                         withDirection direction: OsmNode.Direction) -> (CALayer & LayerPropertiesProviding)
 	{
 		let heading = Double(direction.direction - 90)
 
@@ -1244,7 +1244,7 @@ final class EditorMapLayer: CALayer {
 			direction += 360
 		}
 		return directionShapeLayer(for: node,
-								   withDirection: OsmNode.Direction(direction))
+		                           withDirection: OsmNode.Direction(direction))
 	}
 
 	/// Determines the `CALayer` instance required to draw the direction of the given `node`.
@@ -1269,9 +1269,9 @@ final class EditorMapLayer: CALayer {
 		}
 		enum DIR { case IS_NONE, IS_FORWARD, IS_BACKWARD, IS_BOTH, IS_ALL }
 		let isDirection: DIR = directionValue == "forward" ? .IS_FORWARD :
-		directionValue == "backward" ? .IS_BACKWARD :
-		directionValue == "both" ? .IS_BOTH :
-		directionValue == "all" ? .IS_ALL :
+			directionValue == "backward" ? .IS_BACKWARD :
+			directionValue == "both" ? .IS_BOTH :
+			directionValue == "all" ? .IS_ALL :
 			.IS_NONE
 
 		guard isDirection != .IS_NONE else {

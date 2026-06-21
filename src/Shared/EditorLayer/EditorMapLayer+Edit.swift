@@ -462,7 +462,7 @@ extension EditorMapLayer {
 
 	func prepareNodeRotation() {
 		guard let node = selectedNode,
-			  let keyDir = node.direction
+		      let keyDir = node.direction
 		else { return }
 		nodeRotate = keyDir
 	}

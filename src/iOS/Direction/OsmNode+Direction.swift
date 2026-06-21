@@ -59,6 +59,7 @@ extension OsmNode {
 				return Self.clamp((start + end + 360) / 2)
 			}
 		}
+
 		var arcWidth: Int {
 			if start <= end {
 				return end - start
@@ -75,21 +76,23 @@ extension OsmNode {
 
 		init(_ direction: Int) {
 			self.init(start: direction,
-					  end: direction)
+			          end: direction)
 		}
+
 		init(start: Float, end: Float) {
 			self.init(start: Int(start.rounded()),
-					  end: Int(end.rounded()))
+			          end: Int(end.rounded()))
 		}
+
 		init(_ direction: Float) {
 			self.init(start: direction,
-					  end: direction)
+			          end: direction)
 		}
 
 		/// Returns a new Direction with the given start bearing and the same arc width.
 		func with(start newStart: Int) -> Direction {
 			return Direction(start: newStart,
-							 end: newStart + arcWidth)
+			                 end: newStart + arcWidth)
 		}
 
 		func valueString() -> String {
