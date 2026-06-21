@@ -502,7 +502,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 	func panoramaxUpdate(photoID: String) {
 		// Because the table cells can reload while taking the photo we
 		// need to locate the correct cell again:
-		guard let tableView: UITableView = superviewOfType() else {
+		guard let tableView = superviewOfType(UITableView.self) else {
 			return
 		}
 		guard let cell = tableView.visibleCells.compactMap({

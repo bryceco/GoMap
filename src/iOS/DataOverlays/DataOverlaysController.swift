@@ -135,7 +135,7 @@ class DataOverlaysController: TableViewControllerMac {
 	}
 
 	@IBAction func didToggleSwitch(_ sender: Any) {
-		guard let cell: UserDataTableCell = (sender as? UIView)?.superviewOfType(),
+		guard let cell = (sender as? UIView)?.superviewOfType(UserDataTableCell.self),
 		      let indexPath = tableView.indexPath(for: cell)
 		else { return }
 		switch Section(rawValue: indexPath.section) {

@@ -411,7 +411,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	}
 
 	func tab(toNext forward: Bool) {
-		guard let pair: TextPairTableCell = currentTextField?.superviewOfType(),
+		guard let pair = currentTextField?.superviewOfType(TextPairTableCell.self),
 		      var indexPath = tableView.indexPath(for: pair)
 		else { return }
 

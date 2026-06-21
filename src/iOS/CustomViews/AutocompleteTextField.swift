@@ -128,8 +128,8 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 	}
 
 	func frameForCompletionTableView() -> CGRect {
-		guard let cell: UITableViewCell = superviewOfType(),
-		      let tableView: UITableView = cell.superviewOfType()
+		guard let cell = superviewOfType(UITableViewCell.self),
+		      let tableView = cell.superviewOfType(UITableView.self)
 		else {
 			return .zero
 		}
@@ -154,8 +154,8 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		if filteredCompletions.count != 0 {
 			if completionTableView == nil {
 				guard
-					let cell: UITableViewCell = superviewOfType(),
-					let tableView: UITableView = cell.superviewOfType(),
+					let cell = superviewOfType(UITableViewCell.self),
+					let tableView = cell.superviewOfType(UITableView.self),
 					let indexPath = tableView.indexPath(for: cell)
 				else { return }
 				// scroll cell to top
@@ -209,8 +209,8 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 			gradientLayer?.removeFromSuperlayer()
 			gradientLayer = nil
 
-			if let cell: UITableViewCell = superviewOfType(),
-			   let tableView: UITableView = cell.superviewOfType()
+			if let cell = superviewOfType(UITableViewCell.self),
+			   let tableView = cell.superviewOfType(UITableView.self)
 			{
 				if let cellIndexPath = tableView.indexPath(for: cell) {
 					tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)

@@ -193,19 +193,19 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 	}
 
 	@IBAction func doComment(_ sender: Any) {
-		guard let cell: NotesNewCommentCell = (sender as? UIView)?.superviewOfType() else { return }
+		guard let cell = (sender as? UIView)?.superviewOfType(NotesNewCommentCell.self) else { return }
 		let text = cell.textView.text ?? ""
 		newComment(text, resolves: false)
 	}
 
 	@IBAction func doResolve(_ sender: Any) {
-		guard let cell: NotesNewCommentCell = (sender as? UIView)?.superviewOfType() else { return }
+		guard let cell = (sender as? UIView)?.superviewOfType(NotesNewCommentCell.self) else { return }
 		let text = cell.textView.text ?? ""
 		newComment(text, resolves: true)
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
-		if let cell: NotesNewCommentCell = textView.superviewOfType() {
+		if let cell = textView.superviewOfType(NotesNewCommentCell.self) {
 			newComment = cell.textView.text
 			let s = newComment?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 			cell.commentButton.isEnabled = (s?.count ?? 0) > 0
@@ -213,7 +213,7 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 	}
 
 	@IBAction func showUser(_ sender: Any?) {
-		guard let cell: NotesOldCommentCell = (sender as? UIButton)?.superviewOfType(),
+		guard let cell = (sender as? UIButton)?.superviewOfType(NotesOldCommentCell.self),
 		      let name = cell.user.titleLabel?.text,
 		      let url = URL(string: "\(OSM_SERVER.serverURL)user/\(name)")
 		else {

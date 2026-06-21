@@ -212,7 +212,7 @@ class AerialTileServerListViewController: UITableViewController {
 			editRow = IndexPath(row: serverList?.userDefinedServices().count ?? 0, section: SECTION_USER)
 		} else {
 			// edit existing service
-			guard let cell: UITableViewCell = sender.superviewOfType(),
+			guard let cell = sender.superviewOfType(UITableViewCell.self),
 			      let indexPath = tableView.indexPath(for: cell)
 			else {
 				return

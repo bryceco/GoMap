@@ -9,7 +9,7 @@
 import UIKit
 
 extension UIView {
-	func superviewOfType<T: AnyObject>() -> T? {
+	func superviewOfType<T: AnyObject>(_ type: T.Type) -> T? {
 		var view: UIView? = self
 		while view != nil {
 			if let t = view as? T {
