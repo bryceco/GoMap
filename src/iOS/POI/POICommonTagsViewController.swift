@@ -74,7 +74,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	private var currentFeature: PresetFeature? // the feature that was most recently inferred from the tags
 	private var childPushed = false
 	private var drillDownGroup: PresetDisplayGroup?
-	private var firstResponderTextField: UITextField?
 	private var extraTags: KeyValueTableSection! // array of key/values not covered by presets
 
 	static let isSetHighlight = UIColor.systemBlue
@@ -720,7 +719,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 					let list = [String](values)
 					textField.autocompleteStrings = list
 				}
-				firstResponderTextField = textField
 			}
 		}
 	}
@@ -754,7 +752,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 		// convert to raw value if necessary
 		let tagValue = presetKey.tagValueForPrettyName(textField.text ?? "")
-		firstResponderTextField = nil
 		updateTagDict(withValue: tagValue, forKey: presetKey.tagKey)
 	}
 
