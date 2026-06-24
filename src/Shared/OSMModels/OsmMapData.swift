@@ -106,12 +106,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		appDelegate.mainView.save() // this will also invalidate the timer
 	}
 
-	func setConstructed() {
-		nodes.values.forEach { $0.setConstructed() }
-		ways.values.forEach { $0.setConstructed() }
-		relations.values.forEach { $0.setConstructed() }
-	}
-
 	func wayCount() -> Int {
 		return ways.count
 	}
@@ -524,7 +518,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	func setConstructed(_ object: OsmBaseObject) {
-		object.setConstructed()
+		object.setConstructed(mapData: self)
 	}
 
 	func registerUndoCommentContext(_ context: [String: Any]) {
@@ -784,16 +778,13 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 
 		for node in newData.nodes {
-			node.setConstructed()
-			node.mapData = self
+			node.setConstructed(mapData: self)
 		}
 		for way in newData.ways {
-			way.setConstructed()
-			way.mapData = self
+			way.setConstructed(mapData: self)
 		}
 		for relation in newData.relations {
-			relation.setConstructed()
-			relation.mapData = self
+			relation.setConstructed(mapData: self)
 		}
 		invalidateParentRelationCache()
 
@@ -1831,15 +1822,18 @@ extension OsmMapData {
 		// make sure all objects are marked as constructed
 		for node in nodes.values {
 			assert(node.constructed())
-			assert(node.modifyCount >= (node.ident > 0 ? 0 : 1))
+			assert(node.mapData === self)
+			assert(node.modifyCount >= (node.ident > 0 || node.deleted ? 0 : 1))
 		}
 		for way in ways.values {
 			assert(way.constructed())
-			assert(way.modifyCount >= (way.ident > 0 ? 0 : 1))
+			assert(way.mapData === self)
+			assert(way.modifyCount >= (way.ident > 0 || way.deleted ? 0 : 1))
 		}
 		for relation in relations.values {
 			assert(relation.constructed())
-			assert(relation.modifyCount >= (relation.ident > 0 ? 0 : 1))
+			assert(relation.mapData === self)
+			assert(relation.modifyCount >= (relation.ident > 0 || relation.deleted ? 0 : 1))
 		}
 
 		// make sure that if the undo manager is holding an object that it's consistent with mapData

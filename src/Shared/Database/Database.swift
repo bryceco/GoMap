@@ -554,10 +554,6 @@ final class Database {
 			nodes.append(node)
 		}
 
-		for obj in nodes {
-			obj.setConstructed()
-		}
-
 		return nodes
 	}
 

@@ -381,9 +381,10 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		return _constructed
 	}
 
-	func setConstructed() {
+	func setConstructed(mapData: OsmMapData) {
 		_constructed = true
 		modifyCount = 0
+		self.mapData = mapData
 	}
 
 	static let _rfc3339DateFormatter: DateFormatter = {
