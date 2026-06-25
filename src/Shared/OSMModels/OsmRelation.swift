@@ -19,13 +19,13 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 	}
 
 	func constructMember(_ member: OsmMember) {
-		assert(!_constructed)
+		assert(!constructed())
 		assert(member.obj == nil)
 		members.append(member)
 	}
 
 	func constructMembers(_ members: [OsmMember]) {
-		assert(!_constructed)
+		assert(!constructed())
 		assert(members.first == nil || members.first!.obj == nil) // things added here shouldn't be resolved yet
 		self.members = members
 	}
@@ -116,7 +116,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 	}
 
 	func assignMembers(_ newMembers: [OsmMember], undo: MyUndoManager?) {
-		if _constructed {
+		if constructed() {
 			assert(undo != nil)
 			incrementModifyCount(undo!)
 			undo!.registerUndo(withTarget: self, selector: #selector(assignMembers(_:undo:)), objects: [members, undo!])
@@ -137,7 +137,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 	}
 
 	func addMember(_ member: OsmMember, atIndex index: Int, undo: MyUndoManager?) {
-		if _constructed {
+		if constructed() {
 			assert(undo != nil)
 			incrementModifyCount(undo!)
 			undo!.registerUndo(
@@ -491,6 +491,5 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 	required init?(coder: NSCoder) {
 		members = coder.decodeObject(forKey: "members") as! [OsmMember]
 		super.init(coder: coder)
-		_constructed = true
 	}
 }

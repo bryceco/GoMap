@@ -23,7 +23,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 	}
 
 	func constructNode(_ node: Int64) {
-		assert(!_constructed && nodes.isEmpty)
+		assert(!constructed() && nodes.isEmpty)
 		let ref = OsmIdentifier(node)
 		assert(ref > 0)
 		if nodeRefs == nil {
@@ -34,7 +34,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 	}
 
 	func constructNodeList(_ nodes: [OsmIdentifier]) {
-		assert(!_constructed)
+		assert(!constructed())
 		nodeRefs = nodes
 	}
 
@@ -71,7 +71,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 	}
 
 	@objc func addNode(_ node: OsmNode, atIndex index: Int, undo: MyUndoManager?) {
-		if _constructed {
+		if constructed() {
 			assert(undo != nil)
 			incrementModifyCount(undo)
 			undo!.registerUndo(
@@ -585,7 +585,6 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		for node in nodes {
 			node.setWayCount(node.wayCount + 1, undo: nil)
 		}
-		_constructed = true
 	}
 
 	override func encode(with coder: NSCoder) {

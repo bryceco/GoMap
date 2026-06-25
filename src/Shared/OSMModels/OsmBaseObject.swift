@@ -70,8 +70,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	// extra stuff
 
-	final var _constructed = false
-
 	private(set) final var deleted = false
 
 	final var renderInfo: RenderInfo?
@@ -220,7 +218,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	override var description: String {
 		var text =
-			"id=\(ident) constructed=\(_constructed ? "Yes" : "No") deleted=\(deleted ? "Yes" : "No") modifyCount=\(modifyCount)"
+			"id=\(ident) constructed=\(constructed() ? "Yes" : "No") deleted=\(deleted ? "Yes" : "No") modifyCount=\(modifyCount)"
 		for (key, value) in tags {
 			text += "\n  '\(key)' = '\(value)'"
 		}
@@ -373,17 +371,16 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			return
 		}
 
-		assert(!_constructed)
+		assert(!constructed())
 		tags[tag] = value
 	}
 
 	func constructed() -> Bool {
-		return _constructed
+		return mapData != nil
 	}
 
 	func setConstructed(mapData: OsmMapData) {
-		_constructed = true
-		modifyCount = 0
+		DbgAssert(self.mapData == nil)
 		self.mapData = mapData
 	}
 
@@ -407,7 +404,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	func setTimestamp(_ date: Date, undo: MyUndoManager?) {
-		if _constructed {
+		if constructed() {
 			undo?.registerUndo(
 				withTarget: self,
 				selector: #selector(setTimestamp(_:undo:)),
@@ -440,7 +437,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	func incrementModifyCount(_ undo: MyUndoManager?) {
 		assert(modifyCount >= 0)
-		if _constructed {
+		if constructed() {
 			assert(undo != nil)
 			// [undo registerUndoWithTarget:self selector:@selector(incrementModifyCount:) objects:@[undo]];
 		}
@@ -488,7 +485,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	func setDeleted(_ deleted: Bool, undo: MyUndoManager?) {
-		if _constructed {
+		if constructed() {
 			assert(undo != nil)
 			incrementModifyCount(undo)
 			undo!.registerUndo(
@@ -500,7 +497,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	func setTags(_ tags: [String: String], undo: MyUndoManager?) {
-		if _constructed {
+		if constructed() {
 			assert(undo != nil)
 			incrementModifyCount(undo!)
 			undo!.registerUndo(withTarget: self, selector: #selector(setTags(_:undo:)), objects: [self.tags, undo!])

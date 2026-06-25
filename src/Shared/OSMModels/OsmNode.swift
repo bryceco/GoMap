@@ -69,7 +69,7 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 	}
 
 	@objc func setLongitude(_ longitude: Double, latitude: Double, undo: MyUndoManager?) {
-		if _constructed {
+		if constructed() {
 			assert(undo != nil)
 			incrementModifyCount(undo!)
 			undo!.registerUndo(withTarget: self,
@@ -131,7 +131,6 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 		latLon = LatLon(latitude: lat, longitude: lon)
 		wayCount = 0
 		super.init(coder: coder)
-		_constructed = true
 	}
 
 	override func encode(with coder: NSCoder) {
@@ -141,7 +140,7 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 	}
 
 	func setWayCount(_ wayCount: Int, undo: MyUndoManager?) {
-		if _constructed,
+		if constructed(),
 		   let undo = undo
 		{
 			undo.registerUndo(

@@ -777,28 +777,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			}
 		}
 
-		for node in newData.nodes {
-			node.setConstructed(mapData: self)
-		}
-		for way in newData.ways {
-			way.setConstructed(mapData: self)
-		}
-		for relation in newData.relations {
-			relation.setConstructed(mapData: self)
-		}
-		invalidateParentRelationCache()
+		// Mark everything as constructed
+		newData.nodes.forEach { self.setConstructed($0) }
+		newData.ways.forEach { self.setConstructed($0) }
+		newData.relations.forEach { self.setConstructed($0) }
 
-#if DEBUG
-		for value in nodes.values {
-			assert(value.constructed())
-		}
-		for value in ways.values {
-			assert(value.constructed())
-		}
-		for value in relations.values {
-			assert(value.constructed())
-		}
-#endif
+		invalidateParentRelationCache()
 
 		consistencyCheck()
 
@@ -1204,6 +1188,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		self.undoManager = undoManager
 
 		super.init()
+
+		// Mark everything as constructed
+		self.nodes.values.forEach { self.setConstructed($0) }
+		self.ways.values.forEach { self.setConstructed($0) }
+		self.relations.values.forEach { self.setConstructed($0) }
 
 		initCommon()
 
