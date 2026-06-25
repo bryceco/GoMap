@@ -36063,7 +36063,21 @@
       }
     },
     "Include Chain/Brand names" : {
-      "comment" : "Include Name Suggestion Index (NSI) chain/brand results in search"
+      "comment" : "Include Name Suggestion Index (NSI) chain/brand results in search",
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zincir/Marka adı ekleyin"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包括連鎖/品牌名稱"
+          }
+        }
+      }
     },
     "Invalid URL" : {
       "localizations" : {
