@@ -101,6 +101,7 @@ class MessageDisplay {
 		let MAX_ALPHA: CGFloat = 0.8
 
 		flashLabel.text = title.map { $0 + "\n\n" + message } ?? message
+		flashLabel.superview?.bringSubviewToFront(flashLabel)
 
 		if flashLabel.isHidden {
 			// animate in
