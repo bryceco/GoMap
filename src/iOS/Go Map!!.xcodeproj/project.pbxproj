@@ -233,6 +233,7 @@
 		64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */; };
 		64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */; };
 		64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */; };
+		FA0969F100000000000969F1 /* EditorMapLayerSelectionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0969F200000000000969F2 /* EditorMapLayerSelectionTestCase.swift */; };
 		64348D13225EAA5D00ADE7FB /* MapViewUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */; };
 		6442666722540EDF00C0D545 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666422540EDF00C0D545 /* Lock.swift */; };
 		6442666822540EDF00C0D545 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666522540EDF00C0D545 /* Disposable.swift */; };
@@ -595,6 +596,7 @@
 		64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModelTestCase.swift; sourceTree = "<group>"; };
 		64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OsmNode+Direction.swift"; sourceTree = "<group>"; };
 		64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNode_DirectionTestCase.swift; sourceTree = "<group>"; };
+		FA0969F200000000000969F2 /* EditorMapLayerSelectionTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorMapLayerSelectionTestCase.swift; sourceTree = "<group>"; };
 		64348D08225EA24E00ADE7FB /* GoMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64348D0C225EA24E00ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewUITestCase.swift; sourceTree = "<group>"; };
@@ -1193,6 +1195,7 @@
 				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
 				64348CF6225E867800ADE7FB /* Mocks */,
 				64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */,
+				FA0969F200000000000969F2 /* EditorMapLayerSelectionTestCase.swift */,
 				64348CEC225E7CD900ADE7FB /* GoMapTests.swift */,
 				64C072FC22622B9C00598078 /* Vendor */,
 				64348CEE225E7CD900ADE7FB /* Info.plist */,
@@ -1821,6 +1824,7 @@
 				64E21EB822651F2D004605D7 /* XCTestCase+UserDefaults.swift in Sources */,
 				64348CFD225E867800ADE7FB /* CLHeadingMock.swift in Sources */,
 				64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */,
+				FA0969F100000000000969F1 /* EditorMapLayerSelectionTestCase.swift in Sources */,
 				64E21EB522651C06004605D7 /* OSMMapDataTestCase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
