@@ -167,24 +167,14 @@ extension EditorMapLayer {
 						// selecting way inside previously selected relation
 						selectedNode = nil
 						selectedWay = hit
-					} else if hit.parentRelations.count > 0 {
-						// select relation the way belongs to
-						var relations = hit.parentRelations.filter { relation in
-							relation.isMultipolygon() || relation.isBoundary() || relation.isWaterway()
-						}
-						if relations.count == 0, !hit.hasInterestingTags() {
-							// if the way doesn't have tags then always promote to containing relation
-							relations = hit.parentRelations
-						}
-						if let relation = relations.first {
-							selectedNode = nil
-							selectedWay = nil
-							selectedRelation = relation
-						} else {
-							selectedNode = nil
-							selectedWay = hit
-							selectedRelation = nil
-						}
+					} else if let relation = EditorMapLayer.relationToPromote(
+						parentRelations: hit.parentRelations,
+						wayHasInterestingTags: hit.hasInterestingTags())
+					{
+						// promote to the containing relation (multipolygon, boundary, etc.)
+						selectedNode = nil
+						selectedWay = nil
+						selectedRelation = relation
 					} else {
 						selectedNode = nil
 						selectedWay = hit
@@ -219,6 +209,27 @@ extension EditorMapLayer {
 				dragState.confirmDrag = selectedPrimary.modifyCount == 0
 			}
 		}
+	}
+
+	/// Decide whether a tapped way should be promoted to one of its parent relations instead of
+	/// being selected directly.
+	/// A way that carries its own interesting tags is never auto-promoted (the user tapped a real
+	/// feature, e.g. amenity=parking, and should select the way itself); the parent relation stays
+	/// reachable from the way's Relations list. A tag-less member way still promotes to its
+	/// containing multipolygon/boundary/waterway, or to any parent relation if it has no container.
+	static func relationToPromote(parentRelations: [OsmRelation],
+	                              wayHasInterestingTags: Bool) -> OsmRelation?
+	{
+		if parentRelations.isEmpty || wayHasInterestingTags {
+			return nil
+		}
+		let containers = parentRelations.filter { relation in
+			relation.isMultipolygon() || relation.isBoundary() || relation.isWaterway()
+		}
+		// Choose deterministically by id: parentRelations comes from a dictionary-ordered cache,
+		// so a way shared by several relations must still promote to the same one across launches.
+		let pool = containers.isEmpty ? parentRelations : containers
+		return pool.min(by: { $0.ident < $1.ident })
 	}
 
 	// MARK: Dragging pushPin

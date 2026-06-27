@@ -183,10 +183,13 @@ extension EditorMapLayer {
 			return nil
 		}
 
+		// Order the candidate set once, so both drag-connect and tap selection (and the fallback)
+		// resolve equal-distance ties the same way across taps and app launches.
+		let candidates = EditorMapLayer.sortedForSelection(Array(best.keys))
 		var pick: OsmBaseObject?
 		if isDragConnect {
 			// prefer to connecct to a way in a relation over the relation itself, which is opposite what we do when selecting by tap
-			for obj in best.keys {
+			for obj in candidates {
 				if obj.isRelation() == nil {
 					pick = obj
 					break
@@ -194,35 +197,90 @@ extension EditorMapLayer {
 			}
 		} else {
 			// performing selection by tap
-			if pick == nil,
-			   let relation = selectedRelation
-			{
-				// pick a way that is a member of the relation if possible
-				for member in relation.members {
-					if let obj = member.obj,
-					   best[obj] != nil
-					{
-						pick = obj
-						break
-					}
-				}
-			}
-			if pick == nil, selectedPrimary == nil {
-				// nothing currently selected, so prefer relations
-				for obj in best.keys {
-					if obj.isRelation() != nil {
-						pick = obj
-						break
-					}
-				}
-			}
+			pick = EditorMapLayer.tapSelectionPick(among: candidates,
+			                                       selectedRelation: selectedRelation,
+			                                       hasExistingSelection: selectedPrimary != nil)
 		}
 		if pick == nil {
-			pick = best.first!.key
+			pick = candidates.first
 		}
 		guard let pick = pick else { return nil }
 		pSegment = best[pick]!
 		return pick
+	}
+
+	/// Among the equally-close hit-test candidates, decide which object a tap should select.
+	/// - When a relation is already selected we prefer one of its member ways, so successive
+	///   taps drill down relation -> way -> node.
+	/// - A way that carries its own interesting tags and is a member of one of the candidate
+	///   *container* relations (multipolygon/boundary/waterway, e.g. a parking area that is also a
+	///   multipolygon member) is preferred over that relation, so the user selects the feature they
+	///   see rather than its container (#969). Scoped to container members so an unrelated tagged
+	///   way never steals a relation's selection and route/turn-restriction members don't either;
+	///   it applies regardless of the current selection.
+	/// - Otherwise, when nothing is selected we prefer a relation (a container relation first),
+	///   so multipolygons/boundaries with tag-less member ways remain selectable on the first tap.
+	/// Candidates are visited in a stable id order so equal-distance ties resolve the same way
+	/// across taps and app launches.
+	static func tapSelectionPick(among candidates: [OsmBaseObject],
+	                             selectedRelation: OsmRelation?,
+	                             hasExistingSelection: Bool) -> OsmBaseObject?
+	{
+		// Sorted here too so the helper is deterministic in isolation (callers may already sort).
+		let candidates = EditorMapLayer.sortedForSelection(candidates)
+
+		// Drilling down: prefer a member way of the already-selected relation.
+		if let relation = selectedRelation {
+			for member in relation.members {
+				if let obj = member.obj, candidates.contains(obj) {
+					return obj
+				}
+			}
+		}
+
+		// Container relations under the tap (multipolygon/boundary/waterway). These are the only
+		// relations a tagged member should be preferred over: routes/turn-restrictions etc. have
+		// no geometry of their own, so their member ways must not steal their selection. This
+		// scoping matches relationToPromote.
+		let containerRelations = candidates
+			.compactMap { $0 as? OsmRelation }
+			.filter { $0.isMultipolygon() || $0.isBoundary() || $0.isWaterway() }
+
+		// A tagged way that is a member of a candidate container relation selects the way itself
+		// rather than its container (#969).
+		for obj in candidates {
+			if let way = obj as? OsmWay,
+			   way.hasInterestingTags(),
+			   containerRelations.contains(where: { $0.member(byRef: way) != nil })
+			{
+				return way
+			}
+		}
+
+		// Nothing selected: prefer a relation so tag-less members don't hijack the first tap away
+		// from their container. Prefer a container relation (as relationToPromote does), then any.
+		if !hasExistingSelection {
+			if let container = containerRelations.first {
+				return container
+			}
+			for obj in candidates {
+				if obj.isRelation() != nil {
+					return obj
+				}
+			}
+		}
+
+		// Deterministic fallback over the equal-distance set.
+		return candidates.first
+	}
+
+	/// Stable ordering of hit-test candidates by OSM id, so equal-distance ties resolve the same
+	/// way across taps and app launches.
+	static func sortedForSelection(_ candidates: [OsmBaseObject]) -> [OsmBaseObject] {
+		candidates.sorted {
+			($0.extendedIdentifier.ident, $0.extendedIdentifier.type.rawValue)
+				< ($1.extendedIdentifier.ident, $1.extendedIdentifier.type.rawValue)
+		}
 	}
 
 	// return all nearby objects
