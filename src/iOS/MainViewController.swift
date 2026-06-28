@@ -145,7 +145,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 	@IBOutlet var fpsLabel: FpsLabel!
 	@IBOutlet var userInstructionLabel: UILabel!
 	@IBOutlet var locationButton: UIButton!
-	@IBOutlet var flashLabel: UILabel!
+	@IBOutlet var flashLabel: HUDLabel!
 	@IBOutlet private var statusBarBackground: StatusBarGradient!
 
 	@IBOutlet var mapView: MapView!

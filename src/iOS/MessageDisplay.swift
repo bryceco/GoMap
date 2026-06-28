@@ -11,12 +11,15 @@ import UIKit
 class MessageDisplay {
 	static let shared = MessageDisplay()
 
-	weak var flashLabel: UILabel! {
+	weak var flashLabel: HUDLabel! {
 		didSet {
 			flashLabel.font = UIFont.preferredFont(forTextStyle: .title3)
 			flashLabel.layer.cornerRadius = 5
 			flashLabel.layer.masksToBounds = true
 			flashLabel.isHidden = true
+			flashLabel.backgroundColor = .black.withAlphaComponent(0.7)
+			flashLabel.textColor = .white
+			flashLabel.contentInsets = .init(top: 4, left: 12, bottom: 4, right: 12)
 		}
 	}
 
@@ -24,6 +27,7 @@ class MessageDisplay {
 
 	var lastErrorDate: Date? // to prevent spamming of error dialogs
 	var ignoreNetworkErrorsUntilDate: Date?
+	private var flashGeneration = 0
 
 	func showAlert(_ alert: UIAlertController) {
 		topViewController?.present(alert, animated: true)
@@ -98,8 +102,6 @@ class MessageDisplay {
 	}
 
 	func flashMessage(title: String?, message: String, duration: TimeInterval = 1.0) {
-		let MAX_ALPHA: CGFloat = 0.8
-
 		flashLabel.text = title.map { $0 + "\n\n" + message } ?? message
 		flashLabel.superview?.bringSubviewToFront(flashLabel)
 
@@ -108,15 +110,18 @@ class MessageDisplay {
 			flashLabel.alpha = 0.0
 			flashLabel.isHidden = false
 			UIView.animate(withDuration: 0.25, animations: {
-				self.flashLabel.alpha = MAX_ALPHA
+				self.flashLabel.alpha = 1.0
 			})
 		} else {
 			// already displayed
 			flashLabel.layer.removeAllAnimations()
-			flashLabel.alpha = MAX_ALPHA
+			flashLabel.alpha = 1.0
 		}
 
+		flashGeneration += 1
+		let generation = flashGeneration
 		MainActor.runAfter(nanoseconds: UInt64(duration * 1000_000000)) {
+			guard self.flashGeneration == generation else { return }
 			UIView.animate(withDuration: 0.35, animations: {
 				self.flashLabel.alpha = 0.0
 			}) { finished in
