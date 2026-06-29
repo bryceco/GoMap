@@ -247,6 +247,7 @@ class PresetFeature: CustomDebugStringConvertible {
 			location: location,
 			includeNSI: true)
 
+#if false // Like iD we ignore a feature's removeTags in favor of our own heuristics
 		// remove previous feature tags
 		var removeTags = oldFeature?.removeTags ?? [:]
 		for key in addTags.keys {
@@ -255,16 +256,28 @@ class PresetFeature: CustomDebugStringConvertible {
 		for key in removeTags.keys {
 			tags.removeValue(forKey: key)
 		}
+#endif
 
-#if false // iD reverted this, so we're reverting it also
+		if let oldFeature,
+		   oldFeature.featureID.hasPrefix(featureID)
+		{
+			// old feature was a specialization (amenity/restaurant/pizza -> amenity/restaurant)
+			// so remove tags that specialize it
+		}
+
+#if true // iD keeps changing this, and we try to track it
 		// Find fields that belongs to presets in oldFeature and don't exist in presets in new feature
 		// and delete them. This will do things like remove the "cuisine" tag when a restaurant is
 		// retagged as a shop.
-		if let oldKeys = oldFeature?.allKeysForAllPresets(more: true) {
+		if let oldFeature {
 			let newKeys = allKeysForAllPresets(more: true)
-			let removeKeys = Set(oldKeys).subtracting(newKeys)
-			for key in removeKeys {
-				tags.removeValue(forKey: key)
+			let reducedTags = tags.filter { newKeys.contains($0.key) }
+			if oldFeature.matchObjectTagsScore(reducedTags, geometry: geometry, location: location) == 0.0 {
+				let oldKeys = oldFeature.allKeysForAllPresets(more: true)
+				let removeKeys = Set(oldKeys).subtracting(newKeys)
+				for key in removeKeys {
+					tags.removeValue(forKey: key)
+				}
 			}
 		}
 #endif

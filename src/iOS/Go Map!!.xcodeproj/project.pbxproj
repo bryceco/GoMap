@@ -33,6 +33,7 @@
 		0210AE092F1A2C770031F047 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0210AE082F1A2C770031F047 /* AppState.swift */; };
 		0210AE0B2F1D9E120031F047 /* MapLayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0210AE0A2F1D9E120031F047 /* MapLayersView.swift */; };
 		02148A522FF1C90C002D513D /* HUDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02148A512FF1C90C002D513D /* HUDLabel.swift */; };
+		02148A542FF43E40002D513D /* PresetFeatureChangeCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02148A532FF43E40002D513D /* PresetFeatureChangeCase.swift */; };
 		021BC21E2D6E6E0E004631C5 /* Panoramax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021BC21D2D6E6E05004631C5 /* Panoramax.swift */; };
 		021BC2222D7625FB004631C5 /* Panoramax.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021BC2212D7625FB004631C5 /* Panoramax.storyboard */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
@@ -393,6 +394,7 @@
 		0210AE082F1A2C770031F047 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppState.swift; path = ../Shared/AppState.swift; sourceTree = SOURCE_ROOT; };
 		0210AE0A2F1D9E120031F047 /* MapLayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapLayersView.swift; path = ../Shared/MapLayersView.swift; sourceTree = SOURCE_ROOT; };
 		02148A512FF1C90C002D513D /* HUDLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDLabel.swift; sourceTree = "<group>"; };
+		02148A532FF43E40002D513D /* PresetFeatureChangeCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeatureChangeCase.swift; sourceTree = "<group>"; };
 		021BC21D2D6E6E05004631C5 /* Panoramax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panoramax.swift; sourceTree = "<group>"; };
 		021BC2212D7625FB004631C5 /* Panoramax.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Panoramax.storyboard; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -1201,6 +1203,7 @@
 				64348CEE225E7CD900ADE7FB /* Info.plist */,
 				64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */,
 				64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */,
+				02148A532FF43E40002D513D /* PresetFeatureChangeCase.swift */,
 			);
 			path = GoMapTests;
 			sourceTree = "<group>";
@@ -1816,6 +1819,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */,
+				02148A542FF43E40002D513D /* PresetFeatureChangeCase.swift in Sources */,
 				64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */,
 				64348CFC225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift in Sources */,
 				64348CED225E7CD900ADE7FB /* GoMapTests.swift in Sources */,
