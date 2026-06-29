@@ -806,6 +806,21 @@ final class MainViewController: UIViewController, DPadDelegate,
 			if gestureRecognizer is UITapGestureRecognizer || view is PushPinView {
 				return false // ignore the touch
 			}
+			// Taps on disabled controls should be ignored entirely, not passed to the map.
+			if let control = view as? UIControl, !control.isEnabled {
+				return false
+			}
+		}
+		// Don't pass taps through to MapView when tapping a disabled undo/redo button
+		let location = touch.location(in: self.view)
+		for button in [undoButton, redoButton] {
+			if let button,
+			   !button.isHidden,
+			   !button.isEnabled,
+			   button.convert(button.bounds, to: self.view).contains(location)
+			{
+				return false
+			}
 		}
 		return true // handle the touch
 	}
