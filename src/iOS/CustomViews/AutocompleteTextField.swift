@@ -34,6 +34,11 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 			selector: #selector(keyboardWillChange(_:)),
 			name: UIResponder.keyboardWillChangeFrameNotification,
 			object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(appWillResignActive(_:)),
+			name: UIApplication.willResignActiveNotification,
+			object: nil)
 
 		super.delegate = self
 	}
@@ -125,6 +130,12 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		if isEditing, filteredCompletions.count != 0 {
 			updateAutocomplete()
 		}
+	}
+
+	@objc func appWillResignActive(_ nsNotification: Notification) {
+		guard !filteredCompletions.isEmpty else { return }
+
+		clearFilteredCompletionsInternal()
 	}
 
 	func frameForCompletionTableView() -> CGRect {
@@ -273,6 +284,12 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 
 	func textFieldDidEndEditing(_ textField: UITextField) {
 		clearFilteredCompletionsInternal()
+
+		if let cell = superviewOfType(UITableViewCell.self),
+		   let tableView = cell.superviewOfType(UITableView.self)
+		{
+			tableView.isScrollEnabled = true
+		}
 
 		realDelegate?.textFieldDidEndEditing?(textField)
 	}
