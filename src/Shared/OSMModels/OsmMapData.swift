@@ -265,6 +265,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		return min(modifications, undoCount) // different ways to count, but both can be inflated so take the minimum
 	}
 
+	func hasDataAwaitingUpload() -> Bool {
+		// This is expensive, but accurate
+		return changesetAsXml() != nil
+	}
+
 	// MARK: Editing
 
 	@objc func incrementModifyCount(_ object: OsmBaseObject) {

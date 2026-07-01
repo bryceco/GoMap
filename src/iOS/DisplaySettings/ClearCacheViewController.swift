@@ -46,6 +46,10 @@ class ClearCacheViewController: TableViewControllerMac {
 		AppDelegate.shared.mainView.settings.enableAutomaticCacheManagement = automaticCacheManagement.isOn
 	}
 
+	func hasModifiedOsmData() -> Bool {
+		return AppDelegate.shared.mapView.mapData.hasDataAwaitingUpload()
+	}
+
 	// MARK: - Table view delegate
 
 	private func update(cell: ClearCacheCell, for row: Row) {
@@ -55,9 +59,13 @@ class ClearCacheViewController: TableViewControllerMac {
 
 		let title: String
 		let details: String
+		var color: UIColor = .link
 		switch row {
 		case .osmData:
 			title = NSLocalizedString("OSM Data", comment: "")
+			if hasModifiedOsmData() {
+				color = .systemRed
+			}
 			details = NSLocalizedString(
 				"Downloaded nodes, ways and relations, and any edits you have made.",
 				comment: "")
@@ -77,7 +85,7 @@ class ClearCacheViewController: TableViewControllerMac {
 		cell.sizesLabel.text = ""
 		cell.clearButton.onTap = { _ in self.deleteData(at: row) }
 		cell.clearButton.setTitle("", for: .normal)
-		cell.clearButton.tintColor = .systemRed
+		cell.clearButton.tintColor = color
 		if let image = cell.clearButton.image(for: .normal) {
 			cell.clearButton.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
 		}
@@ -136,9 +144,7 @@ class ClearCacheViewController: TableViewControllerMac {
 				appDelegate.mainView.mapLayersView.mapMarkersView.reset()
 				appDelegate.mainView.updateMapMarkers()
 			}
-			if appDelegate.mapView.mapData.changesetAsXml() != nil
-				|| isUnderDebugger()
-			{
+			if hasModifiedOsmData() || isUnderDebugger() {
 				alert.addAction(UIAlertAction(
 					title: NSLocalizedString("Purge", comment: "Discard editing changes when resetting OSM data cache"),
 					style: .destructive,
