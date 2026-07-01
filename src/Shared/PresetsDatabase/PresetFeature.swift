@@ -258,18 +258,20 @@ class PresetFeature: CustomDebugStringConvertible {
 		}
 #endif
 
-		if let oldFeature,
-		   oldFeature.featureID.hasPrefix(featureID)
-		{
-			// old feature was a specialization (amenity/restaurant/pizza -> amenity/restaurant)
-			// so remove tags that specialize it
-		}
-
 #if true // iD keeps changing this, and we try to track it
 		// Find fields that belongs to presets in oldFeature and don't exist in presets in new feature
 		// and delete them. This will do things like remove the "cuisine" tag when a restaurant is
 		// retagged as a shop.
 		if let oldFeature {
+			if oldFeature.featureID.hasPrefix(featureID + "/") {
+				// old feature was a specialization (amenity/restaurant/pizza -> amenity/restaurant)
+				// so remove tags that specialize it
+				let removals = Set(oldFeature.addTags.keys).subtracting(addTags.keys)
+				for key in removals {
+					tags.removeValue(forKey: key)
+				}
+			}
+
 			let newKeys = allKeysForAllPresets(more: true)
 			let reducedTags = tags.filter { newKeys.contains($0.key) }
 			if oldFeature.matchObjectTagsScore(reducedTags, geometry: geometry, location: location) == 0.0 {

@@ -47,6 +47,23 @@ class PresetFeatureChangeCase: XCTestCase {
 		               "roof:shape should be preserved: school is still a building, so building-specific tags should remain")
 	}
 
+	// Changing amenity/restaurant/pizza → amenity/restaurant:
+	// The pizza preset's addTags include cuisine=pizza, which is a specialization of
+	// the restaurant preset. When converting to the parent, cuisine should be removed
+	// because it was part of the sub-preset's defining tags, not a user-added tag.
+	func testPizzaRestaurantToRestaurantRemovesCuisine() throws {
+		let oldTags = ["amenity": "restaurant", "cuisine": "pizza", "name": "Mario's"]
+		let newFeature = try XCTUnwrap(db.presetFeatureForFeatureID("amenity/restaurant"))
+		let newTags = newFeature.objectTagsUpdatedForFeature(oldTags, geometry: .POINT, location: .none)
+
+		XCTAssertEqual(newTags["amenity"], "restaurant",
+		               "amenity=restaurant should be set")
+		XCTAssertEqual(newTags["name"], "Mario's",
+		               "name should be preserved")
+		XCTAssertNil(newTags["cuisine"],
+		             "cuisine should be removed: it was part of the pizza sub-preset's defining tags")
+	}
+
 	// Changing highway/path → highway/track:
 	// The path-specific tags sac_scale, and trail_visibility are in path's
 	// moreFields but not track's. However, since path and track are siblings under the
