@@ -33,6 +33,11 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 			selector: #selector(keyboardWillChange(_:)),
 			name: UIResponder.keyboardWillChangeFrameNotification,
 			object: nil)
+		NotificationCenter.default.addObserver(
+			self,
+			selector: #selector(appWillResignActive(_:)),
+			name: UIApplication.willResignActiveNotification,
+			object: nil)
 
 		addTarget(self, action: #selector(editingChanged), for: .editingChanged)
 		addTarget(self, action: #selector(editingEnded), for: .editingDidEnd)
@@ -119,6 +124,12 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 		if isEditing, filteredCompletions.count != 0 {
 			updateAutocomplete()
 		}
+	}
+
+	@objc func appWillResignActive(_ nsNotification: Notification) {
+		guard !filteredCompletions.isEmpty else { return }
+
+		clearFilteredCompletionsInternal()
 	}
 
 	func frameForCompletionTableView() -> CGRect {
@@ -256,6 +267,15 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 
 	@objc private func editingEnded() {
 		clearFilteredCompletionsInternal()
+
+		// Defensively restore scrolling: if the overlay teardown path was
+		// skipped (e.g. the app resigned active while completions showed),
+		// the enclosing table would otherwise stay unscrollable.
+		if let cell = superviewOfType(UITableViewCell.self),
+		   let tableView = cell.superviewOfType(UITableView.self)
+		{
+			tableView.isScrollEnabled = true
+		}
 	}
 
 	override func paste(_ sender: Any?) {
