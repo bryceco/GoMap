@@ -360,64 +360,51 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		                       size: OSMSize(width: maxX - minX, height: maxY - minY))
 	}
 
-	func centerPointWithArea(_ pArea: inout Double) -> LatLon {
-		let isClosed = self.isClosed()
-
-		let nodeCount = isClosed ? nodes.count - 1 : nodes.count
-
-		if nodeCount > 2 {
-			if isClosed {
-				// compute centroid
-				var sum: Double = 0
-				var sumX: Double = 0
-				var sumY: Double = 0
-				let offset = nodes.first!.location()
-				var previous = OSMPoint(x: 0.0, y: 0.0)
-				for node in nodes.dropFirst() {
-					let current = OSMPoint(x: node.latLon.lon - offset.x,
-					                       y: node.latLon.lat - offset.y)
-					let partialSum = previous.x * current.y - previous.y * current.x
-					sum += partialSum
-					sumX += (previous.x + current.x) * partialSum
-					sumY += (previous.y + current.y) * partialSum
-					previous = current
-				}
-				pArea = sum / 2
-				var point = OSMPoint(x: sumX / 6 / pArea, y: sumY / 6 / pArea)
-				point.x += offset.x
-				point.y += offset.y
-				return LatLon(point)
-			} else {
-				// compute average
-				var sumX: Double = 0
-				var sumY: Double = 0
-				for node in nodes {
-					sumX += node.latLon.lon
-					sumY += node.latLon.lat
-				}
-				let point = OSMPoint(x: sumX / Double(nodeCount), y: sumY / Double(nodeCount))
-				return LatLon(point)
+	func centerPoint() -> LatLon {
+		if isClosed() {
+			// isClosed guarantees nodes.count > 2, so no need to check nodeCount here
+			var sum: Double = 0
+			var sumX: Double = 0
+			var sumY: Double = 0
+			let offset = nodes.first!.location()
+			var previous = OSMPoint(x: 0.0, y: 0.0)
+			for node in nodes.dropFirst() {
+				let current = OSMPoint(x: node.latLon.lon - offset.x,
+				                       y: node.latLon.lat - offset.y)
+				let partialSum = previous.x * current.y - previous.y * current.x
+				sum += partialSum
+				sumX += (previous.x + current.x) * partialSum
+				sumY += (previous.y + current.y) * partialSum
+				previous = current
 			}
-		} else if nodeCount == 2 {
-			pArea = 0.0
+			let area = sum / 2
+			var point = OSMPoint(x: sumX / 6 / area,
+			                     y: sumY / 6 / area)
+			point.x += offset.x
+			point.y += offset.y
+			return LatLon(point)
+		}
+
+		switch nodes.count {
+		case let n where n > 2:
+			var sumX: Double = 0
+			var sumY: Double = 0
+			for node in nodes {
+				sumX += node.latLon.lon
+				sumY += node.latLon.lat
+			}
+			let point = OSMPoint(x: sumX / Double(n), y: sumY / Double(n))
+			return LatLon(point)
+		case 2:
 			let n1 = nodes[0]
 			let n2 = nodes[1]
 			return LatLon(x: (n1.latLon.lon + n2.latLon.lon) / 2,
 			              y: (n1.latLon.lat + n2.latLon.lat) / 2)
-		} else if nodeCount == 1 {
-			pArea = 0.0
-			let node = nodes.last!
-			return node.latLon
-		} else {
-			pArea = 0.0
-			let pt = LatLon.zero
-			return pt
+		case 1:
+			return nodes[0].latLon
+		default:
+			return LatLon.zero
 		}
-	}
-
-	func centerPoint() -> LatLon {
-		var area = 0.0
-		return centerPointWithArea(&area)
 	}
 
 	func lengthInMeters() -> Double {
