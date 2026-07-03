@@ -747,8 +747,8 @@ func IsClockwisePolygon(_ points: [CGPoint]) -> Bool? {
 }
 
 // Input is a list of points in degrees, with the first and last points being equal
-func AreaInSquareMeters(points: [LatLon]) -> Double {
-	guard points.count > 3, points[0] == points.last! else { return 0.0 }
+func AreaInSquareMeters(points: [LatLon]) -> Double? {
+	guard points.count > 3, points[0] == points.last! else { return nil }
 	// convert to radians
 	let radians = points.map { LatLon(lon: $0.lon * (.pi / 180),
 	                                  lat: $0.lat * (.pi / 180)) }

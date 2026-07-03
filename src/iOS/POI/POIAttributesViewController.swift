@@ -161,7 +161,7 @@ class POIAttributesViewController: UITableViewController {
 					cell.accessoryType = .none
 				case 1:
 					// area (only if closed way)
-					let area = way.areaInSquareMeters()
+					let area = way.areaInSquareMeters() ?? 0.0
 					cell.title.text = NSLocalizedString("Area", comment: "Area of an object in m^2")
 					cell.value.text = String.localizedStringWithFormat(
 						NSLocalizedString("%.0f m^2", comment: "area in m^2"), area)

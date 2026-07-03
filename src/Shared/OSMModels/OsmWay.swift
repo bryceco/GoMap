@@ -422,7 +422,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		return len
 	}
 
-	func areaInSquareMeters() -> Double {
+	func areaInSquareMeters() -> Double? {
 		let points = nodes.map { $0.latLon }
 		return AreaInSquareMeters(points: points)
 	}
