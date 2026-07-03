@@ -11,13 +11,11 @@ import Foundation
 struct LocationSet {
 	enum LocationEntry {
 		struct LatLonRadius {
-			let lat: Double
-			let lon: Double
+			let latLon: LatLon
 			let radius: Double
 
 			init(lat: Double, lon: Double, radius: Double) {
-				self.lat = lat
-				self.lon = lon
+				self.latLon = LatLon(lon: lon, lat: lat)
 				self.radius = radius
 			}
 		}
@@ -77,8 +75,7 @@ struct LocationSet {
 				}
 				return false
 			case let .latLonRadius(latLonRadius):
-				let dist = GreatCircleDistance(LatLon(lon: latLonRadius.lon, lat: latLonRadius.lat),
-				                               mapViewRegion.latLon)
+				let dist = latLonRadius.latLon.greatCircleDistance(to: mapViewRegion.latLon)
 				return dist <= latLonRadius.radius
 			}
 		}

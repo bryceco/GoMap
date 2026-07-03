@@ -195,7 +195,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		}
 
 		if let prev = prev {
-			let d = GreatCircleDistance(coordinate, prev.latLon)
+			let d = coordinate.greatCircleDistance(to: prev.latLon)
 			distance += d
 		} else {
 			// Use the first timestamp as the creation date
@@ -360,7 +360,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 			var prev: GpxPoint?
 			for pt in points {
 				if let prev = prev {
-					let d = GreatCircleDistance(pt.latLon, prev.latLon)
+					let d = pt.latLon.greatCircleDistance(to: prev.latLon)
 					distance += d
 				}
 				prev = pt

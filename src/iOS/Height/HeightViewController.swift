@@ -343,7 +343,7 @@ class HeightViewController: UIViewController {
 
 		for node in object.nodeSet() {
 			let nodePt = node.latLon
-			let d = GreatCircleDistance(userPt, nodePt)
+			let d = userPt.greatCircleDistance(to: nodePt)
 			if d < dist {
 				dist = d
 				var dir = OSMPoint(x: lat2latp(nodePt.lat) - lat2latp(userPt.lat),

@@ -1240,7 +1240,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 	private func updateCurrentRegionForLocationUsingCountryCoder() {
 		// if we moved a significant distance then check our location
 		let latLon = viewPort.screenCenterLatLon()
-		if GreatCircleDistance(latLon, currentRegion.latLon) < 10 * 1000 {
+		if latLon.greatCircleDistance(to: currentRegion.latLon) < 10 * 1000 {
 			return
 		}
 		currentRegion = CountryCoder.shared.regionInfoFor(latLon: latLon)
@@ -1253,7 +1253,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		let latLon = viewPort.screenCenterLatLon()
 		if let plist = UserPrefs.shared.latestOverlayCheckLatLon.value,
 		   let prevLatLon = LatLon(plist),
-		   GreatCircleDistance(latLon, prevLatLon) < 10 * 1000
+		   latLon.greatCircleDistance(to: prevLatLon) < 10 * 1000
 		{
 			return
 		}
@@ -1270,7 +1270,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		let latLon = viewPort.screenCenterLatLon()
 		if let plist = UserPrefs.shared.latestAerialCheckLatLon.value,
 		   let prevLatLon = LatLon(plist),
-		   GreatCircleDistance(latLon, prevLatLon) < 1000
+		   latLon.greatCircleDistance(to: prevLatLon) < 1000
 		{
 			return
 		}

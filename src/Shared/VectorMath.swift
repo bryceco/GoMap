@@ -404,12 +404,6 @@ extension OSMRect {
 		return rect
 	}
 
-	func metersSizeForLatLon() -> OSMSize {
-		let w = GreatCircleDistance(LatLon(x: origin.x, y: origin.y), LatLon(x: origin.x + size.width, y: origin.y))
-		let h = GreatCircleDistance(LatLon(x: origin.x, y: origin.y), LatLon(x: origin.x, y: origin.y + size.height))
-		return OSMSize(width: w, height: h)
-	}
-
 	var boundsString: String {
 		return "OSMRect(ul:(\(origin.x),\(origin.y)),lr:(\(origin.x + size.width),\(origin.y + size.height))"
 	}
@@ -647,6 +641,12 @@ struct LatLon: Equatable, Codable {
 		return a.lon == b.lon && a.lat == b.lat
 	}
 
+	// http://www.movable-type.co.uk/scripts/latlong.html
+	/// Distance between two lon,lat  points in degrees, result in meters
+	func greatCircleDistance(to other: LatLon) -> Double {
+		return GreatCircleDistance2(self, other)
+	}
+
 	// Add PList representation
 	typealias PlistType = [Double]
 
@@ -709,7 +709,7 @@ func visibleEarthAreaAt(zoom: Double) -> Double {
 
 // http://www.movable-type.co.uk/scripts/latlong.html
 /// Distance between two lon,lat  points in degrees, result in meters
-func GreatCircleDistance(_ p1: LatLon, _ p2: LatLon) -> Double {
+func GreatCircleDistance2(_ p1: LatLon, _ p2: LatLon) -> Double {
 	// haversine formula
 	let dlon = (p2.lon - p1.lon) * .pi / 180
 	let dlat = (p2.lat - p1.lat) * .pi / 180
@@ -720,7 +720,7 @@ func GreatCircleDistance(_ p1: LatLon, _ p2: LatLon) -> Double {
 }
 
 func GreatCircleDistance(_ p1: CLLocationCoordinate2D, _ p2: CLLocationCoordinate2D) -> Double {
-	return GreatCircleDistance(LatLon(p1), LatLon(p2))
+	return GreatCircleDistance2(LatLon(p1), LatLon(p2))
 }
 
 // area of a closed polygon (first and last points repeat), and boolean if it's clockwise

@@ -326,14 +326,14 @@ final class MapTransform {
 		let p2 = CGPoint(x: p1.x + 1.0, y: p1.y) // one pixel apart
 		let c1 = latLon(forScreenPoint: p1)
 		let c2 = latLon(forScreenPoint: p2)
-		let meters = GreatCircleDistance(c1, c2)
+		let meters = c1.greatCircleDistance(to: c2)
 		return meters
 	}
 
 	func meters(from: CGPoint, to: CGPoint) -> Double {
 		let c1 = latLon(forScreenPoint: from)
 		let c2 = latLon(forScreenPoint: to)
-		let meters = GreatCircleDistance(c1, c2)
+		let meters = c1.greatCircleDistance(to: c2)
 		return meters
 	}
 

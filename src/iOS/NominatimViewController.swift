@@ -88,8 +88,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			let subtitle: String
 			if let latLon = result.latLon {
 				// compute distance
-				let dist = GreatCircleDistance(latLon,
-				                               AppDelegate.shared.mainView.viewPort.screenCenterLatLon())
+				let dist = latLon.greatCircleDistance(to: AppDelegate.shared.mainView.viewPort.screenCenterLatLon())
 				subtitle = UnitFormatter.shared.stringFor(meters: dist)
 			} else {
 				subtitle = ""

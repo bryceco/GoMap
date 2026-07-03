@@ -427,7 +427,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		for node in nodes {
 			let pt = node.latLon
 			if !first {
-				len += GreatCircleDistance(pt, prev)
+				len += pt.greatCircleDistance(to: prev)
 			}
 			first = false
 			prev = pt
