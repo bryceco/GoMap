@@ -344,10 +344,10 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 	}
 
 	@IBAction func exportOscFile(_ sender: Any) {
+		let fm = FileManager.default
 		if let xml = mapData?.changesetAsXml(),
 		   let text = xml.data(using: .utf8),
-		   let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?
-		   .appendingPathComponent("osmChange.osc"),
+		   let path = fm.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent("osmChange.osc"),
 		   (try? text.write(to: path, options: .atomicWrite)) != nil
 		{
 			let objectsToShare = [path] as [Any]
