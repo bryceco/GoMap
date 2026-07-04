@@ -70,7 +70,7 @@
 --typemark "MARK: - %t"
 --varattributes preserve
 --voidtype void
---maxwidth 120
+--maxwidth 140
 --wraparguments preserve
 --wrapcollections preserve
 --wrapconditions preserve
