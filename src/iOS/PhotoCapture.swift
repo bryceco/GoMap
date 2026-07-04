@@ -117,15 +117,36 @@ private class CameraOverlayView: UIView {
 		return button
 	}
 
+	private static let overlayButtonSize: CGFloat = 60
+
+	private static func styleOverlayButton(_ button: UIButton) {
+		button.backgroundColor = UIColor(white: 0.22, alpha: 0.9)
+		button.tintColor = .white
+		button.layer.cornerRadius = overlayButtonSize / 2
+		button.layer.masksToBounds = true
+		if #available(iOS 13.0, *) {
+			let config = UIImage.SymbolConfiguration(pointSize: 26, weight: .semibold)
+			button.setPreferredSymbolConfiguration(config, forImageIn: .normal)
+		}
+		button.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			button.widthAnchor.constraint(equalToConstant: overlayButtonSize),
+			button.heightAnchor.constraint(equalToConstant: overlayButtonSize)
+		])
+	}
+
 	private func setupButtons() {
 		if #available(iOS 13.0, *) {
-			cancelButton.setImage(UIImage(systemName: "xmark.circle"), for: .normal)
-			acceptButton.setImage(UIImage(systemName: "checkmark.circle"), for: .normal)
+			cancelButton.setImage(UIImage(systemName: "xmark"), for: .normal)
+			acceptButton.setImage(UIImage(systemName: "checkmark"), for: .normal)
 			retakeButton.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
 		} else {
 			cancelButton.setTitle("Cancel", for: .normal)
 			acceptButton.setTitle("Use Photo", for: .normal)
 			retakeButton.setTitle("Retake", for: .normal)
+		}
+		for button in [cancelButton, retakeButton, acceptButton] {
+			Self.styleOverlayButton(button)
 		}
 		for button in [shutterButton, cancelButton, retakeButton, acceptButton] {
 			button.translatesAutoresizingMaskIntoConstraints = false
