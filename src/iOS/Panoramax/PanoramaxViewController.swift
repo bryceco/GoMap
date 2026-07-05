@@ -353,18 +353,6 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		return text
 	}
 
-	private func lighten(image: UIImage) -> UIImage? {
-		let context = CIContext(options: nil)
-		guard let currentFilter = CIFilter(name: "CIColorControls") else { return nil }
-		let beginImage = CIImage(image: image)
-		currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
-		currentFilter.setValue(0.5, forKey: kCIInputBrightnessKey) // Adjust brightness to make the image lighter
-		currentFilter.setValue(0.0, forKey: kCIInputSaturationKey) // Ensure the image stays grayscale
-		guard let outputImage = currentFilter.outputImage,
-		      let cgimg = context.createCGImage(outputImage, from: outputImage.extent) else { return nil }
-		return UIImage(cgImage: cgimg)
-	}
-
 	func printCookies() {
 		print("\n")
 		for cookie in HTTPCookieStorage.shared.cookies ?? [] {
