@@ -34,7 +34,8 @@
 		0210AE0B2F1D9E120031F047 /* MapLayersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0210AE0A2F1D9E120031F047 /* MapLayersView.swift */; };
 		02148A522FF1C90C002D513D /* HUDLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02148A512FF1C90C002D513D /* HUDLabel.swift */; };
 		02148A542FF43E40002D513D /* PresetFeatureChangeCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02148A532FF43E40002D513D /* PresetFeatureChangeCase.swift */; };
-		021BC21E2D6E6E0E004631C5 /* Panoramax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021BC21D2D6E6E05004631C5 /* Panoramax.swift */; };
+		02148A562FFA1433002D513D /* PanoramaxServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02148A552FFA1433002D513D /* PanoramaxServer.swift */; };
+		021BC21E2D6E6E0E004631C5 /* PanoramaxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021BC21D2D6E6E05004631C5 /* PanoramaxViewController.swift */; };
 		021BC2222D7625FB004631C5 /* Panoramax.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 021BC2212D7625FB004631C5 /* Panoramax.storyboard */; };
 		021C6AB3168768C800FB17B0 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 021C6AB2168768C800FB17B0 /* MessageUI.framework */; };
 		021FADBB258591D000F6E1C0 /* PresetDisplayKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021FADBA258591D000F6E1C0 /* PresetDisplayKey.swift */; };
@@ -395,7 +396,8 @@
 		0210AE0A2F1D9E120031F047 /* MapLayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapLayersView.swift; path = ../Shared/MapLayersView.swift; sourceTree = SOURCE_ROOT; };
 		02148A512FF1C90C002D513D /* HUDLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDLabel.swift; sourceTree = "<group>"; };
 		02148A532FF43E40002D513D /* PresetFeatureChangeCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeatureChangeCase.swift; sourceTree = "<group>"; };
-		021BC21D2D6E6E05004631C5 /* Panoramax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panoramax.swift; sourceTree = "<group>"; };
+		02148A552FFA1433002D513D /* PanoramaxServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanoramaxServer.swift; sourceTree = "<group>"; };
+		021BC21D2D6E6E05004631C5 /* PanoramaxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanoramaxViewController.swift; sourceTree = "<group>"; };
 		021BC2212D7625FB004631C5 /* Panoramax.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Panoramax.storyboard; sourceTree = "<group>"; };
 		021C6AB2168768C800FB17B0 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		021FADBA258591D000F6E1C0 /* PresetDisplayKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetDisplayKey.swift; sourceTree = "<group>"; };
@@ -734,6 +736,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02148A572FFA1461002D513D /* Panoramax */ = {
+			isa = PBXGroup;
+			children = (
+				021BC2212D7625FB004631C5 /* Panoramax.storyboard */,
+				02148A552FFA1433002D513D /* PanoramaxServer.swift */,
+				021BC21D2D6E6E05004631C5 /* PanoramaxViewController.swift */,
+			);
+			path = Panoramax;
+			sourceTree = "<group>";
+		};
 		022114FB2E6CDCF800D76061 /* Turn Restrictions */ = {
 			isa = PBXGroup;
 			children = (
@@ -930,8 +942,7 @@
 				6442666322540EDF00C0D545 /* Observable */,
 				6453776323D38D1F00656A1C /* OSMModels */,
 				02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */,
-				021BC2212D7625FB004631C5 /* Panoramax.storyboard */,
-				021BC21D2D6E6E05004631C5 /* Panoramax.swift */,
+				02148A572FFA1461002D513D /* Panoramax */,
 				C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */,
 				02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
@@ -1577,7 +1588,7 @@
 				02709BD32F282B2400B277C6 /* URL+Extension.swift in Sources */,
 				028365C92EFDFF1E002B9E34 /* UnitFormatter.swift in Sources */,
 				02E9ABC02BA151AA00F0EF69 /* GoogleMaps.secret in Sources */,
-				021BC21E2D6E6E0E004631C5 /* Panoramax.swift in Sources */,
+				021BC21E2D6E6E0E004631C5 /* PanoramaxViewController.swift in Sources */,
 				020798012994706000D3C654 /* QuestBuilderController.swift in Sources */,
 				0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */,
 				02CE3CE229909D1D00DDACE0 /* QuestSolverController.swift in Sources */,
@@ -1788,6 +1799,7 @@
 				02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */,
 				ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */,
 				022B2FDB2718CCAC00AB4C28 /* MapboxLocator.secret in Sources */,
+				02148A562FFA1433002D513D /* PanoramaxServer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
