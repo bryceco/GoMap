@@ -1,55 +1,54 @@
 #!/bin/sh
 
 # Download icons from various sources
-# Filter those used by the presets
 # Convert them from SVG to PDF
 # Build an asset catalog containing the images
 
-NAME=(temaki 									maki								roentgen)
-GIT=(https://github.com/ideditor/temaki.git		https://github.com/mapbox/maki.git	https://github.com/enzet/Roentgen.git)
-FILES=('icons/*.svg'							'icons/*.svg'						'icons/*.svg')
+GITHUB_RAW="https://raw.githubusercontent.com"
+ID_SVG="$GITHUB_RAW/openstreetmap/iD/develop/svg"
 
-ID_SVG="https://raw.githubusercontent.com/openstreetmap/iD/develop/svg"
+# Fetch a URL and save to a file, printing an error (without halting) on failure
+fetch() {
+	local url="$1"
+	local dest="$2"
+	curl -fLsS --output "$dest" "$url" 2>/dev/null
+}
 
-# fetch icons from repositories
-for index in "${!NAME[@]}"; do
-	name=${NAME[index]}
-	git=${GIT[index]}
-	files=${FILES[index]}
-
-	rm -rf /tmp/$name
-	(cd /tmp/ && git clone --depth 1 $git)
-	for f in /tmp/$name/$files; do
-		f2=${f##*/}
-		mv -f $f ./$name"-"$(echo $f2 | sed 's/-15//')
-	done
-done
-
-# filter out any files not required by presets
+# Compute the list of icons needed by presets
 presetIcons=($(cd ../presets && ./presetIcons.py | sort | uniq | sed 's/$/.svg/'))
-presetStrings=" ${presetIcons[@]} "
-for f in *.svg; do
-	if [[ ! $presetStrings =~ $f ]]; then
-		rm $f
-	fi
-done
 
-# Special case fetching icons stored by iD, far and pinhead
-echo "fetching iD icons"
+# Fetch all required icons
+echo "Fetching icons"
 for f in "${presetIcons[@]}"; do
+	echo $f
 	if [[ $f = "iD-"* ]]; then
 		f2=${f:3}
-		echo $f2
-		curl -fLsS --output ./$f "$ID_SVG/iD-sprite/presets/$f2" ||\
-		curl -fLsS --output ./$f "$ID_SVG/iD-sprite/fields/crossing_markings/$f2"
+		fetch "$ID_SVG/iD-sprite/presets/$f2" ./$f || \
+		fetch "$ID_SVG/iD-sprite/fields/crossing_markings/$f2" ./$f || \
+		echo "Error: missing iD icon $f2"
 	elif [[ $f = "far-"* || $f = "fas-"* ]]; then
 		f2=${f:4}
-		echo $f2
-		curl -fLsS --output ./$f "$ID_SVG/fontawesome/$f"
+		fetch "$ID_SVG/fontawesome/$f" ./$f || \
+		echo "Error: missing fontawesome icon $f"
 	elif [[ $f = "pinhead-"* ]]; then
 		f2=${f:8}
-		echo $f2
-		curl -fLsS --output ./$f "https://pinhead.ink/latest/$f2"
+		fetch "https://pinhead.ink/latest/$f2" ./$f || \
+		echo "Error: missing pinhead icon $f2"
+	elif [[ $f = "temaki-"* ]]; then
+		f2=${f:7}
+		fetch "$GITHUB_RAW/ideditor/temaki/main/icons/$f2" ./$f || \
+		fetch "$GITHUB_RAW/ideditor/temaki/main/icons/${f2%.svg}-15.svg" ./$f || \
+		echo "Error: missing temaki icon $f2"
+	elif [[ $f = "maki-"* ]]; then
+		f2=${f:5}
+		fetch "$GITHUB_RAW/mapbox/maki/main/icons/$f2" ./$f || \
+		fetch "$GITHUB_RAW/mapbox/maki/main/icons/${f2%.svg}-15.svg" ./$f || \
+		echo "Error: missing maki icon $f2"
+	elif [[ $f = "roentgen-"* ]]; then
+		f2=${f:9}
+		fetch "$GITHUB_RAW/enzet/Roentgen/main/icons/$f2" ./$f || \
+		fetch "$GITHUB_RAW/enzet/Roentgen/main/icons/${f2%.svg}-15.svg" ./$f || \
+		echo "Error: missing roentgen icon $f2"
 	fi
 done
 
