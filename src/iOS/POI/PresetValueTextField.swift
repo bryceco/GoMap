@@ -487,8 +487,8 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 	var panoramaxKey: String?
 	private func getPhotographButton() -> UIView? {
 		guard
+			#available(iOS 14, *), // required by PanoramaxViewController
 			AppEnvironment.hasRearCamera,
-			#available(iOS 13.0, *), // required by camera control
 			OsmTags.isKey(key, variantOf: "panoramax")
 		else {
 			return nil // camera not available
@@ -499,6 +499,8 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		return button
 	}
 
+	// This is a delegate function of PanoramaxViewController that it calls
+	// when a photograph is uploaded and we learn the Panoramax ID for it.
 	func panoramaxUpdate(photoID: String) {
 		// Because the table cells can reload while taking the photo we
 		// need to locate the correct cell again:
@@ -520,7 +522,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		cell.notifyValueChange(ended: true)
 	}
 
-	@available(iOS 13.0, *)
+	@available(iOS 14, *)
 	@objc func openPanoramaxViewController(_ sender: Any?) {
 		resignFirstResponder()
 

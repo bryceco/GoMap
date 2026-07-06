@@ -7,6 +7,7 @@
 //
 
 import CoreLocation
+import PhotosUI
 import UIKit
 @preconcurrency import WebKit
 
@@ -75,7 +76,8 @@ class PanoramaxWebViewController: UIViewController, WKNavigationDelegate {
 	}
 }
 
-class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+@available(iOS 14, *)
+class PanoramaxViewController: UIViewController {
 	var panoramax: PanoramaxServer!
 	var photoID = "" // Provided by caller if there's a pre-existing panoramax photo to display
 	var tags: [String: String] = [:] // Provided by caller to specify tags to upload with new photos
@@ -114,11 +116,7 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		captureButton.tintColor = .systemBlue
 
 		// create progress indicator
-		if #available(iOS 13.0, *) {
-			progress = UIActivityIndicatorView(style: .large)
-		} else {
-			progress = UIActivityIndicatorView(style: .gray)
-		}
+		progress = UIActivityIndicatorView(style: .large)
 		view.addSubview(progress)
 		progress.color = .blue
 		progress.center = view.center
@@ -166,12 +164,37 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 
 	@IBAction
 	func captureAndUploadPhotograph(_ sender: Any) {
-		_ = [
-			// leaving these here for future use, since translators already translated them
-			NSLocalizedString("Take New Photo", comment: ""),
-			NSLocalizedString("Choose Existing Photo",
-			                  comment: "Text displayed in an action sheet when the user wants to upload a photograph from their photo library.")
-		]
+		let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Take New Photo",
+			                         comment: "Option to take a photo with the camera"),
+			style: .default)
+		{ _ in
+			self.presentCamera()
+		})
+
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Choose Existing Photo",
+			                         comment: "Option to choose a photo from the photo library."),
+			style: .default)
+		{ _ in
+			self.presentPhotoLibrary()
+		})
+
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Cancel", comment: ""),
+			style: .cancel))
+
+		if let button = sender as? UIButton {
+			alert.popoverPresentationController?.sourceView = button
+			alert.popoverPresentationController?.sourceRect = button.bounds
+		}
+
+		present(alert, animated: true)
+	}
+
+	private func presentCamera() {
 		photoPicker = PhotoCapture()
 		photoPicker.locationManager = locationManager
 		photoPicker.onCancel = {}
@@ -185,25 +208,35 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 		present(photoPicker, animated: true)
 	}
 
-	// UIImagePickerController delegate function
-	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-		picker.dismiss(animated: true)
+	private func presentPhotoLibrary() {
+		var config = PHPickerConfiguration()
+		config.selectionLimit = 1
+		config.filter = .images
+		let picker = PHPickerViewController(configuration: config)
+		picker.delegate = self
+		present(picker, animated: true)
 	}
 
-	// UIImagePickerController delegate function
-	func imagePickerController(_ picker: UIImagePickerController,
-	                           didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any])
-	{
-		picker.dismiss(animated: true)
-
-		guard let image = info[.originalImage] as? UIImage,
-		      let imageURL = info[.imageURL] as? URL,
-		      let imageData = try? Data(contentsOf: imageURL)
+	@MainActor
+	private func handlePickedImage(_ image: UIImage, data: Data) {
+		guard
+			let source = CGImageSourceCreateWithData(data as CFData, nil),
+			let properties = CGImageSourceCopyPropertiesAtIndex(source, 0, nil) as? [String: Any],
+			let gps = properties[kCGImagePropertyGPSDictionary as String] as? [String: Any],
+			gps[kCGImagePropertyGPSLatitude as String] != nil
 		else {
+			let alert = UIAlertController(
+				title: NSLocalizedString("No Location Data", comment: "The selected photo has no GPS coordinates"),
+				message: NSLocalizedString(
+					"The photo does not contain location data. Panoramax requires that uploaded photos contain location data.",
+					comment: ""),
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+			present(alert, animated: true)
 			return
 		}
 		Task {
-			try await uploadImage(image: image, imageData: imageData)
+			try await uploadImage(image: image, imageData: data)
 		}
 	}
 
@@ -363,6 +396,34 @@ class PanoramaxViewController: UIViewController, UIImagePickerControllerDelegate
 			print("Cookie Path: \(cookie.path)")
 			print("Cookie Expires: \(cookie.expiresDate?.description ?? "Session Cookie")")
 			print("------------")
+		}
+	}
+}
+
+@available(iOS 14, *)
+extension PanoramaxViewController: PHPickerViewControllerDelegate {
+	func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+		picker.dismiss(animated: true)
+		guard let result = results.first else { return }
+		// Request JPEG so we always get a format the server accepts.
+		// iOS transcodes HEIC automatically and preserves GPS metadata during transcoding.
+		result.itemProvider.loadDataRepresentation(forTypeIdentifier: "public.jpeg") { [weak self] data, error in
+			guard let self else { return }
+			DispatchQueue.main.async {
+				guard
+					let data,
+					let image = UIImage(data: data)
+				else {
+					self.showError(error ?? NSError(
+						domain: "Panoramax",
+						code: 0,
+						userInfo: [NSLocalizedDescriptionKey: NSLocalizedString(
+							"The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax.",
+							comment: "Error shown when a selected photo cannot be converted to JPEG format")]))
+					return
+				}
+				self.handlePickedImage(image, data: data)
+			}
 		}
 	}
 }

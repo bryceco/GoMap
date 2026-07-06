@@ -25615,7 +25615,7 @@
       }
     },
     "Choose Existing Photo" : {
-      "comment" : "Text displayed in an action sheet when the user wants to upload a photograph from their photo library.",
+      "comment" : "Option to choose a photo from the photo library.",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -43166,6 +43166,9 @@
         }
       }
     },
+    "No Location Data" : {
+      "comment" : "The selected photo has no GPS coordinates"
+    },
     "No match" : {
       "comment" : "No value available",
       "localizations" : {
@@ -56358,6 +56361,7 @@
       }
     },
     "Take New Photo" : {
+      "comment" : "Option to take a photo with the camera",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -57125,6 +57129,9 @@
         }
       }
     },
+    "The photo does not contain location data. Panoramax requires that uploaded photos contain location data." : {
+
+    },
     "The restriction cannot be deleted" : {
       "localizations" : {
         "ar" : {
@@ -57324,6 +57331,9 @@
           }
         }
       }
+    },
+    "The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax." : {
+      "comment" : "Error shown when a selected photo cannot be converted to JPEG format"
     },
     "The selected way must be completely visible" : {
       "localizations" : {
