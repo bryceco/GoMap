@@ -196,7 +196,15 @@ private class CameraOverlayView: UIView {
 	}
 
 	func showPreview(_ image: UIImage) {
-		previewView.image = image
+		// The camera preview is portrait-locked regardless of device orientation.
+		// The cgImage always contains raw sensor pixels; forcing .right orientation
+		// applies the same 90° CW rotation the camera preview layer uses for portrait.
+		previewView.image = if let cgImage = image.cgImage {
+			UIImage(cgImage: cgImage, scale: image.scale, orientation: .right)
+		} else {
+			image
+		}
+		// animate the preview appearance in
 		previewView.alpha = 0
 		previewView.isHidden = false
 		UIView.animate(withDuration: 0.3) {
