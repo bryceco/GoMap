@@ -365,14 +365,14 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	// MARK: Construction
 
-	func constructTag(_ tag: String, value: String) {
-		// drop deprecated tags
-		if tag == "created_by" {
+	func constructTag(_ key: String, value: String) {
+		// drop discarded tags
+		if PresetsDatabase.shared.discarded.contains(key: key, value: value) {
 			return
 		}
 
 		assert(!constructed())
-		tags[tag] = value
+		tags[key] = value
 	}
 
 	func constructed() -> Bool {

@@ -9,7 +9,8 @@ presets=(preset_categories
 		preset_defaults
 		fields
 		presets
-		deprecated)
+		deprecated
+		discarded)
 
 for preset in ${presets[*]}; do
 	echo $preset

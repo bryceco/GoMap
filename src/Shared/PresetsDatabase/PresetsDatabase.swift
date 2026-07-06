@@ -26,6 +26,7 @@ final class PresetsDatabase {
 	let stdFeatureIndex: [String: [PresetFeature]] // generic preset index
 	var nsiFeatureIndex: [String: [PresetFeature]] // generic+NSI index
 	var nsiGeoJson: [String: GeoJSONGeometry] // geojson regions for NSI
+	let discarded: DiscardedTags
 
 	class func pathForFile(_ file: String) throws -> URL {
 		guard let bundle = Bundle.main.resourceURL else {
@@ -71,6 +72,9 @@ final class PresetsDatabase {
 
 		// deprecated tags
 		deprecations = try DeprecatedTags(from: Self.dataForFile("deprecated.json"))
+
+		// discarded tags
+		discarded = try DiscardedTags(from: Self.dataForFile("discarded.json"))
 
 		// address formats
 		presetAddressFormats = try JSONDecoder().decode([PresetAddressFormat].self,

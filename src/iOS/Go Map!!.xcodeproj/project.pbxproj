@@ -151,6 +151,7 @@
 		02C8C56926F44759003B0122 /* FixmeMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56826F44759003B0122 /* FixmeMarker.swift */; };
 		02C8C56D26F4479A003B0122 /* WayPointMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56C26F4479A003B0122 /* WayPointMarker.swift */; };
 		02C8C56F26F447C3003B0122 /* KeepRightMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C8C56E26F447C3003B0122 /* KeepRightMarker.swift */; };
+		02C995542FFC6BDB00A9CF85 /* DiscardedTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C995532FFC6BDB00A9CF85 /* DiscardedTags.swift */; };
 		02CA15512824A6B40047B0E5 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CA15502824A6B40047B0E5 /* String+Ext.swift */; };
 		02CB2405265DB7CB00835F32 /* OpeningHoursRecognizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */; };
 		02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB2402265DB7CB00835F32 /* CameraView.swift */; };
@@ -515,6 +516,7 @@
 		02C8C56826F44759003B0122 /* FixmeMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FixmeMarker.swift; sourceTree = "<group>"; };
 		02C8C56C26F4479A003B0122 /* WayPointMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WayPointMarker.swift; sourceTree = "<group>"; };
 		02C8C56E26F447C3003B0122 /* KeepRightMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeepRightMarker.swift; sourceTree = "<group>"; };
+		02C995532FFC6BDB00A9CF85 /* DiscardedTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscardedTags.swift; sourceTree = "<group>"; };
 		02CA15502824A6B40047B0E5 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		02CB2401265DB7CB00835F32 /* OpeningHoursRecognizerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpeningHoursRecognizerView.swift; sourceTree = "<group>"; };
 		02CB2402265DB7CB00835F32 /* CameraView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraView.swift; sourceTree = "<group>"; };
@@ -1072,6 +1074,7 @@
 			children = (
 				0220526329283498003C6AE1 /* CountryCoder.swift */,
 				0293B2CC2F53DDB100044DDE /* DeprecatedTags.swift */,
+				02C995532FFC6BDB00A9CF85 /* DiscardedTags.swift */,
 				02DFFD1D2BF3E0F0002A0189 /* LocationSet.swift */,
 				02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */,
 				02A59EDC297E444500B0A676 /* PresetAddressFormat.swift */,
@@ -1729,6 +1732,7 @@
 				02FEDAF42651DCC100DF15D7 /* POIAllTagsViewController.swift in Sources */,
 				02811D6E2E3176DB00E9D889 /* UIImage+Extension.swift in Sources */,
 				C3D096DB263EB73E00E3B129 /* main.swift in Sources */,
+				02C995542FFC6BDB00A9CF85 /* DiscardedTags.swift in Sources */,
 				02F3F8432B96CDA600ECB99F /* MapLibreVectorTilesView.swift in Sources */,
 				02034743266C2CB9000A7C3D /* MapMarkerDatabase.swift in Sources */,
 				C3FA9249263FF95B000A2A99 /* LocationParser.swift in Sources */,
