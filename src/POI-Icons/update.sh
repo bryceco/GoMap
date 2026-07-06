@@ -34,7 +34,7 @@ for f in *.svg; do
 	fi
 done
 
-# Special case fetching icons stored by iD
+# Special case fetching icons stored by iD, far and pinhead
 echo "fetching iD icons"
 for f in "${presetIcons[@]}"; do
 	if [[ $f = "iD-"* ]]; then
@@ -46,6 +46,10 @@ for f in "${presetIcons[@]}"; do
 		f2=${f:4}
 		echo $f2
 		curl -fLsS --output ./$f "$ID_SVG/fontawesome/$f"
+	elif [[ $f = "pinhead-"* ]]; then
+		f2=${f:8}
+		echo $f2
+		curl -fLsS --output ./$f "https://pinhead.ink/latest/$f2"
 	fi
 done
 
