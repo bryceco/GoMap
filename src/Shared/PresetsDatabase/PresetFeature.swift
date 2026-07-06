@@ -276,7 +276,9 @@ class PresetFeature: CustomDebugStringConvertible {
 			let reducedTags = tags.filter { newKeys.contains($0.key) }
 			if oldFeature.matchObjectTagsScore(reducedTags, geometry: geometry, location: location) == 0.0 {
 				let oldKeys = oldFeature.allKeysForAllPresets(more: true)
-				let removeKeys = Set(oldKeys).subtracting(newKeys)
+				let removeKeys = Set(oldKeys)
+					.subtracting(newKeys)
+					.filter { !$0.hasPrefix("addr:") }
 				for key in removeKeys {
 					tags.removeValue(forKey: key)
 				}
