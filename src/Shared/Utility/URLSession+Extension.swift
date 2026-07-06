@@ -48,7 +48,7 @@ extension URLSession {
 		// Check if server returned an HTML page
 		if let contentType = response.value(forHTTPHeaderField: "Content-Type"),
 		   contentTypeIsHTML(contentType),
-		   let attributed = await parseHTML(data)
+		   let attributed = NSAttributedString(withHtmlData: data)
 		{
 			return attributed.string
 		}
@@ -62,24 +62,6 @@ extension URLSession {
 			return contentType.lowercased().contains("text/html")
 		}
 		return UTType(mimeType: contentType)?.conforms(to: .html) == true
-	}
-
-	@MainActor
-	private func parseHTML(_ data: Data) -> NSAttributedString? {
-		guard let attributed = try? NSAttributedString(
-			data: data,
-			options: [
-				.documentType: NSAttributedString.DocumentType.html,
-				.characterEncoding: String.Encoding.utf8.rawValue
-			],
-			documentAttributes: nil)
-		else { return nil }
-
-		let mutable = NSMutableAttributedString(attributedString: attributed)
-		let full = NSRange(location: 0, length: mutable.length)
-		mutable.removeAttribute(.foregroundColor, range: full)
-		mutable.removeAttribute(.backgroundColor, range: full)
-		return mutable
 	}
 
 	func data(with url: URL) async throws -> Data {

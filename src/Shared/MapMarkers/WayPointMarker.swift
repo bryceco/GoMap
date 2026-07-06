@@ -18,16 +18,7 @@ final class WayPointMarker: MapMarker {
 	}
 
 	static func attributedString(for string: String) -> NSAttributedString {
-		if let data = string.data(using: .utf8),
-		   let attr = try? NSAttributedString(data: data,
-		                                      options: [.documentType: NSAttributedString.DocumentType.html,
-		                                                .characterEncoding: String.Encoding.utf8.rawValue],
-		                                      documentAttributes: nil)
-		{
-			return attr
-		} else {
-			return NSAttributedString(string: string)
-		}
+		return NSAttributedString(withHtmlString: string) ?? NSAttributedString(string: string)
 	}
 
 	convenience init(with gpxPoint: GpxPoint) {

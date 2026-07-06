@@ -8,35 +8,25 @@
 
 import UIKit
 
-extension NSMutableAttributedString {
-	/// Takes a string containing HTML code, such as an error message returned by a server, and
-	/// converts it to an NSAttributedString
-	convenience init?(withHtmlString html: String,
-	                  textColor: UIColor,
-	                  backgroundColor backColor: UIColor)
-	{
-		do {
-			guard html.hasPrefix("<"),
-			      let data = html.data(using: .utf8)
-			else { return nil }
-			let encoding = NSNumber(value: String.Encoding.utf8.rawValue)
-			try self.init(data: data,
-			              options: [.documentType: NSAttributedString.DocumentType.html,
-			                        .characterEncoding: encoding],
-			              documentAttributes: nil)
-
-			// remove any hyperlinks, since they display in a different color
-			let range = NSRange(location: 0, length: length)
-			removeAttribute(.link, range: range)
-			// change text color
-			addAttribute(.foregroundColor, value: textColor, range: range)
-			addAttribute(.backgroundColor, value: backColor, range: range)
-			// center align
-			let paragraphStyle = NSMutableParagraphStyle()
-			paragraphStyle.alignment = .center
-			addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
-		} catch {
+extension NSAttributedString {
+	convenience init?(withHtmlData data: Data) {
+		guard
+			let attr = try? NSMutableAttributedString(data: data,
+			                                          options: [
+			                                          	.documentType: NSAttributedString.DocumentType.html,
+			                                          	.characterEncoding: String.Encoding.utf8.rawValue
+			                                          ],
+			                                          documentAttributes: nil)
+		else {
 			return nil
 		}
+		attr.removeAttribute(.foregroundColor, range: NSRange(location: 0, length: attr.length))
+		attr.removeAttribute(.backgroundColor, range: NSRange(location: 0, length: attr.length))
+		self.init(attributedString: attr)
+	}
+
+	convenience init?(withHtmlString string: String) {
+		guard let data = string.data(using: .utf8) else { return nil }
+		self.init(withHtmlData: data)
 	}
 }
