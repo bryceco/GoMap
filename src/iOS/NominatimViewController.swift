@@ -35,6 +35,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	private var historyArray = MostRecentlyUsed<String>(maxCount: 20,
 	                                                    userPrefsKey: UserPrefs.shared.searchHistory)
 	private var showingHistory = true
+	private var searchTask: Task<Void, Never>?
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -226,6 +227,45 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 	func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 		dismiss(animated: true)
+	}
+
+	func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+		searchTask?.cancel()
+
+		guard !searchText.isEmpty else {
+			showingHistory = true
+			resultsArray = []
+			tableView.reloadData()
+			return
+		}
+
+		showingHistory = false
+		activityIndicator.startAnimating()
+		searchTask = Task {
+			defer {
+				Task { await MainActor.run { self.activityIndicator.stopAnimating() } }
+			}
+			// debounce before submitting the searching
+			try? await Task.sleep(nanoseconds: 300_000000)
+			// get the URL and submit the search request
+			guard
+				!Task.isCancelled,
+				let url = nominatimSearchURL(query: searchText,
+				                             lang: PresetLanguages.preferredLanguageCode(),
+				                             latLon: AppDelegate.shared.mainView.viewPort.screenCenterLatLon()),
+				let data = try? await URLSession.shared.data(with: url),
+				!Task.isCancelled
+			else {
+				return
+			}
+
+			// display the results
+			let results = (try? JSONDecoder().decode([NominatimResult].self, from: data)) ?? []
+			await MainActor.run {
+				resultsArray = results
+				tableView.reloadData()
+			}
+		}
 	}
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
