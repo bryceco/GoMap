@@ -403,7 +403,7 @@ final class TileServer: Equatable, Codable {
 		geoJSON: nil,
 		attribString: "",
 		attribIconString: "bing-logo-white",
-		attribUrl: "",
+		attribUrl: "https://www.bingmapsportal.com/terms/EndUserTerms",
 		isVector: false)
 
 	private static var dynamicBingAerial: TileServer?

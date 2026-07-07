@@ -1444,10 +1444,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	@IBAction func requestAerialServiceAttribution(_ sender: Any) {
 		let aerial = mapLayersView.aerialLayer.tileServer
-		if aerial.isBingAerial() {
-			// present bing metadata
-			performSegue(withIdentifier: "BingMetadataSegue", sender: self)
-		} else if aerial.attributionUrl.count > 0 {
+		if aerial.attributionUrl.count > 0 {
 			// open the attribution url
 			if let url = URL(string: aerial.attributionUrl) {
 				let safariViewController = SFSafariViewController(url: url)

@@ -380,7 +380,6 @@
                         <outlet property="uploadButton" destination="YRw-Aj-GwS" id="4Vd-GX-cdu"/>
                         <outlet property="userInstructionLabel" destination="N5Q-nV-TPG" id="Vyf-0j-ia3"/>
                         <segue destination="wrG-56-yuW" kind="modal" identifier="NotesSegue" id="ROf-ZO-hu1"/>
-                        <segue destination="rzX-ca-ESu" kind="modal" identifier="BingMetadataSegue" id="MvO-jp-eEt"/>
                         <segue destination="Dsa-9O-Cca" kind="modal" identifier="poiSegue" id="GP1-Ol-g7i"/>
                     </connections>
                 </viewController>
@@ -659,78 +658,6 @@
             </objects>
             <point key="canvasLocation" x="-2160.8695652173915" y="1008.4821428571428"/>
         </scene>
-        <!--Bing Maps Navigation Controller-->
-        <scene sceneID="Yja-PP-LZI">
-            <objects>
-                <navigationController id="rzX-ca-ESu" userLabel="Bing Maps Navigation Controller" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8DV-Ex-fD9">
-                        <rect key="frame" x="0.0" y="16" width="393" height="54"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="DCR-m3-Qgc" kind="relationship" relationship="rootViewController" id="ciw-Md-Gcx"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="05c-vm-Znh" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-673" y="-611"/>
-        </scene>
-        <!--Bing Maps-->
-        <scene sceneID="I12-cf-9pY">
-            <objects>
-                <viewController id="DCR-m3-Qgc" customClass="BingMetadataViewController" customModule="Go_Map__" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleAspectFit" id="SRh-fQ-dAA">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="bing-logo-gray" translatesAutoresizingMaskIntoConstraints="NO" id="UQm-nn-P6E">
-                                <rect key="frame" x="20" y="76" width="104" height="32"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="104" id="1vt-lM-5xK"/>
-                                    <constraint firstAttribute="height" constant="32" id="ms7-lz-1eH"/>
-                                </constraints>
-                            </imageView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="peH-96-gWt">
-                                <rect key="frame" x="20" y="118" width="353" height="655"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="nrQ-9V-0ML">
-                                <rect key="frame" x="126" y="82" width="20" height="20"/>
-                            </activityIndicatorView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="A8k-Ic-iRd"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="UQm-nn-P6E" firstAttribute="top" secondItem="A8k-Ic-iRd" secondAttribute="top" constant="6" id="DF9-IQ-f5Q"/>
-                            <constraint firstItem="A8k-Ic-iRd" firstAttribute="trailing" secondItem="peH-96-gWt" secondAttribute="trailing" constant="20" id="Gbj-CW-o1z"/>
-                            <constraint firstItem="peH-96-gWt" firstAttribute="top" secondItem="UQm-nn-P6E" secondAttribute="bottom" constant="10" id="LDs-I1-aby"/>
-                            <constraint firstItem="A8k-Ic-iRd" firstAttribute="bottom" secondItem="peH-96-gWt" secondAttribute="bottom" constant="20" id="MBt-TZ-IJx"/>
-                            <constraint firstItem="peH-96-gWt" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="20" id="Pxd-vG-XoU"/>
-                            <constraint firstItem="nrQ-9V-0ML" firstAttribute="centerY" secondItem="UQm-nn-P6E" secondAttribute="centerY" id="UMF-Ru-SZ8"/>
-                            <constraint firstItem="nrQ-9V-0ML" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="126" id="XXx-3q-VEr"/>
-                            <constraint firstItem="nrQ-9V-0ML" firstAttribute="leading" secondItem="UQm-nn-P6E" secondAttribute="trailing" constant="2" id="mBW-14-KcJ"/>
-                            <constraint firstItem="UQm-nn-P6E" firstAttribute="leading" secondItem="A8k-Ic-iRd" secondAttribute="leading" constant="20" id="qzq-UY-gsf"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Bing Maps" id="Qz0-Ce-YCX">
-                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="AC4-hh-8iz">
-                            <connections>
-                                <action selector="cancel:" destination="DCR-m3-Qgc" id="8ju-1i-8uA"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="activityIndicator" destination="nrQ-9V-0ML" id="bD0-eM-Al9"/>
-                        <outlet property="textView" destination="peH-96-gWt" id="oF9-ze-EOx"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="f8A-Xu-2Bc" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="114" y="-611"/>
-        </scene>
         <!--poiTabBar-->
         <scene sceneID="fuP-bJ-qhy">
             <objects>
@@ -891,7 +818,6 @@
     <resources>
         <image name="arrow.uturn.left" catalog="system" width="128" height="113"/>
         <image name="arrow.uturn.right" catalog="system" width="128" height="113"/>
-        <image name="bing-logo-gray" width="87.666664123535156" height="19"/>
         <image name="bing-logo-white" width="87.666664123535156" height="19"/>
         <image name="gear" catalog="system" width="128" height="122"/>
         <image name="icloud.and.arrow.up" catalog="system" width="128" height="117"/>

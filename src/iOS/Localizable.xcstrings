@@ -22362,6 +22362,7 @@
     },
     "Background imagery %@" : {
       "comment" : "identifies current aerial imagery",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -33324,6 +33325,7 @@
       }
     },
     "Error fetching metadata: %@" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

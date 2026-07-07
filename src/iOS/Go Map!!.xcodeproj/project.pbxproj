@@ -272,7 +272,6 @@
 		C3FA9249263FF95B000A2A99 /* LocationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA9248263FF95B000A2A99 /* LocationParser.swift */; };
 		CD677FFA2A5FC17300F28605 /* AccountInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD677FF92A5FC17300F28605 /* AccountInfoTableViewController.swift */; };
 		ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */; };
-		ED56E5B426026542000B368C /* BingMetadataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B226026541000B368C /* BingMetadataViewController.swift */; };
 		ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5B326026541000B368C /* ClearCacheViewController.swift */; };
 		ED56E5C426027A50000B368C /* CustomFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C026027A50000B368C /* CustomFieldController.swift */; };
 		ED56E5C526027A50000B368C /* CustomFieldListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5C126027A50000B368C /* CustomFieldListViewController.swift */; };
@@ -662,7 +661,6 @@
 		C3FA925626416BF5000A2A99 /* GpxLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpxLayer.swift; sourceTree = "<group>"; };
 		CD677FF92A5FC17300F28605 /* AccountInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInfoTableViewController.swift; sourceTree = "<group>"; };
 		ED56E5AA26024DA5000B368C /* AutocompleteTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutocompleteTextField.swift; sourceTree = "<group>"; };
-		ED56E5B226026541000B368C /* BingMetadataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BingMetadataViewController.swift; sourceTree = "<group>"; };
 		ED56E5B326026541000B368C /* ClearCacheViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClearCacheViewController.swift; sourceTree = "<group>"; };
 		ED56E5C026027A50000B368C /* CustomFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFieldController.swift; sourceTree = "<group>"; };
 		ED56E5C126027A50000B368C /* CustomFieldListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomFieldListViewController.swift; sourceTree = "<group>"; };
@@ -867,7 +865,6 @@
 			isa = PBXGroup;
 			children = (
 				C3D096AB263D48F700E3B129 /* AppDelegate.swift */,
-				ED56E5B226026541000B368C /* BingMetadataViewController.swift */,
 				02F0297A2BFAFF2E002F7956 /* DataOverlays */,
 				64D74BF02253DF39004FFD20 /* Direction */,
 				0244399629CA9A28009FC2D0 /* DisplaySettings */,
@@ -1720,7 +1717,6 @@
 				0226B771268300C9005DB9E2 /* Data+Wrapper.swift in Sources */,
 				0262175B2F08533D00594D88 /* PresetTranslations.swift in Sources */,
 				0260E05F2BE30D4700975570 /* CompassButton.swift in Sources */,
-				ED56E5B426026542000B368C /* BingMetadataViewController.swift in Sources */,
 				02EDBF6A26535BD400B7072E /* OsmRelation.swift in Sources */,
 				02A123F1264EF139005638C1 /* QuadMap.swift in Sources */,
 				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
