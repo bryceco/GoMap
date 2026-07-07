@@ -18192,6 +18192,9 @@
         }
       }
     },
+    "Add Crossing Markings" : {
+      "comment" : "A type of quest"
+    },
     "Add Highway Surface" : {
       "comment" : "A type of quest",
       "localizations" : {

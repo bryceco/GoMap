@@ -304,16 +304,44 @@ class QuestList {
 					UUID(uuidString: $0) != nil
 				})
 
+			let addCrossingMarkings = QuestInstance(
+				ident: "__CrossingMarkings",
+				title: NSLocalizedString("Add Crossing Markings", comment: "A type of quest"),
+				label: "ic_quest_pedestrian_crossing",
+				editKeys: ["crossing:markings"],
+				appliesToObject: { obj in
+					func commonChecks(_ tags: [String: String]) -> Bool {
+						return tags["crossing:markings"] == nil &&
+							tags["crossing"] != "unmarked"
+					}
+					if let tags = (obj as? OsmNode)?.tags,
+					   tags["highway"] == "crossing",
+					   tags["foot"] != "no"
+					{
+						return commonChecks(tags)
+					}
+					if let tags = (obj as? OsmWay)?.tags,
+					   let highway = tags["highway"],
+					   highway == "footway" || highway == "path" || highway == "cycleway",
+					   tags[highway] == "crossing"
+					{
+						return commonChecks(tags)
+					}
+					return false
+				},
+				acceptsValue: { _ in true })
+
 			builtinList = [
 				addBuildingType,
-				addSidewalkSurface,
+				addCrossingMarkings,
 				addHighwaySurface,
-				addPhoneNumber,
 				addOpeningHours,
+				addPanoramaxPhoto,
+				addParkingLotType,
+				addPhoneNumber,
+				addSidewalkSurface,
 				addSpeedLimit,
 				addWebsite,
-				addParkingLotType,
-				addPanoramaxPhoto,
 				ResurveyQuest(ageInYears: 2.0)
 			]
 			// we want all built-in idents to be easily recognized and not collide with user defined quests:
