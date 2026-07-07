@@ -16,12 +16,29 @@ private let NUMBER_OF_HEADERS = 2 // feature name + quest name
 private let NUMBER_OF_FOOTERS = 2 // ignore + open tag editor
 
 class QuestSolverController: TableViewControllerMac, PresetValueTextFieldOwner {
+	static let ImageWidth = 60.0
 	var questMarker: QuestMarker!
 	var object: OsmBaseObject!
 	var presetFeature: PresetFeature?
 	var presetKeys: [PresetDisplayKey?] = []
 	var editKeys: [String] = []
 	var onClose: (() -> Void)?
+	private var images: [String: UIImage] = [:]
+	private let placeholderImage = UIImage().scaledTo(width: ImageWidth, height: 32)
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		for presetKey in presetKeys.compactMap({ $0 }) {
+			for preset in presetKey.presetValues ?? [] {
+				if let iconName = preset.icon,
+				   let image = UIImage(named: iconName)
+				{
+					let tag = presetKey.tagKey + "=" + preset.tagValue
+					images[tag] = image.scaledTo(width: Self.ImageWidth, height: nil)
+				}
+			}
+		}
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
@@ -290,6 +307,10 @@ class QuestSolverController: TableViewControllerMac, PresetValueTextFieldOwner {
 				let presetValue = presetKey?.presetValues?[indexPath.row]
 				let cell = tableView.dequeueReusableCell(withIdentifier: "QuestCellTagValue", for: indexPath)
 				cell.textLabel?.text = presetValue?.name ?? ""
+				if !images.isEmpty {
+					let tag = editKeys[indexPath.section - 1] + "=" + (presetValue?.tagValue ?? "")
+					cell.imageView?.image = images[tag] ?? placeholderImage
+				}
 				if let value = object.tags[editKeys[indexPath.section - 1]],
 				   value == presetValue?.tagValue
 				{
