@@ -367,7 +367,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	func constructTag(_ key: String, value: String) {
 		// drop discarded tags
-		if PresetsDatabase.shared.discarded.contains(key: key, value: value) {
+		if PresetsDatabase.shared.discarded.shouldDiscard(key: key, value: value) {
 			return
 		}
 

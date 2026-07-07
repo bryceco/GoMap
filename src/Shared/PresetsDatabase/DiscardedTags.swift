@@ -33,7 +33,7 @@ class DiscardedTags {
 		entries = try JSONDecoder().decode([String: DiscardedEntry].self, from: data)
 	}
 
-	func contains(key: String, value: String) -> Bool {
+	func shouldDiscard(key: String, value: String) -> Bool {
 		switch entries[key] {
 		case .always:
 			return true
