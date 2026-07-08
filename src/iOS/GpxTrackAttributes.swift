@@ -27,10 +27,8 @@ struct GpxTrackAttributes: ActivityAttributes {
 		var status: Status
 
 		var durationHMS: String {
-			let formatter = DateComponentsFormatter()
-			formatter.allowedUnits = [.minute, .second]
-			formatter.zeroFormattingBehavior = .dropLeading
-			return formatter.string(from: (endTime ?? Date()).timeIntervalSince(startTime))!
+			let interval = Int((endTime ?? Date()).timeIntervalSince(startTime))
+			return String(format: "%d:%02d", interval / 60, interval % 60)
 		}
 
 		init(startTime: Date,
