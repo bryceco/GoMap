@@ -219,8 +219,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		editXmlButton.isEnabled = false
 		let generator = appDelegate.generator
 
-		commentTextView.resignFirstResponder()
-		xmlTextView.resignFirstResponder()
+		view.endEditing(true)
 
 		var comment = commentTextView.text ?? ""
 		comment = comment.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)

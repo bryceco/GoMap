@@ -266,7 +266,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
-		resignAll()
+		view.endEditing(true)
 		super.viewWillDisappear(animated)
 		selectedFeature = nil
 		currentFeature = nil
@@ -636,7 +636,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	@IBAction func done(_ sender: Any) {
-		resignAll()
+		view.endEditing(true)
 		dismiss(animated: true)
 
 		let tabController = tabBarController as? POITabBarController
@@ -689,18 +689,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	// MARK: - Text field functions
-
-	func resignAll() {
-		if tableView.window == nil {
-			return
-		}
-
-		for cell in tableView.visibleCells {
-			if let featureCell = cell as? FeaturePresetCell {
-				featureCell.valueField?.resignFirstResponder()
-			}
-		}
-	}
 
 	@IBAction func textFieldReturn(_ sender: UITextField) {
 		sender.resignFirstResponder()
