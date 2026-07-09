@@ -705,7 +705,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ResultCell" textLabel="vwW-V6-kvw" detailTextLabel="Ouf-Z3-6d4" style="IBUITableViewCellStyleSubtitle" id="BdL-WU-ktN" userLabel="ResultCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ResultCell" textLabel="vwW-V6-kvw" detailTextLabel="Ouf-Z3-6d4" style="IBUITableViewCellStyleSubtitle" id="BdL-WU-ktN" userLabel="ResultCell" customClass="NominatimResultCell" customModule="Go_Map__" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="94" width="393" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BdL-WU-ktN" id="brb-Is-TRN">
@@ -732,8 +732,22 @@
                                                         <fragment content="Placeholder - do not translate"/>
                                                     </attributedString>
                                                 </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kTp-aB-7rQ">
+                                                    <rect key="frame" x="200" y="23" width="173" height="19"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="kTp-aB-7rQ" firstAttribute="centerY" secondItem="Ouf-Z3-6d4" secondAttribute="centerY" id="nA1-bF-d1c"/>
+                                                <constraint firstItem="brb-Is-TRN" firstAttribute="trailing" secondItem="kTp-aB-7rQ" secondAttribute="trailing" constant="15" id="nA2-bF-d2c"/>
+                                                <constraint firstItem="kTp-aB-7rQ" firstAttribute="leading" secondItem="Ouf-Z3-6d4" secondAttribute="trailing" constant="12" id="nA3-bF-d3c"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="featureLabel" destination="kTp-aB-7rQ" id="mLw-dC-9sX"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

@@ -8,11 +8,26 @@
 
 import UIKit
 
+class NominatimResultCell: UITableViewCell {
+	@IBOutlet var featureLabel: UILabel!
+}
+
 private struct NominatimResult: Decodable {
 	let osm_type: String?
 	let osm_id: Int?
 	let boundingbox: [String]
 	let display_name: String
+	let `class`: String?
+	let type: String?
+
+	var featureType: String? {
+		switch (`class`, type) {
+		case let (c?, t?): return "\(c)=\(t)"
+		case let (c?, nil): return c
+		case let (nil, t?): return t
+		case (nil, nil): return nil
+		}
+	}
 
 	var latLon: LatLon? {
 		let box = boundingbox.compactMap { Double($0) }
@@ -84,7 +99,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			return cell
 		} else {
 			let cell = tableView.dequeueReusableCell(withIdentifier: "ResultCell",
-			                                         for: indexPath)
+			                                         for: indexPath) as! NominatimResultCell
 			let result = resultsArray[indexPath.row]
 			let subtitle: String
 			if let latLon = result.latLon {
@@ -96,6 +111,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			}
 			cell.textLabel?.text = result.display_name
 			cell.detailTextLabel?.text = subtitle
+			cell.featureLabel.text = result.featureType
 			return cell
 		}
 	}
