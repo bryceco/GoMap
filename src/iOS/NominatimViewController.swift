@@ -235,6 +235,15 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		return false
 	}
 
+	private func sortedByDistance(_ results: [NominatimResult]) -> [NominatimResult] {
+		let center = AppDelegate.shared.mainView.viewPort.screenCenterLatLon()
+		return results.sorted {
+			let d1 = $0.latLon?.greatCircleDistance(to: center) ?? .infinity
+			let d2 = $1.latLon?.greatCircleDistance(to: center) ?? .infinity
+			return d1 < d2
+		}
+	}
+
 	func updateHistory(with string: String) {
 		historyArray.updateWith(string)
 	}
@@ -278,7 +287,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			// display the results
 			let results = (try? JSONDecoder().decode([NominatimResult].self, from: data)) ?? []
 			await MainActor.run {
-				resultsArray = results
+				resultsArray = sortedByDistance(results)
 				tableView.reloadData()
 			}
 		}
@@ -320,7 +329,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			do {
 				let data = try await URLSession.shared.data(with: url)
 				await MainActor.run {
-					resultsArray = (try? JSONDecoder().decode([NominatimResult].self, from: data)) ?? []
+					resultsArray = sortedByDistance((try? JSONDecoder().decode([NominatimResult].self, from: data)) ?? [])
 					tableView.reloadData()
 
 					if resultsArray.count > 0 {
@@ -351,9 +360,18 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	}
 
 	func nominatimSearchURL(query string: String, lang: String, viewBox: OSMRect) -> URL? {
+		// Ensure the viewbox is large enough to bias nearby POIs regardless of current zoom.
+		// A half-size of 0.2° is roughly 20 km, comfortably covering a few miles in any direction.
+		let minHalfSize = 0.2
+		let cx = viewBox.origin.x + viewBox.size.width / 2
+		let cy = viewBox.origin.y + viewBox.size.height / 2
+		let left = min(viewBox.origin.x, cx - minHalfSize)
+		let bottom = min(viewBox.origin.y, cy - minHalfSize)
+		let right = max(viewBox.origin.x + viewBox.size.width, cx + minHalfSize)
+		let top = max(viewBox.origin.y + viewBox.size.height, cy + minHalfSize)
 		// viewbox format: left,top,right,bottom (minLon, maxLat, maxLon, minLat)
 		// Without bounded=1, results worldwide are still returned, biased toward the viewbox.
-		let viewbox = "\(viewBox.origin.x),\(viewBox.origin.y + viewBox.size.height),\(viewBox.origin.x + viewBox.size.width),\(viewBox.origin.y)"
+		let viewbox = "\(left),\(top),\(right),\(bottom)"
 		let url = OSM_SERVER.nominatimUrl
 			.appendingPathComponent("search")
 			.appendingQueryItems(["q": string,
