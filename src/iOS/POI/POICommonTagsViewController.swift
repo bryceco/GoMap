@@ -494,7 +494,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				if value == nil,
 				   let presetGroup = allPresets?.sectionList[indexPath.section],
 				   presetGroup.usesBoth,
-				   let bothKey = bothKeyFor(preset: presetKey),
+				   let bothKey = bothKeyFor(group: presetGroup),
 				   let bothValue = keyValueDict[bothKey]
 				{
 					value = bothValue
@@ -582,11 +582,31 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		return nil
 	}
 
-	func bothKeyFor(preset: PresetDisplayKey) -> String? {
-		if let index = preset.tagKey.lastIndex(of: ":") {
-			return String(preset.tagKey[..<index]) + ":both"
+	func bothKeyFor(group: PresetDisplayGroup) -> String? {
+		let allKeys = group.presetKeys.compactMap({ k -> String? in
+			guard case let .key(presetKey) = k else { return nil }
+			return presetKey.tagKey
+		})
+
+		// Split all strings into components
+		let split = allKeys.map { $0.split(separator: ":").map(String.init) }
+		let count = split.first?.count ?? 0
+
+		// Need at least 2 keys, all with the same component count
+		guard
+			split.count >= 2,
+			split.allSatisfy({ $0.count == count })
+		else { return nil }
+
+		// For each component position replace any components that vary
+		var result = [String]()
+		for i in 0..<count {
+			let values = split.map { $0[i] }
+			let allSame = values.dropFirst().allSatisfy { $0 == values.first }
+			result.append(allSame ? values.first! : "both")
 		}
-		return nil
+
+		return result.joined(separator: ":")
 	}
 
 	// Update all values associated with a group that supports :both
@@ -594,7 +614,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		guard let group = allPresets?.sectionList[indexPath.section],
 		      group.usesBoth,
 		      case let .key(presetKey) = group.presetKeys[indexPath.row],
-		      let bothKey = bothKeyFor(preset: presetKey),
+		      let bothKey = bothKeyFor(group: group),
 		      let tabController = tabBarController as? POITabBarController
 		else {
 			return false
@@ -604,7 +624,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		let tagDict = tabController.keyValueDict
 		let allSameValue = group.presetKeys.allSatisfy({
 			if case let .key(key) = $0,
-			   key === presetKey || tagDict[key.tagKey] == value
+			   key === presetKey || (tagDict[key.tagKey] ?? tagDict[bothKey]) == value
 			{
 				return true
 			}
