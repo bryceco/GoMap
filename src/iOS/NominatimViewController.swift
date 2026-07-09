@@ -268,7 +268,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 				!Task.isCancelled,
 				let url = nominatimSearchURL(query: searchText,
 				                             lang: PresetLanguages.preferredLanguageCode(),
-				                             latLon: AppDelegate.shared.mainView.viewPort.screenCenterLatLon()),
+				                             viewBox: AppDelegate.shared.mainView.viewPort.boundingLatLonForScreen()),
 				let data = try? await URLSession.shared.data(with: url),
 				!Task.isCancelled
 			else {
@@ -307,7 +307,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		guard
 			let url = nominatimSearchURL(query: string,
 			                             lang: PresetLanguages.preferredLanguageCode(),
-			                             latLon: AppDelegate.shared.mainView.viewPort.screenCenterLatLon())
+			                             viewBox: AppDelegate.shared.mainView.viewPort.boundingLatLonForScreen())
 		else {
 			return
 		}
@@ -350,15 +350,17 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		present(alert, animated: true)
 	}
 
-	func nominatimSearchURL(query string: String, lang: String, latLon: LatLon) -> URL? {
+	func nominatimSearchURL(query string: String, lang: String, viewBox: OSMRect) -> URL? {
+		// viewbox format: left,top,right,bottom (minLon, maxLat, maxLon, minLat)
+		// Without bounded=1, results worldwide are still returned, biased toward the viewbox.
+		let viewbox = "\(viewBox.origin.x),\(viewBox.origin.y + viewBox.size.height),\(viewBox.origin.x + viewBox.size.width),\(viewBox.origin.y)"
 		let url = OSM_SERVER.nominatimUrl
 			.appendingPathComponent("search")
 			.appendingQueryItems(["q": string,
 			                      "format": "json",
 			                      "limit": "50",
 			                      "accept-language": lang,
-			                      "lat": String(latLon.lat),
-			                      "lon": String(latLon.lon)])
+			                      "viewbox": viewbox])
 		return url
 	}
 }
