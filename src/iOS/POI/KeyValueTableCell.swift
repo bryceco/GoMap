@@ -167,7 +167,7 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 	func selectTextViewFor(key: String) {
 		// set text formatting options for text field
 		if let preset = keyValueCellOwner?.allPresetKeys.first(where: { key == $0.tagKey }) {
-			if preset.type == .textarea {
+			if preset.type == .textarea || key == "opening_hours" {
 				useTextView()
 			} else {
 				useTextField()

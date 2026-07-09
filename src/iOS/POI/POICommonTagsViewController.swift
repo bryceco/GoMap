@@ -403,7 +403,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		case let PresetKeyOrGroup.key(presetKey):
 			let key = presetKey.tagKey
 
-			if presetKey.type == .textarea {
+			if presetKey.type == .textarea || key == "opening_hours" {
 				// special case for keys that contain large amounts of text
 				let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagArea",
 				                                         for: indexPath) as! FeaturePresetAreaCell
