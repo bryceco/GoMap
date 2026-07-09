@@ -253,11 +253,15 @@ extension OsmServer {
 		request.setUserAgent()
 		request.httpMethod = method
 		if let xml = xml {
-			var data = xml.xmlData(withOptions: 0)
-			data = (try? data.gzipped()) ?? data
-			request.httpBody = data
+			let xmlData = xml.xmlData(withOptions: 0)
 			request.setValue("text/xml; charset=utf-8", forHTTPHeaderField: "Content-Type")
-			request.setValue("gzip", forHTTPHeaderField: "Content-Encoding")
+			if let gzipped = try? xmlData.gzipped() {
+				request.httpBody = gzipped
+				request.setValue("gzip", forHTTPHeaderField: "Content-Encoding")
+			} else {
+				DbgAssert(false)
+				request.httpBody = xmlData
+			}
 		}
 		request.cachePolicy = URLRequest.CachePolicy.reloadIgnoringLocalCacheData
 		let immutableRequest = request
