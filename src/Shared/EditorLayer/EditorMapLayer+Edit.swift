@@ -421,41 +421,61 @@ extension EditorMapLayer {
 	func rotateBegin() {
 		mapData.beginUndoGrouping()
 		dragState.didMove = false
+		nodeRotate?.undoGroupOpen = true
 	}
 
-	func rotateContinue(delta: CGFloat,
-	                    rotate: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon))
-	{
+	func rotateContinue(delta: CGFloat, center: LatLon) {
 		if dragState.didMove {
-			// don't allows undo list to accumulate
+			// don't allow undo list to accumulate
 			mapData.endUndoGrouping()
 			silentUndo = true
 			mapData.undo()
 			silentUndo = false
 			mapData.beginUndoGrouping()
 		}
-
 		dragState.didMove = true
 
-		let axis = viewPort.mapTransform.screenPoint(forLatLon: rotate.rotateObjectCenter, birdsEye: true)
-		let rotatedObject = selectedRelation ?? selectedWay
-		if let nodeSet = rotatedObject?.nodeSet() {
-			for node in nodeSet {
-				let pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
-				let diff = OSMPoint(x: Double(pt.x - axis.x), y: Double(pt.y - axis.y))
-				let radius = hypot(diff.x, diff.y)
-				var angle = atan2(diff.y, diff.x)
-
-				angle += Double(delta)
-				let new = OSMPoint(x: Double(axis.x) + radius * cos(angle), y: Double(axis.y) + radius * sin(angle))
-				let dist = CGPoint(x: CGFloat(new.x) - pt.x, y: -(CGFloat(new.y) - pt.y))
-				adjust(node, byScreenDistance: dist)
+		if let nodeRotate, let node = selectedNode {
+			// rotate a node's direction tag
+			let deltaDegrees = Int(round(delta * 180 / .pi))
+			let newDirection = nodeRotate.initialDirection.with(start: nodeRotate.initialDirection.start + deltaDegrees)
+			var tags = node.tags
+			tags[nodeRotate.key] = newDirection.valueString()
+			mapData.setTags(tags, for: node)
+			setNeedsLayout()
+		} else {
+			// rotate object geometry
+			let axis = viewPort.mapTransform.screenPoint(forLatLon: center, birdsEye: true)
+			let rotatedObject = selectedRelation ?? selectedWay
+			if let nodeSet = rotatedObject?.nodeSet() {
+				for node in nodeSet {
+					let pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
+					let diff = OSMPoint(x: Double(pt.x - axis.x), y: Double(pt.y - axis.y))
+					let radius = hypot(diff.x, diff.y)
+					var angle = atan2(diff.y, diff.x)
+					angle += Double(delta)
+					let new = OSMPoint(x: Double(axis.x) + radius * cos(angle), y: Double(axis.y) + radius * sin(angle))
+					let dist = CGPoint(x: CGFloat(new.x) - pt.x, y: -(CGFloat(new.y) - pt.y))
+					adjust(node, byScreenDistance: dist)
+				}
 			}
 		}
 	}
 
 	func rotateFinish() {
-		mapData.endUndoGrouping()
+		if let nodeRotate {
+			// node direction tag rotation
+			if nodeRotate.undoGroupOpen {
+				mapData.endUndoGrouping()
+			}
+			if dragState.didMove {
+				owner.didUpdateObject()
+			}
+			self.nodeRotate = nil
+		} else {
+			// object geometry rotation
+			mapData.endUndoGrouping()
+		}
 	}
 
 	// MARK: Rotate a node's direction tag
@@ -474,44 +494,6 @@ extension EditorMapLayer {
 		} else {
 			DbgAssert(false)
 		}
-	}
-
-	func rotateNodeBegin() {
-		mapData.beginUndoGrouping()
-		dragState.didMove = false
-		nodeRotate?.undoGroupOpen = true
-	}
-
-	func rotateNodeContinue(delta: CGFloat) {
-		guard let node = selectedNode,
-		      let nodeRotate
-		else { return }
-
-		if dragState.didMove {
-			mapData.endUndoGrouping()
-			silentUndo = true
-			mapData.undo()
-			silentUndo = false
-			mapData.beginUndoGrouping()
-		}
-		dragState.didMove = true
-
-		let deltaDegrees = Int(round(delta * 180 / .pi))
-		let newDirection = nodeRotate.initialDirection.with(start: nodeRotate.initialDirection.start + deltaDegrees)
-		var tags = node.tags
-		tags[nodeRotate.key] = newDirection.valueString()
-		mapData.setTags(tags, for: node)
-		setNeedsLayout()
-	}
-
-	func rotateNodeFinish() {
-		if nodeRotate?.undoGroupOpen == true {
-			mapData.endUndoGrouping()
-		}
-		if dragState.didMove {
-			owner.didUpdateObject()
-		}
-		nodeRotate = nil
 	}
 
 	// MARK: Editing

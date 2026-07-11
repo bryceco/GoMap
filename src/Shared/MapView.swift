@@ -314,9 +314,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	func endObjectRotation() {
 		isRotateObjectMode?.rotateObjectOverlay.removeFromSuperlayer()
-		if editorLayer.nodeRotate != nil {
-			editorLayer.rotateNodeFinish()
-		}
 		placePushpinForSelection()
 		editorLayer.dragState.confirmDrag = false
 		isRotateObjectMode = nil
@@ -1057,27 +1054,13 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	// user rotating an OSM object
 	@IBAction func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
-		guard let rotate = isRotateObjectMode else {
-			return
-		}
-		// Rotate object on screen
+		guard let rotate = isRotateObjectMode else { return }
 		if rotationGesture.state == .began {
-			if editorLayer.nodeRotate != nil {
-				editorLayer.rotateNodeBegin()
-			} else {
-				editorLayer.rotateBegin()
-			}
+			editorLayer.rotateBegin()
 		} else if rotationGesture.state == .changed {
-			if editorLayer.nodeRotate != nil {
-				editorLayer.rotateNodeContinue(delta: rotationGesture.rotation)
-			} else {
-				editorLayer.rotateContinue(delta: rotationGesture.rotation, rotate: rotate)
-			}
+			editorLayer.rotateContinue(delta: rotationGesture.rotation, center: rotate.rotateObjectCenter)
 		} else {
-			// ended
-			if editorLayer.nodeRotate == nil {
-				editorLayer.rotateFinish()
-			}
+			editorLayer.rotateFinish()
 			endObjectRotation()
 		}
 	}
