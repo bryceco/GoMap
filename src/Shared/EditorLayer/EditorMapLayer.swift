@@ -184,9 +184,33 @@ final class EditorMapLayer: CALayer {
 	var isNodeRotateMode: Bool { nodeRotate != nil }
 
 	func canRotateSelectedNode() -> Bool {
-		selectedWay == nil &&
-			selectedRelation == nil &&
-			selectedNode?.direction != nil
+		if selectedWay == nil,
+		   selectedRelation == nil,
+		   let node = selectedNode,
+		   rotatableDirectionTagKeyFor(node: node) != nil
+		{
+			return true
+		}
+		return false
+	}
+
+	func rotatableDirectionTagKeyFor(node: OsmNode) -> String? {
+		if let key = node.direction?.key {
+			return key
+		}
+		let location = AppDelegate.shared.mainView.currentRegion
+		guard let feature = PresetsDatabase.shared.presetFeatureMatching(
+			tags: node.tags,
+			geometry: node.geometry(),
+			location: location,
+			includeNSI: false)
+		else { return nil }
+		for key in ["direction", "camera:direction"] {
+			if let _ = feature.fieldContainingTagKey(key, more: true) {
+				return key
+			}
+		}
+		return nil
 	}
 
 	let objectFilters = EditorFilters()

@@ -461,10 +461,17 @@ extension EditorMapLayer {
 	// MARK: Rotate a node's direction tag
 
 	func prepareNodeRotation() {
-		guard let node = selectedNode,
-		      let keyDir = node.direction
+		guard
+			let node = selectedNode
 		else { return }
-		nodeRotate = keyDir
+		if let dir = node.direction {
+			// the node already has a direction
+			nodeRotate = dir
+		} else if let dirKey = rotatableDirectionTagKeyFor(node: node) {
+			nodeRotate = (dirKey, OsmNode.Direction(0))
+		} else {
+			DbgAssert(false)
+		}
 	}
 
 	func rotateNodeBegin() {
