@@ -56,7 +56,7 @@ class CustomFieldController: UITableViewController {
 				presetValues.append(preset)
 			}
 		}
-		let type: PresetType
+		let type: PresetField.FieldType
 		if presetValues.count == 0 {
 			type = .text
 		} else if presetValues.count >= 2, usesSemiCombo.isOn {

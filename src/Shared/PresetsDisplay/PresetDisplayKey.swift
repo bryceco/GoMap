@@ -14,7 +14,7 @@ class PresetDisplayKey: NSObject, Codable {
 	public class var supportsSecureCoding: Bool { return true }
 
 	let name: String // name of the preset, e.g. Hours
-	let type: PresetType // the type of value, e.g. "roadspeed"
+	let type: PresetField.FieldType // the type of value, e.g. "roadspeed"
 	let tagKey: String // the key being set, e.g. opening_hours
 	let defaultValue: String? // we don't use this, even though it is present
 	let placeholder: String // placeholder text in the UITextField
@@ -25,7 +25,7 @@ class PresetDisplayKey: NSObject, Codable {
 
 	init(
 		name: String,
-		type: PresetType,
+		type: PresetField.FieldType,
 		tagKey: String,
 		defaultValue: String?,
 		placeholder: String?,
@@ -100,7 +100,7 @@ class PresetDisplayKey: NSObject, Codable {
 		presetValues = try container.decode([PresetDisplayValue].self, forKey: .presetList)
 		// originally we didn't save 'type' so it may not exist.
 		// If it exists then use it, otherwise infer the type from the number of presets provided
-		type = (try? container.decode(PresetType.self, forKey: .presetType)) ??
+		type = (try? container.decode(PresetField.FieldType.self, forKey: .presetType)) ??
 			((presetValues?.count ?? 0) > 0 ? .combo : .text)
 
 		defaultValue = nil

@@ -30,7 +30,7 @@ final class PresetDisplayKeyUserDefined: PresetDisplayKey {
 	init(appliesToKey: String, // empty string is possible
 	     appliesToValue: String, // empty string is possible
 	     name: String,
-	     type: PresetType,
+	     type: PresetField.FieldType,
 	     tagKey key: String,
 	     placeholder: String?,
 	     keyboard: UIKeyboardType,

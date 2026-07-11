@@ -8,99 +8,101 @@
 
 import Foundation
 
-enum PresetType: String, Codable {
-	// Special case for the Type field, not part of id-tagging-schema.
-	// This provides us a field we can use to select a different feature.
-	case featureType
+extension PresetField {
+	enum FieldType: String, Codable {
+		// Special case for the Type field, not part of id-tagging-schema.
+		// This provides us a field we can use to select a different feature.
+		case featureType
 
-	// booleans
-	case check
-	case defaultCheck
-	case onewayCheck
+		// booleans
+		case check
+		case defaultCheck
+		case onewayCheck
 
-	// lists of presets
-	case radio
-	case structureRadio
-	case manyCombo
-	case multiCombo
+		// lists of presets
+		case radio
+		case structureRadio
+		case manyCombo
+		case multiCombo
 
-	// multiple choice
-	case combo
-	case semiCombo
-	case networkCombo
-	case typeCombo
-	case colour
+		// multiple choice
+		case combo
+		case semiCombo
+		case networkCombo
+		case typeCombo
+		case colour
 
-	// custom
-	case access
-	case directionalCombo // "cycleway" is no longer used
-	case address
+		// custom
+		case access
+		case directionalCombo // "cycleway" is no longer used
+		case address
 
-	// free form text
-	case text
-	case number
-	case email
-	case identifier
-	case maxweight_bridge
-	case textarea
-	case tel
-	case url
-	case roadheight
-	case roadspeed
-	case wikipedia
-	case wikidata
-	case date
+		// free form text
+		case text
+		case number
+		case email
+		case identifier
+		case maxweight_bridge
+		case textarea
+		case tel
+		case url
+		case roadheight
+		case roadspeed
+		case wikipedia
+		case wikidata
+		case date
 
-	case localized
-	case restrictions
-}
-
-enum PrerequisiteTag {
-	case keyExists(key: String)
-	case keyValue(key: String, value: String)
-	case keyValueNot(key: String, valueNot: String)
-	case keyValues(key: String, values: [String])
-	case keyValuesNot(key: String, valuesNot: [String])
-	case keyNot(key: String)
-
-	init?(json: Any?) {
-		guard let dict = json as? [String: Any] else { return nil }
-		if let key = dict["key"] as? String {
-			if let value = dict["value"] as? String {
-				self = .keyValue(key: key, value: value)
-			} else if let valueNot = dict["valueNot"] as? String {
-				self = .keyValueNot(key: key, valueNot: valueNot)
-			} else if let values = dict["values"] as? [String] {
-				self = .keyValues(key: key, values: values)
-			} else if let valuesNot = dict["valuesNot"] as? [String] {
-				self = .keyValuesNot(key: key, valuesNot: valuesNot)
-			} else {
-				self = .keyExists(key: key)
-			}
-		} else if let keyNot = dict["keyNot"] as? String {
-			self = .keyNot(key: keyNot)
-		} else {
-			print("bad preset prerequisiteTag")
-			return nil
-		}
+		case localized
+		case restrictions
 	}
 
-	func isSatisfied(by tags: [String: String]) -> Bool {
-		switch self {
-		case let .keyExists(key):
-			return tags[key] != nil
-		case let .keyValue(key, value):
-			return tags[key] == value
-		case let .keyValueNot(key, valueNot):
-			return tags[key] != valueNot // absent key satisfies "≠ valueNot"
-		case let .keyValues(key, values):
-			guard let v = tags[key] else { return false }
-			return values.contains(v)
-		case let .keyValuesNot(key, valuesNot):
-			guard let v = tags[key] else { return true } // absent key satisfies "∉ valuesNot"
-			return !valuesNot.contains(v)
-		case let .keyNot(key):
-			return tags[key] == nil
+	enum PrerequisiteTag {
+		case keyExists(key: String)
+		case keyValue(key: String, value: String)
+		case keyValueNot(key: String, valueNot: String)
+		case keyValues(key: String, values: [String])
+		case keyValuesNot(key: String, valuesNot: [String])
+		case keyNot(key: String)
+
+		init?(json: Any?) {
+			guard let dict = json as? [String: Any] else { return nil }
+			if let key = dict["key"] as? String {
+				if let value = dict["value"] as? String {
+					self = .keyValue(key: key, value: value)
+				} else if let valueNot = dict["valueNot"] as? String {
+					self = .keyValueNot(key: key, valueNot: valueNot)
+				} else if let values = dict["values"] as? [String] {
+					self = .keyValues(key: key, values: values)
+				} else if let valuesNot = dict["valuesNot"] as? [String] {
+					self = .keyValuesNot(key: key, valuesNot: valuesNot)
+				} else {
+					self = .keyExists(key: key)
+				}
+			} else if let keyNot = dict["keyNot"] as? String {
+				self = .keyNot(key: keyNot)
+			} else {
+				print("bad preset prerequisiteTag")
+				return nil
+			}
+		}
+
+		func isSatisfied(by tags: [String: String]) -> Bool {
+			switch self {
+			case let .keyExists(key):
+				return tags[key] != nil
+			case let .keyValue(key, value):
+				return tags[key] == value
+			case let .keyValueNot(key, valueNot):
+				return tags[key] != valueNot // absent key satisfies "≠ valueNot"
+			case let .keyValues(key, values):
+				guard let v = tags[key] else { return false }
+				return values.contains(v)
+			case let .keyValuesNot(key, valuesNot):
+				guard let v = tags[key] else { return true } // absent key satisfies "∉ valuesNot"
+				return !valuesNot.contains(v)
+			case let .keyNot(key):
+				return tags[key] == nil
+			}
 		}
 	}
 }
@@ -128,7 +130,7 @@ final class PresetField: CustomDebugStringConvertible {
 
 	var key: String? { jsonDict["key"] as! String? }
 	var keys: [String]? { jsonDict["keys"] as! [String]? }
-	var type: PresetType { PresetType(rawValue: jsonDict["type"] as! String)! }
+	var type: FieldType { FieldType(rawValue: jsonDict["type"] as! String)! }
 	var defaultValue: String? { jsonDict["default"] as! String? }
 	var options: [String]? { jsonDict["options"] as! [String]? }
 	var autoSuggestions: Bool { (jsonDict["autoSuggestions"] as! Bool?) ?? true }

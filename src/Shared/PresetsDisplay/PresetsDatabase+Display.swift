@@ -210,7 +210,7 @@ extension PresetsDatabase {
 	// a preset value with a supplied list of potential values
 	func comboWith(
 		localizedLabel: String,
-		type: PresetType,
+		type: PresetField.FieldType,
 		key: String,
 		options: [[String]],
 		localizedOptions: [String: PresetTranslations.Option]?,
@@ -256,7 +256,7 @@ extension PresetsDatabase {
 	// a yes/no preset
 	func yesNoPresetKeyWith(
 		label: String,
-		type: PresetType,
+		type: PresetField.FieldType,
 		key: String,
 		options: [String]?, // only used by defaultCheck
 		defaultValue: String?,
