@@ -314,7 +314,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	func endObjectRotation() {
 		isRotateObjectMode?.rotateObjectOverlay.removeFromSuperlayer()
-		if editorLayer.isNodeRotateMode {
+		if editorLayer.nodeRotate != nil {
 			editorLayer.rotateNodeFinish()
 		}
 		placePushpinForSelection()
@@ -1062,20 +1062,20 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		}
 		// Rotate object on screen
 		if rotationGesture.state == .began {
-			if editorLayer.isNodeRotateMode {
+			if editorLayer.nodeRotate != nil {
 				editorLayer.rotateNodeBegin()
 			} else {
 				editorLayer.rotateBegin()
 			}
 		} else if rotationGesture.state == .changed {
-			if editorLayer.isNodeRotateMode {
+			if editorLayer.nodeRotate != nil {
 				editorLayer.rotateNodeContinue(delta: rotationGesture.rotation)
 			} else {
 				editorLayer.rotateContinue(delta: rotationGesture.rotation, rotate: rotate)
 			}
 		} else {
 			// ended
-			if !editorLayer.isNodeRotateMode {
+			if editorLayer.nodeRotate == nil {
 				editorLayer.rotateFinish()
 			}
 			endObjectRotation()

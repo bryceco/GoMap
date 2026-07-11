@@ -461,14 +461,16 @@ extension EditorMapLayer {
 	// MARK: Rotate a node's direction tag
 
 	func prepareNodeRotation() {
+		DbgAssert(nodeRotate == nil)
 		guard
 			let node = selectedNode
 		else { return }
 		if let dir = node.direction {
 			// the node already has a direction
-			nodeRotate = dir
+			nodeRotate = NodeRotateState(key: dir.key, initialDirection: dir.direction)
 		} else if let dirKey = rotatableDirectionTagKeyFor(node: node) {
-			nodeRotate = (dirKey, OsmNode.Direction(0))
+			// assume an initial north-facing direction
+			nodeRotate = NodeRotateState(key: dirKey, initialDirection: OsmNode.Direction(0))
 		} else {
 			DbgAssert(false)
 		}
@@ -477,7 +479,7 @@ extension EditorMapLayer {
 	func rotateNodeBegin() {
 		mapData.beginUndoGrouping()
 		dragState.didMove = false
-		nodeRotateUndoOpen = true
+		nodeRotate?.undoGroupOpen = true
 	}
 
 	func rotateNodeContinue(delta: CGFloat) {
@@ -495,7 +497,7 @@ extension EditorMapLayer {
 		dragState.didMove = true
 
 		let deltaDegrees = Int(round(delta * 180 / .pi))
-		let newDirection = nodeRotate.direction.with(start: nodeRotate.direction.start + deltaDegrees)
+		let newDirection = nodeRotate.initialDirection.with(start: nodeRotate.initialDirection.start + deltaDegrees)
 		var tags = node.tags
 		tags[nodeRotate.key] = newDirection.valueString()
 		mapData.setTags(tags, for: node)
@@ -503,9 +505,8 @@ extension EditorMapLayer {
 	}
 
 	func rotateNodeFinish() {
-		if nodeRotateUndoOpen {
+		if nodeRotate?.undoGroupOpen == true {
 			mapData.endUndoGrouping()
-			nodeRotateUndoOpen = false
 		}
 		if dragState.didMove {
 			owner.didUpdateObject()
