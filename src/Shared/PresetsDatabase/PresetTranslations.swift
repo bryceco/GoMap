@@ -147,8 +147,8 @@ class PresetTranslations: Codable {
 
 	struct Feature: Codable {
 		let name: String? // FIXME: only optional because iD-tagging-schema is temporarily broken
-		let terms: String?
-		let aliases: String?
+		let terms: [String]?
+		let aliases: [String]?
 	}
 
 	struct Field: Codable {
@@ -157,7 +157,7 @@ class PresetTranslations: Codable {
 		let placeholder: String?
 		let placeholders: [String: String]? // for address field
 		let labels: [String: String]? // for address field
-		let terms: String?
+		let terms: [String]?
 		let types: [String: String]? // for access field
 	}
 
