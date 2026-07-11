@@ -460,7 +460,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		let f2 = more ? PresetDisplayForFeature.fieldsFor(featureID: featureID, field: { $0.moreFields }) : []
 		let k1 = f1.flatMap { PresetsDatabase.shared.presetFields[$0]!.allKeys }
 		let k2 = f2.flatMap { PresetsDatabase.shared.presetFields[$0]!.allKeys }
-		return k1 + k2
+		return Array(tags.keys) + k1 + k2
 	}
 
 	private var cachedWikiDescription: Any? = NSNull()
