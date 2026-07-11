@@ -316,25 +316,10 @@ extension PresetsDatabase {
 			}
 		}
 
-		if let prerequisiteTag = field.prerequisiteTag {
-			if let key = prerequisiteTag["key"] {
-				guard let v = objectTags[key] else { return nil }
-				if let value = prerequisiteTag["value"] {
-					if v != value {
-						return nil
-					}
-				} else if let valueNot = prerequisiteTag["valueNot"] {
-					if v == valueNot {
-						return nil
-					}
-				}
-			} else if let keyNot = prerequisiteTag["keyNot"] {
-				if objectTags[keyNot] != nil {
-					return nil
-				}
-			} else {
-				print("bad preset prerequisiteTag")
-			}
+		if let prerequisiteTag = field.prerequisiteTag,
+		   !prerequisiteTag.isSatisfied(by: objectTags)
+		{
+			return nil
 		}
 
 		// The locationSet test for presets uses only country codes,

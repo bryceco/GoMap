@@ -55,6 +55,56 @@ enum PresetType: String, Codable {
 	case restrictions
 }
 
+enum PrerequisiteTag {
+	case keyExists(key: String)
+	case keyValue(key: String, value: String)
+	case keyValueNot(key: String, valueNot: String)
+	case keyValues(key: String, values: [String])
+	case keyValuesNot(key: String, valuesNot: [String])
+	case keyNot(key: String)
+
+	init?(json: Any?) {
+		guard let dict = json as? [String: Any] else { return nil }
+		if let key = dict["key"] as? String {
+			if let value = dict["value"] as? String {
+				self = .keyValue(key: key, value: value)
+			} else if let valueNot = dict["valueNot"] as? String {
+				self = .keyValueNot(key: key, valueNot: valueNot)
+			} else if let values = dict["values"] as? [String] {
+				self = .keyValues(key: key, values: values)
+			} else if let valuesNot = dict["valuesNot"] as? [String] {
+				self = .keyValuesNot(key: key, valuesNot: valuesNot)
+			} else {
+				self = .keyExists(key: key)
+			}
+		} else if let keyNot = dict["keyNot"] as? String {
+			self = .keyNot(key: keyNot)
+		} else {
+			print("bad preset prerequisiteTag")
+			return nil
+		}
+	}
+
+	func isSatisfied(by tags: [String: String]) -> Bool {
+		switch self {
+		case let .keyExists(key):
+			return tags[key] != nil
+		case let .keyValue(key, value):
+			return tags[key] == value
+		case let .keyValueNot(key, valueNot):
+			return tags[key] != valueNot // absent key satisfies "≠ valueNot"
+		case let .keyValues(key, values):
+			guard let v = tags[key] else { return false }
+			return values.contains(v)
+		case let .keyValuesNot(key, valuesNot):
+			guard let v = tags[key] else { return true } // absent key satisfies "∉ valuesNot"
+			return !valuesNot.contains(v)
+		case let .keyNot(key):
+			return tags[key] == nil
+		}
+	}
+}
+
 final class PresetField: CustomDebugStringConvertible {
 	let identifier: String
 	let jsonDict: [String: Any]
@@ -90,7 +140,7 @@ final class PresetField: CustomDebugStringConvertible {
 
 	// preconditions
 	var geometry: [String]? { jsonDict["geometry"] as! [String]? }
-	var prerequisiteTag: [String: String]? { jsonDict["prerequisiteTag"] as! [String: String]? }
+	var prerequisiteTag: PrerequisiteTag? { PrerequisiteTag(json: jsonDict["prerequisiteTag"]) }
 	var locationSet: LocationSet? { LocationSet(withJson: jsonDict["locationSet"]) }
 	var usage: String? { jsonDict["usage"] as! String? }
 
