@@ -403,7 +403,8 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		case let PresetKeyOrGroup.key(presetKey):
 			let key = presetKey.tagKey
 
-			if presetKey.type == .textarea || key == "opening_hours" {
+			let isOpeningHours = (key == "opening_hours")
+			if presetKey.type == .textarea || isOpeningHours {
 				// special case for keys that contain large amounts of text
 				let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagArea",
 				                                         for: indexPath) as! FeaturePresetAreaCell
@@ -415,6 +416,17 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				cell.accessoryType = .none
 				cell.nameLabel.text = presetKey.name
 				cell.presetKey = presetKey
+				if isOpeningHours {
+					cell.valueField.autocorrectionType = .no
+					cell.valueField.spellCheckingType = .no
+					cell.valueField.autocapitalizationType = .words
+					cell.valueField.smartDashesType = .no
+				} else {
+					cell.valueField.autocorrectionType = .default
+					cell.valueField.spellCheckingType = .default
+					cell.valueField.autocapitalizationType = .sentences
+					cell.valueField.smartDashesType = .default
+				}
 				if #available(iOS 13.0, *) {
 					cell.valueField.backgroundColor = UIColor.secondarySystemGroupedBackground
 				}
