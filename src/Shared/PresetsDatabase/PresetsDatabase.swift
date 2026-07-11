@@ -66,9 +66,10 @@ final class PresetsDatabase {
 				return (intKey, value)
 			})
 
-		presetFields = try cast(Self.jsonForFile("fields.json"), to: [String: Any].self)
-			.compactMapValuesWithKeys({ k, v in
-				try PresetField(identifier: k, json: cast(v, to: [String: Any].self)) })
+		presetFields = try JSONDecoder()
+			.decode([String: FieldJSON].self, from: Self.dataForFile("fields.json"))
+			.mapValuesWithKeys { key, json in PresetField(identifier: key, from: json) }
+			.filter { _, field in field.usage != "changeset" }
 
 		// deprecated tags
 		deprecations = try DeprecatedTags(from: Self.dataForFile("deprecated.json"))

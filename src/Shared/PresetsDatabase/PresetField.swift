@@ -64,28 +64,6 @@ extension PresetField {
 		case keyValuesNot(key: String, valuesNot: [String])
 		case keyNot(key: String)
 
-		init?(json: Any?) {
-			guard let dict = json as? [String: Any] else { return nil }
-			if let key = dict["key"] as? String {
-				if let value = dict["value"] as? String {
-					self = .keyValue(key: key, value: value)
-				} else if let valueNot = dict["valueNot"] as? String {
-					self = .keyValueNot(key: key, valueNot: valueNot)
-				} else if let values = dict["values"] as? [String] {
-					self = .keyValues(key: key, values: values)
-				} else if let valuesNot = dict["valuesNot"] as? [String] {
-					self = .keyValuesNot(key: key, valuesNot: valuesNot)
-				} else {
-					self = .keyExists(key: key)
-				}
-			} else if let keyNot = dict["keyNot"] as? String {
-				self = .keyNot(key: keyNot)
-			} else {
-				print("bad preset prerequisiteTag")
-				return nil
-			}
-		}
-
 		func isSatisfied(by tags: [String: String]) -> Bool {
 			switch self {
 			case let .keyExists(key):
@@ -107,48 +85,145 @@ extension PresetField {
 	}
 }
 
-final class PresetField: CustomDebugStringConvertible {
-	let identifier: String
-	let jsonDict: [String: Any]
-
-	init?(identifier: String, json: [String: Any]) {
-		guard json["type"] is String else {
-			return nil
-		}
-		self.identifier = identifier
-		jsonDict = json
-		guard self.usage != "changeset" else {
-			// we might be able to ignore other values as well, maybe "manual"
-			return nil
-		}
-#if DEBUG
-		// validate that we don't encounter any types that aren't supported
-		_ = self.type
-		_ = self.options
-#endif
+extension PresetField.PrerequisiteTag: Decodable {
+	enum CodingKeys: String, CodingKey {
+		case key, keyNot, value, valueNot, values, valuesNot
 	}
 
-	var key: String? { jsonDict["key"] as! String? }
-	var keys: [String]? { jsonDict["keys"] as! [String]? }
-	var type: FieldType { FieldType(rawValue: jsonDict["type"] as! String)! }
-	var defaultValue: String? { jsonDict["default"] as! String? }
-	var options: [String]? { jsonDict["options"] as! [String]? }
-	var autoSuggestions: Bool { (jsonDict["autoSuggestions"] as! Bool?) ?? true }
-	var replacement: String? { jsonDict["replacement"] as! String? }
-	var reference: [String: String]? { jsonDict["reference"] as! [String: String]? }
-	var icons: [String: String]? { crossRef(for: "iconsCrossReference").jsonDict["icons"] as! [String: String]? }
-	var universal: Bool { (jsonDict["universal"] as! Bool?) ?? false }
-	var caseSensitive: Bool { ((jsonDict["caseSensitive"] as! Int?) ?? 0) != 0 }
+	init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		if let key = try container.decodeIfPresent(String.self, forKey: .key) {
+			if let value = try container.decodeIfPresent(String.self, forKey: .value) {
+				self = .keyValue(key: key, value: value)
+			} else if let valueNot = try container.decodeIfPresent(String.self, forKey: .valueNot) {
+				self = .keyValueNot(key: key, valueNot: valueNot)
+			} else if let values = try container.decodeIfPresent([String].self, forKey: .values) {
+				self = .keyValues(key: key, values: values)
+			} else if let valuesNot = try container.decodeIfPresent([String].self, forKey: .valuesNot) {
+				self = .keyValuesNot(key: key, valuesNot: valuesNot)
+			} else {
+				self = .keyExists(key: key)
+			}
+		} else if let keyNot = try container.decodeIfPresent(String.self, forKey: .keyNot) {
+			self = .keyNot(key: keyNot)
+		} else {
+			throw DecodingError.dataCorruptedError(forKey: .key,
+			                                       in: container,
+			                                       debugDescription: "bad preset prerequisiteTag")
+		}
+	}
+}
+
+// The raw JSON shape for a single entry in fields.json.
+struct FieldJSON: Decodable {
+	var type: String
+	var usage: String?
+	var key: String?
+	var keys: [String]?
+	var defaultValue: String?
+	var options: [String]?
+	var autoSuggestions: Bool?
+	var replacement: String?
+	var reference: [String: String]?
+	var icons: [String: String]?
+	var universal: Bool?
+	var caseSensitive: Bool?
+	var geometry: [String]?
+	var prerequisiteTag: PresetField.PrerequisiteTag?
+	var locationSet: LocationSet?
+	var urlFormat: String?
+	var pattern: String?
+	// Cross-reference strings: either nil or a "{field_name}" redirect
+	var label: String?
+	var placeholder: String?
+	var placeholders: String?
+	var labels: String?
+	var stringsCrossReference: String?
+	var iconsCrossReference: String?
+
+	enum CodingKeys: String, CodingKey {
+		case type, usage, key, keys
+		case defaultValue = "default"
+		case options, autoSuggestions, replacement, reference, icons
+		case universal, caseSensitive, geometry, prerequisiteTag, locationSet
+		case urlFormat, pattern
+		case label, placeholder, placeholders, labels
+		case stringsCrossReference, iconsCrossReference
+	}
+}
+
+final class PresetField: CustomDebugStringConvertible {
+	let identifier: String
+
+	// Eagerly evaluated stored properties
+	let key: String?
+	let keys: [String]?
+	let type: FieldType
+	let defaultValue: String?
+	let options: [String]?
+	let autoSuggestions: Bool
+	let replacement: String?
+	let reference: [String: String]?
+	private let iconsRaw: [String: String]?
+	let universal: Bool
+	let caseSensitive: Bool
 
 	// preconditions
-	var geometry: [String]? { jsonDict["geometry"] as! [String]? }
-	var prerequisiteTag: PrerequisiteTag? { PrerequisiteTag(json: jsonDict["prerequisiteTag"]) }
-	var locationSet: LocationSet? { LocationSet(withJson: jsonDict["locationSet"]) }
-	var usage: String? { jsonDict["usage"] as! String? }
+	let geometry: [String]?
+	let prerequisiteTag: PrerequisiteTag?
+	let locationSet: LocationSet?
 
 	// restrictions
-	var urlFormat: String? { jsonDict["urlFormat"] as! String? }
-	var pattern: String? { jsonDict["pattern"] as! String? }
+	let urlFormat: String?
+	let pattern: String?
+	let usage: String?
+
+	// Maps cross-reference property names to the field identifiers they point to.
+	// Only populated when a JSON value uses the "{field_name}" redirect syntax.
+	// Used by crossRef(for:) to resolve localizable properties and icons.
+	private let fieldCrossRefs: [String: String]
+
+	init(identifier: String, from json: FieldJSON) {
+		guard let fieldType = FieldType(rawValue: json.type) else {
+			fatalError("Unknown field type: '\(json.type)'")
+		}
+
+		self.identifier = identifier
+		self.type = fieldType
+		self.key = json.key
+		self.keys = json.keys
+		self.defaultValue = json.defaultValue
+		self.options = json.options
+		self.autoSuggestions = json.autoSuggestions ?? true
+		self.replacement = json.replacement
+		self.reference = json.reference
+		self.iconsRaw = json.icons
+		self.universal = json.universal ?? false
+		self.caseSensitive = json.caseSensitive ?? false
+		self.geometry = json.geometry
+		self.prerequisiteTag = json.prerequisiteTag
+		self.locationSet = json.locationSet
+		self.urlFormat = json.urlFormat
+		self.pattern = json.pattern
+		self.usage = json.usage
+
+		// Extract only the cross-reference values (those using "{field_name}" syntax).
+		var refs = [String: String]()
+		for (refKey, val) in [("label", json.label),
+		                      ("placeholder", json.placeholder),
+		                      ("placeholders", json.placeholders),
+		                      ("labels", json.labels),
+		                      ("stringsCrossReference", json.stringsCrossReference),
+		                      ("iconsCrossReference", json.iconsCrossReference)]
+		{
+			if let val, val.hasPrefix("{"), val.hasSuffix("}") {
+				refs[refKey] = String(val.dropFirst().dropLast())
+			}
+		}
+		self.fieldCrossRefs = refs
+	}
+
+	var icons: [String: String]? { crossRef(for: "iconsCrossReference").iconsRaw }
 
 	// localizable strings
 	var localizedLabel: String? {
@@ -175,50 +250,18 @@ final class PresetField: CustomDebugStringConvertible {
 		return PresetTranslations.shared.types(for: crossRef(for: "stringsCrossReference"))
 	}
 
+	// Follows the "{field_name}" cross-reference chain for a given property name.
+	// Returns the field whose identifier should be used for translation/icon lookups.
 	func crossRef(for property: String) -> PresetField {
 		var field = self
 		while
-			let value = field.jsonDict[property],
-			let value = value as? String,
-			value.hasPrefix("{"),
-			value.hasSuffix("}"),
-			let newField = PresetsDatabase.shared.presetFields[String(value.dropFirst().dropLast())],
+			let refId = field.fieldCrossRefs[property],
+			let newField = PresetsDatabase.shared.presetFields[refId],
 			newField !== self
 		{
 			field = newField
 		}
 		return field
-	}
-
-	// Some field values can have a redirect to a different field using a {other_field} notation
-	func redirected<T>(property: String) -> T? {
-		let value = property == "strings"
-			? jsonDict["stringsCrossReference"] ?? jsonDict["strings"]
-			: jsonDict[property]
-		if let value = value as? String,
-		   value.hasPrefix("{"),
-		   value.hasSuffix("}")
-		{
-			let redirect = String(value.dropFirst().dropLast())
-			guard
-				let newField = PresetsDatabase.shared.presetFields[redirect]
-			else {
-				print("bad preset redirect: \(redirect)")
-				return nil
-			}
-			if newField === self {
-				// The field has a redirect to itself, which is silly.
-				// But if it's a stringsCrossReference redirect then just return the
-				// value for strings (or just ignore the redirect which will give nil):
-				return jsonDict[property] as? T
-			}
-			if let newValue: T = newField.redirected(property: property) {
-				return newValue
-			} else {
-				return nil
-			}
-		}
-		return value as? T
 	}
 
 	var allKeys: [String] {

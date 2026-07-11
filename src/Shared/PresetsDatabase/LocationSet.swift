@@ -124,3 +124,43 @@ struct LocationSet {
 		return true
 	}
 }
+
+// MARK: - Decodable
+
+extension LocationSet.LocationEntry: Decodable {
+	init(from decoder: Decoder) throws {
+		let container = try decoder.singleValueContainer()
+		if let string = try? container.decode(String.self) {
+			if string == "001" {
+				self = .world
+			} else if string.hasSuffix(".geojson") {
+				self = .geojson(string)
+			} else {
+				self = .region(string.lowercased())
+			}
+		} else {
+			let coords = try container.decode([Double].self)
+			switch coords.count {
+			case 2:
+				self = .latLonRadius(LatLonRadius(lat: coords[1], lon: coords[0], radius: 25000))
+			case 3:
+				self = .latLonRadius(LatLonRadius(lat: coords[1], lon: coords[0], radius: coords[2]))
+			default:
+				throw DecodingError.dataCorruptedError(in: container,
+				                                       debugDescription: "Expected 2 or 3 coordinates, got \(coords.count)")
+			}
+		}
+	}
+}
+
+extension LocationSet: Decodable {
+	enum CodingKeys: String, CodingKey {
+		case include, exclude
+	}
+
+	init(from decoder: Decoder) throws {
+		let container = try decoder.container(keyedBy: CodingKeys.self)
+		include = try container.decodeIfPresent([LocationEntry].self, forKey: .include) ?? []
+		exclude = try container.decodeIfPresent([LocationEntry].self, forKey: .exclude) ?? []
+	}
+}
