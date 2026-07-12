@@ -817,7 +817,8 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		guard let cell = textView.superviewOfType(FeaturePresetAreaCell.self)
 		else { return }
 
-		let value = textView.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		let value2 = textView.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
+		let value = OsmTags.fixUpOpeningHours(withKey: cell.presetKey.tagKey, value: value2) ?? value2
 		textView.text = value
 		textViewDidChange(textView)
 		updateTagDict(withValue: value, forKey: cell.presetKey.tagKey)
