@@ -8,13 +8,12 @@
 
 import UIKit
 
-class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate {
+class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDelegate {
 	// this needs to be shared, because sometimes we'll create a new autocomplete text field when the keyboard is already showing,
 	// so it never gets a chance to retrieve the size:
 	private static var s_keyboardFrame = CGRect.zero
 	private static let GradientHeight: CGFloat = 20.0
 
-	weak var realDelegate: UITextFieldDelegate?
 	var completionTableView: UITableView?
 	var origCellOffset: CGFloat = 0.0
 	var filteredCompletions: [String] = []
@@ -35,22 +34,17 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 			name: UIResponder.keyboardWillChangeFrameNotification,
 			object: nil)
 
-		super.delegate = self
+		addTarget(self, action: #selector(editingChanged), for: .editingChanged)
+		addTarget(self, action: #selector(editingEnded), for: .editingDidEnd)
 	}
 
 	deinit {
 		NotificationCenter.default.removeObserver(self)
-		delegate = nil
 	}
 
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		assertionFailure() // not supported
-	}
-
-	override weak var delegate: UITextFieldDelegate? {
-		get { realDelegate }
-		set { realDelegate = newValue }
 	}
 
 	func clearFilteredCompletionsInternal() {
@@ -253,41 +247,20 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 	}
 
 	func updateAutocomplete() {
-		updateAutocomplete(for: text!)
+		updateAutocomplete(for: text ?? "")
 	}
 
-	// MARK: delegate
-
-	// Forward any delegate messages to the real delegate
-	func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-		return realDelegate?.textFieldShouldBeginEditing?(textField) ?? true
+	@objc private func editingChanged() {
+		updateAutocomplete()
 	}
 
-	func textFieldDidBeginEditing(_ textField: UITextField) {
-		realDelegate?.textFieldDidBeginEditing?(textField)
-	}
-
-	func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-		return realDelegate?.textFieldShouldEndEditing?(textField) ?? true
-	}
-
-	func textFieldDidEndEditing(_ textField: UITextField) {
+	@objc private func editingEnded() {
 		clearFilteredCompletionsInternal()
-
-		realDelegate?.textFieldDidEndEditing?(textField)
-	}
-
-	func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
-		clearFilteredCompletionsInternal()
-
-		if realDelegate?.textFieldDidEndEditing?(textField, reason: reason) == nil {
-			realDelegate?.textFieldDidEndEditing?(textField)
-		}
 	}
 
 	override func paste(_ sender: Any?) {
 		// Check whether they are pasting a set of tags
-		if let pb = UIPasteboard.general.string?.trimmingCharacters(in: .whitespacesAndNewlines),
+		if let pb = UIPasteboard.general.string,
 		   let tags = OsmTags.tagsForString(pb)
 		{
 			// try to find an ancestor that we can notify
@@ -304,78 +277,4 @@ class AutocompleteTextField: UITextField, UITextFieldDelegate, UITableViewDataSo
 		// Do a regular paste
 		super.paste(sender)
 	}
-
-	func textField(_ textField: UITextField,
-	               shouldChangeCharactersIn range: NSRange,
-	               replacementString string: String) -> Bool
-	{
-		let shouldChange: Bool
-		if let delegate = realDelegate as? KeyValueTableCell {
-			// FIXME: forwarding to this view controller doesn't work following
-			// the normal code path (Swift bug?), so hack it:
-			shouldChange = delegate.textField(textField,
-			                                  shouldChangeCharactersIn: range,
-			                                  replacementString: string)
-		} else {
-			shouldChange = realDelegate?.textField?(textField,
-			                                        shouldChangeCharactersIn: range,
-			                                        replacementString: string) ?? true
-		}
-
-		if shouldChange {
-			let newString = (text! as NSString).replacingCharacters(in: range, with: string) as String
-			updateAutocomplete(for: newString)
-		}
-		return shouldChange
-	}
-
-	func textFieldDidChangeSelection(_ textField: UITextField) {
-		if #available(iOS 13.0, *) {
-			if realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldDidChangeSelection(_:))) ?? false {
-				realDelegate?.textFieldDidChangeSelection?(textField)
-			}
-		}
-	}
-
-	func textFieldShouldClear(_ textField: UITextField) -> Bool {
-		let result = Bool((realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldShouldClear(_:))) ?? false
-				? realDelegate?.textFieldShouldClear?(textField)
-				: true) ?? false)
-		if result {
-			updateAutocomplete(for: "")
-		}
-		return result
-	}
-
-	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-		if realDelegate?.responds(to: #selector(UITextFieldDelegate.textFieldShouldReturn(_:))) ?? false {
-			return realDelegate?.textFieldShouldReturn?(textField) ?? false
-		}
-		return true
-	}
-
-// The delegate value (which will return realDelegate) is tested to determine whether
-// the EditMenu functions are implemented, so these won't be called typically,
-// instead they'll be called in realDelegate.
-#if targetEnvironment(macCatalyst)
-// Various errors on MacCatalyst for these
-#else
-	@available(iOS 16.0, *)
-	func textField(_ textField: UITextField, editMenuForCharactersIn range: NSRange,
-	               suggestedActions: [UIMenuElement]) -> UIMenu?
-	{
-		return realDelegate?.textField?(textField, editMenuForCharactersIn: range, suggestedActions: suggestedActions)
-			?? UIMenu(children: suggestedActions)
-	}
-
-	@available(iOS 16.0, *)
-	func textField(_ textField: UITextField, willPresentEditMenuWith animator: UIEditMenuInteractionAnimating) {
-		realDelegate?.textField?(textField, willPresentEditMenuWith: animator)
-	}
-
-	@available(iOS 16.0, *)
-	func textField(_ textField: UITextField, willDismissEditMenuWith animator: UIEditMenuInteractionAnimating) {
-		realDelegate?.textField?(textField, willDismissEditMenuWith: animator)
-	}
-#endif
 }
