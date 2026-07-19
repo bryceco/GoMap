@@ -106,7 +106,10 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	{
 		// Fixme markers
 		if including.contains(.fixme) {
-			removeMarkers(where: { ($0 as? FixmeMarker)?.shouldHide() ?? false })
+			removeMarkers(where: {
+				guard let fixme = $0 as? FixmeMarker else { return false }
+				return fixme.object == nil || fixme.shouldHide()
+			})
 			updateFixmeMarkers(forRegion: box, mapData: mapData)
 		} else {
 			removeMarkers(where: { $0 is FixmeMarker })
@@ -114,6 +117,11 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 
 		// Quest markers
 		if including.contains(.quest) {
+			// Remove any quest markers whose OSM object was deallocated since last update
+			removeMarkers(where: {
+				guard let quest = $0 as? QuestMarker else { return false }
+				return quest.object == nil
+			})
 			updateQuestMarkers(forRegion: box, mapData: mapData)
 		} else {
 			removeMarkers(where: { $0 is QuestMarker })
