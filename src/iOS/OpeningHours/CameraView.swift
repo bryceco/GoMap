@@ -62,6 +62,24 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 		previewLayer.videoGravity = AVLayerVideoGravity.resizeAspect
 		previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
 		layer.addSublayer(previewLayer)
+
+		// Stop camera when backgrounded to avoid CPU watchdog kills
+		NotificationCenter.default.addObserver(self,
+		                                       selector: #selector(appDidEnterBackground),
+		                                       name: UIApplication.didEnterBackgroundNotification,
+		                                       object: nil)
+		NotificationCenter.default.addObserver(self,
+		                                       selector: #selector(appWillEnterForeground),
+		                                       name: UIApplication.willEnterForegroundNotification,
+		                                       object: nil)
+	}
+
+	@objc private func appDidEnterBackground() {
+		captureSession?.stopRunning()
+	}
+
+	@objc private func appWillEnterForeground() {
+		startRunning()
 	}
 
 	public func startRunning() {
