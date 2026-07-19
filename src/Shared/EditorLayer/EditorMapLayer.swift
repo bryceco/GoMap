@@ -816,7 +816,7 @@ final class EditorMapLayer: CALayer {
 			return shapeLayers
 		}
 
-		let renderInfo = object.renderInfo!
+		let renderInfo = object.renderInfo
 		var layers: [CALayer & LayerPropertiesProviding] = []
 
 		if let node = object as? OsmNode {
@@ -1360,7 +1360,7 @@ final class EditorMapLayer: CALayer {
 
 			if let way = object as? OsmWay {
 				let path = self.path(for: way)
-				let lineWidth: CGFloat = (object.renderInfo?.lineWidth ?? 2.0) + 2
+				let lineWidth: CGFloat = object.renderInfo.lineWidth + 2
 				let wayColor = selected ? wayColor : relationColor
 
 				let layer = CAShapeLayerWithProperties()
@@ -1401,7 +1401,7 @@ final class EditorMapLayer: CALayer {
 											haloLayer.strokeColor = UIColor.orange.withAlphaComponent(0.75).cgColor
 										}
 										haloLayer.fillColor = nil
-										haloLayer.lineWidth = ((way.renderInfo?.lineWidth ?? 0) + 6) * highwayScale
+										haloLayer.lineWidth = (way.renderInfo.lineWidth + 6) * highwayScale
 										haloLayer.lineCap = CAShapeLayerLineCap.round
 										haloLayer.lineJoin = CAShapeLayerLineJoin.round
 										haloLayer.zPosition = Z_HALO
@@ -1644,13 +1644,6 @@ final class EditorMapLayer: CALayer {
 			filterObjects(&objects)
 		}
 
-		// get renderInfo for objects
-		for object in objects {
-			if object.renderInfo == nil {
-				object.renderInfo = RenderInfo.forObject(object)
-			}
-		}
-
 		if viewPort.mapTransform.zoom() < 21.0 {
 			// sort from big to small objects, and remove excess objects
 			objects = RenderInfo.sortByPriority(list: objects, keepingFirst: objectLimit)
@@ -1661,7 +1654,7 @@ final class EditorMapLayer: CALayer {
 		var addressCount = 0
 		while addressCount < objectLimit {
 			let obj = objects[objectLimit - addressCount - 1]
-			if !obj.renderInfo!.isAddressPoint {
+			if !obj.renderInfo.isAddressPoint {
 				break
 			}
 			addressCount += 1

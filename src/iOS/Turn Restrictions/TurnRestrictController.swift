@@ -218,7 +218,7 @@ class TurnRestrictController: UIViewController {
 			highwayLayer.lineWidth = CGFloat(DEFAULT_POPUPLINEWIDTH)
 			highwayLayer.lineCap = .round
 			highwayLayer.path = bezierPath.cgPath
-			highwayLayer.strokeColor = node.turnRestrictionParentWay.renderInfo?.lineColor?.cgColor
+			highwayLayer.strokeColor = node.turnRestrictionParentWay.renderInfo.lineColor?.cgColor
 				?? UIColor.black.cgColor
 			highwayLayer.bounds = detailView.bounds
 			highwayLayer.position = detailViewCenter

@@ -72,7 +72,16 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	private(set) final var deleted = false
 
-	final var renderInfo: RenderInfo?
+	private var _renderInfo: RenderInfo?
+	final var renderInfo: RenderInfo {
+		if let info = _renderInfo {
+			return info
+		}
+		let info = RenderInfo.forObject(self)
+		_renderInfo = info
+		return info
+	}
+
 	private(set) final var modifyCount: Int32 = 0
 	final var notificationService = NotificationService<OsmBaseObject>()
 
@@ -415,7 +424,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	/// Invalidates all cached rendering state for this object, forcing a full re-render on the next draw cycle.
 	func clearCachedProperties() {
-		renderInfo = nil
+		_renderInfo = nil
 		isShown = .UNKNOWN
 		_boundingBox = nil
 		_geometry = nil

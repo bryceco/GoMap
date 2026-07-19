@@ -218,7 +218,7 @@ final class RenderInfo {
 		var countOfPriority = [Int](repeating: 0, count: RenderInfoMaxPriority)
 
 		for obj in list {
-			countOfPriority[(RenderInfoMaxPriority - 1) - obj.renderInfo!.renderPriority] += 1
+			countOfPriority[(RenderInfoMaxPriority - 1) - obj.renderInfo.renderPriority] += 1
 		}
 
 		var max = listCount
@@ -238,7 +238,7 @@ final class RenderInfo {
 		guard let tmp = list.first else { return [] }
 		var output = ContiguousArray<OsmBaseObject>(repeating: tmp, count: max)
 		for obj in list {
-			let index = (RenderInfoMaxPriority - 1) - obj.renderInfo!.renderPriority
+			let index = (RenderInfoMaxPriority - 1) - obj.renderInfo.renderPriority
 			let dest = countOfPriority[index] - 1
 			countOfPriority[index] = dest
 			if dest < max {
