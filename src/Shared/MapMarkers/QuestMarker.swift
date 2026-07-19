@@ -19,7 +19,7 @@ final class QuestMarker: MapMarker {
 
 	override var buttonLabel: String { quest.label }
 
-	init?(object: OsmBaseObject, quest: QuestProtocol, ignorable: MapMarkerIgnoreListProtocol) {
+	@MainActor init?(object: OsmBaseObject, quest: QuestProtocol, ignorable: MapMarkerIgnoreListProtocol) {
 		let ident = "quest-\(quest.ident)-\(object is OsmNode ? "n" : object is OsmWay ? "w" : "r")\(object.ident)"
 		if ignorable.shouldIgnore(ident: ident) {
 			return nil

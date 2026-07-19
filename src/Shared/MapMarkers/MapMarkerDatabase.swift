@@ -10,7 +10,7 @@ import CoreGraphics
 import Foundation
 import KissXML
 
-final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
+@MainActor final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	private var pendingUpdateTask: Task<Void, Never>?
 	private var markerForIdentifier: [String: MapMarker] = [:] // map the marker key (unique string) to a marker
 	private var ignoreList: MapMarkerIgnoreList
@@ -99,7 +99,6 @@ final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	}
 
 	// External callers should use the "withDelay" variant of this
-	@MainActor
 	private func updateMarkers(forRegion box: OSMRect,
 	                           mapData: OsmMapData,
 	                           including: MapMarkerSet) async

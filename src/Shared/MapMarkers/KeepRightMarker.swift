@@ -26,7 +26,7 @@ final class KeepRightMarker: MapMarker {
 	}
 
 	/// Initialize based on KeepRight query
-	init?(gpxWaypoint gpx: GpxPoint, mapData: OsmMapData, ignorable: MapMarkerIgnoreListProtocol) {
+	@MainActor init?(gpxWaypoint gpx: GpxPoint, mapData: OsmMapData, ignorable: MapMarkerIgnoreListProtocol) {
 		//		<wpt lon="-122.2009985" lat="47.6753189">
 		//		<name><![CDATA[website, http error]]></name>
 		//		<desc><![CDATA[The URL (<a target="_blank" href="http://www.stjamesespresso.com/">http://www.stjamesespresso.com/</a>) cannot be opened (HTTP status code 301)]]></desc>
@@ -79,11 +79,11 @@ final class KeepRightMarker: MapMarker {
 		self.ignorable = ignorable
 	}
 
-	func ignore() {
+	@MainActor func ignore() {
 		ignorable!.ignore(marker: self, reason: .userRequest)
 	}
 
-	func shouldHide() -> Bool {
+	@MainActor func shouldHide() -> Bool {
 		return ignorable!.shouldIgnore(marker: self)
 	}
 

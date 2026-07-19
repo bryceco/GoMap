@@ -13,7 +13,7 @@ class AlertPopup: UIViewController {
 		let title: String
 		let image: UIImage?
 		let isCancel: Bool
-		let handler: (() -> Void)?
+		let handler: (@MainActor () -> Void)?
 	}
 
 	private let titleText: String
@@ -37,7 +37,7 @@ class AlertPopup: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 
-	func addAction(title: String, image: UIImage? = nil, isCancel: Bool = false, handler: (() -> Void)? = nil) {
+	func addAction(title: String, image: UIImage? = nil, isCancel: Bool = false, handler: (@MainActor () -> Void)? = nil) {
 		let action = Action(title: title, image: image, isCancel: isCancel, handler: handler)
 		actions.append(action)
 	}

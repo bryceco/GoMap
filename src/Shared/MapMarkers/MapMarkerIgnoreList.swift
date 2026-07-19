@@ -13,13 +13,13 @@ enum MapMarkerIgnoreReason: Codable {
 	case userRequestUntil(Date)
 }
 
-protocol MapMarkerIgnoreListProtocol: AnyObject {
+@MainActor protocol MapMarkerIgnoreListProtocol: AnyObject {
 	func shouldIgnore(ident: String) -> Bool
 	func shouldIgnore(marker: MapMarker) -> Bool
 	func ignore(marker: MapMarker, reason: MapMarkerIgnoreReason)
 }
 
-final class MapMarkerIgnoreList: MapMarkerIgnoreListProtocol, Codable {
+@MainActor final class MapMarkerIgnoreList: MapMarkerIgnoreListProtocol {
 	private typealias IgnoreDict = [String: MapMarkerIgnoreReason]
 
 	init() {
