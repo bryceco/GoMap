@@ -708,7 +708,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	{
 		switch state {
 		case .ended, .cancelled, .failed:
-
 			DisplayLink.shared.remove(.pinDragScroll)
 			let isRotate = self.isRotateObjectMode != nil
 			if isRotate {
@@ -718,9 +717,13 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			if let object {
 				self.editorLayer.dragFinish(object: object, isRotate: isRotate)
 			}
+
 		case .began:
-			self.editorLayer.dragBegin(from: pushPin.arrowPoint.minus(CGPoint(x: dx, y: dy)))
+			if object != nil {
+				self.editorLayer.dragBegin(from: pushPin.arrowPoint.minus(CGPoint(x: dx, y: dy)))
+			}
 			fallthrough // begin state can have movement
+
 		case .changed:
 			// define the drag function
 			func dragObjectToPushpin() {
@@ -790,6 +793,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			dragObjectToPushpin()
 			self.magnifyingGlass.setSourceCenter(arrow, in: self,
 			                                     visible: !self.mainView.mapLayersView.aerialLayer.isHidden)
+
 		default:
 			break
 		}
