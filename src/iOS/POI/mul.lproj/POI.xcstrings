@@ -7211,6 +7211,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Uses semi-colon seperated values (e.g. pizza;kebab for cuisine)\"; ObjectID = \"LAL-tL-bub\"; Note = \"This is used for tags like cuisine=italian;pizza.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verwendet durch Semikolons getrennte Werte (z. B. pizza;kebab für die Küche)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",

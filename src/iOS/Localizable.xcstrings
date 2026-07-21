@@ -36070,6 +36070,18 @@
     "Include Chain/Brand names" : {
       "comment" : "Include Name Suggestion Index (NSI) chain/brand results in search",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Handelsketten/Markennamen einschließen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Включить имена сетей и брендов"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",

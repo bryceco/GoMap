@@ -1244,6 +1244,11 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
         <target state="new">Add Building Type</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Crossing Markings" xml:space="preserve">
+        <source>Add Crossing Markings</source>
+        <target state="new">Add Crossing Markings</target>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Highway Surface" xml:space="preserve">
         <source>Add Highway Surface</source>
         <target state="new">Add Highway Surface</target>
@@ -1513,7 +1518,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Choose Existing Photo" xml:space="preserve">
         <source>Choose Existing Photo</source>
         <target state="translated">Choose Existing Photo</target>
-        <note>Text displayed in an action sheet when the user wants to upload a photograph from their photo library.</note>
+        <note>Option to choose a photo from the photo library.</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
@@ -2060,6 +2065,11 @@ Never delete old tracks</note>
         <target state="new">No Left Turn restriction</target>
         <note />
       </trans-unit>
+      <trans-unit id="No Location Data" xml:space="preserve">
+        <source>No Location Data</source>
+        <target state="new">No Location Data</target>
+        <note>The selected photo has no GPS coordinates</note>
+      </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
         <target state="new">No Right Turn restriction</target>
@@ -2529,7 +2539,7 @@ Title for sharing options</note>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
         <target state="new">Take New Photo</target>
-        <note />
+        <note>Option to take a photo with the camera</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
@@ -2556,6 +2566,11 @@ Title for sharing options</note>
         <target state="new">The object does not contain any tags</target>
         <note />
       </trans-unit>
+      <trans-unit id="The photo does not contain location data. Panoramax requires that uploaded photos contain location data." xml:space="preserve">
+        <source>The photo does not contain location data. Panoramax requires that uploaded photos contain location data.</source>
+        <target state="new">The photo does not contain location data. Panoramax requires that uploaded photos contain location data.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
         <target state="new">The restriction cannot be deleted</target>
@@ -2565,6 +2580,11 @@ Title for sharing options</note>
         <source>The selected image file does not contain location information.</source>
         <target state="new">The selected image file does not contain location information.</target>
         <note />
+      </trans-unit>
+      <trans-unit id="The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax." xml:space="preserve">
+        <source>The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax.</source>
+        <target state="new">The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax.</target>
+        <note>Error shown when a selected photo cannot be converted to JPEG format</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>

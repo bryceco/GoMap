@@ -1429,6 +1429,10 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
         <target state="translated">Přidat typ budovy</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Crossing Markings" xml:space="preserve">
+        <source>Add Crossing Markings</source>
+        <note>A type of quest</note>
+      </trans-unit>
       <trans-unit id="Add Highway Surface" xml:space="preserve">
         <source>Add Highway Surface</source>
         <target state="translated">Přidat povrch cesty</target>
@@ -1698,7 +1702,7 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Choose Existing Photo" xml:space="preserve">
         <source>Choose Existing Photo</source>
         <target state="translated">Vybrat již existující snímek</target>
-        <note>Text displayed in an action sheet when the user wants to upload a photograph from their photo library.</note>
+        <note>Option to choose a photo from the photo library.</note>
       </trans-unit>
       <trans-unit id="Clear All" xml:space="preserve">
         <source>Clear All</source>
@@ -2244,6 +2248,10 @@ Never delete old tracks</note>
         <target state="translated">Žádné omezení odbočení vlevo</target>
         <note />
       </trans-unit>
+      <trans-unit id="No Location Data" xml:space="preserve">
+        <source>No Location Data</source>
+        <note>The selected photo has no GPS coordinates</note>
+      </trans-unit>
       <trans-unit id="No Right Turn restriction" xml:space="preserve">
         <source>No Right Turn restriction</source>
         <target state="translated">Žádné omezení odbočení vpravo</target>
@@ -2733,7 +2741,7 @@ Title for sharing options</note>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
         <target state="translated">Pořídit nový snímek</target>
-        <note />
+        <note>Option to take a photo with the camera</note>
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
@@ -2760,6 +2768,10 @@ Title for sharing options</note>
         <target state="translated">Objekt neobsahuje žádné značky</target>
         <note />
       </trans-unit>
+      <trans-unit id="The photo does not contain location data. Panoramax requires that uploaded photos contain location data." xml:space="preserve">
+        <source>The photo does not contain location data. Panoramax requires that uploaded photos contain location data.</source>
+        <note />
+      </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
         <target state="translated">Omezení nelze odstranit</target>
@@ -2769,6 +2781,10 @@ Title for sharing options</note>
         <source>The selected image file does not contain location information.</source>
         <target state="translated">Zvolený obrázek neobsahuje informace o poloze.</target>
         <note />
+      </trans-unit>
+      <trans-unit id="The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax." xml:space="preserve">
+        <source>The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax.</source>
+        <note>Error shown when a selected photo cannot be converted to JPEG format</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
         <source>The selected way must be completely visible</source>
