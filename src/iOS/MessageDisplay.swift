@@ -65,11 +65,14 @@ class MessageDisplay {
 		{
 			isNetworkError = true
 		}
+
+		// Decode HTML text
 		if let error = error as? UrlSessionError,
 		   case let .badStatusCode(_, message) = error,
-		   message.count > 5
+		   message.prefix(1) == "<", message.suffix(1) == ">",
+		   let html = NSAttributedString(withHtmlString: message)
 		{
-			text = message
+			text = html.string
 		}
 
 		if isNetworkError {
