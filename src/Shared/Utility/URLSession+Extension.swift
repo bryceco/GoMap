@@ -78,7 +78,7 @@ extension URLRequest {
 		let appVersion = AppDelegate.appVersion
 		let systemVersion = UIDevice.current.systemVersion
 		let deviceModel = UIDevice.current.model
-		return "\(appName)/\(appVersion) (\(deviceModel); iOS \(systemVersion))"
+		return "\(appName)/\(appVersion) (\(deviceModel); iOS \(systemVersion); compatible with JOSM)"
 	}
 
 	static let appUserAgentString = appUserAgent()

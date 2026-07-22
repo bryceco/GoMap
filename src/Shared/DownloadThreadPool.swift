@@ -31,6 +31,7 @@ final class DownloadThreadPool: NSObject, URLSessionDataDelegate, URLSessionTask
 			request.httpMethod = "GET"
 			request.cachePolicy = .reloadIgnoringLocalCacheData
 			request.setUserAgent()
+			request.setValue("application/xml, text/xml", forHTTPHeaderField: "Accept")
 			return request
 		}()
 
