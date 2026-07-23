@@ -11,6 +11,30 @@ import UIKit
 
 typealias PushPinViewDragCallback = (PushPinView, UIGestureRecognizer.State, CGFloat, CGFloat) -> Void
 
+/// A pan gesture recognizer that cancels itself when more than one finger is active anywhere
+/// on screen, preventing accidental pin drags during two-finger pinch/rotate gestures.
+private class SingleTouchPanGestureRecognizer: UIPanGestureRecognizer {
+	private func activeCount(in event: UIEvent) -> Int {
+		event.allTouches?.filter { $0.phase != .ended && $0.phase != .cancelled }.count ?? 0
+	}
+
+	override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent) {
+		guard activeCount(in: event) <= 1 else {
+			state = .failed
+			return
+		}
+		super.touchesBegan(touches, with: event)
+	}
+
+	override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
+		guard activeCount(in: event) <= 1 else {
+			state = (state == .possible) ? .failed : .cancelled
+			return
+		}
+		super.touchesMoved(touches, with: event)
+	}
+}
+
 final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGestureRecognizerDelegate {
 	private let shapeLayer: CAShapeLayer // shape for balloon
 	private let textLayer: CATextLayer // text in balloon
@@ -119,7 +143,7 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 		layer.addSublayer(shapeLayer)
 		layer.addSublayer(placeholderLayer)
 
-		let pan = UIPanGestureRecognizer(target: self, action: #selector(draggingGesture(_:)))
+		let pan = SingleTouchPanGestureRecognizer(target: self, action: #selector(draggingGesture(_:)))
 		pan.delegate = self
 		addGestureRecognizer(pan)
 	}
