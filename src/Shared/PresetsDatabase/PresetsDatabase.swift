@@ -311,6 +311,17 @@ final class PresetsDatabase {
 				}
 			}
 		}
+
+		// Fallback: if addr: tags are present but nothing specific matched, use the Address
+		// preset. The preset's "addr:*" tag key can never score via normal matching, so it
+		// requires this special case (mirrors iD editor behavior, ref #4353).
+		if bestFeature == nil || bestFeature!.isGeneric() || !bestFeature!.searchable,
+		   objectTags.keys.contains(where: { $0.hasPrefix("addr:") }),
+		   let addressFeature = stdFeatures["address"]
+		{
+			bestFeature = addressFeature
+		}
+
 		return bestFeature
 	}
 
