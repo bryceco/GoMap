@@ -272,7 +272,9 @@ final class PresetsDatabase {
 	                           withPresetKey: String? = nil,
 	                           ignoringCustomFeatures: Bool = false) -> PresetFeature?
 	{
-		guard let objectTags = objectTags else { return nil }
+		guard let objectTags = objectTags else {
+			return nil
+		}
 
 		var bestFeature: PresetFeature?
 		var bestScore = 0.0
@@ -292,13 +294,15 @@ final class PresetsDatabase {
 					if score >= bestScore {
 						// special case for quests where we want to ensure we pick
 						// a feature containing presetKey
-						if let withPresetKey = withPresetKey,
+						if let withPresetKey,
 						   feature.fieldContainingTagKey(withPresetKey, more: true) == nil
 						{
 							continue
 						}
 						// For ties we take the first alphabetically, just to be consistent
-						if score == bestScore, feature.featureID > bestFeature!.featureID {
+						if score == bestScore,
+						   feature.featureID > bestFeature!.featureID
+						{
 							continue
 						}
 						bestScore = score
