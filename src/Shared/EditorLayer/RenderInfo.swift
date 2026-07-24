@@ -96,6 +96,7 @@ final class RenderInfo {
 
 	class func forObject(_ object: OsmBaseObject) -> RenderInfo {
 		var tags = object.tags
+
 		// if the object is part of a rendered relation then inherit that relation's tags
 		if object is OsmWay,
 		   let parent = object.parentRelations.first(where: { $0.isBoundary() }),
@@ -246,5 +247,33 @@ final class RenderInfo {
 			}
 		}
 		return output
+	}
+}
+
+extension RenderInfo: CustomDebugStringConvertible {
+	var debugDescription: String {
+		func hex(_ color: UIColor) -> String {
+			var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+			color.getRed(&r, green: &g, blue: &b, alpha: &a)
+			return String(format: "#%02X%02X%02X", Int(r * 255), Int(g * 255), Int(b * 255))
+		}
+		var parts = ["\(key)=\(value ?? "*")", "priority:\(renderPriority)"]
+		if let c = lineColor {
+			var s = "line:\(hex(c)) w:\(lineWidth)"
+			if lineOpacity != 1.0 { s += " op:\(lineOpacity)" }
+			if lineCap != .round { s += " cap:\(lineCap.rawValue)" }
+			if let dash = lineDashPattern { s += " dash:\(dash)" }
+			parts.append(s)
+		}
+		if let c = casingColor {
+			var s = "casing:\(hex(c)) w:\(casingWidth)"
+			if casingOpacity != 1.0 { s += " op:\(casingOpacity)" }
+			if casingCap != .butt { s += " cap:\(casingCap.rawValue)" }
+			if let dash = casingDashPattern { s += " dash:\(dash)" }
+			parts.append(s)
+		}
+		if let c = areaColor { parts.append("area:\(hex(c))") }
+		if isAddressPoint { parts.append("addressPoint") }
+		return parts.joined(separator: ", ")
 	}
 }
