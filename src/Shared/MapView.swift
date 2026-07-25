@@ -42,15 +42,14 @@ struct MapLocation {
 // These zPosition values are isolated from the ones in MapLayersView
 private enum EDITOR_ZLAYER: CGFloat {
 	case EDITOR = -20
-	case ROTATEGRAPHIC = -3
 	case BLINK = 4
 }
 
 final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteractionDelegate, RightClickHandling {
-	var isRotateObjectMode: (rotateObjectOverlay: CAShapeLayer, rotateObjectCenter: LatLon)?
+	var isRotateObjectMode: LatLon?
 
 	var voiceAnnouncement: VoiceAnnouncement?
-	var objectRotationGesture: UIRotationGestureRecognizer!
+	private weak var rotateOverlayVC: RotateObjectOverlayViewController?
 	@IBOutlet var editToolbar: CustomSegmentedControl!
 
 	private var magnifyingGlass: MagnifyingGlass!
@@ -95,12 +94,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(screenLongPressGesture(_:)))
 		longPress.delegate = self
 		addGestureRecognizer(longPress)
-
-		// two-finger rotation of OSM objects
-		objectRotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotationGesture(_:)))
-		objectRotationGesture.delegate = self
-		objectRotationGesture.isEnabled = false // disabled until needed
-		addGestureRecognizer(objectRotationGesture)
 
 		if #available(iOS 13.4, macCatalyst 13.0, *) {
 			// mouseover support for Mac Catalyst and iPad:
@@ -286,38 +279,34 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		if editorLayer.canRotateSelectedNode() {
 			editorLayer.prepareNodeRotation()
 		}
-		removePin()
-		let rotateObjectOverlay = CAShapeLayer()
-		let radiusInner: CGFloat = 70
-		let radiusOuter: CGFloat = 90
-		let arrowWidth: CGFloat = 60
-		let center = viewPort.mapTransform.screenPoint(forLatLon: rotateObjectCenter, birdsEye: true)
-		let path = UIBezierPath(
-			arcCenter: center,
-			radius: radiusInner,
-			startAngle: .pi / 2,
-			endAngle: .pi,
-			clockwise: false)
-		path.addLine(to: CGPoint(x: center.x - (radiusOuter + radiusInner) / 2 + arrowWidth / 2, y: center.y))
-		path.addLine(to: CGPoint(x: center.x - (radiusOuter + radiusInner) / 2, y: center.y + arrowWidth / sqrt(2.0)))
-		path.addLine(to: CGPoint(x: center.x - (radiusOuter + radiusInner) / 2 - arrowWidth / 2, y: center.y))
-		path.addArc(withCenter: center, radius: radiusOuter, startAngle: .pi, endAngle: .pi / 2, clockwise: true)
-		path.close()
-		rotateObjectOverlay.path = path.cgPath
-		rotateObjectOverlay.fillColor = UIColor(red: 0.0, green: 1.0, blue: 1.0, alpha: 0.4).cgColor
-		rotateObjectOverlay.zPosition = EDITOR_ZLAYER.ROTATEGRAPHIC.rawValue
-		layer.addSublayer(rotateObjectOverlay)
 
-		isRotateObjectMode = (rotateObjectOverlay, rotateObjectCenter)
-		objectRotationGesture.isEnabled = true
+		let overlayVC = RotateObjectOverlayViewController(
+			onBegin: { [weak self] in self?.editorLayer.rotateBegin() },
+			onContinue: { [weak self] delta in
+				self?.editorLayer.rotateContinue(delta: delta, center: rotateObjectCenter)
+			},
+			onFinish: { [weak self] in self?.editorLayer.rotateFinish() })
+		overlayVC.onComplete = { [weak self] in
+			self?.endObjectRotation()
+		}
+		rotateOverlayVC = overlayVC
+		isRotateObjectMode = rotateObjectCenter
+		// Present first so viewWillAppear fires and rotateBegin() captures the
+		// pushpin position in the undo context before the pin is removed.
+		mainView.present(overlayVC, animated: false)
+		removePin()
 	}
 
 	func endObjectRotation() {
-		isRotateObjectMode?.rotateObjectOverlay.removeFromSuperlayer()
+		guard isRotateObjectMode != nil else { return }
+		isRotateObjectMode = nil
 		placePushpinForSelection()
 		editorLayer.dragState.confirmDrag = false
-		isRotateObjectMode = nil
-		objectRotationGesture.isEnabled = false
+		if let vc = rotateOverlayVC, vc.presentingViewController != nil {
+			vc.onComplete = nil
+			vc.dismiss(animated: false)
+		}
+		rotateOverlayVC = nil
 	}
 
 	// MARK: Discard stale data
@@ -730,7 +719,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 				if let object {
 					self.editorLayer.dragContinue(object: object,
 					                              toPoint: pushPin.arrowPoint,
-					                              isRotateObjectMode: self.isRotateObjectMode)
+					                              rotateObjectCenter: self.isRotateObjectMode)
 				}
 			}
 
@@ -1031,11 +1020,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 				tapAndDragPushpinLatLon = nil
 			}
 
-			// disable rotation if in action
-			if isRotateObjectMode != nil {
-				endObjectRotation()
-			}
-
 			let point = tap.location(in: self)
 			if mainView.plusButtonTimestamp != 0.0 {
 				// user is doing a long-press on + button
@@ -1053,19 +1037,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		if longPress.state == .began, !isHidden {
 			let point = longPress.location(in: self)
 			editorLayer.longPressAtPoint(point)
-		}
-	}
-
-	// user rotating an OSM object
-	@IBAction func handleRotationGesture(_ rotationGesture: UIRotationGestureRecognizer) {
-		guard let rotate = isRotateObjectMode else { return }
-		if rotationGesture.state == .began {
-			editorLayer.rotateBegin()
-		} else if rotationGesture.state == .changed {
-			editorLayer.rotateContinue(delta: rotationGesture.rotation, center: rotate.rotateObjectCenter)
-		} else {
-			editorLayer.rotateFinish()
-			endObjectRotation()
 		}
 	}
 

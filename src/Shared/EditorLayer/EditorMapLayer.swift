@@ -179,13 +179,12 @@ final class EditorMapLayer: CALayer {
 	var dragState = DragState(startPoint: .zero, didMove: false, confirmDrag: false)
 
 	/// Active while rotating a node's `direction` / `camera:direction` tag (not geometry).
-	struct NodeRotateState {
+	struct NodeDirectionState {
 		let key: String
 		let initialDirection: OsmNode.Direction
-		var undoGroupOpen: Bool = false
 	}
 
-	var nodeRotate: NodeRotateState?
+	var nodeDirectionRotation: NodeDirectionState?
 
 	func canRotateSelectedNode() -> Bool {
 		if selectedWay == nil,
