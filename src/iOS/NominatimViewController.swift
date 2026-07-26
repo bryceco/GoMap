@@ -6,6 +6,7 @@
 //  Copyright (c) 2013 Bryce Cogswell. All rights reserved.
 //
 
+import KissXML
 import UIKit
 
 class NominatimResultCell: UITableViewCell {
@@ -201,6 +202,60 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		return true
 	}
 
+	/// try parsing as an OSM note reference
+	/// https://www.openstreetmap.org/note/5403907#map=15/47.52161/-122.11623&layers=V
+	/// "note 12345" or "note #12345"
+	func parsedAsOsmNote(_ string: String) -> Bool {
+		guard let noteId = Self.osmNoteId(from: string) else {
+			return false
+		}
+		jumpToOsmNote(noteId: noteId)
+		return true
+	}
+
+	private static func osmNoteId(from string: String) -> Int64? {
+		if let url = URL(string: string),
+		   url.relativePath.contains("/note/"),
+		   let noteText = url.relativePath.split(separator: "/").last,
+		   let noteID = Int64(noteText)
+		{
+			return noteID
+		}
+
+		// Match plain text "note 12345" (case-insensitive, any whitespace)
+		let pattern = #"(?i)\bnote\s+(\d+)\b"#
+		guard let regex = try? NSRegularExpression(pattern: pattern),
+		      let match = regex.firstMatch(in: string, range: NSRange(string.startIndex..., in: string)),
+		      let range = Range(match.range(at: 1), in: string)
+		else {
+			return nil
+		}
+		return Int64(string[range])
+	}
+
+	func jumpToOsmNote(noteId: Int64) {
+		let url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/notes/\(noteId)")
+		activityIndicator.startAnimating()
+		Task {
+			defer { activityIndicator.stopAnimating() }
+			do {
+				let data = try await URLSession.shared.data(with: url)
+				guard let xmlText = String(data: data, encoding: .utf8),
+				      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
+				      let noteElement = try? xmlDoc.rootElement()?.nodes(forXPath: "./note").first as? DDXMLElement,
+				      let note = OsmNoteMarker(noteXml: noteElement)
+				else {
+					presentErrorMessage()
+					return
+				}
+				updateHistory(with: "note \(noteId)")
+				jumpTo(lat: note.latLon.lat, lon: note.latLon.lon, zoom: nil)
+			} catch {
+				presentErrorMessage(error)
+			}
+		}
+	}
+
 	/// try parsing as GOO.GL redirect
 	/// https://goo.gl/maps/yGZxAN37wcmERVD6A
 	func parsedAsGoogleDynamicLink(_ string: String) -> Bool {
@@ -306,7 +361,8 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		}
 
 		// try parsing it as a special case before doing Nominatim lookup
-		if parsedAsOsmObjectRef(string) ||
+		if parsedAsOsmNote(string) ||
+			parsedAsOsmObjectRef(string) ||
 			parsedAsGoogleDynamicLink(string) ||
 			parsedAsLatLon(string)
 		{
