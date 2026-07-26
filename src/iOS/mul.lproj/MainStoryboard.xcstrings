@@ -3,7 +3,7 @@
   "strings" : {
     "1tR-eI-DSh.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"username\"; ObjectID = \"1tR-eI-DSh\"; Note = \"Placeholder - Do not translate\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -105,7 +105,7 @@
     },
     "1xx-L0-hKm.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Get Directions\"; ObjectID = \"1xx-L0-hKm\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -459,7 +459,7 @@
     },
     "2g1-vb-Cjc.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Comment\"; ObjectID = \"2g1-vb-Cjc\"; Note = \"Add a comment for a Note\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -957,7 +957,7 @@
     },
     "9hH-Ja-fKn.text" : {
       "comment" : "Class = \"UILabel\"; text = \"New comment:\"; ObjectID = \"9hH-Ja-fKn\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -2397,7 +2397,7 @@
     },
     "HeZ-95-3K1.text" : {
       "comment" : "Class = \"UITextView\"; text = \"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.\"; ObjectID = \"HeZ-95-3K1\"; Note = \"Placeholder - do not translate\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2667,7 +2667,7 @@
     },
     "LSJ-rB-J2c.text" : {
       "comment" : "Class = \"UILabel\"; text = \"-\"; ObjectID = \"LSJ-rB-J2c\"; Note = \"Placeholder - Do not translate\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -2751,7 +2751,7 @@
     },
     "MBY-TK-Wuy.title" : {
       "comment" : "Class = \"UINavigationItem\"; title = \"Note\"; ObjectID = \"MBY-TK-Wuy\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3189,7 +3189,7 @@
     },
     "OJ0-aO-ri1.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Comment & Resolve\"; ObjectID = \"OJ0-aO-ri1\"; Note = \"Add a comment and resolve Note\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3357,7 +3357,7 @@
     },
     "PHk-s9-onx.text" : {
       "comment" : "Class = \"UITextView\"; text = \"Various comments...\"; ObjectID = \"PHk-s9-onx\"; Note = \"Placeholder - Do not translate\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -4323,7 +4323,7 @@
     },
     "tOO-VD-MeJ.text" : {
       "comment" : "Class = \"UILabel\"; text = \"2014-06-17 17:54 UTC\"; ObjectID = \"tOO-VD-MeJ\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -4461,7 +4461,7 @@
     },
     "VNE-ee-a7u.text" : {
       "comment" : "Class = \"UILabel\"; text = \"action\"; ObjectID = \"VNE-ee-a7u\"; Note = \"Placeholder - Do not translate\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

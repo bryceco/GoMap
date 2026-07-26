@@ -95,6 +95,7 @@
 		027C7FDC296CCF28005C53A8 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027C7FDB296CCF28005C53A8 /* String+Ext.swift */; };
 		027CF8732BDE141700E6F03B /* DrawingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027CF8722BDE141700E6F03B /* DrawingLayer.swift */; };
 		027E90AA3016BB3800E1A0F1 /* OsmNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E90A93016BB3800E1A0F1 /* OsmNote.swift */; };
+		027E90B03016CF6A00E1A0F1 /* OsmNote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027E90AD3016CB8B00E1A0F1 /* OsmNote.storyboard */; };
 		02811D6C2E3176BE00E9D889 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */; };
 		02811D6E2E3176DB00E9D889 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */; };
 		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
@@ -464,7 +465,8 @@
 		027AD5D119F5A18700120654 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		027C7FDB296CCF28005C53A8 /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Ext.swift"; path = "../../Shared/Utility/String+Ext.swift"; sourceTree = "<group>"; };
 		027CF8722BDE141700E6F03B /* DrawingLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingLayer.swift; sourceTree = "<group>"; };
-		027E90A93016BB3800E1A0F1 /* OsmNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNote.swift; sourceTree = "<group>"; };
+		027E90A93016BB3800E1A0F1 /* OsmNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OsmNote.swift; path = ../../Shared/MapMarkers/OsmNote.swift; sourceTree = "<group>"; };
+		027E90AE3016CB8B00E1A0F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/OsmNote.storyboard; sourceTree = "<group>"; };
 		02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
@@ -793,6 +795,16 @@
 			path = DisplaySettings;
 			sourceTree = "<group>";
 		};
+		027E90AF3016CBEC00E1A0F1 /* Notes */ = {
+			isa = PBXGroup;
+			children = (
+				C341E1592639DF210022E983 /* NotesTableViewController.swift */,
+				027E90AD3016CB8B00E1A0F1 /* OsmNote.storyboard */,
+				027E90A93016BB3800E1A0F1 /* OsmNote.swift */,
+			);
+			path = Notes;
+			sourceTree = "<group>";
+		};
 		02A3598F2704E51700101369 /* POI */ = {
 			isa = PBXGroup;
 			children = (
@@ -886,7 +898,7 @@
 				02572B722F10D8C400216EE3 /* MessageDisplay.swift */,
 				C3D096D7263EAE1E00E3B129 /* MyApplication.swift */,
 				C3004F4C263A6306006BF313 /* NominatimViewController.swift */,
-				C341E1592639DF210022E983 /* NotesTableViewController.swift */,
+				027E90AF3016CBEC00E1A0F1 /* Notes */,
 				02CB2409265DB7D600835F32 /* OpeningHours */,
 				020E0E222F637C4B00A9D27C /* PinchGestureRecognizer.swift */,
 				02A3598F2704E51700101369 /* POI */,
@@ -1019,7 +1031,6 @@
 				02C8C56626F44728003B0122 /* OsmNoteMarker.swift */,
 				02CB523329907832007F758D /* QuestMarker.swift */,
 				02C8C56C26F4479A003B0122 /* WayPointMarker.swift */,
-				027E90A93016BB3800E1A0F1 /* OsmNote.swift */,
 			);
 			name = MapMarkers;
 			path = ../Shared/MapMarkers;
@@ -1523,6 +1534,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				027E90B03016CF6A00E1A0F1 /* OsmNote.storyboard in Resources */,
 				02EA545B2AB7CCA3004688F9 /* InfoPlist.xcstrings in Resources */,
 				02CE3CE32990A2C800DDACE0 /* QuestSolver.storyboard in Resources */,
 				029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */,
@@ -1940,6 +1952,14 @@
 				02EA54592AB7CCA3004688F9 /* mul */,
 			);
 			name = Changeset.storyboard;
+			sourceTree = "<group>";
+		};
+		027E90AD3016CB8B00E1A0F1 /* OsmNote.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				027E90AE3016CB8B00E1A0F1 /* Base */,
+			);
+			name = OsmNote.storyboard;
 			sourceTree = "<group>";
 		};
 		0291D83524427AFA00F793BE /* Display.storyboard */ = {
