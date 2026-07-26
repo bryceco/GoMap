@@ -8,7 +8,6 @@
 
 import CoreGraphics
 import Foundation
-import KissXML
 
 @MainActor final class MapMarkerDatabase: MapMarkerIgnoreListProtocol {
 	private var pendingUpdateTask: Task<Void, Never>?
@@ -273,74 +272,10 @@ extension MapMarkerDatabase {
 
 	func updateNoteMarkers(forRegion box: OSMRect) async {
 		Task {
-			let bbox = "\(box.origin.x),\(box.origin.y),\(box.origin.x + box.size.width),\(box.origin.y + box.size.height)"
-			let url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/notes")
-				.appendingQueryItems(["closed": "0",
-				                      "bbox": "\(bbox)"])
-			guard
-				let data = try? await URLSession.shared.data(with: url),
-				let xmlText = String(data: data, encoding: .utf8),
-				let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0)
-			else {
-				return
-			}
-
-			let notes = (try? xmlDoc.rootElement()?.nodes(forXPath: "./note")) ?? []
-			let newNotes: [OsmNoteMarker] = notes.compactMap({ noteElement in
-				guard let noteElement = noteElement as? DDXMLElement,
-				      let note = OsmNoteMarker(noteXml: noteElement)
-				else {
-					return nil
-				}
-				return note
-			})
-			await MainActor.run {
-				// add downloaded notes
-				for note in newNotes {
-					addOrUpdate(marker: note)
-				}
+			let notes = (try? await OsmNote.download(inBbox: box)) ?? []
+			for note in notes {
+				addOrUpdate(marker: OsmNoteMarker(note: note))
 			}
 		}
-	}
-
-	func upload(note: OsmNoteMarker,
-	            close: Bool,
-	            comment: String) async throws -> OsmNoteMarker
-	{
-		var url = URL(string: "api/0.6/notes")!
-		let queryItems: [String: String]
-
-		if note.comments.count == 0 {
-			// brand new note
-			queryItems = ["lat": "\(note.latLon.lat)",
-			              "lon": "\(note.latLon.lon)",
-			              "text": comment]
-		} else {
-			// existing note
-			if close {
-				url = url.appendingPathComponent("\(note.noteId)/close")
-				queryItems = ["text": comment]
-			} else {
-				url = url.appendingPathComponent("\(note.noteId)/comment")
-				queryItems = ["text": comment]
-			}
-		}
-
-		let postData = try await OSM_SERVER.putRequest(relativeUrl: url.relativePath,
-		                                               queryItems: queryItems,
-		                                               method: "POST",
-		                                               xml: nil)
-		guard let xmlText = String(data: postData, encoding: .utf8),
-		      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
-		      let list = try? xmlDoc.rootElement()?.nodes(forXPath: "./note") as? [DDXMLElement],
-		      let noteElement = list.first,
-		      let newNote = OsmNoteMarker(noteXml: noteElement)
-		else {
-			throw NSError(domain: "OsmNotesDatabase",
-			              code: 1,
-			              userInfo: [NSLocalizedDescriptionKey: "Update Error"])
-		}
-		addOrUpdate(marker: newNote)
-		return newNote
 	}
 }

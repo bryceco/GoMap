@@ -167,7 +167,9 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 
 		Task { @MainActor in
 			do {
-				let newNote = try await mapMarkersView.upload(note: note, close: resolves, comment: text)
+				let newNote = try await mapMarkersView.upload(note: note,
+				                                              action: resolves ? .close : .comment,
+				                                              comment: text)
 				alert.dismiss(animated: true, completion: {
 					self.done(nil) // dismiss ourself after alert is dismissed
 				})

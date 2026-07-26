@@ -152,14 +152,15 @@ class MapMarkersView: UIView {
 		marker.handleButtonPress(in: mainView, markerView: self)
 	}
 
-	// FIXME: Move this somewhere else since it is specific to Notes, but mapMarkerDatabase is private so ??
+	// Note: upload() is implemented here so callers go through MapMarkersView, keeping mapMarkerDatabase private
 	func upload(note: OsmNoteMarker,
-	            close: Bool,
+	            action: OsmNote.UploadAction,
 	            comment: String) async throws -> OsmNoteMarker
 	{
-		return try await mapMarkerDatabase.upload(note: note,
-		                                          close: close,
-		                                          comment: comment)
+		let updatedNote = try await note.note.upload(action: action, comment: comment)
+		let newMarker = OsmNoteMarker(note: updatedNote)
+		mapMarkerDatabase.addOrUpdate(marker: newMarker)
+		return newMarker
 	}
 }
 

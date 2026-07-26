@@ -94,6 +94,7 @@
 		027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027AD5D119F5A18700120654 /* CoreFoundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		027C7FDC296CCF28005C53A8 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027C7FDB296CCF28005C53A8 /* String+Ext.swift */; };
 		027CF8732BDE141700E6F03B /* DrawingLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027CF8722BDE141700E6F03B /* DrawingLayer.swift */; };
+		027E90AA3016BB3800E1A0F1 /* OsmNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027E90A93016BB3800E1A0F1 /* OsmNote.swift */; };
 		02811D6C2E3176BE00E9D889 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */; };
 		02811D6E2E3176DB00E9D889 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */; };
 		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
@@ -463,6 +464,7 @@
 		027AD5D119F5A18700120654 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		027C7FDB296CCF28005C53A8 /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Ext.swift"; path = "../../Shared/Utility/String+Ext.swift"; sourceTree = "<group>"; };
 		027CF8722BDE141700E6F03B /* DrawingLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingLayer.swift; sourceTree = "<group>"; };
+		027E90A93016BB3800E1A0F1 /* OsmNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmNote.swift; sourceTree = "<group>"; };
 		02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
@@ -1017,6 +1019,7 @@
 				02C8C56626F44728003B0122 /* OsmNoteMarker.swift */,
 				02CB523329907832007F758D /* QuestMarker.swift */,
 				02C8C56C26F4479A003B0122 /* WayPointMarker.swift */,
+				027E90A93016BB3800E1A0F1 /* OsmNote.swift */,
 			);
 			name = MapMarkers;
 			path = ../Shared/MapMarkers;
@@ -1595,6 +1598,7 @@
 				020798012994706000D3C654 /* QuestBuilderController.swift in Sources */,
 				0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */,
 				02CE3CE229909D1D00DDACE0 /* QuestSolverController.swift in Sources */,
+				027E90AA3016BB3800E1A0F1 /* OsmNote.swift in Sources */,
 				02F0297E2BFB01E3002F7956 /* DataOverlaysController.swift in Sources */,
 				02AEBEAF294ABE0700009163 /* KeyValueTableCell.swift in Sources */,
 				02581F32301410AD00FC4D3A /* RotateObjectOverlayViewController.swift in Sources */,

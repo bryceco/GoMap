@@ -6,7 +6,6 @@
 //  Copyright (c) 2013 Bryce Cogswell. All rights reserved.
 //
 
-import KissXML
 import UIKit
 
 class NominatimResultCell: UITableViewCell {
@@ -234,20 +233,11 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 	}
 
 	func jumpToOsmNote(noteId: Int64) {
-		let url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/notes/\(noteId)")
 		activityIndicator.startAnimating()
 		Task {
 			defer { activityIndicator.stopAnimating() }
 			do {
-				let data = try await URLSession.shared.data(with: url)
-				guard let xmlText = String(data: data, encoding: .utf8),
-				      let xmlDoc = try? DDXMLDocument(xmlString: xmlText, options: 0),
-				      let noteElement = try? xmlDoc.rootElement()?.nodes(forXPath: "./note").first as? DDXMLElement,
-				      let note = OsmNoteMarker(noteXml: noteElement)
-				else {
-					presentErrorMessage()
-					return
-				}
+				let note = try await OsmNote.download(id: noteId)
 				updateHistory(with: "note \(noteId)")
 				jumpTo(lat: note.latLon.lat, lon: note.latLon.lon, zoom: nil)
 			} catch {
