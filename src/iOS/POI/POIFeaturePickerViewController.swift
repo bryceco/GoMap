@@ -176,8 +176,9 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			location: AppDelegate.shared.mainView.currentRegion,
 			includeNSI: includeNSI)
 		let cell = tableView.dequeueReusableCell(withIdentifier: "FinalCell", for: indexPath) as! FeaturePickerCell
-		cell.title.text = includeNSI && feature.nsiSuggestion ? (brand + feature.friendlyName()) : feature
-			.friendlyName()
+		cell.title.text = includeNSI && feature.nsiSuggestion
+			? (brand + feature.friendlyName())
+			: feature.friendlyName()
 		cell.pickerImage.image = icon
 		if #available(iOS 13.0, *) {
 			cell.pickerImage.tintColor = UIColor.label
@@ -187,10 +188,16 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		cell.pickerImage.contentMode = .scaleAspectFit
 		cell.setNeedsUpdateConstraints()
 		let description = feature.wikiDescription(update: { desc in
-			cell.details.text = desc
-			if let index = self.tableView.indexPath(for: cell) {
-				self.tableView.reloadRows(at: [index], with: .automatic)
+			// Search visible cells by featureID and update it
+			guard let cell = self.tableView.visibleCells.first(where: {
+				($0 as? FeaturePickerCell)?.featureID == feature.featureID
+			}) as? FeaturePickerCell else {
+				return
 			}
+			// update cell
+			self.tableView.performBatchUpdates({
+				cell.details.text = desc
+			})
 		})
 		cell.details.text = description ?? feature.summary()
 		cell.accessoryType = currentFeature === feature ? .checkmark : .none
