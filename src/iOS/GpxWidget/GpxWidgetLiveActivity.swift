@@ -38,10 +38,12 @@ struct GpxWidgetLiveActivity: Widget {
 					VStack(alignment: .leading) {
 						Text("Go Map!!")
 						Text("GPX Trace")
-							.foregroundStyle(.secondary)
+							.foregroundColor(.secondary)
 					}
 					Spacer()
-					if context.state.status == .running {
+					if #available(iOS 17.0, *),
+					   context.state.status == .running
+					{
 						Button(intent: StopGpxTrackIntent()) {
 							Text("\(Image(systemName: "stop.circle")) Stop")
 								.font(.callout)
@@ -59,7 +61,7 @@ struct GpxWidgetLiveActivity: Widget {
 					VStack(alignment: .leading) {
 						Text("Points")
 							.font(.caption)
-							.foregroundStyle(.secondary)
+							.foregroundColor(.secondary)
 						Text("\(context.state.pointCount)")
 							.contentTransition(.numericText())
 							.font(.largeTitle)
@@ -68,7 +70,7 @@ struct GpxWidgetLiveActivity: Widget {
 					VStack(alignment: .trailing) {
 						Text("Duration")
 							.font(.caption)
-							.foregroundStyle(.secondary)
+							.foregroundColor(.secondary)
 						Text(context.state.durationHMS)
 							.contentTransition(.numericText())
 							.font(.largeTitle)
@@ -78,7 +80,7 @@ struct GpxWidgetLiveActivity: Widget {
 				}
 				.padding(.bottom, 5)
 				Text("Started at \(context.state.startTime.formatted(date: .omitted, time: .shortened))")
-					.foregroundStyle(.secondary)
+					.foregroundColor(.secondary)
 					.font(.footnote)
 					.padding(.bottom, 5)
 			}
@@ -95,7 +97,7 @@ struct GpxWidgetLiveActivity: Widget {
 						VStack(alignment: .leading) {
 							Text("Points")
 								.font(.caption)
-								.foregroundStyle(.secondary)
+								.foregroundColor(.secondary)
 							Text("\(context.state.pointCount)")
 								.contentTransition(.numericText())
 								.font(.largeTitle)
@@ -111,7 +113,7 @@ struct GpxWidgetLiveActivity: Widget {
 						VStack(alignment: .trailing) {
 							Text("Duration")
 								.font(.caption)
-								.foregroundStyle(.secondary)
+								.foregroundColor(.secondary)
 							Text(context.state.durationHMS)
 								.contentTransition(.numericText())
 								.font(.largeTitle)
@@ -128,10 +130,10 @@ struct GpxWidgetLiveActivity: Widget {
 					VStack {
 						Text("Go Map!!")
 						Text("GPX Trace")
-							.foregroundStyle(.secondary)
+							.foregroundColor(.secondary)
 						Text(
 							"\(Image(systemName: "info.circle")) \(context.state.startTime.formatted(date: .omitted, time: .shortened))")
-							.foregroundStyle(.secondary)
+							.foregroundColor(.secondary)
 					}
 					.font(.caption)
 				}
@@ -164,11 +166,5 @@ private extension GpxTrackAttributes.ContentState {
 	static var smiley: GpxTrackAttributes.ContentState {
 		GpxTrackAttributes.ContentState(startTime: Date())
 	}
-}
-
-#Preview("Notification", as: .content, using: GpxTrackAttributes.preview) {
-	GpxWidgetLiveActivity()
-} contentStates: {
-	GpxTrackAttributes.ContentState.smiley
 }
 #endif
