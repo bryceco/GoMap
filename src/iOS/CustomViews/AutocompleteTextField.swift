@@ -261,17 +261,12 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 	override func paste(_ sender: Any?) {
 		// Check whether they are pasting a set of tags
 		if let pb = UIPasteboard.general.string,
-		   let tags = OsmTags.tagsForString(pb)
+		   let tags = OsmTags.tagsForString(pb),
+		   let cell = superviewOfType(KeyValueTableCell.self),
+		   let owner = cell.keyValueCellOwner
 		{
-			// try to find an ancestor that we can notify
-			var view: UIView? = self
-			while view != nil {
-				if let cell = view as? KeyValueTableCell {
-					cell.keyValueCellOwner?.pasteTags(tags)
-					return
-				}
-				view = view?.superview
-			}
+			owner.pasteTags(tags)
+			return
 		}
 
 		// Do a regular paste
