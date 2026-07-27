@@ -416,6 +416,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 	}
 
 	func save() {
+		// Don't save state, particularly the viewport transform, if it hasn't been initialized yet
+		guard isInitialized else {
+			return
+		}
+
 		// save preferences first
 		viewPort.saveToUserDefaults()
 
