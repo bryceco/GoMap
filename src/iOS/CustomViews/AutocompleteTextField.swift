@@ -19,6 +19,7 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 	var filteredCompletions: [String] = []
 	var gradientLayer: CAGradientLayer?
 	var didSelectAutocomplete: (() -> Void)?
+	private weak var enclosingTableView: UITableView?
 
 	required init?(coder: NSCoder) {
 		super.init(coder: coder)
@@ -123,7 +124,7 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 
 	func frameForCompletionTableView() -> CGRect {
 		guard let cell = superviewOfType(UITableViewCell.self),
-		      let tableView = cell.superviewOfType(UITableView.self)
+		      let tableView = enclosingTableView ?? cell.superviewOfType(UITableView.self)
 		else {
 			return .zero
 		}
@@ -152,6 +153,7 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 					let tableView = cell.superviewOfType(UITableView.self),
 					let indexPath = tableView.indexPath(for: cell)
 				else { return }
+				enclosingTableView = tableView
 				// scroll cell to top
 				tableView.scrollToRow(at: indexPath, at: .top, animated: false)
 
@@ -203,14 +205,14 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 			gradientLayer?.removeFromSuperlayer()
 			gradientLayer = nil
 
-			if let cell = superviewOfType(UITableViewCell.self),
-			   let tableView = cell.superviewOfType(UITableView.self)
+			enclosingTableView?.isScrollEnabled = true
+			if let enclosingTableView,
+			   let cell = superviewOfType(UITableViewCell.self),
+			   let cellIndexPath = enclosingTableView.indexPath(for: cell)
 			{
-				if let cellIndexPath = tableView.indexPath(for: cell) {
-					tableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
-				}
-				tableView.isScrollEnabled = true
+				enclosingTableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
 			}
+			enclosingTableView = nil
 		}
 	}
 
