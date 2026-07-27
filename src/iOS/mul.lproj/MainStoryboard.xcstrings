@@ -1875,7 +1875,7 @@
     },
     "FaM-WV-S6I.title" : {
       "comment" : "Class = \"UINavigationItem\"; title = \"Search for Location\"; ObjectID = \"FaM-WV-S6I\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -3807,7 +3807,7 @@
     },
     "siu-I6-IEp.title" : {
       "comment" : "Class = \"UIViewController\"; title = \"Search for Location\"; ObjectID = \"siu-I6-IEp\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4161,7 +4161,7 @@
     },
     "TcP-6i-B8H.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Specify a name (\\\"New York\\\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\\\"way 51014987\\\"):\"; ObjectID = \"TcP-6i-B8H\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -4545,7 +4545,7 @@
     },
     "vRO-Aj-Sdr.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"vRO-Aj-Sdr\"; Note = \"Placeholder - do not translate\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -4689,7 +4689,7 @@
     },
     "vwW-V6-kvw.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"vwW-V6-kvw\"; Note = \"Placeholder - do not translate\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -4737,7 +4737,7 @@
     },
     "xw9-Ro-Fai.placeholder" : {
       "comment" : "Class = \"UISearchBar\"; placeholder = \"Niagara Falls\"; ObjectID = \"xw9-Ro-Fai\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
