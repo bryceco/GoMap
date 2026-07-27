@@ -200,7 +200,7 @@ class GpxViewController: TableViewControllerMac {
 			body += "1"
 			body += "\r\n--\(boundary)\r\n"
 			body += "Content-Disposition: form-data; name=\"visibility\"\r\n\r\n"
-			body += "public"
+			body += "identifiable"
 			body += "\r\n--\(boundary)--\r\n"
 			request.httpBody = body.data(using: .utf8)
 			request.setValue(String(format: "%ld", body.count), forHTTPHeaderField: "Content-Length")
