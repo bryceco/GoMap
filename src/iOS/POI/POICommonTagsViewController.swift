@@ -27,6 +27,11 @@ class FeaturePresetAreaCell: UITableViewCell {
 	@IBOutlet var isSet: UIView!
 	var presetKey: PresetDisplayKey!
 
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		valueField.textColor = Self.regularColor
+	}
+
 	private static let placeholderColor: UIColor = {
 		if #available(iOS 13.0, *) {
 			return UIColor.placeholderText
