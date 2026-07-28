@@ -18193,7 +18193,15 @@
       }
     },
     "Add Crossing Markings" : {
-      "comment" : "A type of quest"
+      "comment" : "A type of quest",
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçiş İşaretleri Ekle"
+          }
+        }
+      }
     },
     "Add Highway Surface" : {
       "comment" : "A type of quest",
@@ -43187,7 +43195,15 @@
       }
     },
     "No Location Data" : {
-      "comment" : "The selected photo has no GPS coordinates"
+      "comment" : "The selected photo has no GPS coordinates",
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konum Verisi Yok"
+          }
+        }
+      }
     },
     "No match" : {
       "comment" : "No value available",
@@ -57150,7 +57166,14 @@
       }
     },
     "The photo does not contain location data. Panoramax requires that uploaded photos contain location data." : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fotoğrafta konum verisi yok. Panoramax, yüklenen fotoğrafların konum verisi içermesini gerektirir."
+          }
+        }
+      }
     },
     "The restriction cannot be deleted" : {
       "localizations" : {
@@ -57353,7 +57376,15 @@
       }
     },
     "The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax." : {
-      "comment" : "Error shown when a selected photo cannot be converted to JPEG format"
+      "comment" : "Error shown when a selected photo cannot be converted to JPEG format",
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seçilen fotoğraf JPEG biçimine dönüştürülemedi. Panoramax'a yalnızca JPEG biçimindeki resimler yüklenebilir."
+          }
+        }
+      }
     },
     "The selected way must be completely visible" : {
       "localizations" : {

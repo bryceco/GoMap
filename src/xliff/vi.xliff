@@ -1325,6 +1325,10 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="translated">Không thể nhân đôi đối tượng</target>
         <note />
       </trans-unit>
+      <trans-unit id="Could not parse note" xml:space="preserve">
+        <source>Could not parse note</source>
+        <note />
+      </trans-unit>
       <trans-unit id="Create&#10;" xml:space="preserve">
         <source>Create
 </source>
@@ -2380,6 +2384,10 @@ Select the highway from which you are approaching the intersection, then tap an 
         <source>Update '%@' tag</source>
         <note>Update the named tag value (e.g. foo=*)</note>
       </trans-unit>
+      <trans-unit id="Update Error" xml:space="preserve">
+        <source>Update Error</source>
+        <note />
+      </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
         <source>Updating Note...</source>
         <target state="translated">Đang Cập nhật Ghi chú…</target>
@@ -2683,6 +2691,88 @@ You may want to clear the cache (under Display settings) to improve performance.
       <trans-unit id="yes" xml:space="preserve">
         <source>yes</source>
         <note />
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Nominatim/Base.lproj/Nominatim.storyboard" source-language="en" target-language="vi" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192" />
+    </header>
+    <body>
+      <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
+        <source>Search for Location</source>
+        <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
+      </trans-unit>
+      <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
+        <source>Specify a name ("New York"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object ("way 51014987"):</source>
+        <note>Class = "UILabel"; text = "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"; ObjectID = "TcP-6i-B8H";</note>
+      </trans-unit>
+      <trans-unit id="siu-I6-IEp.title" xml:space="preserve">
+        <source>Search for Location</source>
+        <note>Class = "UIViewController"; title = "Search for Location"; ObjectID = "siu-I6-IEp";</note>
+      </trans-unit>
+      <trans-unit id="vRO-Aj-Sdr.text" xml:space="preserve" translate="no">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "vRO-Aj-Sdr"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
+      <trans-unit id="vwW-V6-kvw.text" xml:space="preserve" translate="no">
+        <source>Title</source>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "vwW-V6-kvw"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
+      <trans-unit id="xw9-Ro-Fai.placeholder" xml:space="preserve">
+        <source>Niagara Falls</source>
+        <note>Class = "UISearchBar"; placeholder = "Niagara Falls"; ObjectID = "xw9-Ro-Fai";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="Notes/Base.lproj/OsmNote.storyboard" source-language="en" target-language="vi" datatype="plaintext">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="26.4" build-num="17E192" />
+    </header>
+    <body>
+      <trans-unit id="1tR-eI-DSh.normalTitle" xml:space="preserve" translate="no">
+        <source>username</source>
+        <note>Class = "UIButton"; normalTitle = "username"; ObjectID = "1tR-eI-DSh"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="1xx-L0-hKm.text" xml:space="preserve">
+        <source>Get Directions</source>
+        <note>Class = "UILabel"; text = "Get Directions"; ObjectID = "1xx-L0-hKm";</note>
+      </trans-unit>
+      <trans-unit id="2g1-vb-Cjc.normalTitle" xml:space="preserve">
+        <source>Comment</source>
+        <note>Class = "UIButton"; normalTitle = "Comment"; ObjectID = "2g1-vb-Cjc"; Note = "Add a comment for a Note";</note>
+      </trans-unit>
+      <trans-unit id="9hH-Ja-fKn.text" xml:space="preserve">
+        <source>New comment:</source>
+        <note>Class = "UILabel"; text = "New comment:"; ObjectID = "9hH-Ja-fKn";</note>
+      </trans-unit>
+      <trans-unit id="HeZ-95-3K1.text" xml:space="preserve" translate="no">
+        <source>Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</source>
+        <note>Class = "UITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "HeZ-95-3K1"; Note = "Placeholder - do not translate";</note>
+      </trans-unit>
+      <trans-unit id="LSJ-rB-J2c.text" xml:space="preserve" translate="no">
+        <source>-</source>
+        <note>Class = "UILabel"; text = "-"; ObjectID = "LSJ-rB-J2c"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="MBY-TK-Wuy.title" xml:space="preserve">
+        <source>Note</source>
+        <note>Class = "UINavigationItem"; title = "Note"; ObjectID = "MBY-TK-Wuy";</note>
+      </trans-unit>
+      <trans-unit id="OJ0-aO-ri1.normalTitle" xml:space="preserve">
+        <source>Comment &amp; Resolve</source>
+        <note>Class = "UIButton"; normalTitle = "Comment &amp; Resolve"; ObjectID = "OJ0-aO-ri1"; Note = "Add a comment and resolve Note";</note>
+      </trans-unit>
+      <trans-unit id="PHk-s9-onx.text" xml:space="preserve" translate="no">
+        <source>Various comments...</source>
+        <note>Class = "UITextView"; text = "Various comments..."; ObjectID = "PHk-s9-onx"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="VNE-ee-a7u.text" xml:space="preserve" translate="no">
+        <source>action</source>
+        <note>Class = "UILabel"; text = "action"; ObjectID = "VNE-ee-a7u"; Note = "Placeholder - Do not translate";</note>
+      </trans-unit>
+      <trans-unit id="tOO-VD-MeJ.text" xml:space="preserve">
+        <source>2014-06-17 17:54 UTC</source>
+        <note>Class = "UILabel"; text = "2014-06-17 17:54 UTC"; ObjectID = "tOO-VD-MeJ";</note>
       </trans-unit>
     </body>
   </file>
