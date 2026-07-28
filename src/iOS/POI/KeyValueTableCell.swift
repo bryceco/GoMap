@@ -299,7 +299,10 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 			textView.resignFirstResponder()
 			return false
 		}
-		return true
+		return Self.shouldChangeTag(origText: textView.text,
+		                            charactersIn: range,
+		                            replacementString: text,
+		                            warningVC: keyValueCellOwner)
 	}
 
 	// MARK: Info button
