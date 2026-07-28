@@ -153,6 +153,7 @@ class MapMarkersView: UIView {
 	}
 
 	// Note: upload() is implemented here so callers go through MapMarkersView, keeping mapMarkerDatabase private
+	@MainActor
 	func upload(note: OsmNoteMarker,
 	            action: OsmNote.UploadAction,
 	            comment: String) async throws -> OsmNoteMarker
