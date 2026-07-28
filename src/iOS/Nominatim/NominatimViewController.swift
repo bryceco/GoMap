@@ -154,6 +154,10 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 		let result = resultsArray[indexPath.row]
 
+		if let text = searchBar.text, !text.isEmpty {
+			updateHistory(with: text)
+		}
+
 		// if nominatim returned an OSM object directly then use it
 		if let osmType = result.osm_type,
 		   let osmId = result.osm_id,
@@ -184,12 +188,11 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 				let data = try await OsmDownloader.osmData(forUrl: url)
 				await MainActor.run {
 					self.activityIndicator.stopAnimating()
-					if let node = data.nodes.first {
-						self.updateHistory(with: "\(objType.string) \(objIdent)")
-						self.jumpTo(lat: node.latLon.lat, lon: node.latLon.lon, zoom: nil)
-					} else {
+					guard let node = data.nodes.first else {
 						self.presentErrorMessage()
+						return
 					}
+					self.jumpTo(lat: node.latLon.lat, lon: node.latLon.lon, zoom: nil)
 				}
 			} catch {
 				await MainActor.run {
@@ -306,6 +309,7 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 			showingHistory = true
 			resultsArray = []
 			tableView.reloadData()
+			activityIndicator.stopAnimating()
 			return
 		}
 
@@ -313,7 +317,11 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		activityIndicator.startAnimating()
 		searchTask = Task {
 			defer {
-				Task { await MainActor.run { self.activityIndicator.stopAnimating() } }
+				// Only stop the indicator if this task completed or failed;
+				// a cancelled task leaves the indicator running for the next task.
+				if !Task.isCancelled {
+					activityIndicator.stopAnimating()
+				}
 			}
 			// debounce before submitting the searching
 			try? await Task.sleep(nanoseconds: 300_000000)
@@ -331,67 +339,30 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 
 			// display the results
 			let results = (try? JSONDecoder().decode([NominatimResult].self, from: data)) ?? []
-			await MainActor.run {
-				resultsArray = sortedByDistance(results)
-				tableView.reloadData()
-			}
+			resultsArray = sortedByDistance(results)
+			tableView.reloadData()
 		}
 	}
 
 	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 		searchBar.resignFirstResponder()
 
-		resultsArray = []
 		guard let string = searchBar.text,
 		      !string.isEmpty
 		else {
-			// no search
-			searchBar.perform(#selector(UIResponder.resignFirstResponder), with: nil, afterDelay: 0.1)
 			return
 		}
 
 		// try parsing it as a special case before doing Nominatim lookup
 		if parsedAsOsmNote(string) ||
-			parsedAsOsmObjectRef(string) ||
 			parsedAsGoogleDynamicLink(string) ||
 			parsedAsLatLon(string)
 		{
 			return
 		}
-
-		guard
-			let url = nominatimSearchURL(query: string,
-			                             lang: PresetLanguages.preferredLanguageCode(),
-			                             viewBox: AppDelegate.shared.mainView.viewPort.boundingLatLonForScreen())
-		else {
+		if parsedAsOsmObjectRef(string) {
+			updateHistory(with: string)
 			return
-		}
-		activityIndicator.startAnimating()
-
-		Task {
-			defer {
-				activityIndicator.stopAnimating()
-			}
-			do {
-				let data = try await URLSession.shared.data(with: url)
-				await MainActor.run {
-					resultsArray = sortedByDistance((try? JSONDecoder().decode([NominatimResult].self, from: data)) ?? [])
-					tableView.reloadData()
-
-					if resultsArray.count > 0 {
-						updateHistory(with: string)
-						// flag that we're no longer showing history and remove all items
-						showingHistory = false
-						tableView.reloadData()
-					} else {
-						presentErrorMessage()
-					}
-				}
-			} catch {
-				await MainActor.run {
-					presentErrorMessage(error)
-				}
-			}
 		}
 	}
 
