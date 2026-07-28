@@ -45069,6 +45069,9 @@
         }
       }
     },
+    "Note #%@" : {
+      "comment" : "OSM note title with ID number"
+    },
     "Note History" : {
       "comment" : "OSM note",
       "localizations" : {

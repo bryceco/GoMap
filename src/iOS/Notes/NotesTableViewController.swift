@@ -34,6 +34,9 @@ class NotesTableViewController: UIViewController, UITableViewDataSource, UITable
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		title = String(format: NSLocalizedString("Note #%@", comment: "OSM note title with ID number"),
+		               String(note.noteId))
+
 		let shareButton = UIBarButtonItem(barButtonSystemItem: .action,
 		                                  target: self,
 		                                  action: #selector(shareTapped(_:)))
