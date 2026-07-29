@@ -1726,6 +1726,10 @@ Never delete old tracks</note>
         <source>Not found</source>
         <note>User credentials not found</note>
       </trans-unit>
+      <trans-unit id="Note #%@" xml:space="preserve">
+        <source>Note #%@</source>
+        <note>OSM note title with ID number</note>
+      </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
         <source>Note History</source>
         <note>OSM note</note>

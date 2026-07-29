@@ -2022,6 +2022,10 @@ Never delete old tracks</note>
         <target state="translated">Tidak ditemukan</target>
         <note>User credentials not found</note>
       </trans-unit>
+      <trans-unit id="Note #%@" xml:space="preserve">
+        <source>Note #%@</source>
+        <note>OSM note title with ID number</note>
+      </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
         <source>Note History</source>
         <target state="translated">Riwayat Catatan</target>
