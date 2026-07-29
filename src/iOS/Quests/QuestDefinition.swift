@@ -42,7 +42,7 @@ class QuestInstance: QuestProtocol {
 	// These items define the quest
 	let ident: String // Uniquely identify the quest
 	let title: String // Localized instructions on what action to take
-	let label: String
+	let label: String // The emoji/character/image used on the quest pin
 	let editKeys: [String] // The value the user is being asked to set
 	let appliesToObject: (OsmBaseObject) -> Bool
 	let acceptsValue: (String) -> Bool

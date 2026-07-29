@@ -219,9 +219,16 @@ class QuestList {
 				label: "ic_quest_max_speed",
 				editKeys: ["maxspeed"],
 				appliesToObject: { obj in
-					guard let way = obj as? OsmWay,
-					      way.tags["maxspeed"] == nil else { return false }
-					switch way.tags["highway"] {
+					guard
+						let way = obj as? OsmWay,
+						let highway = way.tags["highway"],
+						way.tags["maxspeed"] == nil,
+						way.tags["maxspeed:forward"] == nil,
+						way.tags["maxspeed:backward"] == nil
+					else {
+						return false
+					}
+					switch highway {
 					case "motorway",
 					     "trunk",
 					     "primary",
