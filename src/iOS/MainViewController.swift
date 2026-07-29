@@ -516,7 +516,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 	}
 
 	@available(iOS 13.4, *)
-	func keypressAction(key: UIKey) {
+	func keypressAction(key: UIKey) -> Bool {
+		guard presentedViewController == nil else {
+			return false
+		}
 		let size = view.bounds.size
 		let delta = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
 		switch key.keyCode {
@@ -525,8 +528,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 		case .keyboardDownArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: -delta.y))
 		case .keyboardUpArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: delta.y))
 		default:
-			mapView.keypressAction(key: key)
+			return mapView.keypressAction(key: key)
 		}
+		return true
 	}
 
 	// Maintain timers for repeated keypress handling
@@ -534,22 +538,27 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
 		if #available(iOS 13.4, *) {
+			var unhandledPresses = Set<UIPress>()
 			for press in presses {
-				if let key = press.key {
-					keypressAction(key: key)
+				if let key = press.key,
+				   keypressAction(key: key)
+				{
 					if keypressTimers[key] == nil {
 						let timer = Timer(
 							fire: Date(timeInterval: 0.5, since: Date()),
 							interval: 0.25,
 							repeats: true,
-							block: { _ in
-								self.keypressAction(key: key)
+							block: { [weak self] _ in
+								_ = self?.keypressAction(key: key)
 							})
 						RunLoop.current.add(timer, forMode: .default)
 						keypressTimers[key] = timer
 					}
+				} else {
+					unhandledPresses.insert(press)
 				}
 			}
+			super.pressesBegan(unhandledPresses, with: event)
 		} else {
 			super.pressesBegan(presses, with: event)
 		}
@@ -557,14 +566,18 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
 		if #available(iOS 13.4, *) {
+			var unhandledPresses = Set<UIPress>()
 			for press in presses {
-				if let key = press.key {
-					if let timer = keypressTimers[key] {
-						timer.invalidate()
-						keypressTimers.removeValue(forKey: key)
-					}
+				if let key = press.key,
+				   let timer = keypressTimers[key]
+				{
+					timer.invalidate()
+					keypressTimers.removeValue(forKey: key)
+				} else {
+					unhandledPresses.insert(press)
 				}
 			}
+			super.pressesEnded(unhandledPresses, with: event)
 		} else {
 			super.pressesEnded(presses, with: event)
 		}

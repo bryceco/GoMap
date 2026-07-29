@@ -354,18 +354,19 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	// MARK: Key presses
 
 	@available(iOS 13.4, *)
-	func keypressAction(key: UIKey) {
+	func keypressAction(key: UIKey) -> Bool {
 		switch key.keyCode {
 		case .keyboardEscape:
 			guard
 				!isHidden,
 				mainView.presentedViewController == nil
 			else {
-				break
+				return false
 			}
 			unselectAll()
+			return true
 		default:
-			break
+			return false
 		}
 	}
 
