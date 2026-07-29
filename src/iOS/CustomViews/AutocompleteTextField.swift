@@ -154,8 +154,14 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 					let indexPath = tableView.indexPath(for: cell)
 				else { return }
 				enclosingTableView = tableView
+
 				// scroll cell to top
 				tableView.scrollToRow(at: indexPath, at: .top, animated: false)
+
+				if #available(iOS 26, *) {
+					// On iOS 26 the glass navigation bar can overlap the scroll view content.
+					tableView.contentOffset.y -= 48
+				}
 
 				if #available(iOS 15, *),
 				   ProcessInfo.processInfo.operatingSystemVersion.majorVersion < 26
