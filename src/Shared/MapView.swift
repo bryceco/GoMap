@@ -149,9 +149,9 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			checkForNoNameChange(overlayMask: self.mainView.viewState.overlayMask,
 			                     overlays: value)
 		}
-		mainView.viewState.onChange.subscribe(self) { [weak self] viewState in
+		mainView.viewState.onChange.subscribe(self) { [weak self] in
 			guard let self else { return }
-			checkForNoNameChange(overlayMask: viewState.overlayMask,
+			checkForNoNameChange(overlayMask: mainView.viewState.overlayMask,
 			                     overlays: AppDelegate.shared.mainView.settings.tileOverlaySelections)
 		}
 

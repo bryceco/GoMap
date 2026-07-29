@@ -35,24 +35,34 @@ enum MapViewState: Int {
 }
 
 /// Overlays on top of the map: Locator when zoomed, GPS traces, etc.
-struct MapViewOverlays: OptionSet {
+struct MapViewOverlays: OptionSet, CustomDebugStringConvertible {
 	let rawValue: Int
 	static let LOCATOR = MapViewOverlays(rawValue: 1 << 0)
 	static let GPSTRACE = MapViewOverlays(rawValue: 1 << 1)
 	static let NOTES = MapViewOverlays(rawValue: 1 << 2)
 	static let QUESTS = MapViewOverlays(rawValue: 1 << 4)
 	static let DATAOVERLAY = MapViewOverlays(rawValue: 1 << 5)
+
+	var debugDescription: String {
+		var names: [String] = []
+		if contains(.LOCATOR) { names.append("LOCATOR") }
+		if contains(.GPSTRACE) { names.append("GPSTRACE") }
+		if contains(.NOTES) { names.append("NOTES") }
+		if contains(.QUESTS) { names.append("QUESTS") }
+		if contains(.DATAOVERLAY) { names.append("DATAOVERLAY") }
+		return names.isEmpty ? "[]" : "[" + names.joined(separator: ",") + "]"
+	}
 }
 
-struct ViewStateAndOverlays {
-	let onChange = NotificationService<ViewStateAndOverlays>()
+final class ViewStateAndOverlays {
+	let onChange = NotificationService<Void>()
 
 	public var state: MapViewState = UserPrefs.shared.mapViewState.value
 		.flatMap(MapViewState.init(rawValue:)) ?? .EDITORAERIAL
 	{
 		didSet {
 			if state != oldValue {
-				onChange.notify(self)
+				onChange.notify()
 				UserPrefs.shared.mapViewState.value = state.rawValue
 			}
 		}
@@ -61,18 +71,37 @@ struct ViewStateAndOverlays {
 	public var overlayMask = MapViewOverlays(rawValue: UserPrefs.shared.mapViewOverlays.value ?? 0) {
 		didSet {
 			if oldValue != overlayMask {
-				onChange.notify(self)
+				onChange.notify()
 				UserPrefs.shared.mapViewOverlays.value = overlayMask.rawValue
 			}
 		}
 	}
 
-	var zoomedOut = true { // initial value is true since viewPort transform initial value is identity
+	// Initial value is true since viewPort transform initial value is identity
+	var zoomedOut = true {
 		didSet {
 			if oldValue != zoomedOut {
-				onChange.notify(self)
+				onChange.notify()
 			}
 		}
+	}
+
+	// When zoomed out the user's preferred state is overridden:
+	//   Editor only --> Basemap
+	//   Editor+Aerial --> Aerial+Locator
+	var effectiveState: MapViewState {
+		switch (zoomedOut, state) {
+		case (true, .EDITOR): return .BASEMAP
+		case (true, .EDITORAERIAL): return .AERIAL
+		default: return state
+		}
+	}
+
+	var effectiveOverlays: MapViewOverlays {
+		if zoomedOut, state == .EDITORAERIAL {
+			return overlayMask.union(.LOCATOR)
+		}
+		return overlayMask
 	}
 }
 
@@ -143,7 +172,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 	@IBOutlet var dPadView: DPadView!
 	@IBOutlet var progressIndicator: UIActivityIndicatorView!
 	@IBOutlet var fpsLabel: FpsLabel!
-	@IBOutlet var userInstructionLabel: UILabel!
+	@IBOutlet var zoomInToEditLabel: UILabel!
 	@IBOutlet var locationButton: UIButton!
 	@IBOutlet var flashLabel: HUDLabel!
 	@IBOutlet private var statusBarBackground: StatusBarGradient!
@@ -154,7 +183,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	let settings = DisplaySettings()
 
-	var viewState = ViewStateAndOverlays()
+	let viewState = ViewStateAndOverlays()
 	override var shouldAutorotate: Bool { true }
 	override var supportedInterfaceOrientations: UIInterfaceOrientationMask { .all }
 
@@ -212,7 +241,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		])
 		view.sendSubviewToBack(mapLayersView)
 
-		userInstructionLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
+		zoomInToEditLabel.text = NSLocalizedString("Zoom to Edit", comment: "")
 
 		rulerView.mapView = mapView
 
@@ -236,9 +265,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		setupAccessibility()
 
 		// initialize map markers database
-		updateMapMarkers(withState: viewState,
-		                 delay: 1.0,
-		                 including: [])
+		updateMapMarkers(delay: 1.0, including: [])
 
 		// long press for quick access to aerial imagery
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayButtonLongPressGesture(_:)))
@@ -260,11 +287,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 		dPadView.isHidden = true
 
 		// Zoom to Edit message:
-		userInstructionLabel.layer.cornerRadius = 5
-		userInstructionLabel.layer.masksToBounds = true
-		userInstructionLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
-		userInstructionLabel.textColor = UIColor.white
-		userInstructionLabel.isHidden = true
+		zoomInToEditLabel.layer.cornerRadius = 5
+		zoomInToEditLabel.layer.masksToBounds = true
+		zoomInToEditLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.3)
+		zoomInToEditLabel.textColor = UIColor.white
+		zoomInToEditLabel.isHidden = true
 
 		// Location ball appearance
 		locationBallView.heading = 0.0
@@ -355,11 +382,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		// set initial visible layers
-		viewState.onChange.subscribe(self) { [weak self] state in
-			guard let self else { return }
-			self.viewStateDidChange(to: state)
+		viewState.onChange.subscribe(self) { [weak self] in
+			self?.viewStateDidChange()
 		}
-		viewStateDidChange(to: viewState)
+		viewStateDidChange()
 
 		AppState.shared.tileServerList.onChange.subscribe(self) { [weak self] in
 			self?.promptForBetterBackgroundImagery()
@@ -1376,35 +1402,17 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
-	func viewStateDidChange(to state: ViewStateAndOverlays) {
-		// Things are complicated because the user has their own preference for the view
-		// but when they zoom out we make automatic substitutions:
-		// 	Editor only --> Basemap
-		//	Editor+Aerial --> Aerial+Locator
-		let newState: MapViewState
-		let newOverlays: MapViewOverlays
-		switch (state.zoomedOut, state.state) {
-		case (true, .EDITOR):
-			newState = .BASEMAP
-			newOverlays = state.overlayMask
-		case (true, .EDITORAERIAL):
-			newState = .AERIAL
-			newOverlays = state.overlayMask.union(.LOCATOR)
-		default:
-			newState = state.state
-			newOverlays = state.overlayMask
-		}
-
+	func viewStateDidChange() {
 		CATransaction.begin()
 		CATransaction.setAnimationDuration(0.5)
 
-		mapLayersView.locatorLayer.isHidden = !newOverlays.contains(.LOCATOR)
+		mapLayersView.locatorLayer.isHidden = !viewState.effectiveOverlays.contains(.LOCATOR)
 			|| mapLayersView.locatorLayer.tileServer.apiKey == ""
 
 		aerialAlignmentButton.isHidden = true
 		dPadView.isHidden = true
 
-		switch newState {
+		switch viewState.effectiveState {
 		case MapViewState.EDITOR:
 			mapView.isHidden = false
 			mapLayersView.aerialLayer.isHidden = true
@@ -1426,7 +1434,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 			mapLayersView.basemapLayer.isHidden = false
 		}
 
-		userInstructionLabel.isHidden = (newState != .EDITOR && newState != .EDITORAERIAL) || !state.zoomedOut
+		let showZoomInLabel = (viewState.state == .EDITOR || viewState.state == .EDITORAERIAL) && viewState.zoomedOut
+		zoomInToEditLabel.isHidden = !showZoomInLabel
 
 		mapLayersView.quadDownloadLayer?.isHidden = mapView.isHidden
 
@@ -1442,12 +1451,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 		updateUploadButtonState()
 		addNodeButton.isHidden = mapView.isHidden
 
-		updateMapMarkers(withState: state,
-		                 delay: 0,
-		                 including: [])
+		updateMapMarkers(including: [])
 
-		// FIXME:
-		mapView.whiteText = !mapLayersView.aerialLayer.isHidden
+		mapView.whiteText = viewState.effectiveState == .EDITORAERIAL
 	}
 
 	@IBAction func openHelp() {
@@ -1621,16 +1627,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	// MARK: Map Markers
 
-	func updateMapMarkers(including: MapMarkerDatabase.MapMarkerSet = []) {
-		updateMapMarkers(withState: viewState, delay: 0.0, including: including)
-	}
-
 	// This performs an expensive update with a time delay, coalescing multiple calls
 	// into a single update.
-	private func updateMapMarkers(withState viewState: ViewStateAndOverlays,
-	                              delay: CGFloat,
-	                              including: MapMarkerDatabase.MapMarkerSet)
-	{
+	func updateMapMarkers(delay: CGFloat = 0.0, including: MapMarkerDatabase.MapMarkerSet = []) {
 		let delay = max(delay, 0.5)
 		var including = including
 		if including.isEmpty {
