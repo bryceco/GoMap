@@ -52,7 +52,7 @@ class PresetTranslations: Codable {
 
 		// ensure data files are loaded for them
 		for lang in languageCodes where !languageDict.keys.contains(lang) {
-			let data = try PresetsDatabase.dataForFile("translations/\(code).json")
+			let data = try PresetsDatabase.dataForFile("translations/\(lang).json")
 			try addTranslation(from: data)
 		}
 
