@@ -27,7 +27,7 @@ final class QuestUserList: Codable {
 			return
 		}
 
-		// FIXME: Silly to make a temporary version of the object then copy it
+		// Silly to make a temporary version of the object then copy it, but it is cheap and easy
 		let listCopy = try decoder.decode(QuestUserList.self, from: data)
 		list = listCopy.list
 	}
