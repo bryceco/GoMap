@@ -15,6 +15,7 @@ enum SqliteError: LocalizedError {
 	case exec(String, Int32, String)
 	case prepare(String, Int32, String)
 	case clearBindings(Int32)
+	case reset(Int32)
 	case bind(Int32)
 	case step(Int32)
 
@@ -27,6 +28,7 @@ enum SqliteError: LocalizedError {
 		case let .prepare(stmt, rc, msg):
 			return "SqliteError.prepare('\(stmt)') -> \(Sqlite.errorMessageFor(code: rc)) - \(msg)"
 		case let .clearBindings(rc): return "SqliteError.clearBindings() -> \(Sqlite.errorMessageFor(code: rc))"
+		case let .reset(rc): return "SqliteError.reset() -> \(Sqlite.errorMessageFor(code: rc))"
 		case let .bind(rc): return "SqliteError.bind() -> \(Sqlite.errorMessageFor(code: rc))"
 		case let .step(rc): return "SqliteError.step() -> \(Sqlite.errorMessageFor(code: rc))"
 		}
@@ -58,7 +60,7 @@ final class SqliteStatement {
 	func reset() throws {
 		let rc = sqlite3_reset(stmt)
 		if rc != SQLITE_OK {
-			throw SqliteError.clearBindings(rc)
+			throw SqliteError.reset(rc)
 		}
 	}
 
@@ -142,7 +144,8 @@ final class Sqlite {
 	// return self if database can be opened
 	init(path: String, readonly: Bool) throws {
 		var db: sqlite3_db?
-		let rc = sqlite3_open_v2(path, &db, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nil)
+		let flags = readonly ? SQLITE_OPEN_READONLY : (SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE)
+		let rc = sqlite3_open_v2(path, &db, flags, nil)
 		guard rc == SQLITE_OK,
 		      let db = db
 		else {

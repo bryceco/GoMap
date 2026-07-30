@@ -23,7 +23,7 @@ enum DatabaseError: LocalizedError {
 		switch self {
 		case .wayReferencedByNodeDoesNotExist: return "DatabaseError.wayReferencedByNodeDoesNotExist"
 		case .relationReferencedByMemberDoesNotExist: return "DatabaseError.relationReferencedByMemberDoesNotExist"
-		case let .unlinkFailed(rc): return "DatabaseError.unlinkFailed(\(rc)"
+		case let .unlinkFailed(rc): return "DatabaseError.unlinkFailed(\(rc))"
 		}
 	}
 }
@@ -32,8 +32,8 @@ final class Database {
 	private let db: Sqlite
 
 #if USE_RTREE
-	private var spatialInsert: SqliteStatement
-	private var spatialDelete: SqliteStatement
+	private var spatialInsert: SqliteStatement?
+	private var spatialDelete: SqliteStatement?
 #endif
 
 	static let dispatchQueue = DispatchQueue(label: "com.bryceco.gomap.database",
@@ -60,7 +60,7 @@ final class Database {
 		let path = Database.databasePath(withName: name)
 		let rc = unlink(path)
 		if rc != 0 {
-			throw DatabaseError.unlinkFailed(rc)
+			throw DatabaseError.unlinkFailed(errno)
 		}
 	}
 
@@ -194,49 +194,33 @@ final class Database {
 	// MARK: spatial
 
 #if USE_RTREE
-	private func deleteSpatial(_ object: OsmBaseObject?) -> Bool {
-		var rc: Int32
+	private func deleteSpatial(_ object: OsmBaseObject?) throws {
 		if spatialDelete == nil {
-			rc = sqlite3_prepare_v2(db, "INSERT INTO spatial (ident) VALUES (?,?);", -1, &spatialDelete, nil)
-			if rc != SQLITE_OK {
-				DbgAssert(false)
-				return false
-			}
+			spatialDelete = try db.prepare("DELETE FROM spatial WHERE ident=?;")
 		}
-
-		sqlite3_reset(spatialDelete)
-		SqlOk(sqlite3_clear_bindings(spatialDelete))
-		SqlOk(sqlite3_bind_int64(spatialDelete, 1, TaggedObjectIdent(object)))
-		rc = sqlite3_step(spatialDelete)
-		return rc == SQLITE_DONE
+		guard let spatialDelete else { return }
+		try spatialDelete.reset()
+		try spatialDelete.clearBindings()
+		try spatialDelete.bindInt64(1, TaggedObjectIdent(object))
+		try spatialDelete.step()
 	}
 
 	private func add(toSpatial object: OsmBaseObject?) throws {
 		if spatialInsert == nil {
-			DbgOk(sqlite3_prepare_v2(
-				db,
-				"INSERT INTO spatial (ident,minX, maxX,minY, maxY) VALUES (?,?,?,?,?);",
-				-1,
-				&spatialInsert,
-				nil))
+			spatialInsert = try db.prepare("INSERT INTO spatial (ident,minX,maxX,minY,maxY) VALUES (?,?,?,?,?);")
 		}
-
-		let bbox = object?.boundingBox
-		sqlite3_reset(spatialInsert)
-		SqlOk(sqlite3_clear_bindings(spatialInsert))
-		SqlOk(sqlite3_bind_int64(spatialInsert, 1, TaggedObjectIdent(object)))
-		SqlOk(sqlite3_bind_double(spatialInsert, 2, bbox?.origin.x))
-		SqlOk(sqlite3_bind_double(spatialInsert, 3, bbox?.origin.x + bbox?.size.width))
-		SqlOk(sqlite3_bind_double(spatialInsert, 4, bbox?.origin.y))
-		SqlOk(sqlite3_bind_double(spatialInsert, 5, bbox?.origin.y + bbox?.size.height))
-		while true {
-			let rc = sqlite3_step(spatialInsert)
-			if rc != SQLITE_CONSTRAINT {
-				SqlOk(rc, SQLITE_DONE)
-				break
-			}
-			// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
-			try? deleteSpatial(object)
+		guard let spatialInsert, let bbox = object?.boundingBox else { return }
+		try spatialInsert.reset()
+		try spatialInsert.clearBindings()
+		try spatialInsert.bindInt64(1, TaggedObjectIdent(object))
+		try spatialInsert.bindDouble(2, bbox.origin.x)
+		try spatialInsert.bindDouble(3, bbox.origin.x + bbox.size.width)
+		try spatialInsert.bindDouble(4, bbox.origin.y)
+		try spatialInsert.bindDouble(5, bbox.origin.y + bbox.size.height)
+		// If there's a constraint violation the object is already in the table.
+		// This might be an update to a later version from the server, so delete and retry.
+		while try spatialInsert.step(hasResult: Sqlite.CONSTRAINT) {
+			try deleteSpatial(object)
 		}
 	}
 #endif
@@ -467,12 +451,6 @@ final class Database {
 		WayCollection1.Element == OsmWay, WayCollection2.Element == OsmWay,
 		RelationCollection1.Element == OsmRelation, RelationCollection2.Element == OsmRelation
 	{
-#if DEBUG
-#if !targetEnvironment(macCatalyst)
-//		assert(dispatch_get_current_queue() == Database.dispatchQueue)
-#endif
-#endif
-
 		try db.exec("BEGIN")
 
 		do {
