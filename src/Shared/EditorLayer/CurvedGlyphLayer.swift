@@ -299,8 +299,7 @@ final class CurvedGlyphLayer {
 		let font = StringGlyphs.uiFont
 
 		let paragraphStyle = NSMutableParagraphStyle()
-		paragraphStyle.lineSpacing = font.lineHeight - font.ascender + font.descender + 6
-		// FIXME: 6 is a fudge factor so wrapped Chinese displays correctly, but English is now too large
+		paragraphStyle.lineSpacing = font.leading
 
 		let attrString = NSAttributedString(
 			string: string,
