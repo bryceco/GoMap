@@ -234,116 +234,6 @@ final class QuadBox: NSObject, NSSecureCoding {
 		return c
 	}
 
-	/// Discard any quads older than the given date (assuming they aren't busy).
-	/// Returns a bool whether anything was discarded.
-	func discardQuadsOlderThan(referenceDate date: Double) -> Bool {
-		if busy {
-			return false
-		}
-
-		if downloadDate != 0.0,
-		   downloadDate < date
-		{
-			parent?.isDownloaded = false
-			delete()
-			return true
-		} else {
-			var childRemoved = false
-			for child in children {
-				if let child = child {
-					if child.discardQuadsOlderThan(referenceDate: date) {
-						childRemoved = true
-					}
-				}
-			}
-			// Delete ourself if all our children are gone, and we haven't downloaded anything
-			if childRemoved,
-			   !isDownloaded,
-			   downloadDate == 0.0,
-			   !hasChildren(),
-			   parent != nil
-			{
-				delete()
-			}
-			return childRemoved
-		}
-	}
-
-	func discardQuadsOlderThanDate(_ date: Date) -> Bool {
-		return discardQuadsOlderThan(referenceDate: date.timeIntervalSinceReferenceDate)
-	}
-
-	// Discard the oldest "fraction" of quads, or quads older than oldestDate, whichever is more
-	// Return the cutoff date selected, or nil if nothing to discard
-	func discardOldestQuads(fraction: Double, oldest: Date) -> Date? {
-		var oldest = oldest
-
-		if fraction > 0.0 {
-			// get a list of all quads that have downloads
-			var list: [QuadBox] = []
-			enumerateWithBlock({
-				if $0.downloadDate > 0.0 {
-					list.append($0)
-				}
-			})
-			if list.isEmpty {
-				return nil
-			}
-			// sort ascending by date (oldest first)
-			list.sort(by: { $0.downloadDate < $1.downloadDate })
-
-			let index = Int(Double(list.count) * fraction)
-			if index < list.count {
-				let fractionDate = list[index].downloadDate
-				if fractionDate > oldest.timeIntervalSinceReferenceDate {
-					// Cutoff date based on fraction is higher (more recent)
-					// so prune based on the fraction instead
-					oldest = Date(timeIntervalSinceReferenceDate: fractionDate)
-				}
-			}
-		}
-		return discardQuadsOlderThan(referenceDate: oldest.timeIntervalSinceReferenceDate) ? oldest : nil
-	}
-
-	func pointIsCovered(_ point: OSMPoint) -> Bool {
-		if downloadDate != 0.0 {
-			return true
-		} else {
-			let c = childForPoint(point)
-			if let child = children[c.rawValue],
-			   child.pointIsCovered(point)
-			{
-				return true
-			}
-			return false
-		}
-	}
-
-	// if any node is covered then return true (don't delete object)
-	// should only be called on root quad
-	func anyNodeIsCovered(nodeList: [OsmNode]) -> Bool {
-		// rather than searching the entire tree for each node we start the search at the location of the previous node
-		var quad = self
-
-		node_loop: for node in nodeList {
-			let point = node.location()
-			// move up until we find a quad containing the point
-			while !quad.rect.containsPoint(point), quad.parent != nil {
-				quad = quad.parent!
-			}
-			// recurse down until we find a quad with a download date
-			while quad.downloadDate == 0.0 {
-				let c = quad.childForPoint(point)
-				guard let child = quad.children[c.rawValue] else {
-					continue node_loop
-				}
-				quad = child
-			}
-			return true
-		}
-		return false
-	}
-
 	private static func ChildRect(_ child: QUAD_ENUM, _ parent: OSMRect) -> OSMRect {
 		switch child {
 		case .NW: return OSMRect(
@@ -367,14 +257,6 @@ final class QuadBox: NSObject, NSSecureCoding {
 				width: parent.size.width * 0.5,
 				height: parent.size.height * 0.5)
 		}
-	}
-
-	// find a child member could fit into
-	private func childForPoint(_ member: OSMPoint) -> QUAD_ENUM {
-		let west = member.x < rect.origin.x + rect.size.width * 0.5
-		let north = member.y < rect.origin.y + rect.size.height * 0.5
-		let raw = (north ? 1 : 0) << 1 | (west ? 1 : 0)
-		return QUAD_ENUM(rawValue: raw)!
 	}
 
 	private func childForRect(_ member: OSMRect) -> QUAD_ENUM? {
@@ -517,6 +399,120 @@ final class QuadBox: NSObject, NSSecureCoding {
 			child!.enumerateObjects(block)
 		}
 	}
+}
+
+// MARK: - Discard stale data
+
+extension QuadBox {
+	/// Discard any quads older than the given date (assuming they aren't busy).
+	/// Returns a bool whether anything was discarded.
+	private func discardQuadsOlderThan(referenceDate date: Double) -> Bool {
+		if busy {
+			return false
+		}
+
+		if downloadDate != 0.0,
+		   downloadDate < date
+		{
+			parent?.isDownloaded = false
+			delete()
+			return true
+		} else {
+			var childRemoved = false
+			for child in children {
+				if let child = child {
+					if child.discardQuadsOlderThan(referenceDate: date) {
+						childRemoved = true
+					}
+				}
+			}
+			// Delete ourself if all our children are gone, and we haven't downloaded anything
+			if childRemoved,
+			   !isDownloaded,
+			   downloadDate == 0.0,
+			   !hasChildren(),
+			   parent != nil
+			{
+				delete()
+			}
+			return childRemoved
+		}
+	}
+
+	func discardQuadsOlderThanDate(_ date: Date) -> Bool {
+		return discardQuadsOlderThan(referenceDate: date.timeIntervalSinceReferenceDate)
+	}
+
+	// Discard the oldest "fraction" of quads, or quads older than oldestDate, whichever is more
+	// Return the cutoff date selected, or nil if nothing to discard
+	func discardOldestQuads(fraction: Double, oldest: Date) -> Date? {
+		var oldest = oldest
+
+		if fraction > 0.0 {
+			// get a list of all quads that have downloads
+			var list: [QuadBox] = []
+			enumerateWithBlock({
+				if $0.downloadDate > 0.0 {
+					list.append($0)
+				}
+			})
+			if list.isEmpty {
+				return nil
+			}
+			// sort ascending by date (oldest first)
+			list.sort(by: { $0.downloadDate < $1.downloadDate })
+
+			let index = Int(Double(list.count) * fraction)
+			if index < list.count {
+				let fractionDate = list[index].downloadDate
+				if fractionDate > oldest.timeIntervalSinceReferenceDate {
+					// Cutoff date based on fraction is higher (more recent)
+					// so prune based on the fraction instead
+					oldest = Date(timeIntervalSinceReferenceDate: fractionDate)
+				}
+			}
+		}
+		return discardQuadsOlderThan(referenceDate: oldest.timeIntervalSinceReferenceDate) ? oldest : nil
+	}
+
+	func pointIsCovered(_ point: OSMPoint) -> Bool {
+		if downloadDate != 0.0 {
+			return true
+		} else {
+			let c = childForPoint(point)
+			if let child = children[c.rawValue],
+			   child.pointIsCovered(point)
+			{
+				return true
+			}
+			return false
+		}
+	}
+
+	// if any node is covered then return true (don't delete object)
+	// should only be called on root quad
+	func anyNodeIsCovered(nodeList: [OsmNode]) -> Bool {
+		// rather than searching the entire tree for each node we start the search at the location of the previous node
+		var quad = self
+
+		node_loop: for node in nodeList {
+			let point = node.location()
+			// move up until we find a quad containing the point
+			while !quad.rect.containsPoint(point), quad.parent != nil {
+				quad = quad.parent!
+			}
+			// recurse down until we find a quad with a download date
+			while quad.downloadDate == 0.0 {
+				let c = quad.childForPoint(point)
+				guard let child = quad.children[c.rawValue] else {
+					continue node_loop
+				}
+				quad = child
+			}
+			return true
+		}
+		return false
+	}
 
 	func deleteObjects(withPredicate predicate: (_ obj: OsmBaseObject) -> Bool) {
 		members.removeAll(where: { predicate($0) })
@@ -525,5 +521,13 @@ final class QuadBox: NSObject, NSSecureCoding {
 				child.deleteObjects(withPredicate: predicate)
 			}
 		}
+	}
+
+	// find a child member could fit into
+	private func childForPoint(_ member: OSMPoint) -> QUAD_ENUM {
+		let west = member.x < rect.origin.x + rect.size.width * 0.5
+		let north = member.y < rect.origin.y + rect.size.height * 0.5
+		let raw = (north ? 1 : 0) << 1 | (west ? 1 : 0)
+		return QUAD_ENUM(rawValue: raw)!
 	}
 }

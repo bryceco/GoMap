@@ -153,30 +153,6 @@ class QuadMap: NSObject, NSSecureCoding {
 		rootQuad.enumerateObjects(block)
 	}
 
-	// these are for purging old data:
-
-	// MARK: Purge objects
-
-	func discardQuadsOlderThanDate(_ date: Date) -> Bool {
-		return rootQuad.discardQuadsOlderThanDate(date)
-	}
-
-	func discardOldestQuads(_ fraction: Double, oldest: Date) -> Date? {
-		return rootQuad.discardOldestQuads(fraction: fraction, oldest: oldest)
-	}
-
-	func pointIsCovered(_ point: OSMPoint) -> Bool {
-		return rootQuad.pointIsCovered(point)
-	}
-
-	func anyNodeIsCovered(_ nodeList: [OsmNode]) -> Bool {
-		return rootQuad.anyNodeIsCovered(nodeList: nodeList)
-	}
-
-	func deleteObjects(withPredicate predicate: @escaping (_ obj: OsmBaseObject) -> Bool) {
-		rootQuad.deleteObjects(withPredicate: predicate)
-	}
-
 	func consistencyCheck(nodes: [OsmIdentifier: OsmNode],
 	                      ways: [OsmIdentifier: OsmWay],
 	                      relations: [OsmIdentifier: OsmRelation])
@@ -228,5 +204,29 @@ class QuadMap: NSObject, NSSecureCoding {
 			print("* relation \(extra) is missing from quadMap")
 		}
 		assert(diffNodes.isEmpty && diffWays.isEmpty && diffRelations.isEmpty)
+	}
+}
+
+// MARK: - Discard stale data
+
+extension QuadMap {
+	private func discardQuadsOlderThanDate(_ date: Date) -> Bool {
+		return rootQuad.discardQuadsOlderThanDate(date)
+	}
+
+	func discardOldestQuads(_ fraction: Double, oldest: Date) -> Date? {
+		return rootQuad.discardOldestQuads(fraction: fraction, oldest: oldest)
+	}
+
+	func pointIsCovered(_ point: OSMPoint) -> Bool {
+		return rootQuad.pointIsCovered(point)
+	}
+
+	func anyNodeIsCovered(_ nodeList: [OsmNode]) -> Bool {
+		return rootQuad.anyNodeIsCovered(nodeList: nodeList)
+	}
+
+	func deleteObjects(withPredicate predicate: @escaping (_ obj: OsmBaseObject) -> Bool) {
+		rootQuad.deleteObjects(withPredicate: predicate)
 	}
 }

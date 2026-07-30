@@ -1361,244 +1361,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		})
 	}
 
-	// Returns true if any objects were discarded
-	func discardStaleData(maxObjects: Int = 100000, maxAge: Int = 24 * 60 * 60) -> Bool {
-#if DEBUG
-		let minTimeBetweenDiscards = 5.0 // seconds
-#else
-		let minTimeBetweenDiscards = 60.0 // seconds
-#endif
-		if modificationCount() > 0 {
-			return false
-		}
-		let undoObjects = undoManager.objectRefs()
-
-		// don't discard too frequently
-		let now = Date()
-		if now.timeIntervalSince(previousDiscardDate) < minTimeBetweenDiscards {
-			return false
-		}
-
-		// remove objects if they are too old, or we have too many:
-		var oldest = Date(timeIntervalSinceNow: -Double(maxAge))
-
-		// figure out what fraction of objects we should trim to get under the threshold.
-		var fraction = Double(nodes.count + ways.count + relations.count) / Double(maxObjects)
-		if fraction <= 1.0 {
-			// The number of objects is acceptable. We can still trim based on age.
-			fraction = 0.0
-		} else {
-			fraction = 1.0 - 1.0 / fraction
-			if fraction < 0.3 {
-				fraction = 0.3 // don't waste resources trimming tiny quantities
-			}
-		}
-
-		defer {
-			consistencyCheck()
-		}
-
-		var t = CACurrentMediaTime()
-
-		func deresolveRelations() {
-			// deresolve relation references before starting, because if we delete a relation
-			// we don't want a reference to be left dangling in parentRelations:
-			for relation in relations.values {
-				relation.deresolveRefs()
-			}
-		}
-
-		var didDeresolveRelations = false
-
-		var didExpand = false
-		while true {
-			guard
-				// get rid of old quads marked as downloaded
-				let newOldest = region.discardOldestQuads(fraction, oldest: oldest)
-			else {
-				if !didExpand {
-					return false // nothing to discard
-				}
-				break // nothing more to drop
-			}
-			oldest = newOldest
-
-#if DEBUG
-			let interval = now.timeIntervalSince(oldest)
-			if interval < 2 * 60 {
-				print(String(format: "Discarding %f%% stale data %ld seconds old\n", 100 * fraction,
-				             Int(ceil(interval))))
-			} else if interval < 60 * 60 {
-				print(String(format: "Discarding %f%% stale data %ld minutes old\n", 100 * fraction,
-				             Int(interval) / 60))
-			} else {
-				print(String(format: "Discarding %f%% stale data %ld hours old\n", 100 * fraction,
-				             Int(interval) / 60 / 60))
-			}
-#endif
-
-			previousDiscardDate = Date.distantFuture // mark as distant future until we're done discarding
-
-			// now go through all objects and determine which are no longer in a downloaded region
-			var removeRelations: [OsmIdentifier] = []
-			var removeWays: [OsmIdentifier] = []
-			var removeNodes: [OsmIdentifier] = []
-
-			// only remove relation if no members are covered by region
-			for (ident, relation) in relations
-				where !relation.isModified() && !undoObjects.contains(relation)
-			{
-				let memberObjects = relation.allMemberObjects()
-				var covered = false
-				for obj in memberObjects {
-					if let node = obj as? OsmNode {
-						if region.pointIsCovered(node.location()) {
-							covered = true
-							break
-						}
-					} else if let way = obj as? OsmWay {
-						if region.anyNodeIsCovered(way.nodes) {
-							covered = true
-							break
-						}
-					}
-				}
-				if !covered {
-					removeRelations.append(ident)
-				}
-			}
-
-			// only remove way if no nodes are covered by region
-			for (ident, way) in ways
-				where !way.isModified() && !undoObjects.contains(way)
-			{
-				if !region.anyNodeIsCovered(way.nodes) {
-					removeWays.append(ident)
-					for node in way.nodes {
-						DbgAssert(node.wayCount > 0)
-						node.setWayCount(node.wayCount - 1, undo: nil)
-					}
-				}
-			}
-
-			// only remove nodes if they are not covered and they don't belong to a way
-			for (ident, node) in nodes
-				where !node.isModified() && !undoObjects.contains(node)
-			{
-				if node.wayCount == 0 {
-					if !region.pointIsCovered(node.location()) {
-						removeNodes.append(ident)
-					}
-				}
-			}
-
-			if !didDeresolveRelations,
-			   removeNodes.count + removeWays.count + removeRelations.count > 0
-			{
-				deresolveRelations()
-				didDeresolveRelations = true
-			}
-
-			// remove from dictionaries
-			for k in removeNodes {
-				nodes.removeValue(forKey: k)
-			}
-			for k in removeWays {
-				ways.removeValue(forKey: k)
-			}
-			for k in removeRelations {
-				relations.removeValue(forKey: k)
-			}
-
-			print(String(format: "remove %ld objects", removeNodes.count + removeWays.count + removeRelations.count))
-
-			// If after deleting some objects we aren't much larger than the maximum then we're done
-			if Double(nodes.count + ways.count + relations.count) < (Double(maxObjects) * 1.3) {
-				// good enough
-				if !didExpand,
-				   !didDeresolveRelations,
-				   removeNodes.count + removeWays.count + removeRelations.count == 0
-				{
-					previousDiscardDate = now
-					return false
-				}
-				break
-			}
-
-			// we still have way too much stuff, need to be more aggressive
-			didExpand = true
-			fraction = 0.3
-		}
-
-		// remove objects from spatial that are no longer in a dictionary
-		spatial.deleteObjects(withPredicate: { [self] obj in
-			switch obj {
-			case is OsmNode:
-				return nodes[obj.ident] == nil
-			case is OsmWay:
-				return ways[obj.ident] == nil
-			case is OsmRelation:
-				return relations[obj.ident] == nil
-			default:
-				return true
-			}
-		})
-
-		// fixup relation references
-		for relation in relations.values {
-			_ = relation.resolveToMapData(self)
-		}
-
-		t = CACurrentMediaTime() - t
-		print("Discard sweep time = \(t)")
-
-		// make a copy of items to save because the dictionary might get updated by the time the Database block runs
-		let saveNodes = nodes.values
-		let saveWays = ways.values
-		let saveRelations = relations.values
-
-		Database.dispatchQueue.async(execute: { [self] in
-			var t2 = CACurrentMediaTime()
-			let tmpPath: String
-			do {
-				// its faster to create a brand new database than to update the existing one, because SQLite deletes are slow
-				try? Database.delete(withName: "tmp")
-				let db2 = try Database(name: "tmp")
-				tmpPath = db2.path
-				try db2.createTables()
-				try db2.save(saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
-				             deleteNodes: [], deleteWays: [], deleteRelations: [],
-				             isUpdate: false)
-				// need to let db2 go out of scope here so file is no longer in use
-			} catch {
-				// we couldn't create the new database, so abort the discard
-				print("failed to recreate SQL database")
-				return
-			}
-			let realPath = Database.databasePath(withName: "")
-			let error = rename(tmpPath, realPath)
-			if error != 0 {
-				print("failed to rename SQL database")
-			}
-			t2 = CACurrentMediaTime() - t2
-
-			if isUnderDebugger() {
-				// calling nodeCount() etc here isn't thread safe
-				print(String(
-					format: "%@Discard save time = %f, saved %ld objects",
-					t2 > 1.0 ? "*** " : "",
-					t2,
-					Int(nodeCount()) + Int(wayCount()) + Int(relationCount())))
-			}
-
-			DispatchQueue.main.async(execute: {
-				self.previousDiscardDate = Date()
-			})
-		})
-
-		return true
-	}
-
 	// after uploading a changeset we have to update the SQL database to reflect the changes the server replied with
 	func updateSql(_ sqlUpdate: [OsmBaseObject: Bool]) {
 		var insertNode: [OsmNode] = []
@@ -1894,5 +1656,247 @@ extension OsmMapData {
 			consistencyCheckDebugOnly()
 		}
 #endif
+	}
+}
+
+// MARK: - Discard stale data
+
+extension OsmMapData {
+	// Returns true if any objects were discarded
+	func discardStaleData(maxObjects: Int = 100000, maxAge: Int = 24 * 60 * 60) -> Bool {
+#if DEBUG
+		let minTimeBetweenDiscards = 5.0 // seconds
+#else
+		let minTimeBetweenDiscards = 60.0 // seconds
+#endif
+		if modificationCount() > 0 {
+			return false
+		}
+		let undoObjects = undoManager.objectRefs()
+
+		// don't discard too frequently
+		let now = Date()
+		if now.timeIntervalSince(previousDiscardDate) < minTimeBetweenDiscards {
+			return false
+		}
+
+		// remove objects if they are too old, or we have too many:
+		var oldest = Date(timeIntervalSinceNow: -Double(maxAge))
+
+		// figure out what fraction of objects we should trim to get under the threshold.
+		var fraction = Double(nodes.count + ways.count + relations.count) / Double(maxObjects)
+		if fraction <= 1.0 {
+			// The number of objects is acceptable. We can still trim based on age.
+			fraction = 0.0
+		} else {
+			fraction = 1.0 - 1.0 / fraction
+			if fraction < 0.3 {
+				fraction = 0.3 // don't waste resources trimming tiny quantities
+			}
+		}
+
+		defer {
+			consistencyCheck()
+		}
+
+		var t = CACurrentMediaTime()
+
+		func deresolveRelations() {
+			// deresolve relation references before starting, because if we delete a relation
+			// we don't want a reference to be left dangling in parentRelations:
+			for relation in relations.values {
+				relation.deresolveRefs()
+			}
+		}
+
+		var didDeresolveRelations = false
+
+		var didExpand = false
+		while true {
+			guard
+				// get rid of old quads marked as downloaded
+				let newOldest = region.discardOldestQuads(fraction, oldest: oldest)
+			else {
+				if !didExpand {
+					return false // nothing to discard
+				}
+				break // nothing more to drop
+			}
+			oldest = newOldest
+
+#if DEBUG
+			let interval = now.timeIntervalSince(oldest)
+			if interval < 2 * 60 {
+				print(String(format: "Discarding %f%% stale data %ld seconds old\n", 100 * fraction,
+				             Int(ceil(interval))))
+			} else if interval < 60 * 60 {
+				print(String(format: "Discarding %f%% stale data %ld minutes old\n", 100 * fraction,
+				             Int(interval) / 60))
+			} else {
+				print(String(format: "Discarding %f%% stale data %ld hours old\n", 100 * fraction,
+				             Int(interval) / 60 / 60))
+			}
+#endif
+
+			previousDiscardDate = Date.distantFuture // mark as distant future until we're done discarding
+
+			// now go through all objects and determine which are no longer in a downloaded region
+			var removeRelations: [OsmIdentifier] = []
+			var removeWays: [OsmIdentifier] = []
+			var removeNodes: [OsmIdentifier] = []
+
+			// only remove relation if no members are covered by region
+			for (ident, relation) in relations
+				where !relation.isModified() && !undoObjects.contains(relation)
+			{
+				let memberObjects = relation.allMemberObjects()
+				var covered = false
+				for obj in memberObjects {
+					if let node = obj as? OsmNode {
+						if region.pointIsCovered(node.location()) {
+							covered = true
+							break
+						}
+					} else if let way = obj as? OsmWay {
+						if region.anyNodeIsCovered(way.nodes) {
+							covered = true
+							break
+						}
+					}
+				}
+				if !covered {
+					removeRelations.append(ident)
+				}
+			}
+
+			// only remove way if no nodes are covered by region
+			for (ident, way) in ways
+				where !way.isModified() && !undoObjects.contains(way)
+			{
+				if !region.anyNodeIsCovered(way.nodes) {
+					removeWays.append(ident)
+					for node in way.nodes {
+						DbgAssert(node.wayCount > 0)
+						node.setWayCount(node.wayCount - 1, undo: nil)
+					}
+				}
+			}
+
+			// only remove nodes if they are not covered and they don't belong to a way
+			for (ident, node) in nodes
+				where !node.isModified() && !undoObjects.contains(node)
+			{
+				if node.wayCount == 0 {
+					if !region.pointIsCovered(node.location()) {
+						removeNodes.append(ident)
+					}
+				}
+			}
+
+			if !didDeresolveRelations,
+			   removeNodes.count + removeWays.count + removeRelations.count > 0
+			{
+				deresolveRelations()
+				didDeresolveRelations = true
+			}
+
+			// remove from dictionaries
+			for k in removeNodes {
+				nodes.removeValue(forKey: k)
+			}
+			for k in removeWays {
+				ways.removeValue(forKey: k)
+			}
+			for k in removeRelations {
+				relations.removeValue(forKey: k)
+			}
+
+			print(String(format: "remove %ld objects", removeNodes.count + removeWays.count + removeRelations.count))
+
+			// If after deleting some objects we aren't much larger than the maximum then we're done
+			if Double(nodes.count + ways.count + relations.count) < (Double(maxObjects) * 1.3) {
+				// good enough
+				if !didExpand,
+				   !didDeresolveRelations,
+				   removeNodes.count + removeWays.count + removeRelations.count == 0
+				{
+					previousDiscardDate = now
+					return false
+				}
+				break
+			}
+
+			// we still have way too much stuff, need to be more aggressive
+			didExpand = true
+			fraction = 0.3
+		}
+
+		// remove objects from spatial that are no longer in a dictionary
+		spatial.deleteObjects(withPredicate: { [self] obj in
+			switch obj {
+			case is OsmNode:
+				return nodes[obj.ident] == nil
+			case is OsmWay:
+				return ways[obj.ident] == nil
+			case is OsmRelation:
+				return relations[obj.ident] == nil
+			default:
+				return true
+			}
+		})
+
+		// fixup relation references
+		for relation in relations.values {
+			_ = relation.resolveToMapData(self)
+		}
+
+		t = CACurrentMediaTime() - t
+		print("Discard sweep time = \(t)")
+
+		// make a copy of items to save because the dictionary might get updated by the time the Database block runs
+		let saveNodes = nodes.values
+		let saveWays = ways.values
+		let saveRelations = relations.values
+
+		Database.dispatchQueue.async(execute: { [self] in
+			var t2 = CACurrentMediaTime()
+			let tmpPath: String
+			do {
+				// its faster to create a brand new database than to update the existing one, because SQLite deletes are slow
+				try? Database.delete(withName: "tmp")
+				let db2 = try Database(name: "tmp")
+				tmpPath = db2.path
+				try db2.createTables()
+				try db2.save(saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
+				             deleteNodes: [], deleteWays: [], deleteRelations: [],
+				             isUpdate: false)
+				// need to let db2 go out of scope here so file is no longer in use
+			} catch {
+				// we couldn't create the new database, so abort the discard
+				print("failed to recreate SQL database")
+				return
+			}
+			let realPath = Database.databasePath(withName: "")
+			let error = rename(tmpPath, realPath)
+			if error != 0 {
+				print("failed to rename SQL database")
+			}
+			t2 = CACurrentMediaTime() - t2
+
+			if isUnderDebugger() {
+				// calling nodeCount() etc here isn't thread safe
+				print(String(
+					format: "%@Discard save time = %f, saved %ld objects",
+					t2 > 1.0 ? "*** " : "",
+					t2,
+					Int(nodeCount()) + Int(wayCount()) + Int(relationCount())))
+			}
+
+			DispatchQueue.main.async(execute: {
+				self.previousDiscardDate = Date()
+			})
+		})
+
+		return true
 	}
 }
