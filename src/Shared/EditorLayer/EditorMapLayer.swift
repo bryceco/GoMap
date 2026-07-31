@@ -823,7 +823,7 @@ final class EditorMapLayer: CALayer {
 		}
 
 		// casing
-		if object.isWay() != nil || (object.isRelation()?.isMultipolygon() ?? false) {
+		if (object is OsmWay) || (object.isRelation()?.isMultipolygon() ?? false) {
 			if renderInfo.casingWidth > renderInfo.lineWidth, renderInfo.casingColor != nil {
 				var refPoint = OSMPoint.zero
 				let path = object.linePathForObject(withRefPoint: &refPoint)
@@ -868,7 +868,7 @@ final class EditorMapLayer: CALayer {
 			}
 		}
 		// way (also provides an outline for areas)
-		if object.isWay() != nil || (object.isRelation()?.isMultipolygon() ?? false) {
+		if (object is OsmWay) || (object.isRelation()?.isMultipolygon() ?? false) {
 			var refPoint = OSMPoint(x: 0, y: 0)
 			let path = object.linePathForObject(withRefPoint: &refPoint)
 
@@ -901,7 +901,7 @@ final class EditorMapLayer: CALayer {
 		}
 
 		// Area
-		if (object.isWay()?.isArea() ?? false) || (object.isRelation()?.isMultipolygon() ?? false) {
+		if object.geometry() == .AREA {
 			if let areaColor = renderInfo.areaColor,
 			   !object.isCoastline()
 			{
@@ -1007,7 +1007,7 @@ final class EditorMapLayer: CALayer {
 		}
 
 		// Names
-		if object.isWay() != nil || (object.isRelation()?.isMultipolygon() ?? false) {
+		if (object is OsmWay) || (object.isRelation()?.isMultipolygon() ?? false) {
 			// get object name, or address if no name
 			var name = object.givenName()
 			if name == nil {
@@ -1015,12 +1015,12 @@ final class EditorMapLayer: CALayer {
 			}
 
 			if let name = name {
-				let isHighway = object.isWay() != nil && !(object.isWay()?.isArea() ?? false)
-				if isHighway {
-					// These are drawn dynamically
+				let isLine = (object is OsmWay) && (object.geometry() != .AREA)
+				if isLine {
+					// These are drawn dynamically along the length of the way
 				} else {
-					let point = object.isWay() != nil ? object.isWay()!.centerPoint() : object.isRelation()!
-						.centerPoint()
+					// place a label in the center of the object
+					let point = object.centerPoint()
 					let pt = MapTransform.mapPoint(forLatLon: point)
 
 					let layer = CurvedGlyphLayer.layerWithString(name)
@@ -1042,7 +1042,7 @@ final class EditorMapLayer: CALayer {
 				let viaMembers = object.isRelation()?.members(byRole: "via") ?? []
 				for viaMember in viaMembers {
 					if let viaMemberObject = viaMember.obj,
-					   viaMemberObject.isNode() != nil || viaMemberObject.isWay() != nil
+					   viaMemberObject.isNode() != nil || viaMemberObject is OsmWay
 					{
 						let latLon = viaMemberObject.selectionPoint()
 						let pt = MapTransform.mapPoint(forLatLon: latLon)
@@ -1600,7 +1600,7 @@ final class EditorMapLayer: CALayer {
 			{
 				let set = relation.allMemberObjects()
 				for o in set {
-					if o.isWay() != nil {
+					if o is OsmWay {
 						add.append(o)
 					}
 				}

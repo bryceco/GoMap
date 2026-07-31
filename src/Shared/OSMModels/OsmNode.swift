@@ -26,6 +26,10 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 		return OSMPoint(latLon)
 	}
 
+	override func centerPoint() -> LatLon {
+		return latLon
+	}
+
 	override func selectionPoint() -> LatLon {
 		return latLon
 	}

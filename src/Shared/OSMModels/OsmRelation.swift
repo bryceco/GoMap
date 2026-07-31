@@ -354,7 +354,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		return path
 	}
 
-	func centerPoint() -> LatLon {
+	override func centerPoint() -> LatLon {
 		let outerSet: [OsmWay] = members.compactMap({
 			if $0.role == "outer" {
 				return $0.obj as? OsmWay

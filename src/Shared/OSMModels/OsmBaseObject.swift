@@ -285,6 +285,13 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		fatalError()
 	}
 
+	// Center point is the geometric center of an area (or an approximation to it)
+	func centerPoint() -> LatLon {
+		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
+		fatalError()
+	}
+
+	/// Selection point is where to place the pushpin when the object is selected
 	func selectionPoint() -> LatLon {
 		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
 		fatalError()

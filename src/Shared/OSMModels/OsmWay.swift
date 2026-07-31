@@ -360,7 +360,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		                       size: OSMSize(width: maxX - minX, height: maxY - minY))
 	}
 
-	func centerPoint() -> LatLon {
+	override func centerPoint() -> LatLon {
 		if isClosed() {
 			// isClosed guarantees nodes.count > 2, so no need to check nodeCount here
 			var sum: Double = 0
