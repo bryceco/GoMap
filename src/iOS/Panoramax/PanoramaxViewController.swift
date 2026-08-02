@@ -414,12 +414,7 @@ extension PanoramaxViewController: PHPickerViewControllerDelegate {
 					let data,
 					let image = UIImage(data: data)
 				else {
-					self.showError(error ?? NSError(
-						domain: "Panoramax",
-						code: 0,
-						userInfo: [NSLocalizedDescriptionKey: NSLocalizedString(
-							"The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax.",
-							comment: "Error shown when a selected photo cannot be converted to JPEG format")]))
+					self.showError(error ?? PanoramaxServer.Error.jpegConversionFailed)
 					return
 				}
 				self.handlePickedImage(image, data: data)

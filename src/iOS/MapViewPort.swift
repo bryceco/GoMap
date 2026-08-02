@@ -231,13 +231,9 @@ extension MapViewPort {
 	}
 
 	func loadFromUserDefaults() throws {
-		guard
-			let lat = UserPrefs.shared.view_latitude.value,
-			let lon = UserPrefs.shared.view_longitude.value,
-			let scale = UserPrefs.shared.view_scale.value
-		else {
-			throw NSError()
-		}
+		let lat = try UserPrefs.shared.required(\.view_latitude)
+		let lon = try UserPrefs.shared.required(\.view_longitude)
+		let scale = try UserPrefs.shared.required(\.view_scale)
 		setTransformFor(latLon: LatLon(latitude: lat, longitude: lon),
 		                scale: scale,
 		                rotation: 0.0)

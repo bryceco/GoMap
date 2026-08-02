@@ -10,6 +10,18 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 	var window: UIWindow?
 
+	private enum ScopedUrlError: LocalizedError {
+		case notFileURL
+		case securityScopeAccessFailed
+
+		var errorDescription: String? {
+			switch self {
+			case .notFileURL: return "Not a file URL"
+			case .securityScopeAccessFailed: return "startAccessingSecurityScopedResource failed"
+			}
+		}
+	}
+
 	func scene(_ scene: UIScene,
 	           willConnectTo session: UISceneSession,
 	           options connectionOptions: UIScene.ConnectionOptions)
@@ -29,14 +41,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		}
 
 		guard url.isFileURL else {
-			throw NSError(domain: "dataForScopedUrl",
-			              code: 1,
-			              userInfo: [NSLocalizedDescriptionKey: "Not a file URL"])
+			throw ScopedUrlError.notFileURL
 		}
 		guard url.startAccessingSecurityScopedResource() else {
-			throw NSError(domain: "dataForScopedUrl",
-			              code: 1,
-			              userInfo: [NSLocalizedDescriptionKey: "startAccessingSecurityScopedResource failed"])
+			throw ScopedUrlError.securityScopeAccessFailed
 		}
 		defer {
 			url.stopAccessingSecurityScopedResource()

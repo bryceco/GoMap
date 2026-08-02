@@ -9,6 +9,24 @@
 import UIKit
 
 class PanoramaxServer {
+
+	enum Error: LocalizedError {
+		case invalidUploadSetResponse
+		case invalidPhotoUploadResponse
+		case jpegConversionFailed
+
+		var errorDescription: String? {
+			switch self {
+			case .invalidUploadSetResponse: "Invalid response when creating upload set"
+			case .invalidPhotoUploadResponse: "Invalid response when uploading photo"
+			case .jpegConversionFailed:
+				NSLocalizedString(
+					"The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax.",
+					comment: "Error shown when a selected photo cannot be converted to JPEG format")
+			}
+		}
+	}
+
 	static let redirect_uri = "gomaposm://panoramax/callback"
 	private var authVC: PanoramaxWebViewController?
 	let serverURL: URL
@@ -79,7 +97,7 @@ class PanoramaxServer {
 		return components.url!
 	}
 
-	private var authContinuation: CheckedContinuation<Void, Error>?
+	private var authContinuation: CheckedContinuation<Void, Swift.Error>?
 
 	// This pops up the Safari page asking the user for login info
 	@MainActor
@@ -138,7 +156,7 @@ class PanoramaxServer {
 			let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
 			let uploadSetID = json["id"] as? String
 		else {
-			throw NSError(domain: "JSON error", code: 0, userInfo: nil)
+			throw Error.invalidUploadSetResponse
 		}
 		return uploadSetID
 	}
@@ -211,7 +229,7 @@ class PanoramaxServer {
 		      let json = json as? [String: Any],
 		      let ident = json["picture_id"] as? String
 		else {
-			throw NSError(domain: "Bad JSON", code: 1)
+			throw Error.invalidPhotoUploadResponse
 		}
 		return ident
 	}

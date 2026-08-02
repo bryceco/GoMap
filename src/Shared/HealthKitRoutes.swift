@@ -13,9 +13,21 @@ import HealthKit
 class HealthKitRoutes {
 	static let shared = HealthKitRoutes()
 
+	private enum Error: LocalizedError {
+		case notAvailable
+		case noRouteData
+
+		var errorDescription: String? {
+			switch self {
+			case .notAvailable: return NSLocalizedString("HealthKit is not available on this device.", comment: "")
+			case .noRouteData: return NSLocalizedString("No route data found.", comment: "")
+			}
+		}
+	}
+
 	let healthStore = HKHealthStore()
 
-	private func locationsFor(route: HKWorkoutRoute, completion: @escaping (Result<[CLLocation], Error>) -> Void) {
+	private func locationsFor(route: HKWorkoutRoute, completion: @escaping (Result<[CLLocation], Swift.Error>) -> Void) {
 		var allLocations: [CLLocation] = []
 
 		// Create the route query.
@@ -32,13 +44,10 @@ class HealthKitRoutes {
 		healthStore.execute(query)
 	}
 
-	private func getWorkoutRoutes2(completion: @escaping (Result<[HKWorkoutRoute]?, Error>) -> Void) {
+	private func getWorkoutRoutes2(completion: @escaping (Result<[HKWorkoutRoute]?, Swift.Error>) -> Void) {
 		// Check if HealthKit is available on the device
 		guard HKHealthStore.isHealthDataAvailable() else {
-			completion(.failure(
-				NSError(domain: "com.example.healthkit",
-				        code: 1,
-				        userInfo: [NSLocalizedDescriptionKey: "HealthKit is not available on this device."])))
+			completion(.failure(Error.notAvailable))
 			return
 		}
 
@@ -66,10 +75,7 @@ class HealthKitRoutes {
 				if let routes = samples as? [HKWorkoutRoute] {
 					completion(.success(routes))
 				} else {
-					completion(.failure(
-						NSError(domain: "com.example.healthkit",
-						        code: 2,
-						        userInfo: [NSLocalizedDescriptionKey: "No route data found."])))
+					completion(.failure(Error.noRouteData))
 				}
 			}
 
@@ -78,7 +84,7 @@ class HealthKitRoutes {
 		}
 	}
 
-	func getWorkoutRoutes(completion: @escaping (Result<[[CLLocation]], Error>) -> Void) {
+	func getWorkoutRoutes(completion: @escaping (Result<[[CLLocation]], Swift.Error>) -> Void) {
 		getWorkoutRoutes2(completion: { result in
 			if case let .failure(error) = result {
 				completion(.failure(error))

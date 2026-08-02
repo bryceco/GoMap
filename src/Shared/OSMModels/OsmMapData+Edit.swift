@@ -14,17 +14,18 @@ import UIKit
 private var rectoLowerThreshold = 0.0
 private var rectoUpperThreshold = 0.0
 
-enum EditError: LocalizedError {
-	case text(String)
+extension OsmMapData {
 
-	public var errorDescription: String? {
-		switch self {
-		case let .text(text): return text
+	enum EditError: LocalizedError {
+		case text(String)
+
+		public var errorDescription: String? {
+			switch self {
+			case let .text(text): return text
+			}
 		}
 	}
-}
 
-extension OsmMapData {
 	// basic stuff:
 
 	// MARK: canDeleteNode

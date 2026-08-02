@@ -21,6 +21,17 @@ private let BING_MAPS_KEY: String = [
 
 /// A provider of tile imagery, such as Bing or Mapbox
 final class TileServer: Equatable, Codable {
+
+	private enum Error: LocalizedError {
+		case bingMetadataInvalidResponse
+
+		var errorDescription: String? {
+			switch self {
+			case .bingMetadataInvalidResponse: "Invalid response from Bing Maps metadata service"
+			}
+		}
+	}
+
 	private static let iconCache: PersistentWebCache<UIImage> = {
 		let cache = PersistentWebCache<UIImage>(name: "AerialServiceIconCache",
 		                                        memorySize: 10000,
@@ -445,7 +456,7 @@ final class TileServer: Equatable, Codable {
 			json.statusCode == 200,
 			let resource = json.resourceSets.first?.resources.first
 		else {
-			throw NSError(domain: "TileServer", code: 1)
+			throw Error.bingMetadataInvalidResponse
 		}
 
 		let subdomains = resource.imageUrlSubdomains.joined(separator: ",")

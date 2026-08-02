@@ -10,6 +10,18 @@ import Foundation
 import KissXML
 
 struct OsmNote {
+	enum Error: LocalizedError {
+		case parseError
+		case updateError
+
+		var errorDescription: String? {
+			switch self {
+			case .parseError: return NSLocalizedString("Could not parse note", comment: "")
+			case .updateError: return NSLocalizedString("Update Error", comment: "")
+			}
+		}
+	}
+
 	struct Comment {
 		let date: String
 		let action: String
@@ -106,8 +118,7 @@ struct OsmNote {
 		      let noteElement = try? xmlDoc.rootElement()?.nodes(forXPath: "./note").first as? DDXMLElement,
 		      let note = OsmNote(noteXml: noteElement)
 		else {
-			throw NSError(domain: "OsmNote", code: 1,
-			              userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Could not parse note", comment: "")])
+			throw Error.parseError
 		}
 		return note
 	}
@@ -146,8 +157,7 @@ struct OsmNote {
 		      let noteElement = list.first,
 		      let updatedNote = OsmNote(noteXml: noteElement)
 		else {
-			throw NSError(domain: "OsmNote", code: 1,
-			              userInfo: [NSLocalizedDescriptionKey: NSLocalizedString("Update Error", comment: "")])
+			throw Error.updateError
 		}
 		return updatedNote
 	}

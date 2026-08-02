@@ -11,6 +11,18 @@ import UIKit
 
 final class LocationProvider: NSObject, CLLocationManagerDelegate {
 
+	private enum Error: LocalizedError {
+		case denied(String)
+		case unavailable
+
+		var errorDescription: String? {
+			switch self {
+			case let .denied(text): return text
+			case .unavailable: return NSLocalizedString("Location unavailable", comment: "")
+			}
+		}
+	}
+
 	static let shared = LocationProvider()
 	private let locationManager = CLLocationManager()
 
@@ -178,30 +190,25 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 		print("GPS paused by iOS\n")
 	}
 
-	func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+	func locationManager(_ manager: CLLocationManager, didFailWithError error: Swift.Error) {
 		let mainView = AppDelegate.shared.mainView!
 
-		var error = error
 		if (error as? CLError)?.code == CLError.Code.denied {
 			mainView.gpsState = .NONE
-
-			var text = String.localizedStringWithFormat(
-				NSLocalizedString(
-					"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",
-					comment: ""),
-				error.localizedDescription)
-			text = NSLocalizedString("The current location cannot be determined: ", comment: "") + text
-			error = NSError(domain: "Location", code: 100, userInfo: [
-				NSLocalizedDescriptionKey: text
-			])
-			MessageDisplay.shared.presentError(title: nil, error: error, flash: false)
+			let text = NSLocalizedString("The current location cannot be determined: ", comment: "")
+				+ String.localizedStringWithFormat(
+					NSLocalizedString(
+						"Ensure Location Services is enabled and you have granted this application access.\n\nError: %@",
+						comment: ""),
+					error.localizedDescription)
+			MessageDisplay.shared.presentError(title: nil,
+			                                   error: Error.denied(text),
+			                                   flash: false)
 		} else {
 			// driving through a tunnel or something
-			let text = NSLocalizedString("Location unavailable", comment: "")
-			error = NSError(domain: "Location", code: 100, userInfo: [
-				NSLocalizedDescriptionKey: text
-			])
-			MessageDisplay.shared.presentError(title: nil, error: error, flash: true)
+			MessageDisplay.shared.presentError(title: nil,
+			                                   error: Error.unavailable,
+			                                   flash: true)
 		}
 	}
 

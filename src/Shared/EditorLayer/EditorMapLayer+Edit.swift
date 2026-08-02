@@ -574,7 +574,7 @@ extension EditorMapLayer {
 				}
 			}
 		}
-		throw EditError.text("")
+		throw OsmMapData.EditError.text("")
 	}
 
 	func deleteCurrentSelection() {
@@ -752,7 +752,7 @@ extension EditorMapLayer {
 			case .COPYTAGS:
 				if let selectedPrimary = selectedPrimary {
 					if !copyTags(selectedPrimary) {
-						throw EditError.text(NSLocalizedString("The object does not contain any tags", comment: ""))
+						throw OsmMapData.EditError.text(NSLocalizedString("The object does not contain any tags", comment: ""))
 					}
 				}
 			case .PASTETAGS:
@@ -775,7 +775,7 @@ extension EditorMapLayer {
 				}
 				guard let newObject = duplicateObject(primary, withOffset: offset)
 				else {
-					throw EditError.text(NSLocalizedString("Could not duplicate object", comment: ""))
+					throw OsmMapData.EditError.text(NSLocalizedString("Could not duplicate object", comment: ""))
 				}
 				selectedNode = newObject.isNode()
 				selectedWay = newObject.isWay()
@@ -784,14 +784,14 @@ extension EditorMapLayer {
 			case .ROTATE:
 				let canRotateGeometry = selectedWay != nil || (selectedRelation?.isMultipolygon() ?? false)
 				guard canRotateGeometry || canRotateSelectedNode() else {
-					throw EditError.text(NSLocalizedString("Only ways/multipolygons can be rotated", comment: ""))
+					throw OsmMapData.EditError.text(NSLocalizedString("Only ways/multipolygons can be rotated", comment: ""))
 				}
 				owner.startObjectRotation()
 			case .RECTANGULARIZE:
 				guard let way = selectedWay else { return }
 				if way.ident >= 0, !viewPort.boundingLatLonForScreen().containsRect(way.boundingBox) {
-					throw EditError.text(NSLocalizedString("The selected way must be completely visible",
-					                                       comment: "")) // avoid bugs where nodes are deleted from other objects
+					throw OsmMapData.EditError.text(NSLocalizedString("The selected way must be completely visible",
+					                                                  comment: "")) // avoid bugs where nodes are deleted from other objects
 				}
 				let rect = try mapData.canOrthogonalizeWay(way)
 				rect()
@@ -818,8 +818,8 @@ extension EditorMapLayer {
 				if let selectedWay = selectedWay {
 					let boundingBox = selectedWay.boundingBox
 					if selectedWay.ident >= 0, !viewPort.boundingLatLonForScreen().containsRect(boundingBox) {
-						throw EditError.text(NSLocalizedString("The selected way must be completely visible",
-						                                       comment: "")) // avoid bugs where nodes are deleted from other objects
+						throw OsmMapData.EditError.text(NSLocalizedString("The selected way must be completely visible",
+						                                                  comment: "")) // avoid bugs where nodes are deleted from other objects
 					} else {
 						let straighten = try mapData.canStraightenWay(selectedWay)
 						straighten()
@@ -986,7 +986,7 @@ extension EditorMapLayer {
 		presentAlert(alert: multiSelectSheet, location: .rect(rc))
 	}
 
-	func extendSelectedWay(to newPoint: CGPoint, from pinPoint: CGPoint) -> Result<CGPoint, EditError> {
+	func extendSelectedWay(to newPoint: CGPoint, from pinPoint: CGPoint) -> Result<CGPoint, OsmMapData.EditError> {
 		if let way = selectedWay,
 		   selectedNode == nil
 		{
@@ -997,7 +997,7 @@ extension EditorMapLayer {
 			else {
 				// user attempted to add a node at exactly the same location as an existing node,
 				// probably by accidently tapping + too many times.
-				return .failure(EditError.text(""))
+				return .failure(OsmMapData.EditError.text(""))
 			}
 			let segment = way.segmentClosestToPoint(pt)
 			do {
@@ -1007,7 +1007,7 @@ extension EditorMapLayer {
 				selectedNode = newNode
 				return .success(newPoint)
 			} catch {
-				return .failure(error as! EditError)
+				return .failure(error as! OsmMapData.EditError)
 			}
 		}
 
@@ -1132,7 +1132,7 @@ extension EditorMapLayer {
 		do {
 			addNodeToWay = try canAddNode(toWay: way, atIndex: nextIndex)
 		} catch {
-			return .failure(error as! EditError)
+			return .failure(error as! OsmMapData.EditError)
 		}
 		let node2 = createNode(atScreenPoint: newPoint)
 		selectedWay = way // set selection before perfoming add-node action so selection is recorded in undo stack

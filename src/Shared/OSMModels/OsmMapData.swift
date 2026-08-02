@@ -29,29 +29,30 @@ private final class ServerQuery {
 	var rect = OSMRect.zero
 }
 
-enum OsmMapDataError: LocalizedError {
-	case unableToOpenDatabase
-	case osmWayResolveToMapDataFoundNilNodeRefs
-	case osmWayResolveToMapDataCouldntFindNodeRef
-	case badURL(String)
-	case otherError(String)
-	case badServerUpdateValue
-	case badXML
+final class OsmMapData: NSObject, NSSecureCoding {
 
-	public var errorDescription: String? {
-		switch self {
-		case .unableToOpenDatabase: return "OsmMapDataError.unableToOpenDatabase"
-		case .osmWayResolveToMapDataFoundNilNodeRefs: return "OsmMapDataError.osmWayResolveToMapDataFoundNilNodeRefs"
-		case .osmWayResolveToMapDataCouldntFindNodeRef: return "OsmMapDataError.osmWayResolveToMapDataCouldntFindNodeRef"
-		case let .badURL(url): return "OsmMapDataError.badURL(\(url))"
-		case let .otherError(message): return "OsmMapDataError.otherError(\(message))"
-		case .badServerUpdateValue: return "badServerUpdateValue"
-		case .badXML: return "OsmMapDataError:badXML"
+	enum Error: LocalizedError {
+		case unableToOpenDatabase
+		case osmWayResolveToMapDataFoundNilNodeRefs
+		case osmWayResolveToMapDataCouldntFindNodeRef
+		case badURL(String)
+		case otherError(String)
+		case badServerUpdateValue
+		case badXML
+
+		public var errorDescription: String? {
+			switch self {
+			case .unableToOpenDatabase: return "OsmMapDataError.unableToOpenDatabase"
+			case .osmWayResolveToMapDataFoundNilNodeRefs: return "OsmMapDataError.osmWayResolveToMapDataFoundNilNodeRefs"
+			case .osmWayResolveToMapDataCouldntFindNodeRef: return "OsmMapDataError.osmWayResolveToMapDataCouldntFindNodeRef"
+			case let .badURL(url): return "OsmMapDataError.badURL(\(url))"
+			case let .otherError(message): return "OsmMapDataError.otherError(\(message))"
+			case .badServerUpdateValue: return "badServerUpdateValue"
+			case .badXML: return "OsmMapDataError:badXML"
+			}
 		}
 	}
-}
 
-final class OsmMapData: NSObject, NSSecureCoding {
 	static let supportsSecureCoding = true
 
 	// only used when saving/restoring undo manager
@@ -518,10 +519,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		undoManager.removeMostRecentRedo()
 	}
 
-	func clearUndoStack() {
-		undoManager.removeAllActions()
-	}
-
 	func setConstructed(_ object: OsmBaseObject) {
 		object.setConstructed(mapData: self)
 	}
@@ -614,7 +611,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	///	- Once we've successfully fetched the data for the rect we tell the QuadMap that it can mark the given QuadBoxes as downloaded
 	func downloadMissingData(inRect rect: OSMRect,
 	                         withProgress progress: MapViewProgress,
-	                         didUpdate: @escaping (_ error: Error?) -> Void)
+	                         didUpdate: @escaping (_ error: Swift.Error?) -> Void)
 	{
 		// get list of new quads to fetch
 		let newQuads = region.missingQuads(forRect: rect)
@@ -642,7 +639,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					"bbox": "\(rc.origin.x),\(rc.origin.y),\(rc.origin.x + rc.size.width),\(rc.origin.y + rc.size.height)"
 				])
 			Task {
-				let result: Result<OsmDownloadData, Error>
+				let result: Result<OsmDownloadData, Swift.Error>
 				do {
 					let data = try await OsmDownloader.osmData(forUrl: url)
 					result = .success(data)
@@ -858,7 +855,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			      let objType2 = scanner.scanCharacters(from: CharacterSet.alphanumerics),
 			      let objId = scanner.scanInt64()
 			else {
-				throw OsmMapDataError.badServerUpdateValue
+				throw Error.badServerUpdateValue
 			}
 			print("Updating object from version \(localVersion) to \(serverVersion)")
 			let objType = objType2.lowercased()
@@ -881,7 +878,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// we expect to receive an XML document with server updates
 		if !response.hasPrefix("<?xml") {
-			throw OsmMapDataError.otherError(response)
+			throw Error.otherError(response)
 		}
 
 		let diffDoc: DDXMLDocument = try DDXMLDocument(data: postData, options: 0)
@@ -890,7 +887,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			let diffResult = diffDoc.rootElement(),
 			diffResult.name == "diffResult"
 		else {
-			throw OsmMapDataError.otherError("Upload failed: invalid server respsonse")
+			throw Error.otherError("Upload failed: invalid server respsonse")
 		}
 		let timestamp = Date()
 
@@ -960,7 +957,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			                                              relations: relations.values,
 			                                              generator: generator)
 		else {
-			throw OsmMapDataError.badXML
+			throw Error.badXML
 		}
 		OsmMapData.addChangesetId(changesetID, toXML: xmlChanges)
 		try await uploadChangeset(xml: xmlChanges,
@@ -1049,7 +1046,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		guard
 			let xmlCreate = OsmXmlGenerator.createXml(withType: "changeset", tags: tags)
 		else {
-			throw OsmMapDataError.otherError("Failed to create OSM XML for creating a new changeset.")
+			throw Error.otherError("Failed to create OSM XML for creating a new changeset.")
 		}
 		let putData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/create",
 		                                              queryItems: [:],

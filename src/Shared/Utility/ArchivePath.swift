@@ -65,8 +65,8 @@ enum ArchivePath {
 			do {
 				try FileManager.default.moveItem(at: legacyURL, to: preferredURL)
 			} catch {
-				if (error as NSError).domain == NSCocoaErrorDomain,
-				   (error as NSError).code == NSFileWriteFileExistsError
+				if let cocoaError = error as? CocoaError,
+				   cocoaError.code == .fileWriteFileExists
 				{
 					// already have a copy, so delete this one
 					try? FileManager.default.removeItem(at: legacyURL)

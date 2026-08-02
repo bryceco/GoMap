@@ -8,7 +8,7 @@
 
 import Foundation
 
-private protocol PrefProtocol {
+protocol PrefProtocol {
 	associatedtype T
 	var key: String { get }
 	var ubiquitous: Bool { get }
@@ -60,6 +60,19 @@ class Pref<T>: PrefProtocol {
 
 final class UserPrefs {
 	public static let shared = UserPrefs()
+
+	struct MissingPrefError: LocalizedError {
+		let pref: any PrefProtocol
+		var errorDescription: String? { "Preference '\(pref.key)' not found in UserPrefs" }
+	}
+
+	func required<T>(_ keyPath: KeyPath<UserPrefs, Pref<T>>) throws -> T {
+		let pref = self[keyPath: keyPath]
+		guard let value = pref.value else {
+			throw MissingPrefError(pref: pref)
+		}
+		return value
+	}
 
 	let userName = Pref<String>(key: "userName")
 	let appVersion = Pref<String>(key: "appVersion")

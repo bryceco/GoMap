@@ -54,17 +54,8 @@ class MessageDisplay {
 		var title = title ?? NSLocalizedString("Error", comment: "")
 		var text = error.localizedDescription
 
-		var isNetworkError = false
+		let isNetworkError = error is URLError
 		var ignoreButton: String?
-		let userInfo = (error as NSError).userInfo
-		if userInfo["NSErrorFailingURLKey"] != nil {
-			isNetworkError = true
-		}
-		if let underError = userInfo["NSUnderlyingError"] as? NSError,
-		   (underError.domain as CFString) == kCFErrorDomainCFNetwork
-		{
-			isNetworkError = true
-		}
 
 		// Decode HTML text
 		if let error = error as? UrlSessionError,

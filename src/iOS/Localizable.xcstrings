@@ -34787,6 +34787,9 @@
         }
       }
     },
+    "HealthKit is not available on this device." : {
+
+    },
     "Height: %1$@ ± %2$@ meters" : {
       "comment" : "Height of an object with an error value",
       "localizations" : {
@@ -43553,6 +43556,9 @@
           }
         }
       }
+    },
+    "No route data found." : {
+
     },
     "No Straight On restriction" : {
       "localizations" : {

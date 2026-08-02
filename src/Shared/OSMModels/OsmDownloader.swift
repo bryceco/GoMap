@@ -14,33 +14,36 @@ struct OsmDownloadData {
 	var relations: [OsmRelation] = []
 }
 
-enum OsmParserError: LocalizedError {
-	case missingLatLon
-	case unexpectedStackElement
-	case badNodeRef
-	case badRelationRefID
-	case missingKeyValInTag
-	case badXmlDict(String, [String: String])
-	case unsupportedOsmApiVersion(String?)
+class OsmDownloadParser: NSObject, XMLParserDelegate {
 
-	public var errorDescription: String? {
-		switch self {
-		case .missingLatLon: return "missing lat/lon"
-		case .unexpectedStackElement: return "unexpectedStackElement"
-		case .badNodeRef: return "bad node ref ID"
-		case .badRelationRefID: return "badRelationRefID"
-		case .missingKeyValInTag: return ""
-		case let .badXmlDict(ele, dict):
-			return "badXmlDict(\(ele)):\n \(dict.map({ k, v in "\(k)=\(v)" }).joined(separator: ",\n"))"
-		case let .unsupportedOsmApiVersion(str): return "unsupportedOsmApiVersion(\(str ?? "nil")"
+	enum Error: LocalizedError {
+		case missingLatLon
+		case unexpectedStackElement
+		case badNodeRef
+		case badRelationRefID
+		case missingKeyValInTag
+		case badXmlDict(String, [String: String])
+		case unsupportedOsmApiVersion(String?)
+		case unknownParseFailure
+
+		public var errorDescription: String? {
+			switch self {
+			case .missingLatLon: return "missing lat/lon"
+			case .unexpectedStackElement: return "unexpectedStackElement"
+			case .badNodeRef: return "bad node ref ID"
+			case .badRelationRefID: return "badRelationRefID"
+			case .missingKeyValInTag: return ""
+			case let .badXmlDict(ele, dict):
+				return "badXmlDict(\(ele)):\n \(dict.map({ k, v in "\(k)=\(v)" }).joined(separator: ",\n"))"
+			case let .unsupportedOsmApiVersion(str): return "unsupportedOsmApiVersion(\(str ?? "nil")"
+			case .unknownParseFailure: return "XML parse failed"
+			}
 		}
 	}
-}
 
-class OsmDownloadParser: NSObject, XMLParserDelegate {
 	private var parserCurrentElementText = "" // not currently used, it's mostly whitespace
 	private var parserStack: [Any] = []
-	private var parseError: Error?
+	private var parseError: Swift.Error?
 
 	private(set) var result = OsmDownloadData()
 
@@ -56,7 +59,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		switch elementName {
 		case "node":
 			guard let node = OsmNode(fromXmlDict: attributeDict) else {
-				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
+				parseError = Error.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()
 				return
 			}
@@ -64,7 +67,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parserStack.append(node)
 		case "way":
 			guard let way = OsmWay(fromXmlDict: attributeDict) else {
-				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
+				parseError = Error.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()
 				return
 			}
@@ -74,12 +77,12 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			guard let key = attributeDict["k"],
 			      let value = attributeDict["v"]
 			else {
-				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
+				parseError = Error.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()
 				return
 			}
 			guard let object = parserStack.last as? OsmBaseObject else {
-				parseError = OsmParserError.unexpectedStackElement
+				parseError = Error.unexpectedStackElement
 				parser.abortParsing()
 				return
 			}
@@ -90,7 +93,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			      let ref2 = attributeDict["ref"],
 			      let ref = Int64(ref2)
 			else {
-				parseError = OsmParserError.badNodeRef
+				parseError = Error.badNodeRef
 				parser.abortParsing()
 				return
 			}
@@ -98,7 +101,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			parserStack.append("nd")
 		case "relation":
 			guard let relation = OsmRelation(fromXmlDict: attributeDict) else {
-				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
+				parseError = Error.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()
 				return
 			}
@@ -109,14 +112,14 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			      let ref2 = attributeDict["ref"],
 			      let ref = Int64(ref2)
 			else {
-				parseError = OsmParserError.badRelationRefID
+				parseError = Error.badRelationRefID
 				parser.abortParsing()
 				return
 			}
 			guard let type2 = attributeDict["type"],
 			      let type = try? OSM_TYPE(string: type2)
 			else {
-				parseError = OsmParserError.badXmlDict(elementName, attributeDict)
+				parseError = Error.badXmlDict(elementName, attributeDict)
 				parser.abortParsing()
 				return
 			}
@@ -128,7 +131,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 			// osm header
 			let version = attributeDict["version"]
 			if version != "0.6" {
-				parseError = OsmParserError.unsupportedOsmApiVersion(version)
+				parseError = Error.unsupportedOsmApiVersion(version)
 				parser.abortParsing()
 			}
 			parserStack.append("osm")
@@ -165,7 +168,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		parserCurrentElementText += string
 	}
 
-	@objc func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+	@objc func parser(_ parser: XMLParser, parseErrorOccurred parseError: Swift.Error) {
 		DLog(
 			"Parse error: \(parseError.localizedDescription), line \(parser.lineNumber), column \(parser.columnNumber)")
 		self.parseError = parseError
@@ -195,10 +198,8 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 		parseError = nil
 
 		let ok = parser.parse()
-		if let error = parseError {
-			throw error
-		} else if !ok {
-			throw NSError(domain: "OsmDownloader", code: 1)
+		if !ok || parseError != nil {
+			throw parseError ?? parser.parserError ?? Error.unknownParseFailure
 		}
 		return result
 	}

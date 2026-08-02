@@ -248,7 +248,7 @@ extension OsmServer {
 			.appendingQueryItems(queryItems)
 
 		guard var request = oAuth2?.urlRequest(url: url) else {
-			throw OsmMapDataError.badURL(url.absoluteString)
+			throw OsmMapData.Error.badURL(url.absoluteString)
 		}
 		request.setUserAgent()
 		request.httpMethod = method
