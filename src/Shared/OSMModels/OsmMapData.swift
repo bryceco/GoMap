@@ -895,10 +895,14 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			guard let element = element as? DDXMLElement else {
 				continue
 			}
-			let name = element.name
-			let oldId = Int64(element.attribute(forName: "old_id")?.stringValue ?? "0")!
-			let newId = Int64(element.attribute(forName: "new_id")?.stringValue ?? "0")!
-			let newVersion = Int(element.attribute(forName: "new_version")?.stringValue ?? "0")!
+			guard let name = element.name,
+			      let oldId = Int64(element.attribute(forName: "old_id")?.stringValue ?? ""),
+			      let newId = Int64(element.attribute(forName: "new_id")?.stringValue ?? ""),
+			      let newVersion = Int(element.attribute(forName: "new_version")?.stringValue ?? "")
+			else {
+				print("bad upload diff document")
+				continue
+			}
 
 			if name == "node" {
 				OsmMapData.updateObjectDictionary(
@@ -1216,9 +1220,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 #if DEBUG
 		// Verify that every modified object exists in the UndoManager.
-		let n = Set<OsmNode>(nodes.values.filter({ $0.isModified() }))
-		let w = Set<OsmWay>(ways.values.filter({ $0.isModified() }))
-		let r = Set<OsmRelation>(relations.values.filter({ $0.isModified() }))
+		// There might still be newly created, modified, deleted objects, which we ignore.
+		let n = Set<OsmNode>(nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
+		let w = Set<OsmWay>(ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
+		let r = Set<OsmRelation>(relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
 		assert(n.isSubset(of: modNodes))
 		assert(w.isSubset(of: modWays))
 		assert(r.isSubset(of: modRelations))
