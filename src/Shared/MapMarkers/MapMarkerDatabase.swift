@@ -271,11 +271,9 @@ extension MapMarkerDatabase {
 	}
 
 	func updateNoteMarkers(forRegion box: OSMRect) async {
-		Task {
-			let notes = (try? await OsmNote.download(inBbox: box)) ?? []
-			for note in notes {
-				addOrUpdate(marker: OsmNoteMarker(note: note))
-			}
+		let notes = (try? await OsmNote.download(inBbox: box)) ?? []
+		for note in notes {
+			addOrUpdate(marker: OsmNoteMarker(note: note))
 		}
 	}
 }
