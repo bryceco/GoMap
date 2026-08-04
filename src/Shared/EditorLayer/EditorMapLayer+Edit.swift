@@ -840,22 +840,22 @@ extension EditorMapLayer {
 				owner.presentTurnRestrictionEditor()
 			case .CREATE_RELATION:
 				guard let selectedPrimary = selectedPrimary else { return }
-				let create: ((_ type: String) -> Void) = { [self] type in
+				func create(_ type: String) {
 					do {
-						let relation = self.mapData.createRelation()
+						let relation = mapData.createRelation()
 						var tags = selectedPrimary.tags
 						tags["type"] = type
-						self.mapData.setTags(tags, for: relation)
+						mapData.setTags(tags, for: relation)
 						// need the relation type to be set before adding
-						let add = try self.mapData.canAdd(selectedPrimary,
-						                                  to: relation,
-						                                  withRole: "outer")
+						let add = try mapData.canAdd(selectedPrimary,
+						                             to: relation,
+						                             withRole: "outer")
 						add()
-						self.mapData.setTags([:], for: selectedPrimary)
-						self.selectedNode = nil
-						self.selectedWay = nil
-						self.selectedRelation = relation
-						self.setNeedsLayout()
+						mapData.setTags([:], for: selectedPrimary)
+						selectedNode = nil
+						selectedWay = nil
+						selectedRelation = relation
+						setNeedsLayout()
 						owner.didUpdateObject()
 						display.showAlert(
 							NSLocalizedString("Adding members:", comment: ""),
