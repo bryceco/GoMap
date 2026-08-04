@@ -150,10 +150,9 @@ class AerialTileServerListViewController: UITableViewController {
 		return false
 	}
 
-	override func tableView(
-		_ tableView: UITableView,
-		commit editingStyle: UITableViewCell.EditingStyle,
-		forRowAt indexPath: IndexPath)
+	override func tableView(_ tableView: UITableView,
+	                        commit editingStyle: UITableViewCell.EditingStyle,
+	                        forRowAt indexPath: IndexPath)
 	{
 		if editingStyle == .delete {
 			// Delete the row from the data source
@@ -164,10 +163,33 @@ class AerialTileServerListViewController: UITableViewController {
 		}
 	}
 
+	override func tableView(_ tableView: UITableView,
+	                        targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath,
+	                        toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath
+	{
+		// Constrain moves to SECTION_USER only, excluding the "Add New" row
+		let maxRow = serverList!.userDefinedServices().count - 1
+		if proposedDestinationIndexPath.section != SECTION_USER {
+			return IndexPath(row: maxRow, section: SECTION_USER)
+		}
+		// Don't allow dropping onto the "Add New" row
+		let row = min(proposedDestinationIndexPath.row, maxRow)
+		return IndexPath(row: row, section: SECTION_USER)
+	}
+
 	override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to toIndexPath: IndexPath) {
-		let service = serverList!.userDefinedServices()[fromIndexPath.row]
+		guard
+			let services = serverList?.userDefinedServices(),
+			fromIndexPath.section == SECTION_USER,
+			toIndexPath.section == SECTION_USER,
+			fromIndexPath.row < services.count
+		else {
+			return
+		}
+		let service = services[fromIndexPath.row]
 		serverList!.removeUserDefinedService(at: fromIndexPath.row)
-		serverList!.addUserDefinedService(service, at: toIndexPath.row)
+		let insertRow = min(toIndexPath.row, serverList!.userDefinedServices().count)
+		serverList!.addUserDefinedService(service, at: insertRow)
 	}
 
 	override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
