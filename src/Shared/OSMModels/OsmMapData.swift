@@ -1200,6 +1200,13 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		initCommon()
 
+		// OsmMember doesn't save object references so resolve them now.
+		// This will also happen when we download data or load it from disk,
+		// but do it here as well in case that doesn't happen.
+		for relation in self.relations.values {
+			_ = relation.resolveToMapData(self)
+		}
+
 		if region.isEmpty() {
 			// This path taken if we came from a quick-save
 			// didn't save spatial, so add everything back into it
