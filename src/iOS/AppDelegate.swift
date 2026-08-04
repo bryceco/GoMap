@@ -118,7 +118,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground.
 
 		// Turn off GPS so we gracefully end GPX trace.
-		AppDelegate.shared.mainView.gpsState = .NONE
+		if let mainView {
+			// normal path
+			mainView.gpsState = .NONE
+		} else {
+			// iOS 27 path, where teardown sequence is different
+			print("FIXME: Alternate shutdown route")
+			LocationProvider.shared.stop()
+			AppState.shared.gpxTracks.endActiveTrack(continuingCurrentTrack: false)
+		}
 
 #if canImport(ActivityKit)
 		// Remove any live activities
