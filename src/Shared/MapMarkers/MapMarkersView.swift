@@ -12,6 +12,11 @@ class MapMarkersView: UIView {
 	let viewPort: MapViewPort
 	private lazy var mapMarkerDatabase = MapMarkerDatabase()
 
+	var progress: MapViewProgress? {
+		get { mapMarkerDatabase.progress }
+		set { mapMarkerDatabase.progress = newValue }
+	}
+
 	init(viewPort: MapViewPort, mapData: OsmMapData) {
 		self.viewPort = viewPort
 		super.init(frame: .zero)

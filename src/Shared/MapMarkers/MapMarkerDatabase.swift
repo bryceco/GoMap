@@ -14,6 +14,7 @@ import Foundation
 	private var markerForIdentifier: [String: MapMarker] = [:] // map the marker key (unique string) to a marker
 	private var ignoreList: MapMarkerIgnoreList
 	weak var mapData: OsmMapData!
+	var progress: MapViewProgress?
 
 	init() {
 		ignoreList = MapMarkerIgnoreList()
@@ -271,6 +272,8 @@ extension MapMarkerDatabase {
 	}
 
 	func updateNoteMarkers(forRegion box: OSMRect) async {
+		progress?.progressIncrement(1)
+		defer { progress?.progressDecrement() }
 		let notes = (try? await OsmNote.download(inBbox: box)) ?? []
 		for note in notes {
 			addOrUpdate(marker: OsmNoteMarker(note: note))

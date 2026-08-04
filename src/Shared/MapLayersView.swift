@@ -128,6 +128,7 @@ class MapLayersView: UIView {
 
 		mapMarkersView = MapMarkersView(viewPort: viewPort,
 		                                mapData: AppDelegate.shared.mainView.mapView.mapData)
+		mapMarkersView.progress = mainView
 		mapMarkersView.isHidden = false
 		allLayers.append(mapMarkersView)
 
