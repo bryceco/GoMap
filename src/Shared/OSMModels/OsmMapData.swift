@@ -431,14 +431,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 	}
 
-	func addMemberUnsafe(_ member: OsmMember?, to relation: OsmRelation?, at index: Int) {
-		if let member = member, let relation = relation {
-			registerUndoCommentString(NSLocalizedString("add object to relation", comment: ""))
-			let bbox = relation.boundingBox
-			relation.addMember(member, atIndex: index, undo: undoManager)
-			spatial.updateMember(relation, fromBox: bbox, undo: undoManager)
-			updateMultipolygonRelationRoles(relation)
-		}
+	func addMemberUnsafe(_ member: OsmMember, to relation: OsmRelation, at index: Int) {
+		registerUndoCommentString(NSLocalizedString("add object to relation", comment: ""))
+		let bbox = relation.boundingBox
+		relation.addMember(member, atIndex: index, undo: undoManager)
+		spatial.updateMember(relation, fromBox: bbox, undo: undoManager)
+		updateMultipolygonRelationRoles(relation)
 	}
 
 	func deleteMember(inRelationUnsafe relation: OsmRelation, index: Int, deletingRelationIfEmpty: Bool) {
