@@ -63,8 +63,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	private(set) var relations: [OsmIdentifier: OsmRelation] = [:]
 	var periodicSaveTimer: Timer?
 
-	let region: QuadMap
-	let spatial: QuadMap
+	let region: QuadMap // the regions of the map that we have previously downloaded
+	let spatial: QuadMap // spatial index of OSM objects
 	let undoManager: MyUndoManager
 
 	// undo comments

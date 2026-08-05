@@ -43,7 +43,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 	}
 
 	func resolveToMapData(_ mapData: OsmMapData) throws {
-		guard let nodeRefs = nodeRefs else {
+		guard let nodeRefs else {
 			throw OsmMapData.Error.osmWayResolveToMapDataFoundNilNodeRefs
 		}
 		assert(nodes.count == 0)
