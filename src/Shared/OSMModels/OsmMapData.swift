@@ -1199,21 +1199,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		self.relations.values.forEach { self.setConstructed($0) }
 
 		initCommon()
-
-		// OsmMember doesn't save object references so resolve them now.
-		// This will also happen when we download data or load it from disk,
-		// but do it here as well in case that doesn't happen.
-		for relation in self.relations.values {
-			_ = relation.resolveToMapData(self)
-		}
-
-		if region.isEmpty() {
-			// This path taken if we came from a quick-save
-			// didn't save spatial, so add everything back into it
-			enumerateObjects(usingBlock: { object in
-				self.spatial.addMember(object, undo: nil)
-			})
-		}
 	}
 
 	func modifiedObjects() -> OsmDownloadData {
@@ -1471,6 +1456,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 
 		mapData.setObjectMapDataReferences()
+
+		// OsmMember doesn't save object references, so resolve them now.
+		for relation in mapData.relations.values {
+			_ = relation.resolveToMapData(mapData)
+		}
 
 		// rebuild spatial database
 		mapData.enumerateObjects(usingBlock: { obj in
