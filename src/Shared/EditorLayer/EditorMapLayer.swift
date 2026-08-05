@@ -810,6 +810,60 @@ final class EditorMapLayer: CALayer {
 		return wall
 	}
 
+	func buildingLayers(for object: OsmBaseObject,
+	                    path: CGPath,
+	                    refPoint: OSMPoint) -> [CALayer & LayerPropertiesProviding]
+	{
+		guard let height = object.buildingHeight(), height > 0.0 else {
+			return []
+		}
+
+		var layers: [CALayer & LayerPropertiesProviding] = []
+		let hue = CGFloat(object.ident % 20 - 10)
+		var hasPrev = false
+		var prevPoint = OSMPoint.zero
+		path.apply(action: { [self] element in
+			if element.type == .moveToPoint {
+				prevPoint = Add(refPoint, Mult(OSMPoint(element.points[0]), 1 / PATH_SCALING))
+				hasPrev = true
+			} else if element.type == .addLineToPoint, hasPrev {
+				let pt = Add(refPoint, Mult(OSMPoint(element.points[0]), 1 / PATH_SCALING))
+				if let wall = buildingWallLayer(for: pt, point: prevPoint, height: height, hue: hue) {
+					layers.append(wall)
+				}
+				prevPoint = pt
+			} else {
+				hasPrev = false
+			}
+		})
+
+		// roof
+		let color = UIColor(hue: 0, saturation: 0.05, brightness: 0.75 + hue / 100, alpha: 1.0)
+		let roof = CAShapeLayerWithProperties()
+		roof.anchorPoint = CGPoint(x: 0, y: 0)
+		let roofBbox = path.boundingBoxOfPath
+		roof.bounds = CGRect(x: 0, y: 0, width: roofBbox.size.width, height: roofBbox.size.height)
+		roof.position = CGPoint(refPoint)
+		roof.path = path
+		roof.fillColor = color.cgColor
+		roof.strokeColor = UIColor.black.cgColor
+		roof.lineWidth = 1.0
+		roof.lineCap = DEFAULT_LINECAP
+		roof.lineJoin = DEFAULT_LINEJOIN
+		roof.zPosition = Z_BUILDING_ROOF
+		roof.isDoubleSided = true
+
+		let t = CATransform3DMakeTranslation(0, 0, CGFloat(height))
+		roof.properties.position = refPoint
+		roof.properties.transform3D = t
+		roof.properties.is3D = true
+		roof.properties.lineWidth = 1.0
+		roof.transform = t
+		layers.append(roof)
+
+		return layers
+	}
+
 	func getShapeLayers(for object: OsmBaseObject) -> [CALayer & LayerPropertiesProviding] {
 		if let shapeLayers = object.shapeLayers {
 			return shapeLayers
@@ -822,253 +876,161 @@ final class EditorMapLayer: CALayer {
 			layers.append(contentsOf: shapeLayers(for: node))
 		}
 
-		// casing
-		if (object is OsmWay) || (object.isRelation()?.isMultipolygon() ?? false) {
-			if renderInfo.casingWidth > renderInfo.lineWidth, renderInfo.casingColor != nil {
-				var refPoint = OSMPoint.zero
-				let path = object.linePathForObject(withRefPoint: &refPoint)
-				if let path = path {
-					do {
-						let layer = CAShapeLayerWithProperties()
-						layer.anchorPoint = CGPoint(x: 0, y: 0)
-						layer.position = CGPoint(refPoint)
-						layer.path = path
-						layer.strokeColor = renderInfo.casingColor?.cgColor // TODO: type check
-						layer.fillColor = nil
-						layer.lineWidth = renderInfo.casingWidth
-						layer.lineCap = renderInfo.casingCap
-						layer.lineDashPattern = renderInfo.casingDashPattern
-						layer.lineJoin = DEFAULT_LINEJOIN
-						layer.zPosition = Z_CASING
-						layer.properties.position = refPoint
-						layer.properties.lineWidth = layer.lineWidth
-						layers.append(layer)
-					}
+		// casing, way outline, and area fill
+		// For fillable areas use shapePathForObject() for all three; otherwise use linePathForObject().
+		let isWayOrMultipolygon = (object is OsmWay) || (object.isRelation()?.isMultipolygon() ?? false)
+		let isArea = object.geometry() == .AREA && renderInfo.areaColor != nil && !object.isCoastline()
 
-					// provide a halo for streets that don't have a name
-					if owner.useNoNameRoadHalo(), object.isWay()?.needsNoNameHighlight() ?? false {
-						// it lacks a name
-						let haloLayer = CAShapeLayerWithProperties()
-						haloLayer.anchorPoint = CGPoint(x: 0, y: 0)
-						haloLayer.position = CGPoint(refPoint)
-						haloLayer.path = path
-						haloLayer.strokeColor = UIColor.red.cgColor
-						haloLayer.fillColor = nil
-						haloLayer.lineWidth = renderInfo.lineWidth + 4
-						haloLayer.lineCap = DEFAULT_LINECAP
-						haloLayer.lineJoin = DEFAULT_LINEJOIN
-						haloLayer.zPosition = Z_HALO
-						let haloProps = haloLayer.properties
-						haloProps.position = refPoint
-						haloProps.lineWidth = haloLayer.lineWidth
-
-						layers.append(haloLayer)
-					}
-				}
-			}
-		}
-		// way (also provides an outline for areas)
-		if (object is OsmWay) || (object.isRelation()?.isMultipolygon() ?? false) {
-			var refPoint = OSMPoint(x: 0, y: 0)
-			let path = object.linePathForObject(withRefPoint: &refPoint)
-
-			if let path = path {
-				var lineWidth = renderInfo.lineWidth
-				if lineWidth == 0 {
-					DbgAssert(false) // handle this in RenderInfo
-					lineWidth = 2
-				}
-
+		if isWayOrMultipolygon,
+		   let (path, refPoint) = isArea ? object.shapePathForObject() : object.linePathForObject()
+		{
+			// casing
+			if renderInfo.casingWidth > renderInfo.lineWidth,
+			   renderInfo.casingColor != nil
+			{
 				let layer = CAShapeLayerWithProperties()
 				layer.anchorPoint = CGPoint(x: 0, y: 0)
-				let bbox = path.boundingBoxOfPath
-				layer.bounds = CGRect(x: 0, y: 0, width: bbox.size.width, height: bbox.size.height)
 				layer.position = CGPoint(refPoint)
 				layer.path = path
-				layer.strokeColor = (renderInfo.lineColor ?? UIColor.white).cgColor
+				layer.strokeColor = renderInfo.casingColor?.cgColor // TODO: type check
 				layer.fillColor = nil
-				layer.lineWidth = lineWidth
-				layer.lineCap = renderInfo.lineCap
-				layer.lineDashPattern = renderInfo.lineDashPattern
-				layer.lineJoin = .round
-				layer.zPosition = Z_LINE
-
-				let props = layer.properties
-				props.position = refPoint
-				props.lineWidth = layer.lineWidth
+				layer.lineWidth = renderInfo.casingWidth
+				layer.lineCap = renderInfo.casingCap
+				layer.lineDashPattern = renderInfo.casingDashPattern
+				layer.lineJoin = DEFAULT_LINEJOIN
+				layer.zPosition = Z_CASING
+				layer.properties.position = refPoint
+				layer.properties.lineWidth = layer.lineWidth
 				layers.append(layer)
+
+				// provide a halo for streets that don't have a name
+				if !isArea,
+				   owner.useNoNameRoadHalo(),
+				   object.isWay()?.needsNoNameHighlight() ?? false
+				{
+					// it lacks a name
+					let haloLayer = CAShapeLayerWithProperties()
+					haloLayer.anchorPoint = CGPoint(x: 0, y: 0)
+					haloLayer.position = CGPoint(refPoint)
+					haloLayer.path = path
+					haloLayer.strokeColor = UIColor.red.cgColor
+					haloLayer.fillColor = nil
+					haloLayer.lineWidth = renderInfo.lineWidth + 4
+					haloLayer.lineCap = DEFAULT_LINECAP
+					haloLayer.lineJoin = DEFAULT_LINEJOIN
+					haloLayer.zPosition = Z_HALO
+					let haloProps = haloLayer.properties
+					haloProps.position = refPoint
+					haloProps.lineWidth = haloLayer.lineWidth
+
+					layers.append(haloLayer)
+				}
+			} // casing
+
+			// way line
+			var lineWidth = renderInfo.lineWidth
+			if lineWidth == 0 {
+				DbgAssert(false) // handle this in RenderInfo
+				lineWidth = 2
 			}
-		}
+			let layer = CAShapeLayerWithProperties()
+			layer.anchorPoint = CGPoint(x: 0, y: 0)
+			let bbox = path.boundingBoxOfPath
+			layer.bounds = CGRect(x: 0, y: 0, width: bbox.size.width, height: bbox.size.height)
+			layer.position = CGPoint(refPoint)
+			layer.path = path
+			layer.strokeColor = (renderInfo.lineColor ?? UIColor.white).cgColor
+			layer.fillColor = nil
+			layer.lineWidth = lineWidth
+			layer.lineCap = renderInfo.lineCap
+			layer.lineDashPattern = renderInfo.lineDashPattern
+			layer.lineJoin = .round
+			layer.zPosition = Z_LINE
 
-		// Area
-		if object.geometry() == .AREA {
-			if let areaColor = renderInfo.areaColor,
-			   !object.isCoastline()
+			let props = layer.properties
+			props.position = refPoint
+			props.lineWidth = layer.lineWidth
+			layers.append(layer)
+
+			// Area fill (isArea already guarantees areaColor != nil and !isCoastline())
+			if isArea,
+			   let areaColor = renderInfo.areaColor
 			{
-				var refPoint = OSMPoint.zero
-				let path = object.shapePathForObject(withRefPoint: &refPoint)
-				if let path = path {
-					// draw
-					let alpha: CGFloat = object.tags["landuse"] != nil ? 0.15 : 0.25
-					let layer = CAShapeLayerWithProperties()
-					layer.anchorPoint = CGPoint(x: 0, y: 0)
-					layer.path = path
-					layer.position = CGPoint(refPoint)
-					layer.fillColor = areaColor.withAlphaComponent(alpha).cgColor
-					layer.lineCap = DEFAULT_LINECAP
-					layer.lineJoin = DEFAULT_LINEJOIN
-					layer.zPosition = Z_AREA
-					let props = layer.properties
-					props.position = refPoint
+				let alpha: CGFloat = object.tags["landuse"] != nil ? 0.15 : 0.25
+				let areaLayer = CAShapeLayerWithProperties()
+				areaLayer.anchorPoint = CGPoint(x: 0, y: 0)
+				areaLayer.path = path
+				areaLayer.position = CGPoint(refPoint)
+				areaLayer.fillColor = areaColor.withAlphaComponent(alpha).cgColor
+				areaLayer.lineCap = DEFAULT_LINECAP
+				areaLayer.lineJoin = DEFAULT_LINEJOIN
+				areaLayer.zPosition = Z_AREA
+				areaLayer.properties.position = refPoint
 
-					layers.append(layer)
-					if SHOW_3D {
-						// if its a building then add walls for 3D
-						if object.tags["building"] != nil {
-							// calculate height in meters
-							var height = 0.0
-							if let value = object.tags["height"] {
-								// height in meters?
-								let scanner = Scanner(string: value)
-								if let v1 = scanner.scanDouble() {
-									_ = scanner.scanCharacters(from: CharacterSet.whitespacesAndNewlines)
-									if scanner.scanString("'") != nil {
-										// feet
-										var v2 = 0.0
-										if let temp = scanner.scanDouble() {
-											v2 = temp
-											if scanner.scanString("\"") != nil {
-												// inches
-											} else {
-												// malformed
-											}
-										}
-										height = (v1 * 12 + v2) * 0.0254 // meters/inch
-									} else if scanner.scanString("ft") != nil {
-										height = v1 * 0.3048 // meters/foot
-									} else if scanner.scanString("yd") != nil {
-										height = v1 * 0.9144 // meters/yard
-									}
-								}
-							} else {
-								var levels = Double(object.tags["building:levels"] ?? "0") ?? 0.0
-								if levels == 0 {
-									levels = 1
-								}
-								height = 3 * levels // 3 meters per level
-							}
-							let hue = CGFloat(object.ident % 20 - 10)
-							var hasPrev = false
-							var prevPoint = OSMPoint.zero
-							path.apply(action: { [self] element in
-								if element.type == .moveToPoint {
-									prevPoint = Add(refPoint, Mult(OSMPoint(element.points[0]), 1 / PATH_SCALING))
-									hasPrev = true
-								} else if element.type == .addLineToPoint, hasPrev {
-									let pt = Add(refPoint, Mult(OSMPoint(element.points[0]), 1 / PATH_SCALING))
-									let wall = buildingWallLayer(for: pt, point: prevPoint, height: height, hue: hue)
-									if let wall = wall {
-										layers.append(wall)
-									}
-									prevPoint = pt
-								} else {
-									hasPrev = false
-								}
-							})
-							if true {
-								// get roof
-								let color = UIColor(hue: 0, saturation: 0.05, brightness: 0.75 + hue / 100, alpha: 1.0)
-								let roof = CAShapeLayerWithProperties()
-								roof.anchorPoint = CGPoint(x: 0, y: 0)
-								let bbox = path.boundingBoxOfPath
-								roof.bounds = CGRect(x: 0, y: 0, width: bbox.size.width, height: bbox.size.height)
-								roof.position = CGPoint(refPoint)
-								roof.path = path
-								roof.fillColor = color.cgColor
-								roof.strokeColor = UIColor.black.cgColor
-								roof.lineWidth = 1.0
-								roof.lineCap = DEFAULT_LINECAP
-								roof.lineJoin = DEFAULT_LINEJOIN
-								roof.zPosition = Z_BUILDING_ROOF
-								roof.isDoubleSided = true
+				layers.append(areaLayer)
 
-								let t = CATransform3DMakeTranslation(0, 0, CGFloat(height))
-								roof.properties.position = refPoint
-								roof.properties.transform3D = t
-								roof.properties.is3D = true
-								roof.properties.lineWidth = 1.0
-								roof.transform = t
-								layers.append(roof)
-							}
-						}
-					} // SHOW_3D
+				if SHOW_3D {
+					layers.append(contentsOf: buildingLayers(for: object,
+					                                         path: path,
+					                                         refPoint: refPoint))
 				}
 			}
 		}
 
 		// Names
-		if (object is OsmWay) || (object.isRelation()?.isMultipolygon() ?? false) {
-			// get object name, or address if no name
-			var name = object.givenName()
-			if name == nil {
-				name = HouseNumberForObjectTags(object.tags)
-			}
+		// Use object name, or address if no name
+		if object.geometry() == .AREA,
+		   let name = object.givenName() ?? HouseNumberForObjectTags(object.tags)
+		{
+			// place a label in the center of the object
+			let point = object.centerPoint()
+			let pt = MapTransform.mapPoint(forLatLon: point)
 
-			if let name = name {
-				let isLine = (object is OsmWay) && (object.geometry() != .AREA)
-				if isLine {
-					// These are drawn dynamically along the length of the way
-				} else {
-					// place a label in the center of the object
-					let point = object.centerPoint()
-					let pt = MapTransform.mapPoint(forLatLon: point)
+			let layer = CurvedGlyphLayer.layerWithString(name)
+			layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+			layer.position = CGPoint(x: pt.x, y: pt.y)
+			layer.zPosition = Z_TEXT
 
-					let layer = CurvedGlyphLayer.layerWithString(name)
-					layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-					layer.position = CGPoint(x: pt.x, y: pt.y)
-					layer.zPosition = Z_TEXT
+			let props = layer.properties
+			props.position = pt
 
-					let props = layer.properties
-					props.position = pt
-
-					layers.append(layer)
-				}
-			}
+			layers.append(layer)
 		}
 
 		// Turn Restrictions
-		if owner.useTurnRestrictions() {
-			if object.isRelation()?.isRestriction() ?? false {
-				let viaMembers = object.isRelation()?.members(byRole: "via") ?? []
-				for viaMember in viaMembers {
-					if let viaMemberObject = viaMember.obj,
-					   viaMemberObject.isNode() != nil || viaMemberObject is OsmWay
-					{
-						let latLon = viaMemberObject.selectionPoint()
-						let pt = MapTransform.mapPoint(forLatLon: latLon)
+		if owner.useTurnRestrictions(),
+		   object.isRelation()?.isRestriction() ?? false
+		{
+			let viaMembers = object.isRelation()?.members(byRole: "via") ?? []
+			for viaMember in viaMembers {
+				if let viaMemberObject = viaMember.obj,
+				   viaMemberObject.isNode() != nil || viaMemberObject is OsmWay
+				{
+					let latLon = viaMemberObject.selectionPoint()
+					let pt = MapTransform.mapPoint(forLatLon: latLon)
 
-						let restrictionLayerIcon = CALayerWithProperties()
-						restrictionLayerIcon.bounds = CGRect(
-							x: 0,
-							y: 0,
-							width: CGFloat(MinIconSizeInPixels),
-							height: CGFloat(MinIconSizeInPixels))
-						restrictionLayerIcon.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-						restrictionLayerIcon.position = CGPoint(x: pt.x, y: pt.y)
-						if viaMember.isWay(), object.tags["restriction"] == "no_u_turn" {
-							restrictionLayerIcon.contents = UIImage(named: "no_u_turn")?.cgImage
-						} else {
-							restrictionLayerIcon.contents = UIImage(named: "restriction_sign")?.cgImage
-						}
-						restrictionLayerIcon.zPosition = Z_TURN
-						let restrictionIconProps = restrictionLayerIcon.properties
-						restrictionIconProps.position = pt
-
-						layers.append(restrictionLayerIcon)
+					let restrictionLayerIcon = CALayerWithProperties()
+					restrictionLayerIcon.bounds = CGRect(
+						x: 0,
+						y: 0,
+						width: CGFloat(MinIconSizeInPixels),
+						height: CGFloat(MinIconSizeInPixels))
+					restrictionLayerIcon.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+					restrictionLayerIcon.position = CGPoint(x: pt.x, y: pt.y)
+					if viaMember.isWay(), object.tags["restriction"] == "no_u_turn" {
+						restrictionLayerIcon.contents = UIImage(named: "no_u_turn")?.cgImage
+					} else {
+						restrictionLayerIcon.contents = UIImage(named: "restriction_sign")?.cgImage
 					}
+					restrictionLayerIcon.zPosition = Z_TURN
+					let restrictionIconProps = restrictionLayerIcon.properties
+					restrictionIconProps.position = pt
+
+					layers.append(restrictionLayerIcon)
 				}
 			}
 		}
+
 		object.shapeLayers = layers
 		return layers
 	}

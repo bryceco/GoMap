@@ -302,7 +302,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		fatalError()
 	}
 
-	func linePathForObject(withOptionalRefPoint refPoint: UnsafeMutablePointer<OSMPoint>?) -> CGPath? {
+	func linePathForObject() -> (path: CGPath, refPoint: OSMPoint)? {
 		let wayList: [OsmWay]
 		if let way = self as? OsmWay {
 			wayList = [way]
@@ -340,34 +340,24 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			}
 		}
 
-		if refPoint != nil, haveInitial {
-			// place refPoint at upper-left corner of bounding box so it can be the origin for the frame/anchorPoint
-			let bbox = path.boundingBoxOfPath
-			if !bbox.origin.x.isInfinite {
-				var tran = CGAffineTransform(translationX: -bbox.origin.x, y: -bbox.origin.y)
-				let path2 = path.copy(using: &tran)!
-				refPoint!.pointee = OSMPoint(x: initial.x + Double(bbox.origin.x) / PATH_SCALING,
-				                             y: initial.y + Double(bbox.origin.y) / PATH_SCALING)
-				return path2
-			} else {
+		guard haveInitial else { return nil }
+		// place refPoint at upper-left corner of bounding box so it can be the origin for the frame/anchorPoint
+		let bbox = path.boundingBoxOfPath
+		guard !bbox.origin.x.isInfinite else {
 #if DEBUG
-				DLog("bad path: \(self)")
+			DLog("bad path: \(self)")
 #endif
-			}
+			return nil
 		}
-		return path
-	}
-
-	func linePathForObject(withRefPoint refPoint: UnsafeMutablePointer<OSMPoint>) -> CGPath? {
-		return linePathForObject(withOptionalRefPoint: refPoint)
-	}
-
-	func linePathForObject() -> CGPath? {
-		return linePathForObject(withOptionalRefPoint: nil)
+		var tran = CGAffineTransform(translationX: -bbox.origin.x, y: -bbox.origin.y)
+		let path2 = path.copy(using: &tran)!
+		let refPoint = OSMPoint(x: initial.x + Double(bbox.origin.x) / PATH_SCALING,
+		                        y: initial.y + Double(bbox.origin.y) / PATH_SCALING)
+		return (path2, refPoint)
 	}
 
 	// suitable for drawing polygon areas with holes, etc.
-	func shapePathForObject(withRefPoint pRefPoint: UnsafeMutablePointer<OSMPoint>) -> CGPath? {
+	func shapePathForObject() -> (path: CGPath, refPoint: OSMPoint)? {
 		assertionFailure()
 		return nil
 	}
@@ -748,5 +738,38 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	func geometryName() -> String {
 		return geometry().rawValue
+	}
+
+	// Returns the building height in meters if this object has a "building" tag, otherwise nil.
+	func buildingHeight() -> Double? {
+		guard tags["building"] != nil else {
+			return nil
+		}
+		if let value = tags["height"] {
+			let scanner = Scanner(string: value)
+			if let v1 = scanner.scanDouble() {
+				_ = scanner.scanCharacters(from: CharacterSet.whitespacesAndNewlines)
+				if scanner.scanString("'") != nil {
+					// feet and optional inches
+					var v2 = 0.0
+					if let temp = scanner.scanDouble() {
+						v2 = temp
+						_ = scanner.scanString("\"") // inches
+					}
+					return (v1 * 12 + v2) * 0.0254 // meters/inch
+				} else if scanner.scanString("ft") != nil {
+					return v1 * 0.3048 // meters/foot
+				} else if scanner.scanString("yd") != nil {
+					return v1 * 0.9144 // meters/yard
+				}
+			}
+			return 0.0
+		} else {
+			var levels = Double(tags["building:levels"] ?? "0") ?? 0.0
+			if levels == 0 {
+				levels = 1
+			}
+			return 3 * levels // 3 meters per level
+		}
 	}
 }

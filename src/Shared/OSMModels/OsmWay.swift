@@ -463,31 +463,31 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 
 	class func shapePath(
 		forNodes nodes: [OsmNode],
-		forward: Bool,
-		withRefPoint pRefPoint: UnsafeMutablePointer<OSMPoint>) -> CGPath?
+		forward: Bool) -> (path: CGPath, refPoint: OSMPoint)?
 	{
 		if nodes.count == 0 || nodes[0] != nodes.last {
 			return nil
 		}
 		let path = CGMutablePath()
+		var refPoint = OSMPoint.zero
 		var first = true
 		// want loops to run clockwise
 		for n in forward ? nodes : nodes.reversed() {
 			let pt = MapTransform.mapPoint(forLatLon: n.latLon)
 			if first {
 				first = false
-				pRefPoint.pointee = pt
+				refPoint = pt
 				path.move(to: CGPoint(x: 0, y: 0))
 			} else {
-				path.addLine(to: CGPoint(x: CGFloat((pt.x - pRefPoint.pointee.x) * PATH_SCALING),
-				                         y: CGFloat((pt.y - pRefPoint.pointee.y) * PATH_SCALING)))
+				path.addLine(to: CGPoint(x: CGFloat((pt.x - refPoint.x) * PATH_SCALING),
+				                         y: CGFloat((pt.y - refPoint.y) * PATH_SCALING)))
 			}
 		}
-		return path
+		return (path, refPoint)
 	}
 
-	override func shapePathForObject(withRefPoint pRefPoint: UnsafeMutablePointer<OSMPoint>) -> CGPath? {
-		return OsmWay.shapePath(forNodes: nodes, forward: isClockwise(), withRefPoint: pRefPoint)
+	override func shapePathForObject() -> (path: CGPath, refPoint: OSMPoint)? {
+		return OsmWay.shapePath(forNodes: nodes, forward: isClockwise())
 	}
 
 	func hasDuplicatedNode() -> Bool {

@@ -324,7 +324,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		return a
 	}
 
-	override func shapePathForObject(withRefPoint pRefPoint: UnsafeMutablePointer<OSMPoint>) -> CGPath? {
+	override func shapePathForObject() -> (path: CGPath, refPoint: OSMPoint)? {
 		let loopList = buildMultipolygonRepairing(true)
 		if loopList.isEmpty {
 			return nil
@@ -350,8 +350,8 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 				}
 			}
 		}
-		pRefPoint.pointee = refPoint!
-		return path
+		guard let refPoint else { return nil }
+		return (path, refPoint)
 	}
 
 	override func centerPoint() -> LatLon {

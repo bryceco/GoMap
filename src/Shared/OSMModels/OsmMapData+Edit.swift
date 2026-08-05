@@ -1347,8 +1347,7 @@ extension OsmMapData {
 
 		var innerSet: [OsmMember] = []
 		for loop in loopList {
-			var refPoint = OSMPoint.zero
-			guard let path = OsmWay.shapePath(forNodes: loop, forward: true, withRefPoint: &refPoint)
+			guard let (path, refPoint) = OsmWay.shapePath(forNodes: loop, forward: true)
 			else {
 				continue
 			}
