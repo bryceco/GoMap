@@ -41,6 +41,12 @@
             "value" : "Label"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",

@@ -85,8 +85,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mapnik-tegels"
+            "state" : "translated",
+            "value" : "Basiskaarttegels"
           }
         },
         "pt" : {
@@ -410,7 +410,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Credits"
+            "value" : "Auteursrechten"
           }
         },
         "pt" : {
@@ -553,8 +553,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Als je ergens in kaart aan het brengen bent met beperkte verbinding kan je de luchtbeelden en/of Mapnik-tegels voor de volgende twee hogere zoomniveaus die in je huidige weergave-gebied zijn downloaden."
+            "state" : "translated",
+            "value" : "Als je ergens in kaart aan het brengen bent met beperkte verbinding kan je de luchtbeelden en/of basiskaarttegels voor de volgende twee hogere zoomniveaus die in je huidige weergave-gebied zijn downloaden."
           }
         },
         "pt" : {
@@ -971,6 +971,12 @@
             "value" : "FPS最大化"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maximaliseer FPS"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1241,6 +1247,12 @@
             "value" : "名前"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naam"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1375,8 +1387,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Specificeer een host als je gegevens op een alternatieve OSM-server wilt bewerken. De standaardhost is api.openstreetmap.org."
+            "state" : "translated",
+            "value" : "Kies een server als je gegevens wilt bewerken die op een andere OSM-server staan."
           }
         },
         "pt" : {
@@ -1827,6 +1839,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OpenStreetMap アカウント"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OpenStreetMap-account"
           }
         },
         "ru" : {
@@ -2281,7 +2299,7 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Taal"
           }
         },
@@ -2403,6 +2421,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "> 60 FPS 有効化"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maakt > 60 FPS mogelijk"
           }
         },
         "pt" : {
@@ -2991,6 +3015,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アカウント情報"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accountgegevens"
           }
         },
         "ru" : {
@@ -3719,6 +3749,12 @@
             "value" : "सनोंद प्रवेश"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log in"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3906,6 +3942,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "-"
@@ -5109,6 +5151,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "アカウントをリフレッシュ"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Account opnieuw laden"
           }
         },
         "ru" : {
@@ -7907,6 +7955,12 @@
             "value" : "-"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "-"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8042,7 +8096,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Credits"
+            "value" : "Auteursrechten"
           }
         },
         "pt" : {
@@ -9263,6 +9317,12 @@
             "value" : "サインアウト"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uitloggen"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9369,6 +9429,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "変更セット"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wijzigingensets"
           }
         },
         "ru" : {
@@ -9801,6 +9867,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Slack - 意見交換"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slack - Discussie"
           }
         },
         "ru" : {

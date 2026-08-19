@@ -969,6 +969,12 @@
             "value" : "トレーニングの経路はGPX形式の経路としてインポートできます。"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Routes van je workouts kunnen als GPX-routes worden geïmporteerd."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1069,6 +1075,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "健康情報が全く更新されていません。"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gezondheidsinformatie wordt nooit bijgewerkt."
           }
         },
         "ru" : {
@@ -1705,6 +1717,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktivering av posisjonstjenester lar appen vise objekter i nærheten. Dette lar deg enkelt oppdatere eller legge til data du selv kartlegger."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Door locatievoorzieningen in te schakelen, kan de app objecten in je omgeving weergeven. Hierdoor kun je eenvoudig gegevens die je zelf ter plaatse controleert, bijwerken of toevoegen."
           }
         },
         "oc" : {

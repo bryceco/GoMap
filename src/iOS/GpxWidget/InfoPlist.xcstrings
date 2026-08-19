@@ -65,6 +65,12 @@
             "value" : "GpxWidget"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidget"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -150,6 +156,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GpxWidgetExtension"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GpxWidgetExtension"
@@ -255,6 +267,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copyright © 2024 Bryce Cogswell. All rights reserved."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copyright © 2024 Bryce Cogswell. Alle rechten voorbehouden."
           }
         },
         "ru" : {

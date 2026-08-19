@@ -1037,6 +1037,12 @@
             "value" : "キー"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sleutel"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2267,6 +2273,12 @@
             "value" : "新規追加"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuwe toevoegen"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2513,6 +2525,12 @@
             "value" : "エリア"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebied"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2757,6 +2775,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "カスタムフィーチャ"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aangepaste functies"
           }
         },
         "ru" : {
@@ -3705,6 +3729,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "頂点"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoekpunt"
           }
         },
         "ru" : {
@@ -4661,6 +4691,12 @@
             "value" : "ポイント"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punt"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5233,8 +5269,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aangepaste presets"
+            "state" : "translated",
+            "value" : "Aangepaste velden"
           }
         },
         "pt" : {
@@ -6201,6 +6237,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "leaf_type"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "bladtype"
           }
         },
         "ru" : {
@@ -7211,6 +7253,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Uses semi-colon seperated values (e.g. pizza;kebab for cuisine)\"; ObjectID = \"LAL-tL-bub\"; Note = \"This is used for tags like cuisine=italian;pizza.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používá hodnoty oddělené středníkem (např. pizza;kebab pro „cuisine“)"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7221,6 +7269,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Uses semi-colon seperated values (e.g. pizza;kebab for cuisine)"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebruikt waarden gescheiden door een puntkomma (bijv. pizza;kebab voor keuken)"
           }
         },
         "ru" : {
@@ -7287,6 +7341,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "カスタムフィーチャ"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aangepaste functie"
           }
         },
         "ru" : {
@@ -7997,6 +8057,12 @@
             "value" : "キー"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sleutel"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8238,6 +8304,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ⓘ"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "ⓘ"
@@ -8565,6 +8637,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "natural"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "natuurlijk"
           }
         },
         "ru" : {
@@ -9223,8 +9301,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Aangepaste preset"
+            "state" : "translated",
+            "value" : "Aangepast veld"
           }
         },
         "pt" : {
@@ -9647,6 +9725,12 @@
             "value" : "カスタムフィーチャ"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aangepaste functies"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9729,6 +9813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Oak Tree"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eik"
           }
         },
         "ru" : {
@@ -10015,8 +10105,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Preset-naam"
+            "state" : "translated",
+            "value" : "Veld-naam"
           }
         },
         "pt" : {
@@ -10131,6 +10221,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "genus"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "geslacht"
           }
         },
         "ru" : {
@@ -10541,6 +10637,12 @@
             "value" : "この地物の選択時に追加できるタグ。"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tags om toe te voegen wanneer deze functie wordt geselecteerd."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10625,6 +10727,12 @@
             "value" : "地物のタグ"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Functietags"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10695,6 +10803,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Warisi preset dari fitur ini. Jika tidak ada, maka memilih fitur ini akan menggabungkan (bukan mengganti) tag ke objek target."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De preset van deze functie overnemen. Als er geen presets zijn, worden de tags bij het selecteren van deze functie samengevoegd (en niet vervangen) met het doelobject."
           }
         },
         "ru" : {
@@ -10785,6 +10899,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "地物の種類:"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Type functie:"
           }
         },
         "ru" : {
@@ -11231,6 +11351,12 @@
             "value" : "Name"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naam"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11529,6 +11655,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "戻る"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terug"
           }
         },
         "ru" : {
@@ -12539,6 +12671,12 @@
             "value" : "ライン"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lijn"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12783,6 +12921,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "タイトル"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel"
           }
         },
         "ru" : {
@@ -13439,6 +13583,12 @@
             "value" : "キー"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "sleutel"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13683,6 +13833,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "キャンセル"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuleren"
           }
         },
         "ru" : {

@@ -2949,6 +2949,12 @@
             "value" : "%.0f चौ.मी"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%.0f m²"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3877,14 +3883,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg meter"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg meter"
                     }
                   }
                 }
@@ -3897,14 +3903,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg knoop"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
-                      "value" : "%arg"
+                      "state" : "translated",
+                      "value" : "%arg knopen"
                     }
                   }
                 }
@@ -7110,8 +7116,8 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
-                  "value" : "%ld Dagen"
+                  "state" : "translated",
+                  "value" : "%ld Dag"
                 }
               },
               "other" : {
@@ -8983,8 +8989,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@nodes@"
+            "state" : "translated",
+            "value" : "%1$#@meter@, %2$#@knopen@"
           },
           "substitutions" : {
             "meters" : {
@@ -8994,14 +9000,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
+                      "state" : "translated",
                       "value" : "%arg meter"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg meters"
+                      "state" : "translated",
+                      "value" : "%arg meter"
                     }
                   }
                 }
@@ -9014,14 +9020,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg node"
+                      "state" : "translated",
+                      "value" : "%arg knoop"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg nodes"
+                      "state" : "translated",
+                      "value" : "%arg knopen"
                     }
                   }
                 }
@@ -12799,8 +12805,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "%#@meters@, %#@points@, %#@waypoints@"
+            "state" : "translated",
+            "value" : "%1$#@meter@, %2$#@punten@, %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
@@ -12810,14 +12816,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
+                      "state" : "translated",
                       "value" : "%ld meter"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld meters"
+                      "state" : "translated",
+                      "value" : "%ld meter"
                     }
                   }
                 }
@@ -12830,14 +12836,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld point"
+                      "state" : "translated",
+                      "value" : "%ld punt"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%ld points"
+                      "state" : "translated",
+                      "value" : "%ld punten"
                     }
                   }
                 }
@@ -14887,14 +14893,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicate"
+                      "state" : "translated",
+                      "value" : "%arg duplicaat"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg duplicates"
+                      "state" : "translated",
+                      "value" : "%arg duplicaten"
                     }
                   }
                 }
@@ -14907,14 +14913,14 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new route"
+                      "state" : "translated",
+                      "value" : "%arg nieuwe route"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "new",
-                      "value" : "%arg new routes"
+                      "state" : "translated",
+                      "value" : "%arg nieuwe routes"
                     }
                   }
                 }
@@ -17437,6 +17443,12 @@
             "value" : "Én dag"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "1 Dag"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17535,6 +17547,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "सर्व वापरकर्ता-परिभाषित मोहिमांची एक प्रत क्लिपबोर्डवर JSON स्वरूपात कॉपी केली गेली आहे. ह्याची प्रत साठवण्यासाठी किंवा दुसऱ्याला पाठवण्यासाठी तुम्ही ती पेस्ट करुन वापरू शकता."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is een kopie van alle door de gebruiker gedefinieerde quests in JSON-formaat naar het klembord gekopieerd. Je kunt deze ergens plakken om een kopie te bewaren of naar iemand anders te sturen."
           }
         },
         "oc" : {
@@ -18136,6 +18154,12 @@
             "value" : "इमारतीचा प्रकार जोडा"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebouwtype toevoegen"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18195,6 +18219,24 @@
     "Add Crossing Markings" : {
       "comment" : "A type of quest",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat značení přechodu"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oversteekmarkeringen toevoegen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить разметку пешеходного перехода"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18264,6 +18306,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "महामार्गाचा पृष्ठभाग जोडा"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wegdek toevoegen"
           }
         },
         "pt" : {
@@ -18507,6 +18555,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tambah simpul"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knoop toevoegen"
           }
         },
         "ru" : {
@@ -19067,6 +19121,12 @@
             "value" : "उघडण्याच्या वेळा जोडा"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Openingsuren toevoegen"
+          }
+        },
         "oc" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19341,6 +19401,12 @@
             "value" : "Panoramaxの写真を追加"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Panoramax-foto toevoegen"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19440,6 +19506,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "वाहनतळ प्रकार जोडा"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Soort parkeerterrein toevoegen"
           }
         },
         "oc" : {
@@ -19567,6 +19639,12 @@
             "value" : "पदपथाचा पृष्ठभाग जोडा"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voetpadoppervlak toevoegen"
+          }
+        },
         "oc" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19692,6 +19770,12 @@
             "value" : "वेग मर्यादा जोडा"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snelheidslimiet toevoegen"
+          }
+        },
         "oc" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19809,6 +19893,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "दूरध्वनी क्रमांक जोडा"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Telefoonnummer toevoegen"
           }
         },
         "oc" : {
@@ -20082,6 +20172,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "संकेतस्थळ जोडा"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Website toevoegen"
           }
         },
         "oc" : {
@@ -20946,6 +21042,12 @@
             "value" : "Semua data yang tersimpan dalam cache termasuk petak citra aerial, data TagInfo dan Wiki, dll."
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle gegevens in de cache, waaronder tegels met luchtfoto’s, TagInfo- en Wiki-gegevens, enz."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21156,6 +21258,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Semua petak peta untuk peta dasar yang sedang dipilih (Mapnik, Americana, dll)."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle kaarttegels voor de momenteel geselecteerde basiskaart (Mapnik, Americana, enz.)."
           }
         },
         "ru" : {
@@ -21419,6 +21527,12 @@
             "value" : "निर्यात करताना त्रुटी उद्भवली: %@"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is een fout opgetreden tijdens het exporteren: %@"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21536,6 +21650,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "आयात करताना एक त्रुटी उद्भवली: % @"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is een fout opgetreden tijdens het importeren: %@"
           }
         },
         "pt" : {
@@ -21661,6 +21781,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Flate"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebied"
           }
         },
         "nn" : {
@@ -22764,6 +22890,12 @@
             "value" : "Bedre bakgrunnsbilder er tilgjengelig for posisjonen din. Vil du bytte til det?"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er zijn betere achtergrondbeelden beschikbaar voor jouw locatie. Wil je hiernaar overschakelen?"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22888,6 +23020,12 @@
             "value" : "Bedre bakgrunnsbilder tilgjengelig"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Betere beelden beschikbaar"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22998,6 +23136,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "नवीन मोहीम रचा"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maak een nieuwe quest"
           }
         },
         "pt" : {
@@ -23111,6 +23255,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "建物"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gebouw"
           }
         },
         "ru" : {
@@ -23484,6 +23634,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cache"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Caches"
           }
         },
         "ru" : {
@@ -25409,6 +25565,12 @@
             "value" : "Endre"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wijzigen"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25683,6 +25845,12 @@
             "value" : "既存の写真を選択してください"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kies een bestaande foto"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25781,6 +25949,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "すべてクリア"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alles wissen"
           }
         },
         "ru" : {
@@ -25991,6 +26165,12 @@
           }
         },
         "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kompas"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kompas"
@@ -26671,6 +26851,12 @@
             "value" : "कॉपी केले"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gekopieerd"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -27025,7 +27211,32 @@
       }
     },
     "Could not parse note" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text poznámky nelze zpracovat"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De opmerking kon niet worden verwerkt"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не удалось разобрать заметку"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not ayrıştırılamadı"
+          }
+        }
+      }
     },
     "Create\n" : {
       "localizations" : {
@@ -27229,6 +27440,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "各キー/値ペアのために、そして一致したオブジェクトを含めるか除外するかを示すために表内に行を作成します。キーが無いことを示すには値を空にします。任意の値に一致させる場合は key=* を使います。"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Maak voor elk sleutel/waarde-paar een rij in de tabel aan en geef aan of bijbehorende objecten moeten worden opgenomen of uitgesloten. Laat het veld ‘waarde’ leeg om aan te geven dat de sleutel niet aanwezig is. Gebruik ‘sleutel=*’ om elke willekeurige waarde te selecteren."
           }
         },
         "pt" : {
@@ -33890,6 +34107,12 @@
             "value" : "गाळणी"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filters"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -33997,6 +34220,12 @@
             "value" : "ft"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ft"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34075,6 +34304,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GeoJSON"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GeoJSON"
@@ -34269,6 +34504,12 @@
             "value" : "GPS"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPS"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34341,6 +34582,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX"
@@ -34743,6 +34990,12 @@
             "value" : "健康キット"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -34958,6 +35211,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bantuan"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Help"
           }
         },
         "ru" : {
@@ -35183,6 +35442,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "चिन्ह"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pictogram"
           }
         },
         "pt" : {
@@ -35594,6 +35859,12 @@
             "value" : "आयात"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importeren"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -35706,6 +35977,12 @@
             "value" : "आयात त्रुटी"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importeerfout"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -35793,6 +36070,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impor GPX"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX importeren"
           }
         },
         "ru" : {
@@ -35887,6 +36170,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "मोहीम आयात करा"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quests importeren"
           }
         },
         "pt" : {
@@ -36084,10 +36373,22 @@
     "Include Chain/Brand names" : {
       "comment" : "Include Name Suggestion Index (NSI) chain/brand results in search",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zahrnout název řetězce/značky"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Handelsketten/Markennamen einschließen"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vermeld keten- en merknamen"
           }
         },
         "ru" : {
@@ -36600,6 +36901,12 @@
             "value" : "कीज"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sleutels"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -36701,6 +37008,12 @@
             "value" : "kg"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kg"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -36779,6 +37092,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "km"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "km"
@@ -36883,6 +37202,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "km/t"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "km/u"
           }
         },
         "pt" : {
@@ -37284,6 +37609,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lbs"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "lbs"
@@ -37830,6 +38161,12 @@
             "value" : "रेष"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lijn"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -38052,6 +38389,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lokasi diperbarui ke lokasi dan orientasi yang tersimpan dalam foto."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De locatie is bijgewerkt naar de locatie en oriëntatie die in de foto zijn opgeslagen."
           }
         },
         "ru" : {
@@ -38409,6 +38752,12 @@
             "value" : "lt"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "lt"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -38487,6 +38836,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "m"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "m"
@@ -38983,6 +39338,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Petak Peta"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaarttegels"
           }
         },
         "ru" : {
@@ -40182,6 +40543,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mi"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "mi"
@@ -41800,6 +42167,12 @@
             "value" : "mp/t"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mph"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -42070,6 +42443,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "नाव"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Naam"
           }
         },
         "pt" : {
@@ -42725,6 +43104,12 @@
             "value" : "नाही"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "nee"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -43200,6 +43585,24 @@
     "No Location Data" : {
       "comment" : "The selected photo has no GPS coordinates",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Žádné údaje o poloze"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen locatiegegevens"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нет данных о местоположении"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -43239,6 +43642,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tidak ada yang cocok"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geen overeenkomst"
           }
         },
         "ru" : {
@@ -45076,7 +45485,33 @@
       }
     },
     "Note #%@" : {
-      "comment" : "OSM note title with ID number"
+      "comment" : "OSM note title with ID number",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poznámka #%@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opmerking #%@"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заметка #%@"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not #%@"
+          }
+        }
+      }
     },
     "Note History" : {
       "comment" : "OSM note",
@@ -45828,6 +46263,12 @@
             "value" : "古い値: %@"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oude waarde: %@"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -46572,6 +47013,12 @@
             "value" : "Buka Berkas Gambar"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beeldbestand openen"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -46932,6 +47379,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Data OSM"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OSM-gegevens"
           }
         },
         "ru" : {
@@ -47323,6 +47776,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "आपल्या मोहिमांसाठी खालील क्षेत्रात JSON चिकटवा"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plak de JSON-code voor je quests in het onderstaande veld"
           }
         },
         "pt" : {
@@ -48765,6 +49224,12 @@
             "value" : "GPX停止"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX pauzeren"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -48847,6 +49312,12 @@
             "value" : "GPX経路の記録を停止"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De opname van GPX-tracks pauzeren."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -48915,6 +49386,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Foto tidak tersedia"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto niet beschikbaar"
           }
         },
         "ru" : {
@@ -49146,6 +49623,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "बिंदू"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punt"
           }
         },
         "pt" : {
@@ -49617,6 +50100,12 @@
             "value" : "ही मोहीम ओळखण्यासाठी एक अक्षरी चिन्ह (इमोजी किंवा यूनिकोड अक्षर) प्रदान करा:"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geef een symbool van één teken (emoji of unicode-teken) op om deze quest te identificeren:"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -49873,6 +50362,12 @@
             "value" : "मोहीम"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quest"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -50083,6 +50578,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "मोहीम यशस्वीरित्या आयात केले गेले."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De quests werden succesvol geïmporteerd."
           }
         },
         "pt" : {
@@ -52892,6 +53393,12 @@
             "value" : "साठवा"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opslaan"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -52992,6 +53499,12 @@
             "value" : "変更を保存または破棄"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewaar of verwerp je wijzigingen"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -53073,6 +53586,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cari"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoeken"
           }
         },
         "ru" : {
@@ -53415,6 +53934,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "プリセットに使用する言語を選択します。他のアプリコンテンツでは、デフォルトの言語が使用されます。"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Selecteer de taal die voor de Presets worden gebruikt. Voor de overige inhoud van de app wordt je standaardtaal gebruikt."
           }
         },
         "ru" : {
@@ -54206,6 +54731,12 @@
             "value" : "Pengaturan…"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instellingen…"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54704,6 +55235,12 @@
             "value" : "%@ ファイルの読み込に中にエラーが発生しました"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sorry, er is een fout opgetreden bij het laden van het %@-bestand"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54791,6 +55328,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "स्पेस"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Spatie"
           }
         },
         "pt" : {
@@ -55026,6 +55569,12 @@
           }
         },
         "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "st"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "st"
@@ -55404,6 +55953,12 @@
             "value" : "GPX開始"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX starten"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -55484,6 +56039,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX経路の記録を開始"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start met het opnemen van GPX-tracks."
           }
         },
         "ru" : {
@@ -55716,6 +56277,12 @@
             "value" : "GPX終了"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX stoppen"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -55796,6 +56363,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX経路の記録を終了"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop met het opnemen van GPX-tracks."
           }
         },
         "ru" : {
@@ -56029,6 +56602,12 @@
             "value" : "यशवी"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Succes"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -56124,6 +56703,12 @@
             "value" : "t"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "t"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -56198,6 +56783,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "タグキー"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tag sleutel"
           }
         },
         "pt" : {
@@ -56448,6 +57039,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新しい写真を撮る"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuwe foto maken"
           }
         },
         "ru" : {
@@ -57176,6 +57773,24 @@
     },
     "The photo does not contain location data. Panoramax requires that uploaded photos contain location data." : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Snímek neobsahuje údaje o poloze. Panoramax vyžaduje nahrání snímků jen s údaji o místě jejich pořízení."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De foto bevat geen locatiegegevens. Panoramax vereist dat geüploade foto’s locatiegegevens bevatten."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фото не содержит данных о местоположении. В Panoramax необходимо загружать фото с данными о местоположении."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -57346,6 +57961,12 @@
             "value" : "Berkas gambar yang dipilih tidak berisi informasi lokasi."
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het geselecteerde beeldbestand bevat geen locatiegegevens."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -57387,6 +58008,24 @@
     "The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax." : {
       "comment" : "Error shown when a selected photo cannot be converted to JPEG format",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vybraný snímek nelze převést do JPEG. Panoramax přijímá pouze JPEG soubory."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De geselecteerde foto kon niet naar JPEG worden omgezet. Alleen JPEG-afbeeldingen kunnen naar Panoramax worden geüpload."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выбранное фото не может быть конвертировано в формат JPEG. Только изображения в формате JPEG могут быть загружены в Panoramax."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -58767,6 +59406,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "この機能が使えるのはIOS15以降です"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze functie is alleen beschikbaar op iOS 15 of hoger"
           }
         },
         "pt" : {
@@ -61126,6 +61771,12 @@
             "value" : "Atas"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omhoog"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -61439,7 +62090,26 @@
       }
     },
     "Update Error" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chyba aktualizace"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ошибка обновления"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Güncelleme Hatası"
+          }
+        }
+      }
     },
     "update relation members" : {
       "localizations" : {
@@ -61862,7 +62532,7 @@
         }
       }
     },
-    "Upload succeeded but the server returned unexpected data.\nYou should use Clear Cache > OSM Data before continuing to map." : {
+    "Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map." : {
       "comment" : "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings"
     },
     "Upload to OSM" : {
@@ -62788,6 +63458,12 @@
             "value" : "頂点ノード"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoekpunt"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63700,6 +64376,12 @@
             "value" : "ह्या मोहिमेचे नाव काय? एखाद्या कृतीच्या स्वरुपात, जसे की 'पृष्ठभाग जोडा', लिहिणे सर्वात उत्तम:"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hoe heet deze quest? Dit kun je het beste in de vorm van een actie verwoorden, zoals ‘Oppervlak toevoegen’:"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63800,6 +64482,12 @@
             "value" : "ह्या मोहिमेत कोणती 'टॅग की' बदलली जाते?"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welke tag-sleutel wordt door deze quest gewijzigd?"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63898,6 +64586,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ही मोहीम कोणत्या प्रकारच्या वस्तूंना लागू होते?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Op welke soorten objecten is deze quest van toepassing?"
           }
         },
         "pt" : {
@@ -64004,6 +64698,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "हो"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ja"
           }
         },
         "pt" : {
@@ -64223,6 +64923,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "プリセットのカスタムフィールドを定義できます。フィールドは、機能に関連付けられた単一のキーと値のペアです。"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Je kunt aangepaste velden voor presets definiëren. Een veld is een enkel sleutel/waarde-paar dat aan een functie is gekoppeld."
           }
         },
         "ru" : {

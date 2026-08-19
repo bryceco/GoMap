@@ -64,6 +64,12 @@
             "value" : "%@"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -141,6 +147,12 @@
           }
         },
         "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ %2$@"
@@ -225,6 +237,12 @@
           }
         },
         "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$lld"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ %2$lld"
@@ -318,6 +336,12 @@
             "value" : "%@ Stop"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ Stop"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -397,6 +421,12 @@
           }
         },
         "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld"
@@ -492,6 +522,12 @@
             "value" : "Durata"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duur"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -571,6 +607,12 @@
           }
         },
         "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Go Map!!"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Go Map!!"
@@ -666,6 +708,12 @@
             "value" : "Traccia GPX"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX-spoor"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -752,6 +800,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX停止"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GPX pauzeren"
           }
         },
         "ru" : {
@@ -848,6 +902,12 @@
             "value" : "GPX経路の記録を停止"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De opname van GPX-tracks pauzeren."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -936,6 +996,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Punti"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Punten"
           }
         },
         "ru" : {
@@ -1038,6 +1104,12 @@
             "value" : "GPX開始"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start GPX"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1138,6 +1210,12 @@
             "value" : "GPX経路の記録を開始"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Begin met het opnemen van GPX-tracks."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1226,6 +1304,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Iniziato a %@"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gestart om %@"
           }
         },
         "ru" : {
@@ -1328,6 +1412,12 @@
             "value" : "GPX終了"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop GPX"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1420,6 +1510,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GPX経路の記録を終了"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop met het opnemen van GPX-tracks."
           }
         },
         "ru" : {

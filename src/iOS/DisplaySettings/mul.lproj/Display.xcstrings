@@ -593,6 +593,12 @@
             "value" : "Mapnik"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mapnik"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1715,6 +1721,12 @@
             "value" : "ベースマップ"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Basiskaart"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1989,6 +2001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "健康キットの経路:"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit-routes:"
           }
         },
         "ru" : {
@@ -3425,6 +3443,12 @@
             "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "http://{switch:a,b,c}.tile.org/{z}/{x}/{y}.png\n "
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3714,6 +3738,12 @@
           }
         },
         "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12:00:00"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "12:00:00"
@@ -4491,6 +4521,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dettagli"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Details"
           }
         },
         "ru" : {
@@ -5801,6 +5837,12 @@
             "value" : "(TMS)"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "(TMS)"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6051,6 +6093,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nupp"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knop"
           }
         },
         "ru" : {
@@ -6511,8 +6559,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Filters aanzetten"
+            "state" : "translated",
+            "value" : "Objectfilters"
           }
         },
         "pl" : {
@@ -6998,7 +7046,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Luchtbeelden-leverancier"
+            "value" : "Luchtfoto-aanbieder"
           }
         },
         "pt" : {
@@ -7127,6 +7175,12 @@
             "value" : "データのオーバーレイ"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gegevensoverlays"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7233,6 +7287,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "मोहीम"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quests"
           }
         },
         "pt" : {
@@ -8207,6 +8267,12 @@
             "value" : "टिपा व सुधार चिठ्ठ्या"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opmerkingen en Fixmes"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8645,6 +8711,12 @@
             "value" : "Riquadri Aerei"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Luchttegels"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8915,6 +8987,12 @@
             "value" : "ベースマップのみ"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alleen basiskaart"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9021,6 +9099,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "タイトル"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titel"
           }
         },
         "ru" : {
@@ -9152,7 +9236,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Service-wegen"
+            "value" : "Dienstwegen"
           }
         },
         "pl" : {
@@ -9447,6 +9531,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "インポート"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Importeren"
           }
         },
         "ru" : {
@@ -10661,6 +10751,12 @@
             "value" : "Tombol"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knop"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11256,6 +11352,12 @@
           }
         },
         "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "12/22/20, 7:55 PM"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "12/22/20, 7:55 PM"
@@ -12333,6 +12435,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tombol"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Knop"
           }
         },
         "ru" : {

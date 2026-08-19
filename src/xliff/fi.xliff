@@ -1609,6 +1609,10 @@ Error: %@</source>
         <source>HealthKit</source>
         <note>iOS HealthKit framework</note>
       </trans-unit>
+      <trans-unit id="HealthKit is not available on this device." xml:space="preserve">
+        <source>HealthKit is not available on this device.</source>
+        <note />
+      </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
         <source>Height: %1$@ ± %2$@ meters</source>
         <target state="translated">Korkeus: %1$@ ± %2$@ metriä</target>
@@ -1882,6 +1886,10 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No results found" xml:space="preserve">
         <source>No results found</source>
+        <note />
+      </trans-unit>
+      <trans-unit id="No route data found." xml:space="preserve">
+        <source>No route data found.</source>
         <note />
       </trans-unit>
       <trans-unit id="No tags to paste" xml:space="preserve">
@@ -2449,6 +2457,12 @@ Select the highway from which you are approaching the intersection, then tap an 
       <trans-unit id="Upload complete!" xml:space="preserve">
         <source>Upload complete!</source>
         <note />
+      </trans-unit>
+      <trans-unit id="Upload succeeded but the server returned mismatched data.&#10;&#10;You should use Clear Cache &gt; OSM Data before continuing to map." xml:space="preserve">
+        <source>Upload succeeded but the server returned mismatched data.
+
+You should use Clear Cache &gt; OSM Data before continuing to map.</source>
+        <note>'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings</note>
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
         <source>Upload to OSM</source>

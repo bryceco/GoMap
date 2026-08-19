@@ -713,6 +713,12 @@
             "value" : "Bing आरोपण"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bing-bronvermelding"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1433,6 +1439,12 @@
             "value" : "Endringssettkommentar skrives her"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier komt de opmerking bij de wijzigingsset"
+          }
+        },
         "oc" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1622,7 +1634,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kaart naar noorden heroriënteren"
+            "value" : "Kaart naar noorden draaien"
           }
         },
         "oc" : {
@@ -1988,7 +2000,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Naar locatie zoeken"
+            "value" : "Zoek naar locatie"
           }
         },
         "oc" : {
@@ -3283,8 +3295,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Oplossen"
+            "state" : "translated",
+            "value" : "Regeren & Oplossen"
           }
         },
         "oc" : {
@@ -3555,6 +3567,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Etikett"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Label"
           }
         },
         "oc" : {
@@ -4404,6 +4422,12 @@
           }
         },
         "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "nl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "2014-06-17 17:54 UTC"

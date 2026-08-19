@@ -701,6 +701,12 @@
             "value" : "🔽"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "🔽"
+          }
+        },
         "pt" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1465,8 +1471,8 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
-            "value" : "Mail"
+            "state" : "translated",
+            "value" : "Exporteren"
           }
         },
         "pl" : {
@@ -1581,6 +1587,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "変更内容を記述... "
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beschrijf je aanpassingen... "
           }
         },
         "ru" : {

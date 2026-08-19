@@ -455,6 +455,8 @@
 		02709BC92F21B82F00B277C6 /* DraggableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableButton.swift; sourceTree = "<group>"; };
 		02709BCD2F2370E000B277C6 /* MapMarkersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkersView.swift; sourceTree = "<group>"; };
 		02709BD12F282A8400B277C6 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
+		02709F4E3036725400FDA8D8 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Nominatim.xcstrings; sourceTree = "<group>"; };
+		02709F4F3036725400FDA8D8 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/OsmNote.xcstrings; sourceTree = "<group>"; };
 		02771D702BFC15C300FE9B79 /* UserFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFileList.swift; path = ../Shared/UserFileList.swift; sourceTree = "<group>"; };
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		027AB506250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
@@ -1970,6 +1972,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				027E90AE3016CB8B00E1A0F1 /* Base */,
+				02709F4F3036725400FDA8D8 /* mul */,
 			);
 			name = OsmNote.storyboard;
 			sourceTree = "<group>";
@@ -1978,6 +1981,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				027E90B23017096B00E1A0F1 /* Base */,
+				02709F4E3036725400FDA8D8 /* mul */,
 			);
 			name = Nominatim.storyboard;
 			sourceTree = "<group>";
