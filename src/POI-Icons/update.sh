@@ -1,53 +1,54 @@
 #!/bin/sh
 
 # Download icons from various sources
-# Convert them from SVG to PDF
 # Build an asset catalog containing the images
 
-GITHUB_RAW="https://raw.githubusercontent.com"
-ID_SVG="$GITHUB_RAW/openstreetmap/iD/develop/svg"
+TMPDIR_WORK=$(mktemp -d)
+trap 'rm -rf "$TMPDIR_WORK"' EXIT
 
-# Fetch a URL and save to a file, printing an error (without halting) on failure
-fetch() {
-	local url="$1"
-	local dest="$2"
-	curl -fLsS --output "$dest" "$url" 2>/dev/null
-}
+# Download all repos as tarballs in parallel
+echo "Downloading icon repositories..."
+mkdir -p "$TMPDIR_WORK/iD" "$TMPDIR_WORK/maki" "$TMPDIR_WORK/temaki" "$TMPDIR_WORK/roentgen"
+
+curl -fLsS "https://github.com/openstreetmap/iD/archive/develop.tar.gz"    | tar -xz -C "$TMPDIR_WORK/iD"       --strip-components=1 &
+curl -fLsS "https://github.com/mapbox/maki/archive/main.tar.gz"            | tar -xz -C "$TMPDIR_WORK/maki"     --strip-components=1 &
+curl -fLsS "https://github.com/ideditor/temaki/archive/main.tar.gz"        | tar -xz -C "$TMPDIR_WORK/temaki"   --strip-components=1 &
+curl -fLsS "https://github.com/enzet/Roentgen/archive/main.tar.gz"         | tar -xz -C "$TMPDIR_WORK/roentgen" --strip-components=1 &
+wait
 
 # Compute the list of icons needed by presets
 presetIcons=($(cd ../presets && ./presetIcons.py | sort | uniq | sed 's/$/.svg/'))
 
-# Fetch all required icons
+# Copy required icons from local repo copies
 echo "Fetching icons"
 for f in "${presetIcons[@]}"; do
 	echo $f
 	if [[ $f = "iD-"* ]]; then
 		f2=${f:3}
-		fetch "$ID_SVG/iD-sprite/presets/$f2" ./$f || \
-		fetch "$ID_SVG/iD-sprite/fields/crossing_markings/$f2" ./$f || \
+		cp "$TMPDIR_WORK/iD/svg/iD-sprite/presets/$f2" ./$f 2>/dev/null || \
+		cp "$TMPDIR_WORK/iD/svg/iD-sprite/fields/crossing_markings/$f2" ./$f 2>/dev/null || \
 		echo "Error: missing iD icon $f2"
 	elif [[ $f = "far-"* || $f = "fas-"* ]]; then
-		f2=${f:4}
-		fetch "$ID_SVG/fontawesome/$f" ./$f || \
+		cp "$TMPDIR_WORK/iD/svg/fontawesome/$f" ./$f 2>/dev/null || \
 		echo "Error: missing fontawesome icon $f"
 	elif [[ $f = "pinhead-"* ]]; then
 		f2=${f:8}
-		fetch "https://pinhead.ink/latest/$f2" ./$f || \
+		curl -fLsS "https://pinhead.ink/latest/$f2" -o ./$f 2>/dev/null || \
 		echo "Error: missing pinhead icon $f2"
 	elif [[ $f = "temaki-"* ]]; then
 		f2=${f:7}
-		fetch "$GITHUB_RAW/ideditor/temaki/main/icons/$f2" ./$f || \
-		fetch "$GITHUB_RAW/ideditor/temaki/main/icons/${f2%.svg}-15.svg" ./$f || \
+		cp "$TMPDIR_WORK/temaki/icons/$f2" ./$f 2>/dev/null || \
+		cp "$TMPDIR_WORK/temaki/icons/${f2%.svg}-15.svg" ./$f 2>/dev/null || \
 		echo "Error: missing temaki icon $f2"
 	elif [[ $f = "maki-"* ]]; then
 		f2=${f:5}
-		fetch "$GITHUB_RAW/mapbox/maki/main/icons/$f2" ./$f || \
-		fetch "$GITHUB_RAW/mapbox/maki/main/icons/${f2%.svg}-15.svg" ./$f || \
+		cp "$TMPDIR_WORK/maki/icons/$f2" ./$f 2>/dev/null || \
+		cp "$TMPDIR_WORK/maki/icons/${f2%.svg}-15.svg" ./$f 2>/dev/null || \
 		echo "Error: missing maki icon $f2"
 	elif [[ $f = "roentgen-"* ]]; then
 		f2=${f:9}
-		fetch "$GITHUB_RAW/enzet/Roentgen/main/icons/$f2" ./$f || \
-		fetch "$GITHUB_RAW/enzet/Roentgen/main/icons/${f2%.svg}-15.svg" ./$f || \
+		cp "$TMPDIR_WORK/roentgen/icons/$f2" ./$f 2>/dev/null || \
+		cp "$TMPDIR_WORK/roentgen/icons/${f2%.svg}-15.svg" ./$f 2>/dev/null || \
 		echo "Error: missing roentgen icon $f2"
 	fi
 done
