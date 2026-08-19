@@ -896,9 +896,14 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	// Called when user pastes a set of tags
 	func pasteTags(_ tags: [String: String]) {
+		// End editing before reloading
+		view.endEditing(true)
+
+		// update tags
 		for (k, v) in tags {
 			updateTagDict(withValue: v, forKey: k)
 		}
+
 		// the feature type might have changed, so recompute everything
 		selectedFeature = nil
 		updatePresets()
