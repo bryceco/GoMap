@@ -61862,6 +61862,9 @@
         }
       }
     },
+    "Upload succeeded but the server returned unexpected data.\nYou should use Clear Cache > OSM Data before continuing to map." : {
+      "comment" : "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings"
+    },
     "Upload to OSM" : {
       "localizations" : {
         "ar" : {

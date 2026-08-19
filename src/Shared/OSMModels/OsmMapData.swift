@@ -39,6 +39,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		case otherError(String)
 		case badServerUpdateValue
 		case badXML
+		case serverReturnedUnknownObjectId(OsmIdentifier)
 
 		public var errorDescription: String? {
 			switch self {
@@ -49,6 +50,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			case let .otherError(message): return "OsmMapDataError.otherError(\(message))"
 			case .badServerUpdateValue: return "badServerUpdateValue"
 			case .badXML: return "OsmMapDataError:badXML"
+			case let .serverReturnedUnknownObjectId(id):
+				return String.localizedStringWithFormat(
+					NSLocalizedString(
+						"Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map.",
+						comment: "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings"),
+					id)
 			}
 		}
 	}
@@ -903,7 +910,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			}
 
 			if name == "node" {
-				OsmMapData.updateObjectDictionary(
+				try OsmMapData.updateObjectDictionary(
 					&nodes,
 					oldId: oldId,
 					newId: newId,
@@ -912,7 +919,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					timestamp: timestamp,
 					sqlUpdate: &sqlUpdate)
 			} else if name == "way" {
-				OsmMapData.updateObjectDictionary(
+				try OsmMapData.updateObjectDictionary(
 					&ways,
 					oldId: oldId,
 					newId: newId,
@@ -921,7 +928,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					timestamp: timestamp,
 					sqlUpdate: &sqlUpdate)
 			} else if name == "relation" {
-				OsmMapData.updateObjectDictionary(
+				try OsmMapData.updateObjectDictionary(
 					&relations,
 					oldId: oldId,
 					newId: newId,
@@ -973,14 +980,14 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		version newVersion: Int,
 		changeset: Int64,
 		timestamp: Date,
-		sqlUpdate: inout [OsmBaseObject: Bool])
+		sqlUpdate: inout [OsmBaseObject: Bool]) throws
 	{
-		let object = dictionary[oldId]!
+		guard let object = dictionary[oldId] else {
+			throw Error.serverReturnedUnknownObjectId(oldId)
+		}
 		assert(object.ident == oldId)
 		if newVersion == 0, newId == 0 {
 			// Delete object for real
-			// When a way is deleted we delete the nodes also, but they aren't marked as deleted in the graph.
-			// If nodes are still in use by another way the newId and newVersion will be set and we won't take this path.
 			assert(newId == 0 && newVersion == 0)
 			dictionary.removeValue(forKey: object.ident)
 			sqlUpdate[object] = false // mark for deletion
