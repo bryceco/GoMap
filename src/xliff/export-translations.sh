@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 if [ -z "$WEBLATE_TOKEN" ]; then
 	echo "WEBLATE_TOKEN is not set"
 	exit 1
@@ -11,16 +13,15 @@ TMP_XLIFF=/tmp/xliff
 
 
 # Export localizations back out to XLIFFs
-rm -rf $TMP_XLIFF
-LIST=""
+rm -rf "$TMP_XLIFF"
+LANGS=()
 for f in *.xliff; do
-	LANG=$(echo $f | sed s/\.xliff//)
-	LIST="$LIST -exportLanguage $LANG"
+	LANGS+=(-exportLanguage "${f%.xliff}")
 done
-xcodebuild -exportLocalizations -localizationPath $TMP_XLIFF -project "$PROJECT" $LIST
+xcodebuild -exportLocalizations -localizationPath "$TMP_XLIFF" -project "$PROJECT" "${LANGS[@]}"
 
 # Copy XLIFF files back here
-cp $TMP_XLIFF/*/Localized\ Contents/*.xliff .
+cp "$TMP_XLIFF"/*/Localized\ Contents/*.xliff .
 
 # Look for notes containing "Placeholder - do not translate" and mark them with translate="no"
 ./fixPlaceholders.py *.xliff
@@ -39,4 +40,4 @@ git commit -m "Update XLIFF files"
 git push
 
 # Tell weblate to pull latest XLIFFs
-curl -d operation=pull -H "Authorization: Token $WEBLATE_TOKEN" $WEBLATE_REPO
+curl -fLsS -d operation=pull -H "Authorization: Token $WEBLATE_TOKEN" "$WEBLATE_REPO"
