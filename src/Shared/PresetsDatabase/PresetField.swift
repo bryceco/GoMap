@@ -36,6 +36,7 @@ extension PresetField {
 		case access
 		case directionalCombo // "cycleway" is no longer used
 		case address
+		case schedule // opening_hours
 
 		// free form text
 		case text

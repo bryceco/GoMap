@@ -512,7 +512,7 @@ extension PresetsDatabase {
 			let group = PresetDisplayGroup(name: label, tags: addrs, usesBoth: false)
 			return group
 
-		case .text, .number, .email, .identifier, .maxweight_bridge, .textarea,
+		case .text, .number, .email, .identifier, .maxweight_bridge, .textarea, .schedule,
 		     .tel, .url, .roadheight, .roadspeed, .wikipedia, .wikidata, .date:
 
 			// no presets, but we customize keyboard input
