@@ -86,6 +86,7 @@
 		02709BCA2F21B82F00B277C6 /* DraggableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02709BC92F21B82F00B277C6 /* DraggableButton.swift */; };
 		02709BCE2F2370E000B277C6 /* MapMarkersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02709BCD2F2370E000B277C6 /* MapMarkersView.swift */; };
 		02709BD32F282B2400B277C6 /* URL+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02709BD12F282A8400B277C6 /* URL+Extension.swift */; };
+		0270C04D30379A6600F21597 /* CustomPresets.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0270C04B303797B300F21597 /* CustomPresets.storyboard */; };
 		02771D712BFC15C300FE9B79 /* UserFileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02771D702BFC15C300FE9B79 /* UserFileList.swift */; };
 		027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FC250E9C8000C404CD /* Settings.storyboard */; };
 		027AB4FD250E9C8A00C404CD /* POI.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 027AB4FF250E9C8A00C404CD /* POI.storyboard */; };
@@ -457,6 +458,7 @@
 		02709BD12F282A8400B277C6 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		02709F4E3036725400FDA8D8 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Nominatim.xcstrings; sourceTree = "<group>"; };
 		02709F4F3036725400FDA8D8 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/OsmNote.xcstrings; sourceTree = "<group>"; };
+		0270C04C303797B300F21597 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CustomPresets.storyboard; sourceTree = "<group>"; };
 		02771D702BFC15C300FE9B79 /* UserFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFileList.swift; path = ../Shared/UserFileList.swift; sourceTree = "<group>"; };
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		027AB506250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
@@ -825,6 +827,7 @@
 				02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */,
 				ED56E5C026027A50000B368C /* CustomFieldController.swift */,
 				ED56E5C126027A50000B368C /* CustomFieldListViewController.swift */,
+				0270C04B303797B300F21597 /* CustomPresets.storyboard */,
 				02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */,
 				027AB4FF250E9C8A00C404CD /* POI.storyboard */,
 				C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */,
@@ -1547,6 +1550,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0270C04D30379A6600F21597 /* CustomPresets.storyboard in Resources */,
 				027E90B03016CF6A00E1A0F1 /* OsmNote.storyboard in Resources */,
 				02EA545B2AB7CCA3004688F9 /* InfoPlist.xcstrings in Resources */,
 				02CE3CE32990A2C800DDACE0 /* QuestSolver.storyboard in Resources */,
@@ -1930,6 +1934,14 @@
 				02EA54582AB7CCA3004688F9 /* mul */,
 			);
 			name = DirectionViewController.xib;
+			sourceTree = "<group>";
+		};
+		0270C04B303797B300F21597 /* CustomPresets.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0270C04C303797B300F21597 /* Base */,
+			);
+			name = CustomPresets.storyboard;
 			sourceTree = "<group>";
 		};
 		027AB4FC250E9C8000C404CD /* Settings.storyboard */ = {
