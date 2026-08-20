@@ -338,6 +338,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		// two-finger rotation
 		let rotate = RotationGestureRecognizer(target: self, action: #selector(handleRotationGesture(_:)))
+		rotate.delegate = self
 		view.addGestureRecognizer(rotate)
 
 		// Support zoom via tap and drag
@@ -865,6 +866,12 @@ final class MainViewController: UIViewController, DPadDelegate,
 			{
 				return false
 			}
+		}
+		// Don't let pinch/rotate gestures claim a touch that's on the addNodeButton.
+		if gestureRecognizer is UIPinchGestureRecognizer || gestureRecognizer is UIRotationGestureRecognizer,
+		   touch.view === addNodeButton
+		{
+			return false
 		}
 		return true // handle the touch
 	}
