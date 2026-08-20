@@ -1,0 +1,174 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "FaM-WV-S6I.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Search for Location\"; ObjectID = \"FaM-WV-S6I\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hledat polohu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Search for Location"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoek naar locatie"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск местоположения"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konum Ara"
+          }
+        }
+      }
+    },
+    "siu-I6-IEp.title" : {
+      "comment" : "Class = \"UIViewController\"; title = \"Search for Location\"; ObjectID = \"siu-I6-IEp\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hledat polohu"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Search for Location"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zoek naar locatie"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск местоположения"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Konum Ara"
+          }
+        }
+      }
+    },
+    "TcP-6i-B8H.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Specify a name (\\\"New York\\\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\\\"way 51014987\\\"):\"; ObjectID = \"TcP-6i-B8H\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zadejte název („New York“), URL či jiný text obsahující lat/lon koordináty, nebo referenci OSM objektu („way 51014987“):"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specificeer een naam (\"New York\"), een URL of andere tekst die breedtegraad/lengtegraad-coördinaten bevat, of een verwijzing naar een OSM-object (\"weg 51014987\"):"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Укажите название (\"Нью-Йорк\"), URL или другой текст, содержащий координаты широты/долготы, или ссылку на объект OSM (\"way 51014987\"):"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir isim (\"New York\"), bir URL, enlem/boylam koordinatları içeren başka bir metin veya bir OSM nesnesine referans (\"way 51014987\") belirtin:"
+          }
+        }
+      }
+    },
+    "vRO-Aj-Sdr.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"vRO-Aj-Sdr\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Title"
+          }
+        }
+      }
+    },
+    "vwW-V6-kvw.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"vwW-V6-kvw\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Title"
+          }
+        }
+      }
+    },
+    "xw9-Ro-Fai.placeholder" : {
+      "comment" : "Class = \"UISearchBar\"; placeholder = \"Niagara Falls\"; ObjectID = \"xw9-Ro-Fai\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niagarské vodopády"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Niagara Falls"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niagara-watervallen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ниагарский водопад"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Niagara Şelalesi"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}

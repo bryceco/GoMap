@@ -1,0 +1,282 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "1tR-eI-DSh.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"username\"; ObjectID = \"1tR-eI-DSh\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "username"
+          }
+        }
+      }
+    },
+    "1xx-L0-hKm.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Get Directions\"; ObjectID = \"1xx-L0-hKm\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Získat směr"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Get Directions"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Routebeschrijving ontvangen"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Проложить маршрут"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yol Tarifi Al"
+          }
+        }
+      }
+    },
+    "2g1-vb-Cjc.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Comment\"; ObjectID = \"2g1-vb-Cjc\"; Note = \"Add a comment for a Note\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okomentovat"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Comment"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reageer"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Комментировать"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yorum"
+          }
+        }
+      }
+    },
+    "9hH-Ja-fKn.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"New comment:\"; ObjectID = \"9hH-Ja-fKn\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nový komentář:"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "New comment:"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieuwe opmerking:"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Новый комментарий:"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni yorum:"
+          }
+        }
+      }
+    },
+    "HeZ-95-3K1.text" : {
+      "comment" : "Class = \"UITextView\"; text = \"Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.\"; ObjectID = \"HeZ-95-3K1\"; Note = \"Placeholder - do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."
+          }
+        }
+      }
+    },
+    "LSJ-rB-J2c.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"-\"; ObjectID = \"LSJ-rB-J2c\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "-"
+          }
+        }
+      }
+    },
+    "MBY-TK-Wuy.title" : {
+      "comment" : "Class = \"UINavigationItem\"; title = \"Note\"; ObjectID = \"MBY-TK-Wuy\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poznámka"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Note"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opmerking"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заметка"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not"
+          }
+        }
+      }
+    },
+    "OJ0-aO-ri1.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Comment & Resolve\"; ObjectID = \"OJ0-aO-ri1\"; Note = \"Add a comment and resolve Note\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Okomentovat a vyřešit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Comment & Resolve"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reageer & Los op"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Комментировать и Устранить"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yorum Yap& Çözümle"
+          }
+        }
+      }
+    },
+    "PHk-s9-onx.text" : {
+      "comment" : "Class = \"UITextView\"; text = \"Various comments...\"; ObjectID = \"PHk-s9-onx\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Various comments..."
+          }
+        }
+      }
+    },
+    "tOO-VD-MeJ.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"2014-06-17 17:54 UTC\"; ObjectID = \"tOO-VD-MeJ\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "17.06.2014 17:54 UTC"
+          }
+        }
+      }
+    },
+    "VNE-ee-a7u.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"action\"; ObjectID = \"VNE-ee-a7u\"; Note = \"Placeholder - Do not translate\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "action"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.2"
+}
