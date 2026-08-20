@@ -16,7 +16,9 @@ TMP_XLIFF=/tmp/xliff
 rm -rf "$TMP_XLIFF"
 LANGS=()
 for f in *.xliff; do
-	LANGS+=(-exportLanguage "${f%.xliff}")
+	lang="${f%.xliff}"
+	[ "$lang" = "en" ] && continue  # English is the source language, not a translation target
+	LANGS+=(-exportLanguage "$lang")
 done
 xcodebuild -exportLocalizations -localizationPath "$TMP_XLIFF" -project "$PROJECT" "${LANGS[@]}"
 
