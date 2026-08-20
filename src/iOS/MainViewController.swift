@@ -947,11 +947,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 		} else if pan.state == .ended || pan.state == .cancelled {
 			// cancelled occurs when we throw an error dialog
 
-// finish pan with inertia
 #if targetEnvironment(macCatalyst)
 			// mac provides it's own inertia
 			return
-#endif
+#else
+			// finish pan with inertia
 			let initialVelocity = pan.velocity(in: self.view)
 			guard hypot(initialVelocity.x, initialVelocity.y) >= 100.0 else {
 				// don't use inertia for small movements because it interferes with dropping the pin precisely
@@ -975,6 +975,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				                          y: CGFloat(1 - t) * initialVelocity.y * dt)
 				self.viewPort.adjustOrigin(by: translation)
 			})
+#endif
 		} else if pan.state == .failed {
 			DLog("pan gesture failed")
 		} else {

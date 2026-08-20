@@ -128,11 +128,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			AppState.shared.gpxTracks.endActiveTrack(continuingCurrentTrack: false)
 		}
 
-#if canImport(ActivityKit)
+#if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 		// Remove any live activities
-		if !AppEnvironment.isRunningOnMac,
-		   #available(iOS 16.2, *)
-		{
+		if #available(iOS 16.2, *) {
 			GpxTrackWidgetManager.endAllActivitiesSynchronously()
 		}
 #endif
