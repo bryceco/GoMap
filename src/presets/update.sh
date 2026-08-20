@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ex
+set -e
 
 DIST="https://raw.githubusercontent.com/openstreetmap/id-tagging-schema/main/dist"
 
@@ -12,9 +12,9 @@ presets=(preset_categories
 		deprecated
 		discarded)
 
-for preset in ${presets[*]}; do
+for preset in "${presets[@]}"; do
 	echo $preset
-	curl -fLsS $DIST/$preset.min.json > $preset.json
+	curl -fLsS --output $preset.json $DIST/$preset.min.json
 done
 
 # Download NSI geojsons for features
@@ -24,10 +24,10 @@ curl -fLsS --output nsi_geojson.json 'https://cdn.jsdelivr.net/npm/name-suggesti
 curl -fLsS --output nsi_presets.json 'https://cdn.jsdelivr.net/npm/name-suggestion-index@latest/dist/presets/nsi-id-presets.min.json'
 
 # Download address formats
-curl -fLsS https://raw.githubusercontent.com/openstreetmap/iD/develop/data/address_formats.json > address_formats.json
+curl -fLsS --output address_formats.json https://raw.githubusercontent.com/openstreetmap/iD/develop/data/address_formats.json
 
 # Download country borders
-curl -fLsS https://raw.githubusercontent.com/rapideditor/country-coder/main/src/data/borders.json > borders.json
+curl -fLsS --output borders.json https://raw.githubusercontent.com/rapideditor/country-coder/main/src/data/borders.json
 
 git add *.json
 
@@ -55,9 +55,9 @@ git clean -fdx translations/.) || true
 
 mkdir translations
 
-for lang in ${languages[*]}; do
+for lang in $languages; do
 	echo $lang
-    curl -fLsS $DIST/translations/$lang.min.json > translations/$lang.json
+	curl -fLsS --output translations/$lang.json $DIST/translations/$lang.min.json
 done
 
 git add translations/*.json
