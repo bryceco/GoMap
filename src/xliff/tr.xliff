@@ -2036,11 +2036,6 @@ Bu, OSM değişiklik kümesi formatını iyice anladıysanız gerçekleştirmeni
         <note>Never delete old GPX tracks
 Never delete old tracks</note>
       </trans-unit>
-      <trans-unit id="Next" xml:space="preserve">
-        <source>Next</source>
-        <target state="translated">Sonraki</target>
-        <note />
-      </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
         <target state="translated">Veri Yok</target>

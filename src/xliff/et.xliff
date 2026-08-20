@@ -2016,11 +2016,6 @@ Tegemist on asjatundjatele mõeldud tegevusega, mida tuleks kasutada ainult koos
         <note>Never delete old GPX tracks
 Never delete old tracks</note>
       </trans-unit>
-      <trans-unit id="Next" xml:space="preserve">
-        <source>Next</source>
-        <target state="translated">Järgmine</target>
-        <note />
-      </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
         <target state="translated">Andmed puuduvad</target>

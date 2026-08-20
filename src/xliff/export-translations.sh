@@ -27,7 +27,7 @@ cp "$TMP_XLIFF"/*/Localized\ Contents/*.xliff .
 ./fixPlaceholders.py *.xliff
 
 # Make sure newly added strings are tracked by git
-find .. -name '*.strings' -print0 | xargs -0 git add
+find .. -name '*.strings' -not -path '*/vendor/*' -print0 | xargs -0 git add
 git add *.xliff
 git add -u
 

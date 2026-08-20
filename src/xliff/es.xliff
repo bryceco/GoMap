@@ -2025,11 +2025,6 @@ Es una operación avanzada que solo debe llevarse a cabo si tiene un conocimient
         <note>Never delete old GPX tracks
 Never delete old tracks</note>
       </trans-unit>
-      <trans-unit id="Next" xml:space="preserve">
-        <source>Next</source>
-        <target state="translated">Siguiente</target>
-        <note />
-      </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
         <target state="translated">Sin datos</target>

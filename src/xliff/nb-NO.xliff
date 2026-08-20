@@ -1923,11 +1923,6 @@ Det er en avansert handling som kun skal utføres om du har en dekkende forståe
         <note>Never delete old GPX tracks
 Never delete old tracks</note>
       </trans-unit>
-      <trans-unit id="Next" xml:space="preserve">
-        <source>Next</source>
-        <target state="translated">Neste</target>
-        <note />
-      </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
         <target state="translated">Ingen data</target>

@@ -1945,11 +1945,6 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <note>Never delete old GPX tracks
 Never delete old tracks</note>
       </trans-unit>
-      <trans-unit id="Next" xml:space="preserve">
-        <source>Next</source>
-        <target state="translated">下一個</target>
-        <note />
-      </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
         <target state="translated">沒有資料</target>

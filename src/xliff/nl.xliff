@@ -906,7 +906,7 @@ Maak de Mapnik- of Overlaytegelcaches leeg  om de laatste tegels, die veranderin
       <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d member)
 </source>
-        <target state="needs-review-l10n"> (%d leden)
+        <target state="translated"> (%d lid)
 </target>
         <note />
       </trans-unit>
@@ -920,7 +920,7 @@ Maak de Mapnik- of Overlaytegelcaches leeg  om de laatste tegels, die veranderin
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d node)
 </source>
-        <target state="needs-review-l10n"> (%d knopen)
+        <target state="translated"> (%d knoop)
 </target>
         <note />
       </trans-unit>
@@ -973,27 +973,27 @@ Maak de Mapnik- of Overlaytegelcaches leeg  om de laatste tegels, die veranderin
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$#@megabytes@ , %2$#@files@</source>
-        <target state="needs-review-l10n">%1$#@megabytes@ MB, %2$#@files@ bestanden</target>
+        <target state="translated">%1$#@megabytes@, %2$#@files@</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.one" xml:space="preserve">
         <source>%2$ld file</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld bestand</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.other" xml:space="preserve">
         <source>%2$ld files</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld bestanden</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.one" xml:space="preserve">
         <source>%1$.2f MB</source>
-        <target state="needs-review-l10n">%1$.2f</target>
+        <target state="translated">%1$.2f MB</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.other" xml:space="preserve">
         <source>%1$.2f MB</source>
-        <target state="needs-review-l10n">%1$.2f</target>
+        <target state="translated">%1$.2f MB</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -1018,7 +1018,7 @@ Maak de Mapnik- of Overlaytegelcaches leeg  om de laatste tegels, die veranderin
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
         <source>%ld edit, last active %@</source>
-        <target state="needs-review-l10n">%1$ld bewerkingen, laatst actief %2$@</target>
+        <target state="translated">%1$ld bewerking, laatst actief %2$@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
@@ -1028,7 +1028,7 @@ Maak de Mapnik- of Overlaytegelcaches leeg  om de laatste tegels, die veranderin
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
-        <target state="translated">%1$#@meter@, %2$#@knopen@</target>
+        <target state="translated">%1$#@meters@, %2$#@nodes@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
@@ -1053,69 +1053,69 @@ Maak de Mapnik- of Overlaytegelcaches leeg  om de laatste tegels, die veranderin
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
-        <target state="needs-review-l10n">%1$#@meters@ meter, %2$#@points@ punten</target>
+        <target state="translated">%1$#@meters@, %2$#@points@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
-        <target state="translated">%1$#@meter@, %2$#@punten@, %3$#@waypoints@</target>
+        <target state="translated">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="translated">%ld meter</target>
+        <target state="translated">%1$ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="translated">%ld meter</target>
+        <target state="translated">%1$ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
-        <target state="translated">%ld punt</target>
+        <target state="translated">%2$ld punt</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="translated">%ld punten</target>
+        <target state="translated">%2$ld punten</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
         <source>%ld waypoint</source>
-        <target state="new">%ld waypoint</target>
+        <target state="translated">%3$ld waypoint</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.other" xml:space="preserve">
         <source>%ld waypoints</source>
-        <target state="new">%ld waypoints</target>
+        <target state="translated">%3$ld waypoints</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%1$ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
-        <target state="needs-review-l10n">%1$ld</target>
+        <target state="translated">%1$ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld punt</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
-        <target state="needs-review-l10n">%2$ld</target>
+        <target state="translated">%2$ld punten</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
-        <target state="new">%1$#@routes@ imported,
-%2$#@duplicates@ skipped</target>
+        <target state="translated">%1$#@routes@ geïmporteerd,
+%2$#@duplicates@ overgeslagen</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.one" xml:space="preserve">
@@ -1140,7 +1140,7 @@ Maak de Mapnik- of Overlaytegelcaches leeg  om de laatste tegels, die veranderin
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
         <source>%ld object</source>
-        <target state="needs-review-l10n">%ld objecten</target>
+        <target state="translated">%ld object</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
@@ -1150,7 +1150,7 @@ Maak de Mapnik- of Overlaytegelcaches leeg  om de laatste tegels, die veranderin
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.one" xml:space="preserve">
         <source>%lu tile needed</source>
-        <target state="needs-review-l10n">%lu tegels nodig</target>
+        <target state="translated">%lu tegel nodig</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.other" xml:space="preserve">
@@ -2029,11 +2029,6 @@ Dit is een geavanceerde actie die alleen gedaan zou moeten worden als je diepgaa
         <note>Never delete old GPX tracks
 Never delete old tracks</note>
       </trans-unit>
-      <trans-unit id="Next" xml:space="preserve">
-        <source>Next</source>
-        <target state="translated">Volgende</target>
-        <note />
-      </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
         <target state="translated">Geen gegevens</target>
@@ -2220,12 +2215,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
         <source>Pasting %ld tag</source>
-        <target state="needs-review-l10n">%ld tag(s) plakken</target>
+        <target state="translated">%ld tag plakken</target>
         <note />
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
         <source>Pasting %ld tags</source>
-        <target state="needs-review-l10n">%ld tag(s) plakken</target>
+        <target state="translated">%ld tags plakken</target>
         <note />
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
@@ -2850,7 +2845,7 @@ Deze leden zijn gemarkeerd met '&gt;'.</target>
         <source>You've uploaded %ld changeset with this version of Go Map!!
 
 Rate this app?</source>
-        <target state="needs-review-l10n">Je hebt %ld wijzigingensets geüpload met deze versie van Go Map!!
+        <target state="translated">Je hebt %ld wijzigingenset geüpload met deze versie van Go Map!!
 
 Deze app beoordelen?</target>
         <note />
