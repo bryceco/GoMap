@@ -9,7 +9,6 @@ fi
 
 WEBLATE_REPO="https://hosted.weblate.org/api/projects/go-map/repository/"
 PROJECT="../iOS/Go Map!!.xcodeproj/"
-TMP_XLIFF=/tmp/xliff
 
 
 # Tell weblate to commit changes that translators have made
@@ -32,5 +31,12 @@ done
 
 # Import translators' XLIFFs to update .strings files
 for f in *.xliff; do
-	xcodebuild -importLocalizations -localizationPath "$f" -project "$PROJECT"
+	xcodebuild -importLocalizations -localizationPath "$f" -project "$PROJECT" 2>&1 \
+		| grep --line-buffered -E "(^--- xcodebuild:|[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}|error:)" \
+		|| true
+	if [ "${PIPESTATUS[0]}" -ne 0 ]; then
+		echo "Import failed for $f"
+		exit 1
+	fi
 done
+echo "All imports succeeded"
