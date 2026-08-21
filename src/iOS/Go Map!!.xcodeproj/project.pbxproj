@@ -169,7 +169,7 @@
 		02CBF3B82BE8529A000DE2AD /* GpxWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3B72BE8529A000DE2AD /* GpxWidgetBundle.swift */; };
 		02CBF3BA2BE8529A000DE2AD /* GpxWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3B92BE8529A000DE2AD /* GpxWidgetLiveActivity.swift */; };
 		02CBF3BE2BE8529B000DE2AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02CBF3BD2BE8529B000DE2AD /* Assets.xcassets */; };
-		02CBF3C22BE8529B000DE2AD /* GpxWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 02CBF3B12BE8529A000DE2AD /* GpxWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		02CBF3C22BE8529B000DE2AD /* GpxWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 02CBF3B12BE8529A000DE2AD /* GpxWidgetExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		02CBF3C82BE85829000DE2AD /* GpxTrackWidgetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3C72BE85829000DE2AD /* GpxTrackWidgetManager.swift */; };
 		02CBF3CC2BE8655D000DE2AD /* GpxTrackAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */; };
 		02CBF3CD2BE86646000DE2AD /* GpxTrackAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */; };
@@ -1896,6 +1896,7 @@
 /* Begin PBXTargetDependency section */
 		02CBF3C12BE8529B000DE2AD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = 02CBF3B02BE8529A000DE2AD /* GpxWidgetExtension */;
 			targetProxy = 02CBF3C02BE8529B000DE2AD /* PBXContainerItemProxy */;
 		};
@@ -2320,7 +2321,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -2372,7 +2373,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
