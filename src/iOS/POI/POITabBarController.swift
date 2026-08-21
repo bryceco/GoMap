@@ -13,6 +13,12 @@ class POITabBarController: UITabBarController {
 	var selection: OsmBaseObject?
 	var preservedFeatureTypeSearchText: String?
 
+#if targetEnvironment(macCatalyst)
+	/// One segmented control per tab, kept in sync, providing tab switching since the tab bar
+	/// doesn't render inside a macCatalyst modal window (iOS 26 Liquid Glass regression).
+	private var macSegControls: [UISegmentedControl] = []
+#endif
+
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
@@ -39,12 +45,16 @@ class POITabBarController: UITabBarController {
 		// hide attributes tab on new objects
 		updatePOIAttributesTabBarItemVisibility(withSelectedObject: selection)
 
+#if targetEnvironment(macCatalyst)
+		setupMacTabSwitcher()
+		preferredContentSize = CGSize(width: 750, height: 620)
+#else
 		if #available(iOS 17, *) {
-			// On MacCatalyst (and maybe iPad) UITabBar is broken.
-			// This fixes it.
+			// On iPad UITabBar may render incorrectly; forcing compact keeps it consistent.
 			// See https://forums.developer.apple.com/forums/thread/759478
 			traitOverrides.horizontalSizeClass = .compact
 		}
+#endif
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
@@ -59,7 +69,7 @@ class POITabBarController: UITabBarController {
 
 		// make window resizable on MacCatalyst
 		if let windowScene = view.window?.windowScene {
-			windowScene.sizeRestrictions?.minimumSize = CGSize(width: 400, height: 300)
+			windowScene.sizeRestrictions?.minimumSize = CGSize(width: 600, height: 450)
 			windowScene.sizeRestrictions?.maximumSize = CGSize(width: 2000, height: 2000)
 		}
 	}
@@ -139,6 +149,35 @@ class POITabBarController: UITabBarController {
 		UserPrefs.shared.poiTabIndex.value = tabIndex
 		selectedIndex = tabIndex
 	}
+
+#if targetEnvironment(macCatalyst)
+	/// Hides the native tab bar and installs a segmented control into each tab's navigation bar.
+	private func setupMacTabSwitcher() {
+		tabBar.isHidden = true
+
+		let navControllers = viewControllers?.compactMap { $0 as? UINavigationController } ?? []
+		let titles = tabBar.items?.map { $0.title ?? "" } ?? []
+
+		macSegControls = navControllers.map { navVC in
+			let seg = UISegmentedControl(items: titles)
+			seg.selectedSegmentIndex = selectedIndex
+			seg.addTarget(self, action: #selector(macSegmentChanged(_:)), for: .valueChanged)
+			navVC.viewControllers.first?.navigationItem.titleView = seg
+			return seg
+		}
+	}
+
+	@objc private func macSegmentChanged(_ sender: UISegmentedControl) {
+		let newIndex = sender.selectedSegmentIndex
+		guard newIndex != selectedIndex else { return }
+		selectedIndex = newIndex
+		UserPrefs.shared.poiTabIndex.value = newIndex
+		// Keep all copies in sync so the correct tab is highlighted after switching.
+		for seg in macSegControls {
+			seg.selectedSegmentIndex = newIndex
+		}
+	}
+#endif
 
 	func tabButtonItems() -> [KeyboardToolbar.Item] {
 		guard let items = tabBar.items else { return [] }
