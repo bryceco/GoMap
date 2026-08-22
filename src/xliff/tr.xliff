@@ -2710,7 +2710,7 @@ Kavşağa hangi otoyoldan yaklaştığınızı seçin, ardından bir oka dokunar
         <target state="translated">Geri al</target>
         <note />
       </trans-unit>
-      <trans-unit id="Unknown" xml:space="preserve" translate="no">
+      <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
         <target state="translated">Bilinmiyor</target>
         <note>Placeholder for a tag value field with no field-specific placeholder.</note>

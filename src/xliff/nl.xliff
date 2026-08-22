@@ -2700,7 +2700,7 @@ Selecteer de weg vanaf waar je op de kruising komt en druk vervolgens op een pij
         <target state="translated">Ongedaan maken</target>
         <note />
       </trans-unit>
-      <trans-unit id="Unknown" xml:space="preserve" translate="no">
+      <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
         <target state="translated">Onbekend</target>
         <note>Placeholder for a tag value field with no field-specific placeholder.</note>

@@ -2515,7 +2515,7 @@ Select the highway from which you are approaching the intersection, then tap an 
         <source>Undo</source>
         <note />
       </trans-unit>
-      <trans-unit id="Unknown" xml:space="preserve" translate="no">
+      <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
         <target state="translated">Nieznane</target>
         <note>Placeholder for a tag value field with no field-specific placeholder.</note>

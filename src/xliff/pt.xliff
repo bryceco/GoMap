@@ -2638,7 +2638,7 @@ Imaginando que está num veículo, selecione a estrada que está a percorrer e s
         <target state="translated">Desfazer</target>
         <note />
       </trans-unit>
-      <trans-unit id="Unknown" xml:space="preserve" translate="no">
+      <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
         <target state="translated">Desconhecido</target>
         <note>Placeholder for a tag value field with no field-specific placeholder.</note>

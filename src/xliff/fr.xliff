@@ -2648,7 +2648,7 @@ Sélectionner la voie de provenance, puis taper sur une flèche pour basculer en
         <target state="translated">Rétablir</target>
         <note />
       </trans-unit>
-      <trans-unit id="Unknown" xml:space="preserve" translate="no">
+      <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
         <target state="translated">Inconnu</target>
         <note>Placeholder for a tag value field with no field-specific placeholder.</note>

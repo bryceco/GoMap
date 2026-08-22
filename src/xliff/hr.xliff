@@ -2806,7 +2806,7 @@ Odaberi autocestu iz koje se približavaš raskrižju. Zatim dodirni strelicu za
         <target state="translated">Poništi</target>
         <note />
       </trans-unit>
-      <trans-unit id="Unknown" xml:space="preserve" translate="no">
+      <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
         <target state="translated">Nepoznato</target>
         <note>Placeholder for a tag value field with no field-specific placeholder.</note>

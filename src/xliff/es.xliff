@@ -2687,7 +2687,7 @@ Selecciona la carretera desde la que se aproxima a la intersección y, a continu
         <target state="translated">Deshacer</target>
         <note />
       </trans-unit>
-      <trans-unit id="Unknown" xml:space="preserve" translate="no">
+      <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
         <target state="translated">Desconocido</target>
         <note>Placeholder for a tag value field with no field-specific placeholder.</note>
