@@ -61,8 +61,8 @@ class PresetTranslations: Codable {
 			.compactMap { languageDict[$0]?.presets?.fields["internet_access"]?.options?["yes"]?.title }.first ?? "Yes"
 		noForLocale = languageCodes
 			.compactMap { languageDict[$0]?.presets?.fields["internet_access"]?.options?["no"]?.title }.first ?? "No"
-		unknownForLocale = languageCodes.compactMap { languageDict[$0]?.presets?.fields["opening_hours"]?.placeholder }
-			.first ?? "Unknown"
+		unknownForLocale = NSLocalizedString("Unknown",
+											 comment: "Placeholder text that appears when a tag value is empty")
 	}
 
 	func addTranslation(from data: Data) throws {

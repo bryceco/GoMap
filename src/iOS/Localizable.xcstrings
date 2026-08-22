@@ -61328,6 +61328,210 @@
         }
       }
     },
+	"Unknown": {
+	  "comment": "Placeholder for a tag value field with no field-specific placeholder.",
+	  "extractionState": "manual",
+	  "localizations": {
+		"ar": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "غير معروف"
+		  }
+		},
+		"cs": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Není známo"
+		  }
+		},
+		"de": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Unbekannt"
+		  }
+		},
+		"el": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Άγνωστο"
+		  }
+		},
+		"es": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Desconocido"
+		  }
+		},
+		"et": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Teadmata"
+		  }
+		},
+		"eu": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Ezezaguna"
+		  }
+		},
+		"fi": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Ei tiedossa"
+		  }
+		},
+		"fr": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Inconnu"
+		  }
+		},
+		"hr": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Nepoznato"
+		  }
+		},
+		"hu": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Ismeretlen"
+		  }
+		},
+		"id": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Tidak diketahui"
+		  }
+		},
+		"it": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Sconosciuto"
+		  }
+		},
+		"ja": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "不明"
+		  }
+		},
+		"mr": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "अज्ञात"
+		  }
+		},
+		"nb-NO": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Ukjent"
+		  }
+		},
+		"nl": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Onbekend"
+		  }
+		},
+		"nn": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Ukjend"
+		  }
+		},
+		"pl": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Nieznane"
+		  }
+		},
+		"pt": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Desconhecido"
+		  }
+		},
+		"pt-BR": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Desconhecido"
+		  }
+		},
+		"ru": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Неизвестно"
+		  }
+		},
+		"si": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "නොදනී"
+		  }
+		},
+		"ta": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "அறியப்படவில்லை"
+		  }
+		},
+		"tr": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Bilinmiyor"
+		  }
+		},
+		"uk": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Невідомо"
+		  }
+		},
+		"vi": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "Không rõ"
+		  }
+		},
+		"zh-Hans": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "未知"
+		  }
+		},
+		"zh-Hant": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "未知"
+		  }
+		},
+		"zh-Hant-HK": {
+		  "stringUnit": {
+			"state": "translated",
+			"value": "未知"
+		  }
+		},
+		"ars": {
+		  "stringUnit": {
+			"state": "new",
+			"value": ""
+		  }
+		},
+		"oc": {
+		  "stringUnit": {
+			"state": "new",
+			"value": ""
+		  }
+		},
+		"tzm": {
+		  "stringUnit": {
+			"state": "new",
+			"value": ""
+		  }
+		}
+	  }
+	},
     "Unknown role" : {
       "comment" : "relation role=* tag",
       "localizations" : {
