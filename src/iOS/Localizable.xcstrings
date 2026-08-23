@@ -482,6 +482,24 @@
             }
           }
         },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d member)\n"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d members)\n"
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -609,6 +627,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : " (%d članova)\n"
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d member)\n"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d members)\n"
                 }
               }
             }
@@ -1152,6 +1188,24 @@
             }
           }
         },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d node)\n"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d nodes)\n"
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -1279,6 +1333,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : " (%d čvorova)\n"
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d node)\n"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : " (%d nodes)\n"
                 }
               }
             }
@@ -3326,6 +3398,54 @@
             }
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@nodes@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meters"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg node"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg nodes"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3647,6 +3767,54 @@
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "%arg čvorova"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@nodes@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".1f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meters"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg node"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg nodes"
                     }
                   }
                 }
@@ -5027,6 +5195,54 @@
             }
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@megabytes@ , %#@files@"
+          },
+          "substitutions" : {
+            "files" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg file"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg files"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg MB"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg MB"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5367,6 +5583,54 @@
                   "other" : {
                     "stringUnit" : {
                       "state" : "translated",
+                      "value" : "%arg MB"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@megabytes@ , %#@files@"
+          },
+          "substitutions" : {
+            "files" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg file"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg files"
+                    }
+                  }
+                }
+              }
+            },
+            "megabytes" : {
+              "argNum" : 1,
+              "formatSpecifier" : ".2f",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg MB"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
                       "value" : "%arg MB"
                     }
                   }
@@ -6901,6 +7165,24 @@
             }
           }
         },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld Day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld Days"
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -7028,6 +7310,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%ld dana"
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld Day"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld Days"
                 }
               }
             }
@@ -7572,6 +7872,24 @@
             }
           }
         },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld edit, last active %@"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld edits, last active %@"
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -7699,6 +8017,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%ld promjena, zadnja aktivnost %@"
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld edit, last active %@"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld edits, last active %@"
                 }
               }
             }
@@ -8423,6 +8759,54 @@
             }
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@nodes@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meters"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg node"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg nodes"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8771,6 +9155,54 @@
             }
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@nodes@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg meters"
+                    }
+                  }
+                }
+              }
+            },
+            "nodes" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg node"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg nodes"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8990,7 +9422,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@meters@, %2$#@nodes@"
+            "value" : "%#@meters@, %#@nodes@"
           },
           "substitutions" : {
             "meters" : {
@@ -10144,6 +10576,54 @@
             }
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@points@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meters"
+                    }
+                  }
+                }
+              }
+            },
+            "points" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld point"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld points"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10485,6 +10965,54 @@
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "%ld točaka"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@points@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meters"
+                    }
+                  }
+                }
+              }
+            },
+            "points" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld point"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld points"
                     }
                   }
                 }
@@ -12005,6 +12533,74 @@
             }
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meters"
+                    }
+                  }
+                }
+              }
+            },
+            "points" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld point"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld points"
+                    }
+                  }
+                }
+              }
+            },
+            "waypoints" : {
+              "argNum" : 3,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld waypoint"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld waypoints"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12499,6 +13095,74 @@
             }
           }
         },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
+          },
+          "substitutions" : {
+            "meters" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meter"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld meters"
+                    }
+                  }
+                }
+              }
+            },
+            "points" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld point"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld points"
+                    }
+                  }
+                }
+              }
+            },
+            "waypoints" : {
+              "argNum" : 3,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld waypoint"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%ld waypoints"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12806,7 +13470,7 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$#@meters@, %2$#@points@, %3$#@waypoints@"
+            "value" : "%#@meters@, %#@points@, %#@waypoints@"
           },
           "substitutions" : {
             "meters" : {
@@ -14316,6 +14980,54 @@
             }
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+          },
+          "substitutions" : {
+            "duplicates" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg duplicate"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg duplicates"
+                    }
+                  }
+                }
+              }
+            },
+            "routes" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg new route"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg new routes"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14657,6 +15369,54 @@
                     "stringUnit" : {
                       "state" : "translated",
                       "value" : "%arg novih ruta"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%#@routes@ imported,\n%#@duplicates@ skipped"
+          },
+          "substitutions" : {
+            "duplicates" : {
+              "argNum" : 2,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg duplicate"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg duplicates"
+                    }
+                  }
+                }
+              }
+            },
+            "routes" : {
+              "argNum" : 1,
+              "formatSpecifier" : "ld",
+              "variations" : {
+                "plural" : {
+                  "one" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg new route"
+                    }
+                  },
+                  "other" : {
+                    "stringUnit" : {
+                      "state" : "new",
+                      "value" : "%arg new routes"
                     }
                   }
                 }
@@ -15857,6 +16617,24 @@
             }
           }
         },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld object"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld objects"
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -15984,6 +16762,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "%ld objekata"
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld object"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%ld objects"
                 }
               }
             }
@@ -16528,6 +17324,24 @@
             }
           }
         },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lu tile needed"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lu tiles needed"
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -16655,6 +17469,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "Potrebno je %lu pločica"
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lu tile needed"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "%lu tiles needed"
                 }
               }
             }
@@ -47825,6 +48657,24 @@
             }
           }
         },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Pasting %ld character, maximum tag length is 255"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Pasting %ld characters, maximum tag length is 255"
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -47952,6 +48802,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "Umetanje %ld znakova, maksimalni broj znakova za oznaku je 255"
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Pasting %ld character, maximum tag length is 255"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Pasting %ld characters, maximum tag length is 255"
                 }
               }
             }
@@ -48495,6 +49363,24 @@
             }
           }
         },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Pasting %ld tag"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Pasting %ld tags"
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -48622,6 +49508,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "Umetanje %ld oznaka"
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Pasting %ld tag"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "Pasting %ld tags"
                 }
               }
             }
@@ -61328,210 +62232,210 @@
         }
       }
     },
-	"Unknown": {
-	  "comment": "Placeholder for a tag value field with no field-specific placeholder.",
-	  "extractionState": "manual",
-	  "localizations": {
-		"ar": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "غير معروف"
-		  }
-		},
-		"cs": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Není známo"
-		  }
-		},
-		"de": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Unbekannt"
-		  }
-		},
-		"el": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Άγνωστο"
-		  }
-		},
-		"es": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Desconocido"
-		  }
-		},
-		"et": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Teadmata"
-		  }
-		},
-		"eu": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Ezezaguna"
-		  }
-		},
-		"fi": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Ei tiedossa"
-		  }
-		},
-		"fr": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Inconnu"
-		  }
-		},
-		"hr": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Nepoznato"
-		  }
-		},
-		"hu": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Ismeretlen"
-		  }
-		},
-		"id": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Tidak diketahui"
-		  }
-		},
-		"it": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Sconosciuto"
-		  }
-		},
-		"ja": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "不明"
-		  }
-		},
-		"mr": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "अज्ञात"
-		  }
-		},
-		"nb-NO": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Ukjent"
-		  }
-		},
-		"nl": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Onbekend"
-		  }
-		},
-		"nn": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Ukjend"
-		  }
-		},
-		"pl": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Nieznane"
-		  }
-		},
-		"pt": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Desconhecido"
-		  }
-		},
-		"pt-BR": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Desconhecido"
-		  }
-		},
-		"ru": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Неизвестно"
-		  }
-		},
-		"si": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "නොදනී"
-		  }
-		},
-		"ta": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "அறியப்படவில்லை"
-		  }
-		},
-		"tr": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Bilinmiyor"
-		  }
-		},
-		"uk": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Невідомо"
-		  }
-		},
-		"vi": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "Không rõ"
-		  }
-		},
-		"zh-Hans": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "未知"
-		  }
-		},
-		"zh-Hant": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "未知"
-		  }
-		},
-		"zh-Hant-HK": {
-		  "stringUnit": {
-			"state": "translated",
-			"value": "未知"
-		  }
-		},
-		"ars": {
-		  "stringUnit": {
-			"state": "new",
-			"value": ""
-		  }
-		},
-		"oc": {
-		  "stringUnit": {
-			"state": "new",
-			"value": ""
-		  }
-		},
-		"tzm": {
-		  "stringUnit": {
-			"state": "new",
-			"value": ""
-		  }
-		}
-	  }
-	},
+    "Unknown" : {
+      "comment" : "Placeholder for a tag value field with no field-specific placeholder.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير معروف"
+          }
+        },
+        "ars" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : ""
+          }
+        },
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Není známo"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unbekannt"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άγνωστο"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconocido"
+          }
+        },
+        "et" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Teadmata"
+          }
+        },
+        "eu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ezezaguna"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ei tiedossa"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inconnu"
+          }
+        },
+        "hr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nepoznato"
+          }
+        },
+        "hu" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ismeretlen"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak diketahui"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sconosciuto"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不明"
+          }
+        },
+        "mr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "अज्ञात"
+          }
+        },
+        "nb-NO" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukjent"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Onbekend"
+          }
+        },
+        "nn" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ukjend"
+          }
+        },
+        "oc" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : ""
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nieznane"
+          }
+        },
+        "pt" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconhecido"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Desconhecido"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Неизвестно"
+          }
+        },
+        "si" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "නොදනී"
+          }
+        },
+        "ta" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "அறியப்படவில்லை"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bilinmiyor"
+          }
+        },
+        "tzm" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : ""
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Невідомо"
+          }
+        },
+        "vi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Không rõ"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未知"
+          }
+        }
+      }
+    },
     "Unknown role" : {
       "comment" : "relation role=* tag",
       "localizations" : {
@@ -65554,6 +66458,24 @@
             }
           }
         },
+        "el" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "You've uploaded %ld changeset with this version of Go Map!!\n\nRate this app?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?"
+                }
+              }
+            }
+          }
+        },
         "en" : {
           "variations" : {
             "plural" : {
@@ -65681,6 +66603,24 @@
                 "stringUnit" : {
                   "state" : "translated",
                   "value" : "S ovom Go Map verzijom prenio/prenijela si %ld skupova promjena!!\n\nOcijeniti ovu aplikaciju?"
+                }
+              }
+            }
+          }
+        },
+        "hu" : {
+          "variations" : {
+            "plural" : {
+              "one" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "You've uploaded %ld changeset with this version of Go Map!!\n\nRate this app?"
+                }
+              },
+              "other" : {
+                "stringUnit" : {
+                  "state" : "new",
+                  "value" : "You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?"
                 }
               }
             }

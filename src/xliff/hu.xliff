@@ -763,21 +763,29 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       <trans-unit id=" (%d members)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d member)
 </source>
+        <target state="new"> (%d member)
+</target>
         <note />
       </trans-unit>
       <trans-unit id=" (%d members)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d members)
 </source>
+        <target state="new"> (%d members)
+</target>
         <note />
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.one" xml:space="preserve">
         <source> (%d node)
 </source>
+        <target state="new"> (%d node)
+</target>
         <note />
       </trans-unit>
       <trans-unit id=" (%d nodes)&#10;|==|plural.other" xml:space="preserve">
         <source> (%d nodes)
 </source>
+        <target state="new"> (%d nodes)
+</target>
         <note />
       </trans-unit>
       <trans-unit id=" (node)" xml:space="preserve">
@@ -794,42 +802,52 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
+        <target state="new">%1$#@meters@, %2$#@nodes@</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$.1f meter</source>
+        <target state="new">%1$.1f meter</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$.1f meters</source>
+        <target state="new">%1$.1f meters</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
+        <target state="new">%2$ld node</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.1f meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
+        <target state="new">%2$ld nodes</target>
         <note>way length if &lt; 10m</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files" xml:space="preserve">
         <source>%1$#@megabytes@ , %2$#@files@</source>
+        <target state="new">%1$#@megabytes@ , %2$#@files@</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.one" xml:space="preserve">
         <source>%2$ld file</source>
+        <target state="new">%2$ld file</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.files.plural.other" xml:space="preserve">
         <source>%2$ld files</source>
+        <target state="new">%2$ld files</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.one" xml:space="preserve">
         <source>%1$.2f MB</source>
+        <target state="new">%1$.2f MB</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%.2f MB, %ld files|==|substitutions.megabytes.plural.other" xml:space="preserve">
         <source>%1$.2f MB</source>
+        <target state="new">%1$.2f MB</target>
         <note>These values will always be large (plural)</note>
       </trans-unit>
       <trans-unit id="%@ (relation)" xml:space="preserve">
@@ -842,123 +860,154 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.one" xml:space="preserve">
         <source>%ld Day</source>
+        <target state="new">%ld Day</target>
         <note>One or more days</note>
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.other" xml:space="preserve">
         <source>%ld Days</source>
+        <target state="new">%ld Days</target>
         <note>One or more days</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.one" xml:space="preserve">
         <source>%ld edit, last active %@</source>
+        <target state="new">%ld edit, last active %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld edits, last active %@|==|plural.other" xml:space="preserve">
         <source>%ld edits, last active %@</source>
+        <target state="new">%ld edits, last active %@</target>
         <note>Brief synopsis of a mapper's activity (count,last active date)</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes" xml:space="preserve">
         <source>%1$#@meters@, %2$#@nodes@</source>
+        <target state="new">%1$#@meters@, %2$#@nodes@</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%1$ld meter</source>
+        <target state="new">%1$ld meter</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%1$ld meters</source>
+        <target state="new">%1$ld meters</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.one" xml:space="preserve">
         <source>%2$ld node</source>
+        <target state="new">%2$ld node</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld nodes|==|substitutions.nodes.plural.other" xml:space="preserve">
         <source>%2$ld nodes</source>
+        <target state="new">%2$ld nodes</target>
         <note>way length if &gt; 10m</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@</source>
+        <target state="new">%1$#@meters@, %2$#@points@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints" xml:space="preserve">
         <source>%1$#@meters@, %2$#@points@, %3$#@waypoints@</source>
+        <target state="new">%1$#@meters@, %2$#@points@, %3$#@waypoints@</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
+        <target state="new">%ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
+        <target state="new">%ld meters</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
+        <target state="new">%ld point</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
+        <target state="new">%ld points</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.one" xml:space="preserve">
         <source>%ld waypoint</source>
+        <target state="new">%ld waypoint</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points, %ld waypoints|==|substitutions.waypoints.plural.other" xml:space="preserve">
         <source>%ld waypoints</source>
+        <target state="new">%ld waypoints</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.one" xml:space="preserve">
         <source>%ld meter</source>
+        <target state="new">%ld meter</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.meters.plural.other" xml:space="preserve">
         <source>%ld meters</source>
+        <target state="new">%ld meters</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.one" xml:space="preserve">
         <source>%ld point</source>
+        <target state="new">%ld point</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld meters, %ld points|==|substitutions.points.plural.other" xml:space="preserve">
         <source>%ld points</source>
+        <target state="new">%ld points</target>
         <note>length of a gpx track</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped" xml:space="preserve">
         <source>%1$#@routes@ imported,
 %2$#@duplicates@ skipped</source>
+        <target state="new">%1$#@routes@ imported,
+%2$#@duplicates@ skipped</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.one" xml:space="preserve">
         <source>%2$ld duplicate</source>
+        <target state="new">%2$ld duplicate</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.duplicates.plural.other" xml:space="preserve">
         <source>%2$ld duplicates</source>
+        <target state="new">%2$ld duplicates</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.one" xml:space="preserve">
         <source>%1$ld new route</source>
+        <target state="new">%1$ld new route</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld new route(s) imported,&#10;%ld duplicate(s) skipped|==|substitutions.routes.plural.other" xml:space="preserve">
         <source>%1$ld new routes</source>
+        <target state="new">%1$ld new routes</target>
         <note>result of importing GPX routes</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.one" xml:space="preserve">
         <source>%ld object</source>
+        <target state="new">%ld object</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%ld objects|==|plural.other" xml:space="preserve">
         <source>%ld objects</source>
+        <target state="new">%ld objects</target>
         <note>Number of tiles/objects in cache</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.one" xml:space="preserve">
         <source>%lu tile needed</source>
+        <target state="new">%lu tile needed</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="%lu tiles needed|==|plural.other" xml:space="preserve">
         <source>%lu tiles needed</source>
+        <target state="new">%lu tiles needed</target>
         <note>Always plural</note>
       </trans-unit>
       <trans-unit id="(new object)" xml:space="preserve">
@@ -1804,18 +1853,22 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.one" xml:space="preserve">
         <source>Pasting %ld character, maximum tag length is 255</source>
+        <target state="new">Pasting %ld character, maximum tag length is 255</target>
         <note />
       </trans-unit>
       <trans-unit id="Pasting %ld characters, maximum tag length is 255|==|plural.other" xml:space="preserve">
         <source>Pasting %ld characters, maximum tag length is 255</source>
+        <target state="new">Pasting %ld characters, maximum tag length is 255</target>
         <note />
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.one" xml:space="preserve">
         <source>Pasting %ld tag</source>
+        <target state="new">Pasting %ld tag</target>
         <note />
       </trans-unit>
       <trans-unit id="Pasting %ld tag(s)|==|plural.other" xml:space="preserve">
         <source>Pasting %ld tags</source>
+        <target state="new">Pasting %ld tags</target>
         <note />
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
@@ -2323,12 +2376,18 @@ These members are marked with '&gt;'.</source>
         <source>You've uploaded %ld changeset with this version of Go Map!!
 
 Rate this app?</source>
+        <target state="new">You've uploaded %ld changeset with this version of Go Map!!
+
+Rate this app?</target>
         <note />
       </trans-unit>
       <trans-unit id="You've uploaded %ld changesets with this version of Go Map!!&#10;&#10;Rate this app?|==|plural.other" xml:space="preserve">
         <source>You've uploaded %ld changesets with this version of Go Map!!
 
 Rate this app?</source>
+        <target state="new">You've uploaded %ld changesets with this version of Go Map!!
+
+Rate this app?</target>
         <note />
       </trans-unit>
       <trans-unit id="Your OSM data cache is getting large, which may lead to slow startup and shutdown times.&#10;&#10;You may want to clear the cache (under Display settings) to improve performance." xml:space="preserve">
