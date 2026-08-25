@@ -2169,7 +2169,7 @@
 				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5608;
+				CURRENT_PROJECT_VERSION = 5609;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!! Debug";
 				ENABLE_APP_SANDBOX = YES;
@@ -2196,7 +2196,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 5.6.8;
+				MARKETING_VERSION = 5.6.9;
 				"OTHER_SWIFT_FLAGS[arch=*]" = "-DDEBUG ";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
@@ -2231,7 +2231,7 @@
 				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "Go Map!!/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5608;
+				CURRENT_PROJECT_VERSION = 5609;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				DISPLAY_NAME = "Go Map!!";
 				ENABLE_APP_SANDBOX = YES;
@@ -2260,7 +2260,7 @@
 					"@executable_path/Frameworks",
 				);
 				LLVM_LTO = YES;
-				MARKETING_VERSION = 5.6.8;
+				MARKETING_VERSION = 5.6.9;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap;
 				PRODUCT_NAME = "Go Map!!";
 				PROVISIONING_PROFILE = "";
@@ -2298,7 +2298,7 @@
 				CODE_SIGN_ENTITLEMENTS = GpxWidget/GpxWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5608;
+				CURRENT_PROJECT_VERSION = 5609;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -2314,7 +2314,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.6.8;
+				MARKETING_VERSION = 5.6.9;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.GpxWidget;
@@ -2349,7 +2349,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5608;
+				CURRENT_PROJECT_VERSION = 5609;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -2366,7 +2366,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.6.8;
+				MARKETING_VERSION = 5.6.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.GpxWidget;
@@ -2397,7 +2397,7 @@
 				CODE_SIGN_ENTITLEMENTS = PhotoShare/PhotoShare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5608;
+				CURRENT_PROJECT_VERSION = 5609;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_APP_SANDBOX = YES;
@@ -2422,7 +2422,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.6.8;
+				MARKETING_VERSION = 5.6.9;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.PhotoShare;
@@ -2456,7 +2456,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 5608;
+				CURRENT_PROJECT_VERSION = 5609;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = MKTTC6734C;
 				ENABLE_APP_SANDBOX = YES;
@@ -2482,7 +2482,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 5.6.8;
+				MARKETING_VERSION = 5.6.9;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.PhotoShare;
