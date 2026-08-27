@@ -74,36 +74,36 @@
       }
     },
     "TcP-6i-B8H.text" : {
-      "comment" : "Class = \"UILabel\"; text = \"Specify a name (\\\"New York\\\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\\\"way 51014987\\\"):\"; ObjectID = \"TcP-6i-B8H\";",
+      "comment" : "Class = \"UILabel\"; text = \"Specify a name (\\\"New York\\\"), a URL or other text containing lat/lon coordinates, a reference to an OSM object (\\\"way 51014987\\\"), or an OSM note (\\\"note 536129\\\").:\"; ObjectID = \"TcP-6i-B8H\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Zadejte název („New York“), URL či jiný text obsahující lat/lon koordináty, nebo referenci OSM objektu („way 51014987“):"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, or a reference to an OSM object (\"way 51014987\"):"
+            "value" : "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, a reference to an OSM object (\"way 51014987\"), or an OSM note (\"note 536129\").:"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Specificeer een naam (\"New York\"), een URL of andere tekst die breedtegraad/lengtegraad-coördinaten bevat, of een verwijzing naar een OSM-object (\"weg 51014987\"):"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Укажите название (\"Нью-Йорк\"), URL или другой текст, содержащий координаты широты/долготы, или ссылку на объект OSM (\"way 51014987\"):"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Bir isim (\"New York\"), bir URL, enlem/boylam koordinatları içeren başka bir metin veya bir OSM nesnesine referans (\"way 51014987\") belirtin:"
           }
         }
