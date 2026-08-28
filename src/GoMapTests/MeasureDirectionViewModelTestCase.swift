@@ -42,7 +42,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 		// Re-create the view model, since it only asks for the `headingAvailble` during initialization.
 		viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
 
-		XCTAssertEqual(viewModel.valueLabelText.value, "🤷‍♂️")
+		XCTAssertEqual(viewModel.valueLabelText, "🤷‍♂️")
 	}
 
 	func testOldValueLabelTextShouldIndicateThatHeadingIsNotAvailableWhenHeadingIsNotAvailable() {
@@ -51,7 +51,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 		// Re-create the view model, since it only asks for the `headingAvailble` during initialization.
 		viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
 
-		XCTAssertEqual(viewModel.oldValueLabelText.value,
+		XCTAssertEqual(viewModel.oldValueLabelText,
 		               "This device is not able to provide heading data.")
 	}
 
@@ -61,7 +61,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 		// Re-create the view model, since it only asks for the `headingAvailble` during initialization.
 		viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
 
-		XCTAssertTrue(viewModel.isPrimaryActionButtonHidden.value)
+		XCTAssertTrue(viewModel.isPrimaryActionButtonHidden)
 	}
 
 	func testDismissButtonTitleShouldBeBackWhenHeadingIsNotAvailable() {
@@ -70,7 +70,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 		// Re-create the view model, since it only asks for the `headingAvailble` during initialization.
 		viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
 
-		XCTAssertEqual(viewModel.dismissButtonTitle.value, "Back")
+		XCTAssertEqual(viewModel.dismissButtonTitle, "Back")
 	}
 
 	// MARK: Heading is available
@@ -81,7 +81,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 		// Re-create the view model, since it only asks for the `headingAvailble` during initialization.
 		viewModel = MeasureDirectionViewModel(headingProvider: headingProviderMock, key: key)
 
-		XCTAssertEqual(viewModel.valueLabelText.value, "...")
+		XCTAssertEqual(viewModel.valueLabelText, "...")
 	}
 
 	func testOldValueLabelTextShouldContainTheOldValueWhenItWasProvidedDuringInitialization() {
@@ -92,7 +92,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 		                                      key: key,
 		                                      value: oldValue)
 
-		XCTAssertEqual(viewModel.oldValueLabelText.value, "Old value: \(oldValue)")
+		XCTAssertEqual(viewModel.oldValueLabelText, "Old value: \(oldValue)")
 	}
 
 	func testOldValueLabelTextShouldBeNilIfTheOriginalValueWasNil() {
@@ -103,7 +103,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 		                                      key: key,
 		                                      value: oldValue)
 
-		XCTAssertNil(viewModel.oldValueLabelText.value)
+		XCTAssertNil(viewModel.oldValueLabelText)
 	}
 
 	func testOldValueLabelTextShouldBeNilIfTheOriginalValueWasAnEmptyString() {
@@ -114,7 +114,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 		                                      key: key,
 		                                      value: oldValue)
 
-		XCTAssertNil(viewModel.oldValueLabelText.value)
+		XCTAssertNil(viewModel.oldValueLabelText)
 	}
 
 	// MARK: primaryActionButtonTitle
@@ -130,7 +130,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 	// MARK: isPrimaryActionButtonHidden
 
 	func testPrimaryActionButtonShouldBeHiddenWhenNoHeadingUpdateHasBeenProvidedYet() {
-		XCTAssertTrue(viewModel.isPrimaryActionButtonHidden.value)
+		XCTAssertTrue(viewModel.isPrimaryActionButtonHidden)
 	}
 
 	func testPrimaryActionButtonShouldBeVisibleWhenHeadingProviderDidUpdateHeading() {
@@ -139,7 +139,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 		let heading = CLHeadingMock(trueHeading: trueHeading)
 		headingProviderMock.delegate?.headingProviderDidUpdateHeading(heading)
 
-		XCTAssertFalse(viewModel.isPrimaryActionButtonHidden.value)
+		XCTAssertFalse(viewModel.isPrimaryActionButtonHidden)
 	}
 
 	// MARK: Receiving heading updates
@@ -150,7 +150,7 @@ class MeasureDirectionViewModelTestCase: XCTestCase {
 		let heading = CLHeadingMock(trueHeading: trueHeading)
 		headingProviderMock.delegate?.headingProviderDidUpdateHeading(heading)
 
-		XCTAssertEqual(viewModel.valueLabelText.value, "123")
+		XCTAssertEqual(viewModel.valueLabelText, "123")
 	}
 
 	// MARK: viewDidAppear

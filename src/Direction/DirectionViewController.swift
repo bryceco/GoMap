@@ -12,7 +12,6 @@ class DirectionViewController: UIViewController {
 	// MARK: Private properties
 
 	private let viewModel: MeasureDirectionViewModel
-	private var disposal = Disposal()
 	private let onSetValue: (String) -> Void
 
 	@IBOutlet var valueLabel: UILabel!
@@ -84,29 +83,17 @@ class DirectionViewController: UIViewController {
 	private func bindToViewModel() {
 		primaryActionButton.setTitle(viewModel.primaryActionButtonTitle, for: .normal)
 
-		viewModel.valueLabelText.observe { [weak self] text, _ in
-			guard let self = self else { return }
+		viewModel.onUpdate = { [weak self] in
+			self?.updateFromViewModel()
+		}
+		updateFromViewModel()
+	}
 
-			self.valueLabel.text = text
-		}.add(to: &disposal)
-
-		viewModel.oldValueLabelText.observe { [weak self] text, _ in
-			guard let self = self else { return }
-
-			self.oldValueLabel.text = text
-		}.add(to: &disposal)
-
-		viewModel.isPrimaryActionButtonHidden.observe { [weak self] isHidden, _ in
-			guard let self = self else { return }
-
-			self.primaryActionButton.isHidden = isHidden
-		}.add(to: &disposal)
-
-		viewModel.dismissButtonTitle.observe { [weak self] title, _ in
-			guard let self = self else { return }
-
-			self.cancelButton.setTitle(title, for: .normal)
-		}.add(to: &disposal)
+	private func updateFromViewModel() {
+		valueLabel.text = viewModel.valueLabelText
+		oldValueLabel.text = viewModel.oldValueLabelText
+		primaryActionButton.isHidden = viewModel.isPrimaryActionButtonHidden
+		cancelButton.setTitle(viewModel.dismissButtonTitle, for: .normal)
 	}
 }
 

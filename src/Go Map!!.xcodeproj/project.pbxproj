@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		02008650265B25DC008F37DD /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028816A2265AD9D100C30EA2 /* Database.swift */; };
 		0200C1C22703B42600A79804 /* LocationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0200C1C12703B42600A79804 /* LocationParser.swift */; };
-		0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0200FECC2908B0EB002C3F94 /* GeoJSON.swift */; };
+		0200FECD2908B0EB002C3F94 /* Shared/GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0200FECC2908B0EB002C3F94 /* Shared/GeoJSON.swift */; };
 		02024EBC2FD4F09900B9BF09 /* KeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02024EBB2FD4F09900B9BF09 /* KeyboardToolbar.swift */; };
 		0202C5FE2E3BFD7500649F26 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202C5FD2E3BFD7500649F26 /* CustomSegmentedControl.swift */; };
 		0202C6002E3C348400649F26 /* ButtonClosure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0202C5FF2E3C348400649F26 /* ButtonClosure.swift */; };
@@ -116,7 +116,7 @@
 		0291D83724427AFA00F793BE /* Display.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0291D83524427AFA00F793BE /* Display.storyboard */; };
 		02930750268BFB6700B2A326 /* QuadDownloadLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */; };
 		0293B2CD2F53DDB100044DDE /* DeprecatedTags.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293B2CC2F53DDB100044DDE /* DeprecatedTags.swift */; };
-		0293B2CF2F5B620F00044DDE /* TableViewControllerMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293B2CE2F5B620F00044DDE /* TableViewControllerMac.swift */; };
+		0293B2CF2F5B620F00044DDE /* Shared/TableViewControllerMac.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293B2CE2F5B620F00044DDE /* Shared/TableViewControllerMac.swift */; };
 		0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */; };
 		0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB2299D84F7002EED90 /* MaxarAerial.secret */; };
 		02969EBA2DF630A6003BA34A /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02969EB92DF630A6003BA34A /* Array+Extension.swift */; };
@@ -147,7 +147,7 @@
 		02B5669D294F9D7E00710632 /* MagnifyingGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */; };
 		02B5669F294FDCF200710632 /* CrossHairsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B5669E294FDCF200710632 /* CrossHairsLayer.swift */; };
 		02BB355B29B6757C00FB52E5 /* NsiLogoDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */; };
-		02BB355D29B6A55D00FB52E5 /* OsmUserPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */; };
+		02BB355D29B6A55D00FB52E5 /* Shared/OsmUserPrefs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB355C29B6A55D00FB52E5 /* Shared/OsmUserPrefs.swift */; };
 		02BE6190245D1F9D00E92662 /* EsriPlaceholderImage.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */; };
 		02C35E162F12E0AF00BE5948 /* MapViewPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C35E152F12E0AF00BE5948 /* MapViewPort.swift */; };
 		02C456A829C8DB410077E3FD /* TagInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02C456A729C8DB410077E3FD /* TagInfo.swift */; };
@@ -175,7 +175,7 @@
 		02CBF3CD2BE86646000DE2AD /* GpxTrackAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */; };
 		02CC01D12584195E004444EF /* PresetFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01D02584195E004444EF /* PresetFeature.swift */; };
 		02CC01DC25843F2F004444EF /* PresetLanguages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC01DB25843F2F004444EF /* PresetLanguages.swift */; };
-		02CC7E3D2E2EF248001CA356 /* PhotoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */; };
+		02CC7E3D2E2EF248001CA356 /* Shared/PhotoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CC7E3C2E2EF248001CA356 /* Shared/PhotoCapture.swift */; };
 		02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CD9973265C65C200213AD6 /* EditorFilters.swift */; };
 		02CE3CE229909D1D00DDACE0 /* QuestSolverController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CB523E299097C3007F758D /* QuestSolverController.swift */; };
 		02CE3CE32990A2C800DDACE0 /* QuestSolver.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02CB523D299097C3007F758D /* QuestSolver.storyboard */; };
@@ -183,7 +183,7 @@
 		02CE3CE7299187C100DDACE0 /* TelephoneToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */; };
 		02CE3CE929919FC400DDACE0 /* MapPinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE829919FC400DDACE0 /* MapPinButton.swift */; };
 		02CE3CEB2991B5FA00DDACE0 /* QuestIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */; };
-		02D1ABA12F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D1ABA02F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift */; };
+		02D1ABA12F6DBE1700C2AE7E /* Shared/RightClickGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D1ABA02F6DBE1700C2AE7E /* Shared/RightClickGestureRecognizer.swift */; };
 		02D276902E8B289400A21863 /* EXIFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2768F2E8B289400A21863 /* EXIFInfo.swift */; };
 		02D276912E8B289400A21863 /* EXIFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2768F2E8B289400A21863 /* EXIFInfo.swift */; };
 		02D2FD4F29B016BC00483F4D /* PresetValueTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */; };
@@ -243,9 +243,6 @@
 		64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D00225E8D3F00ADE7FB /* OsmNode+Direction.swift */; };
 		64348D03225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */; };
 		64348D13225EAA5D00ADE7FB /* MapViewUITestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */; };
-		6442666722540EDF00C0D545 /* Lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666422540EDF00C0D545 /* Lock.swift */; };
-		6442666822540EDF00C0D545 /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666522540EDF00C0D545 /* Disposable.swift */; };
-		6442666922540EDF00C0D545 /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6442666622540EDF00C0D545 /* Observable.swift */; };
 		647F46CE2253EA4C00CEC482 /* MeasureDirectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */; };
 		647F46D12253F08200CEC482 /* HeadingProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 647F46D02253F08200CEC482 /* HeadingProvider.swift */; };
 		64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C072F9226227D500598078 /* PresetKeyTagCase.swift */; };
@@ -262,7 +259,7 @@
 		C341E15A2639DF210022E983 /* NotesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E1592639DF210022E983 /* NotesTableViewController.swift */; };
 		C341E15C2639DF440022E983 /* NearbyMappersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */; };
 		C365A563263FC53F007DEC94 /* TurnRestrictHwyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */; };
-		C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */; };
+		C365A569263FCC9C007DEC94 /* Shared/TapAndDragGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A568263FCC9C007DEC94 /* Shared/TapAndDragGesture.swift */; };
 		C381C30B263FE518003142BA /* PushPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C30A263FE518003142BA /* PushPinView.swift */; };
 		C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */; };
 		C3D096AC263D48F700E3B129 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096AB263D48F700E3B129 /* AppDelegate.swift */; };
@@ -378,7 +375,7 @@
 
 /* Begin PBXFileReference section */
 		0200C1C12703B42600A79804 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationParser.swift; path = ../Shared/Location/LocationParser.swift; sourceTree = "<group>"; };
-		0200FECC2908B0EB002C3F94 /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/GeoJSON.swift; sourceTree = SOURCE_ROOT; };
+		0200FECC2908B0EB002C3F94 /* Shared/GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/GeoJSON.swift; sourceTree = SOURCE_ROOT; };
 		02024EBB2FD4F09900B9BF09 /* KeyboardToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbar.swift; sourceTree = "<group>"; };
 		0202C5FD2E3BFD7500649F26 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		0202C5FF2E3C348400649F26 /* ButtonClosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonClosure.swift; path = ../../Shared/Utility/ButtonClosure.swift; sourceTree = "<group>"; };
@@ -427,7 +424,7 @@
 		023320A32BE1DB9900E3311A /* DPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPadView.swift; sourceTree = "<group>"; };
 		0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostRecentlyUsed.swift; sourceTree = "<group>"; };
 		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvedGlyphLayer.swift; sourceTree = "<group>"; };
-		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Images.xcassets; sourceTree = "<group>"; };
+		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		0244398C29C9402B009FC2D0 /* TileServerList+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TileServerList+JSON.swift"; sourceTree = "<group>"; };
@@ -437,14 +434,14 @@
 		024909CA267D99190027E531 /* OsmDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmDownloader.swift; sourceTree = "<group>"; };
 		024909CE267EADC70027E531 /* OsmXmlGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmXmlGenerator.swift; sourceTree = "<group>"; };
 		024B5EC52E31A4B900258653 /* MainActor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainActor+Extension.swift"; sourceTree = "<group>"; };
-		024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */ = {isa = PBXFileReference; lastKnownFileType = text; name = "apple-app-site-association"; path = apple-app-site-association; sourceTree = "<group>"; };
+		024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */ = {isa = PBXFileReference; lastKnownFileType = text; path = "apple-app-site-association"; sourceTree = "<group>"; };
 		02505C5229A2EAD60078D60D /* AdvancedQuestBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedQuestBuilder.swift; sourceTree = "<group>"; };
 		02505C5429A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvancedQuestBuilderFilterRow.swift; sourceTree = "<group>"; };
 		02505C5629A458A30078D60D /* QuestDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinition.swift; sourceTree = "<group>"; };
 		02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFilters.swift; sourceTree = "<group>"; };
 		02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFeatures.swift; sourceTree = "<group>"; };
 		0250C8DF2E7CBD7700192893 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/TurnRestrictions.xcstrings; sourceTree = "<group>"; };
-		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "POI-Icons"; sourceTree = "<group>"; };
+		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "POI-Icons"; sourceTree = "<group>"; };
 		02572B722F10D8C400216EE3 /* MessageDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDisplay.swift; sourceTree = "<group>"; };
 		02581F31301410AD00FC4D3A /* RotateObjectOverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotateObjectOverlayViewController.swift; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
@@ -485,10 +482,10 @@
 		028816A2265AD9D100C30EA2 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		028ADAFB2FCE32CE007CEF4E /* UndoAction+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UndoAction+Ext.swift"; sourceTree = "<group>"; };
 		028C51E525CB7A23004A88F7 /* TristateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TristateButton.swift; sourceTree = "<group>"; };
-		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = presets; sourceTree = "<group>"; };
+		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = presets; sourceTree = "<group>"; };
 		0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadDownloadLayer.swift; sourceTree = "<group>"; };
 		0293B2CC2F53DDB100044DDE /* DeprecatedTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeprecatedTags.swift; sourceTree = "<group>"; };
-		0293B2CE2F5B620F00044DDE /* TableViewControllerMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/TableViewControllerMac.swift; sourceTree = SOURCE_ROOT; };
+		0293B2CE2F5B620F00044DDE /* Shared/TableViewControllerMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/TableViewControllerMac.swift; sourceTree = SOURCE_ROOT; };
 		0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerIgnoreList.swift; sourceTree = "<group>"; };
 		0293FEB2299D84F7002EED90 /* MaxarAerial.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MaxarAerial.secret; sourceTree = "<group>"; };
 		02969EB92DF630A6003BA34A /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
@@ -519,7 +516,7 @@
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Go Map!!.entitlements"; path = "App/Go Map!!.entitlements"; sourceTree = SOURCE_ROOT; };
 		02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NsiLogoDatabase.swift; sourceTree = "<group>"; };
-		02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/OsmUserPrefs.swift; sourceTree = SOURCE_ROOT; };
+		02BB355C29B6A55D00FB52E5 /* Shared/OsmUserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/OsmUserPrefs.swift; sourceTree = SOURCE_ROOT; };
 		02C35E152F12E0AF00BE5948 /* MapViewPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewPort.swift; sourceTree = "<group>"; };
 		02C456A729C8DB410077E3FD /* TagInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagInfo.swift; sourceTree = "<group>"; };
 		02C8C56426F446FD003B0122 /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
@@ -549,13 +546,13 @@
 		02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxTrackAttributes.swift; sourceTree = "<group>"; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
-		02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/PhotoCapture.swift; sourceTree = SOURCE_ROOT; };
+		02CC7E3C2E2EF248001CA356 /* Shared/PhotoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/PhotoCapture.swift; sourceTree = SOURCE_ROOT; };
 		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFilters.swift; sourceTree = "<group>"; };
 		02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestChooserController.swift; sourceTree = "<group>"; };
 		02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneToolbar.swift; sourceTree = "<group>"; };
 		02CE3CE829919FC400DDACE0 /* MapPinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinButton.swift; sourceTree = "<group>"; };
 		02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = QuestIcons.xcassets; sourceTree = "<group>"; };
-		02D1ABA02F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/RightClickGestureRecognizer.swift; sourceTree = SOURCE_ROOT; };
+		02D1ABA02F6DBE1700C2AE7E /* Shared/RightClickGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/RightClickGestureRecognizer.swift; sourceTree = SOURCE_ROOT; };
 		02D2768F2E8B289400A21863 /* EXIFInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXIFInfo.swift; sourceTree = "<group>"; };
 		02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetValueTextField.swift; sourceTree = "<group>"; };
 		02D5B5F2248F154D00FEE448 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -617,9 +614,6 @@
 		64348D08225EA24E00ADE7FB /* GoMapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GoMapUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64348D0C225EA24E00ADE7FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewUITestCase.swift; sourceTree = "<group>"; };
-		6442666422540EDF00C0D545 /* Lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lock.swift; sourceTree = "<group>"; };
-		6442666522540EDF00C0D545 /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
-		6442666622540EDF00C0D545 /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		647F46CD2253EA4C00CEC482 /* MeasureDirectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasureDirectionViewModel.swift; sourceTree = "<group>"; };
 		647F46D02253F08200CEC482 /* HeadingProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadingProvider.swift; sourceTree = "<group>"; };
 		64C072F9226227D500598078 /* PresetKeyTagCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetKeyTagCase.swift; sourceTree = "<group>"; };
@@ -638,7 +632,7 @@
 		C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyMappersViewController.swift; sourceTree = "<group>"; };
 		C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRestrictHwyView.swift; sourceTree = "<group>"; };
 		C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechBalloonView.swift; sourceTree = "<group>"; };
-		C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shared/TapAndDragGesture.swift; sourceTree = SOURCE_ROOT; };
+		C365A568263FCC9C007DEC94 /* Shared/TapAndDragGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shared/TapAndDragGesture.swift; sourceTree = SOURCE_ROOT; };
 		C381C305263FD0CA003142BA /* VectorMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		C381C306263FD0E8003142BA /* UndoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UndoManager.swift; sourceTree = "<group>"; };
 		C381C30A263FE518003142BA /* PushPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPinView.swift; sourceTree = "<group>"; };
@@ -758,7 +752,7 @@
 			path = Panoramax;
 			sourceTree = "<group>";
 		};
-		022114FB2E6CDCF800D76061 /* Turn Restrictions */ = {
+		022114FB2E6CDCF800D76061 /* TurnRestrictions */ = {
 			isa = PBXGroup;
 			children = (
 				C3D096AF263D4FF500E3B129 /* TurnRestrictController.swift */,
@@ -799,6 +793,26 @@
 				ED9649C02601C33E00EC0A60 /* TileServerEditViewController.swift */,
 			);
 			path = DisplaySettings;
+			sourceTree = "<group>";
+		};
+		027D00000000000000000002 /* GpxTrack */ = {
+			isa = PBXGroup;
+			children = (
+				02225DA629EB3AE900859F9D /* GpxTrack.swift */,
+				0210AE062F19A9DF0031F047 /* GpxTracks.swift */,
+			);
+			name = GpxTrack;
+			path = Shared/GpxTrack;
+			sourceTree = "<group>";
+		};
+		027D00000000000000000003 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
+				02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */,
+			);
+			name = Location;
+			path = Shared/Location;
 			sourceTree = "<group>";
 		};
 		027E90AF3016CBEC00E1A0F1 /* Notes */ = {
@@ -911,7 +925,7 @@
 				02CB523C299097C3007F758D /* Quests */,
 				0244399529CA9A02009FC2D0 /* Settings */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
-				022114FB2E6CDCF800D76061 /* Turn Restrictions */,
+				022114FB2E6CDCF800D76061 /* TurnRestrictions */,
 				647C150D24268DB7008A9366 /* Upload */,
 			);
 			name = "Go Map!";
@@ -944,7 +958,6 @@
 				020E0E242F637CB200A9D27C /* RotationGestureRecognizer.swift */,
 				02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */,
 			);
-			name = App;
 			path = App;
 			sourceTree = "<group>";
 		};
@@ -953,11 +966,11 @@
 			children = (
 				0210AE082F1A2C770031F047 /* AppState.swift */,
 				02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */,
-				02B52E7828CAA8F800CB55F3 /* CustomViews */,
+				02B52E7828CAA8F800CB55F3 /* Shared/CustomViews */,
 				02F5329B267AD0A50088DF41 /* Database */,
 				02F53299267ACFBB0088DF41 /* EditorLayer */,
 				02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */,
-				0200FECC2908B0EB002C3F94 /* GeoJSON.swift */,
+				0200FECC2908B0EB002C3F94 /* Shared/GeoJSON.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
 				027D00000000000000000002 /* GpxTrack */,
 				027D00000000000000000003 /* Location */,
@@ -965,16 +978,15 @@
 				02C8C56326F446A3003B0122 /* MapMarkers */,
 				024909C8267BF9F70027E531 /* MapTransform.swift */,
 				0282C4C826617E7400F2D282 /* MapView.swift */,
-				6442666322540EDF00C0D545 /* Observable */,
 				6453776323D38D1F00656A1C /* OSMModels */,
-				02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */,
+				02BB355C29B6A55D00FB52E5 /* Shared/OsmUserPrefs.swift */,
 				02148A572FFA1461002D513D /* Panoramax */,
-				02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */,
+				02CC7E3C2E2EF248001CA356 /* Shared/PhotoCapture.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				02E9DCD72F0E34B300F372A9 /* PresetsDisplay */,
-				02D1ABA02F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift */,
-				0293B2CE2F5B620F00044DDE /* TableViewControllerMac.swift */,
-				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
+				02D1ABA02F6DBE1700C2AE7E /* Shared/RightClickGestureRecognizer.swift */,
+				0293B2CE2F5B620F00044DDE /* Shared/TableViewControllerMac.swift */,
+				C365A568263FCC9C007DEC94 /* Shared/TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
 				02092ECE29E32DD40095042B /* UserPrefs.swift */,
 				02F5329C267AD2B20088DF41 /* Utility */,
@@ -982,7 +994,7 @@
 			name = Shared;
 			sourceTree = "<group>";
 		};
-		02B52E7828CAA8F800CB55F3 /* CustomViews */ = {
+		02B52E7828CAA8F800CB55F3 /* Shared/CustomViews */ = {
 			isa = PBXGroup;
 			children = (
 				020EC41E2EA9D6B9005B94D9 /* AlertPopup.swift */,
@@ -1270,17 +1282,6 @@
 			path = GoMapUITests;
 			sourceTree = "<group>";
 		};
-		6442666322540EDF00C0D545 /* Observable */ = {
-			isa = PBXGroup;
-			children = (
-				6442666422540EDF00C0D545 /* Lock.swift */,
-				6442666522540EDF00C0D545 /* Disposable.swift */,
-				6442666622540EDF00C0D545 /* Observable.swift */,
-			);
-			name = Observable;
-			path = Shared/Observable;
-			sourceTree = "<group>";
-		};
 		6453776323D38D1F00656A1C /* OSMModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -1352,26 +1353,6 @@
 				B25C23192BB8B09C000891B6 /* Theme.swift */,
 			);
 			path = iD;
-			sourceTree = "<group>";
-		};
-		027D00000000000000000002 /* GpxTrack */ = {
-			isa = PBXGroup;
-			children = (
-				02225DA629EB3AE900859F9D /* GpxTrack.swift */,
-				0210AE062F19A9DF0031F047 /* GpxTracks.swift */,
-			);
-			name = GpxTrack;
-			path = Shared/GpxTrack;
-			sourceTree = "<group>";
-		};
-		027D00000000000000000003 /* Location */ = {
-			isa = PBXGroup;
-			children = (
-				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
-				02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */,
-			);
-			name = Location;
-			path = Shared/Location;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1675,13 +1656,13 @@
 				0220526429283498003C6AE1 /* CountryCoder.swift in Sources */,
 				C3D096B6263DF82F00E3B129 /* RulerView.swift in Sources */,
 				C341E15A2639DF210022E983 /* NotesTableViewController.swift in Sources */,
-				02BB355D29B6A55D00FB52E5 /* OsmUserPrefs.swift in Sources */,
+				02BB355D29B6A55D00FB52E5 /* Shared/OsmUserPrefs.swift in Sources */,
 				C3D096AE263D4BFB00E3B129 /* UploadViewController.swift in Sources */,
 				0288169E265895FA00C30EA2 /* OsmMapData+Edit.swift in Sources */,
 				020E0E212F6374A500A9D27C /* AppEnvironment.swift in Sources */,
 				02092ECF29E32DD40095042B /* UserPrefs.swift in Sources */,
 				020E0E252F637CB200A9D27C /* RotationGestureRecognizer.swift in Sources */,
-				C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */,
+				C365A569263FCC9C007DEC94 /* Shared/TapAndDragGesture.swift in Sources */,
 				02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */,
 				02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */,
 				02C35E162F12E0AF00BE5948 /* MapViewPort.swift in Sources */,
@@ -1728,7 +1709,6 @@
 				024909C9267BF9F70027E531 /* MapTransform.swift in Sources */,
 				0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */,
 				02F6A459268AE42800F2ACE7 /* Debugger.swift in Sources */,
-				6442666922540EDF00C0D545 /* Observable.swift in Sources */,
 				02C8C56F26F447C3003B0122 /* KeepRightMarker.swift in Sources */,
 				0203473D26695B2A000A7C3D /* EditorMapLayer+Edit.swift in Sources */,
 				024909CB267D99190027E531 /* OsmDownloader.swift in Sources */,
@@ -1742,7 +1722,7 @@
 				02B5669D294F9D7E00710632 /* MagnifyingGlass.swift in Sources */,
 				0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */,
 				023320A42BE1DB9900E3311A /* DPadView.swift in Sources */,
-				02D1ABA12F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift in Sources */,
+				02D1ABA12F6DBE1700C2AE7E /* Shared/RightClickGestureRecognizer.swift in Sources */,
 				ED9649C12601C33E00EC0A60 /* AdvancedSettingsViewController.swift in Sources */,
 				C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */,
 				02CA15512824A6B40047B0E5 /* String+Ext.swift in Sources */,
@@ -1758,13 +1738,13 @@
 				64348D01225E8D3F00ADE7FB /* OsmNode+Direction.swift in Sources */,
 				02CC01D12584195E004444EF /* PresetFeature.swift in Sources */,
 				02505C5529A2ECA50078D60D /* AdvancedQuestBuilderFilterRow.swift in Sources */,
-				0293B2CF2F5B620F00044DDE /* TableViewControllerMac.swift in Sources */,
+				0293B2CF2F5B620F00044DDE /* Shared/TableViewControllerMac.swift in Sources */,
 				02A59EDD297E444500B0A676 /* PresetAddressFormat.swift in Sources */,
 				02EF13C32E5D041800418CA4 /* UIFont+Ext.swift in Sources */,
 				C31315232644292700C0AD86 /* LocationBallView.swift in Sources */,
 				02AF69142F2B53A70000ABA2 /* OsmMapDataArchiver.swift in Sources */,
 				ED964A012601D6A900EC0A60 /* POICommonTagsViewController.swift in Sources */,
-				0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */,
+				0200FECD2908B0EB002C3F94 /* Shared/GeoJSON.swift in Sources */,
 				0293FEB1299D5C78002EED90 /* MapMarkerIgnoreList.swift in Sources */,
 				02505C5329A2EAD60078D60D /* AdvancedQuestBuilder.swift in Sources */,
 				020EBA7926506156001D56F4 /* MercatorTileLayer.swift in Sources */,
@@ -1776,7 +1756,6 @@
 				0260E05F2BE30D4700975570 /* CompassButton.swift in Sources */,
 				02EDBF6A26535BD400B7072E /* OsmRelation.swift in Sources */,
 				02A123F1264EF139005638C1 /* QuadMap.swift in Sources */,
-				6442666822540EDF00C0D545 /* Disposable.swift in Sources */,
 				ED56E5C726027A50000B368C /* CreditsViewController.swift in Sources */,
 				02092ED129E8ADB70095042B /* ArchivePath.swift in Sources */,
 				ED9649F92601D58900EC0A60 /* POIPresetValuePickerController.swift in Sources */,
@@ -1836,8 +1815,7 @@
 				02DFFD1E2BF3E0F0002A0189 /* LocationSet.swift in Sources */,
 				02CB2406265DB7CB00835F32 /* CameraView.swift in Sources */,
 				CD677FFA2A5FC17300F28605 /* AccountInfoTableViewController.swift in Sources */,
-				6442666722540EDF00C0D545 /* Lock.swift in Sources */,
-				02CC7E3D2E2EF248001CA356 /* PhotoCapture.swift in Sources */,
+				02CC7E3D2E2EF248001CA356 /* Shared/PhotoCapture.swift in Sources */,
 				02C8C56726F44728003B0122 /* OsmNoteMarker.swift in Sources */,
 				02505C5B29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift in Sources */,
 				028816A12659B4A600C30EA2 /* GZip.swift in Sources */,

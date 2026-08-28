@@ -17,11 +17,12 @@ class MeasureDirectionViewModel: HeadingProviderDelegate {
 	// MARK: Public properties
 
 	weak var delegate: MeasureDirectionViewModelDelegate?
-	var valueLabelText = Observable<String>("...")
-	var oldValueLabelText = Observable<String?>(nil)
+	var onUpdate: (() -> Void)?
+	var valueLabelText: String = "..." { didSet { onUpdate?() } }
+	var oldValueLabelText: String? { didSet { onUpdate?() } }
 	let primaryActionButtonTitle: String
-	var isPrimaryActionButtonHidden = Observable<Bool>(true)
-	var dismissButtonTitle = Observable<String>(NSLocalizedString("Cancel", comment: ""))
+	var isPrimaryActionButtonHidden: Bool = true { didSet { onUpdate?() } }
+	var dismissButtonTitle: String = NSLocalizedString("Cancel", comment: "") { didSet { onUpdate?() } }
 
 	// MARK: Private properties
 
@@ -32,7 +33,7 @@ class MeasureDirectionViewModel: HeadingProviderDelegate {
 		didSet {
 			if mostRecentHeading != nil {
 				// We have a heading that the user could apply. Show the primary action button.
-				isPrimaryActionButtonHidden.value = false
+				isPrimaryActionButtonHidden = false
 			}
 		}
 	}
@@ -54,15 +55,15 @@ class MeasureDirectionViewModel: HeadingProviderDelegate {
 		headingProvider.delegate = self
 
 		guard headingProvider.isHeadingAvailable else {
-			valueLabelText.value = "🤷‍♂️"
-			oldValueLabelText.value = NSLocalizedString("This device is not able to provide heading data.",
-			                                            comment: "")
-			dismissButtonTitle.value = NSLocalizedString("Back", comment: "back button")
+			valueLabelText = "🤷‍♂️"
+			oldValueLabelText = NSLocalizedString("This device is not able to provide heading data.",
+			                                      comment: "")
+			dismissButtonTitle = NSLocalizedString("Back", comment: "back button")
 			return
 		}
 
 		if let oldValue = value, !oldValue.isEmpty {
-			oldValueLabelText.value = String(format: NSLocalizedString("Old value: %@",
+			oldValueLabelText = String(format: NSLocalizedString("Old value: %@",
 			                                                           comment: "previous tag value"),
 			                                 oldValue)
 		}
@@ -96,6 +97,6 @@ class MeasureDirectionViewModel: HeadingProviderDelegate {
 	func headingProviderDidUpdateHeading(_ heading: CLHeading) {
 		mostRecentHeading = heading
 
-		valueLabelText.value = "\(Int(heading.trueHeading))"
+		valueLabelText = "\(Int(heading.trueHeading))"
 	}
 }
