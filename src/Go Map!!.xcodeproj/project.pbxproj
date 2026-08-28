@@ -377,8 +377,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0200C1C12703B42600A79804 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationParser.swift; path = ../../Shared/LocationParser.swift; sourceTree = "<group>"; };
-		0200FECC2908B0EB002C3F94 /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJSON.swift; sourceTree = "<group>"; };
+		0200C1C12703B42600A79804 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationParser.swift; path = ../Shared/Location/LocationParser.swift; sourceTree = "<group>"; };
+		0200FECC2908B0EB002C3F94 /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/GeoJSON.swift; sourceTree = SOURCE_ROOT; };
 		02024EBB2FD4F09900B9BF09 /* KeyboardToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbar.swift; sourceTree = "<group>"; };
 		0202C5FD2E3BFD7500649F26 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		0202C5FF2E3C348400649F26 /* ButtonClosure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonClosure.swift; path = ../../Shared/Utility/ButtonClosure.swift; sourceTree = "<group>"; };
@@ -388,7 +388,7 @@
 		02072AD51BD46B1700F1CAB4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		020798002994706000D3C654 /* QuestBuilderController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestBuilderController.swift; sourceTree = "<group>"; };
 		02079802299470FB00D3C654 /* QuestBuilder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = QuestBuilder.storyboard; sourceTree = "<group>"; };
-		02092ECE29E32DD40095042B /* UserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserPrefs.swift; path = ../Shared/UserPrefs.swift; sourceTree = "<group>"; };
+		02092ECE29E32DD40095042B /* UserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserPrefs.swift; path = Shared/UserPrefs.swift; sourceTree = "<group>"; };
 		02092ED029E8ADB70095042B /* ArchivePath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePath.swift; sourceTree = "<group>"; };
 		020E0E202F6374A500A9D27C /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		020E0E222F637C4B00A9D27C /* PinchGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchGestureRecognizer.swift; sourceTree = "<group>"; };
@@ -396,7 +396,7 @@
 		020E160A267A82050037DE49 /* TileServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServer.swift; sourceTree = "<group>"; };
 		020EC41E2EA9D6B9005B94D9 /* AlertPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertPopup.swift; sourceTree = "<group>"; };
 		020F4ADD24AAD4E700D9E34A /* PresetsDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetsDatabase.swift; sourceTree = "<group>"; };
-		0210AE062F19A9DF0031F047 /* GpxTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GpxTracks.swift; path = ../Shared/GpxTracks.swift; sourceTree = "<group>"; };
+		0210AE062F19A9DF0031F047 /* GpxTracks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxTracks.swift; sourceTree = "<group>"; };
 		0210AE082F1A2C770031F047 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppState.swift; path = Shared/AppState.swift; sourceTree = SOURCE_ROOT; };
 		0210AE0A2F1D9E120031F047 /* MapLayersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapLayersView.swift; path = Shared/MapLayersView.swift; sourceTree = SOURCE_ROOT; };
 		02148A512FF1C90C002D513D /* HUDLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDLabel.swift; sourceTree = "<group>"; };
@@ -416,7 +416,7 @@
 		022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EditorMapLayer+Ocean.swift"; sourceTree = "<group>"; };
 		0220526329283498003C6AE1 /* CountryCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryCoder.swift; sourceTree = "<group>"; };
 		022114FA2E6CDCD600D76061 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/TurnRestrictions.storyboard; sourceTree = "<group>"; };
-		02225DA629EB3AE900859F9D /* GpxTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GpxTrack.swift; path = ../Shared/GpxTrack.swift; sourceTree = "<group>"; };
+		02225DA629EB3AE900859F9D /* GpxTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxTrack.swift; sourceTree = "<group>"; };
 		02263CDE2677F93A002BA72F /* QuadBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadBox.swift; sourceTree = "<group>"; };
 		0226B770268300C9005DB9E2 /* Data+Wrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Wrapper.swift"; sourceTree = "<group>"; };
 		0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
@@ -427,13 +427,13 @@
 		023320A32BE1DB9900E3311A /* DPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPadView.swift; sourceTree = "<group>"; };
 		0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostRecentlyUsed.swift; sourceTree = "<group>"; };
 		02354F79246349E100878A04 /* CurvedGlyphLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurvedGlyphLayer.swift; sourceTree = "<group>"; };
-		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../Images.xcassets; sourceTree = "<group>"; };
+		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Images.xcassets; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		0244398C29C9402B009FC2D0 /* TileServerList+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TileServerList+JSON.swift"; sourceTree = "<group>"; };
 		0244399329CA4461009FC2D0 /* HoursRecognizer.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HoursRecognizer.json; sourceTree = "<group>"; };
 		0246A78226A4AA3A00941A44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DirectionViewController.xib; sourceTree = "<group>"; };
-		024909C8267BF9F70027E531 /* MapTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapTransform.swift; path = ../Shared/MapTransform.swift; sourceTree = "<group>"; };
+		024909C8267BF9F70027E531 /* MapTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapTransform.swift; path = Shared/MapTransform.swift; sourceTree = "<group>"; };
 		024909CA267D99190027E531 /* OsmDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmDownloader.swift; sourceTree = "<group>"; };
 		024909CE267EADC70027E531 /* OsmXmlGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmXmlGenerator.swift; sourceTree = "<group>"; };
 		024B5EC52E31A4B900258653 /* MainActor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainActor+Extension.swift"; sourceTree = "<group>"; };
@@ -444,7 +444,7 @@
 		02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFilters.swift; sourceTree = "<group>"; };
 		02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFeatures.swift; sourceTree = "<group>"; };
 		0250C8DF2E7CBD7700192893 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/TurnRestrictions.xcstrings; sourceTree = "<group>"; };
-		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "../POI-Icons"; sourceTree = "<group>"; };
+		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "POI-Icons"; path = "POI-Icons"; sourceTree = "<group>"; };
 		02572B722F10D8C400216EE3 /* MessageDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDisplay.swift; sourceTree = "<group>"; };
 		02581F31301410AD00FC4D3A /* RotateObjectOverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotateObjectOverlayViewController.swift; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
@@ -452,14 +452,14 @@
 		0260E05E2BE30D4700975570 /* CompassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassButton.swift; sourceTree = "<group>"; };
 		0262175A2F08533D00594D88 /* PresetTranslations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetTranslations.swift; sourceTree = "<group>"; };
 		0266DE852655A21F007A502E /* Superview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Superview.swift; sourceTree = "<group>"; };
-		02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HealthKitRoutes.swift; path = ../Shared/HealthKitRoutes.swift; sourceTree = "<group>"; };
+		02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitRoutes.swift; sourceTree = "<group>"; };
 		02709BC92F21B82F00B277C6 /* DraggableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableButton.swift; sourceTree = "<group>"; };
 		02709BCD2F2370E000B277C6 /* MapMarkersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkersView.swift; sourceTree = "<group>"; };
 		02709BD12F282A8400B277C6 /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		02709F4E3036725400FDA8D8 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Nominatim.xcstrings; sourceTree = "<group>"; };
 		02709F4F3036725400FDA8D8 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/OsmNote.xcstrings; sourceTree = "<group>"; };
 		0270C04C303797B300F21597 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/CustomPresets.storyboard; sourceTree = "<group>"; };
-		02771D702BFC15C300FE9B79 /* UserFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserFileList.swift; path = ../Shared/UserFileList.swift; sourceTree = "<group>"; };
+		02771D702BFC15C300FE9B79 /* UserFileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFileList.swift; sourceTree = "<group>"; };
 		0277E29316A673CC00456BED /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		027AB506250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Display.storyboard; sourceTree = "<group>"; };
 		027AB507250E9D0600C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
@@ -468,15 +468,15 @@
 		027AB50A250E9D0700C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/POI.storyboard; sourceTree = "<group>"; };
 		027AB50B250E9D0700C404CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Changeset.storyboard; sourceTree = "<group>"; };
 		027AD5D119F5A18700120654 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
-		027C7FDB296CCF28005C53A8 /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Ext.swift"; path = "../../Shared/Utility/String+Ext.swift"; sourceTree = "<group>"; };
+		027C7FDB296CCF28005C53A8 /* String+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "String+Ext.swift"; path = "../Shared/Utility/String+Ext.swift"; sourceTree = "<group>"; };
 		027CF8722BDE141700E6F03B /* DrawingLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawingLayer.swift; sourceTree = "<group>"; };
-		027E90A93016BB3800E1A0F1 /* OsmNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OsmNote.swift; path = ../../Shared/MapMarkers/OsmNote.swift; sourceTree = "<group>"; };
+		027E90A93016BB3800E1A0F1 /* OsmNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OsmNote.swift; path = ../Shared/MapMarkers/OsmNote.swift; sourceTree = "<group>"; };
 		027E90AE3016CB8B00E1A0F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/OsmNote.storyboard; sourceTree = "<group>"; };
 		027E90B23017096B00E1A0F1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Nominatim.storyboard; sourceTree = "<group>"; };
 		02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
-		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = ../Shared/MapView.swift; sourceTree = "<group>"; };
+		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = Shared/MapView.swift; sourceTree = "<group>"; };
 		028365C82EFDFC22002B9E34 /* UnitFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UnitFormatter.swift; path = Shared/Utility/UnitFormatter.swift; sourceTree = SOURCE_ROOT; };
 		0287D25129947B2900BEAD9E /* QuestChooser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QuestChooser.storyboard; sourceTree = "<group>"; };
 		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmMapData+Edit.swift"; sourceTree = "<group>"; };
@@ -485,15 +485,15 @@
 		028816A2265AD9D100C30EA2 /* Database.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		028ADAFB2FCE32CE007CEF4E /* UndoAction+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UndoAction+Ext.swift"; sourceTree = "<group>"; };
 		028C51E525CB7A23004A88F7 /* TristateButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TristateButton.swift; sourceTree = "<group>"; };
-		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = ../presets; sourceTree = "<group>"; };
+		028F504619BA2F460093C423 /* presets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = presets; path = presets; sourceTree = "<group>"; };
 		0293074F268BFB6700B2A326 /* QuadDownloadLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuadDownloadLayer.swift; sourceTree = "<group>"; };
 		0293B2CC2F53DDB100044DDE /* DeprecatedTags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeprecatedTags.swift; sourceTree = "<group>"; };
-		0293B2CE2F5B620F00044DDE /* TableViewControllerMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewControllerMac.swift; sourceTree = "<group>"; };
+		0293B2CE2F5B620F00044DDE /* TableViewControllerMac.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/TableViewControllerMac.swift; sourceTree = SOURCE_ROOT; };
 		0293FEB0299D5C78002EED90 /* MapMarkerIgnoreList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarkerIgnoreList.swift; sourceTree = "<group>"; };
 		0293FEB2299D84F7002EED90 /* MaxarAerial.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MaxarAerial.secret; sourceTree = "<group>"; };
 		02969EB92DF630A6003BA34A /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasemapTileServerListViewController.swift; sourceTree = "<group>"; };
-		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "../POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
+		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		02A59EDA297DE4E100B0A676 /* PresetField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetField.swift; sourceTree = "<group>"; };
 		02A59EDC297E444500B0A676 /* PresetAddressFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetAddressFormat.swift; sourceTree = "<group>"; };
@@ -511,15 +511,15 @@
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueTableCell.swift; sourceTree = "<group>"; };
 		02AF69132F2B53A70000ABA2 /* OsmMapDataArchiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmMapDataArchiver.swift; sourceTree = "<group>"; };
-		02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingPlaceholderImage.png; path = ../Shared/BingPlaceholderImage.png; sourceTree = "<group>"; };
+		02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingPlaceholderImage.png; path = Shared/BingPlaceholderImage.png; sourceTree = "<group>"; };
 		02B2E25D2C3F3DC600815F08 /* DarkModeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeImage.swift; sourceTree = "<group>"; };
 		02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifyingGlass.swift; sourceTree = "<group>"; };
 		02B5669E294FDCF200710632 /* CrossHairsLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossHairsLayer.swift; sourceTree = "<group>"; };
-		02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EsriPlaceholderImage.jpg; path = ../Shared/EsriPlaceholderImage.jpg; sourceTree = "<group>"; };
+		02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EsriPlaceholderImage.jpg; path = Shared/EsriPlaceholderImage.jpg; sourceTree = "<group>"; };
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Go Map!!.entitlements"; path = "iOS/Go Map!!/Go Map!!.entitlements"; sourceTree = "<group>"; };
+		02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Go Map!!.entitlements"; path = "App/Go Map!!.entitlements"; sourceTree = SOURCE_ROOT; };
 		02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NsiLogoDatabase.swift; sourceTree = "<group>"; };
-		02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmUserPrefs.swift; sourceTree = "<group>"; };
+		02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/OsmUserPrefs.swift; sourceTree = SOURCE_ROOT; };
 		02C35E152F12E0AF00BE5948 /* MapViewPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewPort.swift; sourceTree = "<group>"; };
 		02C456A729C8DB410077E3FD /* TagInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagInfo.swift; sourceTree = "<group>"; };
 		02C8C56426F446FD003B0122 /* MapMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMarker.swift; sourceTree = "<group>"; };
@@ -549,14 +549,14 @@
 		02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxTrackAttributes.swift; sourceTree = "<group>"; };
 		02CC01D02584195E004444EF /* PresetFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetFeature.swift; sourceTree = "<group>"; };
 		02CC01DB25843F2F004444EF /* PresetLanguages.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLanguages.swift; sourceTree = "<group>"; };
-		02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCapture.swift; sourceTree = "<group>"; };
+		02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/PhotoCapture.swift; sourceTree = SOURCE_ROOT; };
 		02CD9973265C65C200213AD6 /* EditorFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFilters.swift; sourceTree = "<group>"; };
 		02CE3CE42990A8CE00DDACE0 /* QuestChooserController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestChooserController.swift; sourceTree = "<group>"; };
 		02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneToolbar.swift; sourceTree = "<group>"; };
 		02CE3CE829919FC400DDACE0 /* MapPinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinButton.swift; sourceTree = "<group>"; };
 		02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = QuestIcons.xcassets; sourceTree = "<group>"; };
-		02D1ABA02F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightClickGestureRecognizer.swift; sourceTree = "<group>"; };
-		02D2768F2E8B289400A21863 /* EXIFInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EXIFInfo.swift; path = Shared/EXIFInfo.swift; sourceTree = SOURCE_ROOT; };
+		02D1ABA02F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shared/RightClickGestureRecognizer.swift; sourceTree = SOURCE_ROOT; };
+		02D2768F2E8B289400A21863 /* EXIFInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXIFInfo.swift; sourceTree = "<group>"; };
 		02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetValueTextField.swift; sourceTree = "<group>"; };
 		02D5B5F2248F154D00FEE448 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		02D6237F26A6628300A4F147 /* PhotoShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PhotoShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -572,7 +572,7 @@
 		02E049BC2651D1750028B57F /* UndoAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UndoAction.h; sourceTree = "<group>"; };
 		02E049BD2651D1750028B57F /* UndoAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UndoAction.m; sourceTree = "<group>"; };
 		02E6267119973A0700565D62 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Bridging-Header.h"; sourceTree = "<group>"; };
+		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Go Map!!-Bridging-Header.h"; path = "Shared/Go Map!!-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = GoogleMaps.secret; sourceTree = "<group>"; };
 		02E9ABC32BA54C9500F0EF69 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		02EA54572AB7CCA3004688F9 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Height.xcstrings; sourceTree = "<group>"; };
@@ -599,7 +599,7 @@
 		02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Ext.swift"; sourceTree = "<group>"; };
 		02F6A458268AE42800F2ACE7 /* Debugger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Debugger.swift; sourceTree = "<group>"; };
 		02F72BCB2E35828100B6C76C /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocationProvider.swift; path = Shared/LocationProvider.swift; sourceTree = SOURCE_ROOT; };
+		02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationProvider.swift; sourceTree = "<group>"; };
 		02FBDB5C2E873D9200A70CEF /* StatusBarGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarGradient.swift; sourceTree = "<group>"; };
 		02FC7F952D7FD6DC00DC333D /* CustomFeatureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeatureController.swift; sourceTree = "<group>"; };
 		02FC7F972D7FD6F000DC333D /* CustomFeatureListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFeatureListViewController.swift; sourceTree = "<group>"; };
@@ -632,18 +632,18 @@
 		C3004F51263A6CA5006BF313 /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		C3004F53263A99DC006BF313 /* POIAttributesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIAttributesViewController.swift; sourceTree = "<group>"; };
 		C3004F61263B2524006BF313 /* POIAllTagsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIAllTagsViewController.swift; sourceTree = "<group>"; };
-		C341E1522639DECC0022E983 /* WikiPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WikiPage.swift; path = ../Shared/WikiPage.swift; sourceTree = "<group>"; };
+		C341E1522639DECC0022E983 /* WikiPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WikiPage.swift; sourceTree = "<group>"; };
 		C341E1552639DEFC0022E983 /* FpsLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FpsLabel.swift; sourceTree = "<group>"; };
 		C341E1592639DF210022E983 /* NotesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotesTableViewController.swift; sourceTree = "<group>"; };
 		C341E15B2639DF440022E983 /* NearbyMappersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NearbyMappersViewController.swift; sourceTree = "<group>"; };
 		C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TurnRestrictHwyView.swift; sourceTree = "<group>"; };
 		C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpeechBalloonView.swift; sourceTree = "<group>"; };
-		C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapAndDragGesture.swift; sourceTree = "<group>"; };
-		C381C305263FD0CA003142BA /* VectorMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VectorMath.swift; path = ../Shared/VectorMath.swift; sourceTree = "<group>"; };
+		C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shared/TapAndDragGesture.swift; sourceTree = SOURCE_ROOT; };
+		C381C305263FD0CA003142BA /* VectorMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		C381C306263FD0E8003142BA /* UndoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UndoManager.swift; sourceTree = "<group>"; };
 		C381C30A263FE518003142BA /* PushPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPinView.swift; sourceTree = "<group>"; };
 		C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIFeaturePickerViewController.swift; sourceTree = "<group>"; };
-		C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PersistentWebCache.swift; path = ../Shared/PersistentWebCache.swift; sourceTree = "<group>"; };
+		C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentWebCache.swift; sourceTree = "<group>"; };
 		C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorMapLayer.swift; sourceTree = "<group>"; };
 		C3D096AB263D48F700E3B129 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C3D096AD263D4BFB00E3B129 /* UploadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadViewController.swift; sourceTree = "<group>"; };
@@ -651,8 +651,8 @@
 		C3D096B2263D618E00E3B129 /* HeightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeightViewController.swift; sourceTree = "<group>"; };
 		C3D096B5263DF82F00E3B129 /* RulerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RulerView.swift; sourceTree = "<group>"; };
 		C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderInfo.swift; sourceTree = "<group>"; };
-		C3D096C1263E567200E3B129 /* DisplayLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DisplayLink.swift; path = ../Shared/DisplayLink.swift; sourceTree = "<group>"; };
-		C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DownloadThreadPool.swift; path = ../Shared/DownloadThreadPool.swift; sourceTree = "<group>"; };
+		C3D096C1263E567200E3B129 /* DisplayLink.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisplayLink.swift; sourceTree = "<group>"; };
+		C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadThreadPool.swift; sourceTree = "<group>"; };
 		C3D096CE263EA0DB00E3B129 /* KeyChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyChain.swift; sourceTree = "<group>"; };
 		C3D096D1263EA7E100E3B129 /* LayerProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LayerProperties.swift; sourceTree = "<group>"; };
 		C3D096D4263EACFF00E3B129 /* LocationBallView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationBallView.swift; sourceTree = "<group>"; };
@@ -663,8 +663,8 @@
 		C3D096F0263EBE5D00E3B129 /* OsmWay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmWay.swift; sourceTree = "<group>"; };
 		C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmBaseObject.swift; sourceTree = "<group>"; };
 		C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmRelation.swift; sourceTree = "<group>"; };
-		C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoiceAnnouncement.swift; path = ../Shared/VoiceAnnouncement.swift; sourceTree = "<group>"; };
-		C3FA9248263FF95B000A2A99 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationParser.swift; path = ../Shared/LocationParser.swift; sourceTree = "<group>"; };
+		C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoiceAnnouncement.swift; sourceTree = "<group>"; };
+		C3FA9248263FF95B000A2A99 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationParser.swift; sourceTree = "<group>"; };
 		C3FA924A263FFD7E000A2A99 /* QuadMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuadMap.swift; sourceTree = "<group>"; };
 		C3FA924C263FFEF9000A2A99 /* PathUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PathUtil.swift; sourceTree = "<group>"; };
 		C3FA924F2640329B000A2A99 /* TileServerList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TileServerList.swift; sourceTree = "<group>"; };
@@ -765,7 +765,7 @@
 				C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */,
 				022114F92E6CDCD600D76061 /* TurnRestrictions.storyboard */,
 			);
-			path = "Turn Restrictions";
+			path = TurnRestrictions;
 			sourceTree = "<group>";
 		};
 		0244399529CA9A02009FC2D0 /* Settings */ = {
@@ -896,15 +896,41 @@
 		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
 			isa = PBXGroup;
 			children = (
-				C3D096AB263D48F700E3B129 /* AppDelegate.swift */,
+				02ACBA3A16713CCB00BB4414 /* App */,
 				02F0297A2BFAFF2E002F7956 /* DataOverlays */,
 				64D74BF02253DF39004FFD20 /* Direction */,
 				0244399629CA9A28009FC2D0 /* DisplaySettings */,
+				02BC04E924C6767100BFA5EF /* Height */,
+				027E90B43017097B00E1A0F1 /* Nominatim */,
+				027E90AF3016CBEC00E1A0F1 /* Notes */,
+				02CB2409265DB7D600835F32 /* OpeningHours */,
+				02A3598F2704E51700101369 /* POI */,
+				028F504619BA2F460093C423 /* presets */,
+				0254C6CD2579CD88000705B4 /* POI-Icons */,
+				029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */,
+				02CB523C299097C3007F758D /* Quests */,
+				0244399529CA9A02009FC2D0 /* Settings */,
+				02ACBCFF16713F7F00BB4414 /* Shared */,
+				022114FB2E6CDCF800D76061 /* Turn Restrictions */,
+				647C150D24268DB7008A9366 /* Upload */,
+			);
+			name = "Go Map!";
+			sourceTree = "<group>";
+		};
+		02ACBA3A16713CCB00BB4414 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				C3D096AB263D48F700E3B129 /* AppDelegate.swift */,
+				020E0E202F6374A500A9D27C /* AppEnvironment.swift */,
+				02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */,
+				02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */,
 				02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */,
 				02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */,
 				02CBF3C72BE85829000DE2AD /* GpxTrackWidgetManager.swift */,
-				02BC04E924C6767100BFA5EF /* Height */,
+				023B892A19C148790060CDB5 /* Images.xcassets */,
+				02EA545A2AB7CCA3004688F9 /* InfoPlist.xcstrings */,
 				02ED19801BBF119C00A57CF4 /* Launch Screen.storyboard */,
+				02EA545D2AB7CCA3004688F9 /* Localizable.xcstrings */,
 				C3D096DA263EB73E00E3B129 /* main.swift */,
 				02ACBA4B16713CCB00BB4414 /* MainStoryboard.storyboard */,
 				C3004F51263A6CA5006BF313 /* MainViewController.swift */,
@@ -913,60 +939,28 @@
 				0293FEB2299D84F7002EED90 /* MaxarAerial.secret */,
 				02572B722F10D8C400216EE3 /* MessageDisplay.swift */,
 				C3D096D7263EAE1E00E3B129 /* MyApplication.swift */,
-				027E90B43017097B00E1A0F1 /* Nominatim */,
-				027E90AF3016CBEC00E1A0F1 /* Notes */,
-				02CB2409265DB7D600835F32 /* OpeningHours */,
 				020E0E222F637C4B00A9D27C /* PinchGestureRecognizer.swift */,
-				02A3598F2704E51700101369 /* POI */,
-				028F504619BA2F460093C423 /* presets */,
-				02CB523C299097C3007F758D /* Quests */,
+				02E9ABC32BA54C9500F0EF69 /* PrivacyInfo.xcprivacy */,
 				020E0E242F637CB200A9D27C /* RotationGestureRecognizer.swift */,
 				02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */,
-				0244399529CA9A02009FC2D0 /* Settings */,
-				02ACBCFF16713F7F00BB4414 /* Shared */,
-				02ACBA3A16713CCB00BB4414 /* Supporting Files */,
-				022114FB2E6CDCF800D76061 /* Turn Restrictions */,
-				647C150D24268DB7008A9366 /* Upload */,
 			);
-			name = "Go Map!";
-			path = iOS;
-			sourceTree = "<group>";
-		};
-		02ACBA3A16713CCB00BB4414 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */,
-				02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */,
-				02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */,
-				02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */,
-				023B892A19C148790060CDB5 /* Images.xcassets */,
-				02EA545A2AB7CCA3004688F9 /* InfoPlist.xcstrings */,
-				02EA545D2AB7CCA3004688F9 /* Localizable.xcstrings */,
-				0254C6CD2579CD88000705B4 /* POI-Icons */,
-				029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */,
-				02E9ABC32BA54C9500F0EF69 /* PrivacyInfo.xcprivacy */,
-			);
-			name = "Supporting Files";
+			name = App;
+			path = App;
 			sourceTree = "<group>";
 		};
 		02ACBCFF16713F7F00BB4414 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				020E0E202F6374A500A9D27C /* AppEnvironment.swift */,
 				0210AE082F1A2C770031F047 /* AppState.swift */,
+				02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */,
 				02B52E7828CAA8F800CB55F3 /* CustomViews */,
 				02F5329B267AD0A50088DF41 /* Database */,
-				C3D096C1263E567200E3B129 /* DisplayLink.swift */,
-				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
 				02F53299267ACFBB0088DF41 /* EditorLayer */,
-				02D2768F2E8B289400A21863 /* EXIFInfo.swift */,
+				02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */,
 				0200FECC2908B0EB002C3F94 /* GeoJSON.swift */,
 				02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */,
-				02225DA629EB3AE900859F9D /* GpxTrack.swift */,
-				0210AE062F19A9DF0031F047 /* GpxTracks.swift */,
-				02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */,
-				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
-				02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */,
+				027D00000000000000000002 /* GpxTrack */,
+				027D00000000000000000003 /* Location */,
 				0210AE0A2F1D9E120031F047 /* MapLayersView.swift */,
 				02C8C56326F446A3003B0122 /* MapMarkers */,
 				024909C8267BF9F70027E531 /* MapTransform.swift */,
@@ -975,7 +969,6 @@
 				6453776323D38D1F00656A1C /* OSMModels */,
 				02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */,
 				02148A572FFA1461002D513D /* Panoramax */,
-				C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */,
 				02CC7E3C2E2EF248001CA356 /* PhotoCapture.swift */,
 				02CC01CF2584190A004444EF /* PresetsDatabase */,
 				02E9DCD72F0E34B300F372A9 /* PresetsDisplay */,
@@ -983,12 +976,8 @@
 				0293B2CE2F5B620F00044DDE /* TableViewControllerMac.swift */,
 				C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */,
 				02F5329A267AD0250088DF41 /* Tiles */,
-				02771D702BFC15C300FE9B79 /* UserFileList.swift */,
 				02092ECE29E32DD40095042B /* UserPrefs.swift */,
 				02F5329C267AD2B20088DF41 /* Utility */,
-				C381C305263FD0CA003142BA /* VectorMath.swift */,
-				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
-				C341E1522639DECC0022E983 /* WikiPage.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1023,7 +1012,7 @@
 				02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */,
 				028C51E525CB7A23004A88F7 /* TristateButton.swift */,
 			);
-			path = CustomViews;
+			path = Shared/CustomViews;
 			sourceTree = "<group>";
 		};
 		02BC04E924C6767100BFA5EF /* Height */ = {
@@ -1050,7 +1039,7 @@
 				02C8C56C26F4479A003B0122 /* WayPointMarker.swift */,
 			);
 			name = MapMarkers;
-			path = ../Shared/MapMarkers;
+			path = Shared/MapMarkers;
 			sourceTree = "<group>";
 		};
 		02CB2409265DB7D600835F32 /* OpeningHours */ = {
@@ -1096,7 +1085,7 @@
 				02CBF3B92BE8529A000DE2AD /* GpxWidgetLiveActivity.swift */,
 				02CBF3BF2BE8529B000DE2AD /* Info.plist */,
 			);
-			path = iOS/GpxWidget;
+			path = GpxWidget;
 			sourceTree = "<group>";
 		};
 		02CC01CF2584190A004444EF /* PresetsDatabase */ = {
@@ -1118,7 +1107,7 @@
 				02C456A729C8DB410077E3FD /* TagInfo.swift */,
 			);
 			name = PresetsDatabase;
-			path = ../Shared/PresetsDatabase;
+			path = Shared/PresetsDatabase;
 			sourceTree = "<group>";
 		};
 		02D6238026A6628300A4F147 /* PhotoShare */ = {
@@ -1133,7 +1122,7 @@
 				02D6238126A6628300A4F147 /* ShareViewController.swift */,
 				027C7FDB296CCF28005C53A8 /* String+Ext.swift */,
 			);
-			path = iOS/PhotoShare;
+			path = PhotoShare;
 			sourceTree = "<group>";
 		};
 		02E9DCD72F0E34B300F372A9 /* PresetsDisplay */ = {
@@ -1147,7 +1136,7 @@
 				021FADCC25873C8200F6E1C0 /* PresetsDatabase+Display.swift */,
 			);
 			name = PresetsDisplay;
-			path = ../Shared/PresetsDisplay;
+			path = Shared/PresetsDisplay;
 			sourceTree = "<group>";
 		};
 		02F0297A2BFAFF2E002F7956 /* DataOverlays */ = {
@@ -1175,7 +1164,7 @@
 				02581F31301410AD00FC4D3A /* RotateObjectOverlayViewController.swift */,
 			);
 			name = EditorLayer;
-			path = ../Shared/EditorLayer;
+			path = Shared/EditorLayer;
 			sourceTree = "<group>";
 		};
 		02F5329A267AD0250088DF41 /* Tiles */ = {
@@ -1189,7 +1178,7 @@
 				0244398C29C9402B009FC2D0 /* TileServerList+JSON.swift */,
 			);
 			name = Tiles;
-			path = ../Shared/Tiles;
+			path = Shared/Tiles;
 			sourceTree = "<group>";
 		};
 		02F5329B267AD0A50088DF41 /* Database */ = {
@@ -1199,7 +1188,7 @@
 				0282C4C6265F32E800F2D282 /* Sqlite3.swift */,
 			);
 			name = Database;
-			path = ../Shared/Database;
+			path = Shared/Database;
 			sourceTree = "<group>";
 		};
 		02F5329C267AD2B20088DF41 /* Utility */ = {
@@ -1214,7 +1203,11 @@
 				0226B770268300C9005DB9E2 /* Data+Wrapper.swift */,
 				02F6A458268AE42800F2ACE7 /* Debugger.swift */,
 				02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */,
+				C3D096C1263E567200E3B129 /* DisplayLink.swift */,
+				C3D096CA263E9A1100E3B129 /* DownloadThreadPool.swift */,
+				02D2768F2E8B289400A21863 /* EXIFInfo.swift */,
 				028816A02659B4A600C30EA2 /* GZip.swift */,
+				02696CD42B8EF19400AB70B6 /* HealthKitRoutes.swift */,
 				C3D096CE263EA0DB00E3B129 /* KeyChain.swift */,
 				024B5EC52E31A4B900258653 /* MainActor+Extension.swift */,
 				0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */,
@@ -1222,6 +1215,7 @@
 				02F6A456268A934900F2ACE7 /* NSAttributedString+Ext.swift */,
 				02A59EE82981D75700B0A676 /* OAuth2.swift */,
 				C3FA924C263FFEF9000A2A99 /* PathUtil.swift */,
+				C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */,
 				02CA15502824A6B40047B0E5 /* String+Ext.swift */,
 				0266DE852655A21F007A502E /* Superview.swift */,
 				025F004E2E453002003A68FA /* TypeCast.swift */,
@@ -1230,9 +1224,13 @@
 				028365C82EFDFC22002B9E34 /* UnitFormatter.swift */,
 				02709BD12F282A8400B277C6 /* URL+Extension.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
+				02771D702BFC15C300FE9B79 /* UserFileList.swift */,
+				C381C305263FD0CA003142BA /* VectorMath.swift */,
+				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
+				C341E1522639DECC0022E983 /* WikiPage.swift */,
 			);
 			name = Utility;
-			path = ../Shared/Utility;
+			path = Shared/Utility;
 			sourceTree = "<group>";
 		};
 		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
@@ -1250,7 +1248,7 @@
 				64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */,
 				02148A532FF43E40002D513D /* PresetFeatureChangeCase.swift */,
 			);
-			path = iOS/GoMapTests;
+			path = GoMapTests;
 			sourceTree = "<group>";
 		};
 		64348CF6225E867800ADE7FB /* Mocks */ = {
@@ -1269,7 +1267,7 @@
 				64348D0C225EA24E00ADE7FB /* Info.plist */,
 				64348D12225EAA5D00ADE7FB /* MapViewUITestCase.swift */,
 			);
-			path = iOS/GoMapUITests;
+			path = GoMapUITests;
 			sourceTree = "<group>";
 		};
 		6442666322540EDF00C0D545 /* Observable */ = {
@@ -1280,7 +1278,7 @@
 				6442666622540EDF00C0D545 /* Observable.swift */,
 			);
 			name = Observable;
-			path = ../Shared/Observable;
+			path = Shared/Observable;
 			sourceTree = "<group>";
 		};
 		6453776323D38D1F00656A1C /* OSMModels */ = {
@@ -1307,7 +1305,7 @@
 				028ADAFB2FCE32CE007CEF4E /* UndoAction+Ext.swift */,
 			);
 			name = OSMModels;
-			path = ../Shared/OSMModels;
+			path = Shared/OSMModels;
 			sourceTree = "<group>";
 		};
 		647C150D24268DB7008A9366 /* Upload */ = {
@@ -1354,6 +1352,26 @@
 				B25C23192BB8B09C000891B6 /* Theme.swift */,
 			);
 			path = iD;
+			sourceTree = "<group>";
+		};
+		027D00000000000000000002 /* GpxTrack */ = {
+			isa = PBXGroup;
+			children = (
+				02225DA629EB3AE900859F9D /* GpxTrack.swift */,
+				0210AE062F19A9DF0031F047 /* GpxTracks.swift */,
+			);
+			name = GpxTrack;
+			path = Shared/GpxTrack;
+			sourceTree = "<group>";
+		};
+		027D00000000000000000003 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				C3FA9248263FF95B000A2A99 /* LocationParser.swift */,
+				02F9CEA62F16BDFE00ADED7C /* LocationProvider.swift */,
+			);
+			name = Location;
+			path = Shared/Location;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2166,8 +2184,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
-				CODE_SIGN_ENTITLEMENTS = "iOS/Go Map!!/Go Map!!.entitlements";
-				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "iOS/Go Map!!/Go Map!!.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "App/Go Map!!.entitlements";
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "App/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5609;
@@ -2187,10 +2205,10 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iOS/Go Map!!-Prefix.pch";
+				GCC_PREFIX_HEADER = "App/Go Map!!-Prefix.pch";
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
-				INFOPLIST_FILE = "iOS/Go Map!!-Info.plist";
+				INFOPLIST_FILE = "App/Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2209,7 +2227,7 @@
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_ENABLE_BATCH_MODE = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/iOS/Go Map!!-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Shared/Go Map!!-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_STRICT_CONCURRENCY = minimal;
@@ -2228,8 +2246,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
-				CODE_SIGN_ENTITLEMENTS = "iOS/Go Map!!/Go Map!!.entitlements";
-				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "iOS/Go Map!!/Go Map!!.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "App/Go Map!!.entitlements";
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "App/Go Map!!.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5609;
@@ -2250,10 +2268,10 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "iOS/Go Map!!-Prefix.pch";
+				GCC_PREFIX_HEADER = "App/Go Map!!-Prefix.pch";
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
-				INFOPLIST_FILE = "iOS/Go Map!!-Info.plist";
+				INFOPLIST_FILE = "App/Go Map!!-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2271,7 +2289,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_ENABLE_BATCH_MODE = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/iOS/Go Map!!-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Shared/Go Map!!-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
@@ -2296,7 +2314,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = iOS/GpxWidget/GpxWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = GpxWidget/GpxWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5609;
@@ -2306,7 +2324,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = iOS/GpxWidget/Info.plist;
+				INFOPLIST_FILE = GpxWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GpxWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Bryce Cogswell. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
@@ -2346,7 +2364,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = iOS/GpxWidget/GpxWidgetExtension.entitlements;
+				CODE_SIGN_ENTITLEMENTS = GpxWidget/GpxWidgetExtension.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
@@ -2358,7 +2376,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = iOS/GpxWidget/Info.plist;
+				INFOPLIST_FILE = GpxWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = GpxWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 Bryce Cogswell. All rights reserved.";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
@@ -2395,7 +2413,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = iOS/PhotoShare/PhotoShare.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PhotoShare/PhotoShare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5609;
@@ -2415,7 +2433,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = iOS/PhotoShare/Info.plist;
+				INFOPLIST_FILE = PhotoShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2453,7 +2471,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = iOS/PhotoShare/PhotoShare.entitlements;
+				CODE_SIGN_ENTITLEMENTS = PhotoShare/PhotoShare.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
@@ -2475,7 +2493,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = iOS/PhotoShare/Info.plist;
+				INFOPLIST_FILE = PhotoShare/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2518,7 +2536,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = iOS/GoMapTests/Info.plist;
+				INFOPLIST_FILE = GoMapTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2560,7 +2578,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = iOS/GoMapTests/Info.plist;
+				INFOPLIST_FILE = GoMapTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2599,7 +2617,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = iOS/GoMapUITests/Info.plist;
+				INFOPLIST_FILE = GoMapUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2640,7 +2658,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				INFOPLIST_FILE = iOS/GoMapUITests/Info.plist;
+				INFOPLIST_FILE = GoMapUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
