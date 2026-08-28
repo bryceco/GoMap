@@ -102,7 +102,7 @@
 		02811D6E2E3176DB00E9D889 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */; };
 		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
 		0282C4C926617E7400F2D282 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C826617E7400F2D282 /* MapView.swift */; };
-		028365C92EFDFF1E002B9E34 /* Utility/UnitFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028365C82EFDFC22002B9E34 /* Utility/UnitFormatter.swift */; };
+		028365C92EFDFF1E002B9E34 /* UnitFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028365C82EFDFC22002B9E34 /* UnitFormatter.swift */; };
 		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
 		0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */; };
 		0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D1263EA7E100E3B129 /* LayerProperties.swift */; };
@@ -474,7 +474,7 @@
 		02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
 		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = Shared/MapView.swift; sourceTree = "<group>"; };
-		028365C82EFDFC22002B9E34 /* Utility/UnitFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UnitFormatter.swift; path = UnitFormatter.swift; sourceTree = "<group>"; };
+		028365C82EFDFC22002B9E34 /* UnitFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitFormatter.swift; sourceTree = "<group>"; };
 		0287D25129947B2900BEAD9E /* QuestChooser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QuestChooser.storyboard; sourceTree = "<group>"; };
 		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmMapData+Edit.swift"; sourceTree = "<group>"; };
 		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmMapData.swift; sourceTree = "<group>"; };
@@ -514,7 +514,7 @@
 		02B5669E294FDCF200710632 /* CrossHairsLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossHairsLayer.swift; sourceTree = "<group>"; };
 		02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EsriPlaceholderImage.jpg; path = Shared/EsriPlaceholderImage.jpg; sourceTree = "<group>"; };
 		02B6F71519ACE878002FAEE6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "Go Map!!.entitlements"; path = "App/Go Map!!.entitlements"; sourceTree = SOURCE_ROOT; };
+		02BACD22205A1DDB00C74A49 /* GoMap.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = GoMap.entitlements; path = App/GoMap.entitlements; sourceTree = SOURCE_ROOT; };
 		02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NsiLogoDatabase.swift; sourceTree = "<group>"; };
 		02BB355C29B6A55D00FB52E5 /* OsmUserPrefs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OsmUserPrefs.swift; path = Shared/OsmUserPrefs.swift; sourceTree = "<group>"; };
 		02C35E152F12E0AF00BE5948 /* MapViewPort.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewPort.swift; sourceTree = "<group>"; };
@@ -569,7 +569,7 @@
 		02E049BC2651D1750028B57F /* UndoAction.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UndoAction.h; sourceTree = "<group>"; };
 		02E049BD2651D1750028B57F /* UndoAction.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UndoAction.m; sourceTree = "<group>"; };
 		02E6267119973A0700565D62 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Go Map!!-Bridging-Header.h"; path = "Shared/Go Map!!-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
+		02E8436019B2F4A20044AC1D /* Go Map!!-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "Go Map!!-Bridging-Header.h"; path = "Shared/GoMap-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = GoogleMaps.secret; sourceTree = "<group>"; };
 		02E9ABC32BA54C9500F0EF69 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		02EA54572AB7CCA3004688F9 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/Height.xcstrings; sourceTree = "<group>"; };
@@ -858,9 +858,9 @@
 		02ACBA2416713CCB00BB4414 = {
 			isa = PBXGroup;
 			children = (
-				02BACD22205A1DDB00C74A49 /* Go Map!!.entitlements */,
+				02BACD22205A1DDB00C74A49 /* GoMap.entitlements */,
 				024E6D2E24CBBCE500E1E2A3 /* apple-app-site-association */,
-				02ACBA3916713CCB00BB4414 /* Go Map! */,
+				02ACBA3916713CCB00BB4414 /* GoMap */,
 				64348CEB225E7CD900ADE7FB /* GoMapTests */,
 				64348D09225EA24E00ADE7FB /* GoMapUITests */,
 				02D6238026A6628300A4F147 /* PhotoShare */,
@@ -907,7 +907,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		02ACBA3916713CCB00BB4414 /* Go Map! */ = {
+		02ACBA3916713CCB00BB4414 /* GoMap */ = {
 			isa = PBXGroup;
 			children = (
 				02ACBA3A16713CCB00BB4414 /* App */,
@@ -929,7 +929,7 @@
 				647C150D24268DB7008A9366 /* Upload */,
 				02148A572FFA1461002D513D /* Panoramax */,
 			);
-			name = "Go Map!";
+			name = GoMap;
 			sourceTree = "<group>";
 		};
 		02ACBA3A16713CCB00BB4414 /* App */ = {
@@ -1233,7 +1233,7 @@
 				025F004E2E453002003A68FA /* TypeCast.swift */,
 				02EF13C22E5D041800418CA4 /* UIFont+Ext.swift */,
 				02811D6D2E3176DB00E9D889 /* UIImage+Extension.swift */,
-				028365C82EFDFC22002B9E34 /* Utility/UnitFormatter.swift */,
+				028365C82EFDFC22002B9E34 /* UnitFormatter.swift */,
 				02709BD12F282A8400B277C6 /* URL+Extension.swift */,
 				0226B7722683BCB6005DB9E2 /* URLSession+Extension.swift */,
 				02771D702BFC15C300FE9B79 /* UserFileList.swift */,
@@ -1490,7 +1490,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "Go Map!!" */;
+			buildConfigurationList = 02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "GoMap" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -1622,7 +1622,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02709BD32F282B2400B277C6 /* URL+Extension.swift in Sources */,
-				028365C92EFDFF1E002B9E34 /* Utility/UnitFormatter.swift in Sources */,
+				028365C92EFDFF1E002B9E34 /* UnitFormatter.swift in Sources */,
 				02E9ABC02BA151AA00F0EF69 /* GoogleMaps.secret in Sources */,
 				021BC21E2D6E6E0E004631C5 /* PanoramaxViewController.swift in Sources */,
 				020798012994706000D3C654 /* QuestBuilderController.swift in Sources */,
@@ -2162,8 +2162,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
-				CODE_SIGN_ENTITLEMENTS = "App/Go Map!!.entitlements";
-				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "App/Go Map!!.entitlements";
+				CODE_SIGN_ENTITLEMENTS = App/GoMap.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = App/GoMap.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5609;
@@ -2183,10 +2183,10 @@
 				ENABLE_RESOURCE_ACCESS_USB = NO;
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "App/Go Map!!-Prefix.pch";
+				GCC_PREFIX_HEADER = "App/GoMap-Prefix.pch";
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
-				INFOPLIST_FILE = "App/Go Map!!-Info.plist";
+				INFOPLIST_FILE = "App/GoMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2205,7 +2205,7 @@
 				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_ENABLE_BATCH_MODE = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Shared/Go Map!!-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Shared/GoMap-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_STRICT_CONCURRENCY = minimal;
@@ -2224,8 +2224,8 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO;
-				CODE_SIGN_ENTITLEMENTS = "App/Go Map!!.entitlements";
-				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "App/Go Map!!.entitlements";
+				CODE_SIGN_ENTITLEMENTS = App/GoMap.entitlements;
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = App/GoMap.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 5609;
@@ -2246,10 +2246,10 @@
 				ENABLE_USER_SELECTED_FILES = readonly;
 				GCC_OPTIMIZATION_LEVEL = fast;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "App/Go Map!!-Prefix.pch";
+				GCC_PREFIX_HEADER = "App/GoMap-Prefix.pch";
 				GCC_WARN_UNUSED_LABEL = YES;
 				GCC_WARN_UNUSED_PARAMETER = NO;
-				INFOPLIST_FILE = "App/Go Map!!-Info.plist";
+				INFOPLIST_FILE = "App/GoMap-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2267,7 +2267,7 @@
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_ENABLE_BATCH_MODE = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Shared/Go Map!!-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Shared/GoMap-Bridging-Header.h";
 				SWIFT_PRECOMPILE_BRIDGING_HEADER = NO;
 				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
@@ -2659,7 +2659,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "Go Map!!" */ = {
+		02ACBA2916713CCB00BB4414 /* Build configuration list for PBXProject "GoMap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				02ACBA5F16713CCB00BB4414 /* Debug */,

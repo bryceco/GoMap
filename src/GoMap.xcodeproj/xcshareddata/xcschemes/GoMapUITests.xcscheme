@@ -19,7 +19,7 @@
                BlueprintIdentifier = "64348D07225EA24E00ADE7FB"
                BuildableName = "GoMapUITests.xctest"
                BlueprintName = "GoMapUITests"
-               ReferencedContainer = "container:Go Map!!.xcodeproj">
+               ReferencedContainer = "container:GoMap.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

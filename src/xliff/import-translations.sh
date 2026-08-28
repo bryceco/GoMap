@@ -8,7 +8,7 @@ if [ -z "$WEBLATE_TOKEN" ]; then
 fi
 
 WEBLATE_REPO="https://hosted.weblate.org/api/projects/go-map/repository/"
-PROJECT="../iOS/Go Map!!.xcodeproj/"
+PROJECT="../iOS/GoMap.xcodeproj/"
 
 
 # Tell weblate to commit changes that translators have made

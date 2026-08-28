@@ -9,7 +9,7 @@ else
     exit 1
 fi
 
-git log -p -- 'iOS/Go Map!!.xcodeproj/project.pbxproj' |
+git log -p -- 'iOS/GoMap.xcodeproj/project.pbxproj' |
 egrep '(^commit|([+].*MARKETING))' |
 sed 's/;//' |
 awk '/commit/ { commit = $2 } /MARKETING/ { print "git tag", $4, commit }' |
