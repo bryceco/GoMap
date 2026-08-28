@@ -111,17 +111,22 @@ final class PresetsDatabase {
 					let startTime = Date()
 					let nsiDict = try cast(Self.jsonForFile("nsi_presets.json"), to: [String: Any].self)
 					let readTime = Date()
-					let nsiPresets = try cast(nsiDict["presets"], to: [String: Any].self)
-						.mapValuesWithKeys({ k, v in
-							guard
-								let p = try PresetFeature(withID: k,
-								                          jsonDict: cast(v, to: [String: Any].self),
-								                          isNSI: true)
-							else {
-								throw ContextualError("nil preset")
+					// NSI v8.0 format: "nsi" key contains paths, each with an "items" array.
+					// NSI paths are tree-prefixed (e.g. "brands/amenity/fast_food"); stripping the
+					// first component gives the matching iD standard preset ID ("amenity/fast_food").
+					let nsiData = try cast(nsiDict["nsi"], to: [String: Any].self)
+					var nsiPresets = [String: PresetFeature]()
+					for (path, pathData) in nsiData {
+						let pathDict = try cast(pathData, to: [String: Any].self)
+						let items = pathDict["items"] as? [[String: Any]] ?? []
+						let parentID = path.drop(while: { $0 != "/" }).dropFirst()
+						let parentFeature = self.stdFeatures[String(parentID)]
+						for item in items {
+							if let p = PresetFeature(withNSIPath: path, item: item, parentFeature: parentFeature) {
+								nsiPresets[p.featureID] = p
 							}
-							return p
-						})
+						}
+					}
 					let nsiIndex = Self.buildTagIndex([self.stdFeatures, nsiPresets],
 					                                  basePresets: self.stdFeatures)
 					DispatchQueue.main.async {

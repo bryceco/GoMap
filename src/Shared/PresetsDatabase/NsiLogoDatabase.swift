@@ -36,9 +36,10 @@ class NsiLogoDatabase {
 
 	private func retrieveLogoFromServer(featureID: String, whenFinished: @escaping (UIImage) -> Void) -> UIImage? {
 		let logo = logoCache.object(withKey: featureID, fallbackURL: {
-			// fetch icons from our private server
-			let name: String = featureID.replacingOccurrences(of: "/", with: "_")
-			let url = "http://gomaposm.com/brandIcons/" + name
+			// Logos are stored under brandIcons2/ mirroring the featureID path, always as .png.
+			// e.g. featureID "brands/amenity/fast_food/mcdonalds-c9aa1b"
+			//   -> https://gomaposm.com/brandIcons2/brands/amenity/fast_food/mcdonalds-c9aa1b.png
+			let url = "https://gomaposm.com/brandIcons2/" + featureID + ".png"
 			return URL(string: url)
 		}, objectForData: { data in
 			if let image = UIImage(data: data) {

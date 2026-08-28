@@ -17,11 +17,15 @@ for preset in "${presets[@]}"; do
 	curl -fLsS --output $preset.json $DIST/$preset.min.json
 done
 
-# Download NSI geojsons for features
-curl -fLsS --output nsi_geojson.json 'https://cdn.jsdelivr.net/npm/name-suggestion-index@latest/dist/json/featureCollection.min.json'
+# NSI v8 changed the format of dist/json/nsi.min.json. jsDelivr's @latest tag
+# is currently cached at v7; use @8 to explicitly resolve to the latest v8 release.
+NSI='https://cdn.jsdelivr.net/npm/name-suggestion-index@8'
 
-# Download NSI presets
-curl -fLsS --output nsi_presets.json 'https://cdn.jsdelivr.net/npm/name-suggestion-index@latest/dist/presets/nsi-id-presets.min.json'
+# Download NSI geojsons for features
+curl -fLsS --output nsi_geojson.json "$NSI/dist/json/featureCollection.min.json"
+
+# Download NSI presets (v8.0+ format: nsi.min.json with "nsi" top-level key)
+curl -fLsS --output nsi_presets.json "$NSI/dist/json/nsi.min.json"
 
 # Download address formats
 curl -fLsS --output address_formats.json https://raw.githubusercontent.com/openstreetmap/iD/develop/data/address_formats.json
