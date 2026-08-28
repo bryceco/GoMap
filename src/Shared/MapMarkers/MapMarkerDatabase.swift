@@ -101,10 +101,13 @@ import Foundation
 	// External callers should use the "withDelay" variant of this
 	private func updateMarkers(forRegion box: OSMRect,
 	                           mapData: OsmMapData,
-	                           including: MapMarkerSet) async
+	                           including: MapMarkerSet,
+	                           isLargeArea: Bool) async
 	{
 		// Fixme markers
-		if including.contains(.fixme) {
+		if including.contains(.fixme),
+			!isLargeArea
+		{
 			removeMarkers(where: {
 				guard let fixme = $0 as? FixmeMarker else { return false }
 				return fixme.object == nil || fixme.shouldHide()
@@ -115,7 +118,9 @@ import Foundation
 		}
 
 		// Quest markers
-		if including.contains(.quest) {
+		if including.contains(.quest),
+		   !isLargeArea
+		{
 			// Remove any quest markers whose OSM object was deallocated since last update
 			removeMarkers(where: {
 				guard let quest = $0 as? QuestMarker else { return false }
@@ -147,7 +152,9 @@ import Foundation
 		}
 
 		// Notes markers
-		if including.contains(.notes) {
+		if including.contains(.notes),
+		   !isLargeArea
+		{
 			removeMarkers(where: { ($0 as? OsmNoteMarker)?.shouldHide() ?? false })
 			await updateNoteMarkers(forRegion: box)
 		} else {
@@ -173,13 +180,12 @@ import Foundation
 			else {
 				return
 			}
-			// Don't update excessively large regions
 			let bbox = AppDelegate.shared.mainView.viewPort.boundingLatLonForScreen()
-			guard
-				bbox.size.width * bbox.size.height <= 0.25
-			else { return }
-
-			await self.updateMarkers(forRegion: bbox, mapData: mapData, including: including)
+			let isLargeArea = bbox.size.width * bbox.size.height > 0.25
+			await self.updateMarkers(forRegion: bbox,
+									 mapData: mapData,
+									 including: including,
+									 isLargeArea: isLargeArea)
 			completion()
 		}
 		pendingUpdateTask = task
