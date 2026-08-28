@@ -274,7 +274,21 @@ class PresetFeature: CustomDebugStringConvertible {
 
 			let newKeys = allKeysForAllPresets(more: true)
 			let reducedTags = tags.filter { newKeys.contains($0.key) }
-			if oldFeature.matchObjectTagsScore(reducedTags, geometry: geometry, location: location) == 0.0 {
+			// Check if the old feature is still compatible with the new feature's tag set.
+			// If oldFeature is a sub-feature (e.g. highway/path/informal), its specializing
+			// tags may have been filtered out of reducedTags, causing a false score of 0.
+			// Walk up the ancestor chain to see if any parent is compatible before removing keys.
+			var compatibilityScore = oldFeature.matchObjectTagsScore(reducedTags, geometry: geometry, location: location)
+			if compatibilityScore == 0.0 {
+				var ancestorID = oldFeature.featureID
+				while compatibilityScore == 0.0, let lastSlash = ancestorID.lastIndex(of: "/") {
+					ancestorID = String(ancestorID[..<lastSlash])
+					if let ancestor = PresetsDatabase.shared.presetFeatureForFeatureID(ancestorID) {
+						compatibilityScore = ancestor.matchObjectTagsScore(reducedTags, geometry: geometry, location: location)
+					}
+				}
+			}
+			if compatibilityScore == 0.0 {
 				let oldKeys = oldFeature.allKeysForAllPresets(more: true)
 				let removeKeys = Set(oldKeys)
 					.subtracting(newKeys)
