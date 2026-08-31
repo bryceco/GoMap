@@ -420,6 +420,7 @@
 		0229A8002E458C2100EB65E4 /* GeoJsonMarker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoJsonMarker.swift; sourceTree = "<group>"; };
 		022B2FDA2718CCAC00AB4C28 /* MapboxLocator.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MapboxLocator.secret; sourceTree = "<group>"; };
 		022BF8782C30C25300E07528 /* AnyJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnyJSON.swift; sourceTree = "<group>"; };
+		0230BF943045F69300F16D82 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/CustomPresets.xcstrings; sourceTree = "<group>"; };
 		023320A12BE07B2000E3311A /* DataOverlayLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataOverlayLayer.swift; sourceTree = "<group>"; };
 		023320A32BE1DB9900E3311A /* DPadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DPadView.swift; sourceTree = "<group>"; };
 		0235349A294A9BDD00ED5BBE /* MostRecentlyUsed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostRecentlyUsed.swift; sourceTree = "<group>"; };
@@ -1937,6 +1938,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				0270C04C303797B300F21597 /* Base */,
+				0230BF943045F69300F16D82 /* mul */,
 			);
 			name = CustomPresets.storyboard;
 			sourceTree = "<group>";

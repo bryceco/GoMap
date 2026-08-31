@@ -7271,6 +7271,12 @@
             "value" : "Uses semi-colon seperated values (e.g. pizza;kebab for cuisine)"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Menggunakan nilai yang dipisahkan titik koma (mis. pizza;kebab untuk cuisine)"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",

@@ -17,6 +17,12 @@
             "value" : "Search for Location"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cari Lokasi"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -51,6 +57,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Search for Location"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cari Lokasi"
           }
         },
         "nl" : {
@@ -147,6 +159,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Niagara Falls"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Air Terjun Niagara"
           }
         },
         "nl" : {

@@ -29,6 +29,12 @@
             "value" : "Get Directions"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dapatkan Petunjuk Arah"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -65,6 +71,12 @@
             "value" : "Comment"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Komentar"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -99,6 +111,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "New comment:"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Komentar baru:"
           }
         },
         "nl" : {
@@ -161,6 +179,12 @@
             "value" : "Note"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Catatan"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -195,6 +219,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Comment & Resolve"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Komentari & Selesaikan"
           }
         },
         "nl" : {
@@ -242,6 +272,12 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
+            "value" : "2014-06-17 17:54 UTC"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
             "value" : "2014-06-17 17:54 UTC"
           }
         },
