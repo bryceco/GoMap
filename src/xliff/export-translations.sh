@@ -8,7 +8,7 @@ if [ -z "$WEBLATE_TOKEN" ]; then
 fi
 
 WEBLATE_REPO="https://hosted.weblate.org/api/projects/go-map/repository/"
-PROJECT="../iOS/GoMap.xcodeproj/"
+PROJECT="../GoMap.xcodeproj/"
 TMP_XLIFF=/tmp/xliff
 
 
