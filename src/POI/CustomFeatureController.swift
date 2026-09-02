@@ -11,12 +11,12 @@ import UIKit
 class CustomFeature: PresetFeature, Codable {
 	init(featureID: String,
 	     name: String,
-	     geometry: [String],
+	     geometry: [GEOMETRY],
 	     tags: [String: String])
 	{
 		let impliedFeature = PresetsDatabase.shared.presetFeatureMatching(
 			tags: tags,
-			geometry: GEOMETRY(rawValue: geometry.first!)!,
+			geometry: geometry.first!,
 			location: AppDelegate.shared.mainView.currentRegion,
 			includeNSI: false)
 		super.init(_addTags: nil,
@@ -48,9 +48,12 @@ class CustomFeature: PresetFeature, Codable {
 		let container: KeyedDecodingContainer<CodingKeys> = try decoder.container(keyedBy: CodingKeys.self)
 		let feat = try container.decode(String.self, forKey: .featureID)
 		let name = try container.decode(String.self, forKey: .name)
-		let geom = try container.decode([String].self, forKey: .geometry)
+		let geom = try container.decode([String].self, forKey: .geometry).map { GEOMETRY(rawValue: $0)! }
 		let tags = try container.decode([String: String].self, forKey: .tags)
-		self.init(featureID: feat, name: name, geometry: geom, tags: tags)
+		self.init(featureID: feat,
+				  name: name,
+				  geometry: geom,
+				  tags: tags)
 	}
 
 	func encode(to encoder: any Encoder) throws {
@@ -103,7 +106,7 @@ class CustomFeatureController: UITableViewController, UITextFieldDelegate {
 		if customFeature == nil {
 			customFeature = CustomFeature(featureID: "user-" + UUID().uuidString,
 			                              name: "",
-			                              geometry: [GEOMETRY.POINT.rawValue],
+			                              geometry: [GEOMETRY.POINT],
 			                              tags: [:])
 		}
 
@@ -147,7 +150,7 @@ class CustomFeatureController: UITableViewController, UITextFieldDelegate {
 		for (button, geom) in geomDict {
 			button.addTarget(self, action: #selector(geomButtonTapped(_:)), for: .touchUpInside)
 
-			if customFeature.geometry.contains(geom.rawValue) {
+			if customFeature.geometry.contains(geom) {
 				button.isSelected = true
 			}
 		}
@@ -171,7 +174,6 @@ class CustomFeatureController: UITableViewController, UITextFieldDelegate {
 		}
 		let db = PresetsDatabase.shared
 		if let geom = geom.first,
-		   let geom = GEOMETRY(rawValue: geom),
 		   let impliedFeature = db.presetFeatureMatching(tags: tags,
 		                                                 geometry: geom,
 		                                                 location: AppDelegate.shared.mainView.currentRegion,
@@ -206,9 +208,9 @@ class CustomFeatureController: UITableViewController, UITextFieldDelegate {
 	}
 
 	// Get a list of geometries based on selected buttons
-	func getGeometry() -> [String] {
+	func getGeometry() -> [GEOMETRY] {
 		return geomDict.compactMap { button, geom in
-			button.isSelected ? geom.rawValue : nil
+			button.isSelected ? geom : nil
 		}
 	}
 

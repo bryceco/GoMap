@@ -51,8 +51,9 @@ struct OsmExtendedIdentifier: Equatable, Hashable {
 enum GEOMETRY: String, Codable {
 	case POINT = "point"
 	case LINE = "line"
-	case AREA = "area"
+	case AREA = "area" // closed way or multipolygon
 	case VERTEX = "vertex"
+	case RELATION = "relation"	// typically route relation
 }
 
 @objcMembers
@@ -722,7 +723,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			if relation.isMultipolygon() {
 				return GEOMETRY.AREA
 			} else {
-				return GEOMETRY.LINE
+				return GEOMETRY.RELATION
 			}
 		}
 		fatalError()

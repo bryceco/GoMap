@@ -16,7 +16,7 @@ class PresetFeature: CustomDebugStringConvertible {
 	let aliases: [String] // an alias is a localizable alternative to 'name'
 	let featureID: String
 	let fieldsWithRedirect: [String]?
-	let geometry: [String]
+	let geometry: [GEOMETRY]
 	let iconName: String? // icon on the map
 	let locationSet: LocationSet
 	let matchScore: Double
@@ -36,7 +36,7 @@ class PresetFeature: CustomDebugStringConvertible {
 	     aliases: [String], // an alias is a localizable alternative to 'name'
 	     featureID: String,
 	     fieldsWithRedirect: [String]?,
-	     geometry: [String],
+	     geometry: [GEOMETRY],
 	     icon: String?, // icon on the map
 	     locationSet: LocationSet,
 	     matchScore: Double,
@@ -117,7 +117,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		// Geometry: prefer the parent standard preset. If it's absent (NSI covers tag values
 		// that iD presets don't), infer from the OSM key embedded in the path.
 		// Path format: "<tree>/<key>/..." e.g. "transit/route/bus", "brands/shop/truck".
-		let geometry: [String]
+		let geometry: [GEOMETRY]
 		if let g = parentFeature?.geometry, !g.isEmpty {
 			geometry = g
 		} else {
