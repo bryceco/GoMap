@@ -60,7 +60,7 @@ class PresetArea {
 			      ignore[key] == nil
 			else { continue }
 
-			if preset.geometry.contains(GEOMETRY.AREA.rawValue) { // probably an area..
+			if preset.geometry.contains(.AREA) { // probably an area..
 				areaKeys[key] = [:]
 			}
 		}
@@ -70,7 +70,7 @@ class PresetArea {
 			for (key, value) in preset.addTags {
 				// examine all addTags to get a better sense of what can be tagged on lines - #6800
 				if areaKeys[key] != nil, // probably an area...
-				   preset.geometry.contains(GEOMETRY.LINE.rawValue), // but sometimes a line
+				   preset.geometry.contains(.LINE), // but sometimes a line
 				   value != "*"
 				{
 					areaKeys[key]![value] = true
@@ -122,7 +122,7 @@ class PresetArea {
 			return false
 		}
 		for (k, v) in feature.addTags {
-			if !feature.geometry.contains(GEOMETRY.LINE.rawValue),
+			if !feature.geometry.contains(.LINE),
 			   osmAreaKeys[k] != nil
 			{
 				return false

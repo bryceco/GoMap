@@ -150,6 +150,7 @@ final class UserPrefs {
 	let mostRecentTypes_line = Pref<[String]>(key: "mostRecentTypes.line", ubiquitous: true)
 	let mostRecentTypes_area = Pref<[String]>(key: "mostRecentTypes.area", ubiquitous: true)
 	let mostRecentTypes_vertex = Pref<[String]>(key: "mostRecentTypes.vertex", ubiquitous: true)
+	let mostRecentTypes_relation = Pref<[String]>(key: "mostRecentTypes.relation", ubiquitous: true)
 
 	// Editor filters
 	let editor_enableObjectFilters = Pref<Bool>(key: "editor.enableObjectFilters")
@@ -230,6 +231,7 @@ final class UserPrefs {
 		case .VERTEX: return mostRecentTypes_vertex
 		case .LINE: return mostRecentTypes_line
 		case .POINT: return mostRecentTypes_point
+		case .RELATION: return mostRecentTypes_relation
 		}
 	}
 

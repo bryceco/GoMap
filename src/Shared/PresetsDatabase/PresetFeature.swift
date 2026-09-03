@@ -78,7 +78,7 @@ class PresetFeature: CustomDebugStringConvertible {
 			aliases: (jsonDict["aliases"] as! String?)?.split(separator: "\n").map({ String($0) }) ?? [],
 			featureID: featureID,
 			fieldsWithRedirect: jsonDict["fields"] as! [String]?,
-			geometry: jsonDict["geometry"] as! [String]? ?? [],
+			geometry: (jsonDict["geometry"] as! [String]).map { GEOMETRY(rawValue: $0)! },
 			icon: jsonDict["icon"] as! String?,
 			locationSet: LocationSet(withJson: jsonDict["locationSet"]),
 			matchScore: jsonDict["matchScore"] as! Double? ?? 1.0,
@@ -125,14 +125,14 @@ class PresetFeature: CustomDebugStringConvertible {
 			switch osmKey {
 			case "route":
 				// Route relations (bus, tram, train, etc.) are relations whose members are ways
-				geometry = ["relation", "line"]
+				geometry = [.RELATION, .LINE]
 			case "boundary":
 				// Administrative/protected boundaries are closed areas or multipolygon relations
-				geometry = ["area", "relation"]
+				geometry = [.AREA, .RELATION]
 			case "amenity", "advertising", "club", "emergency", "healthcare",
 			     "leisure", "office", "shop":
 				// Physical locations not yet in iD presets; nodes and closed ways
-				geometry = ["point", "area"]
+				geometry = [.POINT, .AREA]
 			default:
 				assertionFailure("NSI path '\(path)' has no parent preset or geometry")
 				return nil
@@ -449,7 +449,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		guard let searchText = searchText else {
 			return nil
 		}
-		if !self.geometry.contains(geometry.rawValue) {
+		if !self.geometry.contains(geometry) {
 			return nil
 		}
 
@@ -480,7 +480,7 @@ class PresetFeature: CustomDebugStringConvertible {
 	                          location: RegionInfoForLocation) -> Double
 	{
 		if let geometry = geometry,
-		   !self.geometry.contains(geometry.rawValue) ||
+		   !self.geometry.contains(geometry) ||
 		   !locationSet.overlaps(location)
 		{
 			return 0.0
