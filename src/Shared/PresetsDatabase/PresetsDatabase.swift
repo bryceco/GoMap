@@ -86,6 +86,11 @@ final class PresetsDatabase {
 			.compactMapValuesWithKeys({ k, v in
 				try PresetFeature(withID: k, jsonDict: cast(v, to: [String: Any].self), isNSI: false)
 			})
+		for p in presets.values {
+			if let relation = p.relation {
+				print("\(p.featureID): \(relation)\n")
+			}
+		}
 		stdFeatures = presets
 		stdFeatureIndex = Self.buildTagIndex([stdFeatures], basePresets: stdFeatures)
 

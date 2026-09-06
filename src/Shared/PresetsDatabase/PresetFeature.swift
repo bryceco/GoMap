@@ -8,6 +8,77 @@
 
 import UIKit
 
+// Describes a permitted member role within a relation preset (e.g. "inner", "outer", "label").
+struct PresetRelationMemberRole: CustomStringConvertible {
+	let role: String
+	let geometry: [GEOMETRY] // empty means any geometry is permitted
+	let minCount: Int? // minimum number of instances of this role in parent relation
+	let maxCount: Int?
+	// Each element is a tag dict; a member matches if it satisfies ANY element (OR).
+	// Within each dict all key/value pairs must match (AND). A value of "*" is a wildcard.
+	let matchTags: [[String: String]]?
+
+	var description: String {
+		var parts = ["role=\"\(role)\""]
+		if !geometry.isEmpty {
+			parts.append("geometry=[\(geometry.map(\.rawValue).joined(separator: ","))]")
+		}
+		if let minCount { parts.append("min=\(minCount)") }
+		if let maxCount { parts.append("max=\(maxCount)") }
+		if let matchTags {
+			let tagStrings = matchTags.map { dict in
+				dict.map { "\($0.key)=\($0.value)" }.sorted().joined(separator: "&")
+			}
+			parts.append("matchTags=[\(tagStrings.joined(separator: "|"))]")
+		}
+		return parts.joined(separator: " ")
+	}
+
+	init(withDict dict: [String: Any]) {
+		self.role = dict["role"] as! String
+		self.geometry = (dict["geometry"] as! [String]).map { GEOMETRY(rawValue: $0)! }
+		self.minCount = dict["min"] as! Int?
+		self.maxCount = dict["max"] as! Int?
+		self.matchTags = dict["matchTags"] as! [[String: String]]?
+	}
+}
+
+// The editing structure defined by a preset for a relation type.
+// Describes valid member roles and their constraints.
+// Present only on presets that include a "relation" sub-object in presets.json.
+struct PresetRelationType: CustomStringConvertible {
+	enum RelationType: String {
+		case multipolygon
+		case boundary
+	}
+
+	let type: RelationType
+	let allowDuplicateMembers: Bool
+	let memberRoles: [PresetRelationMemberRole]
+
+	var description: String {
+		let dupes = allowDuplicateMembers ? " allowDuplicates" : ""
+		let memberLines = memberRoles.map { "    \($0.description)" }.joined(separator: "\n")
+		return "PresetRelationShape(type=\(type.rawValue)\(dupes)\n\(memberLines)\n)"
+	}
+
+	init(withDict dict: [String: Any]) {
+		let typeString = dict["reference"] as! String
+		self.type = RelationType(rawValue: typeString)!
+		self.allowDuplicateMembers = dict["allowDuplicateMembers"] as! Bool? ?? false
+		self.memberRoles = (dict["members"] as! [[String: Any]]? ?? []).compactMap {
+			PresetRelationMemberRole(withDict: $0)
+		}
+	}
+
+	init?(withJson json: Any?) {
+		guard let dict = json as! [String: Any]? else {
+			return nil
+		}
+		self.init(withDict: dict)
+	}
+}
+
 // A feature-defining tag such as amenity=shop
 class PresetFeature: CustomDebugStringConvertible {
 	static let uninitializedImage = UIImage()
@@ -23,6 +94,7 @@ class PresetFeature: CustomDebugStringConvertible {
 	let moreFieldsWithRedirect: [String]?
 	let nameWithRedirect: String
 	let reference: [String: String]?
+	let relation: PresetRelationType?
 	let _removeTags: [String: String]?
 	let searchable: Bool
 	let tags: [String: String]
@@ -44,6 +116,7 @@ class PresetFeature: CustomDebugStringConvertible {
 	     nameWithRedirect: String,
 	     nsiSuggestion: Bool,
 	     reference: [String: String]?,
+	     relation: PresetRelationType?,
 	     _removeTags: [String: String]?,
 	     searchable: Bool,
 	     tags: [String: String],
@@ -61,6 +134,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		self.nameWithRedirect = nameWithRedirect
 		self.nsiSuggestion = nsiSuggestion
 		self.reference = reference
+		self.relation = relation
 		self._removeTags = _removeTags
 		self.searchable = searchable
 		self.tags = tags
@@ -86,6 +160,7 @@ class PresetFeature: CustomDebugStringConvertible {
 			nameWithRedirect: jsonDict["name"] as! String? ?? featureID,
 			nsiSuggestion: isNSI,
 			reference: jsonDict["reference"] as! [String: String]?,
+			relation: PresetRelationType(withJson: jsonDict["relation"]),
 			_removeTags: jsonDict["removeTags"] as! [String: String]?,
 			searchable: jsonDict["searchable"] as! Bool? ?? true,
 			tags: jsonDict["tags"] as! [String: String],
@@ -152,6 +227,7 @@ class PresetFeature: CustomDebugStringConvertible {
 			nameWithRedirect: displayName,
 			nsiSuggestion: true,
 			reference: nil,
+			relation: nil,
 			_removeTags: nil,
 			searchable: true,
 			tags: tags,

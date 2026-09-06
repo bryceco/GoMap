@@ -31,6 +31,7 @@ class CustomFeature: PresetFeature, Codable {
 		           nameWithRedirect: name,
 		           nsiSuggestion: false,
 		           reference: nil,
+		           relation: nil,
 		           _removeTags: nil,
 		           searchable: true,
 		           tags: tags,
