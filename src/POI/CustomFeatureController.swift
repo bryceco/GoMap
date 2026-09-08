@@ -52,9 +52,9 @@ class CustomFeature: PresetFeature, Codable {
 		let geom = try container.decode([String].self, forKey: .geometry).map { GEOMETRY(rawValue: $0)! }
 		let tags = try container.decode([String: String].self, forKey: .tags)
 		self.init(featureID: feat,
-				  name: name,
-				  geometry: geom,
-				  tags: tags)
+		          name: name,
+		          geometry: geom,
+		          tags: tags)
 	}
 
 	func encode(to encoder: any Encoder) throws {

@@ -106,7 +106,7 @@ import Foundation
 	{
 		// Fixme markers
 		if including.contains(.fixme),
-			!isLargeArea
+		   !isLargeArea
 		{
 			removeMarkers(where: {
 				guard let fixme = $0 as? FixmeMarker else { return false }
@@ -183,9 +183,9 @@ import Foundation
 			let bbox = AppDelegate.shared.mainView.viewPort.boundingLatLonForScreen()
 			let isLargeArea = bbox.size.width * bbox.size.height > 0.25
 			await self.updateMarkers(forRegion: bbox,
-									 mapData: mapData,
-									 including: including,
-									 isLargeArea: isLargeArea)
+			                         mapData: mapData,
+			                         including: including,
+			                         isLargeArea: isLargeArea)
 			completion()
 		}
 		pendingUpdateTask = task

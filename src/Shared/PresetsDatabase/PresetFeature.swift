@@ -182,8 +182,8 @@ class PresetFeature: CustomDebugStringConvertible {
 	                  parentFeature: PresetFeature?)
 	{
 		guard let id = item["id"] as? String,
-			  let tags = item["tags"] as? [String: String],
-			  let displayName = item["displayName"] as? String
+		      let tags = item["tags"] as? [String: String],
+		      let displayName = item["displayName"] as? String
 		else {
 			assertionFailure("bad NSI item")
 			return nil

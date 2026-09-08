@@ -53,7 +53,7 @@ enum GEOMETRY: String, Codable {
 	case LINE = "line"
 	case AREA = "area" // closed way or multipolygon
 	case VERTEX = "vertex"
-	case RELATION = "relation"	// typically route relation
+	case RELATION = "relation" // typically route relation
 }
 
 @objcMembers
