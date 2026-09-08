@@ -138,7 +138,7 @@ extension EditorMapLayer {
 	// MARK: Selection
 
 	func selectObjectAtPoint(_ point: CGPoint) {
-		owner.unblinkObject() // used by Mac Catalyst, harmless otherwise
+		currentBlink = nil // used by Mac Catalyst, harmless otherwise
 
 		if selectedWay != nil,
 		   // check for selecting node inside previously selected way
@@ -281,12 +281,24 @@ extension EditorMapLayer {
 		// do hit testing for connecting to other objects
 		if selectedWay != nil, object.isNode() != nil {
 			var segment = -1
-			if let hit = hitTestDragConnection(for: object as! OsmNode, segment: &segment),
-			   hit.isWay() != nil || hit.isNode() != nil
-			{
-				owner.blink(hit, segment: segment)
+			if let hit = hitTestDragConnection(for: object as! OsmNode, segment: &segment) {
+				if _connectionBlinkTarget?.hit !== hit || _connectionBlinkTarget?.segment != segment {
+					if let hitNode = hit.isNode() {
+						_connectionBlinkTarget = (hit, segment)
+						currentBlink = BlinkOverlay(node: hitNode,
+						                            mapTransform: viewPort.mapTransform,
+						                            parentLayer: owner.layer)
+					} else if let hitWay = hit.isWay() {
+						_connectionBlinkTarget = (hit, segment)
+						currentBlink = BlinkOverlay(way: hitWay, segment: segment,
+						                            mapTransform: viewPort.mapTransform,
+						                            parentLayer: owner.layer)
+					} else {
+						currentBlink = nil
+					}
+				}
 			} else {
-				owner.unblinkObject()
+				currentBlink = nil
 			}
 		}
 	}

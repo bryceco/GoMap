@@ -77,6 +77,7 @@
 		02581F32301410AD00FC4D3A /* RotateObjectOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02581F31301410AD00FC4D3A /* RotateObjectOverlayViewController.swift */; };
 		025CCA12271244B800074726 /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 025CCA11271244B800074726 /* KissXML */; };
 		025F004F2E453002003A68FA /* TypeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025F004E2E453002003A68FA /* TypeCast.swift */; };
+		02608624305005F1000D7FA7 /* BlinkOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02608623305005F1000D7FA7 /* BlinkOverlay.swift */; };
 		0260E05F2BE30D4700975570 /* CompassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0260E05E2BE30D4700975570 /* CompassButton.swift */; };
 		0262175B2F08533D00594D88 /* PresetTranslations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262175A2F08533D00594D88 /* PresetTranslations.swift */; };
 		0266DE862655A21F007A502E /* Superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266DE852655A21F007A502E /* Superview.swift */; };
@@ -447,6 +448,7 @@
 		02581F31301410AD00FC4D3A /* RotateObjectOverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotateObjectOverlayViewController.swift; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		025F004E2E453002003A68FA /* TypeCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCast.swift; sourceTree = "<group>"; };
+		02608623305005F1000D7FA7 /* BlinkOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkOverlay.swift; sourceTree = "<group>"; };
 		0260E05E2BE30D4700975570 /* CompassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassButton.swift; sourceTree = "<group>"; };
 		0262175A2F08533D00594D88 /* PresetTranslations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetTranslations.swift; sourceTree = "<group>"; };
 		0266DE852655A21F007A502E /* Superview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Superview.swift; sourceTree = "<group>"; };
@@ -991,6 +993,7 @@
 				02F5329A267AD0250088DF41 /* Tiles */,
 				02092ECE29E32DD40095042B /* UserPrefs.swift */,
 				02F5329C267AD2B20088DF41 /* Utility */,
+				02608623305005F1000D7FA7 /* BlinkOverlay.swift */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -1743,6 +1746,7 @@
 				02A59EDD297E444500B0A676 /* PresetAddressFormat.swift in Sources */,
 				02EF13C32E5D041800418CA4 /* UIFont+Ext.swift in Sources */,
 				C31315232644292700C0AD86 /* LocationBallView.swift in Sources */,
+				02608624305005F1000D7FA7 /* BlinkOverlay.swift in Sources */,
 				02AF69142F2B53A70000ABA2 /* OsmMapDataArchiver.swift in Sources */,
 				ED964A012601D6A900EC0A60 /* POICommonTagsViewController.swift in Sources */,
 				0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */,

@@ -53,10 +53,6 @@ protocol EditorMapLayerOwner: UIView {
 	func presentEditActionSheet(_ sender: Any?)
 	func presentTurnRestrictionEditor()
 
-	// FIXME: We should move this functionality into EditorMapLayer.
-	// But that might also require moving PushPin as well.
-	func blink(_ object: OsmBaseObject?, segment: Int)
-	func unblinkObject()
 	func startObjectRotation()
 
 	// FIXME: this shouldn't be in the editor layer. Move to MapView.
@@ -234,6 +230,11 @@ final class EditorMapLayer: CALayer {
 	let display: MessageDisplay
 
 	var silentUndo = false // don't flash message about undo
+	var currentBlink: BlinkOverlay? { // marching-ants highlight; set to nil to stop
+		didSet { if currentBlink == nil { _connectionBlinkTarget = nil } }
+	}
+
+	var _connectionBlinkTarget: (hit: OsmBaseObject, segment: Int)?
 
 	// Indicates that enough objects are on-screen that we might have to hide some objects
 	private(set) var atVisibleObjectLimit = false

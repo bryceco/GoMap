@@ -42,7 +42,6 @@ struct MapLocation {
 // These zPosition values are isolated from the ones in MapLayersView
 private enum EDITOR_ZLAYER: CGFloat {
 	case EDITOR = -20
-	case BLINK = 4
 }
 
 final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteractionDelegate, RightClickHandling {
@@ -227,8 +226,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	// MARK: ViewPort changed
 
 	func mapTransformDidChange() {
-		// we could move the blink outline similar to pushpin, but it's complicated and less important
-		unblinkObject()
+		editorLayer.currentBlink = nil
 
 		// Determine if we've zoomed out enough to disable editing
 		updateIsZoomedOut()
@@ -703,7 +701,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			if isRotate {
 				self.endObjectRotation()
 			}
-			self.unblinkObject()
+			self.editorLayer.currentBlink = nil
 			if let object {
 				self.editorLayer.dragFinish(object: object, isRotate: isRotate)
 			}
@@ -762,15 +760,12 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 					let sx = scrollx * CGFloat(duration) * 60.0
 					let sy = scrolly * CGFloat(duration) * 60.0
 					self.viewPort.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
+					self.editorLayer.currentBlink?.translate(dx: -sx, dy: -sy)
 					// because we moved the screen the pushpin is now back on-screen, but
 					// for smooth continuous operation we put the pushpin back off-screen:
 					let newArrowPoint = pushPin.arrowPoint.withOffset(sx, sy)
 					pushPin.location = viewPort.mapTransform.latLon(forScreenPoint: newArrowPoint)
 
-					// update position of blink layer
-					if let pt = self.blinkLayer?.position.withOffset(-sx, -sy) {
-						self.blinkLayer?.position = pt
-					}
 					dragObjectToPushpin()
 					self.magnifyingGlass.setSourceCenter(arrow, in: self,
 					                                     visible: !self.mainView.mapLayersView.aerialLayer.isHidden)
@@ -851,91 +846,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	func refreshPushpinText() {
 		let text = editorLayer.selectedPrimary?.friendlyDescription() ?? NSLocalizedString("(new object)", comment: "")
 		pushPin?.text = text
-	}
-
-	var blinkObject: OsmBaseObject? // used for creating a moving dots animation during selection
-	var blinkSegment = 0
-	var blinkLayer: CAShapeLayer?
-
-	func unblinkObject() {
-		blinkLayer?.removeFromSuperlayer()
-		blinkLayer = nil
-		blinkObject = nil
-		blinkSegment = -1
-	}
-
-	func blink(_ object: OsmBaseObject?, segment: Int) {
-		guard let object = object else {
-			unblinkObject()
-			return
-		}
-		if object == blinkObject, segment == blinkSegment {
-			return
-		}
-		blinkLayer?.removeFromSuperlayer()
-		blinkObject = object
-		blinkSegment = segment
-
-		// create a layer for the object
-		let path = CGMutablePath()
-		if let node = object as? OsmNode {
-			let center = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
-			var rect = CGRect(x: center.x, y: center.y, width: 0, height: 0)
-			rect = rect.insetBy(dx: -10, dy: -10)
-			path.addEllipse(in: rect, transform: .identity)
-		} else if let way = object as? OsmWay {
-			if segment >= 0 {
-				assert(way.nodes.count >= segment + 2)
-				let n1 = way.nodes[segment]
-				let n2 = way.nodes[segment + 1]
-				let p1 = viewPort.mapTransform.screenPoint(forLatLon: n1.latLon, birdsEye: true)
-				let p2 = viewPort.mapTransform.screenPoint(forLatLon: n2.latLon, birdsEye: true)
-				path.move(to: CGPoint(x: p1.x, y: p1.y))
-				path.addLine(to: CGPoint(x: p2.x, y: p2.y))
-			} else {
-				var isFirst = true
-				for node in way.nodes {
-					let pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
-					if isFirst {
-						path.move(to: CGPoint(x: pt.x, y: pt.y))
-					} else {
-						path.addLine(to: CGPoint(x: pt.x, y: pt.y))
-					}
-					isFirst = false
-				}
-			}
-		} else {
-			assertionFailure()
-		}
-		self.blinkLayer = CAShapeLayer()
-		guard let blinkLayer = blinkLayer else { fatalError() }
-		blinkLayer.path = path
-		blinkLayer.fillColor = nil
-		blinkLayer.lineWidth = 3.0
-		blinkLayer.frame = CGRect(x: 0, y: 0, width: bounds.size.width, height: bounds.size.height)
-		blinkLayer.zPosition = EDITOR_ZLAYER.BLINK.rawValue
-		blinkLayer.strokeColor = UIColor.black.cgColor
-
-		let dots = CAShapeLayer()
-		dots.path = blinkLayer.path
-		dots.fillColor = nil
-		dots.lineWidth = blinkLayer.lineWidth
-		dots.bounds = blinkLayer.bounds
-		dots.position = CGPoint.zero
-		dots.anchorPoint = CGPoint.zero
-		dots.strokeColor = UIColor.white.cgColor
-		dots.lineDashPhase = 0.0
-		dots.lineDashPattern = [NSNumber(value: 4), NSNumber(value: 4)]
-		blinkLayer.addSublayer(dots)
-
-		let dashAnimation = CABasicAnimation(keyPath: "lineDashPhase")
-		dashAnimation.fromValue = NSNumber(value: 0.0)
-		dashAnimation.toValue = NSNumber(value: -16.0)
-		dashAnimation.duration = 0.6
-		dashAnimation.repeatCount = Float(CGFloat.greatestFiniteMagnitude)
-		dots.add(dashAnimation, forKey: "linePhase")
-
-		layer.addSublayer(blinkLayer)
 	}
 
 	// MARK: Gesture Recognizers
@@ -1087,7 +997,17 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 				hit = nil
 			}
 		}
-		blink(hit, segment: -1)
+		if let hitNode = hit?.isNode() {
+			editorLayer.currentBlink = BlinkOverlay(node: hitNode,
+			                                        mapTransform: viewPort.mapTransform,
+			                                        parentLayer: layer)
+		} else if let hitWay = hit?.isWay() {
+			editorLayer.currentBlink = BlinkOverlay(way: hitWay,
+			                                        mapTransform: viewPort.mapTransform,
+			                                        parentLayer: layer)
+		} else {
+			editorLayer.currentBlink = nil
+		}
 	}
 
 	func updateSpeechBalloonPosition() {}
