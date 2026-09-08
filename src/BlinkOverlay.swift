@@ -13,7 +13,7 @@ import UIKit
 
 final class BlinkOverlay {
 
-	/// Disambiguates which arc of a closed way to blink when highlighting the
+	/// Disambiguates which half of a closed way to blink when highlighting the
 	/// portion between two nodes.  `forward` follows the node-array order;
 	/// `backward` goes the other way around the ring.
 	enum Direction {
@@ -39,32 +39,55 @@ final class BlinkOverlay {
 		blinkLayer = Self.makeAndAdd(path: path, color: color, to: parentLayer)
 	}
 
+	// MARK: - Arbitrary node sequence (e.g. a path spanning multiple ways)
+
+	/// Blink a path described by an explicit sequence of nodes.
+	init(nodes: [OsmNode],
+		 color: UIColor = .white,
+		 mapTransform: MapTransform,
+		 parentLayer: CALayer)
+	{
+		let path = CGMutablePath()
+		if let first = nodes.first {
+			path.move(to: mapTransform.screenPoint(forLatLon: first.latLon, birdsEye: true))
+			for node in nodes.dropFirst() {
+				path.addLine(to: mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true))
+			}
+		}
+		blinkLayer = Self.makeAndAdd(path: path,
+									 color: color,
+									 to: parentLayer)
+	}
+
 	// MARK: - Way (entire)
 
 	/// Blink an entire way.
-	init(way: OsmWay,
+	convenience init(way: OsmWay,
 	     color: UIColor = .white,
 	     mapTransform: MapTransform,
 	     parentLayer: CALayer)
 	{
-		let path = Self.pathForNodes(way.nodes, mapTransform: mapTransform)
-		blinkLayer = Self.makeAndAdd(path: path, color: color, to: parentLayer)
+		self.init(nodes: way.nodes,
+				  color: color,
+				  mapTransform: mapTransform,
+				  parentLayer: parentLayer)
 	}
 
 	// MARK: - Way segment
 
 	/// Blink a single segment of a way — the edge between
 	/// `way.nodes[segment]` and `way.nodes[segment + 1]`.
-	init(way: OsmWay,
+	convenience init(way: OsmWay,
 	     segment: Int,
 	     color: UIColor = .white,
 	     mapTransform: MapTransform,
 	     parentLayer: CALayer)
 	{
 		assert(way.nodes.count >= segment + 2)
-		let path = Self.pathForNodes(Array(way.nodes[segment...segment + 1]),
-		                             mapTransform: mapTransform)
-		blinkLayer = Self.makeAndAdd(path: path, color: color, to: parentLayer)
+		self.init(nodes: Array(way.nodes[segment...segment + 1]),
+		          color: color,
+				  mapTransform: mapTransform,
+				  parentLayer: parentLayer)
 	}
 
 	// MARK: - Between two nodes of a way
@@ -76,17 +99,22 @@ final class BlinkOverlay {
 	/// pass `.forward` to travel in node-array order from `from` to `to`,
 	/// or `.backward` to travel in the opposite direction.  Passing `nil`
 	/// is equivalent to `.forward` for closed ways.
-	init(way: OsmWay,
+	convenience init(way: OsmWay,
 	     from: OsmNode,
 	     to: OsmNode,
-	     direction: Direction?,
+	     direction: Direction,
 	     color: UIColor = .white,
 	     mapTransform: MapTransform,
 	     parentLayer: CALayer)
 	{
-		let nodes = Self.nodesAlong(way: way, from: from, to: to, direction: direction)
-		let path = Self.pathForNodes(nodes, mapTransform: mapTransform)
-		blinkLayer = Self.makeAndAdd(path: path, color: color, to: parentLayer)
+		let nodes = Self.nodesAlong(way: way,
+									from: from,
+									to: to,
+									direction: direction)
+		self.init(nodes: nodes,
+		          color: color,
+				  mapTransform: mapTransform,
+				  parentLayer: parentLayer)
 	}
 
 	func translate(dx: CGFloat, dy: CGFloat) {
@@ -137,17 +165,6 @@ final class BlinkOverlay {
 		dots.add(animation, forKey: "linePhase")
 	}
 
-	/// Screen-space polyline through an array of nodes.
-	private static func pathForNodes(_ nodes: [OsmNode], mapTransform: MapTransform) -> CGPath {
-		let path = CGMutablePath()
-		guard let first = nodes.first else { return path }
-		path.move(to: mapTransform.screenPoint(forLatLon: first.latLon, birdsEye: true))
-		for node in nodes.dropFirst() {
-			path.addLine(to: mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true))
-		}
-		return path
-	}
-
 	/// Returns the ordered nodes of `way` between `from` and `to`.
 	private static func nodesAlong(way: OsmWay,
 	                               from: OsmNode,
@@ -166,7 +183,8 @@ final class BlinkOverlay {
 			// reverse at the end rather than walking the ring in reverse.
 			let ringCount = nodes.count - 1
 			let isForward = (direction ?? .forward) == .forward
-			let (start, end) = isForward ? (fromIdx % ringCount, toIdx % ringCount)
+			let (start, end) = isForward
+				? (fromIdx % ringCount, toIdx % ringCount)
 				: (toIdx % ringCount, fromIdx % ringCount)
 			let slice: [OsmNode] = start <= end
 				? Array(nodes[start...end])
