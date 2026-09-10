@@ -140,6 +140,20 @@ extension EditorMapLayer {
 	func selectObjectAtPoint(_ point: CGPoint) {
 		currentBlink = nil // used by Mac Catalyst, harmless otherwise
 
+		// Close-area mode: resolve tap against highlighted candidate paths.
+		if let closer = closeAreaHelper {
+			let hitIndex = closer.pathIndex(nearScreenPoint: point,
+			                                mapTransform: viewPort.mapTransform,
+			                                radius: Self.DefaultHitTestRadius)
+			if let idx = hitIndex {
+				applyCloseAreaPath(closer.paths[idx], for: closer.selectedWay)
+			}
+			// Exit close-area mode regardless (success or tap-to-cancel).
+			closeAreaHelper = nil
+			closeAreaBlinks = []
+			return
+		}
+
 		if selectedWay != nil,
 		   // check for selecting node inside previously selected way
 		   let hit = osmHitTestNode(inSelectedWay: point, radius: Self.DefaultHitTestRadius)
@@ -703,6 +717,13 @@ extension EditorMapLayer {
 				if restriction {
 					actionList.append(.RESTRICT)
 				}
+				// offer Close Area when the selected node is an endpoint of an open way
+				if !selectedWay.isClosed(),
+				   selectedNode === selectedWay.nodes.first || selectedNode === selectedWay.nodes.last,
+				   selectedNode.wayCount > 1
+				{
+					actionList.append(.CLOSE_AREA)
+				}
 			} else {
 				if selectedWay.isClosed() {
 					// polygon
@@ -755,7 +776,7 @@ extension EditorMapLayer {
 				selectedNode = nil
 				owner.didUpdateObject()
 			}
-		case .SPLIT, .JOIN, .DISCONNECT, .EXTRACTNODE, .RESTRICT, .ADDNOTE, .DELETE, .MORE:
+		case .SPLIT, .JOIN, .DISCONNECT, .EXTRACTNODE, .RESTRICT, .ADDNOTE, .DELETE, .MORE, .CLOSE_AREA:
 			break
 		}
 
@@ -893,12 +914,56 @@ extension EditorMapLayer {
 				let rc = CGRect(origin: owner.pushpinView()?.arrowPoint ?? .zero, size: .zero)
 				presentAlert(alert: actionSheet, location: .rect(rc))
 				return
+			case .CLOSE_AREA:
+				guard let way = selectedWay else { return }
+				guard let closer = CloseAreaHelper(selectedWay: way, mapData: mapData) else {
+					throw OsmMapData.EditError.text(
+						NSLocalizedString("No connecting path found to close the way", comment: ""))
+				}
+				closeAreaHelper = closer
+				let pathColors: [UIColor] = [
+					UIColor(red: 1.0, green: 0.85, blue: 0.0, alpha: 1), // yellow
+					UIColor(red: 0.0, green: 0.85, blue: 1.0, alpha: 1), // cyan
+					UIColor(red: 0.2, green: 1.0, blue: 0.2, alpha: 1), // green
+					UIColor(red: 1.0, green: 0.5, blue: 0.0, alpha: 1), // orange
+					UIColor(red: 1.0, green: 0.0, blue: 1.0, alpha: 1) // magenta
+				]
+				closeAreaBlinks = closer.paths.enumerated().map { index, path in
+					BlinkOverlay(nodes: path.nodes,
+					             color: pathColors[index % pathColors.count],
+					             mapTransform: viewPort.mapTransform,
+					             parentLayer: owner.layer)
+				}
+				display.showAlert(
+					NSLocalizedString("Close Area", comment: ""),
+					message: NSLocalizedString(
+						"Tap a highlighted path to close the area, or tap elsewhere to cancel.",
+						comment: ""))
+				return
 			}
 		} catch {
 			display.showAlert(error.localizedDescription, message: nil)
 		}
 		setNeedsLayout()
 		owner.didUpdateObject()
+	}
+
+	// MARK: Apply close-area path
+
+	/// Appends the nodes of `path` to `way` (skipping `path.nodes.first`, which
+	/// is already the way's last node) to close the way into a polygon.
+	private func applyCloseAreaPath(_ path: CloseAreaHelper.ConnectingPath, for way: OsmWay) {
+		do {
+			let close = try mapData.canCloseWay(way, withPath: path.nodes)
+			close()
+			selectedWay = way
+			selectedNode = nil
+			owner.placePushpinForSelection(at: nil)
+			setNeedsLayout()
+			owner.didUpdateObject()
+		} catch {
+			display.showAlert(error.localizedDescription, message: nil)
+		}
 	}
 
 	// MARK: Create node/ways

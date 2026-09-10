@@ -1139,6 +1139,36 @@ extension OsmMapData {
 		}
 	}
 
+	// MARK: canCloseWay
+
+	/// Returns an action that closes `way` by appending the nodes in `pathNodes`
+	/// to the way.
+	///
+	/// `pathNodes` is the full closing path as returned by `CloseAreaHelper`, i.e.
+	/// `pathNodes.first === way.nodes.last` and
+	/// `pathNodes.last === way.nodes.first`.  The first element is skipped (it
+	/// is already the last node of the way) and the remaining nodes are
+	/// appended, which makes `way` closed.
+	func canCloseWay(_ way: OsmWay, withPath pathNodes: [OsmNode]) throws -> EditAction {
+		guard pathNodes.count >= 2,
+		      pathNodes.first === way.nodes.last,
+		      pathNodes.last === way.nodes.first
+		else {
+			throw EditError.text(NSLocalizedString("Invalid closing path", comment: ""))
+		}
+		let nodesToAdd = Array(pathNodes.dropFirst()) // skip the already-present last node
+		if way.nodes.count + nodesToAdd.count > 2000 {
+			throw EditError.text(NSLocalizedString("Maximum way length is 2000 nodes", comment: ""))
+		}
+		return { [self] in
+			registerUndoCommentString(NSLocalizedString("Close Area", comment: ""))
+			for node in nodesToAdd {
+				addNodeUnsafe(node, to: way, at: way.nodes.count)
+			}
+			updateParentMultipolygonRelationRoles(for: way)
+		}
+	}
+
 	func canCircularizeWay(_ way: OsmWay) throws -> EditAction {
 		if !(way.isWay() != nil) || !way.isClosed() || way.nodes.count < 4 {
 			throw EditError.text(NSLocalizedString("Requires a closed way with at least 3 nodes", comment: ""))

@@ -135,7 +135,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	func waysContaining(_ node: OsmNode) -> [OsmWay] {
-		return ways.values.filter({ $0.nodes.contains(node) })
+		return ways.values.filter({ $0.nodes.contains(where: { $0 === node }) })
 	}
 
 	func objectsContaining(_ object: OsmBaseObject) -> [OsmBaseObject] {

@@ -226,8 +226,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	// MARK: ViewPort changed
 
 	func mapTransformDidChange() {
-		editorLayer.currentBlink = nil
-
 		// Determine if we've zoomed out enough to disable editing
 		updateIsZoomedOut()
 
@@ -760,7 +758,6 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 					let sx = scrollx * CGFloat(duration) * 60.0
 					let sy = scrolly * CGFloat(duration) * 60.0
 					self.viewPort.adjustOrigin(by: CGPoint(x: -sx, y: -sy))
-					self.editorLayer.currentBlink?.translate(dx: -sx, dy: -sy)
 					// because we moved the screen the pushpin is now back on-screen, but
 					// for smooth continuous operation we put the pushpin back off-screen:
 					let newArrowPoint = pushPin.arrowPoint.withOffset(sx, sy)

@@ -26833,6 +26833,9 @@
         }
       }
     },
+    "Close Area" : {
+      "comment" : "Edit action"
+    },
     "Commit" : {
       "localizations" : {
         "ar" : {
@@ -37243,6 +37246,9 @@
         }
       }
     },
+    "Invalid closing path" : {
+
+    },
     "Invalid URL" : {
       "localizations" : {
         "ar" : {
@@ -43979,6 +43985,9 @@
           }
         }
       }
+    },
+    "No connecting path found to close the way" : {
+
     },
     "No Data" : {
       "comment" : "Alert title",
@@ -57839,6 +57848,9 @@
           }
         }
       }
+    },
+    "Tap a highlighted path to close the area, or tap elsewhere to cancel." : {
+
     },
     "The + button can be positioned on either the left or right side of the screen" : {
       "localizations" : {

@@ -13,7 +13,7 @@ import UIKit
 
 final class BlinkOverlay {
 
-	/// Disambiguates which half of a closed way to blink when highlighting the
+	/// Disambiguates which arc of a closed way to blink when highlighting the
 	/// portion between two nodes.  `forward` follows the node-array order;
 	/// `backward` goes the other way around the ring.
 	enum Direction {
@@ -22,6 +22,7 @@ final class BlinkOverlay {
 	}
 
 	private let blinkLayer: CAShapeLayer
+	private let pathProvider: (MapTransform) -> CGPath
 
 	// MARK: - Node
 
@@ -31,63 +32,61 @@ final class BlinkOverlay {
 	     mapTransform: MapTransform,
 	     parentLayer: CALayer)
 	{
-		let center = mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
-		var rect = CGRect(x: center.x, y: center.y, width: 0, height: 0)
-		rect = rect.insetBy(dx: -10, dy: -10)
-		let path = CGMutablePath()
-		path.addEllipse(in: rect)
-		blinkLayer = Self.makeAndAdd(path: path, color: color, to: parentLayer)
+		let provider: (MapTransform) -> CGPath = { mt in Self.pathForNode(node, mapTransform: mt) }
+		pathProvider = provider
+		blinkLayer = Self.layerFor(path: provider(mapTransform), color: color)
+		parentLayer.addSublayer(blinkLayer)
+		subscribeToChanges(mapTransform)
 	}
 
-	// MARK: - Arbitrary node sequence (e.g. a path spanning multiple ways)
+	// MARK: - Arbitrary node array
 
-	/// Blink a path described by an explicit sequence of nodes.
+	/// Blink an arbitrary sequence of nodes
 	init(nodes: [OsmNode],
-		 color: UIColor = .white,
-		 mapTransform: MapTransform,
-		 parentLayer: CALayer)
+	     color: UIColor = .white,
+	     mapTransform: MapTransform,
+	     parentLayer: CALayer)
 	{
-		let path = CGMutablePath()
-		if let first = nodes.first {
-			path.move(to: mapTransform.screenPoint(forLatLon: first.latLon, birdsEye: true))
-			for node in nodes.dropFirst() {
-				path.addLine(to: mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true))
-			}
-		}
-		blinkLayer = Self.makeAndAdd(path: path,
-									 color: color,
-									 to: parentLayer)
+		let provider: (MapTransform) -> CGPath = { mt in Self.pathForNodes(nodes, mapTransform: mt) }
+		pathProvider = provider
+		blinkLayer = Self.layerFor(path: provider(mapTransform), color: color)
+		parentLayer.addSublayer(blinkLayer)
+		subscribeToChanges(mapTransform)
 	}
 
 	// MARK: - Way (entire)
 
 	/// Blink an entire way.
-	convenience init(way: OsmWay,
+	init(way: OsmWay,
 	     color: UIColor = .white,
 	     mapTransform: MapTransform,
 	     parentLayer: CALayer)
 	{
-		self.init(nodes: way.nodes,
-				  color: color,
-				  mapTransform: mapTransform,
-				  parentLayer: parentLayer)
+		let provider: (MapTransform) -> CGPath = { mt in Self.pathForNodes(way.nodes, mapTransform: mt) }
+		pathProvider = provider
+		blinkLayer = Self.layerFor(path: provider(mapTransform), color: color)
+		parentLayer.addSublayer(blinkLayer)
+		subscribeToChanges(mapTransform)
 	}
 
 	// MARK: - Way segment
 
 	/// Blink a single segment of a way — the edge between
 	/// `way.nodes[segment]` and `way.nodes[segment + 1]`.
-	convenience init(way: OsmWay,
+	init(way: OsmWay,
 	     segment: Int,
 	     color: UIColor = .white,
 	     mapTransform: MapTransform,
 	     parentLayer: CALayer)
 	{
 		assert(way.nodes.count >= segment + 2)
-		self.init(nodes: Array(way.nodes[segment...segment + 1]),
-		          color: color,
-				  mapTransform: mapTransform,
-				  parentLayer: parentLayer)
+		let provider: (MapTransform) -> CGPath = { mt in
+			Self.pathForNodes(Array(way.nodes[segment...segment + 1]), mapTransform: mt)
+		}
+		pathProvider = provider
+		blinkLayer = Self.layerFor(path: provider(mapTransform), color: color)
+		parentLayer.addSublayer(blinkLayer)
+		subscribeToChanges(mapTransform)
 	}
 
 	// MARK: - Between two nodes of a way
@@ -99,26 +98,22 @@ final class BlinkOverlay {
 	/// pass `.forward` to travel in node-array order from `from` to `to`,
 	/// or `.backward` to travel in the opposite direction.  Passing `nil`
 	/// is equivalent to `.forward` for closed ways.
-	convenience init(way: OsmWay,
+	init(way: OsmWay,
 	     from: OsmNode,
 	     to: OsmNode,
-	     direction: Direction,
+	     direction: Direction?,
 	     color: UIColor = .white,
 	     mapTransform: MapTransform,
 	     parentLayer: CALayer)
 	{
-		let nodes = Self.nodesAlong(way: way,
-									from: from,
-									to: to,
-									direction: direction)
-		self.init(nodes: nodes,
-		          color: color,
-				  mapTransform: mapTransform,
-				  parentLayer: parentLayer)
-	}
-
-	func translate(dx: CGFloat, dy: CGFloat) {
-		blinkLayer.position = blinkLayer.position.withOffset(dx, dy)
+		let provider: (MapTransform) -> CGPath = { mt in
+			let nodes = Self.nodesAlong(way: way, from: from, to: to, direction: direction)
+			return Self.pathForNodes(nodes, mapTransform: mt)
+		}
+		pathProvider = provider
+		blinkLayer = Self.layerFor(path: provider(mapTransform), color: color)
+		parentLayer.addSublayer(blinkLayer)
+		subscribeToChanges(mapTransform)
 	}
 
 	deinit {
@@ -127,14 +122,16 @@ final class BlinkOverlay {
 
 	// MARK: - Private helpers
 
-	private static func makeAndAdd(path: CGPath, color: UIColor, to parentLayer: CALayer) -> CAShapeLayer {
-		let (backing, dots) = makeLayers(path: path, color: color)
-		startAnimation(on: dots)
-		parentLayer.addSublayer(backing)
-		return backing
+	private func subscribeToChanges(_ mapTransform: MapTransform) {
+		mapTransform.onChange.subscribe(self) { [weak self] in
+			guard let self else { return }
+			let path = pathProvider(mapTransform)
+			blinkLayer.path = path
+			(blinkLayer.sublayers?.first as? CAShapeLayer)?.path = path
+		}
 	}
 
-	private static func makeLayers(path: CGPath, color: UIColor) -> (CAShapeLayer, CAShapeLayer) {
+	private static func layerFor(path: CGPath, color: UIColor) -> CAShapeLayer {
 		let backing = CAShapeLayer()
 		backing.path = path
 		backing.fillColor = nil
@@ -153,7 +150,8 @@ final class BlinkOverlay {
 		dots.lineDashPattern = [NSNumber(value: 4), NSNumber(value: 4)]
 
 		backing.addSublayer(dots)
-		return (backing, dots)
+		startAnimation(on: dots)
+		return backing
 	}
 
 	private static func startAnimation(on dots: CAShapeLayer) {
@@ -163,6 +161,26 @@ final class BlinkOverlay {
 		animation.duration = 0.6
 		animation.repeatCount = Float(CGFloat.greatestFiniteMagnitude)
 		dots.add(animation, forKey: "linePhase")
+	}
+
+	/// Screen-space circle path around a node.
+	private static func pathForNode(_ node: OsmNode, mapTransform: MapTransform) -> CGPath {
+		let center = mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
+		let rect = CGRect(x: center.x, y: center.y, width: 0, height: 0).insetBy(dx: -10, dy: -10)
+		let path = CGMutablePath()
+		path.addEllipse(in: rect)
+		return path
+	}
+
+	/// Screen-space polyline through an array of nodes.
+	private static func pathForNodes(_ nodes: [OsmNode], mapTransform: MapTransform) -> CGPath {
+		let path = CGMutablePath()
+		guard let first = nodes.first else { return path }
+		path.move(to: mapTransform.screenPoint(forLatLon: first.latLon, birdsEye: true))
+		for node in nodes.dropFirst() {
+			path.addLine(to: mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true))
+		}
+		return path
 	}
 
 	/// Returns the ordered nodes of `way` between `from` and `to`.
@@ -183,8 +201,7 @@ final class BlinkOverlay {
 			// reverse at the end rather than walking the ring in reverse.
 			let ringCount = nodes.count - 1
 			let isForward = (direction ?? .forward) == .forward
-			let (start, end) = isForward
-				? (fromIdx % ringCount, toIdx % ringCount)
+			let (start, end) = isForward ? (fromIdx % ringCount, toIdx % ringCount)
 				: (toIdx % ringCount, fromIdx % ringCount)
 			let slice: [OsmNode] = start <= end
 				? Array(nodes[start...end])

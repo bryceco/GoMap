@@ -85,6 +85,7 @@ enum EDIT_ACTION: Int {
 	case PASTETAGS
 	case RESTRICT
 	case CREATE_RELATION
+	case CLOSE_AREA
 
 	/// Localized names of edit actions
 	func actionTitle(abbreviated: Bool = false) -> (label: String, image: UIImage?) {
@@ -145,6 +146,9 @@ enum EDIT_ACTION: Int {
 		case .STRAIGHTEN:
 			return (NSLocalizedString("Straighten", comment: "Edit action"),
 			        UIImage(systemName: "line.diagonal"))
+		case .CLOSE_AREA:
+			return (NSLocalizedString("Close Area", comment: "Edit action"),
+			        UIImage(systemName: "arrow.triangle.turn.up.right.circle"))
 		}
 	}
 }
@@ -235,6 +239,10 @@ final class EditorMapLayer: CALayer {
 	}
 
 	var _connectionBlinkTarget: (hit: OsmBaseObject, segment: Int)?
+
+	/// Helpers for closing a way into an area
+	var closeAreaHelper: CloseAreaHelper?
+	var closeAreaBlinks: [BlinkOverlay] = []
 
 	// Indicates that enough objects are on-screen that we might have to hide some objects
 	private(set) var atVisibleObjectLimit = false

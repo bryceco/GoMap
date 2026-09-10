@@ -99,7 +99,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 	}
 
 	func isClosed() -> Bool {
-		return nodes.count > 2 && nodes[0] == nodes.last
+		return nodes.count > 2 && nodes[0] === nodes.last
 	}
 
 	static let computeIsOneWayOneWayTags: [String: [String: Bool]] = [

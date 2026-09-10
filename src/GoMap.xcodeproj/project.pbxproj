@@ -78,6 +78,7 @@
 		025CCA12271244B800074726 /* KissXML in Frameworks */ = {isa = PBXBuildFile; productRef = 025CCA11271244B800074726 /* KissXML */; };
 		025F004F2E453002003A68FA /* TypeCast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 025F004E2E453002003A68FA /* TypeCast.swift */; };
 		02608624305005F1000D7FA7 /* BlinkOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02608623305005F1000D7FA7 /* BlinkOverlay.swift */; };
+		0260862630505E18000D7FA7 /* CloseAreaHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0260862530505E18000D7FA7 /* CloseAreaHelper.swift */; };
 		0260E05F2BE30D4700975570 /* CompassButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0260E05E2BE30D4700975570 /* CompassButton.swift */; };
 		0262175B2F08533D00594D88 /* PresetTranslations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0262175A2F08533D00594D88 /* PresetTranslations.swift */; };
 		0266DE862655A21F007A502E /* Superview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266DE852655A21F007A502E /* Superview.swift */; };
@@ -449,6 +450,7 @@
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		025F004E2E453002003A68FA /* TypeCast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeCast.swift; sourceTree = "<group>"; };
 		02608623305005F1000D7FA7 /* BlinkOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlinkOverlay.swift; sourceTree = "<group>"; };
+		0260862530505E18000D7FA7 /* CloseAreaHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseAreaHelper.swift; sourceTree = "<group>"; };
 		0260E05E2BE30D4700975570 /* CompassButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompassButton.swift; sourceTree = "<group>"; };
 		0262175A2F08533D00594D88 /* PresetTranslations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetTranslations.swift; sourceTree = "<group>"; };
 		0266DE852655A21F007A502E /* Superview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Superview.swift; sourceTree = "<group>"; };
@@ -505,8 +507,8 @@
 		02ACBA3316713CCB00BB4414 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		02ACBA3516713CCB00BB4414 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Go Map!!-Info.plist"; sourceTree = "<group>"; };
-		02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Go Map!!-Prefix.pch"; sourceTree = "<group>"; };
+		02ACBA3B16713CCB00BB4414 /* GoMap-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoMap-Info.plist"; sourceTree = "<group>"; };
+		02ACBA4116713CCB00BB4414 /* GoMap-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GoMap-Prefix.pch"; sourceTree = "<group>"; };
 		02ACBD1E16717BBB00BB4414 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		02ACBD2016717BC500BB4414 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		02AEBEAE294ABE0700009163 /* KeyValueTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueTableCell.swift; sourceTree = "<group>"; };
@@ -940,8 +942,8 @@
 			children = (
 				C3D096AB263D48F700E3B129 /* AppDelegate.swift */,
 				020E0E202F6374A500A9D27C /* AppEnvironment.swift */,
-				02ACBA3B16713CCB00BB4414 /* Go Map!!-Info.plist */,
-				02ACBA4116713CCB00BB4414 /* Go Map!!-Prefix.pch */,
+				02ACBA3B16713CCB00BB4414 /* GoMap-Info.plist */,
+				02ACBA4116713CCB00BB4414 /* GoMap-Prefix.pch */,
 				02E9ABBE2BA1502600F0EF69 /* GoogleMaps.secret */,
 				02CBF3CB2BE8655D000DE2AD /* GpxTrackAttributes.swift */,
 				02CBF3C72BE85829000DE2AD /* GpxTrackWidgetManager.swift */,
@@ -1178,6 +1180,7 @@
 				C3D096D1263EA7E100E3B129 /* LayerProperties.swift */,
 				C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */,
 				02581F31301410AD00FC4D3A /* RotateObjectOverlayViewController.swift */,
+				0260862530505E18000D7FA7 /* CloseAreaHelper.swift */,
 			);
 			name = EditorLayer;
 			path = Shared/EditorLayer;
@@ -1804,6 +1807,7 @@
 				02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */,
 				B25C231A2BB8B09C000891B6 /* Theme.swift in Sources */,
 				ED56E5AB26024DA5000B368C /* AutocompleteTextField.swift in Sources */,
+				0260862630505E18000D7FA7 /* CloseAreaHelper.swift in Sources */,
 				029853B72C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift in Sources */,
 				02771D712BFC15C300FE9B79 /* UserFileList.swift in Sources */,
 				02148A522FF1C90C002D513D /* HUDLabel.swift in Sources */,
