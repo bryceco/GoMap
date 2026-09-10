@@ -112,6 +112,16 @@ class MapMarkersView: UIView {
 		// Set position of button
 		let button = marker.button!
 		button.isHidden = false
+		// For way markers, snap display position to the point on the way nearest the screen center,
+		// but only when the current position is off-screen, to avoid distracting sliding.
+		if let way = marker.object as? OsmWay {
+			let currentPos = viewPort.mapTransform.screenPoint(forLatLon: marker.latLon, birdsEye: true)
+			if !bounds.contains(currentPos) {
+				let screenCenter = CGPoint(x: bounds.midX, y: bounds.midY)
+				let centerLatLon = viewPort.mapTransform.latLon(forScreenPoint: screenCenter)
+				marker.latLon = way.latLonOnObject(forLatLon: centerLatLon)
+			}
+		}
 		// We don't want a fixme marker to obscure a POI node, so give it a small offset:
 		let offsetX = (marker is KeepRightMarker) || (marker is FixmeMarker)
 			? 1.0 / MetersPerDegreeAt(latitude: marker.latLon.lat).x

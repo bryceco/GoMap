@@ -18,7 +18,7 @@ import UIKit
 
 class MapMarker {
 	private(set) var buttonId: Int // a unique value we assign to track marker buttons.
-	let latLon: LatLon
+	var latLon: LatLon
 	weak var object: OsmBaseObject?
 	weak var ignorable: MapMarkerIgnoreListProtocol?
 	var button: UIButton?
