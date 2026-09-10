@@ -841,8 +841,11 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	}
 
 	func refreshPushpinText() {
-		let text = editorLayer.selectedPrimary?.friendlyDescription() ?? NSLocalizedString("(new object)", comment: "")
-		pushPin?.text = text
+		if let description = editorLayer.selectedPrimary?.friendlyDescriptionWithFeature() {
+			pushPin?.texts = [description.name, description.feature].compactMap { $0 }
+		} else {
+			pushPin?.texts = [NSLocalizedString("(new object)", comment: "")]
+		}
 	}
 
 	// MARK: Gesture Recognizers

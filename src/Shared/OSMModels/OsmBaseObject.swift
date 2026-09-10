@@ -588,11 +588,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		return tags["brand"]
 	}
 
-	func friendlyDescription(withDetails details: Bool) -> String {
-		if let name = givenName() {
-			return name
-		}
-
+	func featureName(details: Bool) -> String {
 		let location = AppDelegate.shared.mainView.currentRegion
 		if let feature = PresetsDatabase.shared.presetFeatureMatching(tags: tags,
 		                                                              geometry: geometry(),
@@ -603,7 +599,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 			return feature.friendlyName()
 		}
 
-		if isRelation() != nil {
+		if self is OsmRelation {
 			var restriction = tags["restriction"]
 			if restriction == nil {
 				let a = extendedKeys(forKey: "restriction")
@@ -695,11 +691,15 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	func friendlyDescription() -> String {
-		return friendlyDescription(withDetails: false)
+		return givenName() ?? featureName(details: false)
 	}
 
 	func friendlyDescriptionWithDetails() -> String {
-		return friendlyDescription(withDetails: true)
+		return givenName() ?? featureName(details: true)
+	}
+
+	func friendlyDescriptionWithFeature() -> (name: String?, feature: String) {
+		return (givenName(), featureName(details: false))
 	}
 
 	func copy(with zone: NSZone? = nil) -> Any {

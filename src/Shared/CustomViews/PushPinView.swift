@@ -37,7 +37,7 @@ private class SingleTouchPanGestureRecognizer: UIPanGestureRecognizer {
 
 final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGestureRecognizerDelegate {
 	private let shapeLayer: CAShapeLayer // shape for balloon
-	private let textLayer: CATextLayer // text in balloon
+	private var textLayers: [CATextLayer] = [] // one text layer per string, stacked vertically
 	private var hittestRect = CGRect.zero
 	private let moveButton: CALayer
 	public let placeholderLayer: CALayer // used for pin tip when no underlying object is selected
@@ -67,17 +67,32 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 		}
 	}
 
-	var text: String {
-		get {
-			return textLayer.string as! String
-		}
-		set(text) {
-			if text == (textLayer.string as! String) {
-				return
+	// One string per line, stacked vertically and centered horizontally in the balloon.
+	var texts: [String] {
+		get { textLayers.map { $0.string as? String ?? "" } }
+		set {
+			guard newValue != texts else { return }
+			textLayers.forEach { $0.removeFromSuperlayer() }
+			textLayers = newValue.map { string in
+				let layer = makeTextLayer(string: string)
+				shapeLayer.addSublayer(layer)
+				return layer
 			}
-			textLayer.string = text
 			setNeedsLayout()
 		}
+	}
+
+	private func makeTextLayer(string: String) -> CATextLayer {
+		let font = UIFont.preferredFont(forTextStyle: .headline)
+		let layer = CATextLayer()
+		layer.contentsScale = UIScreen.main.scale
+		layer.string = string
+		layer.font = font
+		layer.fontSize = font.pointSize
+		layer.alignmentMode = .center
+		layer.truncationMode = .end
+		layer.foregroundColor = UIColor.white.cgColor
+		return layer
 	}
 
 	var arrowPoint: CGPoint = .zero {
@@ -109,11 +124,6 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 		shapeLayer.shadowOffset = CGSize(width: 3, height: 3)
 		shapeLayer.shadowOpacity = 0.6
 
-		// text layer
-		textLayer = CATextLayer()
-		textLayer.contentsScale = UIScreen.main.scale
-		textLayer.string = ""
-
 		moveButton = CALayer()
 		moveButton.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
 		let moveImage = UIImage(systemName: "arrow.up.and.down.and.arrow.left.and.right")!
@@ -130,14 +140,6 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 
 		super.init(frame: CGRect.zero)
 
-		let font = UIFont.preferredFont(forTextStyle: .headline)
-		textLayer.font = font
-		textLayer.fontSize = font.pointSize
-		textLayer.alignmentMode = .left
-		textLayer.truncationMode = .end
-		textLayer.foregroundColor = UIColor.white.cgColor
-		shapeLayer.addSublayer(textLayer)
-
 		shapeLayer.addSublayer(moveButton)
 
 		layer.addSublayer(shapeLayer)
@@ -151,21 +153,29 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 	override func layoutSubviews() {
 		super.layoutSubviews()
 
-		var textSize = textLayer.preferredFrameSize()
-		if textSize.width > 300 {
-			textSize.width = 300
-		}
-
+		let lineSpacing: CGFloat = 2
 		let moveButtonGap: CGFloat = 3.0
-		let buttonVerticalSpacing: CGFloat = 55
 		let textAlleyWidth: CGFloat = 5
-		let width = textSize.width + 2 * textAlleyWidth + moveButtonGap + moveButton.frame.size.width
-		let height: CGFloat = textSize.height + 2 * textAlleyWidth
-		let boxSize = CGSize(width: width, height: height)
+		let buttonVerticalSpacing: CGFloat = 55
 		let arrowHeight = 20 + buttonVerticalSpacing / 2
 		let arrowWidth: CGFloat = 20
 
-		// creat path with arrow
+		// Measure each text layer; find max width and total stacked height.
+		var maxTextWidth: CGFloat = 0
+		let textSizes: [CGSize] = textLayers.map { layer in
+			var size = layer.preferredFrameSize()
+			if size.width > 300 { size.width = 300 }
+			maxTextWidth = max(maxTextWidth, size.width)
+			return size
+		}
+		let totalTextHeight = textSizes.reduce(0) { $0 + $1.height }
+			+ lineSpacing * CGFloat(max(textLayers.count - 1, 0))
+
+		let width = maxTextWidth + 2 * textAlleyWidth + moveButtonGap + moveButton.frame.size.width
+		let height: CGFloat = totalTextHeight + 2 * textAlleyWidth
+		let boxSize = CGSize(width: width, height: height)
+
+		// Create path with arrow
 		let cornerRadius: CGFloat = 4
 		let viewPath = CGMutablePath()
 
@@ -175,23 +185,23 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 		viewPath.addArc(
 			tangent1End: CGPoint(x: 0, y: arrowHeight),
 			tangent2End: CGPoint(x: 0, y: boxSize.height + arrowHeight),
-			radius: cornerRadius) // bottom right corner
+			radius: cornerRadius)
 		viewPath.addArc(
 			tangent1End: CGPoint(x: 0, y: boxSize.height + arrowHeight),
 			tangent2End: CGPoint(x: boxSize.width, y: boxSize.height + arrowHeight),
-			radius: cornerRadius) // top left corner
+			radius: cornerRadius)
 		viewPath.addArc(
 			tangent1End: CGPoint(x: boxSize.width, y: boxSize.height + arrowHeight),
 			tangent2End: CGPoint(x: boxSize.width, y: arrowHeight),
-			radius: cornerRadius) // top right corner
+			radius: cornerRadius)
 		viewPath.addArc(
 			tangent1End: CGPoint(x: boxSize.width, y: arrowHeight),
 			tangent2End: CGPoint(x: 0, y: arrowHeight),
-			radius: cornerRadius) // bottom right corner
+			radius: cornerRadius)
 		viewPath.addLine(to: CGPoint(x: boxSize.width / 2 + arrowWidth / 2, y: arrowHeight)) // arrow top-right
 		viewPath.closeSubpath()
 
-		// make hit target a little larger
+		// Make hit target a little larger
 		hittestRect = hittestRect.insetBy(dx: -7, dy: -7)
 
 		let viewRect = viewPath.boundingBoxOfPath
@@ -199,11 +209,18 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 		shapeLayer.path = viewPath
 		shapeLayer.shadowPath = viewPath
 
-		textLayer.frame = CGRect(
-			x: textAlleyWidth,
-			y: arrowHeight + textAlleyWidth,
-			width: boxSize.width - textAlleyWidth,
-			height: textSize.height)
+		// Stack text layers vertically; each is as wide as the widest line for centering.
+		var currentY = arrowHeight + textAlleyWidth
+		for (i, layer) in textLayers.enumerated() {
+			layer.frame = CGRect(
+				x: textAlleyWidth,
+				y: currentY,
+				width: maxTextWidth,
+				height: textSizes[i].height)
+			currentY += textSizes[i].height + lineSpacing
+		}
+
+		// Center moveButton vertically within the balloon box.
 		moveButton.frame = CGRect(
 			x: boxSize.width - moveButton.frame.size.width - 3,
 			y: arrowHeight + (boxSize.height - moveButton.frame.size.height) / 2,

@@ -972,7 +972,7 @@
 			children = (
 				0210AE082F1A2C770031F047 /* AppState.swift */,
 				02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */,
-				02B52E7828CAA8F800CB55F3 /* Shared/CustomViews */,
+				02B52E7828CAA8F800CB55F3 /* CustomViews */,
 				02F5329B267AD0A50088DF41 /* Database */,
 				02F53299267ACFBB0088DF41 /* EditorLayer */,
 				02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */,
@@ -1000,7 +1000,7 @@
 			name = Shared;
 			sourceTree = "<group>";
 		};
-		02B52E7828CAA8F800CB55F3 /* Shared/CustomViews */ = {
+		02B52E7828CAA8F800CB55F3 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
 				020EC41E2EA9D6B9005B94D9 /* AlertPopup.swift */,
@@ -1030,6 +1030,7 @@
 				02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */,
 				028C51E525CB7A23004A88F7 /* TristateButton.swift */,
 			);
+			name = CustomViews;
 			path = Shared/CustomViews;
 			sourceTree = "<group>";
 		};
