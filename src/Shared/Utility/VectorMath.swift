@@ -282,6 +282,18 @@ extension OSMPoint {
 		}
 		return Add(lineA, Mult(ab, t))
 	}
+
+	/// Returns the angle in radians at `self` formed by the two neighboring points `a` and `b`.
+	/// The result is in [0, π]: π means perfectly straight, 0 means a complete U-turn.
+	/// Returns `nil` if either neighbor is coincident with `self`.
+	func angle(prev a: OSMPoint, next b: OSMPoint) -> Double? {
+		let vA = Sub(a, self)
+		let vB = Sub(b, self)
+		let lenA = Mag(vA)
+		let lenB = Mag(vB)
+		guard lenA > 0, lenB > 0 else { return nil }
+		return acos(max(-1.0, min(1.0, Dot(vA, vB) / (lenA * lenB))))
+	}
 }
 
 extension OSMPoint: CustomStringConvertible {

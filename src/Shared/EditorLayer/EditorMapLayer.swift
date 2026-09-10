@@ -86,6 +86,7 @@ enum EDIT_ACTION: Int {
 	case RESTRICT
 	case CREATE_RELATION
 	case CLOSE_AREA
+	case ALIGN_NODE
 
 	/// Localized names of edit actions
 	func actionTitle(abbreviated: Bool = false) -> (label: String, image: UIImage?) {
@@ -149,6 +150,9 @@ enum EDIT_ACTION: Int {
 		case .CLOSE_AREA:
 			return (NSLocalizedString("Close Area", comment: "Edit action"),
 			        UIImage(systemName: "arrow.triangle.turn.up.right.circle"))
+		case .ALIGN_NODE:
+			return (NSLocalizedString("Align Node", comment: "Edit action"),
+			        UIImage(systemName: "arrow.up.to.line.alt"))
 		}
 	}
 }

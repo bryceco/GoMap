@@ -21854,6 +21854,9 @@
         }
       }
     },
+    "Align Node" : {
+      "comment" : "Edit action"
+    },
     "All cached data including aerial imagery tiles, TagInfo and Wiki data, etc." : {
       "localizations" : {
         "cs" : {

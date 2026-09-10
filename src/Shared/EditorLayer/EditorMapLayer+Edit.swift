@@ -724,6 +724,22 @@ extension EditorMapLayer {
 				{
 					actionList.append(.CLOSE_AREA)
 				}
+				// offer Align Node when the node is interior and nearly collinear with its neighbors
+				if let index = selectedWay.nodes.firstIndex(of: selectedNode),
+				   index > 0, index < selectedWay.nodes.count - 1
+				{
+					let prev = selectedWay.nodes[index - 1]
+					let next = selectedWay.nodes[index + 1]
+					let c = OSMPoint(x: selectedNode.latLon.lon, y: lat2latp(selectedNode.latLon.lat))
+					let p = OSMPoint(x: prev.latLon.lon, y: lat2latp(prev.latLon.lat))
+					let n = OSMPoint(x: next.latLon.lon, y: lat2latp(next.latLon.lat))
+					// Accept nodes within 45° of straight (angle(prev:next:) returns π for a straight line).
+					if let angle = c.angle(prev: p, next: n),
+					   abs(angle - .pi) * 180 / .pi < 45.0
+					{
+						actionList.append(.ALIGN_NODE)
+					}
+				}
 			} else {
 				if selectedWay.isClosed() {
 					// polygon
@@ -776,7 +792,8 @@ extension EditorMapLayer {
 				selectedNode = nil
 				owner.didUpdateObject()
 			}
-		case .SPLIT, .JOIN, .DISCONNECT, .EXTRACTNODE, .RESTRICT, .ADDNOTE, .DELETE, .MORE, .CLOSE_AREA:
+		case .SPLIT, .JOIN, .DISCONNECT, .EXTRACTNODE, .RESTRICT, .ADDNOTE, .DELETE, .MORE, .CLOSE_AREA,
+		     .ALIGN_NODE:
 			break
 		}
 
@@ -940,6 +957,22 @@ extension EditorMapLayer {
 						"Tap a highlighted path to close the area, or tap elsewhere to cancel.",
 						comment: ""))
 				return
+			case .ALIGN_NODE:
+				guard let way = selectedWay,
+				      let node = selectedNode,
+				      let index = way.nodes.firstIndex(of: node),
+				      index > 0, index < way.nodes.count - 1
+				else { return }
+				let prev = way.nodes[index - 1]
+				let next = way.nodes[index + 1]
+				// Project node onto the segment connecting its two neighbors (in Mercator space)
+				let c = OSMPoint(x: node.latLon.lon, y: lat2latp(node.latLon.lat))
+				let p = OSMPoint(x: prev.latLon.lon, y: lat2latp(prev.latLon.lat))
+				let n = OSMPoint(x: next.latLon.lon, y: lat2latp(next.latLon.lat))
+				let projected = c.nearestPointOnLineSegment(lineA: p, lineB: n)
+				let newLatLon = LatLon(x: projected.x, y: latp2lat(projected.y))
+				mapData.setLatLon(newLatLon, forNode: node)
+				owner.placePushpinForSelection(at: nil)
 			}
 		} catch {
 			display.showAlert(error.localizedDescription, message: nil)
