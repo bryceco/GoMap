@@ -209,30 +209,32 @@ final class PresetsDatabase {
 	}
 
 	func insertCustomFeatures(_ features: [CustomFeature]) {
-		// remove all exising features
+		// remove all existing custom features
 		let removals = stdFeatures.compactMap { $0.value is CustomFeature ? $0.key : nil }
 		for key in removals {
 			stdFeatures.removeValue(forKey: key)
-			nsiFeatures.removeValue(forKey: key)
 		}
 		// add in the new list
 		for f in features {
 			stdFeatures[f.featureID] = f
-			nsiFeatures[f.featureID] = f
 		}
+		// Invalidate the region cache so the next search picks up the new features
+		localCacheDirty = true
 	}
 
 	// Cache features in the local region to speed up searches
 	var localRegion = RegionInfoForLocation.none
+	var localCacheDirty = false
 	var stdLocal: [PresetFeature] = []
 	var nsiLocal: [PresetFeature] = []
 	func enumeratePresetsAndNsiIn(region: RegionInfoForLocation,
 	                              includeNSI: Bool,
 	                              using block: (_ feature: PresetFeature) -> Void)
 	{
-		if region != localRegion {
+		if region != localRegion || localCacheDirty {
 			// update cache with the current region
 			localRegion = region
+			localCacheDirty = false
 			stdLocal = stdFeatures.values.filter({ $0.searchable && $0.locationSet.overlaps(region) })
 			nsiLocal = nsiFeatures.values.filter({ $0.searchable && $0.locationSet.overlaps(region) })
 		}
