@@ -29,18 +29,13 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Lorem ipsum dolor sit er elit lamet," translatesAutoresizingMaskIntoConstraints="NO" id="BAY-7z-hwv">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="insetGrouped" translatesAutoresizingMaskIntoConstraints="NO" id="BAY-7z-hwv">
                                 <rect key="frame" x="20" y="337.5" width="374" height="470.5"/>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
-                                <attributedString key="userComments">
-                                    <fragment content="Placeholder - Do not translate"/>
-                                </attributedString>
                                 <connections>
-                                    <outlet property="delegate" destination="cxn-YY-uLs" id="7NR-Ly-ZJ9"/>
+                                    <outlet property="dataSource" destination="cxn-YY-uLs" id="7NR-Ly-ZJ9"/>
+                                    <outlet property="delegate" destination="cxn-YY-uLs" id="DS2-tV-grp"/>
                                 </connections>
-                            </textView>
+                            </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rqu-ny-n3F" userLabel="Export Button">
                                 <rect key="frame" x="341" y="310" width="53" height="33"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
@@ -201,7 +196,7 @@
                         <outlet property="exportOscButton" destination="Rqu-ny-n3F" id="9Du-qC-2eb"/>
                         <outlet property="progressView" destination="5dY-nN-L0Q" id="oUC-Wd-haC"/>
                         <outlet property="sourceTextField" destination="ps9-Hb-Vow" id="rqc-fs-juv"/>
-                        <outlet property="xmlTextView" destination="BAY-7z-hwv" id="Pg3-i0-84f"/>
+                        <outlet property="groupsTableView" destination="BAY-7z-hwv" id="Pg3-i0-84f"/>
                         <segue destination="39g-gA-9XG" kind="push" identifier="loginSegue" id="ffJ-Oy-uSs"/>
                     </connections>
                 </viewController>

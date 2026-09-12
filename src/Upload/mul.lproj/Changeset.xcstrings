@@ -177,7 +177,7 @@
     },
     "BAY-7z-hwv.text" : {
       "comment" : "Class = \"UITextView\"; text = \"Lorem ipsum dolor sit er elit lamet,\"; ObjectID = \"BAY-7z-hwv\"; Note = \"Placeholder - Do not translate\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

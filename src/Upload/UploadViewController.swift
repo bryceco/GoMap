@@ -10,13 +10,13 @@ import KissXML
 import MessageUI
 import UIKit
 
-func sanitizedURL(_ urlString: String) -> String {
+private func sanitizedURL(_ urlString: String) -> String {
 	let sensitiveKeys = ["token", "auth", "api_key", "access_token", "connectid", "signature"]
 
 	guard var components = URLComponents(string: urlString) else { return urlString }
 	components.queryItems = components.queryItems?.map { item in
 		if sensitiveKeys.contains(item.name.lowercased()) {
-			return URLQueryItem(name: item.name, value: "{apikey}")
+			return URLQueryItem(name: item.name, value: "{\(item.name)}")
 		} else {
 			return item
 		}
@@ -24,10 +24,104 @@ func sanitizedURL(_ urlString: String) -> String {
 	return components.url?.absoluteString ?? urlString
 }
 
-class UploadViewController: UIViewController, UITextViewDelegate {
+// MARK: - Private Table Support Types
+
+/// Section header for a ConnectedObjects group — shows a checkmark toggle and a summary label.
+private final class GroupSectionHeader: UITableViewHeaderFooterView {
+	static let reuseIdentifier = "GroupSectionHeader"
+
+	private let checkImageView = UIImageView()
+	private let titleLabel = UILabel()
+	var onTap: (() -> Void)?
+
+	var isChecked: Bool = false {
+		didSet {
+			let name = isChecked ? "checkmark.circle.fill" : "circle"
+			checkImageView.image = UIImage(systemName: name)
+			checkImageView.tintColor = isChecked ? .systemBlue : .secondaryLabel
+		}
+	}
+
+	func configure(title: String, isChecked checked: Bool, onTap: @escaping () -> Void) {
+		titleLabel.text = title
+		isChecked = checked
+		self.onTap = onTap
+	}
+
+	override init(reuseIdentifier: String?) {
+		super.init(reuseIdentifier: reuseIdentifier)
+		setup()
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { fatalError() }
+
+	private func setup() {
+		checkImageView.contentMode = .scaleAspectFit
+		checkImageView.translatesAutoresizingMaskIntoConstraints = false
+		checkImageView.image = UIImage(systemName: "circle")
+		checkImageView.tintColor = .secondaryLabel
+
+		titleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
+		titleLabel.numberOfLines = 0
+		titleLabel.translatesAutoresizingMaskIntoConstraints = false
+
+		let stack = UIStackView(arrangedSubviews: [checkImageView, titleLabel])
+		stack.axis = .horizontal
+		stack.spacing = 8
+		stack.alignment = .center
+		stack.translatesAutoresizingMaskIntoConstraints = false
+		contentView.addSubview(stack)
+
+		NSLayoutConstraint.activate([
+			checkImageView.widthAnchor.constraint(equalToConstant: 22),
+			checkImageView.heightAnchor.constraint(equalToConstant: 22),
+			stack.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+			stack.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+			stack.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+			stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
+		])
+
+		addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
+	}
+
+	@objc private func tapped() { onTap?() }
+}
+
+/// A cell that contains a non-scrolling UITextView sized to fit its content.
+private final class ChangeGroupCell: UITableViewCell {
+	static let reuseIdentifier = "ChangeGroupCell"
+
+	let groupTextView = UITextView()
+
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+		groupTextView.isEditable = false
+		groupTextView.isScrollEnabled = false
+		groupTextView.dataDetectorTypes = []
+		groupTextView.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
+		groupTextView.translatesAutoresizingMaskIntoConstraints = false
+		contentView.addSubview(groupTextView)
+
+		NSLayoutConstraint.activate([
+			groupTextView.topAnchor.constraint(equalTo: contentView.topAnchor),
+			groupTextView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+			groupTextView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+			groupTextView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
+		])
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { fatalError() }
+}
+
+// MARK: - UploadViewController
+
+class UploadViewController: UIViewController {
 	var mapData: OsmMapData!
 	@IBOutlet var commentContainerView: UIView!
-	@IBOutlet var xmlTextView: UITextView!
+	@IBOutlet var groupsTableView: UITableView!
 	@IBOutlet var commentTextView: UITextView!
 	@IBOutlet var sourceTextField: UITextField!
 	@IBOutlet var commitButton: UIBarButtonItem!
@@ -39,6 +133,13 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 	@IBOutlet var commentHistoryButton: UIButton!
 	@IBOutlet var sourceHistoryButton: UIButton!
 	@IBOutlet var changesetCommentPlaceholder: UILabel!
+
+	private var connectedGroups: [ConnectedObjects] = []
+	private var selectedGroupIndices: Set<Int> = []
+
+	private var selectedGroups: [ConnectedObjects] {
+		connectedGroups.indices.filter { selectedGroupIndices.contains($0) }.map { connectedGroups[$0] }
+	}
 
 	var recentCommentList = MostRecentlyUsed<String>(maxCount: 5,
 	                                                 userPrefsKey: UserPrefs.shared.recentCommitComments)
@@ -62,10 +163,6 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		sourceTextField.returnKeyType = .done
 		sourceTextField.addTarget(self, action: #selector(dismissKeyboard(_:)), for: .editingDidEndOnExit)
 
-		xmlTextView.layer.borderColor = color.cgColor
-		xmlTextView.layer.borderWidth = 2.0
-		xmlTextView.layer.cornerRadius = 10.0
-
 		// create button for source history
 		sourceHistoryButton = UIButton(type: .custom)
 		sourceHistoryButton.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
@@ -73,6 +170,14 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		sourceHistoryButton.addTarget(self, action: #selector(showSourceHistory), for: .touchUpInside)
 		sourceTextField.rightView = sourceHistoryButton
 		sourceTextField.rightViewMode = .always
+
+		groupsTableView.register(ChangeGroupCell.self, forCellReuseIdentifier: ChangeGroupCell.reuseIdentifier)
+		groupsTableView.register(GroupSectionHeader.self,
+		                         forHeaderFooterViewReuseIdentifier: GroupSectionHeader.reuseIdentifier)
+		groupsTableView.rowHeight = UITableView.automaticDimension
+		groupsTableView.estimatedRowHeight = 100
+		groupsTableView.dataSource = self
+		groupsTableView.delegate = self
 
 		if #available(iOS 13.0, *) {
 			progressView.style = .large
@@ -92,25 +197,29 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		sourceTextField.placeholder = "survey, Bing, knowledge" // overrules translations: see #557
 		changesetCommentPlaceholder.isHidden = commentTextView.text.count > 0
 
-		let text = mapData?.changesetAsAttributedString()
-		if text == nil {
-			commitButton.isEnabled = false
-			let font = UIFont.preferredFont(forTextStyle: .body)
-			xmlTextView.attributedText = NSAttributedString(
-				string: NSLocalizedString("Nothing to upload, no changes have been made.", comment: ""),
-				attributes: [
-					NSAttributedString.Key.font: font
-				])
+		connectedGroups = mapData?.undoManager.connectedObjects() ?? []
+		selectedGroupIndices = Set(connectedGroups.indices)
+
+		let hasGroups = !connectedGroups.isEmpty
+		commitButton.isEnabled = hasGroups
+		exportOscButton.isEnabled = hasGroups
+		editXmlButton.isEnabled = hasGroups
+
+		if !hasGroups {
+			let label = UILabel()
+			label.text = NSLocalizedString("Nothing to upload, no changes have been made.", comment: "")
+			label.textAlignment = .center
+			label.numberOfLines = 0
+			label.font = UIFont.preferredFont(forTextStyle: .body)
+			label.textColor = .secondaryLabel
+			groupsTableView.backgroundView = label
 		} else {
-			commitButton.isEnabled = true
-			xmlTextView.attributedText = text
+			groupsTableView.backgroundView = nil
 		}
 
-		exportOscButton.isEnabled = text != nil
-		editXmlButton.isEnabled = text != nil
+		groupsTableView.reloadData()
 
 		clearCommentButton.isHidden = true
-
 		commentHistoryButton.isHidden = recentCommentList.count == 0
 		sourceTextField.rightViewMode = recentSourceList.count > 0 ? .always : .never
 	}
@@ -121,12 +230,50 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		UserPrefs.shared.uploadSource.value = sourceTextField.text
 	}
 
-	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-		if text == "\n" {
-			textView.resignFirstResponder()
-			return false
+	private func summaryLabel(for group: ConnectedObjects) -> String {
+		guard let doc = OsmXmlGenerator.createXmlFor(objects: group.objects,
+		                                             generator: AppDelegate.shared.generator)
+		else { return "" }
+		let (nodeCount, wayCount, relationCount) = OsmXmlGenerator.objectCounts(in: doc)
+		var parts: [String] = []
+		if nodeCount > 0 { parts.append(nodeCount == 1 ? "1 node" : "\(nodeCount) nodes") }
+		if wayCount > 0 { parts.append(wayCount == 1 ? "1 way" : "\(wayCount) ways") }
+		if relationCount > 0 { parts.append(relationCount == 1 ? "1 relation" : "\(relationCount) relations") }
+		return parts.joined(separator: ", ")
+	}
+
+	private func toggleGroup(at section: Int) {
+		if selectedGroupIndices.contains(section) {
+			selectedGroupIndices.remove(section)
+		} else {
+			selectedGroupIndices.insert(section)
 		}
-		return true
+		if let header = groupsTableView.headerView(forSection: section) as? GroupSectionHeader {
+			header.isChecked = selectedGroupIndices.contains(section)
+		}
+		let hasSelection = !selectedGroupIndices.isEmpty
+		commitButton.isEnabled = hasSelection
+		exportOscButton.isEnabled = hasSelection
+		editXmlButton.isEnabled = hasSelection
+	}
+
+	private func currentImagery() -> String {
+		guard
+			let mainView = AppDelegate.shared.mainView,
+			mainView.viewState.state == .EDITORAERIAL || mainView.viewState.state == .AERIAL
+		else {
+			return ""
+		}
+		let server = mainView.mapLayersView.aerialLayer.tileServer
+		if server.identifier.hasPrefix("http:") || server.identifier.hasPrefix("https:") {
+			var imagery = sanitizedURL(server.identifier)
+			if imagery.count > 255 {
+				imagery = String(imagery.prefix(255))
+			}
+			return imagery
+		} else {
+			return server.name
+		}
 	}
 
 	@objc func dismissKeyboard(_ sender: UITextField) {
@@ -139,10 +286,7 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 	}
 
 	private func showHistorySheet(_ list: [String], button: UIButton, textView: UIView) {
-		let actionSheet = UIAlertController(
-			title: nil,
-			message: nil,
-			preferredStyle: .actionSheet)
+		let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 		for message in list {
 			actionSheet.addAction(UIAlertAction(title: message, style: .default, handler: { _ in
 				if let view = textView as? UITextView {
@@ -222,142 +366,112 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		view.endEditing(true)
 
 		var comment = commentTextView.text ?? ""
-		comment = comment.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-		if comment != "" {
-			recentCommentList.updateWith(comment)
-		}
+		comment = comment.trimmingCharacters(in: .whitespacesAndNewlines)
+		if !comment.isEmpty { recentCommentList.updateWith(comment) }
 
 		var source = sourceTextField.text ?? ""
-		source = source.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-		if source != "" {
-			recentSourceList.updateWith(source)
-		}
+		source = source.trimmingCharacters(in: .whitespacesAndNewlines)
+		if !source.isEmpty { recentSourceList.updateWith(source) }
 
 		let locale = PresetLanguages.preferredLanguageCode()
+		let imagery = currentImagery()
 
-		var imagery = ""
-		if appDelegate.mainView.viewState.state == MapViewState.EDITORAERIAL ||
-			appDelegate.mainView.viewState.state == MapViewState.AERIAL
-		{
-			let server = appDelegate.mainView.mapLayersView.aerialLayer.tileServer
-			if server.identifier.hasPrefix("http:") || server.identifier.hasPrefix("https:") {
-				// custom user imagery
-				imagery = sanitizedURL(server.identifier)
-				if imagery.count > 255 {
-					imagery = String(imagery.prefix(255))
-				}
-			} else {
-				imagery = server.name
+		do {
+			try await mapData.uploadChangeset(for: selectedGroups,
+			                                  comment: comment,
+			                                  source: source,
+			                                  imagery: imagery,
+			                                  generator: generator,
+			                                  locale: locale)
+			dismiss(animated: true)
+			MainActor.runAfter(nanoseconds: 300_000000) {
+				appDelegate.mapView.setNeedsLayout()
+				MessageDisplay.shared.flashMessage(title: nil,
+				                                   message: NSLocalizedString("Upload complete!", comment: ""),
+				                                   duration: 1.5)
+				var editCount = UserPrefs.shared.uploadCountPerVersion.value ?? 0
+				editCount += 1
+				UserPrefs.shared.uploadCountPerVersion.value = editCount
+				appDelegate.mainView.askToRate(uploadCount: editCount)
 			}
-		}
-
-		@MainActor
-		func processResult(_ error: Error?) {
+		} catch UrlSessionError.badStatusCode(401, _) {
+			OSM_SERVER.oAuth2?.removeAuthorization()
 			progressView.stopAnimating()
 			commitButton.isEnabled = true
 			cancelButton.isEnabled = true
-
-			switch error {
-			case .some(UrlSessionError.badStatusCode(401, _)):
-				// authentication error, so redirect to login page
-				OSM_SERVER.oAuth2?.removeAuthorization()
-				performSegue(withIdentifier: "loginSegue", sender: self)
-				return
-			case let .some(error):
-				let alert = UIAlertController(
-					title: NSLocalizedString("Unable to upload changes", comment: ""),
-					message: error.localizedDescription,
-					preferredStyle: .alert)
-				alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-				                              style: .cancel,
-				                              handler: nil))
-				present(alert, animated: true)
-
-				if !xmlTextView.isEditable {
-					exportOscButton.isEnabled = true
-					editXmlButton.isEnabled = true
-				}
-			case .none:
-				// success!
-				dismiss(animated: true)
-
-				// flash success message
-				MainActor.runAfter(nanoseconds: 300_000000) {
-					appDelegate.mapView.setNeedsLayout()
-					MessageDisplay.shared.flashMessage(title: nil,
-					                                   message: NSLocalizedString("Upload complete!", comment: ""),
-					                                   duration: 1.5)
-
-					// record number of uploads
-					var editCount = UserPrefs.shared.uploadCountPerVersion.value ?? 0
-					editCount += 1
-					UserPrefs.shared.uploadCountPerVersion.value = editCount
-					appDelegate.mainView.askToRate(uploadCount: editCount)
-				}
-			}
-		}
-
-		do {
-			if xmlTextView.isEditable {
-				// upload user-edited text
-				let xmlText = xmlTextView.text ?? ""
-				let xmlDoc = try DDXMLDocument(xmlString: xmlText, options: 0)
-
-				try await mapData?.openChangesetAndUpload(xml: xmlDoc,
-				                                          comment: comment,
-				                                          source: source,
-				                                          imagery: imagery,
-				                                          generator: generator,
-				                                          locale: locale)
-			} else {
-				// normal upload
-				try await mapData?.uploadChangeset(withComment: comment,
-				                                   source: source,
-				                                   imagery: imagery,
-				                                   generator: generator,
-				                                   locale: locale)
-			}
-			processResult(nil)
+			performSegue(withIdentifier: "loginSegue", sender: self)
 		} catch {
-			processResult(error)
+			progressView.stopAnimating()
+			commitButton.isEnabled = true
+			cancelButton.isEnabled = true
+			let hasSelection = !selectedGroupIndices.isEmpty
+			exportOscButton.isEnabled = hasSelection
+			editXmlButton.isEnabled = hasSelection
+			let alert = UIAlertController(
+				title: NSLocalizedString("Unable to upload changes", comment: ""),
+				message: error.localizedDescription,
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+			                              style: .cancel,
+			                              handler: nil))
+			present(alert, animated: true)
 		}
 	}
 
 	@IBAction func editXml(_ sender: Any) {
-		var xml = mapData?.changesetAsXml() ?? ""
-		xml = xml + "\n\n\n\n\n\n\n\n\n\n\n\n"
-		xmlTextView.attributedText = nil
-		xmlTextView.text = xml
-		xmlTextView.isEditable = true
-		exportOscButton.isEnabled = false
-		editXmlButton.isEnabled = false
+		let groups = selectedGroups
+		guard !groups.isEmpty else { return }
+		let appDelegate = AppDelegate.shared
+		let objects = groups.reduce(into: Set<OsmBaseObject>()) { $0.formUnion($1.objects) }
+		let doc = OsmXmlGenerator.createXmlFor(objects: objects, generator: appDelegate.generator)
+		let xml = doc?.xmlString(withOptions: UInt(XMLNodePrettyPrint)) ?? ""
+		var comment = commentTextView.text ?? ""
+		comment = comment.trimmingCharacters(in: .whitespacesAndNewlines)
+		var source = sourceTextField.text ?? ""
+		source = source.trimmingCharacters(in: .whitespacesAndNewlines)
 
-		let alert = UIAlertController(
-			title: NSLocalizedString("Edit XML", comment: ""),
-			message: NSLocalizedString(
-				"Modifying the raw XML data allows you to correct errors that prevent uploading.\n\nIt is an advanced operation that should only be undertaken if you have a thorough understanding of the OSM changeset format.",
-				comment: ""),
-			preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-		present(alert, animated: true)
+		let vc = XmlEditorViewController()
+		vc.mapData = mapData
+		vc.xmlText = xml + "\n\n\n\n\n\n\n\n\n\n\n\n"
+		vc.comment = comment
+		vc.source = source
+		vc.imagery = currentImagery()
+		vc.generator = appDelegate.generator
+		vc.locale = PresetLanguages.preferredLanguageCode()
+		vc.undoGroups = groups.reduce(into: Set<Int>()) { $0.formUnion($1.undoGroups) }
+		navigationController?.pushViewController(vc, animated: true)
 	}
 
 	@IBAction func exportOscFile(_ sender: Any) {
-		let fm = FileManager.default
-		if let xml = mapData?.changesetAsXml(),
-		   let text = xml.data(using: .utf8),
-		   let path = fm.urls(for: .cachesDirectory, in: .userDomainMask).first?.appendingPathComponent("osmChange.osc"),
-		   (try? text.write(to: path, options: .atomicWrite)) != nil
-		{
-			let objectsToShare = [path] as [Any]
-			let activityVC = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+		let objects = selectedGroups.reduce(into: Set<OsmBaseObject>()) { $0.formUnion($1.objects) }
+		let doc = OsmXmlGenerator.createXmlFor(objects: objects, generator: AppDelegate.shared.generator)
+		guard !selectedGroupIndices.isEmpty,
+		      let text = doc?.xmlString(withOptions: UInt(XMLNodePrettyPrint)).data(using: .utf8),
+		      let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?
+		      .appendingPathComponent("osmChange.osc"),
+		      (try? text.write(to: path, options: .atomicWrite)) != nil
+		else { return }
 
-			// Excluded activities
-			activityVC.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
+		let activityVC = UIActivityViewController(activityItems: [path] as [Any], applicationActivities: nil)
+		activityVC.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
+		activityVC.popoverPresentationController?.sourceView = sender as? UIView
+		present(activityVC, animated: true, completion: nil)
+	}
 
-			activityVC.popoverPresentationController?.sourceView = sender as? UIView
-			present(activityVC, animated: true, completion: nil)
+	@IBAction func cancel(_ sender: Any?) {
+		dismiss(animated: true)
+	}
+}
+
+// MARK: - UITextViewDelegate
+
+extension UploadViewController: UITextViewDelegate {
+	func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+		if textView == commentTextView, text == "\n" {
+			textView.resignFirstResponder()
+			return false
 		}
+		return true
 	}
 
 	func textViewDidChange(_ textView: UITextView) {
@@ -381,27 +495,21 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		}
 	}
 
-	// this is for navigating from the changeset back to the location of the modified object
+	// Navigate from the changeset back to the location of the modified object on the map.
 	func textView(_ textView: UITextView,
 	              shouldInteractWith url: URL,
 	              in characterRange: NSRange,
 	              interaction: UITextItemInteraction) -> Bool
 	{
 		let name = url.absoluteString
-		if name.count == 0 {
-			return false
-		}
+		guard !name.isEmpty else { return false }
 		let ident = Int64(name.dropFirst()) ?? 0
 		let extendedId: OsmExtendedIdentifier
 		switch name.prefix(1) {
-		case "n":
-			extendedId = OsmExtendedIdentifier(.NODE, ident)
-		case "w":
-			extendedId = OsmExtendedIdentifier(.WAY, ident)
-		case "r":
-			extendedId = OsmExtendedIdentifier(.RELATION, ident)
-		default:
-			return false
+		case "n": extendedId = OsmExtendedIdentifier(.NODE, ident)
+		case "w": extendedId = OsmExtendedIdentifier(.WAY, ident)
+		case "r": extendedId = OsmExtendedIdentifier(.RELATION, ident)
+		default: return false
 		}
 		let appDelegate = AppDelegate.shared
 		guard let object = appDelegate.mapView.mapData.object(withExtendedIdentifier: extendedId)
@@ -410,8 +518,50 @@ class UploadViewController: UIViewController, UITextViewDelegate {
 		cancel(nil)
 		return false
 	}
+}
 
-	@IBAction func cancel(_ sender: Any?) {
-		dismiss(animated: true)
+// MARK: - UITableViewDataSource
+
+extension UploadViewController: UITableViewDataSource {
+	func numberOfSections(in tableView: UITableView) -> Int {
+		connectedGroups.count
+	}
+
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		1
+	}
+
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		let cell = tableView.dequeueReusableCell(
+			withIdentifier: ChangeGroupCell.reuseIdentifier,
+			for: indexPath) as! ChangeGroupCell
+		let group = connectedGroups[indexPath.section]
+		if let doc = OsmXmlGenerator.createXmlFor(objects: group.objects, generator: AppDelegate.shared.generator) {
+			cell.groupTextView.attributedText = OsmXmlGenerator.attributedStringForXML(doc)
+		}
+		cell.groupTextView.delegate = self
+		return cell
+	}
+}
+
+// MARK: - UITableViewDelegate
+
+extension UploadViewController: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let header = tableView.dequeueReusableHeaderFooterView(
+			withIdentifier: GroupSectionHeader.reuseIdentifier) as! GroupSectionHeader
+		let group = connectedGroups[section]
+		header.configure(title: summaryLabel(for: group),
+		                 isChecked: selectedGroupIndices.contains(section),
+		                 onTap: { [weak self] in self?.toggleGroup(at: section) })
+		return header
+	}
+
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		UITableView.automaticDimension
+	}
+
+	func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+		44
 	}
 }

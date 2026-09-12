@@ -125,6 +125,23 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		postChangeNotification()
 	}
 
+	/// Removes all undo actions belonging to the given groups and clears the redo stack.
+	/// The redo stack is always cleared because any pending redos are based on pre-upload
+	/// object state and are irrecoverably stale after a server upload.
+	func removeGroups(_ groupIds: Set<Int>) {
+		willChangeValue(forKey: "canUndo")
+		willChangeValue(forKey: "canRedo")
+
+		assert(!isUndoing && !isRedoing)
+		undoStack.removeAll { groupIds.contains($0.group) }
+		redoStack.removeAll()
+
+		didChangeValue(forKey: "canUndo")
+		didChangeValue(forKey: "canRedo")
+
+		postChangeNotification()
+	}
+
 	func registerUndo(_ action: UndoAction) {
 		action.group = groupingStack.last ?? runLoopCounter
 
@@ -223,22 +240,9 @@ class MyUndoManager: NSObject, NSSecureCoding {
 
 	func objectRefs() -> Set<OsmBaseObject> {
 		var refs: Set<OsmBaseObject> = []
-
 		for stack in [undoStack, redoStack] {
 			for action in stack {
-				if let target = action.target as? OsmBaseObject {
-					refs.insert(target)
-				}
-				for obj in action.objects {
-					if let osm = obj as? OsmBaseObject {
-						// argmuments that are an object
-						refs.insert(osm)
-					} else if let dict = obj as? [String: Any] {
-						// also comments can point to objects for selectedNode, etc.
-						refs.formUnion(dict.values.compactMap({ $0 as? OsmBaseObject }))
-					}
-				}
-				refs.formUnion(action.objects.compactMap({ $0 as? OsmBaseObject }))
+				refs.formUnion(action.osmObjects())
 			}
 		}
 		return refs
@@ -286,5 +290,109 @@ private func RunLoopObserverCallBack(
 	if (activity.rawValue & CFRunLoopActivity.afterWaiting.rawValue) != 0 {
 		let undoManager = Unmanaged<MyUndoManager>.fromOpaque(info!).takeUnretainedValue()
 		undoManager.runLoopCounter += 1
+	}
+}
+
+/// A supergroup is a collection of undo groups that share at least one OSM object,
+/// merged together with the full set of objects those groups touch.
+struct ConnectedObjects {
+	/// All OSM objects referenced by any action in any of the constituent groups.
+	let objects: Set<OsmBaseObject>
+	/// The original group identifiers that were merged into this supergroup.
+	let undoGroups: Set<Int>
+
+	var minGroupId: Int { undoGroups.min()! }
+}
+
+extension ConnectedObjects: CustomStringConvertible {
+	public var description: String {
+		let groups = undoGroups.sorted().map(String.init).joined(separator: ", ")
+		let objs = objects
+			.sorted { $0.ident < $1.ident }
+			.map { obj -> String in
+				switch obj {
+				case let n as OsmNode: return "node(\(n.ident))"
+				case let w as OsmWay: return "way(\(w.ident))"
+				case let r as OsmRelation: return "relation(\(r.ident))"
+				default: return "object(\(obj.ident))"
+				}
+			}
+			.joined(separator: ", ")
+		return "groups [\(groups)] → [\(objs)]"
+	}
+}
+
+extension MyUndoManager {
+	func printConnectedObjects() {
+		let groups = connectedObjects()
+		print("ConnectedObjects (\(groups.count) component\(groups.count == 1 ? "" : "s")):")
+		for (i, component) in groups.enumerated() {
+			print("  \(i + 1). \(component)")
+		}
+	}
+
+	/// Returns an array of ConnectedObjects derived from the undo stack.
+	///
+	/// Each undo group is first mapped to the set of OSM objects it touches (via action
+	/// targets and arguments).  Any two groups that share an OSM object are then merged
+	/// into a single supergroup.  Transitive merges are applied so that if A shares an
+	/// object with B and B shares a different object with C, all three form one supergroup.
+	///
+	/// The result is sorted by each supergroup's minimum constituent group id.
+	func connectedObjects() -> [ConnectedObjects] {
+		// Step 1: collect the set of OSM objects touched by each group.
+		var groupObjects: [Int: Set<OsmBaseObject>] = [:]
+		for action in undoStack {
+			groupObjects[action.group, default: []].formUnion(action.osmObjects())
+		}
+
+		guard !groupObjects.isEmpty else { return [] }
+
+		// Step 2: build reverse map — object → [groupId].
+		var groupsForObject: [OsmBaseObject: [Int]] = [:]
+		for (groupId, objects) in groupObjects {
+			for obj in objects {
+				groupsForObject[obj, default: []].append(groupId)
+			}
+		}
+
+		// Step 3: union-find over group ids.
+		var parent: [Int: Int] = Dictionary(uniqueKeysWithValues: groupObjects.keys.map { ($0, $0) })
+
+		func find(_ id: Int) -> Int {
+			var id = id
+			while parent[id] != id {
+				id = parent[id]!
+			}
+			return id
+		}
+
+		func union(_ a: Int, _ b: Int) {
+			let ra = find(a)
+			let rb = find(b)
+			if ra != rb {
+				parent[ra] = rb
+			}
+		}
+
+		// Merge groups that share at least one OSM object.
+		for groups in groupsForObject.values where groups.count > 1 {
+			for i in 1..<groups.count {
+				union(groups[0], groups[i])
+			}
+		}
+
+		// Step 4: collect groups into components keyed by their root.
+		var components: [Int: (groupIds: Set<Int>, objects: Set<OsmBaseObject>)] = [:]
+		for (groupId, objects) in groupObjects {
+			let root = find(groupId)
+			components[root, default: ([], [])].groupIds.insert(groupId)
+			components[root]!.objects.formUnion(objects)
+		}
+
+		// Step 5: convert to UndoSuperGroup and sort by minimum group id.
+		return components.values
+			.map { ConnectedObjects(objects: $0.objects, undoGroups: $0.groupIds) }
+			.sorted { $0.minGroupId < $1.minGroupId }
 	}
 }

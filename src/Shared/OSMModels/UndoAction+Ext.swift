@@ -7,6 +7,23 @@
 //
 
 extension UndoAction {
+	/// All OSM objects referenced by this action — the target (if it is an OSM object)
+	/// plus any OSM objects found directly in `objects` or as values inside a comment dict.
+	func osmObjects() -> Set<OsmBaseObject> {
+		var result: Set<OsmBaseObject> = []
+		if let obj = target as? OsmBaseObject {
+			result.insert(obj)
+		}
+		for obj in objects {
+			if let osm = obj as? OsmBaseObject {
+				result.insert(osm)
+			} else if let dict = obj as? [String: Any] {
+				result.formUnion(dict.values.compactMap { $0 as? OsmBaseObject })
+			}
+		}
+		return result
+	}
+
 	private func describeObject(_ obj: Any) -> String {
 		switch obj {
 		case let node as OsmNode:

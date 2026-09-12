@@ -65,6 +65,16 @@ final class OsmXmlGenerator {
 		}
 	}
 
+	/// Convenience overload that accepts a heterogeneous set of OSM objects,
+	/// splitting them into nodes, ways, and relations before generating the XML.
+	static func createXmlFor(objects: some Sequence<OsmBaseObject>, generator: String) -> DDXMLDocument? {
+		createXmlFor(
+			nodes: objects.compactMap { $0 as? OsmNode },
+			ways: objects.compactMap { $0 as? OsmWay },
+			relations: objects.compactMap { $0 as? OsmRelation },
+			generator: generator)
+	}
+
 	static func createXmlFor<N: Sequence, W: Sequence, R: Sequence>
 	(nodes: N, ways: W, relations: R, generator: String) -> DDXMLDocument?
 		where N.Element == OsmNode, W.Element == OsmWay, R.Element == OsmRelation
@@ -448,6 +458,28 @@ final class OsmXmlGenerator {
 				assertionFailure()
 			}
 		}
+	}
+
+	/// Counts the nodes, ways, and relations present in an osmChange document.
+	/// Mirrors the same element enumeration used by attributedStringForXML, so the
+	/// counts always match what is actually displayed and uploaded.
+	static func objectCounts(in doc: DDXMLDocument) -> (nodes: Int, ways: Int, relations: Int) {
+		var nodes = 0, ways = 0, relations = 0
+		guard let root = doc.rootElement() else { return (0, 0, 0) }
+		let sections = root.elements(forName: "create")
+			+ root.elements(forName: "modify")
+			+ root.elements(forName: "delete")
+		for section in sections {
+			for child in (section.children ?? []).compactMap({ $0 as? DDXMLElement }) {
+				switch child.name {
+				case "node": nodes += 1
+				case "way": ways += 1
+				case "relation": relations += 1
+				default: break
+				}
+			}
+		}
+		return (nodes, ways, relations)
 	}
 
 	/// Converts an XML document to an AttributedString suitable for the Upload view
