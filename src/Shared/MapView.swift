@@ -625,6 +625,12 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		editorLayer.selectedNode = object as? OsmNode
 		editorLayer.selectedWay = object as? OsmWay
 		editorLayer.selectedRelation = object as? OsmRelation
+		// if selecting a node in a way ensure we also select a way
+		if let node = object as? OsmNode,
+		   let way = editorLayer.mapData.waysContaining(node).first
+		{
+			editorLayer.selectedWay = way
+		}
 		placePushpinForSelection(at: point)
 	}
 
