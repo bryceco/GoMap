@@ -1665,40 +1665,37 @@ final class EditorMapLayer: CALayer {
 		}
 		// use fade when removing objects
 		if removals.count != 0 {
-#if FADE_INOUT
-			CATransaction.begin()
-			CATransaction.setAnimationDuration(1.0)
-			CATransaction.setCompletionBlock({
-				for object in removals {
-					fadingOutSet.removeAll { $0 as AnyObject === object as AnyObject }
-					shownObjects.removeAll { $0 as AnyObject === object as AnyObject }
-					for layer in object.shapeLayers {
-						if layer.opacity < 0.1 {
-							layer.removeFromSuperlayer()
+			if FADE_INOUT {
+				CATransaction.begin()
+				CATransaction.setAnimationDuration(1.0)
+				CATransaction.setDisableActions(false)
+				CATransaction.setCompletionBlock({ [weak self] in
+					guard let self else { return }
+					for object in removals {
+						self.fadingOutSet.removeAll { $0 as AnyObject === object as AnyObject }
+						self.shownObjects.removeAll { $0 as AnyObject === object as AnyObject }
+						for layer in object.shapeLayers ?? [] {
+							if layer.opacity < 0.1 {
+								layer.removeFromSuperlayer()
+							}
 						}
 					}
+				})
+				fadingOutSet.append(contentsOf: Array(removals))
+				for object in removals {
+					for layer in object.shapeLayers ?? [] {
+						layer.opacity = 0.01
+					}
 				}
-			})
-			for object in removals {
-				fadingOutSet.union(removals)
-				for layer in object.shapeLayers {
-					layer.opacity = 0.01
+				CATransaction.commit()
+			} else /* FADE_INOUT */ {
+				for object in removals {
+					for layer in object.shapeLayers ?? [] {
+						layer.removeFromSuperlayer()
+					}
 				}
 			}
-			CATransaction.commit()
-#else
-			for object in removals {
-				for layer in object.shapeLayers ?? [] {
-					layer.removeFromSuperlayer()
-				}
-			}
-#endif
 		}
-
-#if FADE_INOUT
-		CATransaction.begin()
-		CATransaction.setAnimationDuration(1.0)
-#endif
 
 		let tRotation = viewPort.mapTransform.rotation()
 		let tScale = CGFloat(viewPort.mapTransform.scale() / PATH_SCALING)
@@ -1769,18 +1766,21 @@ final class EditorMapLayer: CALayer {
 
 				// add the layer if not already present
 				if layer.superlayer == nil {
-#if FADE_INOUT
-					layer.removeAllAnimations()
-					layer.opacity = 1.0
-#endif
+					if FADE_INOUT {
+						layer.removeAllAnimations()
+						layer.opacity = 0.0
+					}
 					baseLayer.addSublayer(layer)
+					if FADE_INOUT {
+						CATransaction.begin()
+						CATransaction.setAnimationDuration(1.0)
+						CATransaction.setDisableActions(false)
+						layer.opacity = 1.0
+						CATransaction.commit()
+					}
 				}
 			}
 		}
-
-#if FADE_INOUT
-		CATransaction.commit()
-#endif
 
 		// draw highlights: these layers are computed in screen coordinates and don't need to be transformed
 		for layer in highlightLayers {
