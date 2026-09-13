@@ -288,9 +288,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	func createNode(atLocation loc: LatLon) -> OsmNode {
-		let node = OsmNode(asUserCreated: AppDelegate.shared.userName ?? "")
-		node.constructLatLon(loc)
-		node.constructDeleted(true)
+		let node = OsmNode(asUserCreated: AppDelegate.shared.userName ?? "", at: loc)
 		setConstructed(node)
 		nodes[node.ident] = node
 
@@ -301,7 +299,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	func createWay() -> OsmWay {
 		let way = OsmWay(asUserCreated: AppDelegate.shared.userName ?? "")
-		way.constructDeleted(true)
 		setConstructed(way)
 		ways[way.ident] = way
 
@@ -312,7 +309,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	func createRelation() -> OsmRelation {
 		let relation = OsmRelation(asUserCreated: AppDelegate.shared.userName ?? "")
-		relation.constructDeleted(true)
 		setConstructed(relation)
 		relations[relation.ident] = relation
 

@@ -526,8 +526,8 @@ final class Database {
 				uid: Int(uid),
 				ident: ident,
 				timestamp: timestamp,
-				tags: tags)
-			node.constructLatLon(LatLon(latitude: latitude, longitude: longitude))
+				tags: tags,
+				latLon: LatLon(latitude: latitude, longitude: longitude))
 
 			nodes.append(node)
 		}

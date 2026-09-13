@@ -72,13 +72,6 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 		return dist
 	}
 
-	/// For bootstrap use only: sets `latLon` before undo tracking begins.
-	/// Never call after construction.
-	func constructLatLon(_ latLon: LatLon) {
-		assert(!constructed())
-		self.latLon = latLon
-	}
-
 	func setLongitude(_ longitude: Double, latitude: Double, _ token: EditToken) {
 		latLon = LatLon(latitude: latitude, longitude: longitude)
 		clearCachedProperties()
@@ -90,14 +83,15 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 		latLon = newerVersion.latLon
 	}
 
-	override init(
+	private override init(
 		withVersion version: Int,
 		changeset: Int64,
 		user: String,
 		uid: Int,
 		ident: Int64,
 		timestamp: String,
-		tags: [String: String])
+		tags: [String: String],
+		deleted: Bool = false)
 	{
 		latLon = .zero
 		wayCount = 0
@@ -108,12 +102,29 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 			uid: uid,
 			ident: ident,
 			timestamp: timestamp,
-			tags: tags)
+			tags: tags,
+			deleted: deleted)
 	}
 
-	convenience init(asUserCreated userName: String) {
+	convenience init(
+		withVersion version: Int,
+		changeset: Int64,
+		user: String,
+		uid: Int,
+		ident: Int64,
+		timestamp: String,
+		tags: [String: String],
+		latLon: LatLon)
+	{
+		self.init(withVersion: version, changeset: changeset, user: user,
+		          uid: uid, ident: ident, timestamp: timestamp, tags: tags)
+		self.latLon = latLon
+	}
+
+	convenience init(asUserCreated userName: String, at latLon: LatLon) {
 		let ident = OsmBaseObject.nextUnusedIdentifier()
-		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:])
+		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:], deleted: true)
+		self.latLon = latLon
 	}
 
 	/// Initialize with XML downloaded from OSM server

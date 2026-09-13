@@ -161,7 +161,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	     uid: Int,
 	     ident: Int64,
 	     timestamp: String,
-	     tags: [String: String])
+	     tags: [String: String],
+	     deleted: Bool = false)
 	{
 		var timestamp = timestamp
 		if timestamp == "" {
@@ -175,7 +176,13 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		self.ident = ident
 		self.timestamp = timestamp
 		self.tags = tags
+		self.deleted = deleted
 		super.init()
+	}
+
+	convenience init(asUserCreated userName: String) {
+		let ident = OsmBaseObject.nextUnusedIdentifier()
+		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:], deleted: true)
 	}
 
 	/// Initialize with XML downloaded from OSM server
@@ -371,13 +378,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	// MARK: Construction
-
-	/// For bootstrap use only: sets `deleted` before undo tracking begins (i.e. before
-	/// the object is passed to `undoManager.apply`).  Never call after construction.
-	func constructDeleted(_ deleted: Bool) {
-		assert(!constructed())
-		self.deleted = deleted
-	}
 
 	func constructTag(_ key: String, value: String) {
 		// drop discarded tags

@@ -445,7 +445,8 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		uid: Int,
 		ident: Int64,
 		timestamp: String,
-		tags: [String: String])
+		tags: [String: String],
+		deleted: Bool = false)
 	{
 		members = []
 		super.init(
@@ -455,13 +456,15 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 			uid: uid,
 			ident: ident,
 			timestamp: timestamp,
-			tags: tags)
+			tags: tags,
+			deleted: deleted)
 	}
 
 	convenience init(asUserCreated userName: String) {
 		let ident = OsmBaseObject.nextUnusedIdentifier()
-		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:])
+		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:], deleted: true)
 	}
+
 
 	/// Initialize with XML downloaded from OSM server
 	override init?(fromXmlDict attributeDict: [String: String]) {
