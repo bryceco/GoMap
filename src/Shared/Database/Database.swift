@@ -527,7 +527,7 @@ final class Database {
 				ident: ident,
 				timestamp: timestamp,
 				tags: tags)
-			node.setLongitude(longitude, latitude: latitude, undo: nil)
+			node.constructLatLon(LatLon(latitude: latitude, longitude: longitude))
 
 			nodes.append(node)
 		}

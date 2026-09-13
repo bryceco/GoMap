@@ -115,36 +115,17 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		mapData?.invalidateParentRelationCache()
 	}
 
-	func assignMembers(_ newMembers: [OsmMember], undo: MyUndoManager?) {
-		if constructed() {
-			assert(undo != nil)
-			incrementModifyCount(undo!)
-			undo!.registerUndo(withTarget: self, selector: #selector(assignMembers(_:undo:)), objects: [members, undo!])
-		}
+	func assignMembers(_ newMembers: [OsmMember], _ token: EditToken) {
 		members = newMembers
 		mapData?.invalidateParentRelationCache()
 	}
 
-	func removeMemberAtIndex(_ index: Int, undo: MyUndoManager) {
-		let member = members[index]
-		incrementModifyCount(undo)
-		undo.registerUndo(
-			withTarget: self,
-			selector: #selector(addMember(_:atIndex:undo:)),
-			objects: [member, NSNumber(value: index), undo])
+	func removeMemberAtIndex(_ index: Int, _ token: EditToken) {
 		members.remove(at: index)
 		mapData?.invalidateParentRelationCache()
 	}
 
-	func addMember(_ member: OsmMember, atIndex index: Int, undo: MyUndoManager?) {
-		if constructed() {
-			assert(undo != nil)
-			incrementModifyCount(undo!)
-			undo!.registerUndo(
-				withTarget: self,
-				selector: #selector(removeMemberAtIndex(_:undo:)),
-				objects: [NSNumber(value: index), undo!])
-		}
+	func addMember(_ member: OsmMember, atIndex index: Int, _ token: EditToken) {
 		members.insert(member, at: index)
 		mapData?.invalidateParentRelationCache()
 	}

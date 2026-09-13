@@ -83,66 +83,27 @@ class QuadMap: NSObject, NSSecureCoding {
 
 	// MARK: Spatial
 
-	@objc func addMember(_ member: OsmBaseObject, undo: MyUndoManager?) {
-		if let undo = undo {
-			undo.registerUndo(withTarget: self,
-			                  selector: #selector(removeMember(_:undo:)),
-			                  objects: [member, undo])
-		}
-		let boundingBox = member.boundingBox
-		rootQuad.addMember(member, bbox: boundingBox)
+	func addMember(_ member: OsmBaseObject) {
+		rootQuad.addMember(member, bbox: member.boundingBox)
 	}
 
-	@objc func removeMember(_ member: OsmBaseObject, undo: MyUndoManager?) -> Bool {
-		let boundingBox = member.boundingBox
-		let ok = rootQuad.removeMember(member, bbox: boundingBox)
-		if ok, let undo = undo {
-			undo.registerUndo(
-				withTarget: self,
-				selector: #selector(addMember(_:undo:)),
-				objects: [member, undo as Any])
-		}
-		return ok
+	@discardableResult
+	func removeMember(_ member: OsmBaseObject) -> Bool {
+		return rootQuad.removeMember(member, bbox: member.boundingBox)
 	}
 
-	func updateMember(_ member: OsmBaseObject, toBox: OSMRect, fromBox: OSMRect, undo: MyUndoManager?) {
-		if fromBox == toBox {
-			return
-		}
+	func updateMember(_ member: OsmBaseObject, toBox: OSMRect, fromBox: OSMRect) {
+		if fromBox == toBox { return }
 		if let fromQuad = rootQuad.getQuadBoxContaining(member, bbox: fromBox) {
 			fromQuad.removeMember(member, bbox: fromBox)
 			rootQuad.addMember(member, bbox: toBox)
-			if let undo = undo {
-				var toBox = toBox
-				var fromBox = fromBox
-				let toData = Data(bytes: &toBox, count: MemoryLayout.size(ofValue: toBox))
-				let fromData = Data(bytes: &fromBox, count: MemoryLayout.size(ofValue: fromBox))
-				undo.registerUndo(
-					withTarget: self,
-					selector: #selector(updateMemberBoxed(_:toBox:fromBox:undo:)),
-					objects: [member, fromData, toData, undo])
-			}
 		} else {
 			rootQuad.addMember(member, bbox: toBox)
-			if let undo = undo {
-				undo.registerUndo(withTarget: self,
-				                  selector: #selector(removeMember(_:undo:)),
-				                  objects: [member, undo])
-			}
 		}
 	}
 
-	// This is just like updateMember but allows boxed arguments so the undo manager can call it
-	@objc func updateMemberBoxed(_ member: OsmBaseObject, toBox: Data, fromBox: Data, undo: MyUndoManager?) {
-		let to: OSMRect = toBox.withUnsafeBytes({ $0.load(as: OSMRect.self) })
-		let from: OSMRect = fromBox.withUnsafeBytes({ $0.load(as: OSMRect.self) })
-		updateMember(member, toBox: to, fromBox: from, undo: undo)
-	}
-
-	// Spatial
-	func updateMember(_ member: OsmBaseObject, fromBox bbox: OSMRect, undo: MyUndoManager?) {
-		let boundingBox = member.boundingBox
-		updateMember(member, toBox: boundingBox, fromBox: bbox, undo: undo)
+	func updateMember(_ member: OsmBaseObject, fromBox bbox: OSMRect) {
+		updateMember(member, toBox: member.boundingBox, fromBox: bbox)
 	}
 
 	func findObjects(inArea bbox: OSMRect, block: (OsmBaseObject) -> Void) {

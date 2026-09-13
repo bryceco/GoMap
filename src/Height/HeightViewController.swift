@@ -105,8 +105,7 @@ class HeightViewController: UIViewController {
 
 		coreMotion = CMMotionManager()
 		coreMotion?.deviceMotionUpdateInterval = 1.0 / 30
-		let currentQueue = OperationQueue.current
-		if let currentQueue = currentQueue {
+		if let currentQueue = OperationQueue.current {
 			coreMotion?.startDeviceMotionUpdates(
 				using: .xTrueNorthZVertical,
 				to: currentQueue,
@@ -180,7 +179,7 @@ class HeightViewController: UIViewController {
 		// get FOV
 		cameraFOV = Double(videoDevice.activeFormat.videoFieldOfView)
 		if cameraFOV == 0 {
-			cameraFOV = calculateCameraFOV()
+			cameraFOV = 58.5 // fallback if hardware doesn't report FOV
 		}
 		cameraFOV *= .pi / 180
 
@@ -246,96 +245,25 @@ class HeightViewController: UIViewController {
 		return false
 	}
 
-	static var cameraFOVCameraAngle: Double = 0
-
-	private static let ModelList = [(model: String, fov: Double, focal_length: Double, vertical_sensor_size: Double)](
-		// http://caramba-apps.com/blog/files/field-of-view-angles-ipad-iphone.html
-		arrayLiteral:
-		("iPad5,4", 0.0, 3.3, 0.0), // iPad Air 2
-		("iPad4,5", 0.0, 0.0, 0.0), // iPad Mini (2nd Generation iPad Mini - Cellular)
-		("iPad4,4", 0.0, 0.0, 0.0), // iPad Mini (2nd Generation iPad Mini - Wifi)
-		("iPad4,2", 0.0, 0.0, 0.0), // iPad Air 5th Generation iPad (iPad Air) - Cellular
-		("iPad4,1", 0.0, 0.0, 0.0), // iPad Air 5th Generation iPad (iPad Air) - Wifi
-		("iPad3,6", 0.0, 0.0, 0.0), // iPad 4 (4th Generation)
-		("iPad3,5", 0.0, 0.0, 0.0), // iPad 4 (4th Generation)
-		("iPad3,4", 0.0, 0.0, 0.0), // iPad 4 (4th Generation)
-		("iPad3,3", 0.0, 0.0, 0.0), // iPad 3 (3rd Generation)
-		("iPad3,2", 0.0, 0.0, 0.0), // iPad 3 (3rd Generation)
-		("iPad3,1", 0.0, 0.0, 0.0), // iPad 3 (3rd Generation)
-		("iPad2,7", 0.0, 0.0, 0.0), // iPad Mini (Original)
-		("iPad2,6", 0.0, 0.0, 0.0), // iPad Mini (Original)
-		("iPad2,5", 0.0, 3.3, 0.0), // iPad Mini (Original)
-		("iPad2,4", 43.47, 0.0, 0.0), // iPad 2
-		("iPad2,3", 43.47, 0.0, 0.0), // iPad 2
-		("iPad2,2", 43.47, 0.0, 0.0), // iPad 2
-		("iPad2,1", 43.47, 0.0, 0.0), // iPad 2
-
-		("iPhone7,2", 0.0, 4.15, 4.89), // iPhone 6+
-		("iPhone7,1", 0.0, 4.15, 4.89), // iPhone 6
-		("iPhone6,2", 0.0, 4.12, 4.89), // iPhone 5s (model A1457, A1518, A1528 (China), A1530 | Global)
-		("iPhone6,1", 0.0, 4.12, 4.89), // iPhone 5s model A1433, A1533 | GSM)
-		("iPhone5,4", 0.0, 4.10, 4.54), // iPhone 5c (model A1507, A1516, A1526 (China), A1529 | Global)
-		("iPhone5,3", 0.0, 4.10, 4.54), // iPhone 5c (model A1456, A1532 | GSM)
-		("iPhone5,2", 58.498, 4.10, 4.592), // iPhone 5 (model A1429, everything else)
-		("iPhone5,1", 58.498, 4.10, 4.592), // iPhone 5 (model A1428, AT&T/Canada)
-		("iPhone4,1", 56.423, 4.28, 4.592), // iPhone 4S
-		("iPhone3,1", 61.048, 3.85, 4.54), // iPhone 4
-		("iPhone2,1", 49.871, 3.85, 3.58), // iPhone 3GS
-		("iPhone1,1", 49.356, 3.85, 3.538), // iPhone 3
-
-		("iPod4,1", 0.0, 0.0, 0.0), // iPod Touch (Fifth Generation)
-		("iPod4,1", 0.0, 0.0, 0.0) // iPod Touch (Fourth Generation)
-	)
-
-	func calculateCameraFOV() -> Double {
-		var systemInfo = utsname()
-		uname(&systemInfo)
-		for device in HeightViewController.ModelList {
-			if device.vertical_sensor_size == 0 {
-				continue
-			}
-			if device.focal_length == 0 {
-				continue
-			}
-			let a = 2 * atan2(device.vertical_sensor_size / 2, device.focal_length) * 180 / .pi
-			assert(device.fov == 0 || abs(Float(a - device.fov)) < 0.01)
-			let machineMirror = Mirror(reflecting: systemInfo.machine)
-			let model = machineMirror.children.reduce("") { identifier, element in
-				guard let value = element.value as? Int8, value != 0 else { return identifier }
-				return identifier + String(UnicodeScalar(UInt8(value)))
-			}
-			if strcmp(model, device.model) == 0 {
-				HeightViewController.cameraFOVCameraAngle = a
-			}
-		}
-
-		if HeightViewController.cameraFOVCameraAngle == 0 {
-			HeightViewController.cameraFOVCameraAngle = 58.498 // wild guess
-		}
-		return HeightViewController.cameraFOVCameraAngle
-	}
-
-	func distanceToObject(error: inout Double, direction pDirection: inout Double) -> Double {
+	func distanceToObject() -> (dist: Double, error: Double, direction: Double)? {
 		let mapView = AppDelegate.shared.mapView!
 		var object = mapView.selectedPrimary
 		if object == nil, mapView.pushPin == nil {
-			error = .nan
-			pDirection = .nan
-			return .nan
+			return nil
 		}
 		if object == nil {
 			// brand new object, so fake it
 			let latlon = mapView.viewPort.mapTransform.latLon(forScreenPoint: mapView.pushPin!.arrowPoint)
 			// this gets thrown away at the end of this method so the details aren't important
 			let node = OsmNode(withVersion: 0, changeset: 0, user: "", uid: 0, ident: 0, timestamp: "", tags: [:])
-			node.setLongitude(latlon.lon, latitude: latlon.lat, undo: nil)
+			node.constructLatLon(latlon)
 			object = node
 		}
 		guard
 			let object = object,
 			let location = LocationProvider.shared.currentLocation
 		else {
-			return 0.0
+			return nil
 		}
 		let userPt = LatLon(location.coordinate)
 		var dist = Double(MAXFLOAT)
@@ -353,10 +281,7 @@ class HeightViewController: UIViewController {
 			}
 		}
 
-		error = location.horizontalAccuracy
-		pDirection = bearing
-
-		return dist
+		return (dist, location.horizontalAccuracy, bearing)
 	}
 
 	func distanceString(forFloat num: Double) -> String {
@@ -373,13 +298,11 @@ class HeightViewController: UIViewController {
 		}
 
 		// compute location
-		var distError = 0.0
-		var direction = 0.0
-		let dist = distanceToObject(error: &distError, direction: &direction)
-		if dist.isNaN {
+		guard let result = distanceToObject() else {
 			cancel(self)
 			return
 		}
+		let (dist, distError, direction) = result
 
 		// get camera tilt
 		var pitch = motion.attitude.pitch

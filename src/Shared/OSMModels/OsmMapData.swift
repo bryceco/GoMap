@@ -280,58 +280,44 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	// MARK: Editing
 
-	@objc func incrementModifyCount(_ object: OsmBaseObject) {
-		undoManager.registerUndo(withTarget: self, selector: #selector(incrementModifyCount(_:)), objects: [object])
-		object.incrementModifyCount(undoManager)
-	}
-
-	@objc func clearCachedProperties(_ object: OsmBaseObject, undo: MyUndoManager) {
-		undo.registerUndo(
-			withTarget: self,
-			selector: #selector(clearCachedProperties(_:undo:)),
-			objects: [object, undo])
-		object.clearCachedProperties()
-	}
-
 	@objc
 	func setTags(_ dict: [String: String], for object: OsmBaseObject) {
 		let localDict = OsmTags.DictWithTagsTruncatedTo255(dict)
 		registerUndoCommentString(NSLocalizedString("set tags", comment: ""))
-		object.setTags(localDict, undo: undoManager)
+		undoManager.apply(.setTags(object, localDict))
 	}
 
 	func createNode(atLocation loc: LatLon) -> OsmNode {
 		let node = OsmNode(asUserCreated: AppDelegate.shared.userName ?? "")
-		node.setLongitude(loc.lon, latitude: loc.lat, undo: nil)
-		node.setDeleted(true, undo: nil)
+		node.constructLatLon(loc)
+		node.constructDeleted(true)
 		setConstructed(node)
 		nodes[node.ident] = node
 
 		registerUndoCommentString(NSLocalizedString("create node", comment: ""))
-		node.setDeleted(false, undo: undoManager)
-		spatial.addMember(node, undo: undoManager)
+		undoManager.apply(.setDeleted(node, false)) // undeletes + adds to spatial
 		return node
 	}
 
 	func createWay() -> OsmWay {
 		let way = OsmWay(asUserCreated: AppDelegate.shared.userName ?? "")
-		way.setDeleted(true, undo: nil)
+		way.constructDeleted(true)
 		setConstructed(way)
 		ways[way.ident] = way
 
 		registerUndoCommentString(NSLocalizedString("create way", comment: ""))
-		way.setDeleted(false, undo: undoManager)
+		undoManager.apply(.setDeleted(way, false))
 		return way
 	}
 
 	func createRelation() -> OsmRelation {
 		let relation = OsmRelation(asUserCreated: AppDelegate.shared.userName ?? "")
-		relation.setDeleted(true, undo: nil)
+		relation.constructDeleted(true)
 		setConstructed(relation)
 		relations[relation.ident] = relation
 
 		registerUndoCommentString(NSLocalizedString("create relation", comment: ""))
-		relation.setDeleted(false, undo: undoManager)
+		undoManager.apply(.setDeleted(relation, false))
 		return relation
 	}
 
@@ -355,21 +341,17 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		assert(node.wayCount == 0)
 		registerUndoCommentString(NSLocalizedString("delete node", comment: ""))
 		remove(fromParentRelationsUnsafe: node)
-		node.setDeleted(true, undo: undoManager)
-		_ = spatial.removeMember(node, undo: undoManager)
+		undoManager.apply(.setDeleted(node, true)) // marks deleted + removes from spatial
 	}
 
 	func deleteWayUnsafe(_ way: OsmWay) {
 		registerUndoCommentString(NSLocalizedString("delete way", comment: ""))
-
 		remove(fromParentRelationsUnsafe: way)
-
 		while way.nodes.count != 0 {
 			let node = way.nodes.last!
 			deleteNodeUnsafe(inWay: way, index: way.nodes.count - 1, preserveNode: node.hasInterestingTags())
 		}
-		way.setDeleted(true, undo: undoManager)
-		_ = spatial.removeMember(way, undo: undoManager)
+		undoManager.apply(.setDeleted(way, true))
 	}
 
 	func deleteRelationUnsafe(_ relation: OsmRelation) {
@@ -382,21 +364,16 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			: NSLocalizedString("delete relation", comment: "")
 		registerUndoCommentString(message)
 
-		_ = spatial.removeMember(relation, undo: undoManager)
-
 		remove(fromParentRelationsUnsafe: relation)
-
 		while relation.members.count != 0 {
-			relation.removeMemberAtIndex(relation.members.count - 1, undo: undoManager)
+			undoManager.apply(.removeMember(relation, index: relation.members.count - 1))
 		}
-		relation.setDeleted(true, undo: undoManager)
+		undoManager.apply(.setDeleted(relation, true))
 	}
 
 	func addNodeUnsafe(_ node: OsmNode, to way: OsmWay, at index: Int) {
 		registerUndoCommentString(NSLocalizedString("add node to way", comment: ""))
-		let origBox = way.boundingBox
-		way.addNode(node, atIndex: index, undo: undoManager)
-		spatial.updateMember(way, fromBox: origBox, undo: undoManager)
+		undoManager.apply(.addNode(way, node, index: index))
 	}
 
 	func deleteNodeUnsafe(inWay way: OsmWay, index: Int, preserveNode: Bool) {
@@ -404,16 +381,14 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		let node = way.nodes[index]
 		DbgAssert(node.wayCount > 0)
 
-		let bbox = way.boundingBox
-		way.removeNodeAtIndex(index, undo: undoManager)
+		undoManager.apply(.removeNode(way, index: index))
 		// if removing the node leads to 2 identical nodes being consecutive delete one of them as well
 		while index > 0,
 		      index < way.nodes.count,
 		      way.nodes[index - 1] == way.nodes[index]
 		{
-			way.removeNodeAtIndex(index, undo: undoManager)
+			undoManager.apply(.removeNode(way, index: index))
 		}
-		spatial.updateMember(way, fromBox: bbox, undo: undoManager)
 
 		if node.wayCount == 0, !preserveNode {
 			deleteNodeUnsafe(node)
@@ -424,41 +399,23 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	func setLatLon(_ latLon: LatLon, forNode node: OsmNode) {
 		registerUndoCommentString(NSLocalizedString("move", comment: ""))
-
-		// need to update all ways/relation which contain the node
-		let parents = objectsContaining(node).map({ ($0, $0.boundingBox) })
-		let bboxNode = node.boundingBox
-		node.setLongitude(latLon.lon, latitude: latLon.lat, undo: undoManager)
-		spatial.updateMember(node, fromBox: bboxNode, undo: undoManager)
-
-		for (parent, box) in parents {
-			clearCachedProperties(parent, undo: undoManager)
-			parent.computeBoundingBox()
-			spatial.updateMember(parent, fromBox: box, undo: undoManager)
-		}
+		undoManager.apply(.moveNode(node, to: latLon))
 	}
 
 	func addMemberUnsafe(_ member: OsmMember, to relation: OsmRelation, at index: Int) {
 		registerUndoCommentString(NSLocalizedString("add object to relation", comment: ""))
-		let bbox = relation.boundingBox
-		relation.addMember(member, atIndex: index, undo: undoManager)
-		spatial.updateMember(relation, fromBox: bbox, undo: undoManager)
+		undoManager.apply(.addMember(relation, member, index: index))
 		updateMultipolygonRelationRoles(relation)
 	}
 
 	func deleteMember(inRelationUnsafe relation: OsmRelation, index: Int, deletingRelationIfEmpty: Bool) {
 		if deletingRelationIfEmpty, relation.members.count == 1 {
-			// deleting last member of relation, so delete relation
 			deleteRelationUnsafe(relation)
 		} else {
 			AppDelegate.shared.mapView.mapData.consistencyCheck()
-
 			registerUndoCommentString(NSLocalizedString("delete object from relation", comment: ""))
-			let bbox = relation.boundingBox
-			relation.removeMemberAtIndex(index, undo: undoManager)
-			spatial.updateMember(relation, fromBox: bbox, undo: undoManager)
+			undoManager.apply(.removeMember(relation, index: index))
 			AppDelegate.shared.mapView.mapData.consistencyCheck()
-
 			updateMultipolygonRelationRoles(relation)
 		}
 	}
@@ -466,9 +423,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	func updateMembersUnsafe(_ memberList: [OsmMember]?, in relation: OsmRelation?) {
 		if let memberList = memberList, let relation = relation {
 			registerUndoCommentString(NSLocalizedString("update relation members", comment: ""))
-			let bbox = relation.boundingBox
-			relation.assignMembers(memberList, undo: undoManager)
-			spatial.updateMember(relation, fromBox: bbox, undo: undoManager)
+			undoManager.apply(.assignMembers(relation, memberList))
 		}
 	}
 
@@ -722,12 +677,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					// already exists, so do an in-place update
 					let bbox = currentNode.boundingBox
 					currentNode.serverUpdate(with: newNode)
-					spatial.updateMember(currentNode, fromBox: bbox, undo: nil)
+					spatial.updateMember(currentNode, fromBox: bbox)
 					newNodes.append(currentNode)
 				}
 			} else {
 				nodes[newNode.ident] = newNode
-				spatial.addMember(newNode, undo: nil)
+				spatial.addMember(newNode)
 				newNodes.append(newNode)
 			}
 		}
@@ -741,13 +696,13 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					let bbox = currentWay.boundingBox
 					currentWay.serverUpdate(with: newWay)
 					try currentWay.resolveToMapData(self)
-					spatial.updateMember(currentWay, fromBox: bbox, undo: nil)
+					spatial.updateMember(currentWay, fromBox: bbox)
 					newWays.append(currentWay)
 				}
 			} else {
 				ways[newWay.ident] = newWay
 				try newWay.resolveToMapData(self)
-				spatial.addMember(newWay, undo: nil)
+				spatial.addMember(newWay)
 				newWays.append(newWay)
 			}
 		}
@@ -760,12 +715,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 #endif
 					let bbox = currentRelation.boundingBox
 					currentRelation.serverUpdate(with: newRelation)
-					spatial.updateMember(currentRelation, fromBox: bbox, undo: nil)
+					spatial.updateMember(currentRelation, fromBox: bbox)
 					newRelations.append(currentRelation)
 				}
 			} else {
 				relations[newRelation.ident] = newRelation
-				spatial.addMember(newRelation, undo: nil)
+				spatial.addMember(newRelation)
 				newRelations.append(newRelation)
 			}
 		}
@@ -780,7 +735,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				let bbox = relation.boundingBox
 				relation.clearCachedProperties()
 				didChange = relation.resolveToMapData(self) || didChange
-				spatial.updateMember(relation, fromBox: bbox, undo: nil)
+				spatial.updateMember(relation, fromBox: bbox)
 			}
 		}
 
@@ -1134,6 +1089,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		super.init()
 
+		undoManager.mapData = self
 		initCommon()
 	}
 
@@ -1164,6 +1120,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		self.undoManager = undoManager
 
 		super.init()
+
+		undoManager.mapData = self
 
 		// Mark everything as constructed
 		self.nodes.values.forEach { self.setConstructed($0) }
@@ -1253,11 +1211,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// reset way counts in nodes
 		for node in nodes.values {
-			node.setWayCount(0, undo: nil)
+			node.wayCount = 0
 		}
 		for way in ways.values {
 			for node in way.nodes {
-				node.setWayCount(node.wayCount + 1, undo: nil)
+				node.wayCount += 1
 			}
 		}
 
@@ -1272,7 +1230,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		// rebuild spatial
 		for obj in dirty {
 			if !obj.deleted {
-				spatial.addMember(obj, undo: nil)
+				spatial.addMember(obj)
 			}
 		}
 
@@ -1437,7 +1395,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		// rebuild spatial database
 		mapData.enumerateObjects(usingBlock: { obj in
 			if !obj.deleted {
-				mapData.spatial.addMember(obj, undo: nil)
+				mapData.spatial.addMember(obj)
 			}
 		})
 
@@ -1746,7 +1704,7 @@ extension OsmMapData {
 					removeWays.append(ident)
 					for node in way.nodes {
 						DbgAssert(node.wayCount > 0)
-						node.setWayCount(node.wayCount - 1, undo: nil)
+						node.wayCount -= 1
 					}
 				}
 			}

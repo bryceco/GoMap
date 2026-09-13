@@ -17,10 +17,14 @@ class MyUndoManager: NSObject, NSSecureCoding {
 	private var undoStack: [UndoAction] = []
 	private var redoStack: [UndoAction] = []
 	private var groupingStack: [Int] = []
-	private var commentList: [[String: Any]] = []
+	var commentList: [[String: Any]] = []
 
 	private(set) var isUndoing = false
 	private(set) var isRedoing = false
+
+	/// Set by OsmMapData immediately after creating or decoding the undo manager.
+	/// Used by `apply(_:)` to perform spatial-index updates inside operation apply bodies.
+	weak var mapData: OsmMapData?
 
 	public static let UndoManagerDidChangeNotification = "UndoManagerDidChangeNotification"
 
@@ -78,7 +82,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		text += String(format: "   run loop = %ld\n", runLoopCounter)
 		text += "   group = \(groupingStack.last ?? -1)\n"
 		for action in undoStack {
-			text += String(format: "   %ld: %@\n", action.group, action.selector)
+			text += "   \(action)\n"
 		}
 		return text
 	}
@@ -142,19 +146,37 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		postChangeNotification()
 	}
 
-	func registerUndo(_ action: UndoAction) {
-		action.group = groupingStack.last ?? runLoopCounter
+	// MARK: - Forward-edit entry point
+
+	/// Executes `type` immediately (forward edit, undo, or redo) and pushes the
+	/// inverse onto the appropriate stack.  Also bumps `modifyCount` for affected
+	/// objects and appends comments to `commentList`.
+	func apply(_ type: UndoActionType) {
+		guard let mapData = mapData else { return }
 
 		willChangeValue(forKey: "canUndo")
 		willChangeValue(forKey: "canRedo")
 
+		if case .comment(let dict) = type {
+			commentList.append(dict)
+		}
+
+		let inverseType = type.apply(to: mapData)
+		let group = groupingStack.last ?? runLoopCounter
+		let inverse = UndoAction(type: inverseType, group: group)
+
 		if isUndoing {
-			redoStack.append(action)
+			redoStack.append(inverse)
 		} else if isRedoing {
-			undoStack.append(action)
+			undoStack.append(inverse)
 		} else {
-			undoStack.append(action)
+			undoStack.append(inverse)
 			redoStack.removeAll()
+		}
+
+		let undoing = isUndoing
+		for obj in type.modifyObjects {
+			obj.adjustModifyCount(undoing: undoing)
 		}
 
 		didChangeValue(forKey: "canUndo")
@@ -163,30 +185,36 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		postChangeNotification()
 	}
 
-	func registerUndo(withTarget target: AnyObject, selector: Selector, objects: [Any]) {
-		DbgAssert(target.responds(to: selector))
-
-		let action = UndoAction(target: target, selector: selector, objects: objects)
-		registerUndo(action)
-	}
-
-	@objc func doComment(_ comment: [String: Any]) {
-		registerUndo(withTarget: self, selector: #selector(doComment(_:)), objects: [comment])
-		commentList.append(comment)
+	func doComment(_ comment: [String: Any]) {
+		apply(.comment(comment))
 	}
 
 	func registerUndoComment(_ comment: [String: Any]) {
-		registerUndo(withTarget: self, selector: #selector(doComment(_:)), objects: [comment])
+		apply(.comment(comment))
 	}
 
-	class func doActionGroup(fromStack stack: inout [UndoAction]) {
-		guard let currentGroup = stack.last?.group else { return }
+	func doActionGroup(fromStack stack: inout [UndoAction]) {
+		guard stack.last != nil else { return }
+		let currentGroup = stack.last!.group
 
 		while stack.last?.group == currentGroup,
 		      let action = stack.popLast()
 		{
-			// print("-- Undo action: '\(action.selector)' \(type(of: action.target))")
-			action.perform()
+			if case .comment(let dict) = action.type {
+				commentList.append(dict)
+			}
+			guard let mapData = mapData else { continue }
+			let inverseType = action.type.apply(to: mapData)
+			let inverse = UndoAction(type: inverseType, group: action.group)
+			if isUndoing {
+				redoStack.append(inverse)
+			} else {
+				undoStack.append(inverse)
+			}
+			let undoing = isUndoing
+			for obj in action.type.modifyObjects {
+				obj.adjustModifyCount(undoing: undoing)
+			}
 		}
 	}
 
@@ -199,7 +227,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 
 		assert(!isUndoing && !isRedoing)
 		isUndoing = true
-		Self.doActionGroup(fromStack: &undoStack)
+		doActionGroup(fromStack: &undoStack)
 		isUndoing = false
 
 		didChangeValue(forKey: "canUndo")
@@ -218,7 +246,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 
 		assert(!isUndoing && !isRedoing)
 		isRedoing = true
-		Self.doActionGroup(fromStack: &redoStack)
+		doActionGroup(fromStack: &redoStack)
 		isRedoing = false
 
 		didChangeValue(forKey: "canUndo")
@@ -242,7 +270,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		var refs: Set<OsmBaseObject> = []
 		for stack in [undoStack, redoStack] {
 			for action in stack {
-				refs.formUnion(action.osmObjects())
+				refs.formUnion(action.osmObjects)
 			}
 		}
 		return refs
@@ -343,7 +371,7 @@ extension MyUndoManager {
 		// Step 1: collect the set of OSM objects touched by each group.
 		var groupObjects: [Int: Set<OsmBaseObject>] = [:]
 		for action in undoStack {
-			groupObjects[action.group, default: []].formUnion(action.osmObjects())
+			groupObjects[action.group, default: []].formUnion(action.osmObjects)
 		}
 
 		guard !groupObjects.isEmpty else { return [] }

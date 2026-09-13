@@ -10,7 +10,7 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 	static let supportsSecureCoding = true
 
 	private(set) var latLon: LatLon
-	private(set) var wayCount: Int
+	var wayCount: Int
 
 	var turnRestrictionParentWay: OsmWay! // temporarily used during turn restriction processing
 
@@ -72,15 +72,16 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 		return dist
 	}
 
-	@objc func setLongitude(_ longitude: Double, latitude: Double, undo: MyUndoManager?) {
-		if constructed() {
-			assert(undo != nil)
-			incrementModifyCount(undo!)
-			undo!.registerUndo(withTarget: self,
-			                   selector: #selector(setLongitude(_:latitude:undo:)),
-			                   objects: [NSNumber(value: latLon.lon), NSNumber(value: latLon.lat), undo!])
-		}
+	/// For bootstrap use only: sets `latLon` before undo tracking begins.
+	/// Never call after construction.
+	func constructLatLon(_ latLon: LatLon) {
+		assert(!constructed())
+		self.latLon = latLon
+	}
+
+	func setLongitude(_ longitude: Double, latitude: Double, _ token: EditToken) {
 		latLon = LatLon(latitude: latitude, longitude: longitude)
+		clearCachedProperties()
 	}
 
 	override func serverUpdate(with newerVersion: OsmBaseObject) {
@@ -143,15 +144,5 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 		coder.encode(latLon.lon, forKey: "lon")
 	}
 
-	func setWayCount(_ wayCount: Int, undo: MyUndoManager?) {
-		if constructed(),
-		   let undo = undo
-		{
-			undo.registerUndo(
-				withTarget: self,
-				selector: #selector(setWayCount(_:undo:)),
-				objects: [NSNumber(value: self.wayCount), undo])
-		}
-		self.wayCount = wayCount
-	}
+
 }

@@ -372,6 +372,13 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	// MARK: Construction
 
+	/// For bootstrap use only: sets `deleted` before undo tracking begins (i.e. before
+	/// the object is passed to `undoManager.apply`).  Never call after construction.
+	func constructDeleted(_ deleted: Bool) {
+		assert(!constructed())
+		self.deleted = deleted
+	}
+
 	func constructTag(_ key: String, value: String) {
 		// drop discarded tags
 		if PresetsDatabase.shared.discarded.shouldDiscard(key: key, value: value) {
@@ -410,13 +417,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		return Date()
 	}
 
-	func setTimestamp(_ date: Date, undo: MyUndoManager?) {
-		if constructed() {
-			undo?.registerUndo(
-				withTarget: self,
-				selector: #selector(setTimestamp(_:undo:)),
-				objects: [dateForTimestamp(), undo!])
-		}
+	func setTimestamp(_ date: Date, _ token: EditToken) {
 		timestamp = Self.rfc3339DateFormatter().string(from: date)
 	}
 
@@ -442,20 +443,16 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		return modifyCount > 0
 	}
 
-	func incrementModifyCount(_ undo: MyUndoManager?) {
+	/// Increments or decrements `modifyCount` based on direction.
+	/// Called by `MyUndoManager.apply` / `doActionGroup` — not by model setters.
+	func adjustModifyCount(undoing: Bool) {
 		assert(modifyCount >= 0)
-		if constructed() {
-			assert(undo != nil)
-			// [undo registerUndoWithTarget:self selector:@selector(incrementModifyCount:) objects:@[undo]];
-		}
-		if undo?.isUndoing ?? false {
+		if undoing {
 			modifyCount -= 1
 		} else {
 			modifyCount += 1
 		}
 		assert(modifyCount >= 0)
-
-		// update cached values
 		clearCachedProperties()
 	}
 
@@ -475,7 +472,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		self.ident = ident
 		self.version = version
 		self.changeset = changeset
-		setTimestamp(timestamp, undo: nil)
+		self.timestamp = Self.rfc3339DateFormatter().string(from: timestamp)
 	}
 
 	func serverUpdate(with newerVersion: OsmBaseObject) {
@@ -491,24 +488,11 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		clearCachedProperties()
 	}
 
-	func setDeleted(_ deleted: Bool, undo: MyUndoManager?) {
-		if constructed() {
-			assert(undo != nil)
-			incrementModifyCount(undo)
-			undo!.registerUndo(
-				withTarget: self,
-				selector: #selector(setDeleted(_:undo:)),
-				objects: [NSNumber(value: self.deleted), undo!])
-		}
+	func setDeleted(_ deleted: Bool, _ token: EditToken) {
 		self.deleted = deleted
 	}
 
-	func setTags(_ tags: [String: String], undo: MyUndoManager?) {
-		if constructed() {
-			assert(undo != nil)
-			incrementModifyCount(undo!)
-			undo!.registerUndo(withTarget: self, selector: #selector(setTags(_:undo:)), objects: [self.tags, undo!])
-		}
+	func setTags(_ tags: [String: String], _ token: EditToken) {
 		self.tags = tags
 		clearCachedProperties()
 	}

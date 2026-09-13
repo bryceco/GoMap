@@ -53,34 +53,21 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 				throw OsmMapData.Error.osmWayResolveToMapDataCouldntFindNodeRef
 			}
 			nodes.append(node)
-			node.setWayCount(node.wayCount + 1, undo: nil)
+			node.wayCount += 1
 		}
 		self.nodeRefs = nil
 	}
 
-	@objc func removeNodeAtIndex(_ index: Int, undo: MyUndoManager) {
+	func removeNodeAtIndex(_ index: Int, _ token: EditToken) {
 		let node = nodes[index]
-		incrementModifyCount(undo)
-		undo.registerUndo(
-			withTarget: self,
-			selector: #selector(addNode(_:atIndex:undo:)),
-			objects: [node, NSNumber(value: index), undo])
 		nodes.remove(at: index)
-		node.setWayCount(node.wayCount - 1, undo: nil)
+		node.wayCount -= 1
 		computeBoundingBox()
 	}
 
-	@objc func addNode(_ node: OsmNode, atIndex index: Int, undo: MyUndoManager?) {
-		if constructed() {
-			assert(undo != nil)
-			incrementModifyCount(undo)
-			undo!.registerUndo(
-				withTarget: self,
-				selector: #selector(removeNodeAtIndex(_:undo:)),
-				objects: [NSNumber(value: index), undo!])
-		}
+	func addNode(_ node: OsmNode, atIndex index: Int, _ token: EditToken) {
 		nodes.insert(node, at: index)
-		node.setWayCount(node.wayCount + 1, undo: nil)
+		node.wayCount += 1
 		computeBoundingBox()
 	}
 
@@ -88,7 +75,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		super.serverUpdate(with: newerVersion)
 		// undo wayCount in contained nodes
 		for node in nodes {
-			node.setWayCount(node.wayCount - 1, undo: nil)
+			node.wayCount -= 1
 		}
 		nodeRefs = (newerVersion as! OsmWay).nodeRefs
 		nodes = (newerVersion as! OsmWay).nodes
@@ -570,7 +557,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		nodes = coder.decodeObject(forKey: "nodes") as! [OsmNode]
 		super.init(coder: coder)
 		for node in nodes {
-			node.setWayCount(node.wayCount + 1, undo: nil)
+			node.wayCount += 1
 		}
 	}
 

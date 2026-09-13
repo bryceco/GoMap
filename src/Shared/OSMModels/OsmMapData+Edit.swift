@@ -758,8 +758,8 @@ extension OsmMapData {
 			let newNode = createNode(atLocation: node.latLon)
 			for way in waysContaining(node) {
 				while let index = way.nodes.firstIndex(of: node) {
-					way.addNode(newNode, atIndex: index + 1, undo: undoManager)
-					way.removeNodeAtIndex(index, undo: undoManager)
+					undoManager.apply(.addNode(way, newNode, index: index + 1))
+					undoManager.apply(.removeNode(way, index: index))
 				}
 			}
 		}
@@ -1276,7 +1276,7 @@ extension OsmMapData {
 					newWay = duplicateWay(way, withOffset: offset)
 				}
 				let newMember = OsmMember(obj: newWay, role: member.role)
-				newRelation.addMember(newMember, atIndex: newRelation.members.count, undo: undoManager)
+				undoManager.apply(.addMember(newRelation, newMember, index: newRelation.members.count))
 			}
 		}
 		setTags(relation.tags, for: newRelation)
