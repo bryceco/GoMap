@@ -10,9 +10,9 @@ final class OsmMember: NSObject, NSSecureCoding {
 	static let supportsSecureCoding = true
 
 	let ref: OsmIdentifier
-	private(set) var type: OSM_TYPE // way, node, or relation
+	let type: OSM_TYPE // way, node, or relation
+	let role: String?
 	private(set) var obj: OsmBaseObject?
-	private(set) var role: String?
 
 	override var description: String {
 		return "\(super.description) role=\(role ?? ""); type=\(type); ref=\(ref);"
