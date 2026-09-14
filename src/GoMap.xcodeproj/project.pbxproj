@@ -131,6 +131,7 @@
 		02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096C1263E567200E3B129 /* DisplayLink.swift */; };
 		02A123F1264EF139005638C1 /* QuadMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924A263FFD7E000A2A99 /* QuadMap.swift */; };
 		02A4E35E3056CB99003B5A71 /* UndoAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A4E35D3056CB99003B5A71 /* UndoAction.swift */; };
+		02A4E3603057E3CF003B5A71 /* OsmEditOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A4E35F3057E3CF003B5A71 /* OsmEditOperation.swift */; };
 		02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDA297DE4E100B0A676 /* PresetField.swift */; };
 		02A59EDD297E444500B0A676 /* PresetAddressFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDC297E444500B0A676 /* PresetAddressFormat.swift */; };
 		02A59EDF297F358900B0A676 /* PresetArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDE297F358900B0A676 /* PresetArea.swift */; };
@@ -498,6 +499,7 @@
 		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		02A4E35D3056CB99003B5A71 /* UndoAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoAction.swift; sourceTree = "<group>"; };
+		02A4E35F3057E3CF003B5A71 /* OsmEditOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmEditOperation.swift; sourceTree = "<group>"; };
 		02A59EDA297DE4E100B0A676 /* PresetField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetField.swift; sourceTree = "<group>"; };
 		02A59EDC297E444500B0A676 /* PresetAddressFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetAddressFormat.swift; sourceTree = "<group>"; };
 		02A59EDE297F358900B0A676 /* PresetArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetArea.swift; sourceTree = "<group>"; };
@@ -1294,6 +1296,7 @@
 			children = (
 				C3D096F1263EBE5E00E3B129 /* OsmBaseObject.swift */,
 				024909CA267D99190027E531 /* OsmDownloader.swift */,
+				02A4E35F3057E3CF003B5A71 /* OsmEditOperation.swift */,
 				0288169D265895FA00C30EA2 /* OsmMapData.swift */,
 				0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */,
 				02AF69132F2B53A70000ABA2 /* OsmMapDataArchiver.swift */,
@@ -1817,6 +1820,7 @@
 				B287A89A2BBC64F70050A15D /* Style.swift in Sources */,
 				02D5B5F3248F154D00FEE448 /* Colors.swift in Sources */,
 				021FADCD25873C8200F6E1C0 /* PresetsDatabase+Display.swift in Sources */,
+				02A4E3603057E3CF003B5A71 /* OsmEditOperation.swift in Sources */,
 				02505C5729A458A30078D60D /* QuestDefinition.swift in Sources */,
 				0203B06429B3D62900B020DF /* OsmType.swift in Sources */,
 				02F6A457268A934900F2ACE7 /* NSAttributedString+Ext.swift in Sources */,

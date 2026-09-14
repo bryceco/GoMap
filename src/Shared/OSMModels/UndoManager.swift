@@ -150,7 +150,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 
 	/// Executes `type` immediately and pushes the inverse onto the appropriate stack.
 	/// For actions that modify objects, marks them modified and appends comments to `commentList`.
-	func apply(_ type: EditOperationType) {
+	func apply(_ type: OsmEditOperation) {
 		guard let mapData = mapData else { return }
 
 		willChangeValue(forKey: "canUndo")
