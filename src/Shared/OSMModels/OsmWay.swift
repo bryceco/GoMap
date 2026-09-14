@@ -22,22 +22,6 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		return nodeRefs?.count ?? 0
 	}
 
-	func constructNode(_ node: Int64) {
-		assert(!constructed() && nodes.isEmpty)
-		let ref = OsmIdentifier(node)
-		assert(ref > 0)
-		if nodeRefs == nil {
-			nodeRefs = [ref]
-		} else {
-			nodeRefs!.append(ref)
-		}
-	}
-
-	func constructNodeList(_ nodes: [OsmIdentifier]) {
-		assert(!constructed())
-		nodeRefs = nodes
-	}
-
 	override func isWay() -> OsmWay? {
 		return self
 	}
@@ -516,7 +500,7 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		return best
 	}
 
-	override init(
+	init(
 		withVersion version: Int,
 		changeset: Int64,
 		user: String,
@@ -524,9 +508,11 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 		ident: Int64,
 		timestamp: String,
 		tags: [String: String],
+		nodeRefs: [OsmIdentifier] = [],
 		deleted: Bool = false)
 	{
 		nodes = []
+		self.nodeRefs = nodeRefs.isEmpty ? nil : nodeRefs
 		super.init(
 			withVersion: version,
 			changeset: changeset,
@@ -541,13 +527,6 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 	convenience init(asUserCreated userName: String) {
 		let ident = OsmBaseObject.nextUnusedIdentifier()
 		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:], deleted: true)
-	}
-
-
-	/// Initialize with XML downloaded from OSM server
-	override init?(fromXmlDict attributeDict: [String: String]) {
-		nodes = []
-		super.init(fromXmlDict: attributeDict)
 	}
 
 	required init?(coder: NSCoder) {

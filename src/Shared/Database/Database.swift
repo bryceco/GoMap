@@ -535,11 +535,19 @@ final class Database {
 		return nodes
 	}
 
+	private struct WayMetadata {
+		let user: String, timestamp: String, tags: [String: String]
+		let version: Int32, uid: Int32
+		let changeset: Int64
+		var nodeRefs: [OsmIdentifier]
+	}
+
 	func queryWays() throws -> [OsmWay] {
 		let wayStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways")
-
-		var ways: [OsmIdentifier: OsmWay] = [:]
 		let tagsDict = try queryTagTable("way_tags", sizeEstimate: 20000)
+
+		// Collect way metadata, pre-sizing nodeRef arrays using nodecount
+		var wayMeta: [OsmIdentifier: WayMetadata] = [:]
 
 		while try wayStatement.step(hasResult: Sqlite.ROW) {
 			let ident = wayStatement.columnInt64(0)
@@ -549,30 +557,31 @@ final class Database {
 			let changeset = wayStatement.columnInt64(4)
 			let uid = wayStatement.columnInt32(5)
 			let nodecount = wayStatement.columnInt32(6)
-
 			let tags = tagsDict[ident] ?? [:]
-
-			let way = OsmWay(
-				withVersion: Int(version),
-				changeset: changeset,
-				user: user,
-				uid: Int(uid),
-				ident: ident,
-				timestamp: timestamp,
-				tags: tags)
-
-			let nodeRefs = [OsmIdentifier](repeating: -1, count: Int(nodecount))
-			way.constructNodeList(nodeRefs)
-
-			ways[way.ident] = way
+			wayMeta[ident] = WayMetadata(
+				user: user, timestamp: timestamp, tags: tags,
+				version: version, uid: uid, changeset: changeset,
+				nodeRefs: [OsmIdentifier](repeating: -1, count: Int(nodecount)))
 		}
 
-		try queryNodes(forWays: ways)
+		// Fill in node IDs by index
+		try fillNodeRefs(into: &wayMeta)
 
-		return Array(ways.values)
+		// Construct fully-initialized OsmWay objects
+		return wayMeta.map { ident, meta in
+			OsmWay(
+				withVersion: Int(meta.version),
+				changeset: meta.changeset,
+				user: meta.user,
+				uid: Int(meta.uid),
+				ident: ident,
+				timestamp: meta.timestamp,
+				tags: meta.tags,
+				nodeRefs: meta.nodeRefs)
+		}
 	}
 
-	private func queryNodes(forWays ways: [OsmIdentifier: OsmWay]) throws {
+	private func fillNodeRefs(into wayMeta: inout [OsmIdentifier: WayMetadata]) throws {
 		let nodeStatement = try db.prepare("SELECT ident,node_id,node_index FROM way_nodes")
 
 		while try nodeStatement.step(hasResult: Sqlite.ROW) {
@@ -580,22 +589,18 @@ final class Database {
 			let node_id = nodeStatement.columnInt64(1)
 			let node_index = nodeStatement.columnInt32(2)
 
-			guard let way = ways[ident] else {
+			guard wayMeta[ident] != nil else {
 				throw DatabaseError.wayReferencedByNodeDoesNotExist
 			}
-
-			way.nodeRefs![Int(node_index)] = node_id
+			wayMeta[ident]!.nodeRefs[Int(node_index)] = node_id
 		}
 	}
 
-	// This class is used as a temporary object while reading relations from Sqlite3 and building member lists
-	private final class OsmRelationBuilder {
-		let relation: OsmRelation
+	private struct RelationMetadata {
+		let user: String, timestamp: String, tags: [String: String]
+		let version: Int32, uid: Int32
+		let changeset: Int64
 		var members: [OsmMember?]
-		init(with relation: OsmRelation, memberCount: Int) {
-			self.relation = relation
-			members = [OsmMember?](repeating: nil, count: memberCount)
-		}
 	}
 
 	func queryRelations() throws -> [OsmRelation] {
@@ -604,8 +609,8 @@ final class Database {
 
 		let tagsDict = try queryTagTable("relation_tags", sizeEstimate: 1000)
 
-		var relations: [OsmIdentifier: OsmRelationBuilder] = [:]
-		relations.reserveCapacity(1000)
+		var relationMeta: [OsmIdentifier: RelationMetadata] = [:]
+		relationMeta.reserveCapacity(1000)
 
 		while try relationStatement.step(hasResult: Sqlite.ROW) {
 			let ident = relationStatement.columnInt64(0)
@@ -615,33 +620,29 @@ final class Database {
 			let changeset = relationStatement.columnInt64(4)
 			let uid = relationStatement.columnInt32(5)
 			let membercount = relationStatement.columnInt32(6)
-
 			let tags = tagsDict[ident] ?? [:]
+			relationMeta[ident] = RelationMetadata(
+				user: user, timestamp: timestamp, tags: tags,
+				version: version, uid: uid, changeset: changeset,
+				members: [OsmMember?](repeating: nil, count: Int(membercount)))
+		}
 
-			let relation = OsmRelation(
-				withVersion: Int(version),
-				changeset: changeset,
-				user: user,
-				uid: Int(uid),
+		try fillMembers(into: &relationMeta)
+
+		return relationMeta.map { ident, meta in
+			OsmRelation(
+				withVersion: Int(meta.version),
+				changeset: meta.changeset,
+				user: meta.user,
+				uid: Int(meta.uid),
 				ident: ident,
-				timestamp: timestamp,
-				tags: tags)
-
-			let builder = OsmRelationBuilder(with: relation, memberCount: Int(membercount))
-			relations[relation.ident] = builder
+				timestamp: meta.timestamp,
+				tags: meta.tags,
+				members: meta.members.map { $0! })
 		}
-
-		// set the member objects for relations
-		try queryMembers(forRelationBuilders: relations)
-		for builder in relations.values {
-			builder.relation.constructMembers(builder.members.map({ $0! }))
-		}
-
-		// build the final list of relations
-		return relations.values.map({ $0.relation })
 	}
 
-	private func queryMembers(forRelationBuilders relations: [OsmIdentifier: OsmRelationBuilder]) throws {
+	private func fillMembers(into relationMeta: inout [OsmIdentifier: RelationMetadata]) throws {
 		let memberStatement = try db.prepare("SELECT ident,type,ref,role,member_index FROM relation_members")
 
 		while try memberStatement.step(hasResult: Sqlite.ROW) {
@@ -651,15 +652,11 @@ final class Database {
 			let role = memberStatement.columnText(3)
 			let member_index = memberStatement.columnInt32(4)
 
-			guard let relation = relations[ident] else {
+			guard relationMeta[ident] != nil else {
 				throw DatabaseError.relationReferencedByMemberDoesNotExist
 			}
-			let member = try OsmMember(
-				type: OSM_TYPE(string: type),
-				ref: ref,
-				role: role)
-
-			relation.members[Int(member_index)] = member
+			let member = try OsmMember(type: OSM_TYPE(string: type), ref: ref, role: role)
+			relationMeta[ident]!.members[Int(member_index)] = member
 		}
 	}
 }

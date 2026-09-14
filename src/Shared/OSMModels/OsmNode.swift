@@ -83,7 +83,7 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 		latLon = newerVersion.latLon
 	}
 
-	private override init(
+	override private init(
 		withVersion version: Int,
 		changeset: Int64,
 		user: String,
@@ -127,20 +127,6 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 		self.latLon = latLon
 	}
 
-	/// Initialize with XML downloaded from OSM server
-	override init?(fromXmlDict attributeDict: [String: String]) {
-		guard let latText = attributeDict["lat"],
-		      let lonText = attributeDict["lon"],
-		      let lat = Double(latText),
-		      let lon = Double(lonText)
-		else {
-			return nil
-		}
-		latLon = LatLon(lon: lon, lat: lat)
-		wayCount = 0
-		super.init(fromXmlDict: attributeDict)
-	}
-
 	required init?(coder: NSCoder) {
 		let lat = coder.decodeDouble(forKey: "lat")
 		let lon = coder.decodeDouble(forKey: "lon")
@@ -154,6 +140,4 @@ final class OsmNode: OsmBaseObject, NSSecureCoding {
 		coder.encode(latLon.lat, forKey: "lat")
 		coder.encode(latLon.lon, forKey: "lon")
 	}
-
-
 }

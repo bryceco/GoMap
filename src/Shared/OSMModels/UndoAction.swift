@@ -68,12 +68,12 @@ extension UndoActionType {
 		let token = EditToken()
 		switch self {
 
-		case .setTimestamp(let obj, let newDate):
+		case let .setTimestamp(obj, newDate):
 			let oldDate = obj.dateForTimestamp()
 			obj.setTimestamp(newDate, token)
 			return .setTimestamp(obj, oldDate)
 
-		case .setDeleted(let obj, let newDeleted):
+		case let .setDeleted(obj, newDeleted):
 			let oldDeleted = obj.deleted
 			obj.setDeleted(newDeleted, token)
 			// Absorb lifecycle spatial add/remove.
@@ -84,12 +84,12 @@ extension UndoActionType {
 			}
 			return .setDeleted(obj, oldDeleted)
 
-		case .setTags(let obj, let newTags):
+		case let .setTags(obj, newTags):
 			let oldTags = obj.tags
 			obj.setTags(newTags, token) // calls clearCachedProperties internally
 			return .setTags(obj, oldTags)
 
-		case .moveNode(let node, let newLatLon):
+		case let .moveNode(node, newLatLon):
 			// Capture pre-move state for all objects whose bboxes depend on this node.
 			let oldLatLon = node.latLon
 			let parents = mapData.objectsContaining(node).map { ($0, $0.boundingBox) }
@@ -97,38 +97,38 @@ extension UndoActionType {
 			node.setLongitude(newLatLon.lon, latitude: newLatLon.lat, token)
 			mapData.spatial.updateMember(node, fromBox: oldNodeBox)
 			for (parent, oldBox) in parents {
-				parent.clearCachedProperties()   // invalidates cached bbox
+				parent.clearCachedProperties() // invalidates cached bbox
 				mapData.spatial.updateMember(parent, fromBox: oldBox)
 			}
 			return .moveNode(node, to: oldLatLon)
 
-		case .addNode(let way, let node, let index):
+		case let .addNode(way, node, index):
 			let oldBox = way.boundingBox
 			way.addNode(node, atIndex: index, token)
 			mapData.spatial.updateMember(way, fromBox: oldBox)
 			return .removeNode(way, index: index)
 
-		case .removeNode(let way, let index):
+		case let .removeNode(way, index):
 			let node = way.nodes[index]
 			let oldBox = way.boundingBox
 			way.removeNodeAtIndex(index, token)
 			mapData.spatial.updateMember(way, fromBox: oldBox)
 			return .addNode(way, node, index: index)
 
-		case .assignMembers(let relation, let newMembers):
+		case let .assignMembers(relation, newMembers):
 			let oldMembers = relation.members
 			let oldBox = relation.boundingBox
 			relation.assignMembers(newMembers, token)
 			mapData.spatial.updateMember(relation, fromBox: oldBox)
 			return .assignMembers(relation, oldMembers)
 
-		case .addMember(let relation, let member, let index):
+		case let .addMember(relation, member, index):
 			let oldBox = relation.boundingBox
 			relation.addMember(member, atIndex: index, token)
 			mapData.spatial.updateMember(relation, fromBox: oldBox)
 			return .removeMember(relation, index: index)
 
-		case .removeMember(let relation, let index):
+		case let .removeMember(relation, index):
 			let member = relation.members[index]
 			let oldBox = relation.boundingBox
 			relation.removeMemberAtIndex(index, token)
@@ -152,17 +152,17 @@ extension UndoActionType {
 		switch self {
 		case .setTimestamp, .comment:
 			return []
-		case .setDeleted(let obj, _),
-		     .setTags(let obj, _):
+		case let .setDeleted(obj, _),
+		     let .setTags(obj, _):
 			return [obj]
-		case .moveNode(let node, _):
+		case let .moveNode(node, _):
 			return [node]
-		case .addNode(let way, _, _),
-		     .removeNode(let way, _):
+		case let .addNode(way, _, _),
+		     let .removeNode(way, _):
 			return [way]
-		case .assignMembers(let rel, _),
-		     .addMember(let rel, _, _),
-		     .removeMember(let rel, _):
+		case let .assignMembers(rel, _),
+		     let .addMember(rel, _, _),
+		     let .removeMember(rel, _):
 			return [rel]
 		}
 	}
@@ -189,24 +189,24 @@ final class UndoAction: NSObject, NSSecureCoding {
 	/// which undo groups share objects (for selective upload grouping).
 	var osmObjects: Set<OsmBaseObject> {
 		switch type {
-		case .setTimestamp(let obj, _),
-		     .setDeleted(let obj, _),
-		     .setTags(let obj, _):
+		case let .setTimestamp(obj, _),
+		     let .setDeleted(obj, _),
+		     let .setTags(obj, _):
 			return [obj]
-		case .moveNode(let node, _):
+		case let .moveNode(node, _):
 			return [node]
-		case .addNode(let way, let node, _):
+		case let .addNode(way, node, _):
 			return [way, node]
-		case .removeNode(let way, _):
+		case let .removeNode(way, _):
 			return [way]
-		case .assignMembers(let rel, _),
-		     .removeMember(let rel, _):
+		case let .assignMembers(rel, _),
+		     let .removeMember(rel, _):
 			return [rel]
-		case .addMember(let rel, let member, _):
+		case let .addMember(rel, member, _):
 			var result: Set<OsmBaseObject> = [rel]
 			if let obj = member.obj { result.insert(obj) }
 			return result
-		case .comment(let dict):
+		case let .comment(dict):
 			return Set(dict.values.compactMap { $0 as? OsmBaseObject })
 		}
 	}
@@ -215,25 +215,25 @@ final class UndoAction: NSObject, NSSecureCoding {
 
 	override var description: String {
 		switch type {
-		case .setTimestamp(let obj, let date):
+		case let .setTimestamp(obj, date):
 			return "UndoAction \(group): \(obj.ident).setTimestamp(\(date))"
-		case .setDeleted(let obj, let del):
+		case let .setDeleted(obj, del):
 			return "UndoAction \(group): \(obj.ident).setDeleted(\(del))"
-		case .setTags(let obj, _):
+		case let .setTags(obj, _):
 			return "UndoAction \(group): \(obj.ident).setTags(...)"
-		case .moveNode(let node, let latLon):
+		case let .moveNode(node, latLon):
 			return "UndoAction \(group): node(\(node.ident)).moveNode(to:\(latLon))"
-		case .addNode(let way, let node, let i):
+		case let .addNode(way, node, i):
 			return "UndoAction \(group): way(\(way.ident)).addNode(\(node.ident), at:\(i))"
-		case .removeNode(let way, let i):
+		case let .removeNode(way, i):
 			return "UndoAction \(group): way(\(way.ident)).removeNode(at:\(i))"
-		case .assignMembers(let rel, _):
+		case let .assignMembers(rel, _):
 			return "UndoAction \(group): relation(\(rel.ident)).assignMembers(...)"
-		case .addMember(let rel, _, let i):
+		case let .addMember(rel, _, i):
 			return "UndoAction \(group): relation(\(rel.ident)).addMember(at:\(i))"
-		case .removeMember(let rel, let i):
+		case let .removeMember(rel, i):
 			return "UndoAction \(group): relation(\(rel.ident)).removeMember(at:\(i))"
-		case .comment(let d):
+		case let .comment(d):
 			return "UndoAction \(group): comment(\(d["comment"] ?? ""))"
 		}
 	}
@@ -246,7 +246,7 @@ final class UndoAction: NSObject, NSSecureCoding {
 		case setTimestamp = 1
 		case setDeleted = 2
 		case setTags = 3
-		case moveNode = 4       // was setLongitude; same 2-double encoding
+		case moveNode = 4 // was setLongitude; same 2-double encoding
 		case addNode = 5
 		case removeNode = 6
 		case assignMembers = 7
@@ -259,46 +259,46 @@ final class UndoAction: NSObject, NSSecureCoding {
 	func encode(with coder: NSCoder) {
 		coder.encode(group, forKey: "group")
 		switch type {
-		case .setTimestamp(let obj, let date):
+		case let .setTimestamp(obj, date):
 			coder.encode(Tag.setTimestamp.rawValue, forKey: "tag")
 			coder.encode(obj, forKey: "obj")
 			coder.encode(date as NSDate, forKey: "date")
-		case .setDeleted(let obj, let deleted):
+		case let .setDeleted(obj, deleted):
 			coder.encode(Tag.setDeleted.rawValue, forKey: "tag")
 			coder.encode(obj, forKey: "obj")
 			coder.encode(deleted, forKey: "bool")
-		case .setTags(let obj, let tags):
+		case let .setTags(obj, tags):
 			coder.encode(Tag.setTags.rawValue, forKey: "tag")
 			coder.encode(obj, forKey: "obj")
 			coder.encode(tags as NSDictionary, forKey: "tags")
-		case .moveNode(let node, let latLon):
+		case let .moveNode(node, latLon):
 			coder.encode(Tag.moveNode.rawValue, forKey: "tag")
 			coder.encode(node, forKey: "node")
 			coder.encode(latLon.lon, forKey: "lon")
 			coder.encode(latLon.lat, forKey: "lat")
-		case .addNode(let way, let node, let index):
+		case let .addNode(way, node, index):
 			coder.encode(Tag.addNode.rawValue, forKey: "tag")
 			coder.encode(way, forKey: "way")
 			coder.encode(node, forKey: "node")
 			coder.encode(index, forKey: "index")
-		case .removeNode(let way, let index):
+		case let .removeNode(way, index):
 			coder.encode(Tag.removeNode.rawValue, forKey: "tag")
 			coder.encode(way, forKey: "way")
 			coder.encode(index, forKey: "index")
-		case .assignMembers(let relation, let members):
+		case let .assignMembers(relation, members):
 			coder.encode(Tag.assignMembers.rawValue, forKey: "tag")
 			coder.encode(relation, forKey: "relation")
 			coder.encode(members as NSArray, forKey: "members")
-		case .addMember(let relation, let member, let index):
+		case let .addMember(relation, member, index):
 			coder.encode(Tag.addMember.rawValue, forKey: "tag")
 			coder.encode(relation, forKey: "relation")
 			coder.encode(member, forKey: "member")
 			coder.encode(index, forKey: "index")
-		case .removeMember(let relation, let index):
+		case let .removeMember(relation, index):
 			coder.encode(Tag.removeMember.rawValue, forKey: "tag")
 			coder.encode(relation, forKey: "relation")
 			coder.encode(index, forKey: "index")
-		case .comment(let dict):
+		case let .comment(dict):
 			coder.encode(Tag.comment.rawValue, forKey: "tag")
 			coder.encode(dict as NSDictionary, forKey: "comment")
 		}

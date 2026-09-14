@@ -118,12 +118,8 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		if self === other {
 			return true
 		}
-		// Occasionally we'll build a temporary object and then see if that object already exists,
-		// in which case don't assert if either object is not marked as constructed
 		let equal = ident == other.ident && type(of: self) === type(of: other)
-		DbgAssert(!equal
-			|| !constructed()
-			|| !other.constructed()) // There should never be more than one copy of an object
+		DbgAssert(!equal) // There should never be more than one copy of an object
 		return equal
 	}
 
@@ -185,30 +181,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:], deleted: true)
 	}
 
-	/// Initialize with XML downloaded from OSM server
-	init?(fromXmlDict attributeDict: [String: String]) {
-		if let version2 = attributeDict["version"],
-		   let version = Int(version2),
-		   let changeset2 = attributeDict["changeset"],
-		   let changeset = Int64(changeset2),
-		   let ident2 = attributeDict["id"],
-		   let ident = Int64(ident2),
-		   let timestamp = attributeDict["timestamp"]
-		{
-			self.version = version
-			self.changeset = changeset
-			user = attributeDict["user"] ?? "" // can be missing on old objects
-			uid = Int(attributeDict["uid"] ?? "") ?? 0 // can be missing on old objects
-			visible = true
-			self.ident = ident
-			self.timestamp = timestamp
-			tags = [:]
-			super.init()
-		} else {
-			return nil
-		}
-	}
-
 	var osmType: OSM_TYPE { return self is OsmNode ? .NODE : self is OsmWay ? .WAY : .RELATION }
 
 	var extendedIdentifier: OsmExtendedIdentifier {
@@ -235,7 +207,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	override var description: String {
 		var text =
-			"id=\(ident) constructed=\(constructed() ? "Yes" : "No") deleted=\(deleted ? "Yes" : "No") modifyCount=\(modifyCount)"
+			"id=\(ident) deleted=\(deleted ? "Yes" : "No") modifyCount=\(modifyCount)"
 		for (key, value) in tags {
 			text += "\n  '\(key)' = '\(value)'"
 		}
@@ -375,27 +347,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		Self._nextUnusedIdentifier -= 1
 		UserPrefs.shared.nextUnusedIdentifier.value = Self._nextUnusedIdentifier
 		return Int64(Self._nextUnusedIdentifier)
-	}
-
-	// MARK: Construction
-
-	func constructTag(_ key: String, value: String) {
-		// drop discarded tags
-		if PresetsDatabase.shared.discarded.shouldDiscard(key: key, value: value) {
-			return
-		}
-
-		assert(!constructed())
-		tags[key] = value
-	}
-
-	func constructed() -> Bool {
-		return mapData != nil
-	}
-
-	func setConstructed(mapData: OsmMapData) {
-		DbgAssert(self.mapData == nil)
-		self.mapData = mapData
 	}
 
 	static let _rfc3339DateFormatter: DateFormatter = {

@@ -157,7 +157,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		willChangeValue(forKey: "canUndo")
 		willChangeValue(forKey: "canRedo")
 
-		if case .comment(let dict) = type {
+		if case let .comment(dict) = type {
 			commentList.append(dict)
 		}
 
@@ -200,7 +200,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		while stack.last?.group == currentGroup,
 		      let action = stack.popLast()
 		{
-			if case .comment(let dict) = action.type {
+			if case let .comment(dict) = action.type {
 				commentList.append(dict)
 			}
 			guard let mapData = mapData else { continue }

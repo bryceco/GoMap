@@ -289,7 +289,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	func createNode(atLocation loc: LatLon) -> OsmNode {
 		let node = OsmNode(asUserCreated: AppDelegate.shared.userName ?? "", at: loc)
-		setConstructed(node)
+		node.mapData = self
 		nodes[node.ident] = node
 
 		registerUndoCommentString(NSLocalizedString("create node", comment: ""))
@@ -299,7 +299,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	func createWay() -> OsmWay {
 		let way = OsmWay(asUserCreated: AppDelegate.shared.userName ?? "")
-		setConstructed(way)
+		way.mapData = self
 		ways[way.ident] = way
 
 		registerUndoCommentString(NSLocalizedString("create way", comment: ""))
@@ -309,7 +309,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	func createRelation() -> OsmRelation {
 		let relation = OsmRelation(asUserCreated: AppDelegate.shared.userName ?? "")
-		setConstructed(relation)
+		relation.mapData = self
 		relations[relation.ident] = relation
 
 		registerUndoCommentString(NSLocalizedString("create relation", comment: ""))
@@ -473,10 +473,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	func removeMostRecentRedo() {
 		undoManager.removeMostRecentRedo()
-	}
-
-	func setConstructed(_ object: OsmBaseObject) {
-		object.setConstructed(mapData: self)
 	}
 
 	func registerUndoCommentContext(_ context: [String: Any]) {
@@ -652,18 +648,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		consistencyCheck()
 #endif
 
-#if DEBUG
-		for value in nodes.values {
-			assert(value.constructed())
-		}
-		for value in ways.values {
-			assert(value.constructed())
-		}
-		for value in relations.values {
-			assert(value.constructed())
-		}
-#endif
-
 		for newNode in newData.nodes {
 			if let currentNode = nodes[newNode.ident] {
 				if currentNode.version < newNode.version {
@@ -677,6 +661,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					newNodes.append(currentNode)
 				}
 			} else {
+				newNode.mapData = self
 				nodes[newNode.ident] = newNode
 				spatial.addMember(newNode)
 				newNodes.append(newNode)
@@ -696,6 +681,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					newWays.append(currentWay)
 				}
 			} else {
+				newWay.mapData = self
 				ways[newWay.ident] = newWay
 				try newWay.resolveToMapData(self)
 				spatial.addMember(newWay)
@@ -715,6 +701,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					newRelations.append(currentRelation)
 				}
 			} else {
+				newRelation.mapData = self
 				relations[newRelation.ident] = newRelation
 				spatial.addMember(newRelation)
 				newRelations.append(newRelation)
@@ -734,11 +721,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				spatial.updateMember(relation, fromBox: bbox)
 			}
 		}
-
-		// Mark everything as constructed
-		newData.nodes.forEach { self.setConstructed($0) }
-		newData.ways.forEach { self.setConstructed($0) }
-		newData.relations.forEach { self.setConstructed($0) }
 
 		invalidateParentRelationCache()
 
@@ -1119,11 +1101,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		undoManager.mapData = self
 
-		// Mark everything as constructed
-		self.nodes.values.forEach { self.setConstructed($0) }
-		self.ways.values.forEach { self.setConstructed($0) }
-		self.relations.values.forEach { self.setConstructed($0) }
-
 		initCommon()
 	}
 
@@ -1498,19 +1475,15 @@ extension OsmMapData {
 		                         ways: ways,
 		                         relations: relations)
 
-		// make sure all objects are marked as constructed
 		for node in nodes.values {
-			assert(node.constructed())
 			assert(node.mapData === self)
 			assert(node.modifyCount >= (node.ident > 0 || node.deleted ? 0 : 1))
 		}
 		for way in ways.values {
-			assert(way.constructed())
 			assert(way.mapData === self)
 			assert(way.modifyCount >= (way.ident > 0 || way.deleted ? 0 : 1))
 		}
 		for relation in relations.values {
-			assert(relation.constructed())
 			assert(relation.mapData === self)
 			assert(relation.modifyCount >= (relation.ident > 0 || relation.deleted ? 0 : 1))
 		}

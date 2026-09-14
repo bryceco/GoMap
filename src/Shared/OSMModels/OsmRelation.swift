@@ -18,18 +18,6 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		return "OsmRelation \(super.description)"
 	}
 
-	func constructMember(_ member: OsmMember) {
-		assert(!constructed())
-		assert(member.obj == nil)
-		members.append(member)
-	}
-
-	func constructMembers(_ members: [OsmMember]) {
-		assert(!constructed())
-		assert(members.first == nil || members.first!.obj == nil) // things added here shouldn't be resolved yet
-		self.members = members
-	}
-
 	override func isRelation() -> OsmRelation? {
 		return self
 	}
@@ -438,7 +426,7 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		coder.encode(members, forKey: "members")
 	}
 
-	override init(
+	init(
 		withVersion version: Int,
 		changeset: Int64,
 		user: String,
@@ -446,9 +434,10 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 		ident: Int64,
 		timestamp: String,
 		tags: [String: String],
+		members: [OsmMember] = [],
 		deleted: Bool = false)
 	{
-		members = []
+		self.members = members
 		super.init(
 			withVersion: version,
 			changeset: changeset,
@@ -463,13 +452,6 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 	convenience init(asUserCreated userName: String) {
 		let ident = OsmBaseObject.nextUnusedIdentifier()
 		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:], deleted: true)
-	}
-
-
-	/// Initialize with XML downloaded from OSM server
-	override init?(fromXmlDict attributeDict: [String: String]) {
-		members = []
-		super.init(fromXmlDict: attributeDict)
 	}
 
 	required init?(coder: NSCoder) {
