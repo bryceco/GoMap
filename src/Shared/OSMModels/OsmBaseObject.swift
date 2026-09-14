@@ -83,7 +83,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		return info
 	}
 
-	private(set) final var modifyCount: Int32 = 0
+	private(set) final var isModified: Bool = false
 	final var notificationService = NotificationService<OsmBaseObject>()
 
 	var parentRelations: [OsmRelation] {
@@ -99,7 +99,6 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		uid = 0
 		visible = false
 		deleted = false
-		modifyCount = 0
 	}
 
 	override var hash: Int {
@@ -133,7 +132,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		coder.encode(visible, forKey: "visible")
 		coder.encode(tags, forKey: "tags")
 		coder.encode(deleted, forKey: "deleted")
-		coder.encode(modifyCount, forKey: "modified")
+		coder.encode(isModified ? Int32(1) : Int32(0), forKey: "modified")
 	}
 
 	required init?(coder: NSCoder) {
@@ -146,7 +145,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		visible = coder.decodeBool(forKey: "visible")
 		tags = coder.decodeObject(forKey: "tags") as? [String: String] ?? [:]
 		deleted = coder.decodeBool(forKey: "deleted")
-		modifyCount = coder.decodeInt32(forKey: "modified")
+		isModified = coder.decodeInt32(forKey: "modified") != 0
 		super.init()
 		assert(ident != 0)
 	}
@@ -207,7 +206,7 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 
 	override var description: String {
 		var text =
-			"id=\(ident) deleted=\(deleted ? "Yes" : "No") modifyCount=\(modifyCount)"
+			"id=\(ident) deleted=\(deleted ? "Yes" : "No") isModified=\(isModified)"
 		for (key, value) in tags {
 			text += "\n  '\(key)' = '\(value)'"
 		}
@@ -390,25 +389,17 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 		}
 	}
 
-	func isModified() -> Bool {
-		return modifyCount > 0
-	}
-
-	/// Increments or decrements `modifyCount` based on direction.
-	/// Called by `MyUndoManager.apply` / `doActionGroup` — not by model setters.
-	func adjustModifyCount(undoing: Bool) {
-		assert(modifyCount >= 0)
-		if undoing {
-			modifyCount -= 1
-		} else {
-			modifyCount += 1
-		}
-		assert(modifyCount >= 0)
+	/// Sets `isModified` and clears cached rendering state if the value changed.
+	/// Called by `MyUndoManager` — not by model setters directly.
+	func setModified(_ value: Bool) {
+		guard isModified != value else { return }
+		isModified = value
 		clearCachedProperties()
 	}
 
-	func resetModifyCount() {
-		modifyCount = 0
+	/// Resets `isModified` to false after a successful upload.
+	func resetModified() {
+		isModified = false
 		clearCachedProperties()
 	}
 

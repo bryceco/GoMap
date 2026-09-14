@@ -112,7 +112,7 @@ class ResurveyQuest: QuestInstance {
 		let shopPredicate = try! QuestList.predicateForKey("phone", more: true)
 
 		let predicate: (OsmBaseObject) -> Bool = { obj in
-			if obj.timestamp >= dateString || obj.isModified() {
+			if obj.timestamp >= dateString || obj.isModified {
 				return false
 			}
 			return shopPredicate(obj.tags)

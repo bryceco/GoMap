@@ -230,7 +230,7 @@ extension EditorMapLayer {
 
 			if selectedPrimary is OsmWay || selectedPrimary is OsmRelation {
 				// if they later try to drag this way ask them if they really wanted to
-				dragState.confirmDrag = selectedPrimary.modifyCount == 0
+				dragState.confirmDrag = !selectedPrimary.isModified
 			}
 		}
 	}

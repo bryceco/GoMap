@@ -152,7 +152,7 @@ final class RenderInfo {
 	func computeRenderPriority(_ object: OsmBaseObject) -> Int {
 		guard renderPriority == 0 else { return renderPriority }
 		var priority: Int
-		if object.modifyCount > 0 {
+		if object.isModified {
 			priority = 33
 		} else {
 			switch (key, value) {

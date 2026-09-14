@@ -104,7 +104,7 @@ final class OsmXmlGenerator {
 				// deleted
 				let element = Self.element(for: node)
 				deleteNodeElement.addChild(element)
-			} else if node.isModified(), !node.deleted {
+			} else if node.isModified, !node.deleted {
 				// added/modified
 				let element = Self.element(for: node)
 				element
@@ -132,7 +132,7 @@ final class OsmXmlGenerator {
 					let nodeElement = Self.element(for: node)
 					deleteWayElement.addChild(nodeElement)
 				}
-			} else if way.isModified(), !way.deleted {
+			} else if way.isModified, !way.deleted {
 				// added/modified
 				let element = Self.element(for: way)
 				for node in way.nodes.removingDuplicatedItems() {
@@ -157,7 +157,7 @@ final class OsmXmlGenerator {
 			if relation.deleted, relation.ident > 0 {
 				let element = Self.element(for: relation)
 				deleteRelationElement.addChild(element)
-			} else if relation.isModified(),
+			} else if relation.isModified,
 			          !relation.deleted
 			{
 				// added/modified

@@ -261,13 +261,13 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		var modifications = 0
 
 		for (_, node) in nodes {
-			modifications += (node.deleted ? node.ident > 0 : node.isModified()) ? 1 : 0
+			modifications += (node.deleted ? node.ident > 0 : node.isModified) ? 1 : 0
 		}
 		for (_, way) in ways {
-			modifications += (way.deleted ? way.ident > 0 : way.isModified()) ? 1 : 0
+			modifications += (way.deleted ? way.ident > 0 : way.isModified) ? 1 : 0
 		}
 		for (_, relation) in relations {
-			modifications += (relation.deleted ? relation.ident > 0 : relation.isModified()) ? 1 : 0
+			modifications += (relation.deleted ? relation.ident > 0 : relation.isModified) ? 1 : 0
 		}
 		let undoCount = undoManager.countUndoGroups
 		return min(modifications, undoCount) // different ways to count, but both can be inflated so take the minimum
@@ -886,7 +886,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		} else {
 			assert(oldId > 0)
 		}
-		object.resetModifyCount()
+		object.resetModified()
 	}
 
 	private class func encodeBase64(_ plainText: String) -> String {
@@ -1116,9 +1116,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 #if DEBUG
 		// Verify that every modified object exists in the UndoManager.
 		// There might still be newly created, modified, deleted objects, which we ignore.
-		let n = Set<OsmNode>(nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
-		let w = Set<OsmWay>(ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
-		let r = Set<OsmRelation>(relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified() }))
+		let n = Set<OsmNode>(nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified }))
+		let w = Set<OsmWay>(ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified }))
+		let r = Set<OsmRelation>(relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified }))
 		assert(n.isSubset(of: modNodes))
 		assert(w.isSubset(of: modWays))
 		assert(r.isSubset(of: modRelations))
@@ -1155,9 +1155,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	func purgeSoft() {
 		// get a list of all dirty objects
 		var dirty: Set<OsmBaseObject> = []
-		dirty.formUnion(nodes.values.compactMap({ $0.isModified() ? $0 : nil }))
-		dirty.formUnion(ways.values.compactMap({ $0.isModified() ? $0 : nil }))
-		dirty.formUnion(relations.values.compactMap({ $0.isModified() ? $0 : nil }))
+		dirty.formUnion(nodes.values.compactMap({ $0.isModified ? $0 : nil }))
+		dirty.formUnion(ways.values.compactMap({ $0.isModified ? $0 : nil }))
+		dirty.formUnion(relations.values.compactMap({ $0.isModified ? $0 : nil }))
 
 		// get objects referenced by undo manager
 		let undoRefs = undoManager.objectRefs()
@@ -1477,15 +1477,15 @@ extension OsmMapData {
 
 		for node in nodes.values {
 			assert(node.mapData === self)
-			assert(node.modifyCount >= (node.ident > 0 || node.deleted ? 0 : 1))
+			assert(node.isModified || node.ident > 0 || node.deleted)
 		}
 		for way in ways.values {
 			assert(way.mapData === self)
-			assert(way.modifyCount >= (way.ident > 0 || way.deleted ? 0 : 1))
+			assert(way.isModified || way.ident > 0 || way.deleted)
 		}
 		for relation in relations.values {
 			assert(relation.mapData === self)
-			assert(relation.modifyCount >= (relation.ident > 0 || relation.deleted ? 0 : 1))
+			assert(relation.isModified || relation.ident > 0 || relation.deleted)
 		}
 
 		// make sure that if the undo manager is holding an object that it's consistent with mapData
@@ -1643,7 +1643,7 @@ extension OsmMapData {
 
 			// only remove relation if no members are covered by region
 			for (ident, relation) in relations
-				where !relation.isModified() && !undoObjects.contains(relation)
+				where !relation.isModified && !undoObjects.contains(relation)
 			{
 				let memberObjects = relation.allMemberObjects()
 				var covered = false
@@ -1667,7 +1667,7 @@ extension OsmMapData {
 
 			// only remove way if no nodes are covered by region
 			for (ident, way) in ways
-				where !way.isModified() && !undoObjects.contains(way)
+				where !way.isModified && !undoObjects.contains(way)
 			{
 				if !region.anyNodeIsCovered(way.nodes) {
 					removeWays.append(ident)
@@ -1680,7 +1680,7 @@ extension OsmMapData {
 
 			// only remove nodes if they are not covered and they don't belong to a way
 			for (ident, node) in nodes
-				where !node.isModified() && !undoObjects.contains(node)
+				where !node.isModified && !undoObjects.contains(node)
 			{
 				if node.wayCount == 0 {
 					if !region.pointIsCovered(node.location()) {

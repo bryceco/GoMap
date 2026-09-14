@@ -61,7 +61,7 @@ extension UndoActionType {
 	/// Mutation and its inverse sit on adjacent lines in each case body — the
 	/// "capture → mutate → return inverse" pattern makes correctness self-evident.
 	///
-	/// `modifyCount` is intentionally NOT adjusted here; `MyUndoManager` handles
+	/// `isModified` is intentionally NOT set here; `MyUndoManager` handles
 	/// it externally via `modifyObjects` so undo/redo direction is unambiguous.
 	@discardableResult
 	func apply(to mapData: OsmMapData) -> UndoActionType {
@@ -145,9 +145,8 @@ extension UndoActionType {
 // MARK: - modifyObjects
 
 extension UndoActionType {
-	/// Objects whose `modifyCount` should be incremented (or decremented during undo)
-	/// when this operation is applied. `setTimestamp` and `comment` are excluded
-	/// because they don't mark objects as dirty.
+	/// Objects whose `isModified` flag should be updated when this operation is applied.
+	/// `setTimestamp` and `comment` are excluded because they don't mark objects as dirty.
 	var modifyObjects: Set<OsmBaseObject> {
 		switch self {
 		case .setTimestamp, .comment:

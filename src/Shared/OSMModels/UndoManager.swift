@@ -148,9 +148,8 @@ class MyUndoManager: NSObject, NSSecureCoding {
 
 	// MARK: - Forward-edit entry point
 
-	/// Executes `type` immediately (forward edit, undo, or redo) and pushes the
-	/// inverse onto the appropriate stack.  Also bumps `modifyCount` for affected
-	/// objects and appends comments to `commentList`.
+	/// Executes `type` immediately and pushes the inverse onto the appropriate stack.
+	/// For actions that modify objects, marks them modified and appends comments to `commentList`.
 	func apply(_ type: UndoActionType) {
 		guard let mapData = mapData else { return }
 
@@ -174,9 +173,9 @@ class MyUndoManager: NSObject, NSSecureCoding {
 			redoStack.removeAll()
 		}
 
-		let undoing = isUndoing
+		// Forward edits always mark objects as modified.
 		for obj in type.modifyObjects {
-			obj.adjustModifyCount(undoing: undoing)
+			obj.setModified(true)
 		}
 
 		didChangeValue(forKey: "canUndo")
@@ -196,6 +195,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 	func doActionGroup(fromStack stack: inout [UndoAction]) {
 		guard stack.last != nil else { return }
 		let currentGroup = stack.last!.group
+		var affectedObjects: Set<OsmBaseObject> = []
 
 		while stack.last?.group == currentGroup,
 		      let action = stack.popLast()
@@ -211,9 +211,20 @@ class MyUndoManager: NSObject, NSSecureCoding {
 			} else {
 				undoStack.append(inverse)
 			}
-			let undoing = isUndoing
-			for obj in action.type.modifyObjects {
-				obj.adjustModifyCount(undoing: undoing)
+			affectedObjects.formUnion(action.type.modifyObjects)
+		}
+
+		// Recompute isModified for affected objects.
+		// After undo: an object is still modified only if it remains on the undo stack.
+		// After redo: all affected objects are back on the undo stack, so always modified.
+		if isUndoing {
+			let liveModified = Set(undoStack.flatMap { $0.type.modifyObjects })
+			for obj in affectedObjects {
+				obj.setModified(liveModified.contains(obj))
+			}
+		} else {
+			for obj in affectedObjects {
+				obj.setModified(true)
 			}
 		}
 	}
