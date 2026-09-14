@@ -10,15 +10,15 @@ import Foundation
 
 // MARK: - EditToken
 
-/// Proof that a mutation was initiated through an `UndoActionType.apply(to:)` call.
+/// Proof that a mutation was initiated through an `EditOperationType.apply(to:)` call.
 /// `fileprivate init()` means the only way to obtain a token is inside this file —
-/// i.e. inside `UndoActionType.apply(to:)`.  Every tracked-object setter requires
+/// i.e. inside `EditOperationType.apply(to:)`.  Every tracked-object setter requires
 /// one, so the compiler enforces that mutations flow through the undo system.
 struct EditToken {
 	fileprivate init() {}
 }
 
-// MARK: - UndoActionType
+// MARK: - EditOperationType
 
 /// Macro-level invertible edit operations.
 ///
@@ -30,7 +30,7 @@ struct EditToken {
 ///   `addToSpatial`, `removeFromSpatial`, `updateInSpatial` — absorbed into each op's apply
 ///   `incrementModifyCount` — tracked externally by `MyUndoManager`
 ///   `clearCachedProperties` — absorbed into `setTags` / `moveNode` apply bodies
-enum UndoActionType {
+enum EditOperationType {
 	// MARK: OsmBaseObject
 	case setTimestamp(OsmBaseObject, Date)
 	case setDeleted(OsmBaseObject, Bool)
@@ -54,7 +54,7 @@ enum UndoActionType {
 
 // MARK: - apply(to:)
 
-extension UndoActionType {
+extension EditOperationType {
 	/// Performs the mutation described by this case, absorbing all side effects
 	/// (spatial index, cache invalidation), and returns the exact inverse operation.
 	///
@@ -64,7 +64,7 @@ extension UndoActionType {
 	/// `isModified` is intentionally NOT set here; `MyUndoManager` handles
 	/// it externally via `modifyObjects` so undo/redo direction is unambiguous.
 	@discardableResult
-	func apply(to mapData: OsmMapData) -> UndoActionType {
+	func apply(to mapData: OsmMapData) -> EditOperationType {
 		let token = EditToken()
 		switch self {
 
@@ -144,7 +144,7 @@ extension UndoActionType {
 
 // MARK: - modifyObjects
 
-extension UndoActionType {
+extension EditOperationType {
 	/// Objects whose `isModified` flag should be updated when this operation is applied.
 	/// `setTimestamp` and `comment` are excluded because they don't mark objects as dirty.
 	var modifyObjects: Set<OsmBaseObject> {
@@ -169,15 +169,15 @@ extension UndoActionType {
 
 // MARK: - UndoAction
 
-/// Pairs an `UndoActionType` with its undo-group ID.
+/// Pairs an `EditOperationType` with its undo-group ID.
 /// Implements `NSSecureCoding` so it can be archived as part of `OsmMapData`.
 final class UndoAction: NSObject, NSSecureCoding {
 	static var supportsSecureCoding: Bool { true }
 
-	let type: UndoActionType
+	let type: EditOperationType
 	var group: Int
 
-	init(type: UndoActionType, group: Int = 0) {
+	init(type: EditOperationType, group: Int = 0) {
 		self.type = type
 		self.group = group
 	}
@@ -316,9 +316,9 @@ final class UndoAction: NSObject, NSSecureCoding {
 		super.init()
 	}
 
-	/// Decodes the `UndoActionType` from `coder`. Returns `nil` if the tag is
+	/// Decodes the `EditOperationType` from `coder`. Returns `nil` if the tag is
 	/// unknown or required objects are missing (e.g. archive version mismatch).
-	private static func decodeType(from coder: NSCoder) -> UndoActionType? {
+	private static func decodeType(from coder: NSCoder) -> EditOperationType? {
 		let tagRaw = coder.decodeInteger(forKey: "tag")
 		guard let tag = Tag(rawValue: tagRaw) else { return nil }
 
