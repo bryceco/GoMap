@@ -248,17 +248,36 @@ final class GpxTrack: NSObject, NSSecureCoding {
 
 #if os(iOS)
 		guard let doc: DDXMLDocument = try? DDXMLDocument(
-			xmlString: "<gpx creator=\"Go Map!!\" version=\"1.4\"></gpx>",
+			xmlString: "<gpx creator=\"Go Map!!\" version=\"1.1\" xmlns=\"http://www.topografix.com/GPX/1/1\"></gpx>",
 			options: 0),
-			let root = doc.rootElement(),
-			let trkElement = DDXMLNode.element(withName: "trk") as? DDXMLElement
+			let root = doc.rootElement()
 		else { return nil }
 #else
-		let root = DDXMLNode.element(withName: "gpx") as? DDXMLElement
+		guard let root = DDXMLNode.element(withName: "gpx") as? DDXMLElement else { return nil }
 		let doc = DDXMLDocument(rootElement: root)
 		doc.characterEncoding = "UTF-8"
 #endif
+
+		// Metadata: creation date
+		if let metaElement = DDXMLNode.element(withName: "metadata") as? DDXMLElement,
+		   let timeElement = DDXMLNode.element(withName: "time") as? DDXMLElement
+		{
+			timeElement.stringValue = dateFormatter.string(from: creationDate)
+			metaElement.addChild(timeElement)
+			root.addChild(metaElement)
+		}
+
+		guard let trkElement = DDXMLNode.element(withName: "trk") as? DDXMLElement
+		else { return nil }
 		root.addChild(trkElement)
+
+		// Track name (only written if explicitly set, not the auto-generated filename)
+		if let trackName = _name,
+		   let nameElement = DDXMLNode.element(withName: "name") as? DDXMLElement
+		{
+			nameElement.stringValue = trackName
+			trkElement.addChild(nameElement)
+		}
 
 		guard let segElement = DDXMLNode.element(withName: "trkseg") as? DDXMLElement
 		else { return nil }
@@ -267,8 +286,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		for pt in points {
 			guard let ptElement = DDXMLNode.element(withName: "trkpt") as? DDXMLElement,
 			      let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latLon.lat)") as? DDXMLNode,
-			      let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.latLon.lon)") as? DDXMLNode,
-			      let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement
+			      let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.latLon.lon)") as? DDXMLNode
 			else { return nil }
 
 			segElement.addChild(ptElement)
@@ -282,12 +300,50 @@ final class GpxTrack: NSObject, NSSecureCoding {
 				ptElement.addChild(timeElement)
 			}
 
-			eleElement.stringValue = "\(pt.elevation)"
-			ptElement.addChild(eleElement)
+			if let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement {
+				eleElement.stringValue = "\(pt.elevation)"
+				ptElement.addChild(eleElement)
+			}
 		}
 
-		let string = doc.xmlString
-		return string
+		// Waypoints
+		for pt in wayPoints {
+			guard let wptElement = DDXMLNode.element(withName: "wpt") as? DDXMLElement,
+			      let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latLon.lat)") as? DDXMLNode,
+			      let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.latLon.lon)") as? DDXMLNode
+			else { continue }
+
+			root.addChild(wptElement)
+			wptElement.addAttribute(attrLat)
+			wptElement.addAttribute(attrLon)
+
+			if pt.elevation != 0,
+			   let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement
+			{
+				eleElement.stringValue = "\(pt.elevation)"
+				wptElement.addChild(eleElement)
+			}
+			if let timestamp = pt.timestamp,
+			   let timeElement = DDXMLNode.element(withName: "time") as? DDXMLElement
+			{
+				timeElement.stringValue = dateFormatter.string(from: timestamp)
+				wptElement.addChild(timeElement)
+			}
+			if !pt.name.isEmpty,
+			   let nameElement = DDXMLNode.element(withName: "name") as? DDXMLElement
+			{
+				nameElement.stringValue = pt.name
+				wptElement.addChild(nameElement)
+			}
+			if !pt.desc.isEmpty,
+			   let descElement = DDXMLNode.element(withName: "desc") as? DDXMLElement
+			{
+				descElement.stringValue = pt.desc
+				wptElement.addChild(descElement)
+			}
+		}
+
+		return doc.xmlString
 	}
 
 	func gpxXmlData() -> Data? {
@@ -340,10 +396,37 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		let trkPoints: [GpxPoint] = try trkNodes.map { try GpxPoint(withXML: $0) }
 		let wptPoints: [GpxPoint] = try wptNodes.map { try GpxPoint(withXML: $0) }
 
+		// Read track name from <trk><name>
+		var trackName: String?
+		for ns in nsList {
+			let namePath = "./\(ns)gpx/\(ns)trk/\(ns)name"
+			if let nameNode = (try? doc.nodes(forXPath: namePath))?.first,
+			   let str = nameNode.stringValue, !str.isEmpty
+			{
+				trackName = str
+				break
+			}
+		}
+
+		// Read creation date from <metadata><time> as fallback
+		var metadataDate: Date?
+		for ns in nsList {
+			let timePath = "./\(ns)gpx/\(ns)metadata/\(ns)time"
+			if let timeNode = (try? doc.nodes(forXPath: timePath))?.first,
+			   let str = timeNode.stringValue
+			{
+				metadataDate = OsmBaseObject.rfc3339DateFormatter().date(from: str)
+				break
+			}
+		}
+
 		self.init()
 		points = trkPoints
 		wayPoints = wptPoints
-		creationDate = trkPoints.first?.timestamp ?? wptPoints.first?.timestamp ?? Date()
+		creationDate = trkPoints.first?.timestamp ?? wptPoints.first?.timestamp ?? metadataDate ?? Date()
+		if let trackName {
+			name = trackName
+		}
 	}
 
 	convenience init(xmlFile url: URL) throws {
