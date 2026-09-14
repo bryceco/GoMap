@@ -57,7 +57,8 @@ enum GEOMETRY: String, Codable {
 }
 
 @objcMembers
-class OsmBaseObject: NSObject, NSCoding, NSCopying {
+class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
+	public class var supportsSecureCoding: Bool { true }
 	private(set) final var ident: OsmIdentifier
 	private(set) final var user: String
 	private(set) final var timestamp: String
@@ -136,14 +137,14 @@ class OsmBaseObject: NSObject, NSCoding, NSCopying {
 	}
 
 	required init?(coder: NSCoder) {
-		ident = (coder.decodeObject(forKey: "ident") as? NSNumber)?.int64Value ?? 0
-		user = coder.decodeObject(forKey: "user") as? String ?? ""
-		timestamp = coder.decodeObject(forKey: "timestamp") as? String ?? ""
+		ident = coder.decodeObject(of: NSNumber.self, forKey: "ident")?.int64Value ?? 0
+		user = coder.decodeObject(of: NSString.self, forKey: "user") as String? ?? ""
+		timestamp = coder.decodeObject(of: NSString.self, forKey: "timestamp") as String? ?? ""
 		version = Int(coder.decodeInt32(forKey: "version"))
 		changeset = OsmIdentifier(coder.decodeInteger(forKey: "changeset"))
 		uid = Int(coder.decodeInt32(forKey: "uid"))
 		visible = coder.decodeBool(forKey: "visible")
-		tags = coder.decodeObject(forKey: "tags") as? [String: String] ?? [:]
+		tags = coder.decodeObject(of: [NSDictionary.self, NSString.self], forKey: "tags") as? [String: String] ?? [:]
 		deleted = coder.decodeBool(forKey: "deleted")
 		isModified = coder.decodeInt32(forKey: "modified") != 0
 		super.init()

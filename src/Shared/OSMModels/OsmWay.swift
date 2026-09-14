@@ -8,8 +8,7 @@
 
 import UIKit
 
-final class OsmWay: OsmBaseObject, NSSecureCoding {
-	static let supportsSecureCoding = true
+final class OsmWay: OsmBaseObject {
 
 	var nodeRefs: [OsmIdentifier]? // only used during construction
 	private(set) var nodes: [OsmNode]
@@ -530,7 +529,10 @@ final class OsmWay: OsmBaseObject, NSSecureCoding {
 	}
 
 	required init?(coder: NSCoder) {
-		nodes = coder.decodeObject(forKey: "nodes") as! [OsmNode]
+		guard let nodes = coder.decodeObject(of: [NSArray.self, OsmNode.self], forKey: "nodes") as? [OsmNode] else {
+			return nil
+		}
+		self.nodes = nodes
 		super.init(coder: coder)
 		for node in nodes {
 			node.wayCount += 1

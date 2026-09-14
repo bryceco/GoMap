@@ -1082,12 +1082,18 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	required init?(coder: NSCoder) {
 		guard
-			let nodes = coder.decodeObject(forKey: "nodes") as? [OsmIdentifier: OsmNode],
-			let ways = coder.decodeObject(forKey: "ways") as? [OsmIdentifier: OsmWay],
-			let relations = coder.decodeObject(forKey: "relations") as? [OsmIdentifier: OsmRelation],
-			let region = coder.decodeObject(forKey: "region") as? QuadMap,
-			let spatial = coder.decodeObject(forKey: "spatial") as? QuadMap,
-			let undoManager = coder.decodeObject(forKey: "undoManager") as? MyUndoManager
+			let nodes = coder.decodeObject(of: [NSDictionary.self, NSNumber.self, OsmNode.self],
+			                               forKey: "nodes") as? [OsmIdentifier: OsmNode],
+			let ways = coder.decodeObject(of: [NSDictionary.self, NSNumber.self, OsmWay.self],
+			                              forKey: "ways") as? [OsmIdentifier: OsmWay],
+			let relations = coder.decodeObject(of: [NSDictionary.self, NSNumber.self, OsmRelation.self],
+			                                   forKey: "relations") as? [OsmIdentifier: OsmRelation],
+			let region = coder.decodeObject(of: QuadMap.self,
+			                                forKey: "region"),
+			let spatial = coder.decodeObject(of: QuadMap.self,
+			                                 forKey: "spatial"),
+			let undoManager = coder.decodeObject(of: MyUndoManager.self,
+			                                     forKey: "undoManager")
 		else { return nil }
 
 		self.nodes = nodes

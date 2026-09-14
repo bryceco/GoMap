@@ -288,35 +288,16 @@ class MyUndoManager: NSObject, NSSecureCoding {
 	}
 
 	func encode(with coder: NSCoder) {
-		if coder.allowsKeyedCoding {
-			coder.encode(undoStack, forKey: "undoStack")
-			coder.encode(redoStack, forKey: "redoStack")
-			coder.encode(runLoopCounter, forKey: "runLoopCounter")
-		} else {
-			coder.encode(undoStack)
-			coder.encode(redoStack)
-			coder.encodeBytes(&runLoopCounter, length: MemoryLayout.size(ofValue: runLoopCounter))
-		}
+		coder.encode(undoStack, forKey: "undoStack")
+		coder.encode(redoStack, forKey: "redoStack")
+		coder.encode(runLoopCounter, forKey: "runLoopCounter")
 	}
 
 	required init?(coder: NSCoder) {
 		super.init()
-		if coder.allowsKeyedCoding {
-			undoStack = coder.decodeObject(forKey: "undoStack") as? [UndoAction] ?? []
-			redoStack = coder.decodeObject(forKey: "redoStack") as? [UndoAction] ?? []
-			runLoopCounter = coder.decodeInteger(forKey: "runLoopCounter")
-		} else {
-			undoStack = coder.decodeObject() as? [UndoAction] ?? []
-			redoStack = coder.decodeObject() as? [UndoAction] ?? []
-			var len = 0
-			withUnsafeMutablePointer(to: &len, {
-				if let ptr = coder.decodeBytes(withReturnedLength: $0) {
-					runLoopCounter = ptr.load(as: type(of: runLoopCounter))
-				} else {
-					runLoopCounter = 0
-				}
-			})
-		}
+		undoStack = coder.decodeObject(of: [NSArray.self, UndoAction.self], forKey: "undoStack") as? [UndoAction] ?? []
+		redoStack = coder.decodeObject(of: [NSArray.self, UndoAction.self], forKey: "redoStack") as? [UndoAction] ?? []
+		runLoopCounter = coder.decodeInteger(forKey: "runLoopCounter")
 		initCommon()
 	}
 }

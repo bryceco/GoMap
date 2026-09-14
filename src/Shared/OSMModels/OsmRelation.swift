@@ -9,8 +9,7 @@
 import UIKit
 
 @objcMembers
-final class OsmRelation: OsmBaseObject, NSSecureCoding {
-	static let supportsSecureCoding = true
+final class OsmRelation: OsmBaseObject {
 
 	private(set) var members: [OsmMember]
 
@@ -455,7 +454,10 @@ final class OsmRelation: OsmBaseObject, NSSecureCoding {
 	}
 
 	required init?(coder: NSCoder) {
-		members = coder.decodeObject(forKey: "members") as! [OsmMember]
+		guard let members = coder.decodeObject(of: [NSArray.self, OsmMember.self], forKey: "members") as? [OsmMember] else {
+			return nil
+		}
+		self.members = members
 		super.init(coder: coder)
 	}
 }

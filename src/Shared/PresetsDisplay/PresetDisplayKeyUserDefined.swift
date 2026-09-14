@@ -16,8 +16,8 @@ final class PresetDisplayKeyUserDefined: PresetDisplayKey {
 	let appliesToValue: String // "" if not used
 
 	required init?(coder: NSCoder) {
-		if let appliesToKey = coder.decodeObject(forKey: "appliesToKey") as? String,
-		   let appliesToValue = coder.decodeObject(forKey: "appliesToValue") as? String
+		if let appliesToKey = coder.decodeObject(of: NSString.self, forKey: "appliesToKey") as String?,
+		   let appliesToValue = coder.decodeObject(of: NSString.self, forKey: "appliesToValue") as String?
 		{
 			self.appliesToKey = appliesToKey
 			self.appliesToValue = appliesToValue
@@ -25,6 +25,12 @@ final class PresetDisplayKeyUserDefined: PresetDisplayKey {
 		} else {
 			return nil
 		}
+	}
+
+	override func encode(with coder: NSCoder) {
+		coder.encode(appliesToKey, forKey: "appliesToKey")
+		coder.encode(appliesToValue, forKey: "appliesToValue")
+		super.encode(with: coder)
 	}
 
 	init(appliesToKey: String, // empty string is possible

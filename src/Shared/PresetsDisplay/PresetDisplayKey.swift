@@ -10,7 +10,7 @@
 import UIKit
 
 // A key along with information about possible values
-class PresetDisplayKey: NSObject, Codable {
+class PresetDisplayKey: NSObject, NSSecureCoding, Codable {
 	public class var supportsSecureCoding: Bool { return true }
 
 	let name: String // name of the preset, e.g. Hours
@@ -52,10 +52,10 @@ class PresetDisplayKey: NSObject, Codable {
 	// This is used only for user-defined keys, called from
 	// PresetKeyUserDefined() super.init()
 	required init?(coder: NSCoder) {
-		if let name = coder.decodeObject(forKey: "name") as? String,
-		   let tagKey = coder.decodeObject(forKey: "tagKey") as? String,
-		   let placeholder = coder.decodeObject(forKey: "placeholder") as? String,
-		   let presetList = coder.decodeObject(forKey: "presetList") as? [PresetDisplayValue],
+		if let name = coder.decodeObject(of: NSString.self, forKey: "name") as String?,
+		   let tagKey = coder.decodeObject(of: NSString.self, forKey: "tagKey") as String?,
+		   let placeholder = coder.decodeObject(of: NSString.self, forKey: "placeholder") as String?,
+		   let presetList = coder.decodeObject(of: [NSArray.self, PresetDisplayValue.self], forKey: "presetList") as? [PresetDisplayValue],
 		   let keyboardType = UIKeyboardType(rawValue: coder.decodeInteger(forKey: "keyboardType")),
 		   let autocapitalizationType = UITextAutocapitalizationType(rawValue:
 		   	coder.decodeInteger(forKey: "capitalize"))
@@ -72,6 +72,16 @@ class PresetDisplayKey: NSObject, Codable {
 		} else {
 			return nil
 		}
+	}
+
+	// This is used only for user-defined keys (legacy NSKeyedArchiver path)
+	func encode(with coder: NSCoder) {
+		coder.encode(name, forKey: "name")
+		coder.encode(tagKey, forKey: "tagKey")
+		coder.encode(placeholder, forKey: "placeholder")
+		coder.encode(presetValues, forKey: "presetList")
+		coder.encode(keyboardType.rawValue, forKey: "keyboardType")
+		coder.encode(autocapitalizationType.rawValue, forKey: "capitalize")
 	}
 
 	enum CodingKeys: String, CodingKey {

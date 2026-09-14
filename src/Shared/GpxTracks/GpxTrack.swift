@@ -104,8 +104,8 @@ final class GpxPoint: NSObject, NSSecureCoding {
 		accuracy = aDecoder.decodeDouble(forKey: "acc")
 		elevation = aDecoder.decodeDouble(forKey: "ele")
 		timestamp = aDecoder.decodeObject(of: NSDate.self, forKey: "time") as? Date
-		name = aDecoder.decodeObject(forKey: "name") as? String ?? ""
-		desc = aDecoder.decodeObject(forKey: "desc") as? String ?? ""
+		name = aDecoder.decodeObject(of: NSString.self, forKey: "name") as String? ?? ""
+		desc = aDecoder.decodeObject(of: NSString.self, forKey: "desc") as String? ?? ""
 		extensions = []
 		super.init()
 	}
@@ -395,10 +395,10 @@ final class GpxTrack: NSObject, NSSecureCoding {
 
 	required init?(coder aDecoder: NSCoder) {
 		super.init()
-		points = aDecoder.decodeObject(forKey: "points") as? [GpxPoint] ?? []
-		wayPoints = aDecoder.decodeObject(forKey: "waypoints") as? [GpxPoint] ?? []
-		name = aDecoder.decodeObject(forKey: "name") as? String ?? ""
-		creationDate = aDecoder.decodeObject(forKey: "creationDate") as? Date ?? Date()
+		points = aDecoder.decodeObject(of: [NSArray.self, GpxPoint.self], forKey: "points") as? [GpxPoint] ?? []
+		wayPoints = aDecoder.decodeObject(of: [NSArray.self, GpxPoint.self], forKey: "waypoints") as? [GpxPoint] ?? []
+		name = aDecoder.decodeObject(of: NSString.self, forKey: "name") as String? ?? ""
+		creationDate = aDecoder.decodeObject(of: NSDate.self, forKey: "creationDate") as Date? ?? Date()
 	}
 
 	func encode(with aCoder: NSCoder) {
