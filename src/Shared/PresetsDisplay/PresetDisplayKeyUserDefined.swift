@@ -28,9 +28,8 @@ final class PresetDisplayKeyUserDefined: PresetDisplayKey {
 	}
 
 	override func encode(with coder: NSCoder) {
-		coder.encode(appliesToKey, forKey: "appliesToKey")
-		coder.encode(appliesToValue, forKey: "appliesToValue")
-		super.encode(with: coder)
+		// NSSecureCoding requires this, but saves use Codable/JSON — this should never be called
+		fatalError("Use Codable encoding instead")
 	}
 
 	init(appliesToKey: String, // empty string is possible
@@ -90,7 +89,7 @@ class PresetKeyUserDefinedList: Codable {
 		{
 			self.list = list
 		} else {
-			// Legacy method of storing data
+			// Legacy method of storing data — migrate to JSON on first load (Sept 14, 2026)
 			do {
 				let path = PresetKeyUserDefinedList.legacyArchivePath()
 				let data = try Data(contentsOf: URL(fileURLWithPath: path))
@@ -100,6 +99,9 @@ class PresetKeyUserDefinedList: Codable {
 				                 PresetDisplayValue.self]
 				list = try NSKeyedUnarchiver.unarchivedObject(ofClasses: classList, from: data)
 					as? [PresetDisplayKeyUserDefined] ?? []
+
+				// migrate to JSON so the legacy archive is never read again
+				save()
 			} catch {
 				list = []
 			}

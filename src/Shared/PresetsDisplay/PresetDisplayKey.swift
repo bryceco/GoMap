@@ -51,6 +51,7 @@ class PresetDisplayKey: NSObject, NSSecureCoding, Codable {
 
 	// This is used only for user-defined keys, called from
 	// PresetKeyUserDefined() super.init()
+	// This a legacy initializer. Delete 6 months after Sept 14, 2026
 	required init?(coder: NSCoder) {
 		if let name = coder.decodeObject(of: NSString.self, forKey: "name") as String?,
 		   let tagKey = coder.decodeObject(of: NSString.self, forKey: "tagKey") as String?,
@@ -74,14 +75,9 @@ class PresetDisplayKey: NSObject, NSSecureCoding, Codable {
 		}
 	}
 
-	// This is used only for user-defined keys (legacy NSKeyedArchiver path)
 	func encode(with coder: NSCoder) {
-		coder.encode(name, forKey: "name")
-		coder.encode(tagKey, forKey: "tagKey")
-		coder.encode(placeholder, forKey: "placeholder")
-		coder.encode(presetValues, forKey: "presetList")
-		coder.encode(keyboardType.rawValue, forKey: "keyboardType")
-		coder.encode(autocapitalizationType.rawValue, forKey: "capitalize")
+		// NSSecureCoding requires this, but saves use Codable/JSON — this should never be called
+		fatalError("Use Codable encoding instead")
 	}
 
 	enum CodingKeys: String, CodingKey {

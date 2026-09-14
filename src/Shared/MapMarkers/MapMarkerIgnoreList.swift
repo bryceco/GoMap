@@ -23,7 +23,44 @@ enum MapMarkerIgnoreReason: Codable {
 	private typealias IgnoreDict = [String: MapMarkerIgnoreReason]
 
 	init() {
-		ignoreList = readIgnoreList()
+		let path = ArchivePath.mapMarkerIgnoreList.url()
+		guard let data = try? Data(contentsOf: path) else {
+			ignoreList = [:]
+			return
+		}
+
+		var list: IgnoreDict
+		var needsMigration = false
+
+		if let json = try? JSONDecoder().decode(IgnoreDict.self, from: data) {
+			list = json
+		} else {
+			// Legacy: read as archive — migrate to JSON on first load (Sept 14, 2026)
+			do {
+				let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
+				list = unarchiver.decodeDecodable(IgnoreDict.self, forKey: NSKeyedArchiveRootObjectKey) ?? [:]
+				needsMigration = true
+			} catch {
+				ignoreList = [:]
+				return
+			}
+		}
+
+		// filter out ignored items that expired
+		let now = Date()
+		list = list.filter({
+			switch $0.value {
+			case .userRequest:
+				return true
+			case let .userRequestUntil(date):
+				return date > now
+			}
+		})
+
+		ignoreList = list
+		if needsMigration {
+			writeIgnoreList() // migrate to JSON so the legacy archive is never read again
+		}
 	}
 
 	private var ignoreList: IgnoreDict = [:]
@@ -41,40 +78,6 @@ enum MapMarkerIgnoreReason: Codable {
 		writeIgnoreList()
 		marker.button?.removeFromSuperview()
 		marker.button = nil
-	}
-
-	private func readIgnoreList() -> [String: MapMarkerIgnoreReason] {
-		let path = ArchivePath.mapMarkerIgnoreList.url()
-		guard let data = try? Data(contentsOf: path) else {
-			return [:]
-		}
-		var list: IgnoreDict
-
-		// try to read as JSON
-		if let json = try? JSONDecoder().decode(IgnoreDict.self, from: data) {
-			list = json
-		} else {
-			// Legacy: read as archive
-			do {
-				let unarchiver = try NSKeyedUnarchiver(forReadingFrom: data)
-				list = unarchiver.decodeDecodable(IgnoreDict.self, forKey: NSKeyedArchiveRootObjectKey) ?? [:]
-			} catch {
-				return [:]
-			}
-		}
-
-		// filter out ignored items that expired
-		let now = Date()
-		list = list.filter({
-			switch $0.value {
-			case .userRequest:
-				return true
-			case let .userRequestUntil(date):
-				return date > now
-			}
-		})
-
-		return list
 	}
 
 	private func writeIgnoreList() {
