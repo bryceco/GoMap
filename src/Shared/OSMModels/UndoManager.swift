@@ -218,7 +218,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		// After undo: an object is still modified only if it remains on the undo stack.
 		// After redo: all affected objects are back on the undo stack, so always modified.
 		if isUndoing {
-			let liveModified = Set(undoStack.flatMap { $0.type.modifyObjects })
+			let liveModified = Set(stack.flatMap { $0.type.modifyObjects })
 			for obj in affectedObjects {
 				obj.setModified(liveModified.contains(obj))
 			}

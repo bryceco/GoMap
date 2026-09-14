@@ -37,7 +37,7 @@ class QuadMap: NSObject, NSSecureCoding {
 	}
 
 	required init?(coder: NSCoder) {
-		if let root = coder.decodeObject(forKey: "rootQuad") as? QuadBox {
+		if let root = coder.decodeObject(of: QuadBox.self, forKey: "rootQuad") {
 			rootQuad = root
 			encodingContentsOnSave = true
 		} else {

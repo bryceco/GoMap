@@ -528,6 +528,8 @@ final class OsmWay: OsmBaseObject {
 		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:], deleted: true)
 	}
 
+	override class var supportsSecureCoding: Bool { true }
+
 	required init?(coder: NSCoder) {
 		guard let nodes = coder.decodeObject(of: [NSArray.self, OsmNode.self], forKey: "nodes") as? [OsmNode] else {
 			return nil

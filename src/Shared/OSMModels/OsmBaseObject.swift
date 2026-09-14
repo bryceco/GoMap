@@ -146,7 +146,9 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 		visible = coder.decodeBool(forKey: "visible")
 		tags = coder.decodeObject(of: [NSDictionary.self, NSString.self], forKey: "tags") as? [String: String] ?? [:]
 		deleted = coder.decodeBool(forKey: "deleted")
+		// "modified" is the current key; "modifyCount" was the legacy integer key before the refactor.
 		isModified = coder.decodeInt32(forKey: "modified") != 0
+			|| coder.decodeInt32(forKey: "modifyCount") > 0
 		super.init()
 		assert(ident != 0)
 	}

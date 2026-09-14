@@ -90,7 +90,13 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 		cannotDecodeObjectOfClassName name: String,
 		originalClasses classNames: [String]) -> AnyClass?
 	{
-		fatalError("archive error: cannotDecodeObjectOfClassName \(name)")
+		print("OsmMapDataArchiver: unknown class '\(name)' during unarchive")
+		if name == "UndoAction" {
+			// Returning nil causes the unarchiver to substitute nil for the unknown object.
+			// This gracefully discards stale undo/redo data when upgrading from an older archive format.
+			return nil
+		}
+		fatalError()
 	}
 
 	func unarchiver(_ unarchiver: NSKeyedUnarchiver, willReplace object: Any, with newObject: Any) {

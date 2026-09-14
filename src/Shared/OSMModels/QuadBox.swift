@@ -70,13 +70,13 @@ final class QuadBox: NSObject, NSSecureCoding {
 	}
 
 	init?(coder: NSCoder) {
-		children[0] = coder.decodeObject(forKey: "child0") as? QuadBox
-		children[1] = coder.decodeObject(forKey: "child1") as? QuadBox
-		children[2] = coder.decodeObject(forKey: "child2") as? QuadBox
-		children[3] = coder.decodeObject(forKey: "child3") as? QuadBox
+		children[0] = coder.decodeObject(of: QuadBox.self, forKey: "child0")
+		children[1] = coder.decodeObject(of: QuadBox.self, forKey: "child1")
+		children[2] = coder.decodeObject(of: QuadBox.self, forKey: "child2")
+		children[3] = coder.decodeObject(of: QuadBox.self, forKey: "child3")
 		isDownloaded = coder.decodeBool(forKey: "whole")
 		isSplit = coder.decodeBool(forKey: "split")
-		guard let rectData = coder.decodeObject(forKey: "rect") as? Data else { return nil }
+		guard let rectData = coder.decodeObject(of: NSData.self, forKey: "rect") as Data? else { return nil }
 		rect = rectData.withUnsafeBytes({ $0.load(as: OSMRect.self) })
 		downloadDate = coder.decodeDouble(forKey: "date")
 		parent = nil

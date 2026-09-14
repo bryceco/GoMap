@@ -453,6 +453,8 @@ final class OsmRelation: OsmBaseObject {
 		self.init(withVersion: 1, changeset: 0, user: userName, uid: 0, ident: ident, timestamp: "", tags: [:], deleted: true)
 	}
 
+	override class var supportsSecureCoding: Bool { true }
+
 	required init?(coder: NSCoder) {
 		guard let members = coder.decodeObject(of: [NSArray.self, OsmMember.self], forKey: "members") as? [OsmMember] else {
 			return nil

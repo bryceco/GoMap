@@ -126,6 +126,8 @@ final class OsmNode: OsmBaseObject {
 		self.latLon = latLon
 	}
 
+	override class var supportsSecureCoding: Bool { true }
+
 	required init?(coder: NSCoder) {
 		let lat = coder.decodeDouble(forKey: "lat")
 		let lon = coder.decodeDouble(forKey: "lon")

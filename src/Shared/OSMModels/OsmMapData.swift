@@ -1090,8 +1090,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			                                   forKey: "relations") as? [OsmIdentifier: OsmRelation],
 			let region = coder.decodeObject(of: QuadMap.self,
 			                                forKey: "region"),
-			let spatial = coder.decodeObject(of: QuadMap.self,
-			                                 forKey: "spatial"),
+			let spatial = coder.decodeObject(of: [QuadMap.self, QuadBox.self],
+			                                 forKey: "spatial") as? QuadMap,
 			let undoManager = coder.decodeObject(of: MyUndoManager.self,
 			                                     forKey: "undoManager")
 		else { return nil }
