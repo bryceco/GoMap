@@ -188,7 +188,8 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		}
 		cell.pickerImage.contentMode = .scaleAspectFit
 		cell.setNeedsUpdateConstraints()
-		let description = feature.wikiDescription(update: { desc in
+		let description = feature.wikiDescription(update: { [weak self] desc in
+			guard let self else { return }
 			// Search visible cells by featureID and update it
 			guard let cell = self.tableView.visibleCells.first(where: {
 				($0 as? FeaturePickerCell)?.featureID == feature.featureID
