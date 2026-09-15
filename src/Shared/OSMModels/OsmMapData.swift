@@ -270,7 +270,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			modifications += (relation.deleted ? relation.ident > 0 : relation.isModified) ? 1 : 0
 		}
 		let undoCount = undoManager.countUndoGroups
-		return min(modifications, undoCount) // different ways to count, but both can be inflated so take the minimum
+		// Both counts can be inflated independently, so take the minimum.
+		// When the undo stack is empty trust isModified directly rather than clamping everything to zero.
+		return undoCount == 0 ? modifications : min(modifications, undoCount)
 	}
 
 	func hasDataAwaitingUpload() -> Bool {

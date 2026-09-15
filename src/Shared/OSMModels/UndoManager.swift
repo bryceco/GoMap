@@ -366,7 +366,24 @@ extension MyUndoManager {
 			groupObjects[action.group, default: []].formUnion(action.osmObjects)
 		}
 
-		guard !groupObjects.isEmpty else { return [] }
+		guard !groupObjects.isEmpty else {
+			// Undo stack is empty — fall back to isModified on each object.
+			// This handles upgrades where an incompatible undo archive was discarded
+			// but per-object modification flags (encoded separately) survived.
+			guard let mapData = mapData else { return [] }
+			// Use the same predicate as modificationCount(): for deleted objects, any
+			// existing-server object (ident > 0) needs to be uploaded; for non-deleted
+			// objects, check isModified.
+			func needsUpload(_ obj: OsmBaseObject) -> Bool {
+				obj.deleted ? obj.ident > 0 : obj.isModified
+			}
+			let modified: Set<OsmBaseObject> = Set(
+				mapData.nodes.values.filter(needsUpload) +
+					mapData.ways.values.filter(needsUpload) +
+					mapData.relations.values.filter(needsUpload))
+			guard !modified.isEmpty else { return [] }
+			return [ConnectedObjects(objects: modified, undoGroups: [0])]
+		}
 
 		// Step 2: build reverse map — object → [groupId].
 		var groupsForObject: [OsmBaseObject: [Int]] = [:]
