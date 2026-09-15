@@ -27,7 +27,11 @@ extension MapPositionedView {
 			return nil
 		}
 		let point = viewPort.mapTransform.screenPoint(forLatLon: location, birdsEye: false)
-		return viewPort.mapTransform.wrappedScreenPoint(point, screenBounds: mapView.bounds)
+		let wrapped = viewPort.mapTransform.wrappedScreenPoint(point, screenBounds: mapView.bounds)
+		guard wrapped.x.isFinite, wrapped.y.isFinite else {
+			return nil
+		}
+		return wrapped
 	}
 
 	func updateScreenPosition() {
