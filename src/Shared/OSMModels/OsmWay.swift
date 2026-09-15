@@ -348,6 +348,12 @@ final class OsmWay: OsmBaseObject {
 				previous = current
 			}
 			let area = sum / 2
+			guard area != 0 else {
+				// Degenerate polygon (zero area): fall back to bounding box center
+				let rc = boundingBox
+				return LatLon(x: rc.origin.x + rc.size.width / 2,
+							  y: rc.origin.y + rc.size.height / 2)
+			}
 			var point = OSMPoint(x: sumX / 6 / area,
 			                     y: sumY / 6 / area)
 			point.x += offset.x
