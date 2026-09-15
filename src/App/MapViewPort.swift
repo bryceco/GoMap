@@ -74,8 +74,9 @@ extension MapViewPort {
 	}
 
 	func adjustZoom(by ratio: CGFloat, aroundScreenPoint zoomCenter: CGPoint) {
-		guard
-			ratio != 1.0
+		guard ratio.isFinite,
+		      ratio > 0,
+		      ratio != 1.0
 		else {
 			return
 		}
