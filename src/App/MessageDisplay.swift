@@ -42,29 +42,18 @@ class MessageDisplay {
 	}
 
 	func presentError(title: String?, error: Error, flash: Bool) {
-		defer {
-			if !flash {
-				lastErrorDate = Date()
-			}
-		}
 		guard lastErrorDate == nil || Date().timeIntervalSince(lastErrorDate ?? Date()) > 3.0 else {
 			return
 		}
+		if !flash {
+			lastErrorDate = Date()
+		}
 
 		var title = title ?? NSLocalizedString("Error", comment: "")
-		var text = error.localizedDescription
+		let defaultText = error.localizedDescription
 
 		let isNetworkError = error is URLError
 		var ignoreButton: String?
-
-		// Decode HTML text
-		if let error = error as? UrlSessionError,
-		   case let .badStatusCode(_, message) = error,
-		   message.prefix(1) == "<", message.suffix(1) == ">",
-		   let html = NSAttributedString(withHtmlString: message)
-		{
-			text = html.string
-		}
 
 		if isNetworkError {
 			if let ignoreNetworkErrorsUntilDate = ignoreNetworkErrorsUntilDate {
@@ -79,19 +68,40 @@ class MessageDisplay {
 			ignoreButton = NSLocalizedString("Ignore", comment: "")
 		}
 
-		if flash {
-			flashMessage(title: title, message: text)
+		// Server error responses are sometimes full HTML pages; decode asynchronously.
+		let htmlMessage: String?
+		if let urlError = error as? UrlSessionError,
+		   case let .badStatusCode(_, message) = urlError,
+		   message.prefix(1) == "<", message.suffix(1) == ">"
+		{
+			htmlMessage = message
 		} else {
-			let alertError = UIAlertController(title: title, message: text, preferredStyle: .alert)
-			alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-			                                   style: .cancel, handler: nil))
-			if let ignoreButton = ignoreButton {
-				alertError.addAction(UIAlertAction(title: ignoreButton, style: .default, handler: { [self] _ in
-					// ignore network errors for a while
-					ignoreNetworkErrorsUntilDate = Date().addingTimeInterval(60.0)
-				}))
+			htmlMessage = nil
+		}
+
+		Task { @MainActor in
+			let text: String
+			if let htmlMessage,
+			   let decoded = await NSAttributedString(withHtmlString: htmlMessage)
+			{
+				text = decoded.string
+			} else {
+				text = defaultText
 			}
-			showAlert(alertError)
+			if flash {
+				self.flashMessage(title: title, message: text)
+			} else {
+				let alertError = UIAlertController(title: title, message: text, preferredStyle: .alert)
+				alertError.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+				                                   style: .cancel, handler: nil))
+				if let ignoreButton = ignoreButton {
+					alertError.addAction(UIAlertAction(title: ignoreButton, style: .default, handler: { [self] _ in
+						// ignore network errors for a while
+						ignoreNetworkErrorsUntilDate = Date().addingTimeInterval(60.0)
+					}))
+				}
+				self.showAlert(alertError)
+			}
 		}
 	}
 

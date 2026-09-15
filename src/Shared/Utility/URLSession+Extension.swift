@@ -48,7 +48,7 @@ extension URLSession {
 		// Check if server returned an HTML page
 		if let contentType = response.value(forHTTPHeaderField: "Content-Type"),
 		   contentTypeIsHTML(contentType),
-		   let attributed = NSAttributedString(withHtmlData: data)
+		   let attributed = await NSAttributedString(withHtmlData: data)
 		{
 			return attributed.string
 		}

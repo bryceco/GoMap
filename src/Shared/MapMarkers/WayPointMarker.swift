@@ -17,13 +17,13 @@ final class WayPointMarker: MapMarker {
 		super.init(latLon: latLon)
 	}
 
-	static func attributedString(for string: String) -> NSAttributedString {
-		return NSAttributedString(withHtmlString: string) ?? NSAttributedString(string: string)
+	static func attributedString(for string: String) async -> NSAttributedString {
+		return await NSAttributedString(withHtmlString: string) ?? NSAttributedString(string: string)
 	}
 
-	convenience init(with gpxPoint: GpxPoint) {
-		let name = Self.attributedString(for: gpxPoint.name)
-		let desc = Self.attributedString(for: gpxPoint.desc)
+	convenience init(with gpxPoint: GpxPoint) async {
+		let name = await Self.attributedString(for: gpxPoint.name)
+		let desc = await Self.attributedString(for: gpxPoint.desc)
 		let message = [name, desc].compactMap { $0.string == "" ? nil : $0 }.joined(by: "\n\n")
 		self.init(with: gpxPoint.latLon, description: message)
 	}

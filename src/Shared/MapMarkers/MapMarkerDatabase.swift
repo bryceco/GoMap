@@ -139,7 +139,7 @@ import Foundation
 				// requesting an update for .gpx then do a full refresh.
 				removeMarkers(where: { $0 is WayPointMarker })
 			}
-			updateGpxWaypointMarkers()
+			await updateGpxWaypointMarkers()
 		} else {
 			removeMarkers(where: { $0 is WayPointMarker })
 		}
@@ -229,10 +229,10 @@ extension MapMarkerDatabase {
 		})
 	}
 
-	func updateGpxWaypointMarkers() {
+	func updateGpxWaypointMarkers() async {
 		for track in AppState.shared.gpxTracks.allTracks() {
 			for point in track.wayPoints {
-				let marker = WayPointMarker(with: point)
+				let marker = await WayPointMarker(with: point)
 				addOrUpdate(marker: marker)
 			}
 		}
