@@ -2563,7 +2563,7 @@ Za poboljšanje performance, izbriši predmemoriju (u postavci „Prikaz”).</t
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve" translate="no">
         <source>320</source>
-        <target state="translated">320</target>
+        <target state="new">320</target>
         <note>Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve" translate="no">
@@ -3658,7 +3658,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve" translate="no">
         <source>Quercus </source>
-        <target state="translated">Quercus </target>
+        <target state="new">Quercus </target>
         <note>Class = "UITextField"; placeholder = "Quercus "; ObjectID = "6yC-L7-V38"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
@@ -3688,7 +3688,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve" translate="no">
         <source>broadleaved </source>
-        <target state="translated">širokolisno </target>
+        <target state="new">širokolisno </target>
         <note>Class = "UITextField"; placeholder = "broadleaved "; ObjectID = "AAx-p2-Mzh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve" translate="no">
@@ -3956,7 +3956,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve" translate="no">
         <source>tree </source>
-        <target state="translated">stablo </target>
+        <target state="new">stablo </target>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
@@ -3976,7 +3976,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve" translate="no">
         <source>Oak</source>
-        <target state="translated">Hrast</target>
+        <target state="new">Hrast</target>
         <note>Class = "UITextField"; placeholder = "Oak"; ObjectID = "ftg-j1-Ep9"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve" translate="no">
@@ -4066,7 +4066,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">vrijednost </target>
+        <target state="new">vrijednost </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
@@ -4126,7 +4126,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="sVp-1S-TjJ.placeholder" xml:space="preserve" translate="no">
         <source>role</source>
-        <target state="translated">role</target>
+        <target state="new">role</target>
         <note>Class = "UITextField"; placeholder = "role"; ObjectID = "sVp-1S-TjJ"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="teB-9L-Nrf.text" xml:space="preserve">
@@ -4136,7 +4136,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">vrijednost </target>
+        <target state="new">vrijednost </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
@@ -4156,7 +4156,7 @@ Izbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih plo�
       </trans-unit>
       <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">vrijednost </target>
+        <target state="new">vrijednost </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
