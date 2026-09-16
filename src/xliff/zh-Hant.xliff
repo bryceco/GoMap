@@ -1826,6 +1826,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax." xml:space="preserve">
         <source>The selected photo could not be converted to JPEG. Only JPEG images can be uploaded to Panoramax.</source>
+        <target state="translated">選取的圖片無法轉換為 JPEG，只能上傳 JPEG 影像到 Panoramax。</target>
         <note>Error shown when a selected photo cannot be converted to JPEG format</note>
       </trans-unit>
       <trans-unit id="The selected way must be completely visible" xml:space="preserve">
@@ -1994,6 +1995,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Update Error" xml:space="preserve">
         <source>Update Error</source>
+        <target state="translated">上傳錯誤</target>
         <note/>
       </trans-unit>
       <trans-unit id="Updating Note..." xml:space="preserve">
@@ -2010,6 +2012,9 @@ Select the highway from which you are approaching the intersection, then tap an 
         <source>Upload succeeded but the server returned mismatched data.
 
 You should use Clear Cache &gt; OSM Data before continuing to map.</source>
+        <target state="translated">上傳成功但伺服哈回傳不吻合資料。
+
+您應當繼續用地圖前清除&gt;OSM資料快取。</target>
         <note>'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings</note>
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
@@ -2995,6 +3000,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
     <body>
       <trans-unit id="FaM-WV-S6I.title" xml:space="preserve">
         <source>Search for Location</source>
+        <target state="translated">搜尋位置</target>
         <note>Class = "UINavigationItem"; title = "Search for Location"; ObjectID = "FaM-WV-S6I";</note>
       </trans-unit>
       <trans-unit id="TcP-6i-B8H.text" xml:space="preserve">
