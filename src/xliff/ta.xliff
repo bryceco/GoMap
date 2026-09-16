@@ -2682,7 +2682,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Zzc-4t-QhT.text" xml:space="preserve" translate="no">
         <source>Aerial Tiles</source>
-        <target state="translated">வான்வழி ஓடுகள்</target>
+        <target state="new">வான்வழி ஓடுகள்</target>
         <note>Class = "UILabel"; text = "Aerial Tiles"; ObjectID = "Zzc-4t-QhT"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="ahv-4V-kjV.text" xml:space="preserve">
@@ -3532,7 +3532,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve" translate="no">
         <source>Quercus </source>
-        <target state="translated">குவர்கச் </target>
+        <target state="new">குவர்கச் </target>
         <note>Class = "UITextField"; placeholder = "Quercus "; ObjectID = "6yC-L7-V38"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
@@ -3562,7 +3562,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve" translate="no">
         <source>broadleaved </source>
-        <target state="translated">அகலமான </target>
+        <target state="new">அகலமான </target>
         <note>Class = "UITextField"; placeholder = "broadleaved "; ObjectID = "AAx-p2-Mzh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve" translate="no">
@@ -3819,7 +3819,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve" translate="no">
         <source>tree </source>
-        <target state="translated">மரம் </target>
+        <target state="new">மரம் </target>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
@@ -3838,7 +3838,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve" translate="no">
         <source>Oak</source>
-        <target state="translated">ஓக்</target>
+        <target state="new">ஓக்</target>
         <note>Class = "UITextField"; placeholder = "Oak"; ObjectID = "ftg-j1-Ep9"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve" translate="no">
@@ -3925,7 +3925,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">மதிப்பு </target>
+        <target state="new">மதிப்பு </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
@@ -3991,7 +3991,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">மதிப்பு </target>
+        <target state="new">மதிப்பு </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
@@ -4010,7 +4010,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">மதிப்பு </target>
+        <target state="new">மதிப்பு </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
