@@ -2438,12 +2438,12 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="Jc3-Um-Aiy.text" xml:space="preserve" translate="no">
         <source>320</source>
-        <target state="translated">320</target>
+        <target state="new">320</target>
         <note>Class = "UILabel"; text = "320"; ObjectID = "Jc3-Um-Aiy"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="Yt9-h6-KKC.normalTitle" xml:space="preserve" translate="no">
         <source>Update "direction" tag</source>
-        <target state="translated">Actualizar la etiqueta "dirección</target>
+        <target state="new">Actualizar la etiqueta "dirección</target>
         <note>Class = "UIButton"; normalTitle = "Update \"direction\" tag"; ObjectID = "Yt9-h6-KKC"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
       <trans-unit id="exg-Jc-FOH.normalTitle" xml:space="preserve">
@@ -2453,7 +2453,7 @@ Es posible que desee vaciar la antememoria (en la configuración de pantalla) pa
       </trans-unit>
       <trans-unit id="vtk-nS-Ss4.text" xml:space="preserve" translate="no">
         <source>Old value: 42</source>
-        <target state="translated">Valor antiguo: 42</target>
+        <target state="new">Valor antiguo: 42</target>
         <note>Class = "UILabel"; text = "Old value: 42"; ObjectID = "vtk-nS-Ss4"; Note = "Placeholder - do not translate";</note>
       </trans-unit>
     </body>
@@ -3728,7 +3728,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="Wcg-RB-I2a.text" xml:space="preserve" translate="no">
         <source>Inscription</source>
-        <target state="translated">Inscripción</target>
+        <target state="new">Inscripción</target>
         <note>Class = "UILabel"; text = "Inscription"; ObjectID = "Wcg-RB-I2a"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
