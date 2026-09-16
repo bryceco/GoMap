@@ -327,60 +327,36 @@ final class EditorMapLayer: CALayer {
 		OsmMapData.g_EditorMapLayerForArchive = self
 
 		mapData.undoContextForComment = { comment in
-			let location = Data.fromStruct(self.viewPort.mapTransform.transform)
-			var dict: [String: Any] = [:]
-			dict["comment"] = comment
-			dict["location"] = location
-			if let pushpin = self.owner.pushpinView()?.arrowPoint {
-				dict["pushpin"] = NSCoder.string(for: pushpin)
-			}
-			if let selectedRelation = self.selectedRelation {
-				dict["selectedRelation"] = selectedRelation
-			}
-			if let selectedWay = self.selectedWay {
-				dict["selectedWay"] = selectedWay
-			}
-			if let selectedNode = self.selectedNode {
-				dict["selectedNode"] = selectedNode
-			}
-			return dict
+			UndoContext(
+				comment: comment,
+				mapTransform: self.viewPort.mapTransform.transform,
+				pushpinPoint: self.owner.pushpinView()?.arrowPoint,
+				selections: self.selections)
 		}
-		mapData.undoCommentCallback = { undo, context in
-			if self.silentUndo {
-				return
-			}
+		mapData.undoCommentCallback = { undo, ctx in
+			if self.silentUndo { return }
 
-			guard let action = context["comment"] as? String,
-			      let location = context["location"] as? Data,
-			      let transform: OSMTransform = location.asStruct()
-			else { return }
-			// FIXME: Use Coder for OSMTransform (warning: doing this will break backwards compatibility)
-			viewPort.mapTransform.transform = transform
+			viewPort.mapTransform.transform = ctx.mapTransform
 			let title = undo ? NSLocalizedString("Undo", comment: "") : NSLocalizedString("Redo", comment: "")
 
-			self.selectedRelation = context["selectedRelation"] as? OsmRelation
-			self.selectedWay = context["selectedWay"] as? OsmWay
-			self.selectedNode = context["selectedNode"] as? OsmNode
-			if self.selectedNode?.deleted ?? false {
-				self.selectedNode = nil
-			}
+			self.selections = ctx.selections
+			if self.selectedNode?.deleted ?? false { self.selectedNode = nil }
+			if self.selectedWay?.deleted ?? false { self.selectedWay = nil }
+			if self.selectedRelation?.deleted ?? false { self.selectedRelation = nil }
 
-			if let pushpin = context["pushpin"] as? String,
+			if let pushpin = ctx.pushpinPoint,
 			   let primary = self.selectedPrimary
 			{
 				// since we don't record the pushpin location until after a drag has begun we need to re-center on the
 				// object:
-				var pt = NSCoder.cgPoint(for: pushpin)
-				let loc = self.viewPort.mapTransform.latLon(forScreenPoint: pt)
+				let loc = self.viewPort.mapTransform.latLon(forScreenPoint: pushpin)
 				let pos = primary.latLonOnObject(forLatLon: loc)
-				pt = self.viewPort.mapTransform.screenPoint(forLatLon: pos, birdsEye: true)
-				// place pushpin
+				let pt = self.viewPort.mapTransform.screenPoint(forLatLon: pos, birdsEye: true)
 				self.owner.placePushpin(at: pt, object: primary)
 			} else {
 				self.owner.removePin()
 			}
-			let message = "\(title) \(action)"
-			self.display.flashMessage(title: nil, message: message)
+			self.display.flashMessage(title: nil, message: "\(title) \(ctx.comment)")
 		}
 		addSublayer(baseLayer)
 

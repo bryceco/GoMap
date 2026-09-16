@@ -251,12 +251,12 @@ extension EditorMapLayer {
 		if dragState.didMove {
 			mapData.endUndoGrouping()
 			silentUndo = true
-			let dict = mapData.undo()
+			let ctx = mapData.undo()
 			silentUndo = false
 			mapData.beginUndoGrouping()
-			if let dict = dict as? [String: String] {
+			if let ctx {
 				// maintain the original pin location:
-				mapData.registerUndoCommentContext(dict)
+				mapData.registerUndoCommentContext(ctx)
 			}
 		}
 		dragState.didMove = true

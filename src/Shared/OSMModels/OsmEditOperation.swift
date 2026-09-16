@@ -7,6 +7,17 @@
 //
 
 import Foundation
+import UIKit
+
+// MARK: - UndoContext
+
+/// The editor-layer state captured at the moment of a mutation, restored on undo/redo.
+struct UndoContext {
+	let comment: String
+	let mapTransform: OSMTransform
+	let pushpinPoint: CGPoint?
+	let selections: MapView.Selections
+}
 
 // MARK: - EditToken
 
@@ -49,7 +60,7 @@ enum OsmEditOperation {
 	case removeMember(OsmRelation, index: Int)
 
 	// MARK: Comment
-	case comment([String: Any])
+	case comment(UndoContext)
 }
 
 // MARK: - apply(to:)

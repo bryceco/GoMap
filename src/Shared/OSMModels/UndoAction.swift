@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 // MARK: - UndoAction
 
@@ -46,8 +47,10 @@ final class UndoAction: NSObject, NSSecureCoding {
 			var result: Set<OsmBaseObject> = [rel]
 			if let obj = member.obj { result.insert(obj) }
 			return result
-		case let .comment(dict):
-			return Set(dict.values.compactMap { $0 as? OsmBaseObject })
+		case let .comment(ctx):
+			return Set([ctx.selections.relation as OsmBaseObject?,
+			            ctx.selections.way,
+			            ctx.selections.node].compactMap { $0 })
 		}
 	}
 
@@ -73,8 +76,8 @@ final class UndoAction: NSObject, NSSecureCoding {
 			return "UndoAction \(group): relation(\(rel.ident)).addMember(at:\(i))"
 		case let .removeMember(rel, i):
 			return "UndoAction \(group): relation(\(rel.ident)).removeMember(at:\(i))"
-		case let .comment(d):
-			return "UndoAction \(group): comment(\(d["comment"] ?? ""))"
+		case let .comment(ctx):
+			return "UndoAction \(group): comment(\(ctx.comment))"
 		}
 	}
 
@@ -138,9 +141,16 @@ final class UndoAction: NSObject, NSSecureCoding {
 			coder.encode(Tag.removeMember.rawValue, forKey: "tag")
 			coder.encode(relation, forKey: "relation")
 			coder.encode(index, forKey: "index")
-		case let .comment(dict):
+		case let .comment(ctx):
 			coder.encode(Tag.comment.rawValue, forKey: "tag")
-			coder.encode(dict as NSDictionary, forKey: "comment")
+			coder.encode(ctx.comment as NSString, forKey: "comment")
+			coder.encode(Data.fromStruct(ctx.mapTransform) as NSData, forKey: "mapTransform")
+			if let pushpinPoint = ctx.pushpinPoint {
+				coder.encode(NSCoder.string(for: pushpinPoint) as NSString, forKey: "pushpinPoint")
+			}
+			coder.encode(ctx.selections.relation, forKey: "selectedRelation")
+			coder.encode(ctx.selections.way, forKey: "selectedWay")
+			coder.encode(ctx.selections.node, forKey: "selectedNode")
 		}
 	}
 
@@ -148,7 +158,10 @@ final class UndoAction: NSObject, NSSecureCoding {
 		let group = coder.decodeInteger(forKey: "group")
 		guard let decoded = UndoAction.decodeType(from: coder) else {
 			self.group = 0
-			self.type = .comment([:])
+			self.type = .comment(UndoContext(comment: "",
+											 mapTransform: .identity,
+			                                 pushpinPoint: nil,
+											 selections: MapView.Selections()))
 			super.init()
 			return nil
 		}
@@ -216,20 +229,20 @@ final class UndoAction: NSObject, NSSecureCoding {
 			return .removeMember(relation, index: coder.decodeInteger(forKey: "index"))
 
 		case .comment:
-			// Must include all classes that can appear as values inside the dict.
-			// Using only NSDictionary.self causes the decoder to reject embedded OsmNode/Way/Relation
-			// objects and cache their UIDs as nil, which poisons subsequent decodes of the same objects
-			// by actions like moveNode that decode them with the correct type — causing those decodes
-			// to return nil from the UID cache and abort the entire undoStack deserialization.
-			let dict = (coder.decodeObject(of: [NSDictionary.self,
-			                                    OsmNode.self,
-			                                    OsmWay.self,
-			                                    OsmRelation.self,
-			                                    NSString.self,
-			                                    NSData.self,
-			                                    NSMutableData.self],
-			                               forKey: "comment") as? [String: Any]) ?? [:]
-			return .comment(dict)
+			guard let comment = coder.decodeObject(of: NSString.self, forKey: "comment") as String?,
+			      let mapTransformData = coder.decodeObject(of: NSData.self, forKey: "mapTransform") as Data?,
+			      let mapTransform: OSMTransform = mapTransformData.asStruct()
+			else { return nil }
+			let pushpinPoint = (coder.decodeObject(of: NSString.self, forKey: "pushpinPoint") as String?)
+				.map { NSCoder.cgPoint(for: $0) }
+			let selections = MapView.Selections(
+				node: coder.decodeObject(of: OsmNode.self, forKey: "selectedNode"),
+				way: coder.decodeObject(of: OsmWay.self, forKey: "selectedWay"),
+				relation: coder.decodeObject(of: OsmRelation.self, forKey: "selectedRelation"))
+			return .comment(UndoContext(comment: comment,
+										mapTransform: mapTransform,
+										pushpinPoint: pushpinPoint,
+										selections: selections))
 		}
 	}
 }

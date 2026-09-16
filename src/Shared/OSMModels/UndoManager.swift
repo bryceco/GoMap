@@ -17,7 +17,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 	private var undoStack: [UndoAction] = []
 	private var redoStack: [UndoAction] = []
 	private var groupingStack: [Int] = []
-	var commentList: [[String: Any]] = []
+	var commentList: [UndoContext] = []
 
 	private(set) var isUndoing = false
 	private(set) var isRedoing = false
@@ -156,8 +156,8 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		willChangeValue(forKey: "canUndo")
 		willChangeValue(forKey: "canRedo")
 
-		if case let .comment(dict) = type {
-			commentList.append(dict)
+		if case let .comment(ctx) = type {
+			commentList.append(ctx)
 		}
 
 		let inverseType = type.apply(to: mapData)
@@ -184,11 +184,11 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		postChangeNotification()
 	}
 
-	func doComment(_ comment: [String: Any]) {
+	func doComment(_ comment: UndoContext) {
 		apply(.comment(comment))
 	}
 
-	func registerUndoComment(_ comment: [String: Any]) {
+	func registerUndoComment(_ comment: UndoContext) {
 		apply(.comment(comment))
 	}
 
@@ -200,8 +200,8 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		while stack.last?.group == currentGroup,
 		      let action = stack.popLast()
 		{
-			if case let .comment(dict) = action.type {
-				commentList.append(dict)
+			if case let .comment(ctx) = action.type {
+				commentList.append(ctx)
 			}
 			guard let mapData = mapData else { continue }
 			let inverseType = action.type.apply(to: mapData)
@@ -230,7 +230,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 	}
 
 	// returns the oldest comment registered within the undo group
-	func undo() -> [String: Any]? {
+	func undo() -> UndoContext? {
 		commentList = []
 
 		willChangeValue(forKey: "canUndo")
@@ -249,7 +249,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		return commentList.last
 	}
 
-	func redo() -> [String: Any]? {
+	func redo() -> UndoContext? {
 		commentList = []
 
 		willChangeValue(forKey: "canUndo")

@@ -75,8 +75,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	let undoManager: MyUndoManager
 
 	// undo comments
-	var undoContextForComment: ((_ comment: String) -> [String: Any])?
-	var undoCommentCallback: ((_ undo: Bool, _ context: [String: Any]) -> Void)?
+	var undoContextForComment: ((_ comment: String) -> UndoContext)?
+	var undoCommentCallback: ((_ undo: Bool, _ context: UndoContext) -> Void)?
 
 	private var previousDiscardDate = Date.distantPast
 
@@ -428,23 +428,23 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	// MARK: Undo manager interface
 
 	@discardableResult
-	func undo() -> [String: Any]? {
-		let comment = undoManager.undo()
-		if let undoCommentCallback = undoCommentCallback {
-			undoCommentCallback(true, comment ?? [:])
+	func undo() -> UndoContext? {
+		let ctx = undoManager.undo()
+		if let ctx = ctx {
+			undoCommentCallback?(true, ctx)
 		}
 		consistencyCheck()
-		return comment
+		return ctx
 	}
 
 	@discardableResult
-	func redo() -> [String: Any]? {
-		let comment = undoManager.redo()
-		if let undoCommentCallback = undoCommentCallback {
-			undoCommentCallback(false, comment ?? [:])
+	func redo() -> UndoContext? {
+		let ctx = undoManager.redo()
+		if let ctx = ctx {
+			undoCommentCallback?(false, ctx)
 		}
 		consistencyCheck()
-		return comment
+		return ctx
 	}
 
 	func canUndo() -> Bool {
@@ -477,7 +477,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		undoManager.removeMostRecentRedo()
 	}
 
-	func registerUndoCommentContext(_ context: [String: Any]) {
+	func registerUndoCommentContext(_ context: UndoContext) {
 		undoManager.registerUndoComment(context)
 	}
 
