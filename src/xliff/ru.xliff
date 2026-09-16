@@ -1330,6 +1330,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="HealthKit is not available on this device." xml:space="preserve">
         <source>HealthKit is not available on this device.</source>
+        <target state="translated">HealthKit недоступен на данном устройстве.</target>
         <note/>
       </trans-unit>
       <trans-unit id="Height: %1$@ ± %2$@ meters" xml:space="preserve">
@@ -1641,6 +1642,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="No route data found." xml:space="preserve">
         <source>No route data found.</source>
+        <target state="translated">Данные маршрута не найдены.</target>
         <note/>
       </trans-unit>
       <trans-unit id="No tags to paste" xml:space="preserve">
@@ -2337,6 +2339,9 @@ Select the highway from which you are approaching the intersection, then tap an 
         <source>Upload succeeded but the server returned mismatched data.
 
 You should use Clear Cache &gt; OSM Data before continuing to map.</source>
+        <target state="translated">Отправка данных была успешной, но сервер вернул неправильные данные.
+
+Вы должны использовать очистку кэша данных OSM перед тем как вносить изменения на карте.</target>
         <note>'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings</note>
       </trans-unit>
       <trans-unit id="Upload to OSM" xml:space="preserve">
@@ -3512,10 +3517,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">Ключ</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "6zU-bk-hWw";</note>
       </trans-unit>
       <trans-unit id="8Nt-xf-x5Q.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Заголовок</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "8Nt-xf-x5Q";</note>
       </trans-unit>
       <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve" translate="no">
@@ -3528,18 +3535,22 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Bnh-U0-D7i.text" xml:space="preserve">
         <source>Add New</source>
+        <target state="translated">Добавить новый</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "Bnh-U0-D7i"; Note = "Add user-defined tagging preset";</note>
       </trans-unit>
       <trans-unit id="CBg-8X-VJp.normalTitle" xml:space="preserve">
         <source>Area</source>
+        <target state="translated">Площадь</target>
         <note>Class = "UIButton"; normalTitle = "Area"; ObjectID = "CBg-8X-VJp";</note>
       </trans-unit>
       <trans-unit id="CXe-gQ-Zda.text" xml:space="preserve">
         <source>Value 8</source>
+        <target state="translated">Значение 8</target>
         <note>Class = "UILabel"; text = "Value 8"; ObjectID = "CXe-gQ-Zda";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.footerTitle" xml:space="preserve">
         <source>The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard.</source>
+        <target state="translated">Этот пресет будет доступен, когда будут обрабатываться объекты с совпадающей комбинацией ключ/значение. Оставьте любое из полей пустым, чтобы использовать подстановочный знак.</target>
         <note>Class = "UITableViewSection"; footerTitle = "The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard."; ObjectID = "Dfv-TT-J6i";</note>
       </trans-unit>
       <trans-unit id="Dfv-TT-J6i.headerTitle" xml:space="preserve">
@@ -3552,10 +3563,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="Eou-a6-V4g.text" xml:space="preserve">
         <source>Key</source>
+        <target state="translated">Ключ</target>
         <note>Class = "UILabel"; text = "Key"; ObjectID = "Eou-a6-V4g";</note>
       </trans-unit>
       <trans-unit id="Fcv-4Q-gpE.text" xml:space="preserve">
         <source>Value 3</source>
+        <target state="translated">Значение 3</target>
         <note>Class = "UILabel"; text = "Value 3"; ObjectID = "Fcv-4Q-gpE";</note>
       </trans-unit>
       <trans-unit id="Fe2-dc-zgA.placeholder" xml:space="preserve" translate="no">
@@ -3564,94 +3577,117 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
         <source>Custom Fields</source>
+        <target state="translated">Пользовательские поля</target>
         <note>Class = "UINavigationItem"; title = "Custom Fields"; ObjectID = "GIO-W7-q5U";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
         <source>Value 1</source>
+        <target state="translated">Значение 1</target>
         <note>Class = "UILabel"; text = "Value 1"; ObjectID = "JAT-qD-dTS";</note>
       </trans-unit>
       <trans-unit id="KX3-hG-OyE.title" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Назад</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "KX3-hG-OyE";</note>
       </trans-unit>
       <trans-unit id="LAL-tL-bub.text" xml:space="preserve">
         <source>Uses semi-colon seperated values (e.g. pizza;kebab for cuisine)</source>
+        <target state="translated">Использует значения, разделенные точкой с запятой (например, pizza;kebab для кухни)</target>
         <note>Class = "UILabel"; text = "Uses semi-colon seperated values (e.g. pizza;kebab for cuisine)"; ObjectID = "LAL-tL-bub"; Note = "This is used for tags like cuisine=italian;pizza.";</note>
       </trans-unit>
       <trans-unit id="Lhz-HA-Q6j.title" xml:space="preserve">
         <source>Custom Feature</source>
+        <target state="translated">Пользовательская функция</target>
         <note>Class = "UINavigationItem"; title = "Custom Feature"; ObjectID = "Lhz-HA-Q6j";</note>
       </trans-unit>
       <trans-unit id="MU8-ia-Kco.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">ключ</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "MU8-ia-Kco";</note>
       </trans-unit>
       <trans-unit id="Nxm-fU-1eX.placeholder" xml:space="preserve">
         <source>natural</source>
+        <target state="translated">Природные образования</target>
         <note>Class = "UITextField"; placeholder = "natural"; ObjectID = "Nxm-fU-1eX";</note>
       </trans-unit>
       <trans-unit id="OND-s7-I6f.title" xml:space="preserve">
         <source>Custom Field</source>
+        <target state="translated">Пользовательское поле</target>
         <note>Class = "UINavigationItem"; title = "Custom Field"; ObjectID = "OND-s7-I6f";</note>
       </trans-unit>
       <trans-unit id="QDv-7w-nbx.headerTitle" xml:space="preserve">
         <source>Field Name</source>
+        <target state="translated">Имя поля</target>
         <note>Class = "UITableViewSection"; headerTitle = "Field Name"; ObjectID = "QDv-7w-nbx";</note>
       </trans-unit>
       <trans-unit id="R0q-aM-ULf.text" xml:space="preserve">
         <source>Value 6</source>
+        <target state="translated">Значение 6</target>
         <note>Class = "UILabel"; text = "Value 6"; ObjectID = "R0q-aM-ULf";</note>
       </trans-unit>
       <trans-unit id="Rfe-SO-p0w.title" xml:space="preserve">
         <source>Cancel</source>
+        <target state="translated">Отмена</target>
         <note>Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "Rfe-SO-p0w";</note>
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.footerTitle" xml:space="preserve">
         <source>Tags to add when selecting this feature.</source>
+        <target state="translated">Теги, которые будут добавлены при выборе данной функции.</target>
         <note>Class = "UITableViewSection"; footerTitle = "Tags to add when selecting this feature."; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="Ruw-WB-IgL.headerTitle" xml:space="preserve">
         <source>Feature Tags</source>
+        <target state="translated">Теги функции</target>
         <note>Class = "UITableViewSection"; headerTitle = "Feature Tags"; ObjectID = "Ruw-WB-IgL";</note>
       </trans-unit>
       <trans-unit id="ScT-zG-GwL.text" xml:space="preserve">
         <source>Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object.</source>
+        <target state="translated">Наследовать пресеты данной функции. Если не выбрано, то функция совместит (не заменит) теги на выбранном объекте.</target>
         <note>Class = "UILabel"; text = "Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object."; ObjectID = "ScT-zG-GwL";</note>
       </trans-unit>
       <trans-unit id="TJk-hO-Ejc.text" xml:space="preserve">
         <source>Name</source>
+        <target state="translated">Имя</target>
         <note>Class = "UILabel"; text = "Name"; ObjectID = "TJk-hO-Ejc";</note>
       </trans-unit>
       <trans-unit id="UJ1-oM-H4Z.title" xml:space="preserve">
         <source>Back</source>
+        <target state="translated">Назад</target>
         <note>Class = "UIBarButtonItem"; title = "Back"; ObjectID = "UJ1-oM-H4Z";</note>
       </trans-unit>
       <trans-unit id="WXF-5S-E8m.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Заголовок</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "WXF-5S-E8m";</note>
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
         <source>Value 10</source>
+        <target state="translated">Значение 10</target>
         <note>Class = "UILabel"; text = "Value 10"; ObjectID = "Wim-Qa-dYQ";</note>
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Линия</target>
         <note>Class = "UIButton"; normalTitle = "Line"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
         <source>Value 7</source>
+        <target state="translated">Значение 1</target>
         <note>Class = "UILabel"; text = "Value 7"; ObjectID = "WoH-od-iKL";</note>
       </trans-unit>
       <trans-unit id="ZNr-2O-LuN.placeholder" xml:space="preserve">
         <source>key</source>
+        <target state="translated">ключ</target>
         <note>Class = "UITextField"; placeholder = "key"; ObjectID = "ZNr-2O-LuN";</note>
       </trans-unit>
       <trans-unit id="bF4-TU-MTA.text" xml:space="preserve">
         <source>Add New</source>
+        <target state="translated">Добавить новый</target>
         <note>Class = "UILabel"; text = "Add New"; ObjectID = "bF4-TU-MTA"; Note = "Add user-defined tagging preset";</note>
       </trans-unit>
       <trans-unit id="cNV-jf-zYM.title" xml:space="preserve">
         <source>Custom Features</source>
+        <target state="translated">Пользовательские функции</target>
         <note>Class = "UINavigationItem"; title = "Custom Features"; ObjectID = "cNV-jf-zYM";</note>
       </trans-unit>
       <trans-unit id="cTf-Rc-vqr.headerTitle" xml:space="preserve">
@@ -3660,10 +3696,12 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="dsA-B6-s7R.text" xml:space="preserve">
         <source>Value 9</source>
+        <target state="translated">Значение 9</target>
         <note>Class = "UILabel"; text = "Value 9"; ObjectID = "dsA-B6-s7R";</note>
       </trans-unit>
       <trans-unit id="eG3-Xz-Nnp.placeholder" xml:space="preserve">
         <source>Dogs Allowed</source>
+        <target state="translated">Собаки допускаются</target>
         <note>Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp";</note>
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve" translate="no">
@@ -3672,6 +3710,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
         <source>Point</source>
+        <target state="translated">Точка</target>
         <note>Class = "UIButton"; normalTitle = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve" translate="no">
@@ -3688,6 +3727,7 @@ Clear the Basemap or Overlay tile caches  to download the latest tiles that refl
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.footerTitle" xml:space="preserve">
         <source>The possible values for the preset</source>
+        <target state="translated">Возможные значения для пресета</target>
         <note>Class = "UITableViewSection"; footerTitle = "The possible values for the preset"; ObjectID = "jv1-BF-p2a";</note>
       </trans-unit>
       <trans-unit id="jv1-BF-p2a.headerTitle" xml:space="preserve">
