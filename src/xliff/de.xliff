@@ -3558,7 +3558,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="6yC-L7-V38.placeholder" xml:space="preserve" translate="no">
         <source>Quercus </source>
-        <target state="translated">Eiche </target>
+        <target state="new">Eiche </target>
         <note>Class = "UITextField"; placeholder = "Quercus "; ObjectID = "6yC-L7-V38"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="6zU-bk-hWw.placeholder" xml:space="preserve">
@@ -3588,7 +3588,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="AAx-p2-Mzh.placeholder" xml:space="preserve" translate="no">
         <source>broadleaved </source>
-        <target state="translated">breitblättrig </target>
+        <target state="new">breitblättrig </target>
         <note>Class = "UITextField"; placeholder = "broadleaved "; ObjectID = "AAx-p2-Mzh"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="Ak4-ru-E4V.placeholder" xml:space="preserve" translate="no">
@@ -3878,7 +3878,7 @@ Löschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterz
       </trans-unit>
       <trans-unit id="ftg-j1-Ep9.placeholder" xml:space="preserve" translate="no">
         <source>Oak</source>
-        <target state="translated">Eiche</target>
+        <target state="new">Eiche</target>
         <note>Class = "UITextField"; placeholder = "Oak"; ObjectID = "ftg-j1-Ep9"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="gv7-b8-wUw.text" xml:space="preserve" translate="no">
