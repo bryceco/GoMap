@@ -3823,7 +3823,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve" translate="no">
         <source>tree </source>
-        <target state="translated">árbol </target>
+        <target state="new">árbol </target>
         <note>Class = "UITextField"; placeholder = "tree "; ObjectID = "eN0-0z-hUp"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="f5t-25-IXF.title" xml:space="preserve">
@@ -3930,7 +3930,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">valor </target>
+        <target state="new">valor </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
@@ -3999,7 +3999,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">valor </target>
+        <target state="new">valor </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
@@ -4019,7 +4019,7 @@ Para descargar las teselas más recientes, con los cambios enviados anteriorment
       </trans-unit>
       <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">valor </target>
+        <target state="new">valor </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
