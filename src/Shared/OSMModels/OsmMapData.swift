@@ -784,7 +784,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	// Performs a single upload attempt. Throws VersionMismatchError if the server
 	// reports a version conflict so the caller can re-fetch and retry.
-	private func uploadChangeset(xml xmlChanges: DDXMLDocument, changesetID: Int64) async throws {
+	@MainActor private func uploadChangeset(xml xmlChanges: DDXMLDocument, changesetID: Int64) async throws {
 		let postData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(changesetID)/upload",
 		                                               queryItems: [:],
 		                                               method: "POST",
@@ -948,7 +948,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		return changeset
 	}
 
-	func uploadChangeset(_ content: UploadContent,
+	@MainActor func uploadChangeset(_ content: UploadContent,
 	                     comment: String,
 	                     source: String,
 	                     imagery: String,
@@ -1015,7 +1015,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	///			- Repeat until either there is no mismatch, or retry count is reached
 	///		- Ask the server to close the changeset
 	///		- Have the undo manager remove associated undo groups
-	func uploadChangeset(for groups: [ConnectedObjects],
+	@MainActor func uploadChangeset(for groups: [ConnectedObjects],
 	                     comment: String,
 	                     source: String,
 	                     imagery: String,
