@@ -60,9 +60,6 @@ extension OsmEditOperation {
 	///
 	/// Mutation and its inverse sit on adjacent lines in each case body — the
 	/// "capture → mutate → return inverse" pattern makes correctness self-evident.
-	///
-	/// `isModified` is intentionally NOT set here; `MyUndoManager` handles
-	/// it externally via `modifyObjects` so undo/redo direction is unambiguous.
 	@discardableResult
 	func apply(to mapData: OsmMapData) -> OsmEditOperation {
 		let token = EditToken()
@@ -76,6 +73,7 @@ extension OsmEditOperation {
 		case let .setDeleted(obj, newDeleted):
 			let oldDeleted = obj.deleted
 			obj.setDeleted(newDeleted, token)
+			obj.clearCachedProperties()
 			// Absorb lifecycle spatial add/remove.
 			if newDeleted && !oldDeleted {
 				_ = mapData.spatial.removeMember(obj)
@@ -86,7 +84,8 @@ extension OsmEditOperation {
 
 		case let .setTags(obj, newTags):
 			let oldTags = obj.tags
-			obj.setTags(newTags, token) // calls clearCachedProperties internally
+			obj.setTags(newTags, token)
+			obj.clearCachedProperties()
 			return .setTags(obj, oldTags)
 
 		case let .moveNode(node, newLatLon):
@@ -105,6 +104,7 @@ extension OsmEditOperation {
 		case let .addNode(way, node, index):
 			let oldBox = way.boundingBox
 			way.addNode(node, atIndex: index, token)
+			way.clearCachedProperties()
 			mapData.spatial.updateMember(way, fromBox: oldBox)
 			return .removeNode(way, index: index)
 
@@ -112,6 +112,7 @@ extension OsmEditOperation {
 			let node = way.nodes[index]
 			let oldBox = way.boundingBox
 			way.removeNodeAtIndex(index, token)
+			way.clearCachedProperties()
 			mapData.spatial.updateMember(way, fromBox: oldBox)
 			return .addNode(way, node, index: index)
 
@@ -119,12 +120,14 @@ extension OsmEditOperation {
 			let oldMembers = relation.members
 			let oldBox = relation.boundingBox
 			relation.assignMembers(newMembers, token)
+			relation.clearCachedProperties()
 			mapData.spatial.updateMember(relation, fromBox: oldBox)
 			return .assignMembers(relation, oldMembers)
 
 		case let .addMember(relation, member, index):
 			let oldBox = relation.boundingBox
 			relation.addMember(member, atIndex: index, token)
+			relation.clearCachedProperties()
 			mapData.spatial.updateMember(relation, fromBox: oldBox)
 			return .removeMember(relation, index: index)
 
@@ -132,6 +135,7 @@ extension OsmEditOperation {
 			let member = relation.members[index]
 			let oldBox = relation.boundingBox
 			relation.removeMemberAtIndex(index, token)
+			relation.clearCachedProperties()
 			mapData.spatial.updateMember(relation, fromBox: oldBox)
 			return .addMember(relation, member, index: index)
 

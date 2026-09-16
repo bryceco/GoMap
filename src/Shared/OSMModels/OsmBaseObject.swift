@@ -439,7 +439,6 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 
 	func setTags(_ tags: [String: String], _ token: EditToken) {
 		self.tags = tags
-		clearCachedProperties()
 	}
 
 	// get all keys that contain another part, like "restriction:conditional"
