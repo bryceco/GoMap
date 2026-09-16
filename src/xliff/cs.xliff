@@ -4278,7 +4278,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">hodnota </target>
+        <target state="new">hodnota </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "nrU-9j-jfm"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="o63-qY-4vl.text" xml:space="preserve">
@@ -4348,7 +4348,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="u2W-Xt-qyS.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">value </target>
+        <target state="new">value </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "u2W-Xt-qyS"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="v1b-PG-XxE.title" xml:space="preserve">
@@ -4368,7 +4368,7 @@ Pro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahran
       </trans-unit>
       <trans-unit id="xRb-oM-jei.placeholder" xml:space="preserve" translate="no">
         <source>value </source>
-        <target state="translated">value </target>
+        <target state="new">value </target>
         <note>Class = "UITextField"; placeholder = "value "; ObjectID = "xRb-oM-jei"; Note = "Placeholder - Do not translate";</note>
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
