@@ -949,12 +949,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	@MainActor func uploadChangeset(_ content: UploadContent,
-	                     comment: String,
-	                     source: String,
-	                     imagery: String,
-	                     generator: String,
-	                     locale: String,
-	                     groupIds: Set<Int>) async throws
+	                                comment: String,
+	                                source: String,
+	                                imagery: String,
+	                                generator: String,
+	                                locale: String,
+	                                groupIds: Set<Int>) async throws
 	{
 		consistencyCheck()
 
@@ -1016,11 +1016,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	///		- Ask the server to close the changeset
 	///		- Have the undo manager remove associated undo groups
 	@MainActor func uploadChangeset(for groups: [ConnectedObjects],
-	                     comment: String,
-	                     source: String,
-	                     imagery: String,
-	                     generator: String,
-	                     locale: String) async throws
+	                                comment: String,
+	                                source: String,
+	                                imagery: String,
+	                                generator: String,
+	                                locale: String) async throws
 	{
 		let objects = groups.reduce(into: Set<OsmBaseObject>()) { $0.formUnion($1.objects) }
 		let groupIds = groups.reduce(into: Set<Int>()) { $0.formUnion($1.undoGroups) }

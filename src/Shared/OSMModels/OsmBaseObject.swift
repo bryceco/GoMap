@@ -516,7 +516,7 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 		return tags["brand"]
 	}
 
-	func featureName(details: Bool) -> String {
+	private func featureName(details: Bool) -> String {
 		let location = AppDelegate.shared.mainView.currentRegion
 		if let feature = PresetsDatabase.shared.presetFeatureMatching(tags: tags,
 		                                                              geometry: geometry(),

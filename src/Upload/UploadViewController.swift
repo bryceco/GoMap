@@ -537,7 +537,23 @@ extension UploadViewController: UITableViewDataSource {
 			for: indexPath) as! ChangeGroupCell
 		let group = connectedGroups[indexPath.section]
 		if let doc = OsmXmlGenerator.createXmlFor(objects: group.objects, generator: AppDelegate.shared.generator) {
-			cell.groupTextView.attributedText = OsmXmlGenerator.attributedStringForXML(doc)
+			var primaryDescriptions: [Int64: String] = [:]
+			var parentWayNames: [Int64: String] = [:]
+			for obj in group.objects {
+				if !obj.tags.isEmpty {
+					let (name, feature) = obj.friendlyDescriptionWithFeature()
+					primaryDescriptions[obj.ident] = name.map { "\($0) (\(feature))" } ?? feature
+				} else if let node = obj as? OsmNode, node.wayCount > 0,
+				          let parentWay = mapData.waysContaining(node).first
+				{
+					let (name, feature) = parentWay.friendlyDescriptionWithFeature()
+					parentWayNames[node.ident] = name.map { "\($0) (\(feature))" } ?? feature
+				}
+			}
+			cell.groupTextView.attributedText = OsmXmlGenerator.attributedStringForXML(
+				doc,
+				primaryDescriptions: primaryDescriptions,
+				parentWayNames: parentWayNames)
 		}
 		cell.groupTextView.delegate = self
 		return cell

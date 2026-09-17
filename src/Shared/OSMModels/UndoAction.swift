@@ -159,9 +159,9 @@ final class UndoAction: NSObject, NSSecureCoding {
 		guard let decoded = UndoAction.decodeType(from: coder) else {
 			self.group = 0
 			self.type = .comment(UndoContext(comment: "",
-											 mapTransform: .identity,
+			                                 mapTransform: .identity,
 			                                 pushpinPoint: nil,
-											 selections: MapView.Selections()))
+			                                 selections: MapView.Selections()))
 			super.init()
 			return nil
 		}
@@ -240,9 +240,9 @@ final class UndoAction: NSObject, NSSecureCoding {
 				way: coder.decodeObject(of: OsmWay.self, forKey: "selectedWay"),
 				relation: coder.decodeObject(of: OsmRelation.self, forKey: "selectedRelation"))
 			return .comment(UndoContext(comment: comment,
-										mapTransform: mapTransform,
-										pushpinPoint: pushpinPoint,
-										selections: selections))
+			                            mapTransform: mapTransform,
+			                            pushpinPoint: pushpinPoint,
+			                            selections: selections))
 		}
 	}
 }

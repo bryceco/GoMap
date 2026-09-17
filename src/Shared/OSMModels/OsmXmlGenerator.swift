@@ -18,21 +18,18 @@ final class OsmXmlGenerator {
 		let doc = try! DDXMLDocument(xmlString: "<osm></osm>", options: 0)
 		let root = doc.rootElement()!
 #else
-		let root = DDXMLNode.element(withName: "osm") as? DDXMLElement
+		let root = DDXMLElement(name: "osm")
 		let doc = DDXMLDocument(rootElement: root)
 		doc.characterEncoding = "UTF-8"
 #endif
-		guard let typeElement = DDXMLNode.element(withName: type) as? DDXMLElement else { return nil }
+		let typeElement = DDXMLElement(name: type)
 		root.addChild(typeElement)
 
 		for (key, value) in dictionary {
-			guard let tag = DDXMLNode.element(withName: "tag") as? DDXMLElement,
-			      let attrKey = DDXMLNode.attribute(withName: "k", stringValue: key) as? DDXMLNode,
-			      let attrValue = DDXMLNode.attribute(withName: "v", stringValue: value) as? DDXMLNode
-			else { return nil }
+			let tag = DDXMLElement(name: "tag")
+			tag.addAttribute(DDXMLNode.attribute(withName: "k", stringValue: key) as! DDXMLNode)
+			tag.addAttribute(DDXMLNode.attribute(withName: "v", stringValue: value) as! DDXMLNode)
 			typeElement.addChild(tag)
-			tag.addAttribute(attrKey)
-			tag.addAttribute(attrValue)
 		}
 		return doc
 	}
@@ -40,27 +37,18 @@ final class OsmXmlGenerator {
 	// MARK: Changeset Payload XML
 
 	class func element(for object: OsmBaseObject) -> DDXMLElement {
-		let type = object.osmType.string
-		let element = DDXMLNode.element(withName: type) as! DDXMLElement
-		element
-			.addAttribute(DDXMLNode
-				.attribute(withName: "id", stringValue: NSNumber(value: object.ident).stringValue) as! DDXMLNode)
-		element.addAttribute(DDXMLNode.attribute(withName: "timestamp", stringValue: object.timestamp) as! DDXMLNode)
-		element
-			.addAttribute(DDXMLNode
-				.attribute(withName: "version", stringValue: NSNumber(value: object.version).stringValue) as! DDXMLNode)
-		return element
+		let el = DDXMLElement(name: object.osmType.string)
+		el.addAttribute(DDXMLNode.attribute(withName: "id", stringValue: String(object.ident)) as! DDXMLNode)
+		el.addAttribute(DDXMLNode.attribute(withName: "timestamp", stringValue: object.timestamp) as! DDXMLNode)
+		el.addAttribute(DDXMLNode.attribute(withName: "version", stringValue: String(object.version)) as! DDXMLNode)
+		return el
 	}
 
 	class func addTags(for object: OsmBaseObject, element: DDXMLElement) {
 		for (key, value) in object.tags {
-			let tagElement = DDXMLElement.element(withName: "tag") as! DDXMLElement
-			if let attribute = DDXMLNode.attribute(withName: "k", stringValue: key) as? DDXMLNode {
-				tagElement.addAttribute(attribute)
-			}
-			if let attribute = DDXMLNode.attribute(withName: "v", stringValue: value) as? DDXMLNode {
-				tagElement.addAttribute(attribute)
-			}
+			let tagElement = DDXMLElement(name: "tag")
+			tagElement.addAttribute(DDXMLNode.attribute(withName: "k", stringValue: key) as! DDXMLNode)
+			tagElement.addAttribute(DDXMLNode.attribute(withName: "v", stringValue: value) as! DDXMLNode)
 			element.addChild(tagElement)
 		}
 	}
@@ -79,24 +67,18 @@ final class OsmXmlGenerator {
 	(nodes: N, ways: W, relations: R, generator: String) -> DDXMLDocument?
 		where N.Element == OsmNode, W.Element == OsmWay, R.Element == OsmRelation
 	{
-		let createNodeElement = DDXMLNode.element(withName: "create") as! DDXMLElement
-		let modifyNodeElement = DDXMLNode.element(withName: "modify") as! DDXMLElement
-		let deleteNodeElement = DDXMLNode.element(withName: "delete") as! DDXMLElement
-		let createWayElement = DDXMLNode.element(withName: "create") as! DDXMLElement
-		let modifyWayElement = DDXMLNode.element(withName: "modify") as! DDXMLElement
-		let deleteWayElement = DDXMLNode.element(withName: "delete") as! DDXMLElement
-		let createRelationElement = DDXMLNode.element(withName: "create") as! DDXMLElement
-		let modifyRelationElement = DDXMLNode.element(withName: "modify") as! DDXMLElement
-		let deleteRelationElement = DDXMLNode.element(withName: "delete") as! DDXMLElement
+		let createNodeElement = DDXMLElement(name: "create")
+		let modifyNodeElement = DDXMLElement(name: "modify")
+		let deleteNodeElement = DDXMLElement(name: "delete")
+		let createWayElement = DDXMLElement(name: "create")
+		let modifyWayElement = DDXMLElement(name: "modify")
+		let deleteWayElement = DDXMLElement(name: "delete")
+		let createRelationElement = DDXMLElement(name: "create")
+		let modifyRelationElement = DDXMLElement(name: "modify")
+		let deleteRelationElement = DDXMLElement(name: "delete")
 
-		if let attribute = DDXMLNode.attribute(withName: "if-unused", stringValue: "yes") as? DDXMLNode {
-			deleteNodeElement.addAttribute(attribute)
-		}
-		if let attribute = DDXMLNode.attribute(withName: "if-unused", stringValue: "yes") as? DDXMLNode {
-			deleteWayElement.addAttribute(attribute)
-		}
-		if let attribute = DDXMLNode.attribute(withName: "if-unused", stringValue: "yes") as? DDXMLNode {
-			deleteRelationElement.addAttribute(attribute)
+		for deleteElement in [deleteNodeElement, deleteWayElement, deleteRelationElement] {
+			deleteElement.addAttribute(DDXMLNode.attribute(withName: "if-unused", stringValue: "yes") as! DDXMLNode)
 		}
 
 		for node in nodes {
@@ -107,14 +89,8 @@ final class OsmXmlGenerator {
 			} else if node.isModified, !node.deleted {
 				// added/modified
 				let element = Self.element(for: node)
-				element
-					.addAttribute(DDXMLNode
-						.attribute(withName: "lat",
-						           stringValue: NSNumber(value: node.latLon.lat).stringValue) as! DDXMLNode)
-				element
-					.addAttribute(DDXMLNode
-						.attribute(withName: "lon",
-						           stringValue: NSNumber(value: node.latLon.lon).stringValue) as! DDXMLNode)
+				element.addAttribute(DDXMLNode.attribute(withName: "lat", stringValue: String(node.latLon.lat)) as! DDXMLNode)
+				element.addAttribute(DDXMLNode.attribute(withName: "lon", stringValue: String(node.latLon.lon)) as! DDXMLNode)
 				Self.addTags(for: node, element: element)
 				if node.ident < 0 {
 					createNodeElement.addChild(element)
@@ -136,12 +112,8 @@ final class OsmXmlGenerator {
 				// added/modified
 				let element = Self.element(for: way)
 				for node in way.nodes.removingDuplicatedItems() {
-					let refElement = DDXMLElement.element(withName: "nd") as! DDXMLElement
-					refElement
-						.addAttribute(DDXMLNode
-							.attribute(
-								withName: "ref",
-								stringValue: NSNumber(value: node.ident).stringValue) as! DDXMLNode)
+					let refElement = DDXMLElement(name: "nd")
+					refElement.addAttribute(DDXMLNode.attribute(withName: "ref", stringValue: String(node.ident)) as! DDXMLNode)
 					element.addChild(refElement)
 				}
 				Self.addTags(for: way, element: element)
@@ -163,17 +135,10 @@ final class OsmXmlGenerator {
 				// added/modified
 				let element = Self.element(for: relation)
 				for member in relation.members {
-					let memberElement = DDXMLElement.element(withName: "member") as! DDXMLElement
-					memberElement
-						.addAttribute(DDXMLNode
-							.attribute(withName: "type", stringValue: member.type.string) as! DDXMLNode)
-					memberElement
-						.addAttribute(DDXMLNode
-							.attribute(withName: "ref",
-							           stringValue: NSNumber(value: member.ref).stringValue) as! DDXMLNode)
-					memberElement
-						.addAttribute(DDXMLNode
-							.attribute(withName: "role", stringValue: member.role ?? "") as! DDXMLNode)
+					let memberElement = DDXMLElement(name: "member")
+					memberElement.addAttribute(DDXMLNode.attribute(withName: "type", stringValue: member.type.string) as! DDXMLNode)
+					memberElement.addAttribute(DDXMLNode.attribute(withName: "ref", stringValue: String(member.ref)) as! DDXMLNode)
+					memberElement.addAttribute(DDXMLNode.attribute(withName: "role", stringValue: member.role ?? "") as! DDXMLNode)
 					element.addChild(memberElement)
 				}
 				Self.addTags(for: relation, element: element)
@@ -270,11 +235,16 @@ final class OsmXmlGenerator {
 		]))
 	}
 
-	private static func update(_ string: NSMutableAttributedString, withNode node: DDXMLElement) {
+	private static func update(_ string: NSMutableAttributedString, withNode node: DDXMLElement,
+	                           primaryDescriptions: [Int64: String], parentWayNames: [Int64: String])
+	{
 #if os(iOS)
 		let font = UIFont.preferredFont(forTextStyle: .body)
+		let boldDescriptor = font.fontDescriptor.withSymbolicTraits(.traitBold)
+		let boldFont = boldDescriptor.map { UIFont(descriptor: $0, size: 0) } ?? font
 #else
 		let font = NSFont.labelFont(ofSize: 12)
+		let boldFont = NSFont.boldSystemFont(ofSize: 12)
 #endif
 
 		var foregroundColor = UIColor.black
@@ -283,17 +253,39 @@ final class OsmXmlGenerator {
 		}
 
 		let nodeName = node.attribute(forName: "id")?.stringValue
-		string.append(NSAttributedString(string: "\tNode ", attributes: [
-			NSAttributedString.Key.font: font,
-			NSAttributedString.Key.foregroundColor: foregroundColor
-		]))
-		string.append(
-			NSAttributedString(
-				string: nodeName ?? "",
-				attributes: [
+		let ident = nodeName.flatMap { Int64($0) }
+
+		if let desc = ident.flatMap({ primaryDescriptions[$0] }) {
+			// Bold description first, then "— Node {linked-ID}"
+			string.append(NSAttributedString(string: "\t\(desc) ", attributes: [
+				NSAttributedString.Key.font: boldFont,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+			string.append(NSAttributedString(string: "— Node ", attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+			string.append(NSAttributedString(string: nodeName ?? "", attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.link: "n" + (nodeName ?? "")
+			]))
+		} else {
+			// "Node {linked-ID}", optionally with parent way context
+			string.append(NSAttributedString(string: "\tNode ", attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+			string.append(NSAttributedString(string: nodeName ?? "", attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.link: "n" + (nodeName ?? "")
+			]))
+			if let parentWay = ident.flatMap({ parentWayNames[$0] }) {
+				string.append(NSAttributedString(string: " (in \(parentWay))", attributes: [
 					NSAttributedString.Key.font: font,
-					NSAttributedString.Key.link: "n" + (nodeName ?? "")
+					NSAttributedString.Key.foregroundColor: foregroundColor
 				]))
+			}
+		}
 		string.append(NSAttributedString(string: "\n", attributes: [
 			NSAttributedString.Key.font: font
 		]))
@@ -309,7 +301,9 @@ final class OsmXmlGenerator {
 		}
 	}
 
-	private static func update(_ string: NSMutableAttributedString, withWay way: DDXMLElement) {
+	private static func update(_ string: NSMutableAttributedString, withWay way: DDXMLElement,
+	                           primaryDescriptions: [Int64: String], parentWayNames: [Int64: String])
+	{
 		var nodeCount = 0
 		for tag in way.children ?? [] {
 			guard let tag = tag as? DDXMLElement else {
@@ -322,8 +316,11 @@ final class OsmXmlGenerator {
 
 #if os(iOS)
 		let font = UIFont.preferredFont(forTextStyle: .body)
+		let boldDescriptor = font.fontDescriptor.withSymbolicTraits(.traitBold)
+		let boldFont = boldDescriptor.map { UIFont(descriptor: $0, size: 0) } ?? font
 #else
 		let font = NSFont.labelFont(ofSize: 12)
+		let boldFont = NSFont.boldSystemFont(ofSize: 12)
 #endif
 
 		var foregroundColor = UIColor.black
@@ -332,24 +329,41 @@ final class OsmXmlGenerator {
 		}
 
 		let wayName = way.attribute(forName: "id")?.stringValue
-		string.append(NSAttributedString(string: NSLocalizedString("\tWay ", comment: ""), attributes: [
-			NSAttributedString.Key.font: font,
-			NSAttributedString.Key.foregroundColor: foregroundColor
-		]))
-		string.append(
-			NSAttributedString(
-				string: wayName ?? "",
-				attributes: [
-					NSAttributedString.Key.font: font,
-					NSAttributedString.Key.link: "w" + (wayName ?? "")
-				]))
-		string.append(
-			NSAttributedString(
-				string: String.localizedStringWithFormat(NSLocalizedString(" (%d nodes)\n", comment: ""), nodeCount),
-				attributes: [
-					NSAttributedString.Key.font: font,
-					NSAttributedString.Key.foregroundColor: foregroundColor
-				]))
+		let ident = wayName.flatMap { Int64($0) }
+		let nodeCountStr = String.localizedStringWithFormat(NSLocalizedString(" (%d nodes)\n", comment: ""), nodeCount)
+
+		if let desc = ident.flatMap({ primaryDescriptions[$0] }) {
+			// Bold description first, then "— Way {linked-ID} (N nodes)"
+			string.append(NSAttributedString(string: "\t\(desc) ", attributes: [
+				NSAttributedString.Key.font: boldFont,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+			string.append(NSAttributedString(string: "— Way ", attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+			string.append(NSAttributedString(string: wayName ?? "", attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.link: "w" + (wayName ?? "")
+			]))
+			string.append(NSAttributedString(string: nodeCountStr, attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+		} else {
+			string.append(NSAttributedString(string: NSLocalizedString("\tWay ", comment: ""), attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+			string.append(NSAttributedString(string: wayName ?? "", attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.link: "w" + (wayName ?? "")
+			]))
+			string.append(NSAttributedString(string: nodeCountStr, attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+		}
 
 		for tag in way.children ?? [] {
 			guard let tag = tag as? DDXMLElement else {
@@ -365,7 +379,9 @@ final class OsmXmlGenerator {
 		}
 	}
 
-	private static func update(_ string: NSMutableAttributedString, withRelation relation: DDXMLElement) {
+	private static func update(_ string: NSMutableAttributedString, withRelation relation: DDXMLElement,
+	                           primaryDescriptions: [Int64: String], parentWayNames: [Int64: String])
+	{
 		var memberCount = 0
 		for tag in relation.children ?? [] {
 			guard let tag = tag as? DDXMLElement else {
@@ -378,8 +394,11 @@ final class OsmXmlGenerator {
 
 #if os(iOS)
 		let font = UIFont.preferredFont(forTextStyle: .body)
+		let boldDescriptor = font.fontDescriptor.withSymbolicTraits(.traitBold)
+		let boldFont = boldDescriptor.map { UIFont(descriptor: $0, size: 0) } ?? font
 #else
 		let font = NSFont.labelFont(ofSize: 12)
+		let boldFont = NSFont.boldSystemFont(ofSize: 12)
 #endif
 
 		var foregroundColor = UIColor.black
@@ -388,26 +407,41 @@ final class OsmXmlGenerator {
 		}
 
 		let relationName = relation.attribute(forName: "id")?.stringValue
-		string.append(NSAttributedString(string: NSLocalizedString("\tRelation ", comment: ""), attributes: [
-			NSAttributedString.Key.font: font,
-			NSAttributedString.Key.foregroundColor: foregroundColor
-		]))
-		string.append(
-			NSAttributedString(
-				string: relationName ?? "",
-				attributes: [
-					NSAttributedString.Key.font: font,
-					NSAttributedString.Key.link: "r" + (relationName ?? "")
-				]))
-		string.append(
-			NSAttributedString(
-				string: String.localizedStringWithFormat(
-					NSLocalizedString(" (%d members)\n", comment: ""),
-					memberCount),
-				attributes: [
-					NSAttributedString.Key.font: font,
-					NSAttributedString.Key.foregroundColor: foregroundColor
-				]))
+		let ident = relationName.flatMap { Int64($0) }
+		let memberCountStr = String.localizedStringWithFormat(NSLocalizedString(" (%d members)\n", comment: ""), memberCount)
+
+		if let desc = ident.flatMap({ primaryDescriptions[$0] }) {
+			// Bold description first, then "— Relation {linked-ID} (N members)"
+			string.append(NSAttributedString(string: "\t\(desc) ", attributes: [
+				NSAttributedString.Key.font: boldFont,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+			string.append(NSAttributedString(string: "— Relation ", attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+			string.append(NSAttributedString(string: relationName ?? "", attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.link: "r" + (relationName ?? "")
+			]))
+			string.append(NSAttributedString(string: memberCountStr, attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+		} else {
+			string.append(NSAttributedString(string: NSLocalizedString("\tRelation ", comment: ""), attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+			string.append(NSAttributedString(string: relationName ?? "", attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.link: "r" + (relationName ?? "")
+			]))
+			string.append(NSAttributedString(string: memberCountStr, attributes: [
+				NSAttributedString.Key.font: font,
+				NSAttributedString.Key.foregroundColor: foregroundColor
+			]))
+		}
 
 		for tag in relation.children ?? [] {
 			guard let tag = tag as? DDXMLElement else {
@@ -423,7 +457,9 @@ final class OsmXmlGenerator {
 		}
 	}
 
-	private static func update(_ string: NSMutableAttributedString, withHeader header: String, objects: [Any]?) {
+	private static func update(_ string: NSMutableAttributedString, withHeader header: String, objects: [Any]?,
+	                           primaryDescriptions: [Int64: String], parentWayNames: [Int64: String])
+	{
 		guard let objects = objects,
 		      objects.count > 0
 		else {
@@ -449,11 +485,11 @@ final class OsmXmlGenerator {
 				continue
 			}
 			if object.name == "node" {
-				update(string, withNode: object)
+				update(string, withNode: object, primaryDescriptions: primaryDescriptions, parentWayNames: parentWayNames)
 			} else if object.name == "way" {
-				update(string, withWay: object)
+				update(string, withWay: object, primaryDescriptions: primaryDescriptions, parentWayNames: parentWayNames)
 			} else if object.name == "relation" {
-				update(string, withRelation: object)
+				update(string, withRelation: object, primaryDescriptions: primaryDescriptions, parentWayNames: parentWayNames)
 			} else {
 				assertionFailure()
 			}
@@ -482,8 +518,13 @@ final class OsmXmlGenerator {
 		return (nodes, ways, relations)
 	}
 
-	/// Converts an XML document to an AttributedString suitable for the Upload view
-	static func attributedStringForXML(_ doc: DDXMLDocument) -> NSAttributedString? {
+	/// Converts an XML document to an AttributedString suitable for the Upload view.
+	/// - `primaryDescriptions`: maps object ID → bold label shown before the type+ID (for objects with tags)
+	/// - `parentWayNames`: maps node ID → parent way label shown after the ID (for topology nodes)
+	static func attributedStringForXML(_ doc: DDXMLDocument,
+	                                   primaryDescriptions: [Int64: String] = [:],
+	                                   parentWayNames: [Int64: String] = [:]) -> NSAttributedString?
+	{
 		let string = NSMutableAttributedString()
 		guard let root = doc.rootElement() else { return nil }
 
@@ -491,13 +532,16 @@ final class OsmXmlGenerator {
 		let creates = root.elements(forName: "create")
 		let modifys = root.elements(forName: "modify")
 		for delete in deletes {
-			update(string, withHeader: NSLocalizedString("Delete\n", comment: ""), objects: delete.children)
+			update(string, withHeader: NSLocalizedString("Delete\n", comment: ""), objects: delete.children,
+			       primaryDescriptions: primaryDescriptions, parentWayNames: parentWayNames)
 		}
 		for create in creates {
-			update(string, withHeader: NSLocalizedString("Create\n", comment: ""), objects: create.children)
+			update(string, withHeader: NSLocalizedString("Create\n", comment: ""), objects: create.children,
+			       primaryDescriptions: primaryDescriptions, parentWayNames: parentWayNames)
 		}
 		for modify in modifys {
-			update(string, withHeader: NSLocalizedString("Modify\n", comment: ""), objects: modify.children)
+			update(string, withHeader: NSLocalizedString("Modify\n", comment: ""), objects: modify.children,
+			       primaryDescriptions: primaryDescriptions, parentWayNames: parentWayNames)
 		}
 		return string
 	}
