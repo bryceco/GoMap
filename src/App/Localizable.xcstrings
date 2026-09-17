@@ -26623,6 +26623,9 @@
         }
       }
     },
+    "Changeset comment" : {
+      "comment" : "Header for the changeset comment section on the upload screen"
+    },
     "Choose Existing Photo" : {
       "comment" : "Option to choose a photo from the photo library.",
       "localizations" : {
@@ -31590,6 +31593,9 @@
           }
         }
       }
+    },
+    "Describe your changes..." : {
+      "comment" : "Placeholder text shown in the empty changeset comment field"
     },
     "Detach from relation" : {
       "localizations" : {
@@ -56057,6 +56063,9 @@
           }
         }
       }
+    },
+    "Source" : {
+      "comment" : "Header for the data source section on the upload screen"
     },
     "Space" : {
       "comment" : "Space key on the keyboard",

@@ -10,6 +10,17 @@ import KissXML
 import MessageUI
 import UIKit
 
+// Section header titles and the comment placeholder. Kept as named constants (rather than
+// inline at each use site) so translators and reviewers can find every user-facing string here.
+private enum UploadStrings {
+	static let commentHeader = NSLocalizedString("Changeset comment",
+	                                             comment: "Header for the changeset comment section on the upload screen")
+	static let sourceHeader = NSLocalizedString("Source",
+	                                            comment: "Header for the data source section on the upload screen")
+	static let commentPlaceholder = NSLocalizedString("Describe your changes...",
+	                                                  comment: "Placeholder text shown in the empty changeset comment field")
+}
+
 private func sanitizedURL(_ urlString: String) -> String {
 	let sensitiveKeys = ["token", "auth", "api_key", "access_token", "connectid", "signature"]
 
@@ -25,6 +36,199 @@ private func sanitizedURL(_ urlString: String) -> String {
 }
 
 // MARK: - Private Table Support Types
+
+/// Full-width cell hosting the changeset comment editor. The text view doesn't scroll;
+/// instead the cell grows with its content (down to a minimum height).
+private final class CommentCell: UITableViewCell {
+	static let minimumTextHeight: CGFloat = 72
+
+	let textView = UITextView()
+	let clearButton = UIButton(type: .system)
+	let historyButton = UIButton(type: .system)
+	private let placeholderLabel = UILabel()
+
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		selectionStyle = .none
+
+		textView.font = UIFont.preferredFont(forTextStyle: .body)
+		textView.adjustsFontForContentSizeCategory = true
+		textView.backgroundColor = .clear
+		textView.isScrollEnabled = false
+		textView.textContainerInset = .zero
+		textView.textContainer.lineFragmentPadding = 0
+		textView.returnKeyType = .done
+		textView.translatesAutoresizingMaskIntoConstraints = false
+		contentView.addSubview(textView)
+
+		historyButton.setImage(UIImage(systemName: "clock.arrow.circlepath") ?? UIImage(systemName: "clock"),
+		                       for: .normal)
+		clearButton.setImage(UIImage(systemName: "xmark.circle.fill"), for: .normal)
+		clearButton.tintColor = .tertiaryLabel
+
+		// History comes first so it doesn't jump around when the clear button shows/hides.
+		let buttons = UIStackView(arrangedSubviews: [historyButton, clearButton])
+		buttons.axis = .vertical
+		buttons.spacing = 4
+		buttons.translatesAutoresizingMaskIntoConstraints = false
+		contentView.addSubview(buttons)
+
+		let margins = contentView.layoutMarginsGuide
+		// Not quite required, to avoid a transient conflict with the cell's estimated height.
+		let bottom = textView.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
+		bottom.priority = .required - 1
+
+		NSLayoutConstraint.activate([
+			textView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+			textView.topAnchor.constraint(equalTo: margins.topAnchor),
+			bottom,
+			textView.heightAnchor.constraint(greaterThanOrEqualToConstant: Self.minimumTextHeight),
+
+			buttons.leadingAnchor.constraint(equalTo: textView.trailingAnchor, constant: 8),
+			buttons.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+			buttons.topAnchor.constraint(equalTo: margins.topAnchor),
+			buttons.bottomAnchor.constraint(lessThanOrEqualTo: margins.bottomAnchor),
+			buttons.widthAnchor.constraint(equalToConstant: 28),
+			historyButton.heightAnchor.constraint(equalToConstant: 28),
+			clearButton.heightAnchor.constraint(equalToConstant: 28)
+		])
+
+		placeholderLabel.text = UploadStrings.commentPlaceholder
+		placeholderLabel.font = textView.font
+		placeholderLabel.adjustsFontForContentSizeCategory = true
+		placeholderLabel.textColor = .placeholderText
+		placeholderLabel.translatesAutoresizingMaskIntoConstraints = false
+		contentView.addSubview(placeholderLabel)
+		NSLayoutConstraint.activate([
+			placeholderLabel.leadingAnchor.constraint(equalTo: textView.leadingAnchor),
+			placeholderLabel.topAnchor.constraint(equalTo: textView.topAnchor),
+			placeholderLabel.trailingAnchor.constraint(lessThanOrEqualTo: textView.trailingAnchor)
+		])
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { fatalError() }
+
+	/// Placeholder visibility follows the text view's content; callers just call this after
+	/// any edit rather than touching the label directly.
+	func updatePlaceholderVisibility() {
+		placeholderLabel.isHidden = textView.text.count > 0
+	}
+
+	/// Hides the placeholder outright, e.g. while the text view has focus.
+	func hidePlaceholder() {
+		placeholderLabel.isHidden = true
+	}
+}
+
+/// Cell hosting the single-line source field, plus a button for recently used sources.
+private final class SourceCell: UITableViewCell {
+	let textField = UITextField()
+	let historyButton = UIButton(type: .system)
+
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		selectionStyle = .none
+
+		textField.font = UIFont.preferredFont(forTextStyle: .body)
+		textField.adjustsFontForContentSizeCategory = true
+		textField.borderStyle = .none
+		textField.clearButtonMode = .whileEditing
+		textField.returnKeyType = .done
+		textField.setContentHuggingPriority(.defaultLow, for: .horizontal)
+		textField.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
+
+		historyButton.setImage(UIImage(systemName: "clock.arrow.circlepath") ?? UIImage(systemName: "clock"),
+		                       for: .normal)
+
+		let stack = UIStackView(arrangedSubviews: [textField, historyButton])
+		stack.axis = .horizontal
+		stack.spacing = 8
+		stack.alignment = .center
+		stack.translatesAutoresizingMaskIntoConstraints = false
+		contentView.addSubview(stack)
+
+		let margins = contentView.layoutMarginsGuide
+		NSLayoutConstraint.activate([
+			stack.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+			stack.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+			stack.topAnchor.constraint(equalTo: margins.topAnchor),
+			stack.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
+			textField.heightAnchor.constraint(greaterThanOrEqualToConstant: 28),
+			historyButton.widthAnchor.constraint(equalToConstant: 28),
+			historyButton.heightAnchor.constraint(equalToConstant: 28)
+		])
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { fatalError() }
+}
+
+/// Informational cell: either the orange "distant changes were deselected" warning,
+/// or the "nothing to upload" message.
+private final class MessageCell: UITableViewCell {
+	static let reuseIdentifier = "MessageCell"
+
+	enum Style {
+		case warning
+		case empty
+	}
+
+	private let iconView = UIImageView()
+	private let messageLabel = UILabel()
+
+	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+		super.init(style: style, reuseIdentifier: reuseIdentifier)
+		selectionStyle = .none
+
+		iconView.image = UIImage(systemName: "exclamationmark.triangle.fill")
+		iconView.tintColor = .systemOrange
+		iconView.contentMode = .scaleAspectFit
+		iconView.setContentHuggingPriority(.required, for: .horizontal)
+		iconView.setContentCompressionResistancePriority(.required, for: .horizontal)
+
+		messageLabel.numberOfLines = 0
+		messageLabel.adjustsFontForContentSizeCategory = true
+
+		let stack = UIStackView(arrangedSubviews: [iconView, messageLabel])
+		stack.axis = .horizontal
+		stack.spacing = 10
+		stack.alignment = .center
+		stack.translatesAutoresizingMaskIntoConstraints = false
+		contentView.addSubview(stack)
+
+		let margins = contentView.layoutMarginsGuide
+		NSLayoutConstraint.activate([
+			iconView.widthAnchor.constraint(equalToConstant: 22),
+			iconView.heightAnchor.constraint(equalToConstant: 22),
+			stack.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+			stack.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+			stack.topAnchor.constraint(equalTo: margins.topAnchor),
+			stack.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
+		])
+	}
+
+	@available(*, unavailable)
+	required init?(coder: NSCoder) { fatalError() }
+
+	func configure(text: String, style: Style) {
+		messageLabel.text = text
+		switch style {
+		case .warning:
+			iconView.isHidden = false
+			messageLabel.font = UIFont.preferredFont(forTextStyle: .footnote)
+			messageLabel.textColor = .label
+			messageLabel.textAlignment = .natural
+			backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
+		case .empty:
+			iconView.isHidden = true
+			messageLabel.font = UIFont.preferredFont(forTextStyle: .body)
+			messageLabel.textColor = .secondaryLabel
+			messageLabel.textAlignment = .center
+			backgroundColor = .secondarySystemGroupedBackground
+		}
+	}
+}
 
 /// Section header for a ConnectedObjects group — shows a checkmark toggle and a summary label.
 private final class GroupSectionHeader: UITableViewHeaderFooterView {
@@ -114,6 +318,7 @@ private final class ChangeGroupCell: UITableViewCell {
 		groupTextView.isEditable = false
 		groupTextView.isScrollEnabled = false
 		groupTextView.dataDetectorTypes = []
+		groupTextView.backgroundColor = .clear
 		groupTextView.textContainerInset = UIEdgeInsets(top: 8, left: 4, bottom: 8, right: 4)
 		groupTextView.translatesAutoresizingMaskIntoConstraints = false
 		contentView.addSubview(groupTextView)
@@ -133,24 +338,43 @@ private final class ChangeGroupCell: UITableViewCell {
 // MARK: - UploadViewController
 
 class UploadViewController: UIViewController {
+	/// Table layout. Comment and source are always present; the rest depends on the pending edits.
+	private enum Section {
+		case comment
+		case source
+		case distanceWarning
+		case noChanges
+		case group(Int) // index into connectedGroups
+	}
+
 	var mapData: OsmMapData!
-	@IBOutlet var commentContainerView: UIView!
-	@IBOutlet var groupsTableView: UITableView!
-	@IBOutlet var commentTextView: UITextView!
-	@IBOutlet var sourceTextField: UITextField!
+	@IBOutlet var tableView: UITableView!
 	@IBOutlet var commitButton: UIBarButtonItem!
 	@IBOutlet var cancelButton: UIBarButtonItem!
 	@IBOutlet var progressView: UIActivityIndicatorView!
-	@IBOutlet var exportOscButton: UIButton!
-	@IBOutlet var editXmlButton: UIButton!
-	@IBOutlet var clearCommentButton: UIButton!
-	@IBOutlet var commentHistoryButton: UIButton!
-	@IBOutlet var sourceHistoryButton: UIButton!
-	@IBOutlet var changesetCommentPlaceholder: UILabel!
 
+	// The comment and source cells are created once and never reused, so they
+	// retain their text and first-responder state regardless of scrolling.
+	private lazy var commentCell = CommentCell(style: .default, reuseIdentifier: nil)
+	private lazy var sourceCell = SourceCell(style: .default, reuseIdentifier: nil)
+
+	var commentTextView: UITextView { commentCell.textView }
+	var clearCommentButton: UIButton { commentCell.clearButton }
+	var commentHistoryButton: UIButton { commentCell.historyButton }
+	var sourceTextField: UITextField { sourceCell.textField }
+	var sourceHistoryButton: UIButton { sourceCell.historyButton }
+
+	// Edit/Export act on the selected groups and live in the bottom toolbar.
+	private lazy var editXmlButton = UIBarButtonItem(barButtonSystemItem: .edit,
+	                                                 target: self,
+	                                                 action: #selector(editXml(_:)))
+	private lazy var exportOscButton = UIBarButtonItem(barButtonSystemItem: .action,
+	                                                   target: self,
+	                                                   action: #selector(exportOscFile(_:)))
+
+	private var sections: [Section] = [.comment, .source]
 	private var connectedGroups: [ConnectedObjects] = []
 	private var selectedGroupIndices: Set<Int> = []
-	private var distanceBannerView: UIView?
 
 	private var selectedGroups: [ConnectedObjects] {
 		connectedGroups.indices.filter { selectedGroupIndices.contains($0) }.map { connectedGroups[$0] }
@@ -164,106 +388,118 @@ class UploadViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		let color = UIColor.gray.withAlphaComponent(0.5)
-		commentContainerView.layer.borderColor = color.cgColor
-		commentContainerView.layer.borderWidth = 2.0
-		commentContainerView.layer.cornerRadius = 10.0
-		commentTextView.returnKeyType = .done
+		// Comment cell
+		commentTextView.delegate = self
+		clearCommentButton.addTarget(self, action: #selector(clearCommentText(_:)), for: .touchUpInside)
+		commentHistoryButton.addTarget(self, action: #selector(showCommitMessageHistory(_:)), for: .touchUpInside)
 
-		sourceTextField.layer.borderColor = color.cgColor
-		sourceTextField.layer.borderWidth = 2.0
-		sourceTextField.layer.cornerRadius = 10.0
-		sourceTextField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 7.5, height: 0))
-		sourceTextField.leftViewMode = .always
-		sourceTextField.returnKeyType = .done
+		// Source cell
+		sourceTextField.placeholder = "survey, Bing, knowledge" // intentionally not localized: see #557
 		sourceTextField.addTarget(self, action: #selector(dismissKeyboard(_:)), for: .editingDidEndOnExit)
+		sourceHistoryButton.addTarget(self, action: #selector(showSourceHistory(_:)), for: .touchUpInside)
 
-		// create button for source history
-		sourceHistoryButton = UIButton(type: .custom)
-		sourceHistoryButton.frame = CGRect(x: 0, y: 0, width: 22, height: 22)
-		sourceHistoryButton.setTitle("🔽", for: .normal)
-		sourceHistoryButton.addTarget(self, action: #selector(showSourceHistory), for: .touchUpInside)
-		sourceTextField.rightView = sourceHistoryButton
-		sourceTextField.rightViewMode = .always
+		// Table
+		tableView.register(ChangeGroupCell.self, forCellReuseIdentifier: ChangeGroupCell.reuseIdentifier)
+		tableView.register(MessageCell.self, forCellReuseIdentifier: MessageCell.reuseIdentifier)
+		tableView.register(GroupSectionHeader.self,
+		                   forHeaderFooterViewReuseIdentifier: GroupSectionHeader.reuseIdentifier)
+		tableView.rowHeight = UITableView.automaticDimension
+		tableView.estimatedRowHeight = 100
+		tableView.keyboardDismissMode = .interactive
+		tableView.dataSource = self
+		tableView.delegate = self
 
-		groupsTableView.register(ChangeGroupCell.self, forCellReuseIdentifier: ChangeGroupCell.reuseIdentifier)
-		groupsTableView.register(GroupSectionHeader.self,
-		                         forHeaderFooterViewReuseIdentifier: GroupSectionHeader.reuseIdentifier)
-		groupsTableView.rowHeight = UITableView.automaticDimension
-		groupsTableView.estimatedRowHeight = 100
-		groupsTableView.dataSource = self
-		groupsTableView.delegate = self
+		toolbarItems = [
+			editXmlButton,
+			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+			exportOscButton
+		]
 
-		if #available(iOS 13.0, *) {
-			progressView.style = .large
-		} else {
-			progressView.style = .whiteLarge
-		}
+		progressView.style = .large
 	}
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		navigationController?.setToolbarHidden(false, animated: animated)
 
 		let mapView = AppDelegate.shared.mapView
 		mapData = mapView?.mapData
 
 		commentTextView.text = UserPrefs.shared.uploadComment.value
 		sourceTextField.text = UserPrefs.shared.uploadSource.value
-		sourceTextField.placeholder = "survey, Bing, knowledge" // overrules translations: see #557
-		changesetCommentPlaceholder.isHidden = commentTextView.text.count > 0
-
-		connectedGroups = mapData?.undoManager.connectedObjects() ?? []
-		selectedGroupIndices = nearbyGroupIndices()
-
-		let hasGroups = !connectedGroups.isEmpty
-		commitButton.isEnabled = hasGroups
-		exportOscButton.isEnabled = hasGroups
-		editXmlButton.isEnabled = hasGroups
-
-		if !hasGroups {
-			let label = UILabel()
-			label.text = NSLocalizedString("Nothing to upload, no changes have been made.", comment: "")
-			label.textAlignment = .center
-			label.numberOfLines = 0
-			label.font = UIFont.preferredFont(forTextStyle: .body)
-			label.textColor = .secondaryLabel
-			groupsTableView.backgroundView = label
-		} else {
-			groupsTableView.backgroundView = nil
-		}
-
-		groupsTableView.reloadData()
-		updateDistanceBanner()
+		commentCell.updatePlaceholderVisibility()
 
 		clearCommentButton.isHidden = true
 		commentHistoryButton.isHidden = recentCommentList.count == 0
-		sourceTextField.rightViewMode = recentSourceList.count > 0 ? .always : .never
+		sourceHistoryButton.isHidden = recentSourceList.count == 0
+
+		reloadGroups()
 	}
 
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
+		// Don't let the toolbar follow us into the XML editor or login screens.
+		navigationController?.setToolbarHidden(true, animated: animated)
 		UserPrefs.shared.uploadComment.value = commentTextView.text
 		UserPrefs.shared.uploadSource.value = sourceTextField.text
 	}
 
-	override func viewDidLayoutSubviews() {
-		super.viewDidLayoutSubviews()
-		// Keep the tableHeaderView properly sized to fit its Auto Layout content.
-		if let banner = distanceBannerView {
-			let width = groupsTableView.bounds.width
-			let height = banner.systemLayoutSizeFitting(
-				CGSize(width: width, height: 0),
-				withHorizontalFittingPriority: .required,
-				verticalFittingPriority: .fittingSizeLevel
-			).height
-			if abs(banner.frame.height - height) > 0.5 {
-				banner.frame = CGRect(x: 0, y: 0, width: width, height: height)
-				groupsTableView.tableHeaderView = banner
+	// MARK: - Sections
+
+	/// Recomputes the change groups, their default selection, and the table layout.
+	private func reloadGroups() {
+		connectedGroups = mapData?.undoManager.connectedObjects() ?? []
+		selectedGroupIndices = nearbyGroupIndices()
+
+		sections = [.comment, .source]
+		if connectedGroups.isEmpty {
+			sections.append(.noChanges)
+		} else {
+			if selectedGroupIndices.count < connectedGroups.count {
+				// Some distant groups were automatically deselected
+				sections.append(.distanceWarning)
 			}
+			sections += connectedGroups.indices.map { Section.group($0) }
+		}
+
+		updateActionButtons()
+		tableView.reloadData()
+	}
+
+	private func sectionIndex(forGroup groupIndex: Int) -> Int? {
+		sections.firstIndex {
+			if case let .group(index) = $0 { return index == groupIndex }
+			return false
 		}
 	}
 
-	// MARK: - Distance Banner
+	private func updateActionButtons() {
+		let hasSelection = !selectedGroupIndices.isEmpty
+		commitButton.isEnabled = hasSelection
+		exportOscButton.isEnabled = hasSelection
+		editXmlButton.isEnabled = hasSelection
+	}
+
+	/// Asks the table to re-measure self-sizing rows (i.e. the comment cell) without reloading them.
+	private func updateRowHeights() {
+		UIView.performWithoutAnimation {
+			tableView.beginUpdates()
+			tableView.endUpdates()
+		}
+	}
+
+	private func updateCommentHeightIfNeeded() {
+		let textView = commentTextView
+		guard textView.bounds.width > 0 else { return }
+		let fitting = textView.sizeThatFits(CGSize(width: textView.bounds.width,
+		                                           height: .greatestFiniteMagnitude)).height
+		let target = max(fitting, CommentCell.minimumTextHeight)
+		if abs(target - textView.bounds.height) > 0.5 {
+			updateRowHeights()
+		}
+	}
+
+	// MARK: - Change Groups
 
 	/// Returns the indices of groups that are geographically close to the most recently edited group.
 	/// Each group's bounding box is expanded by ~500 m; groups whose expanded boxes overlap are
@@ -289,7 +525,9 @@ class UploadViewController: UIViewController {
 		var parent = Array(0..<count)
 		func find(_ x: Int) -> Int {
 			var x = x
-			while parent[x] != x { x = parent[x] }
+			while parent[x] != x {
+				x = parent[x]
+			}
 			return x
 		}
 		for i in 0..<count {
@@ -309,56 +547,6 @@ class UploadViewController: UIViewController {
 		return Set(connectedGroups.indices.filter { find($0) == targetRoot })
 	}
 
-	private func createDistanceBannerView() -> UIView {
-		let icon = UIImageView(image: UIImage(systemName: "exclamationmark.triangle.fill"))
-		icon.tintColor = .systemOrange
-		icon.contentMode = .scaleAspectFit
-		icon.setContentHuggingPriority(.required, for: .horizontal)
-		icon.setContentCompressionResistancePriority(.required, for: .horizontal)
-		icon.translatesAutoresizingMaskIntoConstraints = false
-		NSLayoutConstraint.activate([
-			icon.widthAnchor.constraint(equalToConstant: 22),
-			icon.heightAnchor.constraint(equalToConstant: 22)
-		])
-
-		let label = UILabel()
-		label.text = NSLocalizedString(
-			"Some changes are in a different location and have been deselected. Upload them as a separate changeset.",
-			comment: "Warning shown on upload screen when distant edit groups are automatically deselected")
-		label.numberOfLines = 0
-		label.font = UIFont.preferredFont(forTextStyle: .footnote)
-		label.translatesAutoresizingMaskIntoConstraints = false
-
-		let stack = UIStackView(arrangedSubviews: [icon, label])
-		stack.axis = .horizontal
-		stack.spacing = 8
-		stack.alignment = .center
-		stack.translatesAutoresizingMaskIntoConstraints = false
-
-		let container = UIView()
-		container.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
-		container.addSubview(stack)
-		NSLayoutConstraint.activate([
-			stack.topAnchor.constraint(equalTo: container.topAnchor, constant: 10),
-			stack.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -10),
-			stack.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
-			stack.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16)
-		])
-		return container
-	}
-
-	private func updateDistanceBanner() {
-		if selectedGroupIndices.count < connectedGroups.count {
-			if distanceBannerView == nil {
-				distanceBannerView = createDistanceBannerView()
-			}
-			groupsTableView.tableHeaderView = distanceBannerView
-		} else {
-			distanceBannerView = nil
-			groupsTableView.tableHeaderView = nil
-		}
-	}
-
 	private func summaryLabel(for group: ConnectedObjects) -> String {
 		guard let doc = OsmXmlGenerator.createXmlFor(objects: group.objects,
 		                                             generator: AppDelegate.shared.generator)
@@ -371,23 +559,22 @@ class UploadViewController: UIViewController {
 		return parts.joined(separator: ", ")
 	}
 
-	private func toggleGroup(at section: Int) {
-		if selectedGroupIndices.contains(section) {
-			selectedGroupIndices.remove(section)
+	private func toggleGroup(at groupIndex: Int) {
+		if selectedGroupIndices.contains(groupIndex) {
+			selectedGroupIndices.remove(groupIndex)
 		} else {
-			selectedGroupIndices.insert(section)
+			selectedGroupIndices.insert(groupIndex)
 		}
-		if let header = groupsTableView.headerView(forSection: section) as? GroupSectionHeader {
-			header.isChecked = selectedGroupIndices.contains(section)
+		if let section = sectionIndex(forGroup: groupIndex),
+		   let header = tableView.headerView(forSection: section) as? GroupSectionHeader
+		{
+			header.isChecked = selectedGroupIndices.contains(groupIndex)
 		}
-		let hasSelection = !selectedGroupIndices.isEmpty
-		commitButton.isEnabled = hasSelection
-		exportOscButton.isEnabled = hasSelection
-		editXmlButton.isEnabled = hasSelection
+		updateActionButtons()
 	}
 
-	private func confirmDiscard(at section: Int) {
-		let group = connectedGroups[section]
+	private func confirmDiscard(at groupIndex: Int) {
+		let group = connectedGroups[groupIndex]
 		let alert = UIAlertController(
 			title: NSLocalizedString("Discard Changes", comment: "Title for discard-group confirmation alert"),
 			message: NSLocalizedString(
@@ -404,29 +591,7 @@ class UploadViewController: UIViewController {
 
 	private func discardGroup(_ group: ConnectedObjects) {
 		mapData.undoManager.discardGroups(group.undoGroups)
-
-		connectedGroups = mapData.undoManager.connectedObjects()
-		selectedGroupIndices = nearbyGroupIndices()
-
-		let hasGroups = !connectedGroups.isEmpty
-		commitButton.isEnabled = hasGroups
-		exportOscButton.isEnabled = hasGroups
-		editXmlButton.isEnabled = hasGroups
-
-		if !hasGroups {
-			let label = UILabel()
-			label.text = NSLocalizedString("Nothing to upload, no changes have been made.", comment: "")
-			label.textAlignment = .center
-			label.numberOfLines = 0
-			label.font = UIFont.preferredFont(forTextStyle: .body)
-			label.textColor = .secondaryLabel
-			groupsTableView.backgroundView = label
-		} else {
-			groupsTableView.backgroundView = nil
-		}
-
-		groupsTableView.reloadData()
-		updateDistanceBanner()
+		reloadGroups()
 	}
 
 	private func currentImagery() -> String {
@@ -448,13 +613,16 @@ class UploadViewController: UIViewController {
 		}
 	}
 
+	// MARK: - Actions
+
 	@objc func dismissKeyboard(_ sender: UITextField) {
 		sender.resignFirstResponder()
 	}
 
-	@IBAction func clearCommentText(_ sender: Any) {
+	@objc func clearCommentText(_ sender: Any) {
 		commentTextView.text = ""
 		clearCommentButton.isHidden = true
+		updateCommentHeightIfNeeded()
 	}
 
 	private func showHistorySheet(_ list: [String], button: UIButton, textView: UIView) {
@@ -468,7 +636,8 @@ class UploadViewController: UIViewController {
 					view.text = message
 					view.resignFirstResponder()
 				}
-				self.changesetCommentPlaceholder.isHidden = self.commentTextView.text.count > 0
+				self.commentCell.updatePlaceholderVisibility()
+				self.updateCommentHeightIfNeeded()
 			}))
 		}
 		actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
@@ -479,11 +648,11 @@ class UploadViewController: UIViewController {
 		present(actionSheet, animated: true)
 	}
 
-	@IBAction func showCommitMessageHistory(_ sender: Any) {
+	@objc func showCommitMessageHistory(_ sender: Any) {
 		showHistorySheet(recentCommentList.items, button: commentHistoryButton, textView: commentTextView)
 	}
 
-	@IBAction func showSourceHistory(_ sender: Any) {
+	@objc func showSourceHistory(_ sender: Any) {
 		showHistorySheet(recentSourceList.items, button: sourceHistoryButton, textView: sourceTextField)
 	}
 
@@ -574,11 +743,8 @@ class UploadViewController: UIViewController {
 			performSegue(withIdentifier: "loginSegue", sender: self)
 		} catch {
 			progressView.stopAnimating()
-			commitButton.isEnabled = true
 			cancelButton.isEnabled = true
-			let hasSelection = !selectedGroupIndices.isEmpty
-			exportOscButton.isEnabled = hasSelection
-			editXmlButton.isEnabled = hasSelection
+			updateActionButtons()
 			let alert = UIAlertController(
 				title: NSLocalizedString("Unable to upload changes", comment: ""),
 				message: error.localizedDescription,
@@ -590,7 +756,7 @@ class UploadViewController: UIViewController {
 		}
 	}
 
-	@IBAction func editXml(_ sender: Any) {
+	@objc func editXml(_ sender: Any) {
 		let groups = selectedGroups
 		guard !groups.isEmpty else { return }
 		let appDelegate = AppDelegate.shared
@@ -614,7 +780,7 @@ class UploadViewController: UIViewController {
 		navigationController?.pushViewController(vc, animated: true)
 	}
 
-	@IBAction func exportOscFile(_ sender: Any) {
+	@objc func exportOscFile(_ sender: Any) {
 		let objects = selectedGroups.reduce(into: Set<OsmBaseObject>()) { $0.formUnion($1.objects) }
 		let doc = OsmXmlGenerator.createXmlFor(objects: objects, generator: AppDelegate.shared.generator)
 		guard !selectedGroupIndices.isEmpty,
@@ -626,7 +792,11 @@ class UploadViewController: UIViewController {
 
 		let activityVC = UIActivityViewController(activityItems: [path] as [Any], applicationActivities: nil)
 		activityVC.excludedActivityTypes = [UIActivity.ActivityType.addToReadingList]
-		activityVC.popoverPresentationController?.sourceView = sender as? UIView
+		if let item = sender as? UIBarButtonItem {
+			activityVC.popoverPresentationController?.barButtonItem = item
+		} else {
+			activityVC.popoverPresentationController?.sourceView = sender as? UIView
+		}
 		present(activityVC, animated: true, completion: nil)
 	}
 
@@ -649,21 +819,22 @@ extension UploadViewController: UITextViewDelegate {
 	func textViewDidChange(_ textView: UITextView) {
 		if textView == commentTextView {
 			clearCommentButton.isHidden = commentTextView.text.count == 0
-			changesetCommentPlaceholder.isHidden = commentTextView.text.count > 0
+			commentCell.updatePlaceholderVisibility()
+			updateCommentHeightIfNeeded()
 		}
 	}
 
 	func textViewDidBeginEditing(_ textView: UITextView) {
 		if textView == commentTextView {
 			clearCommentButton.isHidden = commentTextView.text.count == 0
-			changesetCommentPlaceholder.isHidden = true
+			commentCell.hidePlaceholder()
 		}
 	}
 
 	func textViewDidEndEditing(_ textView: UITextView) {
 		if textView == commentTextView {
 			clearCommentButton.isHidden = true
-			changesetCommentPlaceholder.isHidden = commentTextView.text.count > 0
+			commentCell.updatePlaceholderVisibility()
 		}
 	}
 
@@ -696,18 +867,54 @@ extension UploadViewController: UITextViewDelegate {
 
 extension UploadViewController: UITableViewDataSource {
 	func numberOfSections(in tableView: UITableView) -> Int {
-		connectedGroups.count
+		sections.count
 	}
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		1
 	}
 
+	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		switch sections[section] {
+		case .comment: return UploadStrings.commentHeader
+		case .source: return UploadStrings.sourceHeader
+		case .distanceWarning, .noChanges, .group: return nil
+		}
+	}
+
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		switch sections[indexPath.section] {
+		case .comment:
+			return commentCell
+		case .source:
+			return sourceCell
+		case .distanceWarning:
+			let cell = tableView.dequeueReusableCell(
+				withIdentifier: MessageCell.reuseIdentifier,
+				for: indexPath) as! MessageCell
+			cell.configure(
+				text: NSLocalizedString(
+					"Some changes are in a different location and have been deselected. Upload them as a separate changeset.",
+					comment: "Warning shown on upload screen when distant edit groups are automatically deselected"),
+				style: .warning)
+			return cell
+		case .noChanges:
+			let cell = tableView.dequeueReusableCell(
+				withIdentifier: MessageCell.reuseIdentifier,
+				for: indexPath) as! MessageCell
+			cell.configure(
+				text: NSLocalizedString("Nothing to upload, no changes have been made.", comment: ""),
+				style: .empty)
+			return cell
+		case let .group(groupIndex):
+			return groupCell(for: connectedGroups[groupIndex], at: indexPath)
+		}
+	}
+
+	private func groupCell(for group: ConnectedObjects, at indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(
 			withIdentifier: ChangeGroupCell.reuseIdentifier,
 			for: indexPath) as! ChangeGroupCell
-		let group = connectedGroups[indexPath.section]
 		if let doc = OsmXmlGenerator.createXmlFor(objects: group.objects, generator: AppDelegate.shared.generator) {
 			var primaryDescriptions: [Int64: String] = [:]
 			var parentWayNames: [Int64: String] = [:]
@@ -736,13 +943,15 @@ extension UploadViewController: UITableViewDataSource {
 
 extension UploadViewController: UITableViewDelegate {
 	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		// Comment and source use plain titles (see titleForHeaderInSection)
+		guard case let .group(groupIndex) = sections[section] else { return nil }
 		let header = tableView.dequeueReusableHeaderFooterView(
 			withIdentifier: GroupSectionHeader.reuseIdentifier) as! GroupSectionHeader
-		let group = connectedGroups[section]
+		let group = connectedGroups[groupIndex]
 		header.configure(title: summaryLabel(for: group),
-		                 isChecked: selectedGroupIndices.contains(section),
-		                 onSelect: { [weak self] in self?.toggleGroup(at: section) },
-		                 onDiscard: { [weak self] in self?.confirmDiscard(at: section) })
+		                 isChecked: selectedGroupIndices.contains(groupIndex),
+		                 onSelect: { [weak self] in self?.toggleGroup(at: groupIndex) },
+		                 onDiscard: { [weak self] in self?.confirmDiscard(at: groupIndex) })
 		return header
 	}
 

@@ -3,7 +3,7 @@
   "strings" : {
     "ArV-4u-j7D.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Changes:\"; ObjectID = \"ArV-4u-j7D\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -465,7 +465,7 @@
     },
     "hcE-yO-3eH.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Edit\"; ObjectID = \"hcE-yO-3eH\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -639,7 +639,7 @@
     },
     "Idd-0q-a3f.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"🔽\"; ObjectID = \"Idd-0q-a3f\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -765,7 +765,7 @@
     },
     "ikj-u9-9Bn.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Changeset comment:\"; ObjectID = \"ikj-u9-9Bn\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1095,7 +1095,7 @@
     },
     "Plh-7W-ceY.text" : {
       "comment" : "Class = \"UITextView\"; text = \"Lorem ipsum dolor sit er elit lamet,\"; ObjectID = \"Plh-7W-ceY\"; Note = \"Placeholder - Do not translate\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1227,7 +1227,7 @@
     },
     "ps9-Hb-Vow.placeholder" : {
       "comment" : "Class = \"UITextField\"; placeholder = \"survey, Bing, etc.\"; ObjectID = \"ps9-Hb-Vow\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1377,7 +1377,7 @@
     },
     "Rqu-ny-n3F.normalTitle" : {
       "comment" : "Class = \"UIButton\"; normalTitle = \"Export\"; ObjectID = \"Rqu-ny-n3F\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -1539,7 +1539,7 @@
     },
     "xNB-pJ-M20.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Describe your changes... \"; ObjectID = \"xNB-pJ-M20\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -1635,7 +1635,7 @@
     },
     "yZR-tZ-66S.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Source:\"; ObjectID = \"yZR-tZ-66S\";",
-      "extractionState" : "extracted_with_value",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
