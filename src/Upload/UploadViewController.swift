@@ -32,7 +32,9 @@ private final class GroupSectionHeader: UITableViewHeaderFooterView {
 
 	private let checkImageView = UIImageView()
 	private let titleLabel = UILabel()
-	var onTap: (() -> Void)?
+	private let discardButton = UIButton(type: .system)
+	var onSelect: (() -> Void)?
+	var onDiscard: (() -> Void)?
 
 	var isChecked: Bool = false {
 		didSet {
@@ -42,10 +44,11 @@ private final class GroupSectionHeader: UITableViewHeaderFooterView {
 		}
 	}
 
-	func configure(title: String, isChecked checked: Bool, onTap: @escaping () -> Void) {
+	func configure(title: String, isChecked checked: Bool, onSelect: @escaping () -> Void, onDiscard: @escaping () -> Void) {
 		titleLabel.text = title
 		isChecked = checked
-		self.onTap = onTap
+		self.onSelect = onSelect
+		self.onDiscard = onDiscard
 	}
 
 	override init(reuseIdentifier: String?) {
@@ -65,8 +68,18 @@ private final class GroupSectionHeader: UITableViewHeaderFooterView {
 		titleLabel.font = UIFont.preferredFont(forTextStyle: .subheadline)
 		titleLabel.numberOfLines = 0
 		titleLabel.translatesAutoresizingMaskIntoConstraints = false
+		titleLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-		let stack = UIStackView(arrangedSubviews: [checkImageView, titleLabel])
+		discardButton.setImage(UIImage(systemName: "arrow.uturn.backward.circle"), for: .normal)
+		discardButton.tintColor = .systemRed
+		discardButton.translatesAutoresizingMaskIntoConstraints = false
+		discardButton.addTarget(self, action: #selector(discardTapped), for: .touchUpInside)
+		NSLayoutConstraint.activate([
+			discardButton.widthAnchor.constraint(equalToConstant: 22),
+			discardButton.heightAnchor.constraint(equalToConstant: 22)
+		])
+
+		let stack = UIStackView(arrangedSubviews: [checkImageView, titleLabel, discardButton])
 		stack.axis = .horizontal
 		stack.spacing = 8
 		stack.alignment = .center
@@ -82,10 +95,11 @@ private final class GroupSectionHeader: UITableViewHeaderFooterView {
 			stack.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
 		])
 
-		addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapped)))
+		addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(selectTapped)))
 	}
 
-	@objc private func tapped() { onTap?() }
+	@objc private func selectTapped() { onSelect?() }
+	@objc private func discardTapped() { onDiscard?() }
 }
 
 /// A cell that contains a non-scrolling UITextView sized to fit its content.
@@ -370,6 +384,49 @@ class UploadViewController: UIViewController {
 		commitButton.isEnabled = hasSelection
 		exportOscButton.isEnabled = hasSelection
 		editXmlButton.isEnabled = hasSelection
+	}
+
+	private func confirmDiscard(at section: Int) {
+		let group = connectedGroups[section]
+		let alert = UIAlertController(
+			title: NSLocalizedString("Discard Changes", comment: "Title for discard-group confirmation alert"),
+			message: NSLocalizedString(
+				"These edits will be permanently discarded and cannot be recovered.",
+				comment: "Body of discard-group confirmation alert"),
+			preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Discard", comment: "Destructive button that discards a group of edits"),
+			style: .destructive)
+		{ [weak self] _ in self?.discardGroup(group) })
+		present(alert, animated: true)
+	}
+
+	private func discardGroup(_ group: ConnectedObjects) {
+		mapData.undoManager.discardGroups(group.undoGroups)
+
+		connectedGroups = mapData.undoManager.connectedObjects()
+		selectedGroupIndices = nearbyGroupIndices()
+
+		let hasGroups = !connectedGroups.isEmpty
+		commitButton.isEnabled = hasGroups
+		exportOscButton.isEnabled = hasGroups
+		editXmlButton.isEnabled = hasGroups
+
+		if !hasGroups {
+			let label = UILabel()
+			label.text = NSLocalizedString("Nothing to upload, no changes have been made.", comment: "")
+			label.textAlignment = .center
+			label.numberOfLines = 0
+			label.font = UIFont.preferredFont(forTextStyle: .body)
+			label.textColor = .secondaryLabel
+			groupsTableView.backgroundView = label
+		} else {
+			groupsTableView.backgroundView = nil
+		}
+
+		groupsTableView.reloadData()
+		updateDistanceBanner()
 	}
 
 	private func currentImagery() -> String {
@@ -684,7 +741,8 @@ extension UploadViewController: UITableViewDelegate {
 		let group = connectedGroups[section]
 		header.configure(title: summaryLabel(for: group),
 		                 isChecked: selectedGroupIndices.contains(section),
-		                 onTap: { [weak self] in self?.toggleGroup(at: section) })
+		                 onSelect: { [weak self] in self?.toggleGroup(at: section) },
+		                 onDiscard: { [weak self] in self?.confirmDiscard(at: section) })
 		return header
 	}
 

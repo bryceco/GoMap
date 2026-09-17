@@ -31740,7 +31740,7 @@
       }
     },
     "Discard" : {
-      "comment" : "Discard changes",
+      "comment" : "Destructive button that discards a group of edits\nDiscard changes",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -31863,6 +31863,9 @@
           }
         }
       }
+    },
+    "Discard Changes" : {
+      "comment" : "Title for discard-group confirmation alert"
     },
     "Disconnect" : {
       "comment" : "Edit action",
@@ -59746,6 +59749,9 @@
           }
         }
       }
+    },
+    "These edits will be permanently discarded and cannot be recovered." : {
+      "comment" : "Body of discard-group confirmation alert"
     },
     "This action requires GPS to be turned on" : {
       "localizations" : {

@@ -129,6 +129,47 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		postChangeNotification()
 	}
 
+	/// Applies the inverse of all undo actions belonging to `groupIds`, permanently
+	/// discarding those edits without pushing anything to the redo stack.
+	/// The redo stack is cleared entirely (same policy as `removeGroups`).
+	///
+	/// Safe to call on a `ConnectedObjects` supergroup because its object set is
+	/// guaranteed disjoint from every other supergroup on the stack.
+	func discardGroups(_ groupIds: Set<Int>) {
+		guard let mapData = mapData else { return }
+
+		willChangeValue(forKey: "canUndo")
+		willChangeValue(forKey: "canRedo")
+
+		assert(!isUndoing && !isRedoing)
+
+		// Apply inverses in reverse stack order (newest first) so multi-step edits
+		// on the same object unwind correctly.
+		var affectedObjects: Set<OsmBaseObject> = []
+		for i in stride(from: undoStack.count - 1, through: 0, by: -1) {
+			let action = undoStack[i]
+			guard groupIds.contains(action.group) else { continue }
+			action.type.apply(to: mapData)
+			affectedObjects.formUnion(action.type.modifyObjects)
+		}
+
+		// Remove the reverted actions and wipe the redo stack.
+		undoStack.removeAll { groupIds.contains($0.group) }
+		redoStack.removeAll()
+
+		// Recompute isModified: an object is still modified only if it remains
+		// on the undo stack.
+		let liveModified = Set(undoStack.flatMap { $0.type.modifyObjects })
+		for obj in affectedObjects {
+			obj.setModified(liveModified.contains(obj))
+		}
+
+		didChangeValue(forKey: "canUndo")
+		didChangeValue(forKey: "canRedo")
+
+		postChangeNotification()
+	}
+
 	/// Removes all undo actions belonging to the given groups and clears the redo stack.
 	/// The redo stack is always cleared because any pending redos are based on pre-upload
 	/// object state and are irrecoverably stale after a server upload.
