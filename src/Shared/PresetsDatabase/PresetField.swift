@@ -41,6 +41,7 @@ extension PresetField {
 		// free form text
 		case text
 		case number
+		case integer
 		case email
 		case identifier
 		case maxweight_bridge

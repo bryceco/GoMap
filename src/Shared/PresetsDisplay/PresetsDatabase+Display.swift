@@ -334,6 +334,10 @@ extension PresetsDatabase {
 		let label = field.localizedLabel ?? OsmTags.PrettyTag(key)
 
 		switch field.type {
+		case .featureType:
+			// special-cased elsewhere
+			return nil
+
 		case .defaultCheck, .check, .onewayCheck:
 			let tag = yesNoPresetKeyWith(
 				label: label,
@@ -512,7 +516,7 @@ extension PresetsDatabase {
 			let group = PresetDisplayGroup(name: label, tags: addrs, usesBoth: false)
 			return group
 
-		case .text, .number, .email, .identifier, .maxweight_bridge, .textarea, .schedule,
+		case .text, .number, .integer, .email, .identifier, .maxweight_bridge, .textarea, .schedule,
 		     .tel, .url, .roadheight, .roadspeed, .wikipedia, .wikidata, .date:
 
 			// no presets, but we customize keyboard input
@@ -520,7 +524,14 @@ extension PresetsDatabase {
 			var capitalize: UITextAutocapitalizationType = .none
 			var autocorrect: UITextAutocorrectionType = .no
 			switch field.type {
-			case .number, .roadheight, .roadspeed, .date:
+			case .featureType:
+				break
+			case .check, .onewayCheck, .defaultCheck, .access, .address, .radio, .structureRadio,
+			     .combo, .manyCombo, .multiCombo, .semiCombo, .networkCombo, .typeCombo, .directionalCombo,
+			     .colour, .schedule, .identifier, .maxweight_bridge,
+			     .wikipedia, .wikidata, .localized, .restrictions:
+				break
+			case .number, .integer, .roadheight, .roadspeed, .date:
 				keyboard = .numbersAndPunctuation // UIKeyboardTypeDecimalPad doesn't have Done button
 			case .tel:
 				keyboard = .phonePad
@@ -540,8 +551,6 @@ extension PresetsDatabase {
 				default:
 					break
 				}
-			default:
-				break
 			}
 			let tag = PresetDisplayKey(
 				name: label,
@@ -562,12 +571,6 @@ extension PresetsDatabase {
 
 		case .restrictions:
 			// used for turn restrictions: not implemented
-			return nil
-
-		default:
-#if DEBUG
-			assertionFailure()
-#endif
 			return nil
 		}
 	}
