@@ -55833,6 +55833,9 @@
         }
       }
     },
+    "Some changes are in a different location and have been deselected. Upload them as a separate changeset." : {
+      "comment" : "Warning shown on upload screen when distant edit groups are automatically deselected"
+    },
     "Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." : {
       "localizations" : {
         "ar" : {

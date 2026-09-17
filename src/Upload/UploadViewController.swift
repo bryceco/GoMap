@@ -136,6 +136,7 @@ class UploadViewController: UIViewController {
 
 	private var connectedGroups: [ConnectedObjects] = []
 	private var selectedGroupIndices: Set<Int> = []
+	private var distanceBannerView: UIView?
 
 	private var selectedGroups: [ConnectedObjects] {
 		connectedGroups.indices.filter { selectedGroupIndices.contains($0) }.map { connectedGroups[$0] }
@@ -198,7 +199,7 @@ class UploadViewController: UIViewController {
 		changesetCommentPlaceholder.isHidden = commentTextView.text.count > 0
 
 		connectedGroups = mapData?.undoManager.connectedObjects() ?? []
-		selectedGroupIndices = Set(connectedGroups.indices)
+		selectedGroupIndices = nearbyGroupIndices()
 
 		let hasGroups = !connectedGroups.isEmpty
 		commitButton.isEnabled = hasGroups
@@ -218,6 +219,7 @@ class UploadViewController: UIViewController {
 		}
 
 		groupsTableView.reloadData()
+		updateDistanceBanner()
 
 		clearCommentButton.isHidden = true
 		commentHistoryButton.isHidden = recentCommentList.count == 0
@@ -228,6 +230,119 @@ class UploadViewController: UIViewController {
 		super.viewWillDisappear(animated)
 		UserPrefs.shared.uploadComment.value = commentTextView.text
 		UserPrefs.shared.uploadSource.value = sourceTextField.text
+	}
+
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		// Keep the tableHeaderView properly sized to fit its Auto Layout content.
+		if let banner = distanceBannerView {
+			let width = groupsTableView.bounds.width
+			let height = banner.systemLayoutSizeFitting(
+				CGSize(width: width, height: 0),
+				withHorizontalFittingPriority: .required,
+				verticalFittingPriority: .fittingSizeLevel
+			).height
+			if abs(banner.frame.height - height) > 0.5 {
+				banner.frame = CGRect(x: 0, y: 0, width: width, height: height)
+				groupsTableView.tableHeaderView = banner
+			}
+		}
+	}
+
+	// MARK: - Distance Banner
+
+	/// Returns the indices of groups that are geographically close to the most recently edited group.
+	/// Each group's bounding box is expanded by ~500 m; groups whose expanded boxes overlap are
+	/// considered part of the same cluster. The cluster containing the most recently edited group
+	/// is returned, leaving distant groups deselected by default.
+	private func nearbyGroupIndices() -> Set<Int> {
+		let count = connectedGroups.count
+		guard count > 1 else { return Set(connectedGroups.indices) }
+
+		// ~500 m expressed in degrees (1° lat ≈ 111 km)
+		let expandDeg = 0.005
+
+		let expandedBoxes: [OSMRect?] = connectedGroups.map { group in
+			guard let first = group.objects.first else { return nil }
+			let bbox = group.objects.reduce(first.boundingBox) { $0.union($1.boundingBox) }
+			return OSMRect(x: bbox.origin.x - expandDeg,
+			               y: bbox.origin.y - expandDeg,
+			               width: bbox.size.width + 2 * expandDeg,
+			               height: bbox.size.height + 2 * expandDeg)
+		}
+
+		// Union-Find to identify connected components
+		var parent = Array(0..<count)
+		func find(_ x: Int) -> Int {
+			var x = x
+			while parent[x] != x { x = parent[x] }
+			return x
+		}
+		for i in 0..<count {
+			for j in (i + 1)..<count {
+				guard let bi = expandedBoxes[i], let bj = expandedBoxes[j] else { continue }
+				if bi.intersectsRect(bj) {
+					parent[find(i)] = find(j)
+				}
+			}
+		}
+
+		// Select the component containing the most recently edited group
+		let mostRecentIndex = connectedGroups.indices.max {
+			(connectedGroups[$0].undoGroups.max() ?? 0) < (connectedGroups[$1].undoGroups.max() ?? 0)
+		} ?? 0
+		let targetRoot = find(mostRecentIndex)
+		return Set(connectedGroups.indices.filter { find($0) == targetRoot })
+	}
+
+	private func createDistanceBannerView() -> UIView {
+		let icon = UIImageView(image: UIImage(systemName: "exclamationmark.triangle.fill"))
+		icon.tintColor = .systemOrange
+		icon.contentMode = .scaleAspectFit
+		icon.setContentHuggingPriority(.required, for: .horizontal)
+		icon.setContentCompressionResistancePriority(.required, for: .horizontal)
+		icon.translatesAutoresizingMaskIntoConstraints = false
+		NSLayoutConstraint.activate([
+			icon.widthAnchor.constraint(equalToConstant: 22),
+			icon.heightAnchor.constraint(equalToConstant: 22)
+		])
+
+		let label = UILabel()
+		label.text = NSLocalizedString(
+			"Some changes are in a different location and have been deselected. Upload them as a separate changeset.",
+			comment: "Warning shown on upload screen when distant edit groups are automatically deselected")
+		label.numberOfLines = 0
+		label.font = UIFont.preferredFont(forTextStyle: .footnote)
+		label.translatesAutoresizingMaskIntoConstraints = false
+
+		let stack = UIStackView(arrangedSubviews: [icon, label])
+		stack.axis = .horizontal
+		stack.spacing = 8
+		stack.alignment = .center
+		stack.translatesAutoresizingMaskIntoConstraints = false
+
+		let container = UIView()
+		container.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.15)
+		container.addSubview(stack)
+		NSLayoutConstraint.activate([
+			stack.topAnchor.constraint(equalTo: container.topAnchor, constant: 10),
+			stack.bottomAnchor.constraint(equalTo: container.bottomAnchor, constant: -10),
+			stack.leadingAnchor.constraint(equalTo: container.leadingAnchor, constant: 16),
+			stack.trailingAnchor.constraint(equalTo: container.trailingAnchor, constant: -16)
+		])
+		return container
+	}
+
+	private func updateDistanceBanner() {
+		if selectedGroupIndices.count < connectedGroups.count {
+			if distanceBannerView == nil {
+				distanceBannerView = createDistanceBannerView()
+			}
+			groupsTableView.tableHeaderView = distanceBannerView
+		} else {
+			distanceBannerView = nil
+			groupsTableView.tableHeaderView = nil
+		}
 	}
 
 	private func summaryLabel(for group: ConnectedObjects) -> String {
