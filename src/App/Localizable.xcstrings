@@ -367,7 +367,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d الأعضاء)\n"
                 }
               },
@@ -409,7 +409,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d الأعضاء)\n"
                 }
               },
@@ -451,7 +451,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d členů)\n"
                 }
               },
@@ -469,7 +469,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d Mitglieder)\n"
                 }
               },
@@ -523,7 +523,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d miembros)\n"
                 }
               },
@@ -541,7 +541,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d liiget)\n"
                 }
               },
@@ -577,7 +577,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d jäsentä)\n"
                 }
               },
@@ -595,7 +595,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d membres)\n"
                 }
               },
@@ -667,7 +667,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d membri)\n"
                 }
               },
@@ -697,7 +697,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d सदस्य)\n"
                 }
               },
@@ -715,7 +715,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d medlemmer)\n"
                 }
               },
@@ -781,7 +781,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d membres)\n"
                 }
               },
@@ -823,7 +823,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d członków)\n"
                 }
               },
@@ -859,7 +859,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d membros)\n"
                 }
               },
@@ -961,7 +961,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d ⵏ ⵉⴳⵎⴰⵎⵏ)\n"
                 }
               },
@@ -991,7 +991,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d членів)\n"
                 }
               },
@@ -1073,7 +1073,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d عقدة)\n"
                 }
               },
@@ -1115,7 +1115,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d عقدة)\n"
                 }
               },
@@ -1157,7 +1157,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d bodů)\n"
                 }
               },
@@ -1175,7 +1175,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d Knoten)\n"
                 }
               },
@@ -1247,7 +1247,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d punkti)\n"
                 }
               },
@@ -1283,7 +1283,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d pistettä)\n"
                 }
               },
@@ -1301,7 +1301,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d nœuds)\n"
                 }
               },
@@ -1373,7 +1373,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d nodi)\n"
                 }
               },
@@ -1403,7 +1403,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d गाठी)\n"
                 }
               },
@@ -1421,7 +1421,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d noder)\n"
                 }
               },
@@ -1487,7 +1487,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d nos)\n"
                 }
               },
@@ -1529,7 +1529,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d węzłów [punktów])\n"
                 }
               },
@@ -1565,7 +1565,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d nós)\n"
                 }
               },
@@ -1697,7 +1697,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : " (%d точок)\n"
                 }
               },
@@ -2951,19 +2951,19 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f m^2"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f m^2"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f m^2"
           }
         },
@@ -2975,7 +2975,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f m²"
           }
         },
@@ -3011,13 +3011,13 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f m^2"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f चौ.मी"
           }
         },
@@ -3035,13 +3035,13 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f m^2"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f м²"
           }
         },
@@ -3059,13 +3059,13 @@
         },
         "tzm" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f m^2"
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f м^2"
           }
         },
@@ -3077,7 +3077,7 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%.0f 平方公尺"
           }
         }
@@ -3088,7 +3088,7 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ أمتار، %#@nodes@ عقد"
           },
           "substitutions" : {
@@ -3099,37 +3099,37 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3143,37 +3143,37 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3184,7 +3184,7 @@
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ أمتار، %#@nodes@ عقد"
           },
           "substitutions" : {
@@ -3195,31 +3195,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -3239,31 +3239,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -3280,7 +3280,7 @@
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metrů, %#@nodes@ bodů"
           },
           "substitutions" : {
@@ -3291,25 +3291,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3323,25 +3323,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3352,7 +3352,7 @@
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ Meter, %#@nodes@ Knoten"
           },
           "substitutions" : {
@@ -3363,13 +3363,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3383,13 +3383,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3496,7 +3496,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metros, %#@nodes@ nodos"
           },
           "substitutions" : {
@@ -3544,7 +3544,7 @@
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%1$.0f meetrit, %#@nodes@ punkti"
           },
           "substitutions" : {
@@ -3555,13 +3555,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3620,7 +3620,7 @@
         },
         "fi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metriä, %#@nodes@ pistettä"
           },
           "substitutions" : {
@@ -3631,13 +3631,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3651,13 +3651,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3824,7 +3824,7 @@
         },
         "id" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meter, %#@nodes@ node"
           },
           "substitutions" : {
@@ -3835,7 +3835,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3849,7 +3849,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3860,7 +3860,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meters, %#@nodes@"
           },
           "substitutions" : {
@@ -3871,13 +3871,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3908,7 +3908,7 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ メートル, %#@nodes@ ノード"
           },
           "substitutions" : {
@@ -3919,7 +3919,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3933,7 +3933,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3944,7 +3944,7 @@
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ मीटर, %#@nodes@ गाठी"
           },
           "substitutions" : {
@@ -3955,13 +3955,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3975,13 +3975,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -3992,7 +3992,7 @@
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meter, %#@nodes@ node"
           },
           "substitutions" : {
@@ -4003,13 +4003,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4023,13 +4023,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4040,7 +4040,7 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meter, %#@nodes@ knopen"
           },
           "substitutions" : {
@@ -4088,7 +4088,7 @@
         },
         "nn" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meters, %#@nodes@"
           },
           "substitutions" : {
@@ -4099,13 +4099,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4136,7 +4136,7 @@
         },
         "oc" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ mètres, %#@nodes@ nos"
           },
           "substitutions" : {
@@ -4147,31 +4147,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -4191,31 +4191,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -4232,7 +4232,7 @@
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meters, %#@nodes@"
           },
           "substitutions" : {
@@ -4243,25 +4243,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4304,7 +4304,7 @@
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metros, %#@nodes@ nós"
           },
           "substitutions" : {
@@ -4352,7 +4352,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metros, %#@nodes@ nós"
           },
           "substitutions" : {
@@ -4363,13 +4363,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4383,13 +4383,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4400,7 +4400,7 @@
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ метра, %#@nodes@"
           },
           "substitutions" : {
@@ -4411,25 +4411,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4472,7 +4472,7 @@
         },
         "si" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meters, %#@nodes@"
           },
           "substitutions" : {
@@ -4483,13 +4483,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4616,7 +4616,7 @@
         },
         "tzm" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meters, %#@nodes@"
           },
           "substitutions" : {
@@ -4627,13 +4627,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4664,7 +4664,7 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ метрів, %#@nodes@ точок"
           },
           "substitutions" : {
@@ -4675,25 +4675,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4707,25 +4707,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4736,7 +4736,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ mét, %#@nodes@ nốt"
           },
           "substitutions" : {
@@ -4747,7 +4747,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4761,7 +4761,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4783,7 +4783,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4797,7 +4797,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4819,7 +4819,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4833,7 +4833,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4885,7 +4885,7 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ ميقا بايت، %#@files@ ملف/ات"
           },
           "substitutions" : {
@@ -4896,37 +4896,37 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4940,37 +4940,37 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -4981,7 +4981,7 @@
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ ميقا بايت، %#@files@ ملف/ات"
           },
           "substitutions" : {
@@ -4992,31 +4992,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -5036,31 +5036,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -5077,7 +5077,7 @@
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ souborů"
           },
           "substitutions" : {
@@ -5088,25 +5088,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5120,25 +5120,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5149,7 +5149,7 @@
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ Dateien"
           },
           "substitutions" : {
@@ -5160,13 +5160,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5180,13 +5180,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5293,7 +5293,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ archivos"
           },
           "substitutions" : {
@@ -5304,13 +5304,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5341,7 +5341,7 @@
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ faili"
           },
           "substitutions" : {
@@ -5352,13 +5352,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5372,13 +5372,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5437,7 +5437,7 @@
         },
         "fi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MT, %#@files@ tiedostoa"
           },
           "substitutions" : {
@@ -5448,13 +5448,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5468,13 +5468,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5533,7 +5533,7 @@
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, broj datoteka: %#@files@"
           },
           "substitutions" : {
@@ -5641,7 +5641,7 @@
         },
         "id" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ berkas"
           },
           "substitutions" : {
@@ -5652,7 +5652,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5666,7 +5666,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5677,7 +5677,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@"
           },
           "substitutions" : {
@@ -5708,13 +5708,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5725,7 +5725,7 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ ファイル"
           },
           "substitutions" : {
@@ -5736,7 +5736,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5750,7 +5750,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5761,7 +5761,7 @@
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ फाईली"
           },
           "substitutions" : {
@@ -5772,13 +5772,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5792,13 +5792,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5809,7 +5809,7 @@
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ filer"
           },
           "substitutions" : {
@@ -5820,13 +5820,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5840,13 +5840,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5905,7 +5905,7 @@
         },
         "nn" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@"
           },
           "substitutions" : {
@@ -5936,13 +5936,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -5953,7 +5953,7 @@
         },
         "oc" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ fichiers"
           },
           "substitutions" : {
@@ -5964,31 +5964,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -6008,31 +6008,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -6049,7 +6049,7 @@
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ plików"
           },
           "substitutions" : {
@@ -6060,25 +6060,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6092,25 +6092,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6121,7 +6121,7 @@
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ ficheiros"
           },
           "substitutions" : {
@@ -6169,7 +6169,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ arquivos"
           },
           "substitutions" : {
@@ -6180,13 +6180,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6200,13 +6200,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6260,25 +6260,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6289,7 +6289,7 @@
         },
         "si" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@"
           },
           "substitutions" : {
@@ -6320,13 +6320,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6433,7 +6433,7 @@
         },
         "tzm" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@"
           },
           "substitutions" : {
@@ -6464,13 +6464,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6481,7 +6481,7 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ МБ, %#@files@ файлів"
           },
           "substitutions" : {
@@ -6492,25 +6492,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6524,25 +6524,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6553,7 +6553,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ tập tin"
           },
           "substitutions" : {
@@ -6564,7 +6564,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6578,7 +6578,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6589,7 +6589,7 @@
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ 个文件"
           },
           "substitutions" : {
@@ -6600,7 +6600,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6614,7 +6614,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6625,7 +6625,7 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@megabytes@ MB, %#@files@ 檔案"
           },
           "substitutions" : {
@@ -6636,7 +6636,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -6650,7 +6650,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -7050,7 +7050,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld يوم/أيام"
                 }
               },
@@ -7092,7 +7092,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld يوم/أيام"
                 }
               },
@@ -7134,7 +7134,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld dnech"
                 }
               },
@@ -7152,7 +7152,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld Tage"
                 }
               },
@@ -7206,7 +7206,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld días"
                 }
               },
@@ -7224,7 +7224,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld päeva"
                 }
               },
@@ -7260,7 +7260,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld päivää"
                 }
               },
@@ -7350,7 +7350,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld Giorni"
                 }
               },
@@ -7380,7 +7380,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld दिवस"
                 }
               },
@@ -7398,7 +7398,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld dager"
                 }
               },
@@ -7464,7 +7464,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld Jorns"
                 }
               },
@@ -7506,7 +7506,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld Dni"
                 }
               },
@@ -7524,7 +7524,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld dias"
                 }
               },
@@ -7542,7 +7542,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld dias"
                 }
               },
@@ -7644,7 +7644,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld ⵏ ⵡⵓⵙⵙⴰⵏ"
                 }
               },
@@ -7674,7 +7674,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld днів"
                 }
               },
@@ -7757,7 +7757,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld تحرير، آخر نشاط %2$@"
                 }
               },
@@ -7799,7 +7799,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld تحرير، آخر نشاط %2$@"
                 }
               },
@@ -7841,7 +7841,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld úprav, naposledy aktivní %2$@"
                 }
               },
@@ -7859,7 +7859,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld Bearbeitungen, zuletzt aktiv %2$@"
                 }
               },
@@ -7931,7 +7931,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld redigeerimist, viimati aktiivne %2$@"
                 }
               },
@@ -7985,7 +7985,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld modifications, dernière activité le %2$@"
                 }
               },
@@ -8087,7 +8087,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld संपादने, शेवटचे सक्रिय %2$@"
                 }
               },
@@ -8105,7 +8105,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld redideringer, sist aktiv %2$@"
                 }
               },
@@ -8171,7 +8171,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld modificacions, darriera activitat lo %2$@"
                 }
               },
@@ -8213,7 +8213,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld zmian, ostatnio aktywny %2$@"
                 }
               },
@@ -8249,7 +8249,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld edições, última atividade %2$@"
                 }
               },
@@ -8381,7 +8381,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%1$ld змін, остання %2$@"
                 }
               },
@@ -10266,7 +10266,7 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ متر, %#@points@ نقطة"
           },
           "substitutions" : {
@@ -10277,37 +10277,37 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -10321,37 +10321,37 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "zero" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -10362,7 +10362,7 @@
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ متر, %#@points@ نقطة"
           },
           "substitutions" : {
@@ -10373,31 +10373,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -10417,31 +10417,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -10458,7 +10458,7 @@
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metrů, %#@points@ bodů"
           },
           "substitutions" : {
@@ -10469,25 +10469,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -10501,25 +10501,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -10530,7 +10530,7 @@
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ Meter, %#@points@ Punkte"
           },
           "substitutions" : {
@@ -10541,13 +10541,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -10561,13 +10561,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -10722,7 +10722,7 @@
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meetrit, %#@points@ punkti"
           },
           "substitutions" : {
@@ -10733,13 +10733,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -10753,13 +10753,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -10818,7 +10818,7 @@
         },
         "fi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metriä, %#@points@ pistettä"
           },
           "substitutions" : {
@@ -10829,13 +10829,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -10849,13 +10849,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11022,7 +11022,7 @@
         },
         "id" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meter, %#@points@ titik"
           },
           "substitutions" : {
@@ -11033,7 +11033,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11047,7 +11047,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11058,7 +11058,7 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metri, %#@points@ punti"
           },
           "substitutions" : {
@@ -11069,13 +11069,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11089,13 +11089,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11106,7 +11106,7 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ メートル, %#@points@ ポイント"
           },
           "substitutions" : {
@@ -11117,7 +11117,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11131,7 +11131,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11142,7 +11142,7 @@
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ मीटर, %#@points@ बिंदू"
           },
           "substitutions" : {
@@ -11153,13 +11153,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11173,13 +11173,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11190,7 +11190,7 @@
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ meter, %#@points@ punkter"
           },
           "substitutions" : {
@@ -11201,13 +11201,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11221,13 +11221,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11334,7 +11334,7 @@
         },
         "oc" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metres, %#@points@ ponchs"
           },
           "substitutions" : {
@@ -11345,31 +11345,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -11389,31 +11389,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -11502,7 +11502,7 @@
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metros, %#@points@ pontos"
           },
           "substitutions" : {
@@ -11513,13 +11513,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11533,13 +11533,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11550,7 +11550,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metros, %#@points@ pontos"
           },
           "substitutions" : {
@@ -11561,13 +11561,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11581,13 +11581,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11862,7 +11862,7 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ метрів, %#@points@ точок"
           },
           "substitutions" : {
@@ -11873,25 +11873,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11905,25 +11905,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11934,7 +11934,7 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ mét, %#@points@ điểm"
           },
           "substitutions" : {
@@ -11945,7 +11945,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11959,7 +11959,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -11995,7 +11995,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -12363,7 +12363,7 @@
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metrů, %#@points@ bodů, %#@waypoints@ bodů trasy"
           },
           "substitutions" : {
@@ -12374,25 +12374,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -12406,25 +12406,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -12438,25 +12438,25 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -12467,7 +12467,7 @@
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ Meter, %#@points@ Punkte, %#@waypoints@ Wegpunkte"
           },
           "substitutions" : {
@@ -12478,13 +12478,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -12498,13 +12498,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -12518,13 +12518,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -12722,13 +12722,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13283,7 +13283,7 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ メートル, %#@points@ ポイント, %#@waypoints@ ウェイポイント"
           },
           "substitutions" : {
@@ -13294,7 +13294,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13308,7 +13308,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13322,7 +13322,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13333,7 +13333,7 @@
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ मीटर, %#@points@ बिंदू, %#@waypoints@ मार्गबिंदू"
           },
           "substitutions" : {
@@ -13344,13 +13344,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13364,13 +13364,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13384,13 +13384,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13605,7 +13605,7 @@
         },
         "oc" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metres, %#@points@ ponchs, %#@waypoints@ ponchs d’etapa"
           },
           "substitutions" : {
@@ -13616,31 +13616,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -13660,31 +13660,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -13704,31 +13704,31 @@
                 "plural" : {
                   "few" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "many" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "two" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
@@ -13849,7 +13849,7 @@
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metros, %#@points@ pontos, %#@waypoints@ pontos de passagem"
           },
           "substitutions" : {
@@ -13860,13 +13860,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13880,13 +13880,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13900,13 +13900,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13917,7 +13917,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@meters@ metros, %#@points@ pontos, %#@waypoints@ waypoints"
           },
           "substitutions" : {
@@ -13928,13 +13928,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13948,13 +13948,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -13968,13 +13968,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -15078,7 +15078,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "%#@routes@ nueva(s) ruta(s) importada(s),\n%#@duplicates@ duplicado(s) omitido(s)"
           },
           "substitutions" : {
@@ -15089,13 +15089,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -15109,13 +15109,13 @@
                 "plural" : {
                   "one" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   },
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -16410,7 +16410,7 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "匯入 %#@routes@ 新路線，\n跳過 %#@duplicates@ 重覆的"
           },
           "substitutions" : {
@@ -16421,7 +16421,7 @@
                 "plural" : {
                   "other" : {
                     "stringUnit" : {
-                      "state" : "needs_review",
+                      "state" : "translated",
                       "value" : "%arg"
                     }
                   }
@@ -16502,7 +16502,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld عنصر/عناصر"
                 }
               },
@@ -16544,7 +16544,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld عنصر/عناصر"
                 }
               },
@@ -16586,7 +16586,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld objektů"
                 }
               },
@@ -16604,7 +16604,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld Objekte"
                 }
               },
@@ -16658,7 +16658,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld objetos"
                 }
               },
@@ -16676,7 +16676,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld objekti"
                 }
               },
@@ -16712,7 +16712,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld objektia"
                 }
               },
@@ -16730,7 +16730,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld objets"
                 }
               },
@@ -16802,7 +16802,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld oggetti"
                 }
               },
@@ -16832,7 +16832,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld वस्तू"
                 }
               },
@@ -16850,7 +16850,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld objekter"
                 }
               },
@@ -16916,7 +16916,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld objèctes"
                 }
               },
@@ -16958,7 +16958,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld obiektów"
                 }
               },
@@ -16976,7 +16976,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld objetos"
                 }
               },
@@ -16994,7 +16994,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld objetos"
                 }
               },
@@ -17024,7 +17024,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld объект"
                 }
               },
@@ -17126,7 +17126,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld обʼєктів"
                 }
               },
@@ -17209,7 +17209,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "عدد الصور المتجانبة المطلوبة %lu"
                 }
               },
@@ -17251,7 +17251,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "عدد الصور المتجانبة المطلوبة %lu"
                 }
               },
@@ -17293,7 +17293,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Potřebné dlaždice: %lu"
                 }
               },
@@ -17311,7 +17311,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%lu Kacheln benötigt"
                 }
               },
@@ -17365,7 +17365,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%lu mosaicos necesarios"
                 }
               },
@@ -17383,7 +17383,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Vaja %lu paani"
                 }
               },
@@ -17437,7 +17437,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%lu tuiles requises"
                 }
               },
@@ -17509,7 +17509,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%lu tiles necessari"
                 }
               },
@@ -17533,7 +17533,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%lu फरश्या आवश्यक"
                 }
               },
@@ -17551,7 +17551,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%lu flis behøves"
                 }
               },
@@ -17617,7 +17617,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%lu teules necessaris"
                 }
               },
@@ -17677,7 +17677,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%lu quadrículas necessárias"
                 }
               },
@@ -17695,7 +17695,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%lu quadrículas necessárias"
                 }
               },
@@ -17827,7 +17827,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Потрібно %lu тайлів"
                 }
               },
@@ -19073,6 +19073,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Geçiş İşaretleri Ekle"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增穿越道標示"
           }
         }
       }
@@ -28076,6 +28082,12 @@
             "state" : "translated",
             "value" : "Not ayrıştırılamadı"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法檢析註解"
+          }
         }
       }
     },
@@ -35888,7 +35900,32 @@
       }
     },
     "HealthKit is not available on this device." : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit není na tomto zařízení k dispozici."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit недоступен на данном устройстве."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SağlıkKiti bu cihazda kullanılamıyor."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "這一裝置並無法使用 HealthKit。"
+          }
+        }
+      }
     },
     "Height: %1$@ ± %2$@ meters" : {
       "comment" : "Height of an object with an error value",
@@ -44312,6 +44349,12 @@
             "state" : "translated",
             "value" : "Konum Verisi Yok"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沒有位置資料"
+          }
         }
       }
     },
@@ -44671,7 +44714,32 @@
       }
     },
     "No route data found." : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data trasy nenalezena."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Данные маршрута не найдены."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rota verisi bulunamadı."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沒有找到路徑資料。"
+          }
+        }
+      }
     },
     "No Straight On restriction" : {
       "localizations" : {
@@ -46213,6 +46281,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Not #%@"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "註解 #%@"
           }
         }
       }
@@ -49269,13 +49343,13 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "تُعرض عند نسخ / لصق الوسوم من عنصر لآخر"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "تُعرض عند نسخ / لصق الوسوم من عنصر لآخر"
                 }
               },
@@ -49311,13 +49385,13 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "تُعرض عند نسخ / لصق الوسوم من عنصر لآخر"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "تُعرض عند نسخ / لصق الوسوم من عنصر لآخر"
                 }
               },
@@ -49353,13 +49427,13 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Vkládání %ld tagů"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Vkládání %ld tagů"
                 }
               }
@@ -49425,13 +49499,13 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Pegando etiqueta(s) %ld"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Pegando etiqueta(s) %ld"
                 }
               }
@@ -49497,13 +49571,13 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Collage de %ld étiquette(s)"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Collage de %ld étiquette(s)"
                 }
               }
@@ -49557,7 +49631,7 @@
             "plural" : {
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Menempel %ld tag"
                 }
               }
@@ -49587,7 +49661,7 @@
             "plural" : {
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "%ld 件のタグを貼り付け中"
                 }
               }
@@ -49617,13 +49691,13 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Limer inn %ld etikett(er)"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Limer inn %ld etikett(er)"
                 }
               }
@@ -49743,13 +49817,13 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "A colar %ld etiquetas"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "A colar %ld etiquetas"
                 }
               }
@@ -49761,13 +49835,13 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Colando %ld etiquetas"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Colando %ld etiquetas"
                 }
               }
@@ -49893,13 +49967,13 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Вставлення %ld теґів"
                 }
               },
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Вставлення %ld теґів"
                 }
               }
@@ -49911,7 +49985,7 @@
             "plural" : {
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Đang dán %ld thẻ"
                 }
               }
@@ -49923,7 +49997,7 @@
             "plural" : {
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "粘贴 %ld 个标签"
                 }
               }
@@ -49935,7 +50009,7 @@
             "plural" : {
               "other" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "貼上 %ld 標籤"
                 }
               }
@@ -58581,6 +58655,12 @@
             "state" : "translated",
             "value" : "Fotoğrafta konum verisi yok. Panoramax, yüklenen fotoğrafların konum verisi içermesini gerektirir."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "這張圖片並沒有位置資料，Panoramax 需要上傳圖片含有位置資料。"
+          }
         }
       }
     },
@@ -58815,6 +58895,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seçilen fotoğraf JPEG biçimine dönüştürülemedi. Panoramax'a yalnızca JPEG biçimindeki resimler yüklenebilir."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選取的圖片無法轉換為 JPEG，只能上傳 JPEG 影像到 Panoramax。"
           }
         }
       }
@@ -63100,6 +63186,12 @@
             "state" : "translated",
             "value" : "Güncelleme Hatası"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上傳錯誤"
+          }
         }
       }
     },
@@ -63525,7 +63617,33 @@
       }
     },
     "Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map." : {
-      "comment" : "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings"
+      "comment" : "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nahraní bylo úspěšné, ale odpověď serveru byla porušená.\n\nPřed pokračováním do mapy vyčistěte mezipaměť OSM dat."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отправка данных была успешной, но сервер вернул неправильные данные.\n\nВы должны использовать очистку кэша данных OSM перед тем как вносить изменения на карте."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükleme başarıyla tamamlandı ancak sunucu uyuşmayan veriler gönderdi.\n\nHaritalamaya devam etmeden önce “Önbelleği Temizle > OSM Verisi” seçeneğini kullanmalısınız."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上傳成功但伺服哈回傳不吻合資料。\n\n您應當繼續用地圖前清除>OSM資料快取。"
+          }
+        }
+      }
     },
     "Upload to OSM" : {
       "localizations" : {
@@ -66376,7 +66494,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "لقد قمت برفع %ld تغيير/تغييرات مع هذا الإصدار من Go Map!!\n\nهل ترغب بتقييم هذا التطبيق؟"
                 }
               },
@@ -66418,7 +66536,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "لقد قمت برفع %ld تغيير/تغييرات مع هذا الإصدار من Go Map!!\n\nهل ترغب بتقييم هذا التطبيق؟"
                 }
               },
@@ -66460,7 +66578,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Nahráli jste už %ld sad změn s touto verzí Go Map!!\n\nNapíšete nám recenzi?"
                 }
               },
@@ -66478,7 +66596,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Du hast %ld Änderungssätze mit dieser Version von GoMap!! hochgeladen.\n\nDiese App bewerten?"
                 }
               },
@@ -66532,7 +66650,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Ha cargado %ld conjuntos de cambios con esta versión de Go Map!!\n\n¿Quiere valorar esta aplicación?"
                 }
               },
@@ -66604,7 +66722,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Vous avez téléversé %ld groupes de modifications avec cette version de Go Map!!\n\nNoter cette application ?"
                 }
               },
@@ -66676,7 +66794,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Hai caricato %ld modifiche con questa versione di Go Map!!\n\nVuoi lasciare una recensione?"
                 }
               },
@@ -66718,7 +66836,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Du har lastet opp %ld endringssett med denne versjonen av Go Map!!\n\nVurder programmet?"
                 }
               },
@@ -66826,7 +66944,7 @@
               },
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Przesłano %ld zestawów zmian z użyciem tej wersji Go Map!!\n\nCzy chcesz ocenić tę aplikację?"
                 }
               },
@@ -66844,7 +66962,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Já enviou %ld conjuntos de alterações com esta versão do Go Map!!\n\nQuer avaliar esta aplicação?"
                 }
               },
@@ -66862,7 +66980,7 @@
             "plural" : {
               "one" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Você enviou %ld conjuntos de alterações com esta versão do Go Map!!\n\nAvaliar este app?"
                 }
               },
@@ -66886,7 +67004,7 @@
               },
               "many" : {
                 "stringUnit" : {
-                  "state" : "needs_review",
+                  "state" : "translated",
                   "value" : "Вы загрузили %ld пакетов правок используя эту версию Go Map!!\n\nХотите оценить приложение?"
                 }
               },

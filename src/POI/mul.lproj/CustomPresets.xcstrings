@@ -29,6 +29,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"6zU-bk-hWw\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klíč"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -40,6 +46,18 @@
             "state" : "translated",
             "value" : "kunci"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ключ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "anahtar"
+          }
         }
       }
     },
@@ -47,6 +65,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"8Nt-xf-x5Q\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Název"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -57,6 +81,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Judul"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заголовок"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlık"
           }
         }
       }
@@ -89,6 +125,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Add New\"; ObjectID = \"bF4-TU-MTA\"; Note = \"Add user-defined tagging preset\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat nové"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -99,6 +141,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tambahkan Baru"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить новый"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni Ekle"
           }
         }
       }
@@ -107,6 +161,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Add New\"; ObjectID = \"Bnh-U0-D7i\"; Note = \"Add user-defined tagging preset\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat nové"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -118,6 +178,18 @@
             "state" : "translated",
             "value" : "Tambahkan Baru"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Добавить новый"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yeni Ekle"
+          }
         }
       }
     },
@@ -125,6 +197,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Area\"; ObjectID = \"CBg-8X-VJp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plocha"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -136,6 +214,18 @@
             "state" : "translated",
             "value" : "Area"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Площадь"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alan"
+          }
         }
       }
     },
@@ -143,6 +233,12 @@
       "comment" : "Class = \"UINavigationItem\"; title = \"Custom Features\"; ObjectID = \"cNV-jf-zYM\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vlastní funkce"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -154,6 +250,18 @@
             "state" : "translated",
             "value" : "Fitur Kustom"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пользовательские функции"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Özellikler"
+          }
         }
       }
     },
@@ -161,6 +269,12 @@
       "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Preset Key\"; ObjectID = \"cTf-Rc-vqr\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klíč předvolby"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -172,6 +286,12 @@
             "state" : "translated",
             "value" : "Kunci Preset"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Önceden Ayarlanmış Anahtar"
+          }
         }
       }
     },
@@ -179,6 +299,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 8\"; ObjectID = \"CXe-gQ-Zda\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 8"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -190,6 +316,18 @@
             "state" : "translated",
             "value" : "Nilai 8"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значение 8"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 8"
+          }
         }
       }
     },
@@ -197,6 +335,12 @@
       "comment" : "Class = \"UITableViewSection\"; footerTitle = \"The preset will be available when editing objects matching this key/value combination. Leave either blank for wildcard.\"; ObjectID = \"Dfv-TT-J6i\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Předvolba bude dostupná při úpravách objektů shodujících se s touto kombinací klíče a hodnoty. Ponechte prázdné, nebo použijte hvězdičku."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -208,6 +352,18 @@
             "state" : "translated",
             "value" : "Preset akan tersedia saat mengedit objek yang cocok dengan kombinasi kunci/nilai ini. Kosongkan salah satu atau keduanya untuk wildcard."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этот пресет будет доступен, когда будут обрабатываться объекты с совпадающей комбинацией ключ/значение. Оставьте любое из полей пустым, чтобы использовать подстановочный знак."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu anahtar/değer kombinasyonuna uyan nesneleri düzenlerken bu ön ayar kullanılabilir olacaktır. Joker karakter kullanmak için ikisinden birini boş bırakın."
+          }
         }
       }
     },
@@ -215,6 +371,12 @@
       "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Applies To\"; ObjectID = \"Dfv-TT-J6i\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uplatní se na"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -226,6 +388,12 @@
             "state" : "translated",
             "value" : "Berlaku Untuk"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapsam:"
+          }
         }
       }
     },
@@ -233,6 +401,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Vertex\"; ObjectID = \"DhX-ri-fx9\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bod linie"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -244,6 +418,12 @@
             "state" : "translated",
             "value" : "Simpul"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Köşe Noktası"
+          }
         }
       }
     },
@@ -251,6 +431,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 9\"; ObjectID = \"dsA-B6-s7R\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 9"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -262,6 +448,18 @@
             "state" : "translated",
             "value" : "Nilai 9"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значение 9"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 9"
+          }
         }
       }
     },
@@ -269,6 +467,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"Dogs Allowed\"; ObjectID = \"eG3-Xz-Nnp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Psi povoleni"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -279,6 +483,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anjing Diizinkan"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Собаки допускаются"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Köpeklere İzin Veriliyor"
           }
         }
       }
@@ -299,6 +515,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Key\"; ObjectID = \"Eou-a6-V4g\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klíč"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -310,6 +532,18 @@
             "state" : "translated",
             "value" : "Kunci"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ключ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anahtar"
+          }
         }
       }
     },
@@ -317,6 +551,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 3\"; ObjectID = \"Fcv-4Q-gpE\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 3"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -328,6 +568,18 @@
             "state" : "translated",
             "value" : "Nilai 3"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значение 3"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 3"
+          }
         }
       }
     },
@@ -335,6 +587,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Point\"; ObjectID = \"fdT-wh-QoF\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bod"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -345,6 +603,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Titik"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Точка"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nokta"
           }
         }
       }
@@ -389,6 +659,12 @@
       "comment" : "Class = \"UINavigationItem\"; title = \"Custom Fields\"; ObjectID = \"GIO-W7-q5U\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vlastní předvolby"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -400,6 +676,18 @@
             "state" : "translated",
             "value" : "Bidang Kustom"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пользовательские поля"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Alanlar"
+          }
         }
       }
     },
@@ -407,6 +695,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"leaf_type\"; ObjectID = \"j2j-qT-aHG\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "leaf_type"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -418,6 +712,12 @@
             "state" : "translated",
             "value" : "leaf_type"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "yaprak_türü"
+          }
         }
       }
     },
@@ -425,6 +725,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 1\"; ObjectID = \"JAT-qD-dTS\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 1"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -436,6 +742,18 @@
             "state" : "translated",
             "value" : "Nilai 1"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значение 1"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 1"
+          }
         }
       }
     },
@@ -443,6 +761,12 @@
       "comment" : "Class = \"UITableViewSection\"; footerTitle = \"The possible values for the preset\"; ObjectID = \"jv1-BF-p2a\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Možné hodnoty předvolby"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -454,6 +778,18 @@
             "state" : "translated",
             "value" : "Nilai yang mungkin untuk preset"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Возможные значения для пресета"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ön ayarın alabileceği değerler"
+          }
         }
       }
     },
@@ -461,6 +797,12 @@
       "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Preset values\"; ObjectID = \"jv1-BF-p2a\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnoty předvolby"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -471,6 +813,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nilai preset"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ön ayar değerleri"
           }
         }
       }
@@ -491,6 +839,12 @@
       "comment" : "Class = \"UIBarButtonItem\"; title = \"Back\"; ObjectID = \"KX3-hG-OyE\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zpět"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -502,6 +856,18 @@
             "state" : "translated",
             "value" : "Kembali"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
+          }
         }
       }
     },
@@ -509,6 +875,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"genus:en\"; ObjectID = \"l2k-lT-vHS\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus:en"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -520,6 +892,12 @@
             "state" : "translated",
             "value" : "genus:en"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cins:en"
+          }
         }
       }
     },
@@ -527,6 +905,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Uses semi-colon seperated values (e.g. pizza;kebab for cuisine)\"; ObjectID = \"LAL-tL-bub\"; Note = \"This is used for tags like cuisine=italian;pizza.\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Používá hodnoty oddělené středníkem (např. pizza;kebab pro „cuisine“)"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -538,6 +922,18 @@
             "state" : "translated",
             "value" : "Menggunakan nilai yang dipisahkan titik koma (mis. pizza;kebab untuk cuisine)"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Использует значения, разделенные точкой с запятой (например, pizza;kebab для кухни)"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noktalı virgülle ayrılmış değerler kullanır (örn. mutfak türü olarak pizza;kebap)"
+          }
         }
       }
     },
@@ -545,6 +941,12 @@
       "comment" : "Class = \"UINavigationItem\"; title = \"Custom Feature\"; ObjectID = \"Lhz-HA-Q6j\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vlastní funkce"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -556,6 +958,18 @@
             "state" : "translated",
             "value" : "Fitur Kustom"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пользовательская функция"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Özellik"
+          }
         }
       }
     },
@@ -563,6 +977,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 5\"; ObjectID = \"li7-oV-pgT\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 5"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -574,6 +994,12 @@
             "state" : "translated",
             "value" : "Nilai 5"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 5"
+          }
         }
       }
     },
@@ -581,6 +1007,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Name\"; ObjectID = \"mcN-gM-s7u\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Název"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -592,6 +1024,12 @@
             "state" : "translated",
             "value" : "Nama"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad"
+          }
         }
       }
     },
@@ -599,6 +1037,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"MU8-ia-Kco\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klíč"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -610,6 +1054,18 @@
             "state" : "translated",
             "value" : "kunci"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ключ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "anahtar"
+          }
         }
       }
     },
@@ -617,6 +1073,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 4\"; ObjectID = \"ng7-T9-SJ6\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 4"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -628,6 +1090,12 @@
             "state" : "translated",
             "value" : "Nilai 4"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 4"
+          }
         }
       }
     },
@@ -635,6 +1103,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 2\"; ObjectID = \"nKt-LG-cSw\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 2"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -645,6 +1119,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nilai 2"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 2"
           }
         }
       }
@@ -665,6 +1145,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"natural\"; ObjectID = \"Nxm-fU-1eX\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "natural"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -676,6 +1162,18 @@
             "state" : "translated",
             "value" : "natural"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Природные образования"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "doğal"
+          }
         }
       }
     },
@@ -683,6 +1181,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 11\"; ObjectID = \"o63-qY-4vl\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 11"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -693,6 +1197,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nilai 11"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 11"
           }
         }
       }
@@ -725,6 +1235,12 @@
       "comment" : "Class = \"UINavigationItem\"; title = \"Custom Field\"; ObjectID = \"OND-s7-I6f\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vlastní předvolba"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -736,6 +1252,18 @@
             "state" : "translated",
             "value" : "Bidang Kustom"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Пользовательское поле"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özel Alan"
+          }
         }
       }
     },
@@ -743,6 +1271,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"Oak Tree\"; ObjectID = \"pqN-F1-JGm\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dub letní"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -754,6 +1288,12 @@
             "state" : "translated",
             "value" : "Pohon Ek"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Meşe Ağacı"
+          }
         }
       }
     },
@@ -761,6 +1301,12 @@
       "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Field Name\"; ObjectID = \"QDv-7w-nbx\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Název předvolby"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -772,6 +1318,18 @@
             "state" : "translated",
             "value" : "Nama Bidang"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя поля"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alan Adı"
+          }
         }
       }
     },
@@ -779,6 +1337,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"genus\"; ObjectID = \"qTY-bY-Dwe\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -790,6 +1354,12 @@
             "state" : "translated",
             "value" : "genus"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "cins"
+          }
         }
       }
     },
@@ -797,6 +1367,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 6\"; ObjectID = \"R0q-aM-ULf\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 6"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -808,6 +1384,18 @@
             "state" : "translated",
             "value" : "Nilai 6"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значение 6"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 6"
+          }
         }
       }
     },
@@ -815,6 +1403,12 @@
       "comment" : "Class = \"UIBarButtonItem\"; title = \"Cancel\"; ObjectID = \"Rfe-SO-p0w\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrušit"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -826,6 +1420,18 @@
             "state" : "translated",
             "value" : "Batal"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Отмена"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
+          }
         }
       }
     },
@@ -833,6 +1439,12 @@
       "comment" : "Class = \"UITableViewSection\"; footerTitle = \"Tags to add when selecting this feature.\"; ObjectID = \"Ruw-WB-IgL\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Značky pro přidání při výběru této funkce."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -844,6 +1456,18 @@
             "state" : "translated",
             "value" : "Tag yang ditambahkan saat memilih fitur ini."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Теги, которые будут добавлены при выборе данной функции."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu özelliği seçerken eklenecek etiketler."
+          }
         }
       }
     },
@@ -851,6 +1475,12 @@
       "comment" : "Class = \"UITableViewSection\"; headerTitle = \"Feature Tags\"; ObjectID = \"Ruw-WB-IgL\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Značky funkce"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -862,6 +1492,18 @@
             "state" : "translated",
             "value" : "Tag Fitur"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Теги функции"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özellik Etiketleri"
+          }
         }
       }
     },
@@ -869,6 +1511,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Inherit the presets of this feature. If none then selecting this feature will merge (not replace) the tags onto the target object.\"; ObjectID = \"ScT-zG-GwL\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdědit předvolby této funkce. Pokud nejsou žádné, vybraní této funkce sloučí (nenahradí) značky s cílovým objektem."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -880,6 +1528,18 @@
             "state" : "translated",
             "value" : "Warisi preset dari fitur ini. Jika tidak ada, memilih fitur ini akan menggabungkan (bukan mengganti) tag ke objek target."
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Наследовать пресеты данной функции. Если не выбрано, то функция совместит (не заменит) теги на выбранном объекте."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu özelliğin ön ayarlarını devralır. Ön ayar yoksa bu özelliğin seçilmesi durumunda etiketler hedef nesneye birleştirilir (yerine geçmez)."
+          }
         }
       }
     },
@@ -887,6 +1547,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Feature type:\"; ObjectID = \"sGi-dQ-1v0\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Typ funkce:"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -898,6 +1564,12 @@
             "state" : "translated",
             "value" : "Tipe fitur:"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Özellik türü:"
+          }
         }
       }
     },
@@ -905,6 +1577,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Key\"; ObjectID = \"teB-9L-Nrf\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klíč"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -916,6 +1594,12 @@
             "state" : "translated",
             "value" : "Kunci"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Anahtar"
+          }
         }
       }
     },
@@ -923,6 +1607,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Name\"; ObjectID = \"TJk-hO-Ejc\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Název"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -933,6 +1623,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nama"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Имя"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ad"
           }
         }
       }
@@ -953,6 +1655,12 @@
       "comment" : "Class = \"UIBarButtonItem\"; title = \"Back\"; ObjectID = \"UJ1-oM-H4Z\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zpět"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -963,6 +1671,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kembali"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Назад"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geri"
           }
         }
       }
@@ -983,6 +1703,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 12\"; ObjectID = \"wFE-f1-sQa\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 12"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -994,6 +1720,12 @@
             "state" : "translated",
             "value" : "Nilai 12"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 12"
+          }
         }
       }
     },
@@ -1001,6 +1733,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 10\"; ObjectID = \"Wim-Qa-dYQ\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 10"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1012,6 +1750,18 @@
             "state" : "translated",
             "value" : "Nilai 10"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значение 10"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 10"
+          }
         }
       }
     },
@@ -1019,6 +1769,12 @@
       "comment" : "Class = \"UIButton\"; normalTitle = \"Line\"; ObjectID = \"WjA-Nb-uzp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Linie"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1030,6 +1786,18 @@
             "state" : "translated",
             "value" : "Garis"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Линия"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hat"
+          }
         }
       }
     },
@@ -1037,6 +1805,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value 7\"; ObjectID = \"WoH-od-iKL\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota 7"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1048,6 +1822,18 @@
             "state" : "translated",
             "value" : "Nilai 7"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Значение 1"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer 7"
+          }
         }
       }
     },
@@ -1055,6 +1841,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Title\"; ObjectID = \"WXF-5S-E8m\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Název"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1065,6 +1857,18 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Judul"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Заголовок"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Başlık"
           }
         }
       }
@@ -1085,6 +1889,12 @@
       "comment" : "Class = \"UILabel\"; text = \"Value\"; ObjectID = \"z19-cc-gHZ\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hodnota"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1096,6 +1906,12 @@
             "state" : "translated",
             "value" : "Nilai"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değer"
+          }
         }
       }
     },
@@ -1103,6 +1919,12 @@
       "comment" : "Class = \"UITextField\"; placeholder = \"key\"; ObjectID = \"ZNr-2O-LuN\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "klíč"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1114,6 +1936,18 @@
             "state" : "translated",
             "value" : "kunci"
           }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ключ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "anahtar"
+          }
         }
       }
     },
@@ -1121,6 +1955,12 @@
       "comment" : "Class = \"UIBarButtonItem\"; title = \"Cancel\"; ObjectID = \"zqH-07-JEp\";",
       "extractionState" : "extracted_with_value",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zrušit"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -1131,6 +1971,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Batal"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "İptal"
           }
         }
       }

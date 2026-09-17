@@ -7,25 +7,25 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "الصور المتجانبة من Mapnik"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "الصور المتجانبة من Mapnik"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mapnik dlaždice"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mapnik Kacheln"
           }
         },
@@ -37,13 +37,13 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Azulejos Mapnik"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mapnik paanid"
           }
         },
@@ -55,31 +55,31 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Tuiles Mapnik"
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mapnik pločice"
           }
         },
         "id" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ubin Mapnik"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mapnikタイル"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mapnik-flis"
           }
         },
@@ -91,19 +91,19 @@
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Quadrículas Mapnik"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Quadrículas Mapnik"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Тайлы Mapnik"
           }
         },
@@ -121,31 +121,31 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Тайли Mapnik"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mảnh Mapnik"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mapnik瓦片"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mapnik 圖磚"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Mapnik 圖磚"
           }
         }
@@ -481,25 +481,25 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "إذا كنت تقوم برسم الخرائط في مكان ما به اتصال محدود، يمكنك تنزيل الصور الجوية المتجانبة و / أو صور خريطة Mapnik لمنطقة العرض الحالية وبمستويي تكبير للخريطة."
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "إذا كنت تقوم برسم الخرائط في مكان ما به اتصال محدود، يمكنك تنزيل الصور الجوية المتجانبة و / أو صور خريطة Mapnik لمنطقة العرض الحالية وبمستويي تكبير للخريطة."
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Pokud mapujete v místech s omezeným připojením, můžete si stáhnout letecké snímky či Mapnik dlaždice pro další dvě vyšší úrovně přiblížení, než je aktuálně zobrazená oblast."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Wenn Sie beim Kartieren eine schlechte Datenverbindung haben, können Sie die Luftbild- und/oder Karten-Kacheln für die beiden nächsthöheren Zoomstufen herunterladen, die sich im aktuellen Sichtbereich befinden."
           }
         },
@@ -511,25 +511,25 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Si estás cartografiando algún lugar con conectividad limitada, puedes descargar las baldosas aéreas y/o de Mapnik para los dos niveles de zoom superiores siguientes que se encuentren en el área de la visualización actual."
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kaardistades piiratud ühendusega, saad alla laadida aerofoto ja/või Mapnik paanid praeguses vaateväljas asuva kahe järgmise kõrgema suurendustaseme jaoks."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Si vous cartographiez depuis une zone avec une mauvaise connexion vous pouvez télécharger les tuiles aériennes ou Mapnik pour les deux niveaux de zoom supérieurs dans la zone actuellement visible."
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ako mapiraš negdje s ograničenom povezanošću, možeš preuzeti aerofotografije i/ili Mapnik pločice za sljedeće dvije veće razine zumiranja, koje se nalaze u trenutačnom području prikaza."
           }
         },
@@ -541,13 +541,13 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Se devi mappare aree con una connettività limitata, puoi scaricare le immagini aeree e/o Mapnik per i due livelli di zoom successivi più alti che si trovano nell'area di visualizzazione corrente."
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "ネット接続が制限されているところでマッピングする際には、衛星画像やMapnikタイルを現在見えているエリア内の2段階高いズームレベルでダウンロードできます。"
           }
         },
@@ -559,19 +559,19 @@
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Se estiver a mapear algum lugar com ligação à Internet limitada ou mesmo sem Internet, pode descarregar as quadrículas de imagens aéreas e/ou Mapnik (mapa renderizado) para os próximos dois níveis de ampliação mais altos que estão na área de visualização atual."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Se você estiver mapeando algum lugar com conectividade limitada ou sem conectividade, você pode baixar as quadrículas aéreas e/ou Mapnik para os próximos dois níveis de zoom mais altos que estão na área de visualização atual."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Если вы занимаетесь картографированием на местности, где нет доступа в интернет, вы можете скачать аэрофотоснимки и/или тайлы Mapnik для текущего места с возможностью увеличения ещё на два следующих уровня зума."
           }
         },
@@ -589,7 +589,7 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Якщо ви мапите у місцях з поганим звʼязком, ви можете завантажити аерофото і тайли Mapnik двох наступних рівнів збільшення для місцини яка відкрита у редакторі."
           }
         },
@@ -601,13 +601,13 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "在您編輯的當下，如果網路通訊受到限制，您可以先下載空照影像或 Mapnik 圖磚，這將包含了放大兩階後，目前畫面範圍內的區域。"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "在您編輯的當下，如果網路通訊受到限制，您可以先下載空照影像或 Mapnik 圖磚，這將包含了放大兩階後，目前畫面範圍內的區域。"
           }
         }
@@ -1303,25 +1303,25 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "حدد مضيفًا آخر إذا كنت ترغب في تحرير البيانات الموجودة على خادم OSM آخر، علماً بأن المضيف الافتراضي هو api.openstreetmap.org."
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "حدد مضيفًا آخر إذا كنت ترغب في تحرير البيانات الموجودة على خادم OSM آخر، علماً بأن المضيف الافتراضي هو api.openstreetmap.org."
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Zadejte adresu hostitele, pokud chcete upravovat data umístěná na alternativním OSM serveru. Výchozí hostitel je api.openstreetmap.org."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Geben Sie einen Host an, wenn Sie Daten bearbeiten möchten, die sich auf einem anderen OSM-Server befinden. Der Standard-Host ist api.openstreetmap.org."
           }
         },
@@ -1333,13 +1333,13 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Especifica un host si deseas editar datos ubicados en un servidor OSM alternativo. El host por defecto es api.openstreetmap.org."
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Määra host kui soovid muuta teises OSM serveris asuvaid andmeid. Vaikimisi host on api.openstreetmap.org."
           }
         },
@@ -1351,7 +1351,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Spécifiez un hôte si vous souhaitez éditer les données sur un serveur OSM alternatif. L'hôte par défaut est api.openstreetmap.org."
           }
         },
@@ -1375,13 +1375,13 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "代替OSMサーバー上にあるデータを編集したい場合にはホストを指定してください。デフォルトのホストはapi.openstreetmap.org です。"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Angi en vert hvis du ønsker å redigere data som finnes på en alternativ OSM-tjener. Forvalgt vert er api.openstreetmap.org."
           }
         },
@@ -1399,13 +1399,13 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Especifique um host se você gostaria de editar os dados localizados em um servidor OpenStreetMap alternativo. O host padrão é api.openstreetmap.org."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Введите адрес узла, если вы хотите редактировать данные, находящиеся на альтернативном сервере OSM. Узел по умолчанию: api.openstreetmap.org."
           }
         },
@@ -1423,13 +1423,13 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Введіть адресу альтернативного OSM-сервера, якщо ви хочете редагувати дані там. Адреса за замовчуванням: api.openstreetmap.org."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "如果你想编辑位于另一个OSM服务器上的数据，请指定一个主机。默认主机是api.openstreetmap.org。"
           }
         },
@@ -2203,25 +2203,25 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "اللغة"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "اللغة"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Jazyk"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sprache"
           }
         },
@@ -2233,13 +2233,13 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Idioma"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Keel"
           }
         },
@@ -2251,13 +2251,13 @@
         },
         "fi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kieli"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Langue"
           }
         },
@@ -2269,7 +2269,7 @@
         },
         "id" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bahasa"
           }
         },
@@ -2281,19 +2281,19 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "言語"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "भाषा"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Språk"
           }
         },
@@ -2311,7 +2311,7 @@
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Idioma"
           }
         },
@@ -2335,31 +2335,31 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Мова"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ngôn ngữ"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "语言"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "語言"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "語言"
           }
         }
@@ -3073,13 +3073,13 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "حقوق النشر © 2012-2020 Bryce Cogswell. \n كل الحقوق محفوظة.\n\n بيانات OpenStreetMap مرخصة بموجب ترخيص Open Data Commons Open Database (ODbL):\n https://www.openstreetmap.com/copyright\n\n حقوق نشر صور Bing الجوية لشركة Microsoft ومورديها:\n https://www.microsoft.com/maps/product/terms.html ، https://www.microsoft.com/maps/assets/docs/terms.aspx\n\n حقوق الطبع والنشر للصور الجوية لـ Mapbox Mapbox ومورديها:\n https://www.mapbox.com/tos\n\n تحليل XML بإذن من روبي هانسون KissXML:\n https://github.com/robbiehanson/KissXML\n\n كود تحليل EXIF حقوق النشر (c) 2010-2015 Mayank Lahiri\n https://github.com/mayanklahiri/easyexif\n\n أيقونات الخريطة بواسطة SJJB:\n http://www.sjjb.co.uk/mapicons\n\n أيقونات أخرى بواسطة Glyphish:\n http://glyphish.com\n"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "حقوق النشر © 2012-2020 Bryce Cogswell. \n كل الحقوق محفوظة.\n\n بيانات OpenStreetMap مرخصة بموجب ترخيص Open Data Commons Open Database (ODbL):\n https://www.openstreetmap.com/copyright\n\n حقوق نشر صور Bing الجوية لشركة Microsoft ومورديها:\n https://www.microsoft.com/maps/product/terms.html ، https://www.microsoft.com/maps/assets/docs/terms.aspx\n\n حقوق الطبع والنشر للصور الجوية لـ Mapbox Mapbox ومورديها:\n https://www.mapbox.com/tos\n\n تحليل XML بإذن من روبي هانسون KissXML:\n https://github.com/robbiehanson/KissXML\n\n كود تحليل EXIF حقوق النشر (c) 2010-2015 Mayank Lahiri\n https://github.com/mayanklahiri/easyexif\n\n أيقونات الخريطة بواسطة SJJB:\n http://www.sjjb.co.uk/mapicons\n\n أيقونات أخرى بواسطة Glyphish:\n http://glyphish.com\n"
           }
         },
@@ -3103,7 +3103,7 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Copyright © 2012-2020 Bryce Cogswell.\nReservados todos los derechos.\n\nLos datos de OpenStreetMap tienen licencia de Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nLas imágenes aéreas de Bing tienen derechos de autor de Microsoft y sus proveedores:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nLas imágenes aéreas de Mapbox son propiedad de Mapbox y sus proveedores: https://www.mapbox.com/tos\n\nAnálisis XML cortesía de KissXML de Robbie Hanson:\nhttps://github.com/robbiehanson/KissXML\n\nCódigo de análisis EXIF Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nSímbolos de la tarjeta SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOtros símbolos de Glyphish:\nhttp://glyphish.com\n"
           }
         },
@@ -3115,7 +3115,7 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Copyright © 2012-2020 Bryce Cogswell.\nTous droits réservés.\n\nLes données OpenStreetMap sont sous licence Open Data Commons Open Database License (ODbL) :\nhttps://www.openstreetmap.com/copyright\n\nLes images aériennes de Bing sont protégées par le droit d'auteur de Microsoft et de ses fournisseurs :\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nImage aérienne Mapbox, copyright Mapbox et ses fournisseurs : https://www.mapbox.com/tos\n\nL'analyse XML est une courtoisie de KissXML de Robbie Hanson :\nhttps://github.com/robbiehanson/KissXML\n\nCode d'analyse EXIF Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nIcônes de la carte par SJJB :\nhttp://www.sjjb.co.uk/mapicons\n\nAutres icônes par Glyphish :\nhttp://glyphish.com\n"
           }
         },
@@ -3139,25 +3139,25 @@
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Copyright © 2012-2020 Bryce Cogswell. \nAll rights reserved.\n\nOpenStreetMapデータはOpen Data CommonsのOpen Database License (ODbL)の下にライセンスされています:\nhttps://www.openstreetmap.com/copyright\n\nBing aerial imagery copyright Microsoft and its suppliers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox aerial imagery copyright Mapbox and its suppliers: https://www.mapbox.com/tos\n\nXML parsing courtesy of Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nMap icons by SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOther icons by Glyphish:\nhttp://glyphish.com\n"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Copyright © 2012-2020 Bryce Cogswell. \nAlle rechten voorbehouden\n\nOpenStreetMap-data is vrijgegeven onder de Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nBing luchtfoto's copyright Microsoft en haar leveranciers:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox luchtfoto's copyright Mapbox en haar leveranciers: https://www.mapbox.com/tos\n\nXML-parsing met dank aan Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nEXIF parsing-code Copyright (c) 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nKaartpictogrammen gemaakt door SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nAndere pictogrammen gemaakt door Glyphish:\nhttp://glyphish.com\n"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Direitos de autor © 2012-2020 Bryce Cogswell.\nTodos os direitos reservados.\n\nOs dados do OpenStreetMap são disponibilizados segundo a licença Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nImagens aéreas Bing © Microsoft e os seus fornecedores:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nImagens aéreas Mapbox © Mapbox e os seus fornecedores: https://www.mapbox.com/tos\n\nParsing XML cortesia de Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nCódigo parsing EXIF © 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nÍcones para mapas SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOutros ícones por Glyphish:\nhttp://glyphish.com\n"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Direitos autorais © 2012-2020 Bryce Cogswell.\nTodos os direitos reservados.\n\nDados OpenStreetMap são licenciados sob a Open Data Commons Open Database License (ODbL):\nhttps://www.openstreetmap.com/copyright\n\nImagens aéreas Bing © Microsoft e seus fornecedores:\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nImagens aéreas Mapbox © Mapbox e seus fornecedores: https://www.mapbox.com/tos\n\nParsing XML cortesia de Robbie Hanson's KissXML:\nhttps://github.com/robbiehanson/KissXML\n\nCódigo parsing EXIF © 2010-2015 Mayank Lahiri\nhttps://github.com/mayanklahiri/easyexif\n\nÍcones para mapas SJJB:\nhttp://www.sjjb.co.uk/mapicons\n\nOutros ícones por Glyphish:\nhttp://glyphish.com\n"
           }
         },
@@ -3193,7 +3193,7 @@
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "2012-2020 Bryce Cogswell © 版權所有 \n保留所有權利\n\n以開放資料庫授權條款 (Open Database License, ODbL) 授權開放街圖資料：\nhttps://www.openstreetmap.com/copyright\n\nBing 空照圖微軟及其供應商所有：\nhttps://www.microsoft.com/maps/product/terms.html, https://www.microsoft.com/maps/assets/docs/terms.aspx\n\nMapbox 空照圖 Mapbox 及其供應商所有：https://www.mapbox.com/tos\n\n感謝 Robbie Hanson 的 KissXML XML 解析：\nhttps://github.com/robbiehanson/KissXML\n\nEXIF 解析程式碼 2010-2015 Mayank Lahiri 版權所有 (c)\nhttps://github.com/mayanklahiri/easyexif\n\nSJJB 提供地圖圖示：\nhttp://www.sjjb.co.uk/mapicons\n\n其他圖示來自 Glyphish:\nhttp://glyphish.com\n"
           }
         }
@@ -5209,25 +5209,25 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "اللغة"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "اللغة"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Jazyk"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sprache"
           }
         },
@@ -5239,13 +5239,13 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Idioma"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Keel"
           }
         },
@@ -5257,13 +5257,13 @@
         },
         "fi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kieli"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Langue"
           }
         },
@@ -5275,49 +5275,49 @@
         },
         "id" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bahasa"
           }
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Lingua"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "言語"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "भाषा"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Språk"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Taal"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Idioma"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Idioma"
           }
         },
@@ -5347,25 +5347,25 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ngôn ngữ"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "语言"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "語言"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "語言"
           }
         }
@@ -7417,25 +7417,25 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "اللغة"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "اللغة"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Jazyk"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Sprache"
           }
         },
@@ -7447,13 +7447,13 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Idioma"
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Keel"
           }
         },
@@ -7465,13 +7465,13 @@
         },
         "fi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Kieli"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Langue"
           }
         },
@@ -7483,49 +7483,49 @@
         },
         "id" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bahasa"
           }
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Lingua"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "言語"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "भाषा"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Språk"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Taal"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Idioma"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Idioma"
           }
         },
@@ -7555,25 +7555,25 @@
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ngôn ngữ"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "语言"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "語言"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "語言"
           }
         }

@@ -6469,19 +6469,19 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "تمكين المصفيات"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "تمكين المصفيات"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Povolit filtry"
           }
         },
@@ -6505,25 +6505,25 @@
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Luba filtrid"
           }
         },
         "fi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ota suodattimet käyttöön"
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Activer les filtres"
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aktiviraj filtre"
           }
         },
@@ -6535,25 +6535,25 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abilita filtri"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "フィルターを有効化"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "गाळणी सक्षम करा"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Skru på filter"
           }
         },
@@ -6565,25 +6565,25 @@
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Włącz filtry"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ativar filtros"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ativar filtros"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Фильтры"
           }
         },
@@ -6601,31 +6601,31 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Увімкнути фільтри"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bật Bộ lọc"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "启用过滤器"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "啟用過濾功能"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "啟用過濾功能"
           }
         }
@@ -9589,25 +9589,25 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "امسح ذاكرة التخزين المؤقت لبيانات خريطة الشارع المفتوحة كل فترة خاصة إذا أصبحت حالة التطبيق غير متزامنة مع الخادم، وقد يحدث هذا إذا قام شخص آخر بتغيير البيانات التي تقوم بتحريرها، أو إذا فشلت عملية رفع البيانات في منتصف الإجراء الذي يمنعك من رفع بيانات إضافية. \n\nتحذير: سيؤدي مسح ذاكرة التخزين المؤقت OSM إلى فقد أي تغييرات لم تقم برفعها. \n\nامسح ذاكرة التخزين المؤقت لطبقة Mapnik أو الطبقات الأخرى لتنزيل أحدث الصور المتجانبة التي تعكس التغييرات التي أرسلتها مسبقًا.  قد ستغرق تطبيق تغييراتك أحيانا ما يصل إلى 24 ساعة لتتم معالجتها."
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "امسح ذاكرة التخزين المؤقت لبيانات خريطة الشارع المفتوحة كل فترة خاصة إذا أصبحت حالة التطبيق غير متزامنة مع الخادم، وقد يحدث هذا إذا قام شخص آخر بتغيير البيانات التي تقوم بتحريرها، أو إذا فشلت عملية رفع البيانات في منتصف الإجراء الذي يمنعك من رفع بيانات إضافية. \n\nتحذير: سيؤدي مسح ذاكرة التخزين المؤقت OSM إلى فقد أي تغييرات لم تقم برفعها. \n\nامسح ذاكرة التخزين المؤقت لطبقة Mapnik أو الطبقات الأخرى لتنزيل أحدث الصور المتجانبة التي تعكس التغييرات التي أرسلتها مسبقًا.  قد ستغرق تطبيق تغييراتك أحيانا ما يصل إلى 24 ساعة لتتم معالجتها."
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Pročistěte mezipaměť pokud aplikace není synchronizovaná s OSM serverem. Může se to stát např. když někdo další změní data, která zrovna upravujete nebo pokud dojde k selhání nahrávání změn, což vám může bránit v nahrání dalších změn.\n\nUpozornění: Vyčištěním mezipaměti přijdete o všechny nenahrané změny.\n\nPro stažení nejnovějších dlaždic, zohledňujících i vaše dříve nahrané změny, pročistěte mezipaměť Mapnik nebo překryvných dlaždic. Zpracování vašich změn může trvat i 24 hodin."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Leeren Sie den OSM-Zwischenspeicher, wenn der Anwendungsstatus nicht mehr mit dem OSM-Server synchronisiert ist. Dies kann der Fall sein, wenn jemand anderes Daten ändert, die Sie gerade bearbeiten, oder wenn einer Ihrer Uploads fehlschlägt, so dass Sie keine weiteren Daten hochladen können.\n\nAchtung! Wenn Sie den OSM-Zwischenspeicher leeren, gehen alle Änderungen, die noch nicht hochgeladen wurden, verloren.\n\nLöschen Sie den Hintergrund-Zwischenspeicher, um die neuesten Kacheln herunterzuladen, die Ihre Änderungen zeigen, die Sie bereits hochgeladen haben. Es kann bis zu 24 Stunden dauern, bis Ihre Änderungen verarbeitet sind."
           }
         },
@@ -9619,25 +9619,25 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Vacíe la antememoria si la aplicación no está sincronizada con el servidor OSM. Esto puede suceder, por ejemplo, si otra persona cambia los datos que está editando actualmente o si no se cargan los cambios, lo que puede impedir que cargue más cambios.\n\nAtención: al vaciar la antememoria perderá todos los cambios no guardados.\n\nPara descargar las teselas más recientes, con los cambios enviados anteriormente, vacíe las antememorias de Mapnik o de teselas superpuestas. Puede tomar hasta 24 horas para que se procesen sus cambios."
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Tühjenda OSMi andmete vahemälu, kui rakenduse olek ei ole enam OSM serveriga sünkroonis. See võib juhtuda, kui keegi teine muudab andmeid, mida redigeerid, või kui üks sinu üleslaadimine ebaõnnestub poolel teel, mis takistab sul täiendavate andmete üleslaadimist.\n\nHoiatus: OSM vahemälu tühjendamine toob kaasa kõigi veel üles laadimata muudatuste kadumise.\n\nTühjenda Mapnik või Overlay paanide vahemälu, et laadida alla viimased paanid, mis kajastavad sinu poolt varem esitatud muudatusi. Sinu muudatuste töötlemiseks võib kuluda kuni 24 tundi."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Videz le cache de données OSM si l'application n'est plus à jour vis-à-vis du serveur OSM. Cela peut arriver si quelqu'un d'autre modifie des données que vous éditez, ou si un de vos téléversements échoue en cours de route, vous empêchant de téléverser des données supplémentaires.\n\nAvertissement : vider le cache OSM entraînera la perte de toutes les modifications que vous n'avez pas encore téléversées.\n\nVidez le cache des tuiles Mapnik ou de surcouche pour télécharger les dernières tuiles rendant compte de vos modifications soumises précédemment. Vos modifications peuvent mettre jusqu'à 24 heures pour être prises en compte."
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Izbriši predmemoriju podataka OSM-a, ako dođe do neusklađenosti između programa i OSM poslužitelja. To se može dogoditi, ako netko drugi promijeni podatke koje uređuješ ili ako jedan od tvojih prijenosa ne uspije te onemogućuje prijenos dodatnih podataka.\n\nUpozorenje: Brisanjem predmemorije OSM-a izgubit ćeš sve promjene koje još nisu prenesene.\n\nIzbriši predmemoriju Mapnik ili Overlay pločica za preuzimanje najnovijih pločica koje odražavaju tvoje prethodno poslane promjene. Obrada tvojih promjena može potrajati do 24 sata."
           }
         },
@@ -9649,37 +9649,37 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cancella la cache dei dati OSM se lo stato dell'applicazione non è più sincronizzato con il server OSM. Ciò può verificarsi se qualcun altro modifica i dati che stai modificando o se uno dei tuoi caricamenti non riesce a metà impedendoti di caricare dati aggiuntivi.\n\nAttenzione: svuotare la cache di OSM farà perdere tutte le modifiche che non sono state ancora caricate.\n\nCancella le cache dei riquadri Mapnik o Overlay per scaricare i riquadri più recenti che riflettono le modifiche inviate in precedenza. L'elaborazione delle modifiche potrebbe richiedere fino a 24 ore."
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "アプリの状態がOSM本番環境とズレてきた場合にはOSMデータのキャッシュをクリアしてください。これはあなたが編集中のデータを別の誰かが変更したり、アップロード中に失敗してデータ追加を保護している時などに起こります。\n\n警告: OSMキャッシュをクリアすると、未アップロードの変更が失われることになります。\n\n直前に登録した変更を反映した最新のタイルをダウンロードする場合には、Mapnikやオーバーレイタイルのキャッシュをクリアしてください。あなたの変更は処理完了まで最大24時間程度掛かる場合があります。"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "OSM सर्व्हर सोबतची समकालिक स्थिती तुटल्यास OSM डेटाचा कॅश पुसून टाका. आपण संपादन करत असलेल्या डेटाला इतर कोणी बदलले किंवा आपला एखादा चढवण्याचा प्रयत्न अपयशी ठरला तर असे होऊ शकते.\n\nसावधान: OSM कॅश पुसून टाकल्याने आपण अद्याप न चढवलेले बदल गमवून बसाल.\n\nआपण चढवलेले बदल दाखवणाऱ्या फरश्या डाऊनलोड करण्यासाठी Mapnik किंवा आच्छादन फरश्यांचे कॅश पुसून टाका. आपले बदल प्रक्रियित व्हायला २४ तास लागू शकता."
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Maak de OSM-gegevenscache leeg als het programma niet langer gesynchroniseerd is met de OSM-server. Dit kan gebeuren als iemand anders gegevens verandert die je aan het bewerken bent of als één van je uploads halverwege mislukt, wat voorkomt dat je extra gegevens upload. \n\nWaarschuwing: Het leegmaken van de OSM-cache zal ervoor zorgen dat je veranderingen die je nog niet hebt geüpload verliest.\n\nMaak de Mapnik- of Overlaytegelcaches leeg  om de laatste tegels, die veranderingen weergeven die je hebt ingediend, te downloaden. Het kan tot 24 uur duren om je veranderingen te verwerken."
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Limpe os ficheiros temporários dos dados do OpenStreetMap se a aplicação não sincronizar com os servidores do OpenStreetMap. Isto pode acontecer se houver alguém a alterar os dados nos quais está a trabalhar, ou se um dos envios falhar, impedindo que envie dados adicionais.\n\nAviso: limpar os ficheiros temporários do OpenStreetMap fará com que perca todas as alterações que ainda não foram enviadas.\n\nLimpe os ficheiros temporários das quadrículas Mapnik ou de sobreposição para poder descarregar as últimas quadrículas que refletem as alterações que enviou anteriormente. As suas alterações podem demorar 24 horas para serem processadas e mostradas no OpenStreetMap."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Limpe o cache de dados OpenStreetMap se o aplicativo não sincronizar com os servidores OpenStreetMap. Isto pode acontecer se houver alguém modificando os dados nos quais você está trabalhando, ou se um dos envios falhar, impedindo que você envie dados adicionais.\n\nAviso: limpar o cache do OpenStreetMap fará com que você perca todas as alterações que ainda não foram enviadas.\n\nLimpe as quadrículas Mapnik ou de sobreposição para poder baixar as últimas quadrículas que refletem as alterações que você enviou anteriormente. Suas alterações podem levar 24 horas para serem processadas e exibidas no OpenStreetMap."
           }
         },
@@ -9703,7 +9703,7 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Очистіть кеш-памʼять з даними OSM, якщо стан застосунка не синхронізується з сервером OSM. Таке може відбуватися, якщо хтось інший змінив дані, які ви саме редагуєте, або якщо надсилання одного з ваших наборів змін зривається на півдорозі, не дозволяючи вам відправити додаткові дані. \n\nПопередження: Очищення кешу з даними OSM призведе до втрати будь-яких змін, які ще не було завантажено.\n\nОчистіть кеш тайлів Mapnik або шар-накладку, щоб завантажити найновіші тайли, які показують зміни, що були внесені вами раніше. Обробка ваших наборів змін може зайняти до 24 годин."
           }
         },
@@ -9715,13 +9715,13 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "如果現有資料的狀態已經和 OSM 伺服器不同步，請刪除 OSM 資料快取。成因可能是其他人更動了您當下所編輯的資料，或是在您上傳時因無法增加資料而失敗了。\n\n警告：刪除 OSM 資料快取，會使您失去所有尚未上傳的更動。\n\n清除 Mapnik 或是其他套疊的圖磚快取，以下載最新且包含您之前所更動資料的圖磚。然而您的更動可能要 24 個小時才會生效。"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "如果現有資料的狀態已經和 OSM 伺服器不同步，請刪除 OSM 資料快取。成因可能是其他人更動了您當下所編輯的資料，或是在您上傳時因無法增加資料而失敗了。\n\n警告：刪除 OSM 資料快取，會使您失去所有尚未上傳的更動。\n\n清除 Mapnik 或是其他套疊的圖磚快取，以下載最新且包含您之前所更動資料的圖磚。然而您的更動可能要 24 個小時才會生效。"
           }
         }
@@ -11587,25 +11587,25 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "تمكين تدوير الشاشة"
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "تمكين تدوير الشاشة"
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Otáčení mapy"
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Rotation aktivieren"
           }
         },
@@ -11623,7 +11623,7 @@
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Luba pööramine"
           }
         },
@@ -11635,67 +11635,67 @@
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Permettre la rotation"
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aktiviraj okretanje"
           }
         },
         "id" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aktifkan Rotasi"
           }
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Abilita Rotazione"
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "自動回転を有効化"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "फिरवणे सक्षम करा"
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Skru på rotasjon"
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Draaien aanzetten"
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ativar rotação"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ativar rotação"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Вращение карты"
           }
         },
@@ -11713,31 +11713,31 @@
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Повертати мапу"
           }
         },
         "vi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Cho phép Xoay"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "启用旋转"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "啟用旋轉功能"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "啟用旋轉功能"
           }
         }

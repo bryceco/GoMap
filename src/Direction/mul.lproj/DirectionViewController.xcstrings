@@ -7,31 +7,31 @@
       "localizations" : {
         "ar" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "ضع جهازك موازيا لاتجاه العنصر."
           }
         },
         "ars" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "ضع جهازك موازيا لاتجاه العنصر."
           }
         },
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Nasměrujte své zařízení paralelně se směrem objektu."
           }
         },
         "de" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Richte dein Gerät parallel zur Objektrichtung aus."
           }
         },
         "el" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Τοποθετήστε την συσκευή σας παράλληλα προς την κατεύθυνση του αντικειμένου."
           }
         },
@@ -43,31 +43,31 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Coloque el dispositivo de forma paralela a la dirección del objeto."
           }
         },
         "et" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aseta seade paralleelselt objekti suunaga."
           }
         },
         "fi" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Aseta laitteesi kohtisuoraan kohti objektia."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Positionnez votre appareil parallèlement à la direction de l'objet."
           }
         },
         "hr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Postavi uređaj paralelno sa smjerom objekta."
           }
         },
@@ -79,73 +79,73 @@
         },
         "it" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Posiziona il tuo dispositivo parallelamente alla direzione dell''oggetto."
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "装置をオブジェクトと並行する方向に向けてください。"
           }
         },
         "mr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "आपले उपकरण वस्तूच्या दिशेला समांतर ठेवा."
           }
         },
         "nb-NO" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Posisjoner din enhet i parallell med objektets retning."
           }
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Plaats je apparaat parallel aan de richting van het object."
           }
         },
         "nn" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Plasser eininga di parallelt med retninga til objektet."
           }
         },
         "oc" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Plaçatz l’aparelh en parallèle a la drechiera de l’objècte."
           }
         },
         "pl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Ustaw urządzenie równolegle do orientacji obiektu."
           }
         },
         "pt" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Posicione o seu dispositivo paralelo à direção do objeto."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Posicione seu aparelho paralelo a direção do objeto."
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Расположите устройство параллельно направлению движения объекта."
           }
         },
         "ta" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "உங்கள் சாதனத்தை பொருளின் திசைக்கு இணையாக வைக்கவும்."
           }
         },
@@ -157,13 +157,13 @@
         },
         "tzm" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "ⵙⵔⵙ ⴰⵍⵍⴰⵍ ⵙ ⵓⵎⵏⴰⵡⴰⵢ ⴷ ⵓⵎⵏⵉⴷ ⵏ ⵓⵙⴽⴽⵉⵏ."
           }
         },
         "uk" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Розташуйте пристрій паралельно до напрямку руху обʼєкта."
           }
         },
@@ -175,13 +175,13 @@
         },
         "zh-Hant" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "將您的設備與物體的方向平行放置。"
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "將您的設備與物體的方向平行放置。"
           }
         }

@@ -679,6 +679,11 @@
         <target state="new">Aerial only</target>
         <note />
       </trans-unit>
+      <trans-unit id="Align Node" xml:space="preserve">
+        <source>Align Node</source>
+        <target state="new">Align Node</target>
+        <note>Edit action</note>
+      </trans-unit>
       <trans-unit id="All Tags" xml:space="preserve">
         <source>All Tags</source>
         <target state="new">All Tags</target>
@@ -855,6 +860,11 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="new">Changeset</target>
         <note>OSM changeset identifier</note>
       </trans-unit>
+      <trans-unit id="Changeset comment" xml:space="preserve">
+        <source>Changeset comment</source>
+        <target state="new">Changeset comment</target>
+        <note>Header for the changeset comment section on the upload screen</note>
+      </trans-unit>
       <trans-unit id="Choose Existing Photo" xml:space="preserve">
         <source>Choose Existing Photo</source>
         <target state="translated">Choose Existing Photo</target>
@@ -864,6 +874,11 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Clear All</source>
         <target state="new">Clear All</target>
         <note />
+      </trans-unit>
+      <trans-unit id="Close Area" xml:space="preserve">
+        <source>Close Area</source>
+        <target state="new">Close Area</target>
+        <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Commit" xml:space="preserve">
         <source>Commit</source>
@@ -974,6 +989,11 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="new">Delete failed</target>
         <note />
       </trans-unit>
+      <trans-unit id="Describe your changes..." xml:space="preserve">
+        <source>Describe your changes...</source>
+        <target state="new">Describe your changes...</target>
+        <note>Placeholder text shown in the empty changeset comment field</note>
+      </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
         <source>Detach from relation</source>
         <target state="new">Detach from relation</target>
@@ -982,7 +1002,13 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Discard" xml:space="preserve">
         <source>Discard</source>
         <target state="new">Discard</target>
-        <note>Discard changes</note>
+        <note>Destructive button that discards a group of edits
+Discard changes</note>
+      </trans-unit>
+      <trans-unit id="Discard Changes" xml:space="preserve">
+        <source>Discard Changes</source>
+        <target state="new">Discard Changes</target>
+        <note>Title for discard-group confirmation alert</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
         <source>Disconnect</source>
@@ -1201,6 +1227,11 @@ Error: %@</target>
       <trans-unit id="Invalid URL" xml:space="preserve">
         <source>Invalid URL</source>
         <target state="new">Invalid URL</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Invalid closing path" xml:space="preserve">
+        <source>Invalid closing path</source>
+        <target state="new">Invalid closing path</target>
         <note />
       </trans-unit>
       <trans-unit id="Join" xml:space="preserve">
@@ -1434,6 +1465,11 @@ Never delete old tracks</note>
         <source>No active track</source>
         <target state="new">No active track</target>
         <note>GPX track</note>
+      </trans-unit>
+      <trans-unit id="No connecting path found to close the way" xml:space="preserve">
+        <source>No connecting path found to close the way</source>
+        <target state="new">No connecting path found to close the way</target>
+        <note />
       </trans-unit>
       <trans-unit id="No match" xml:space="preserve">
         <source>No match</source>
@@ -1816,6 +1852,11 @@ Title for sharing options</note>
         <target state="new">Show Recent Items</target>
         <note />
       </trans-unit>
+      <trans-unit id="Some changes are in a different location and have been deselected. Upload them as a separate changeset." xml:space="preserve">
+        <source>Some changes are in a different location and have been deselected. Upload them as a separate changeset.</source>
+        <target state="new">Some changes are in a different location and have been deselected. Upload them as a separate changeset.</target>
+        <note>Warning shown on upload screen when distant edit groups are automatically deselected</note>
+      </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
         <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
         <target state="new">Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</target>
@@ -1825,6 +1866,11 @@ Title for sharing options</note>
         <source>Sorry, an error occurred while loading the %@ file</source>
         <target state="new">Sorry, an error occurred while loading the %@ file</target>
         <note>Argument is a file type like 'GPX' or 'GeoJSON'</note>
+      </trans-unit>
+      <trans-unit id="Source" xml:space="preserve">
+        <source>Source</source>
+        <target state="new">Source</target>
+        <note>Header for the data source section on the upload screen</note>
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">
         <source>Space</source>
@@ -1895,6 +1941,11 @@ Title for sharing options</note>
         <source>Take New Photo</source>
         <target state="new">Take New Photo</target>
         <note>Option to take a photo with the camera</note>
+      </trans-unit>
+      <trans-unit id="Tap a highlighted path to close the area, or tap elsewhere to cancel." xml:space="preserve">
+        <source>Tap a highlighted path to close the area, or tap elsewhere to cancel.</source>
+        <target state="new">Tap a highlighted path to close the area, or tap elsewhere to cancel.</target>
+        <note />
       </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
@@ -1975,6 +2026,11 @@ Title for sharing options</note>
         <source>The ways contain incompatible tags</source>
         <target state="new">The ways contain incompatible tags</target>
         <note />
+      </trans-unit>
+      <trans-unit id="These edits will be permanently discarded and cannot be recovered." xml:space="preserve">
+        <source>These edits will be permanently discarded and cannot be recovered.</source>
+        <target state="new">These edits will be permanently discarded and cannot be recovered.</target>
+        <note>Body of discard-group confirmation alert</note>
       </trans-unit>
       <trans-unit id="This action requires GPS to be turned on" xml:space="preserve">
         <source>This action requires GPS to be turned on</source>

@@ -40,6 +40,12 @@
             "state" : "translated",
             "value" : "Konum Ara"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜尋位置"
+          }
         }
       }
     },
@@ -91,7 +97,7 @@
       "localizations" : {
         "cs" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Zadejte název („New York“), URL či jiný text obsahující lat/lon koordináty, nebo referenci OSM objektu („way 51014987“):"
           }
         },
@@ -103,19 +109,19 @@
         },
         "nl" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Specificeer een naam (\"New York\"), een URL of andere tekst die breedtegraad/lengtegraad-coördinaten bevat, of een verwijzing naar een OSM-object (\"weg 51014987\"):"
           }
         },
         "ru" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Укажите название (\"Нью-Йорк\"), URL или другой текст, содержащий координаты широты/долготы, или ссылку на объект OSM (\"way 51014987\"):"
           }
         },
         "tr" : {
           "stringUnit" : {
-            "state" : "needs_review",
+            "state" : "translated",
             "value" : "Bir isim (\"New York\"), bir URL, enlem/boylam koordinatları içeren başka bir metin veya bir OSM nesnesine referans (\"way 51014987\") belirtin:"
           }
         }
