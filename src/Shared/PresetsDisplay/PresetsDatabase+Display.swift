@@ -516,7 +516,7 @@ extension PresetsDatabase {
 			let group = PresetDisplayGroup(name: label, tags: addrs, usesBoth: false)
 			return group
 
-		case .text, .number, .integer, .email, .identifier, .maxweight_bridge, .textarea, .schedule,
+		case .text, .number, .integer, .email, .identifier, .textarea, .schedule,
 		     .tel, .url, .roadheight, .roadspeed, .wikipedia, .wikidata, .date:
 
 			// no presets, but we customize keyboard input
@@ -524,13 +524,14 @@ extension PresetsDatabase {
 			var capitalize: UITextAutocapitalizationType = .none
 			var autocorrect: UITextAutocorrectionType = .no
 			switch field.type {
-			case .featureType:
+			// no keyboard customization needed:
+			case .schedule, .identifier, .wikipedia, .wikidata:
 				break
-			case .check, .onewayCheck, .defaultCheck, .access, .address, .radio, .structureRadio,
-			     .combo, .manyCombo, .multiCombo, .semiCombo, .networkCombo, .typeCombo, .directionalCombo,
-			     .colour, .schedule, .identifier, .maxweight_bridge,
-			     .wikipedia, .wikidata, .localized, .restrictions:
-				break
+			// handled by earlier cases in the outer switch (unreachable):
+			case .featureType, .check, .onewayCheck, .defaultCheck, .access, .address,
+			     .radio, .structureRadio, .combo, .manyCombo, .multiCombo, .semiCombo,
+			     .networkCombo, .typeCombo, .directionalCombo, .colour, .localized, .restrictions:
+				assertionFailure()
 			case .number, .integer, .roadheight, .roadspeed, .date:
 				keyboard = .numbersAndPunctuation // UIKeyboardTypeDecimalPad doesn't have Done button
 			case .tel:
@@ -544,8 +545,9 @@ extension PresetsDatabase {
 				autocorrect = .yes
 			case .text:
 				switch field.key {
-				case "architect", "artist_name", "branch", "brand", "comment",
-				     "destination", "flag:name", "network", "operator", "subject":
+				case "architect", "artist_name", "branch", "brand",
+				     "destination", "flag:name", "from", "network",
+				     "operator", "protection_title", "subject", "to":
 					capitalize = .words
 					autocorrect = .default
 				default:

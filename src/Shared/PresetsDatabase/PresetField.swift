@@ -44,7 +44,6 @@ extension PresetField {
 		case integer
 		case email
 		case identifier
-		case maxweight_bridge
 		case textarea
 		case tel
 		case url
