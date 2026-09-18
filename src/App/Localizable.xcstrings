@@ -21861,7 +21861,15 @@
       }
     },
     "Align Node" : {
-      "comment" : "Edit action"
+      "comment" : "Edit action",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "對齊節點"
+          }
+        }
+      }
     },
     "All cached data including aerial imagery tiles, TagInfo and Wiki data, etc." : {
       "localizations" : {
@@ -26630,7 +26638,15 @@
       }
     },
     "Changeset comment" : {
-      "comment" : "Header for the changeset comment section on the upload screen"
+      "comment" : "Header for the changeset comment section on the upload screen",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "夑更集摘要"
+          }
+        }
+      }
     },
     "Choose Existing Photo" : {
       "comment" : "Option to choose a photo from the photo library.",
@@ -26846,7 +26862,15 @@
       }
     },
     "Close Area" : {
-      "comment" : "Edit action"
+      "comment" : "Edit action",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關閉區域"
+          }
+        }
+      }
     },
     "Commit" : {
       "localizations" : {
@@ -31607,7 +31631,15 @@
       }
     },
     "Describe your changes..." : {
-      "comment" : "Placeholder text shown in the empty changeset comment field"
+      "comment" : "Placeholder text shown in the empty changeset comment field",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "描述您的變動…"
+          }
+        }
+      }
     },
     "Detach from relation" : {
       "localizations" : {
@@ -31883,7 +31915,15 @@
       }
     },
     "Discard Changes" : {
-      "comment" : "Title for discard-group confirmation alert"
+      "comment" : "Title for discard-group confirmation alert",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "棄置變動"
+          }
+        }
+      }
     },
     "Disconnect" : {
       "comment" : "Edit action",
@@ -37296,7 +37336,14 @@
       }
     },
     "Invalid closing path" : {
-
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無效的關閉路徑"
+          }
+        }
+      }
     },
     "Invalid URL" : {
       "localizations" : {
@@ -44036,7 +44083,14 @@
       }
     },
     "No connecting path found to close the way" : {
-
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "沒有找到連接的路徑來關閉路徑"
+          }
+        }
+      }
     },
     "No Data" : {
       "comment" : "Alert title",
@@ -55917,7 +55971,15 @@
       }
     },
     "Some changes are in a different location and have been deselected. Upload them as a separate changeset." : {
-      "comment" : "Warning shown on upload screen when distant edit groups are automatically deselected"
+      "comment" : "Warning shown on upload screen when distant edit groups are automatically deselected",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有些變動在其他位置而且已經取消選取了，將用分開的變更集上傳資料。"
+          }
+        }
+      }
     },
     "Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." : {
       "localizations" : {
@@ -56139,7 +56201,15 @@
       }
     },
     "Source" : {
-      "comment" : "Header for the data source section on the upload screen"
+      "comment" : "Header for the data source section on the upload screen",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "來源"
+          }
+        }
+      }
     },
     "Space" : {
       "comment" : "Space key on the keyboard",
@@ -57942,7 +58012,14 @@
       }
     },
     "Tap a highlighted path to close the area, or tap elsewhere to cancel." : {
-
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "點一下強調的路徑來關閉區域，或是點一下其他地方來取消。"
+          }
+        }
+      }
     },
     "The + button can be positioned on either the left or right side of the screen" : {
       "localizations" : {
@@ -59846,7 +59923,15 @@
       }
     },
     "These edits will be permanently discarded and cannot be recovered." : {
-      "comment" : "Body of discard-group confirmation alert"
+      "comment" : "Body of discard-group confirmation alert",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "這些編輯會永久棄置並且無法恢復。"
+          }
+        }
+      }
     },
     "This action requires GPS to be turned on" : {
       "localizations" : {

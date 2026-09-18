@@ -52,6 +52,12 @@
             "state" : "translated",
             "value" : "Yol Tarifi Al"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取得導航路線"
+          }
         }
       }
     },
@@ -94,6 +100,12 @@
             "state" : "translated",
             "value" : "Yorum"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回應"
+          }
         }
       }
     },
@@ -135,6 +147,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yeni yorum:"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新回應："
           }
         }
       }
@@ -202,6 +220,12 @@
             "state" : "translated",
             "value" : "Not"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "註解"
+          }
         }
       }
     },
@@ -243,6 +267,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yorum Yap& Çözümle"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回應&解決"
           }
         }
       }
@@ -297,6 +327,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "17.06.2014 17:54 UTC"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "2014-06-17 17:54 UTC"
           }
         }
       }

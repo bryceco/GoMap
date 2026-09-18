@@ -58,6 +58,12 @@
             "state" : "translated",
             "value" : "anahtar"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵"
+          }
         }
       }
     },
@@ -93,6 +99,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Başlık"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標題"
           }
         }
       }
@@ -154,6 +166,12 @@
             "state" : "translated",
             "value" : "Yeni Ekle"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增新的"
+          }
         }
       }
     },
@@ -189,6 +207,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yeni Ekle"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增新的"
           }
         }
       }
@@ -226,6 +250,12 @@
             "state" : "translated",
             "value" : "Alan"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "區域"
+          }
         }
       }
     },
@@ -262,6 +292,12 @@
             "state" : "translated",
             "value" : "Özel Özellikler"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自訂功能"
+          }
         }
       }
     },
@@ -291,6 +327,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Önceden Ayarlanmış Anahtar"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "預先組合鍵"
           }
         }
       }
@@ -328,6 +370,12 @@
             "state" : "translated",
             "value" : "Değer 8"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 8"
+          }
         }
       }
     },
@@ -364,6 +412,12 @@
             "state" : "translated",
             "value" : "Bu anahtar/değer kombinasyonuna uyan nesneleri düzenlerken bu ön ayar kullanılabilir olacaktır. Joker karakter kullanmak için ikisinden birini boş bırakın."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "當你編輯的物件吻合這個鍵/值組合時，預設組合將會出現。可以留空採萬用字元。"
+          }
         }
       }
     },
@@ -394,6 +448,12 @@
             "state" : "translated",
             "value" : "Kapsam:"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "套用至"
+          }
         }
       }
     },
@@ -423,6 +483,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Köşe Noktası"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "頂點"
           }
         }
       }
@@ -460,6 +526,12 @@
             "state" : "translated",
             "value" : "Değer 9"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 9"
+          }
         }
       }
     },
@@ -495,6 +567,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Köpeklere İzin Veriliyor"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "允許寵物"
           }
         }
       }
@@ -544,6 +622,12 @@
             "state" : "translated",
             "value" : "Anahtar"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵"
+          }
         }
       }
     },
@@ -580,6 +664,12 @@
             "state" : "translated",
             "value" : "Değer 3"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 3"
+          }
         }
       }
     },
@@ -615,6 +705,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nokta"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "節點"
           }
         }
       }
@@ -688,6 +784,12 @@
             "state" : "translated",
             "value" : "Özel Alanlar"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自訂欄位"
+          }
         }
       }
     },
@@ -717,6 +819,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "yaprak_türü"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "葉子類型"
           }
         }
       }
@@ -754,6 +862,12 @@
             "state" : "translated",
             "value" : "Değer 1"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 1"
+          }
         }
       }
     },
@@ -790,6 +904,12 @@
             "state" : "translated",
             "value" : "Ön ayarın alabileceği değerler"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "預先組合可能的值"
+          }
         }
       }
     },
@@ -819,6 +939,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ön ayar değerleri"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "預先組合值"
           }
         }
       }
@@ -868,6 +994,12 @@
             "state" : "translated",
             "value" : "Geri"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回去"
+          }
         }
       }
     },
@@ -897,6 +1029,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "cins:en"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus:en"
           }
         }
       }
@@ -934,6 +1072,12 @@
             "state" : "translated",
             "value" : "Noktalı virgülle ayrılmış değerler kullanır (örn. mutfak türü olarak pizza;kebap)"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用分號分隔值 (例如 pizza;kebab 來標示食物類型)"
+          }
         }
       }
     },
@@ -970,6 +1114,12 @@
             "state" : "translated",
             "value" : "Özel Özellik"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自訂功能"
+          }
         }
       }
     },
@@ -1000,6 +1150,12 @@
             "state" : "translated",
             "value" : "Değer 5"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 5"
+          }
         }
       }
     },
@@ -1029,6 +1185,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ad"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名稱"
           }
         }
       }
@@ -1066,6 +1228,12 @@
             "state" : "translated",
             "value" : "anahtar"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵"
+          }
         }
       }
     },
@@ -1096,6 +1264,12 @@
             "state" : "translated",
             "value" : "Değer 4"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 4"
+          }
         }
       }
     },
@@ -1125,6 +1299,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Değer 2"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 2"
           }
         }
       }
@@ -1174,6 +1354,12 @@
             "state" : "translated",
             "value" : "doğal"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自然"
+          }
         }
       }
     },
@@ -1203,6 +1389,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Değer 11"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 11"
           }
         }
       }
@@ -1264,6 +1456,12 @@
             "state" : "translated",
             "value" : "Özel Alan"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自訂欄位"
+          }
         }
       }
     },
@@ -1293,6 +1491,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Meşe Ağacı"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "橡樹"
           }
         }
       }
@@ -1330,6 +1534,12 @@
             "state" : "translated",
             "value" : "Alan Adı"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "欄位名稱"
+          }
         }
       }
     },
@@ -1359,6 +1569,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "cins"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "genus"
           }
         }
       }
@@ -1396,6 +1612,12 @@
             "state" : "translated",
             "value" : "Değer 6"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 6"
+          }
         }
       }
     },
@@ -1431,6 +1653,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İptal"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         }
       }
@@ -1468,6 +1696,12 @@
             "state" : "translated",
             "value" : "Bu özelliği seçerken eklenecek etiketler."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "當選取這圖徵時點一下來新增。"
+          }
         }
       }
     },
@@ -1503,6 +1737,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Özellik Etiketleri"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "圖徵標籤"
           }
         }
       }
@@ -1540,6 +1780,12 @@
             "state" : "translated",
             "value" : "Bu özelliğin ön ayarlarını devralır. Ön ayar yoksa bu özelliğin seçilmesi durumunda etiketler hedef nesneye birleştirilir (yerine geçmez)."
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繼承這圖徵的預設組合，如果沒有選取這圖徵則會合併 (不是取代) 標籤到目標物件。"
+          }
         }
       }
     },
@@ -1570,6 +1816,12 @@
             "state" : "translated",
             "value" : "Özellik türü:"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "圖徵類型："
+          }
         }
       }
     },
@@ -1599,6 +1851,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anahtar"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵"
           }
         }
       }
@@ -1635,6 +1893,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ad"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "名稱"
           }
         }
       }
@@ -1684,6 +1948,12 @@
             "state" : "translated",
             "value" : "Geri"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "回去"
+          }
         }
       }
     },
@@ -1726,6 +1996,12 @@
             "state" : "translated",
             "value" : "Değer 12"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 12"
+          }
         }
       }
     },
@@ -1761,6 +2037,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Değer 10"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 10"
           }
         }
       }
@@ -1798,6 +2080,12 @@
             "state" : "translated",
             "value" : "Hat"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "線段"
+          }
         }
       }
     },
@@ -1834,6 +2122,12 @@
             "state" : "translated",
             "value" : "Değer 7"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值 7"
+          }
         }
       }
     },
@@ -1869,6 +2163,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Başlık"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標題"
           }
         }
       }
@@ -1912,6 +2212,12 @@
             "state" : "translated",
             "value" : "Değer"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "值"
+          }
         }
       }
     },
@@ -1948,6 +2254,12 @@
             "state" : "translated",
             "value" : "anahtar"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵"
+          }
         }
       }
     },
@@ -1977,6 +2289,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "İptal"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消"
           }
         }
       }

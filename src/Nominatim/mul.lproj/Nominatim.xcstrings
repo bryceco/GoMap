@@ -88,6 +88,12 @@
             "state" : "translated",
             "value" : "Konum Ara"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "搜尋位置"
+          }
         }
       }
     },
@@ -123,6 +129,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bir isim (\"New York\"), bir URL, enlem/boylam koordinatları içeren başka bir metin veya bir OSM nesnesine referans (\"way 51014987\") belirtin:"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "指定名稱 (\"紐約\")，網址或是其他包含經度/緯度的座標，OSM 物件的參照 (\"way 51014987\")，或是 OSM 註解 (\"註解 536129\")："
           }
         }
       }
@@ -189,6 +201,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Niagara Şelalesi"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "尼加拉瓜瀑布"
           }
         }
       }
