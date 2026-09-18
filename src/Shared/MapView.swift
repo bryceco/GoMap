@@ -199,9 +199,12 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			if oldValue, !isHidden, AppDelegate.shared.mainView.isInitialized {
 				// just became visible, so have editor download data for region
 				editorLayer?.updateMapLocation()
-			}
-			if isHidden {
-				unselectAll()
+				// if we are in a new location where pushpin is off-screen then remove it
+				if let pushPin,
+				   !self.bounds.contains(pushPin.center)
+				{
+					unselectAll()
+				}
 			}
 			// editToolbar isn't a subview, so we have to hide/unhide it manually
 			editToolbar?.isHidden = pushPin == nil || isHidden
