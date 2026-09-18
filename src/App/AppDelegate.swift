@@ -92,6 +92,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			isAppUpgrade = true
 			UserPrefs.shared.appVersion.value = Self.appVersion
 			UserPrefs.shared.uploadCountPerVersion.value = 0
+			// backup user edits file
+			if let prevVersion {
+				let url = ArchivePath.osmDataArchive.url()
+				try? FileManager.default.copyItem(at: url,
+												  to: url.appendingPathExtension("backup-\(prevVersion)"))
+			} else {
+				// remove backups
+			}
 		}
 
 		// Sync preferences in iCloud
