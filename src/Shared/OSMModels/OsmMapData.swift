@@ -1567,7 +1567,9 @@ extension OsmMapData {
 
 extension OsmMapData {
 	// Returns true if any objects were discarded
-	func discardStaleData(maxObjects: Int = 100000, maxAge: Int = 24 * 60 * 60) -> Bool {
+	func discardStaleData(maxObjects: Int = 100000, maxAge: Int = 24 * 60 * 60,
+	                      protectedObjects: Set<OsmBaseObject> = []) -> Bool
+	{
 #if DEBUG
 		let minTimeBetweenDiscards = 5.0 // seconds
 #else
@@ -1577,6 +1579,10 @@ extension OsmMapData {
 			return false
 		}
 		let undoObjects = undoManager.objectRefs()
+
+		// expand protectedObjects to include nodes of protected ways
+		var protected = protectedObjects
+		protected.formUnion(protectedObjects.compactMap({ $0 as? OsmWay }).flatMap(\.nodes))
 
 		// don't discard too frequently
 		let now = Date()
@@ -1651,7 +1657,7 @@ extension OsmMapData {
 
 			// only remove relation if no members are covered by region
 			for (ident, relation) in relations
-				where !relation.isModified && !undoObjects.contains(relation)
+				where !relation.isModified && !undoObjects.contains(relation) && !protected.contains(relation)
 			{
 				let memberObjects = relation.allMemberObjects()
 				var covered = false
@@ -1675,7 +1681,7 @@ extension OsmMapData {
 
 			// only remove way if no nodes are covered by region
 			for (ident, way) in ways
-				where !way.isModified && !undoObjects.contains(way)
+				where !way.isModified && !undoObjects.contains(way) && !protected.contains(way)
 			{
 				if !region.anyNodeIsCovered(way.nodes) {
 					removeWays.append(ident)
@@ -1688,7 +1694,7 @@ extension OsmMapData {
 
 			// only remove nodes if they are not covered and they don't belong to a way
 			for (ident, node) in nodes
-				where !node.isModified && !undoObjects.contains(node)
+				where !node.isModified && !undoObjects.contains(node) && !protected.contains(node)
 			{
 				if node.wayCount == 0 {
 					if !region.pointIsCovered(node.location()) {

@@ -405,6 +405,21 @@ final class EditorMapLayer: CALayer {
 		setNeedsLayout()
 	}
 
+	/// Clean up display state after `discardStaleData()` trims objects from the cache.
+	/// Shape layers for trimmed objects are removed and the display list is rebuilt
+	/// from the spatial index on the next layout pass.
+	func cleanupAfterCacheTrim() {
+		for object in shownObjects + fadingOutSet {
+			for layer in object.shapeLayers ?? [] {
+				layer.removeFromSuperlayer()
+			}
+		}
+		shownObjects = []
+		fadingOutSet = []
+		_connectionBlinkTarget = nil
+		setNeedsLayout()
+	}
+
 	enum MapDataPurgeStyle {
 		case hard // purges everything
 		case soft // purges everything except user edits

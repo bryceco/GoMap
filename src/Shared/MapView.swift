@@ -312,8 +312,12 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	func discardStaleData() {
 		if mainView.settings.enableAutomaticCacheManagement {
-			let changed = editorLayer.mapData.discardStaleData()
+			let selections = editorLayer.selections
+			let protected: Set<OsmBaseObject> = Set(
+				[selections.node, selections.way, selections.relation].compactMap { $0 })
+			let changed = editorLayer.mapData.discardStaleData(protectedObjects: protected)
 			if changed {
+				editorLayer.cleanupAfterCacheTrim()
 				MessageDisplay.shared.flashMessage(title: nil, message: NSLocalizedString("Cache trimmed", comment: ""))
 				editorLayer.updateMapLocation() // download data if necessary
 			}
