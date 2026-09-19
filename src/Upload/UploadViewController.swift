@@ -513,8 +513,12 @@ class UploadViewController: UIViewController {
 		let expandDeg = 0.005
 
 		let expandedBoxes: [OSMRect?] = connectedGroups.map { group in
-			guard let first = group.objects.first else { return nil }
-			let bbox = group.objects.reduce(first.boundingBox) { $0.union($1.boundingBox) }
+			// Only consider objects that will actually be uploaded; deleted objects
+			// with negative idents can have degenerate (0,0) bounding boxes that
+			// would cause unrelated groups to appear nearby.
+			let uploadable = group.objects.filter { $0.deleted ? $0.ident > 0 : $0.isModified }
+			guard let first = uploadable.first else { return nil }
+			let bbox = uploadable.reduce(first.boundingBox) { $0.union($1.boundingBox) }
 			return OSMRect(x: bbox.origin.x - expandDeg,
 			               y: bbox.origin.y - expandDeg,
 			               width: bbox.size.width + 2 * expandDeg,

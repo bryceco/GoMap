@@ -468,8 +468,32 @@ extension MyUndoManager {
 			components[root]!.objects.formUnion(objects)
 		}
 
-		// Step 5: convert to UndoSuperGroup and sort by minimum group id.
-		return components.values
+		// Step 5: separate components that have uploadable objects from no-ops
+		// (e.g. objects created then deleted without ever reaching the server).
+		func needsUpload(_ obj: OsmBaseObject) -> Bool {
+			obj.deleted ? obj.ident > 0 : obj.isModified
+		}
+		var uploadable: [(groupIds: Set<Int>, objects: Set<OsmBaseObject>)] = []
+		var noOpGroupIds: Set<Int> = []
+		for component in components.values {
+			if component.objects.contains(where: needsUpload) {
+				uploadable.append(component)
+			} else {
+				noOpGroupIds.formUnion(component.groupIds)
+			}
+		}
+
+		// Attach no-op group IDs to the most recently edited uploadable component
+		// so they get cleaned up when that component is uploaded or discarded.
+		if !noOpGroupIds.isEmpty, !uploadable.isEmpty {
+			let mostRecentIndex = uploadable.indices.max {
+				(uploadable[$0].groupIds.max() ?? 0) < (uploadable[$1].groupIds.max() ?? 0)
+			}!
+			uploadable[mostRecentIndex].groupIds.formUnion(noOpGroupIds)
+		}
+
+		// Step 6: convert to ConnectedObjects and sort by minimum group id.
+		return uploadable
 			.map { ConnectedObjects(objects: $0.objects, undoGroups: $0.groupIds) }
 			.sorted { $0.minGroupId < $1.minGroupId }
 	}
