@@ -473,20 +473,10 @@ extension PresetsDatabase {
 				"postcode",
 				"unit"
 			]
-			var keysForCountry: [String] = []
-			for locale in presetAddressFormats {
-				guard let countryCodes = locale.countryCodes else {
-					// default
-					keysForCountry = locale.addressKeys.flatMap({ $0 })
-					continue
-				}
-				if countryCodes.contains(countryCode) {
-					// country specific format
-					keysForCountry = locale.addressKeys.flatMap({ $0 })
-					break
-				}
-			}
-			keysForCountry = keysForCountry.flatMap({ $0.components(separatedBy: "+") })
+			let format = addressFormat(for: countryCode)
+			let keysForCountry = format.addressKeys
+				.flatMap { $0 }
+				.flatMap { $0.components(separatedBy: "+") }
 
 			let labels = field.labels
 			let placeholders = field.placeholders

@@ -499,10 +499,6 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 		}) {
 			return name.value
 		}
-		// then try addr:housename
-		if let name = tags["addr:housename"] {
-			return name
-		}
 		// for ways, use ref tag
 		if isWay() != nil,
 		   let highway = tags["highway"],
@@ -512,8 +508,17 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 		{
 			return name
 		}
-		// final fallback use brand
-		return tags["brand"]
+		// then try brand
+		if let brand = tags["brand"] {
+			return brand
+		}
+		// try formatted street address (e.g. "123 Main St")
+		let countryCode = AppDelegate.shared.mainView.currentRegion.country
+		let format = PresetsDatabase.shared.addressFormat(for: countryCode)
+		if let address = format.formattedStreetAddress(from: tags) {
+			return address
+		}
+		return nil
 	}
 
 	private func featureName(details: Bool) -> String {

@@ -277,6 +277,20 @@ final class PresetsDatabase {
 		return stdFeatures[featureID] ?? nsiFeatures[featureID]
 	}
 
+	/// Returns the address format for the given country code,
+	/// falling back to the default format (no countryCodes).
+	func addressFormat(for countryCode: String) -> PresetAddressFormat {
+		let code = countryCode.lowercased()
+		if let format = presetAddressFormats.first(where: {
+			$0.countryCodes?.contains(code) == true
+		}) {
+			return format
+		}
+		// Fall back to default (entry with no countryCodes)
+		return presetAddressFormats.first(where: { $0.countryCodes == nil })
+			?? presetAddressFormats[0]
+	}
+
 	func presetFeatureMatching(tags objectTags: [String: String]?,
 	                           geometry: GEOMETRY?,
 	                           location: RegionInfoForLocation,
