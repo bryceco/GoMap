@@ -420,7 +420,7 @@ class QuestList {
 	}
 
 	func questsForObject(_ object: OsmBaseObject) -> [QuestProtocol] {
-		return list.compactMap({ isEnabled($0) && $0.appliesTo(object) ? $0 : nil })
+		return list.filter { isEnabled($0) && $0.appliesTo(object) }
 	}
 
 	func setEnabled(_ quest: QuestProtocol, _ isEnabled: Bool) {

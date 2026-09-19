@@ -96,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			if let prevVersion {
 				let url = ArchivePath.osmDataArchive.url()
 				try? FileManager.default.copyItem(at: url,
-												  to: url.appendingPathExtension("backup-\(prevVersion)"))
+				                                  to: url.appendingPathExtension("backup-\(prevVersion)"))
 			} else {
 				// remove backups
 			}
