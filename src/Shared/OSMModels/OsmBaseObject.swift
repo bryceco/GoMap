@@ -472,6 +472,14 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 		"road": .name,
 		"living_street": .name
 	]
+	/// Returns true if `code` is a language/locale code (e.g. "en", "zh-Hans")
+	/// rather than a non-language qualifier like "etymology" or "signed".
+	static func isLanguageCode(_ code: String) -> Bool {
+		// Extract the base language subtag (before any "-" script/region suffix)
+		let base = code.prefix(while: { $0 != "-" })
+		return Locale.isoLanguageCodes.contains(String(base))
+	}
+
 	func givenName() -> String? {
 		// first try the name in the user's locale
 		var preferredLocale = PresetLanguages.preferredLanguageCode()
@@ -493,14 +501,14 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 		if let name = tags["name:en"] {
 			return name
 		}
-		// then try any other name:* tag
+		// then try any other name:<language> tag
 		if let name = tags.first(where: { key, _ in
-			key.starts(with: "name:")
+			key.hasPrefix("name:") && OsmBaseObject.isLanguageCode(String(key.dropFirst(5)))
 		}) {
 			return name.value
 		}
 		// for ways, use ref tag
-		if isWay() != nil,
+		if self is OsmWay,
 		   let highway = tags["highway"],
 		   let uses = OsmBaseObject.givenNameHighwayTypes[highway],
 		   uses == .ref,
