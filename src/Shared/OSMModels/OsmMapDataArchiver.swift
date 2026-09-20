@@ -77,14 +77,6 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 		return decode
 	}
 
-	func unarchiver(_ unarchiver: NSKeyedUnarchiver, didDecode object: Any?) -> Any? {
-		if object is EditorMapLayer {
-			DbgAssert(OsmMapData.g_EditorMapLayerForArchive != nil)
-			return OsmMapData.g_EditorMapLayerForArchive
-		}
-		return object
-	}
-
 	func unarchiver(
 		_ unarchiver: NSKeyedUnarchiver,
 		cannotDecodeObjectOfClassName name: String,

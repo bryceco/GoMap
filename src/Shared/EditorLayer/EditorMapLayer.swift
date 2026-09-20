@@ -324,8 +324,6 @@ final class EditorMapLayer: CALayer {
 			self?.updateMapLocation()
 		}
 
-		OsmMapData.g_EditorMapLayerForArchive = self
-
 		mapData.undoContextForComment = { comment in
 			UndoContext(
 				comment: comment,

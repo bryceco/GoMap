@@ -63,9 +63,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	static let supportsSecureCoding = true
 
-	// only used when saving/restoring undo manager
-	public static var g_EditorMapLayerForArchive: EditorMapLayer?
-
 	private(set) var nodes: [OsmIdentifier: OsmNode] = [:]
 	private(set) var ways: [OsmIdentifier: OsmWay] = [:]
 	private(set) var relations: [OsmIdentifier: OsmRelation] = [:]
@@ -1333,8 +1330,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	func archiveModifiedData() {
 		var t = CACurrentMediaTime()
 		// save dirty data and relations
-		DbgAssert(OsmMapData.g_EditorMapLayerForArchive != nil)
-
 		// save our original data
 		let origNodes = nodes
 		let origWays = ways
