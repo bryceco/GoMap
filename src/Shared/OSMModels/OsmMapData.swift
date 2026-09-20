@@ -40,6 +40,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		case badServerUpdateValue
 		case badXML
 		case serverReturnedUnknownObjectId(OsmIdentifier)
+		case serverSkippedDelete
 
 		public var errorDescription: String? {
 			switch self {
@@ -50,12 +51,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			case let .otherError(message): return "OsmMapDataError.otherError(\(message))"
 			case .badServerUpdateValue: return "badServerUpdateValue"
 			case .badXML: return "OsmMapDataError:badXML"
-			case let .serverReturnedUnknownObjectId(id):
-				return String.localizedStringWithFormat(
-					NSLocalizedString(
-						"Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map.",
-						comment: "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings"),
-					id)
+			// these two are different, but user doesn't need to know the details
+			case .serverSkippedDelete,
+			     .serverReturnedUnknownObjectId:
+				return NSLocalizedString(
+					"Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map.",
+					comment: "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings")
 			}
 		}
 	}
@@ -784,7 +785,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	// Performs a single upload attempt. Throws VersionMismatchError if the server
 	// reports a version conflict so the caller can re-fetch and retry.
-	@MainActor private func uploadChangeset(xml xmlChanges: DDXMLDocument, changesetID: Int64) async throws {
+	// Returns true if the server skipped any of our deletes because of if-unused.
+	@MainActor private func uploadChangeset(xml xmlChanges: DDXMLDocument, changesetID: Int64) async throws -> Bool {
 		let postData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(changesetID)/upload",
 		                                               queryItems: [:],
 		                                               method: "POST",
@@ -816,6 +818,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 		let timestamp = Date()
 		var sqlUpdate: [OsmBaseObject: Bool] = [:]
+		var skippedDelete = false
 		for element in (diffResult.children ?? []).compactMap({ $0 as? DDXMLElement }) {
 			guard let name = element.name,
 			      let oldId = Int64(element.attribute(forName: "old_id")?.stringValue ?? ""),
@@ -828,22 +831,26 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			}
 			switch name {
 			case "node":
-				try OsmMapData.updateObjectDictionary(&nodes, oldId: oldId, newId: newId,
-				                                      version: newVersion, changeset: changesetID,
-				                                      timestamp: timestamp, sqlUpdate: &sqlUpdate)
+				skippedDelete = try OsmMapData.updateObjectDictionary(&nodes, oldId: oldId, newId: newId,
+				                                                      version: newVersion, changeset: changesetID,
+				                                                      timestamp: timestamp, sqlUpdate: &sqlUpdate)
+					|| skippedDelete
 			case "way":
-				try OsmMapData.updateObjectDictionary(&ways, oldId: oldId, newId: newId,
-				                                      version: newVersion, changeset: changesetID,
-				                                      timestamp: timestamp, sqlUpdate: &sqlUpdate)
+				skippedDelete = try OsmMapData.updateObjectDictionary(&ways, oldId: oldId, newId: newId,
+				                                                      version: newVersion, changeset: changesetID,
+				                                                      timestamp: timestamp, sqlUpdate: &sqlUpdate)
+					|| skippedDelete
 			case "relation":
-				try OsmMapData.updateObjectDictionary(&relations, oldId: oldId, newId: newId,
-				                                      version: newVersion, changeset: changesetID,
-				                                      timestamp: timestamp, sqlUpdate: &sqlUpdate)
+				skippedDelete = try OsmMapData.updateObjectDictionary(&relations, oldId: oldId, newId: newId,
+				                                                      version: newVersion, changeset: changesetID,
+				                                                      timestamp: timestamp, sqlUpdate: &sqlUpdate)
+					|| skippedDelete
 			default:
 				DLog("Bad upload diff document")
 			}
 		}
 		updateSql(sqlUpdate)
+		return skippedDelete
 	}
 
 	private func closeChangeset(_ changesetID: Int64) async throws {
@@ -860,7 +867,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		version newVersion: Int,
 		changeset: Int64,
 		timestamp: Date,
-		sqlUpdate: inout [OsmBaseObject: Bool]) throws
+		sqlUpdate: inout [OsmBaseObject: Bool]) throws -> Bool
 	{
 		guard let object = dictionary[oldId] else {
 			throw Error.serverReturnedUnknownObjectId(oldId)
@@ -871,10 +878,18 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			assert(newId == 0 && newVersion == 0)
 			dictionary.removeValue(forKey: object.ident)
 			sqlUpdate[object] = false // mark for deletion
-			return
+			return false
 		}
 
 		assert(newVersion > 0)
+		if object.deleted {
+			// The server returned a version for an object we asked it to delete, so the delete
+			// was skipped because of if-unused (still in use, or already deleted by someone else).
+			// Drop our copy, otherwise it gets submitted for deletion on every future upload.
+			dictionary.removeValue(forKey: oldId)
+			sqlUpdate[object] = false // mark for deletion
+			return true
+		}
 		object.serverUpdate(ident: newId,
 		                    version: newVersion,
 		                    changeset: changeset,
@@ -890,6 +905,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			assert(oldId > 0)
 		}
 		object.resetModified()
+		return false
 	}
 
 	private class func encodeBase64(_ plainText: String) -> String {
@@ -963,10 +979,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		                                             source: source,
 		                                             imagery: imagery,
 		                                             locale: locale)
+		var skippedDelete = false
 		switch content {
 		case let .xml(xmlChanges):
 			OsmMapData.addChangesetId(changesetID, toXML: xmlChanges)
-			try await uploadChangeset(xml: xmlChanges, changesetID: changesetID)
+			skippedDelete = try await uploadChangeset(xml: xmlChanges, changesetID: changesetID)
 		case let .objects(objects):
 			var attempt = 0
 			while true {
@@ -978,7 +995,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				OsmMapData.addChangesetId(changesetID, toXML: xml)
 				do {
 					// upload to server
-					try await uploadChangeset(xml: xml, changesetID: changesetID)
+					skippedDelete = try await uploadChangeset(xml: xml, changesetID: changesetID)
 					break
 				} catch let mismatch as VersionMismatchError {
 					// version mismatch error: fetch the server's version and update ourself
@@ -1000,6 +1017,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		try await closeChangeset(changesetID)
 		undoManager.removeGroups(groupIds)
+
+		if skippedDelete {
+			// The upload is complete and our state is consistent, but tell the user to refresh.
+			throw Error.serverSkippedDelete
+		}
 	}
 
 	/// Upload xml generated by mapData.
