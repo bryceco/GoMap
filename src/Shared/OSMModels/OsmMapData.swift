@@ -819,8 +819,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		for element in (diffResult.children ?? []).compactMap({ $0 as? DDXMLElement }) {
 			guard let name = element.name,
 			      let oldId = Int64(element.attribute(forName: "old_id")?.stringValue ?? ""),
-			      let newId = Int64(element.attribute(forName: "new_id")?.stringValue ?? ""),
-			      let newVersion = Int(element.attribute(forName: "new_version")?.stringValue ?? "")
+			      // new_id and new_version are absent when the object was deleted
+			      let newId = Int64(element.attribute(forName: "new_id")?.stringValue ?? "0"),
+			      let newVersion = Int(element.attribute(forName: "new_version")?.stringValue ?? "0")
 			else {
 				print("bad upload diff document")
 				continue
