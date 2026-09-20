@@ -1615,6 +1615,14 @@ final class MainViewController: UIViewController, DPadDelegate,
 			nav.presentationController?.delegate = self
 		}
 
+		// Deselect any selected objects before showing the upload screen
+		if let nav = segue.destination as? UINavigationController,
+		   nav.viewControllers.first is UploadViewController
+		{
+			// we don't want to be holding objects that might be updated/discarded
+			mapView.unselectAll()
+		}
+
 		if sender is OsmNoteMarker {
 			let vc: NotesTableViewController
 			if let dest = segue.destination as? NotesTableViewController {
