@@ -80,155 +80,18 @@ final class UndoAction: NSObject, NSSecureCoding {
 
 	// MARK: NSSecureCoding
 
-	/// Integer tags written to the archive to identify the case.
-	/// Tags 10–14 were retired with the micro-op design; gaps are intentional.
-	private enum Tag: Int {
-		case setDeleted = 2
-		case setTags = 3
-		case moveNode = 4 // was setLongitude; same 2-double encoding
-		case addNode = 5
-		case removeNode = 6
-		case assignMembers = 7
-		case addMember = 8
-		case removeMember = 9
-		// 10–14 retired
-		case comment = 15
-	}
-
 	func encode(with coder: NSCoder) {
 		coder.encode(group, forKey: "group")
-		switch type {
-		case let .setDeleted(obj, deleted):
-			coder.encode(Tag.setDeleted.rawValue, forKey: "tag")
-			coder.encode(obj, forKey: "obj")
-			coder.encode(deleted, forKey: "bool")
-		case let .setTags(obj, tags):
-			coder.encode(Tag.setTags.rawValue, forKey: "tag")
-			coder.encode(obj, forKey: "obj")
-			coder.encode(tags as NSDictionary, forKey: "tags")
-		case let .moveNode(node, latLon):
-			coder.encode(Tag.moveNode.rawValue, forKey: "tag")
-			coder.encode(node, forKey: "node")
-			coder.encode(latLon.lon, forKey: "lon")
-			coder.encode(latLon.lat, forKey: "lat")
-		case let .addNode(way, node, index):
-			coder.encode(Tag.addNode.rawValue, forKey: "tag")
-			coder.encode(way, forKey: "way")
-			coder.encode(node, forKey: "node")
-			coder.encode(index, forKey: "index")
-		case let .removeNode(way, index):
-			coder.encode(Tag.removeNode.rawValue, forKey: "tag")
-			coder.encode(way, forKey: "way")
-			coder.encode(index, forKey: "index")
-		case let .assignMembers(relation, members):
-			coder.encode(Tag.assignMembers.rawValue, forKey: "tag")
-			coder.encode(relation, forKey: "relation")
-			coder.encode(members as NSArray, forKey: "members")
-		case let .addMember(relation, member, index):
-			coder.encode(Tag.addMember.rawValue, forKey: "tag")
-			coder.encode(relation, forKey: "relation")
-			coder.encode(member, forKey: "member")
-			coder.encode(index, forKey: "index")
-		case let .removeMember(relation, index):
-			coder.encode(Tag.removeMember.rawValue, forKey: "tag")
-			coder.encode(relation, forKey: "relation")
-			coder.encode(index, forKey: "index")
-		case let .comment(ctx):
-			coder.encode(Tag.comment.rawValue, forKey: "tag")
-			coder.encode(ctx.comment as NSString, forKey: "comment")
-			coder.encode(Data.fromStruct(ctx.mapTransform) as NSData, forKey: "mapTransform")
-			if let pushpinPoint = ctx.pushpinPoint {
-				coder.encode(NSCoder.string(for: pushpinPoint) as NSString, forKey: "pushpinPoint")
-			}
-			coder.encode(ctx.selections.relation, forKey: "selectedRelation")
-			coder.encode(ctx.selections.way, forKey: "selectedWay")
-			coder.encode(ctx.selections.node, forKey: "selectedNode")
-		}
+		type.encode(with: coder)
 	}
 
 	required init?(coder: NSCoder) {
 		let group = coder.decodeInteger(forKey: "group")
-		guard let decoded = UndoAction.decodeType(from: coder) else {
-			self.group = 0
-			self.type = .comment(UndoContext(comment: "",
-			                                 mapTransform: .identity,
-			                                 pushpinPoint: nil,
-			                                 selections: MapView.Selections()))
-			super.init()
+		guard let decoded = OsmEditOperation.decode(from: coder) else {
 			return nil
 		}
 		self.group = group
 		self.type = decoded
 		super.init()
-	}
-
-	/// Decodes the `OsmEditOperation` from `coder`. Returns `nil` if the tag is
-	/// unknown or required objects are missing (e.g. archive version mismatch).
-	private static func decodeType(from coder: NSCoder) -> OsmEditOperation? {
-		let tagRaw = coder.decodeInteger(forKey: "tag")
-		guard let tag = Tag(rawValue: tagRaw) else { return nil }
-
-		switch tag {
-		case .setDeleted:
-			guard let obj = coder.decodeObject(of: OsmBaseObject.self, forKey: "obj")
-			else { return nil }
-			return .setDeleted(obj, coder.decodeBool(forKey: "bool"))
-
-		case .setTags:
-			guard let obj = coder.decodeObject(of: OsmBaseObject.self, forKey: "obj"),
-			      let tags = coder.decodeObject(of: NSDictionary.self, forKey: "tags") as? [String: String]
-			else { return nil }
-			return .setTags(obj, tags)
-
-		case .moveNode:
-			guard let node = coder.decodeObject(of: OsmNode.self, forKey: "node")
-			else { return nil }
-			return .moveNode(node, to: LatLon(latitude: coder.decodeDouble(forKey: "lat"),
-			                                  longitude: coder.decodeDouble(forKey: "lon")))
-
-		case .addNode:
-			guard let way = coder.decodeObject(of: OsmWay.self, forKey: "way"),
-			      let node = coder.decodeObject(of: OsmNode.self, forKey: "node")
-			else { return nil }
-			return .addNode(way, node, index: coder.decodeInteger(forKey: "index"))
-
-		case .removeNode:
-			guard let way = coder.decodeObject(of: OsmWay.self, forKey: "way")
-			else { return nil }
-			return .removeNode(way, index: coder.decodeInteger(forKey: "index"))
-
-		case .assignMembers:
-			guard let relation = coder.decodeObject(of: OsmRelation.self, forKey: "relation"),
-			      let members = coder.decodeObject(of: NSArray.self, forKey: "members") as? [OsmMember]
-			else { return nil }
-			return .assignMembers(relation, members)
-
-		case .addMember:
-			guard let relation = coder.decodeObject(of: OsmRelation.self, forKey: "relation"),
-			      let member = coder.decodeObject(of: OsmMember.self, forKey: "member")
-			else { return nil }
-			return .addMember(relation, member, index: coder.decodeInteger(forKey: "index"))
-
-		case .removeMember:
-			guard let relation = coder.decodeObject(of: OsmRelation.self, forKey: "relation")
-			else { return nil }
-			return .removeMember(relation, index: coder.decodeInteger(forKey: "index"))
-
-		case .comment:
-			guard let comment = coder.decodeObject(of: NSString.self, forKey: "comment") as String?,
-			      let mapTransformData = coder.decodeObject(of: NSData.self, forKey: "mapTransform") as Data?,
-			      let mapTransform: OSMTransform = mapTransformData.asStruct()
-			else { return nil }
-			let pushpinPoint = (coder.decodeObject(of: NSString.self, forKey: "pushpinPoint") as String?)
-				.map { NSCoder.cgPoint(for: $0) }
-			let selections = MapView.Selections(
-				node: coder.decodeObject(of: OsmNode.self, forKey: "selectedNode"),
-				way: coder.decodeObject(of: OsmWay.self, forKey: "selectedWay"),
-				relation: coder.decodeObject(of: OsmRelation.self, forKey: "selectedRelation"))
-			return .comment(UndoContext(comment: comment,
-			                            mapTransform: mapTransform,
-			                            pushpinPoint: pushpinPoint,
-			                            selections: selections))
-		}
 	}
 }
