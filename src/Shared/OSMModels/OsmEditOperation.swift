@@ -155,19 +155,16 @@ extension OsmEditOperation {
 
 extension OsmEditOperation {
 	/// Integer tags written to the archive to identify the case.
-	/// Tags 10–14 were retired with the micro-op design; gaps are intentional.
 	enum ArchiveTag: Int {
-		// 1 was setTimestamp (removed)
+		case comment = 1
 		case setDeleted = 2
 		case setTags = 3
-		case moveNode = 4 // was setLongitude; same 2-double encoding
+		case moveNode = 4
 		case addNode = 5
 		case removeNode = 6
 		case assignMembers = 7
 		case addMember = 8
 		case removeMember = 9
-		// 10–14 retired
-		case comment = 15
 	}
 
 	func encode(with coder: NSCoder) {
