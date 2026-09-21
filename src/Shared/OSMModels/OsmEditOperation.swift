@@ -43,7 +43,6 @@ struct EditToken {
 ///   `clearCachedProperties` — absorbed into `setTags` / `moveNode` apply bodies
 enum OsmEditOperation {
 	// MARK: OsmBaseObject
-	case setTimestamp(OsmBaseObject, Date)
 	case setDeleted(OsmBaseObject, Bool)
 	case setTags(OsmBaseObject, [String: String])
 
@@ -75,11 +74,6 @@ extension OsmEditOperation {
 	func apply(to mapData: OsmMapData) -> OsmEditOperation {
 		let token = EditToken()
 		switch self {
-
-		case let .setTimestamp(obj, newDate):
-			let oldDate = obj.dateForTimestamp()
-			obj.setTimestamp(newDate, token)
-			return .setTimestamp(obj, oldDate)
 
 		case let .setDeleted(obj, newDeleted):
 			let oldDeleted = obj.deleted
@@ -161,10 +155,10 @@ extension OsmEditOperation {
 
 extension OsmEditOperation {
 	/// Objects whose `isModified` flag should be updated when this operation is applied.
-	/// `setTimestamp` and `comment` are excluded because they don't mark objects as dirty.
+	/// `comment` is excluded because it doesn't mark objects as dirty.
 	var modifyObjects: Set<OsmBaseObject> {
 		switch self {
-		case .setTimestamp, .comment:
+		case .comment:
 			return []
 		case let .setDeleted(obj, _),
 		     let .setTags(obj, _):

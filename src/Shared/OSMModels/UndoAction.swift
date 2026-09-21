@@ -30,8 +30,7 @@ final class UndoAction: NSObject, NSSecureCoding {
 	/// which undo groups share objects (for selective upload grouping).
 	var osmObjects: Set<OsmBaseObject> {
 		switch type {
-		case let .setTimestamp(obj, _),
-		     let .setDeleted(obj, _),
+		case let .setDeleted(obj, _),
 		     let .setTags(obj, _):
 			return [obj]
 		case let .moveNode(node, _):
@@ -58,8 +57,6 @@ final class UndoAction: NSObject, NSSecureCoding {
 
 	override var description: String {
 		switch type {
-		case let .setTimestamp(obj, date):
-			return "UndoAction \(group): \(obj.ident).setTimestamp(\(date))"
 		case let .setDeleted(obj, del):
 			return "UndoAction \(group): \(obj.ident).setDeleted(\(del))"
 		case let .setTags(obj, _):
@@ -86,7 +83,6 @@ final class UndoAction: NSObject, NSSecureCoding {
 	/// Integer tags written to the archive to identify the case.
 	/// Tags 10–14 were retired with the micro-op design; gaps are intentional.
 	private enum Tag: Int {
-		case setTimestamp = 1
 		case setDeleted = 2
 		case setTags = 3
 		case moveNode = 4 // was setLongitude; same 2-double encoding
@@ -102,10 +98,6 @@ final class UndoAction: NSObject, NSSecureCoding {
 	func encode(with coder: NSCoder) {
 		coder.encode(group, forKey: "group")
 		switch type {
-		case let .setTimestamp(obj, date):
-			coder.encode(Tag.setTimestamp.rawValue, forKey: "tag")
-			coder.encode(obj, forKey: "obj")
-			coder.encode(date as NSDate, forKey: "date")
 		case let .setDeleted(obj, deleted):
 			coder.encode(Tag.setDeleted.rawValue, forKey: "tag")
 			coder.encode(obj, forKey: "obj")
@@ -177,12 +169,6 @@ final class UndoAction: NSObject, NSSecureCoding {
 		guard let tag = Tag(rawValue: tagRaw) else { return nil }
 
 		switch tag {
-		case .setTimestamp:
-			guard let obj = coder.decodeObject(of: OsmBaseObject.self, forKey: "obj"),
-			      let date = coder.decodeObject(of: NSDate.self, forKey: "date") as Date?
-			else { return nil }
-			return .setTimestamp(obj, date)
-
 		case .setDeleted:
 			guard let obj = coder.decodeObject(of: OsmBaseObject.self, forKey: "obj")
 			else { return nil }

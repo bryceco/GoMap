@@ -370,10 +370,6 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 		return Date()
 	}
 
-	func setTimestamp(_ date: Date, _ token: EditToken) {
-		timestamp = Self.rfc3339DateFormatter().string(from: date)
-	}
-
 	/// Invalidates all cached rendering state for this object, forcing a full re-render on the next draw cycle.
 	func clearCachedProperties() {
 		_renderInfo = nil
