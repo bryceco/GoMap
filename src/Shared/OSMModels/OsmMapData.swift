@@ -604,9 +604,14 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					case let .success(data):
 						// merge data
 						print("Downloaded \(data.nodes.count + data.ways.count + data.relations.count) objects")
-						try? self.merge(data, savingToDatabase: true)
-						didGetData = true
-						didUpdate(nil) // data was updated
+						do {
+							try self.merge(data, savingToDatabase: true)
+							didGetData = true
+							didUpdate(nil) // data was updated
+						} catch {
+							didGetData = false
+							didUpdate(error)
+						}
 					case let .failure(error):
 						didGetData = false
 						didUpdate(error) // error fetching data
@@ -682,8 +687,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				}
 			} else {
 				newWay.mapData = self
-				ways[newWay.ident] = newWay
 				try newWay.resolveToMapData(self)
+				ways[newWay.ident] = newWay
 				spatial.addMember(newWay)
 				newWays.append(newWay)
 			}
@@ -1416,8 +1421,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			print("Error: \(error.localizedDescription)")
 			print("Unable to read database: recreating from scratch")
 			try? Database.delete(withName: "")
-			// need to download all regions
-			mapData.region.rootQuad.reset()
+			// merge() may have failed part way through, leaving nodes without their ways,
+			// so discard everything except user edits and download it all again
+			mapData.purgeSoft()
 		}
 
 		return mapData

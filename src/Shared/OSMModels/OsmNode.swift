@@ -9,7 +9,12 @@
 final class OsmNode: OsmBaseObject {
 
 	private(set) var latLon: LatLon
-	var wayCount: Int
+	var wayCount: Int {
+		didSet {
+			// a node is drawn differently depending on whether it belongs to a way
+			clearCachedProperties()
+		}
+	}
 
 	var turnRestrictionParentWay: OsmWay! // temporarily used during turn restriction processing
 

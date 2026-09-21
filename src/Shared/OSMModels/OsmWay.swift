@@ -30,12 +30,14 @@ final class OsmWay: OsmBaseObject {
 			throw OsmMapData.Error.osmWayResolveToMapDataFoundNilNodeRefs
 		}
 		assert(nodes.count == 0)
-		nodes.reserveCapacity(nodeRefs.count)
-		for ref in nodeRefs {
+		// look up everything before changing anything, so a failure has no side effects
+		nodes = try nodeRefs.map { ref -> OsmNode in
 			guard let node = mapData.nodes[ref] else {
 				throw OsmMapData.Error.osmWayResolveToMapDataCouldntFindNodeRef
 			}
-			nodes.append(node)
+			return node
+		}
+		for node in nodes {
 			node.wayCount += 1
 		}
 		self.nodeRefs = nil
