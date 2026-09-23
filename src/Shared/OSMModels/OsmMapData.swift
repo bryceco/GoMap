@@ -598,24 +598,23 @@ final class OsmMapData: NSObject, NSSecureCoding {
 				} catch {
 					result = .failure(error)
 				}
-				await MainActor.run {
-					let didGetData: Bool
-					switch result {
-					case let .success(data):
-						// merge data
-						print("Downloaded \(data.nodes.count + data.ways.count + data.relations.count) objects")
-						do {
-							try self.merge(data, savingToDatabase: true)
-							didGetData = true
-							didUpdate(nil) // data was updated
-						} catch {
-							didGetData = false
-							didUpdate(error)
-						}
-					case let .failure(error):
+				let didGetData: Bool
+				switch result {
+				case let .success(data):
+					print("Downloaded \(data.nodes.count + data.ways.count + data.relations.count) objects")
+					do {
+						try await self.saveAndMerge(data)
+						didGetData = true
+						didUpdate(nil) // data was updated
+					} catch {
 						didGetData = false
-						didUpdate(error) // error fetching data
+						didUpdate(error)
 					}
+				case let .failure(error):
+					didGetData = false
+					didUpdate(error) // error fetching data
+				}
+				await MainActor.run {
 
 					for quadBox in query.quadList {
 						self.region.updateDownloadStatus(quadBox, success: didGetData)
@@ -625,8 +624,47 @@ final class OsmMapData: NSObject, NSSecureCoding {
 #if DEBUG
 					AppDelegate.shared.mainView.mapLayersView.quadDownloadLayer?.setNeedsLayout()
 #endif
+					self.archiveModifiedData() // region changed
 				}
 			}
+		}
+	}
+
+	/// Saves data downloaded from the server to the database, then merges it into memory.
+	/// The database is written first, from the freshly parsed objects, so that:
+	/// - it only ever contains server data, never anything the user has edited
+	/// - the background write never reads objects that the main thread might be editing
+	@MainActor
+	func saveAndMerge(_ data: OsmDownloadData) async throws {
+		// Skip objects we already have, unless the server's version is newer.
+		// Modified objects are saved: the database holds the server's copy, the archive holds ours.
+		func isNew(_ obj: OsmBaseObject, current: OsmBaseObject?) -> Bool {
+			guard let current else { return true }
+			return current.isModified || current.version < obj.version
+		}
+		nonisolated(unsafe) let saveNodes = data.nodes.filter { isNew($0, current: nodes[$0.ident]) }
+		nonisolated(unsafe) let saveWays = data.ways.filter { isNew($0, current: ways[$0.ident]) }
+		nonisolated(unsafe) let saveRelations = data.relations.filter { isNew($0, current: relations[$0.ident]) }
+
+		let ok = await withCheckedContinuation { continuation in
+			// dispatch async so main thread doesn't block
+			Database.dispatchQueue.async {
+				continuation.resume(returning: OsmMapData.writeDatabase(
+					saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
+					deleteNodes: [], deleteWays: [], deleteRelations: [],
+					isUpdate: false))
+			}
+		}
+		if !ok {
+			// database failure: it has been deleted, so everything must be downloaded again
+			region.rootQuad.reset()
+		}
+		// merge even if the save failed, so the user gets the data
+		try merge(data)
+
+		// purge old data
+		MainActor.runAfter(nanoseconds: 1000_000000) {
+			AppDelegate.shared.mapView.discardStaleData()
 		}
 	}
 
@@ -638,16 +676,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	// MARK: Download
 
-	func merge(_ newData: OsmDownloadData, savingToDatabase save: Bool) throws {
+	func merge(_ newData: OsmDownloadData) throws {
 		if newData.nodes.count + newData.ways.count + newData.relations.count == 0 {
 			return
 		}
-		var newNodes: [OsmNode] = []
-		var newWays: [OsmWay] = []
-		var newRelations: [OsmRelation] = []
-		newNodes.reserveCapacity(newData.nodes.count)
-		newWays.reserveCapacity(newData.ways.count)
-		newRelations.reserveCapacity(newData.relations.count)
 
 #if DEBUG
 		consistencyCheck()
@@ -663,13 +695,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					let bbox = currentNode.boundingBox
 					currentNode.serverUpdate(with: newNode)
 					spatial.updateMember(currentNode, fromBox: bbox)
-					newNodes.append(currentNode)
 				}
 			} else {
 				newNode.mapData = self
 				nodes[newNode.ident] = newNode
 				spatial.addMember(newNode)
-				newNodes.append(newNode)
 			}
 		}
 
@@ -683,14 +713,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					currentWay.serverUpdate(with: newWay)
 					try currentWay.resolveToMapData(self)
 					spatial.updateMember(currentWay, fromBox: bbox)
-					newWays.append(currentWay)
 				}
 			} else {
 				newWay.mapData = self
 				try newWay.resolveToMapData(self)
 				ways[newWay.ident] = newWay
 				spatial.addMember(newWay)
-				newWays.append(newWay)
 			}
 		}
 
@@ -703,13 +731,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					let bbox = currentRelation.boundingBox
 					currentRelation.serverUpdate(with: newRelation)
 					spatial.updateMember(currentRelation, fromBox: bbox)
-					newRelations.append(currentRelation)
 				}
 			} else {
 				newRelation.mapData = self
 				relations[newRelation.ident] = newRelation
 				spatial.addMember(newRelation)
-				newRelations.append(newRelation)
 			}
 		}
 
@@ -730,23 +756,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		invalidateParentRelationCache()
 
 		consistencyCheck()
-
-		// store new nodes in database
-		if save {
-			sqlSave(
-				saveNodes: newNodes,
-				saveWays: newWays,
-				saveRelations: newRelations,
-				deleteNodes: [],
-				deleteWays: [],
-				deleteRelations: [],
-				isUpdate: false)
-
-			// purge old data
-			MainActor.runAfter(nanoseconds: 1000_000000) {
-				AppDelegate.shared.mapView.discardStaleData()
-			}
-		}
 	}
 
 	// MARK: Upload
@@ -1011,7 +1020,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					}
 					let data = try await OsmDownloader.osmData(forUrl: url)
 					// merging updates the objects in-place, which works because they are reference objects
-					try merge(data, savingToDatabase: true)
+					try await saveAndMerge(data)
 					attempt += 1
 				}
 			}
@@ -1247,46 +1256,39 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		return ArchivePath.osmDataArchive.url()
 	}
 
-	private func sqlSave(
+	/// Writes to the database. Must be called on Database.dispatchQueue.
+	/// Returns false on failure, in which case the database has been deleted and the caller
+	/// must reset the region so everything gets downloaded again.
+	private static func writeDatabase(
 		saveNodes: [OsmNode],
 		saveWays: [OsmWay],
 		saveRelations: [OsmRelation],
 		deleteNodes: [OsmNode],
 		deleteWays: [OsmWay],
 		deleteRelations: [OsmRelation],
-		isUpdate: Bool)
+		isUpdate: Bool) -> Bool
 	{
 		if (saveNodes.count + saveWays.count + saveRelations.count +
 			deleteNodes.count + deleteWays.count + deleteRelations.count) == 0
 		{
-			return
+			return true
 		}
-		Database.dispatchQueue.async(execute: { [self] in
-			var t = CACurrentMediaTime()
-			let ok: Bool
-			do {
-				let db = try Database(name: "")
-				try db.createTables()
-				try db.save(saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
-				            deleteNodes: deleteNodes, deleteWays: deleteWays, deleteRelations: deleteRelations,
-				            isUpdate: isUpdate)
-				ok = true
-			} catch {
-				try? Database.delete(withName: "")
-				ok = false
-			}
-			t = CACurrentMediaTime() - t
-
-			DispatchQueue.main.async(execute: { [self] in
-				DLog(
-					"\(t > 1.0 ? "*** " : "")sql save \(saveNodes.count + saveWays.count + saveRelations.count) objects, time = \(t) (\(Int(nodeCount()) + Int(wayCount()) + Int(relationCount()))) objects total)")
-				if !ok {
-					// database failure
-					region.rootQuad.reset()
-				}
-				archiveModifiedData()
-			})
-		})
+		var t = CACurrentMediaTime()
+		let ok: Bool
+		do {
+			let db = try Database(name: "")
+			try db.createTables()
+			try db.save(saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
+			            deleteNodes: deleteNodes, deleteWays: deleteWays, deleteRelations: deleteRelations,
+			            isUpdate: isUpdate)
+			ok = true
+		} catch {
+			try? Database.delete(withName: "")
+			ok = false
+		}
+		t = CACurrentMediaTime() - t
+		DLog("\(t > 1.0 ? "*** " : "")sql save \(saveNodes.count + saveWays.count + saveRelations.count) objects, time = \(t)")
+		return ok
 	}
 
 	// after uploading a changeset we have to update the SQL database to reflect the changes the server replied with
@@ -1322,14 +1324,22 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			}
 		}
 
-		sqlSave(
-			saveNodes: insertNode,
-			saveWays: insertWay,
-			saveRelations: insertRelation,
-			deleteNodes: deleteNode,
-			deleteWays: deleteWay,
-			deleteRelations: deleteRelation,
-			isUpdate: true)
+		// Synchronous: the user is already waiting for the upload to finish, and the
+		// objects must reach the database before the undo stack (and so the archive) forgets them.
+		let ok = Database.dispatchQueue.sync {
+			OsmMapData.writeDatabase(
+				saveNodes: insertNode,
+				saveWays: insertWay,
+				saveRelations: insertRelation,
+				deleteNodes: deleteNode,
+				deleteWays: deleteWay,
+				deleteRelations: deleteRelation,
+				isUpdate: true)
+		}
+		if !ok {
+			region.rootQuad.reset()
+		}
+		archiveModifiedData()
 	}
 
 	func archiveModifiedData() {
@@ -1413,7 +1423,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			newData.nodes = try db.queryNodes()
 			newData.ways = try db.queryWays()
 			newData.relations = try db.queryRelations()
-			try mapData.merge(newData, savingToDatabase: false)
+			try mapData.merge(newData)
 
 			mapData.consistencyCheck()
 		} catch {
@@ -1788,9 +1798,10 @@ extension OsmMapData {
 		print("Discard sweep time = \(t)")
 
 		// make a copy of items to save because the dictionary might get updated by the time the Database block runs
-		let saveNodes = nodes.values
-		let saveWays = ways.values
-		let saveRelations = relations.values
+		// The database only holds server data; modified objects live in the archive.
+		let saveNodes = nodes.values.filter { !$0.isModified }
+		let saveWays = ways.values.filter { !$0.isModified }
+		let saveRelations = relations.values.filter { !$0.isModified }
 
 		Database.dispatchQueue.async(execute: { [self] in
 			var t2 = CACurrentMediaTime()

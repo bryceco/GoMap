@@ -36,11 +36,6 @@ struct EditToken {
 /// Each case carries exactly the values needed to reproduce the operation.
 /// `apply(to:)` performs the mutation, absorbs all side-effects (spatial index
 /// updates, cache invalidation), and returns the inverse operation.
-///
-/// Cases removed vs. the micro-op design:
-///   `addToSpatial`, `removeFromSpatial`, `updateInSpatial` — absorbed into each op's apply
-///   `incrementModifyCount` — tracked externally by `MyUndoManager`
-///   `clearCachedProperties` — absorbed into `setTags` / `moveNode` apply bodies
 enum OsmEditOperation {
 	// MARK: OsmBaseObject
 	case setDeleted(OsmBaseObject, Bool)
