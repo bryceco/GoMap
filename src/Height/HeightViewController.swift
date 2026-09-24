@@ -246,30 +246,28 @@ class HeightViewController: UIViewController {
 	}
 
 	func distanceToObject() -> (dist: Double, error: Double, direction: Double)? {
-		let mapView = AppDelegate.shared.mapView!
-		var object = mapView.selectedPrimary
-		if object == nil, mapView.pushPin == nil {
-			return nil
-		}
-		if object == nil {
-			// brand new object, so fake it
-			let latlon = mapView.viewPort.mapTransform.latLon(forScreenPoint: mapView.pushPin!.arrowPoint)
-			// this gets thrown away at the end of this method so the details aren't important
-			let node = OsmNode(withVersion: 0, changeset: 0, user: "", uid: 0, ident: 0, timestamp: "", tags: [:], latLon: latlon)
-			object = node
-		}
 		guard
-			let object = object,
-			let location = LocationProvider.shared.currentLocation
+			let mapView = AppDelegate.shared.mapView,
+			let userLocation = LocationProvider.shared.currentLocation
 		else {
 			return nil
 		}
-		let userPt = LatLon(location.coordinate)
+
+		var points: [LatLon]
+		if let object = mapView.selectedPrimary {
+			points = object.nodeSet().map { $0.latLon }
+		} else if let pushPin = mapView.pushPin {
+			let latlon = mapView.viewPort.mapTransform.latLon(forScreenPoint: pushPin.arrowPoint)
+			points = [latlon]
+		} else {
+			return nil
+		}
+
+		let userPt = LatLon(userLocation.coordinate)
 		var dist = Double(MAXFLOAT)
 		var bearing: Double = 0
 
-		for node in object.nodeSet() {
-			let nodePt = node.latLon
+		for nodePt in points {
 			let d = userPt.greatCircleDistance(to: nodePt)
 			if d < dist {
 				dist = d
@@ -280,7 +278,7 @@ class HeightViewController: UIViewController {
 			}
 		}
 
-		return (dist, location.horizontalAccuracy, bearing)
+		return (dist, userLocation.horizontalAccuracy, bearing)
 	}
 
 	func distanceString(forFloat num: Double) -> String {
