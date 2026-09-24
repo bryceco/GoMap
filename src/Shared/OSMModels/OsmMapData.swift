@@ -637,10 +637,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	@MainActor
 	func saveAndMerge(_ data: OsmDownloadData) async throws {
 		// Skip objects we already have, unless the server's version is newer.
-		// Modified objects are saved: the database holds the server's copy, the archive holds ours.
+		// (A modified object's server copy is already in the database, or in its `server` field.)
 		func isNew(_ data: OsmObjectData<some Any>, current: OsmBaseObject?) -> Bool {
 			guard let current else { return true }
-			return current.isModified || current.version < data.version
+			return current.version < data.version
 		}
 		// These are Sendable value types, so they can cross to the database queue as-is
 		let saveNodes = data.nodes.filter { isNew($0, current: nodes[$0.ident]) }
@@ -1256,6 +1256,17 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			}
 		}
 
+		// The database was just deleted. Put the server's copy of everything we kept back
+		// into it, since a later download will see these objects as already present.
+		let saveNodes = nodes.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
+		let saveWays = ways.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
+		let saveRelations = relations.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
+		Database.dispatchQueue.async { // queued behind the delete
+			_ = OsmMapData.writeDatabase(saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
+			                             deleteNodes: [], deleteWays: [], deleteRelations: [],
+			                             isUpdate: false)
+		}
+
 		consistencyCheck()
 	}
 
@@ -1813,12 +1824,13 @@ extension OsmMapData {
 		print("Discard sweep time = \(t)")
 
 		// make a copy of items to save because the dictionary might get updated by the time the Database block runs
-		// The database only holds server data, and modified objects no longer are that.
-		// Converting to value types here, on the main thread, means the background
-		// write can't observe edits made while it's running.
-		let saveNodes = nodes.values.compactMap { $0.isModified ? nil : OsmNodeData($0) }
-		let saveWays = ways.values.compactMap { $0.isModified ? nil : OsmWayData($0) }
-		let saveRelations = relations.values.compactMap { $0.isModified ? nil : OsmRelationData($0) }
+		// The database only holds server data: for a modified object that's its saved
+		// server copy, for anything else the object itself. Converting to value types
+		// here, on the main thread, means the background write can't observe edits made
+		// while it's running. New objects (ident < 0) live only in the archive.
+		let saveNodes = nodes.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
+		let saveWays = ways.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
+		let saveRelations = relations.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
 
 		Database.dispatchQueue.async(execute: { [self] in
 			var t2 = CACurrentMediaTime()

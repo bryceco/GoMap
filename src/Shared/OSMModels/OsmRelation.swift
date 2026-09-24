@@ -12,6 +12,10 @@ import UIKit
 final class OsmRelation: OsmBaseObject {
 
 	private(set) var members: [OsmMember]
+	/// The last state received from the server, kept only while the object has local edits
+	private(set) var server: OsmRelationData?
+	/// What belongs in the SQL database for this object
+	var serverData: OsmRelationData { server ?? OsmRelationData(self) }
 
 	override var description: String {
 		return "OsmRelation \(super.description)"
@@ -120,6 +124,17 @@ final class OsmRelation: OsmBaseObject {
 	func serverUpdate(with data: OsmRelationData) {
 		super.serverUpdate(header: data)
 		members = data.members
+		server = nil
+	}
+
+	override func captureServerCopy() {
+		if ident > 0, server == nil {
+			server = OsmRelationData(self)
+		}
+	}
+
+	override func clearServerCopy() {
+		server = nil
 	}
 
 	convenience init(_ data: OsmRelationData) {
@@ -427,6 +442,9 @@ final class OsmRelation: OsmBaseObject {
 	override func encode(with coder: NSCoder) {
 		super.encode(with: coder)
 		coder.encode(members, forKey: "members")
+		if let data = server?.serializedData() {
+			coder.encode(data, forKey: "server")
+		}
 	}
 
 	init(
@@ -464,6 +482,9 @@ final class OsmRelation: OsmBaseObject {
 			return nil
 		}
 		self.members = members
+		if let data = coder.decodeObject(of: NSData.self, forKey: "server") as Data? {
+			server = OsmRelationData(serializedData: data)
+		}
 		super.init(coder: coder)
 	}
 }

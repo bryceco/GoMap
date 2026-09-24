@@ -51,6 +51,24 @@ struct OsmObjectData<Body> {
 }
 
 extension OsmObjectData: Sendable where Body: Sendable {}
+extension OsmObjectData: Codable where Body: Codable {}
+
+extension OsmObjectData where Body: Codable {
+	/// Serialize to binary plist for archiving
+	func serializedData() -> Data {
+		let encoder = PropertyListEncoder()
+		encoder.outputFormat = .binary
+		return try! encoder.encode(self)
+	}
+
+	/// Deserialize from binary plist
+	init?(serializedData data: Data) {
+		guard let value = try? PropertyListDecoder().decode(Self.self, from: data) else {
+			return nil
+		}
+		self = value
+	}
+}
 
 typealias OsmNodeData = OsmObjectData<LatLon>
 typealias OsmWayData = OsmObjectData<[OsmIdentifier]>

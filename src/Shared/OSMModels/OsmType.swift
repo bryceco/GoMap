@@ -20,7 +20,7 @@ enum OsmObjectError: Error {
 	}
 }
 
-enum OSM_TYPE: Int {
+enum OSM_TYPE: Int, Codable {
 	case NODE = 1
 	case WAY = 2
 	case RELATION = 3

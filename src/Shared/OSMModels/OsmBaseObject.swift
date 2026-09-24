@@ -399,7 +399,25 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 	/// Resets `isModified` to false after a successful upload.
 	func resetModified() {
 		isModified = false
+		clearServerCopy() // the object now matches the server
 		clearCachedProperties()
+	}
+
+	// MARK: Server copy
+	//
+	// The SQL database must only ever contain what the server sent us. Once an object
+	// is edited that information exists nowhere else in memory, so the undo manager
+	// captures a copy just before the first edit. Subclasses hold the typed copy.
+	// It stays until the object is uploaded or replaced by a newer server version;
+	// in particular it survives undo, since after an undo the live object matches it.
+
+	/// Called by MyUndoManager before an edit is applied
+	func captureServerCopy() {
+		fatalError("subclass must override")
+	}
+
+	func clearServerCopy() {
+		fatalError("subclass must override")
 	}
 
 	// MARK: Update properties with refreshed data from server

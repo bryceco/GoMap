@@ -201,6 +201,11 @@ class MyUndoManager: NSObject, NSSecureCoding {
 			commentList.append(ctx)
 		}
 
+		// Preserve what the server sent us before the first edit changes it
+		for obj in type.modifyObjects {
+			obj.captureServerCopy()
+		}
+
 		let inverseType = type.apply(to: mapData)
 		let group = groupingStack.last ?? runLoopCounter
 		let inverse = UndoAction(type: inverseType, group: group)

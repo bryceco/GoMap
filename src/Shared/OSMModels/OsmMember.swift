@@ -9,7 +9,7 @@
 // FIXME: @unchecked because `obj` is mutable. It's only ever set on the main thread, and the
 // members that cross threads (freshly parsed or read from the database) always have obj == nil.
 // Goes away once OsmMember becomes a struct.
-final class OsmMember: NSObject, NSSecureCoding, @unchecked Sendable {
+final class OsmMember: NSObject, NSSecureCoding, Codable, @unchecked Sendable {
 	static let supportsSecureCoding = true
 
 	let ref: OsmIdentifier
@@ -43,6 +43,24 @@ final class OsmMember: NSObject, NSSecureCoding, @unchecked Sendable {
 			fatalError()
 		}
 		super.init()
+	}
+
+	// MARK: Codable (used when a relation's server copy is archived; `obj` is not encoded)
+
+	private enum CodingKeys: String, CodingKey { case type, ref, role }
+
+	convenience init(from decoder: Decoder) throws {
+		let c = try decoder.container(keyedBy: CodingKeys.self)
+		try self.init(type: c.decode(OSM_TYPE.self, forKey: .type),
+		              ref: c.decode(OsmIdentifier.self, forKey: .ref),
+		              role: c.decodeIfPresent(String.self, forKey: .role))
+	}
+
+	func encode(to encoder: Encoder) throws {
+		var c = encoder.container(keyedBy: CodingKeys.self)
+		try c.encode(type, forKey: .type)
+		try c.encode(ref, forKey: .ref)
+		try c.encodeIfPresent(role, forKey: .role)
 	}
 
 	func deresolveRef() {
