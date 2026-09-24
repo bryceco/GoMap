@@ -61,8 +61,8 @@ final class PresetsDatabase {
 		let defaults = try JSONDecoder().decode([String: [String]].self,
 		                                        from: Self.dataForFile("preset_defaults.json"))
 		presetDefaults = Dictionary(uniqueKeysWithValues:
-			defaults.compactMap { key, value in
-				guard let intKey = GEOMETRY(rawValue: key) else { return nil }
+			defaults.map { key, value in
+				let intKey = GEOMETRY(rawValue: key)!
 				return (intKey, value)
 			})
 
@@ -86,11 +86,14 @@ final class PresetsDatabase {
 			.compactMapValuesWithKeys({ k, v in
 				try PresetFeature(withID: k, jsonDict: cast(v, to: [String: Any].self), isNSI: false)
 			})
-		for p in presets.values {
-			if let relation = p.relation {
-				print("\(p.featureID): \(relation)\n")
+#if DEBUG
+		for preset in presets.values {
+			if let relation = preset.relation {
+				print("\(preset.featureID): \(relation)\n")
 			}
 		}
+#endif
+
 		stdFeatures = presets
 		stdFeatureIndex = Self.buildTagIndex([stdFeatures], basePresets: stdFeatures)
 
