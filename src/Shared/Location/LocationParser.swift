@@ -356,16 +356,28 @@ class LocationParser {
 			}
 		}
 
-		// try parsing as any URL containing lat=,lon=
-		if let lat2 = components.queryItems?.first(where: { $0.name == "lat" })?.value,
-		   let lon2 = components.queryItems?.first(where: { $0.name == "lon" })?.value,
-		   let lat = Double(lat2),
-		   let lon = Double(lon2)
-		{
-			return MapLocation(longitude: lon,
-			                   latitude: lat,
-			                   zoom: 0.0,
-			                   viewState: nil)
+		// try parsing as any URL containing lat=,lon= or mlat=,mlon= (OpenStreetMap)
+		if let queryItems = components.queryItems {
+			let latValue = queryItems.first(where: { $0.name == "lat" })?.value
+				?? queryItems.first(where: { $0.name == "mlat" })?.value
+			let lonValue = queryItems.first(where: { $0.name == "lon" })?.value
+				?? queryItems.first(where: { $0.name == "mlon" })?.value
+			if let latValue,
+			   let lonValue,
+			   let lat = Double(latValue),
+			   let lon = Double(lonValue)
+			{
+				var zoom = 0.0
+				if let z = queryItems.first(where: { $0.name == "zoom" })?.value,
+				   let z2 = Double(z)
+				{
+					zoom = z2
+				}
+				return MapLocation(longitude: lon,
+				                   latitude: lat,
+				                   zoom: zoom,
+				                   viewState: nil)
+			}
 		}
 
 		// try parsing as a link containing zoom/lat/lon triple
