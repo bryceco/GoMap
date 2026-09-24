@@ -117,10 +117,14 @@ final class OsmRelation: OsmBaseObject {
 		mapData?.invalidateParentRelationCache()
 	}
 
-	override func serverUpdate(with newerVersion: OsmBaseObject) {
-		let newerVersion = newerVersion as! OsmRelation
-		super.serverUpdate(with: newerVersion)
-		members = newerVersion.members
+	func serverUpdate(with data: OsmRelationData) {
+		super.serverUpdate(header: data)
+		members = data.members
+	}
+
+	convenience init(_ data: OsmRelationData) {
+		self.init(withVersion: data.version, changeset: data.changeset, user: data.user, uid: data.uid,
+		          ident: data.ident, timestamp: data.timestamp, tags: data.tags, members: data.members)
 	}
 
 	override func computeBoundingBox() {

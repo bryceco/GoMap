@@ -81,10 +81,14 @@ final class OsmNode: OsmBaseObject {
 		clearCachedProperties()
 	}
 
-	override func serverUpdate(with newerVersion: OsmBaseObject) {
-		let newerVersion = newerVersion as! OsmNode
-		super.serverUpdate(with: newerVersion)
-		latLon = newerVersion.latLon
+	func serverUpdate(with data: OsmNodeData) {
+		super.serverUpdate(header: data)
+		latLon = data.latLon
+	}
+
+	convenience init(_ data: OsmNodeData) {
+		self.init(withVersion: data.version, changeset: data.changeset, user: data.user, uid: data.uid,
+		          ident: data.ident, timestamp: data.timestamp, tags: data.tags, latLon: data.latLon)
 	}
 
 	override private init(

@@ -416,15 +416,17 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 		self.timestamp = Self.rfc3339DateFormatter().string(from: timestamp)
 	}
 
-	func serverUpdate(with newerVersion: OsmBaseObject) {
-		assert(ident == newerVersion.ident)
-		assert(version < newerVersion.version)
-		tags = newerVersion.tags
-		user = newerVersion.user
-		timestamp = newerVersion.timestamp
-		version = newerVersion.version
-		changeset = newerVersion.changeset
-		uid = newerVersion.uid
+	/// Replace the server-visible fields with a newer version from the server.
+	/// Subclasses call this and then update their own body.
+	func serverUpdate<Body>(header data: OsmObjectData<Body>) {
+		assert(ident == data.ident)
+		assert(version < data.version)
+		tags = data.tags
+		user = data.user
+		timestamp = data.timestamp
+		version = data.version
+		changeset = data.changeset
+		uid = data.uid
 		// derived data
 		clearCachedProperties()
 	}

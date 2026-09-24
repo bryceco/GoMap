@@ -56,14 +56,20 @@ final class OsmWay: OsmBaseObject {
 		computeBoundingBox()
 	}
 
-	override func serverUpdate(with newerVersion: OsmBaseObject) {
-		super.serverUpdate(with: newerVersion)
+	/// After calling this the caller must call resolveToMapData() to rebuild `nodes`
+	func serverUpdate(with data: OsmWayData) {
+		super.serverUpdate(header: data)
 		// undo wayCount in contained nodes
 		for node in nodes {
 			node.wayCount -= 1
 		}
-		nodeRefs = (newerVersion as! OsmWay).nodeRefs
-		nodes = (newerVersion as! OsmWay).nodes
+		nodes = []
+		nodeRefs = data.nodeRefs
+	}
+
+	convenience init(_ data: OsmWayData) {
+		self.init(withVersion: data.version, changeset: data.changeset, user: data.user, uid: data.uid,
+		          ident: data.ident, timestamp: data.timestamp, tags: data.tags, nodeRefs: data.nodeRefs)
 	}
 
 	func isArea() -> Bool {

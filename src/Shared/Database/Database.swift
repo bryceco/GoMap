@@ -227,9 +227,7 @@ final class Database {
 
 	// MARK: save
 
-	private func saveNodes<NodeCollection: Collection>(_ nodes: NodeCollection) throws
-		where NodeCollection.Element == OsmNode
-	{
+	private func saveNodes(_ nodes: [OsmNodeData]) throws {
 		if nodes.count == 0 {
 			return
 		}
@@ -253,7 +251,7 @@ final class Database {
 			while try nodeStatement.step(hasResult: Sqlite.CONSTRAINT) {
 				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
 				print(String(format: "retry node %lld\n", node.ident))
-				try? deleteNodes([node])
+				try? deleteNodes([node.ident])
 			}
 
 			for (key, value) in node.tags {
@@ -270,9 +268,7 @@ final class Database {
 		}
 	}
 
-	private func saveWays<WayCollection: Collection>(_ ways: WayCollection) throws
-		where WayCollection.Element == OsmWay
-	{
+	private func saveWays(_ ways: [OsmWayData]) throws {
 		if ways.count == 0 {
 			return
 		}
@@ -291,11 +287,11 @@ final class Database {
 			try wayStatement.bindInt32(4, Int32(way.version))
 			try wayStatement.bindInt64(5, way.changeset)
 			try wayStatement.bindInt32(6, Int32(way.uid))
-			try wayStatement.bindInt32(7, Int32(way.nodes.count))
+			try wayStatement.bindInt32(7, Int32(way.nodeRefs.count))
 			while try wayStatement.step(hasResult: Sqlite.CONSTRAINT) {
 				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
 				print(String(format: "retry way %lld\n", way.ident))
-				try? deleteWays([way])
+				try? deleteWays([way.ident])
 			}
 
 			for (key, value) in way.tags {
@@ -308,11 +304,11 @@ final class Database {
 			}
 
 			var index: Int32 = 0
-			for node in way.nodes {
+			for nodeRef in way.nodeRefs {
 				try nodeStatement.reset()
 				try nodeStatement.clearBindings()
 				try nodeStatement.bindInt64(1, way.ident)
-				try nodeStatement.bindInt64(2, node.ident)
+				try nodeStatement.bindInt64(2, nodeRef)
 				try nodeStatement.bindInt32(3, index)
 				try nodeStatement.step()
 				index += 1
@@ -323,9 +319,7 @@ final class Database {
 		}
 	}
 
-	private func saveRelations<RelationCollection: Collection>(_ relations: RelationCollection) throws
-		where RelationCollection.Element == OsmRelation
-	{
+	private func saveRelations(_ relations: [OsmRelationData]) throws {
 		if relations.count == 0 {
 			return
 		}
@@ -350,7 +344,7 @@ final class Database {
 			while try baseStatement.step(hasResult: Sqlite.CONSTRAINT) {
 				// tried to insert something already there. This might be an update to a later version from the server so delete what we have and retry
 				print(String(format: "retry relation %lld\n", relation.ident))
-				try? deleteRelations([relation])
+				try? deleteRelations([relation.ident])
 			}
 
 			for (key, value) in relation.tags {
@@ -382,82 +376,69 @@ final class Database {
 
 	// MARK: delete
 
-	private func deleteNodes<NodeSequence: Collection>(_ nodes: NodeSequence) throws
-		where NodeSequence.Element == OsmNode
-	{
+	private func deleteNodes(_ nodes: [OsmIdentifier]) throws {
 		if nodes.isEmpty {
 			return
 		}
 
 		let nodeStatement = try db.prepare("DELETE from NODES where ident=?;")
 
-		for node in nodes {
+		for ident in nodes {
 			try nodeStatement.reset()
 			try nodeStatement.clearBindings()
-			try nodeStatement.bindInt64(1, node.ident)
+			try nodeStatement.bindInt64(1, ident)
 			try nodeStatement.step()
 		}
 	}
 
-	private func deleteWays<WayCollection: Collection>(_ ways: WayCollection) throws
-		where WayCollection.Element == OsmWay
-	{
+	private func deleteWays(_ ways: [OsmIdentifier]) throws {
 		if ways.count == 0 {
 			return
 		}
 
 		let nodeStatement = try db.prepare("DELETE from WAYS where ident=?;")
 
-		for way in ways {
+		for ident in ways {
 			try nodeStatement.reset()
 			try nodeStatement.clearBindings()
-			try nodeStatement.bindInt64(1, way.ident)
+			try nodeStatement.bindInt64(1, ident)
 			try nodeStatement.step()
 		}
 	}
 
-	private func deleteRelations<RelationCollection: Collection>(_ relations: RelationCollection) throws
-		where RelationCollection.Element == OsmRelation
-	{
+	private func deleteRelations(_ relations: [OsmIdentifier]) throws {
 		if relations.count == 0 {
 			return
 		}
 
 		let relationStatement = try db.prepare("DELETE from RELATIONS where ident=?;")
 
-		for relation in relations {
+		for ident in relations {
 			try relationStatement.reset()
 			try relationStatement.clearBindings()
-			try relationStatement.bindInt64(1, relation.ident)
+			try relationStatement.bindInt64(1, ident)
 			try relationStatement.step()
 		}
 	}
 
 	// MARK: update
 
-	func save<NodeCollection1: Collection, NodeCollection2: Collection,
-		WayCollection1: Collection, WayCollection2: Collection,
-		RelationCollection1: Collection, RelationCollection2: Collection>
-	(
-		saveNodes: NodeCollection1,
-		saveWays: WayCollection1,
-		saveRelations: RelationCollection1,
-		deleteNodes: NodeCollection2,
-		deleteWays: WayCollection2,
-		deleteRelations: RelationCollection2,
+	func save(
+		saveNodes: [OsmNodeData],
+		saveWays: [OsmWayData],
+		saveRelations: [OsmRelationData],
+		deleteNodes: [OsmIdentifier],
+		deleteWays: [OsmIdentifier],
+		deleteRelations: [OsmIdentifier],
 		isUpdate: Bool) throws
-		where
-		NodeCollection1.Element == OsmNode, NodeCollection2.Element == OsmNode,
-		WayCollection1.Element == OsmWay, WayCollection2.Element == OsmWay,
-		RelationCollection1.Element == OsmRelation, RelationCollection2.Element == OsmRelation
 	{
 		try db.exec("BEGIN")
 
 		do {
 			if isUpdate {
-				try self.deleteNodes(saveNodes)
-				try self.deleteWays(saveWays)
-				try self.deleteRelations(saveRelations)
+				try self.deleteNodes(saveNodes.map(\.ident))
+				try self.deleteWays(saveWays.map(\.ident))
+				try self.deleteRelations(saveRelations.map(\.ident))
 			}
 			try self.saveNodes(saveNodes)
 			try self.saveWays(saveWays)
@@ -498,13 +479,13 @@ final class Database {
 		return dict
 	}
 
-	func queryNodes() throws -> [OsmNode] {
+	func queryNodes() throws -> [OsmNodeData] {
 		let nodeStatement =
 			try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes;")
 
 		let tagsDict = try queryTagTable("node_tags", sizeEstimate: 5000)
 
-		var nodes: [OsmNode] = []
+		var nodes: [OsmNodeData] = []
 		nodes.reserveCapacity(100000)
 
 		while try nodeStatement.step(hasResult: Sqlite.ROW) {
@@ -519,15 +500,15 @@ final class Database {
 
 			let tags = tagsDict[ident] ?? [:]
 
-			let node = OsmNode(
-				withVersion: Int(version),
+			let node = OsmNodeData(
+				ident: ident,
+				version: Int(version),
 				changeset: Int64(changeset),
 				user: user,
 				uid: Int(uid),
-				ident: ident,
 				timestamp: timestamp,
 				tags: tags,
-				latLon: LatLon(latitude: latitude, longitude: longitude))
+				body: LatLon(latitude: latitude, longitude: longitude))
 
 			nodes.append(node)
 		}
@@ -542,7 +523,7 @@ final class Database {
 		var nodeRefs: [OsmIdentifier]
 	}
 
-	func queryWays() throws -> [OsmWay] {
+	func queryWays() throws -> [OsmWayData] {
 		let wayStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways")
 		let tagsDict = try queryTagTable("way_tags", sizeEstimate: 20000)
 
@@ -567,17 +548,16 @@ final class Database {
 		// Fill in node IDs by index
 		try fillNodeRefs(into: &wayMeta)
 
-		// Construct fully-initialized OsmWay objects
 		return wayMeta.map { ident, meta in
-			OsmWay(
-				withVersion: Int(meta.version),
+			OsmWayData(
+				ident: ident,
+				version: Int(meta.version),
 				changeset: meta.changeset,
 				user: meta.user,
 				uid: Int(meta.uid),
-				ident: ident,
 				timestamp: meta.timestamp,
 				tags: meta.tags,
-				nodeRefs: meta.nodeRefs)
+				body: meta.nodeRefs)
 		}
 	}
 
@@ -603,7 +583,7 @@ final class Database {
 		var members: [OsmMember?]
 	}
 
-	func queryRelations() throws -> [OsmRelation] {
+	func queryRelations() throws -> [OsmRelationData] {
 		let relationStatement = try db
 			.prepare("SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations")
 
@@ -630,15 +610,15 @@ final class Database {
 		try fillMembers(into: &relationMeta)
 
 		return relationMeta.map { ident, meta in
-			OsmRelation(
-				withVersion: Int(meta.version),
+			OsmRelationData(
+				ident: ident,
+				version: Int(meta.version),
 				changeset: meta.changeset,
 				user: meta.user,
 				uid: Int(meta.uid),
-				ident: ident,
 				timestamp: meta.timestamp,
 				tags: meta.tags,
-				members: meta.members.map { $0! })
+				body: meta.members.map { $0! })
 		}
 	}
 

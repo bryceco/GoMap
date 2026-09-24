@@ -638,13 +638,14 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	func saveAndMerge(_ data: OsmDownloadData) async throws {
 		// Skip objects we already have, unless the server's version is newer.
 		// Modified objects are saved: the database holds the server's copy, the archive holds ours.
-		func isNew(_ obj: OsmBaseObject, current: OsmBaseObject?) -> Bool {
+		func isNew(_ data: OsmObjectData<some Any>, current: OsmBaseObject?) -> Bool {
 			guard let current else { return true }
-			return current.isModified || current.version < obj.version
+			return current.isModified || current.version < data.version
 		}
-		nonisolated(unsafe) let saveNodes = data.nodes.filter { isNew($0, current: nodes[$0.ident]) }
-		nonisolated(unsafe) let saveWays = data.ways.filter { isNew($0, current: ways[$0.ident]) }
-		nonisolated(unsafe) let saveRelations = data.relations.filter { isNew($0, current: relations[$0.ident]) }
+		// These are Sendable value types, so they can cross to the database queue as-is
+		let saveNodes = data.nodes.filter { isNew($0, current: nodes[$0.ident]) }
+		let saveWays = data.ways.filter { isNew($0, current: ways[$0.ident]) }
+		let saveRelations = data.relations.filter { isNew($0, current: relations[$0.ident]) }
 
 		let ok = await withCheckedContinuation { continuation in
 			// dispatch async so main thread doesn't block
@@ -697,9 +698,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					spatial.updateMember(currentNode, fromBox: bbox)
 				}
 			} else {
-				newNode.mapData = self
-				nodes[newNode.ident] = newNode
-				spatial.addMember(newNode)
+				let node = OsmNode(newNode)
+				node.mapData = self
+				nodes[node.ident] = node
+				spatial.addMember(node)
 			}
 		}
 
@@ -715,10 +717,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					spatial.updateMember(currentWay, fromBox: bbox)
 				}
 			} else {
-				newWay.mapData = self
-				try newWay.resolveToMapData(self)
-				ways[newWay.ident] = newWay
-				spatial.addMember(newWay)
+				let way = OsmWay(newWay)
+				way.mapData = self
+				try way.resolveToMapData(self)
+				ways[way.ident] = way
+				spatial.addMember(way)
 			}
 		}
 
@@ -733,9 +736,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					spatial.updateMember(currentRelation, fromBox: bbox)
 				}
 			} else {
-				newRelation.mapData = self
-				relations[newRelation.ident] = newRelation
-				spatial.addMember(newRelation)
+				let relation = OsmRelation(newRelation)
+				relation.mapData = self
+				relations[relation.ident] = relation
+				spatial.addMember(relation)
 			}
 		}
 
@@ -1146,7 +1150,13 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		initCommon()
 	}
 
-	private func modifiedObjects() -> OsmDownloadData {
+	private struct ModifiedObjects {
+		let nodes: [OsmNode]
+		let ways: [OsmWay]
+		let relations: [OsmRelation]
+	}
+
+	private func modifiedObjects() -> ModifiedObjects {
 		var undoObjects = undoManager.objectRefs()
 		let modWays = undoObjects.compactMap({ $0 as? OsmWay })
 		for way in modWays {
@@ -1166,10 +1176,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		assert(r.isSubset(of: modRelations))
 #endif
 
-		let modified = OsmDownloadData(nodes: modNodes,
-		                               ways: modWays,
-		                               relations: modRelations)
-		return modified
+		return ModifiedObjects(nodes: modNodes, ways: modWays, relations: modRelations)
 	}
 
 	private func purgeExceptUndo() {
@@ -1260,12 +1267,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	/// Returns false on failure, in which case the database has been deleted and the caller
 	/// must reset the region so everything gets downloaded again.
 	private static func writeDatabase(
-		saveNodes: [OsmNode],
-		saveWays: [OsmWay],
-		saveRelations: [OsmRelation],
-		deleteNodes: [OsmNode],
-		deleteWays: [OsmWay],
-		deleteRelations: [OsmRelation],
+		saveNodes: [OsmNodeData],
+		saveWays: [OsmWayData],
+		saveRelations: [OsmRelationData],
+		deleteNodes: [OsmIdentifier],
+		deleteWays: [OsmIdentifier],
+		deleteRelations: [OsmIdentifier],
 		isUpdate: Bool) -> Bool
 	{
 		if (saveNodes.count + saveWays.count + saveRelations.count +
@@ -1326,14 +1333,20 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// Synchronous: the user is already waiting for the upload to finish, and the
 		// objects must reach the database before the undo stack (and so the archive) forgets them.
+		let saveNodes = insertNode.map { OsmNodeData($0) }
+		let saveWays = insertWay.map { OsmWayData($0) }
+		let saveRelations = insertRelation.map { OsmRelationData($0) }
+		let deleteNodes = deleteNode.map(\.ident)
+		let deleteWays = deleteWay.map(\.ident)
+		let deleteRelations = deleteRelation.map(\.ident)
 		let ok = Database.dispatchQueue.sync {
 			OsmMapData.writeDatabase(
-				saveNodes: insertNode,
-				saveWays: insertWay,
-				saveRelations: insertRelation,
-				deleteNodes: deleteNode,
-				deleteWays: deleteWay,
-				deleteRelations: deleteRelation,
+				saveNodes: saveNodes,
+				saveWays: saveWays,
+				saveRelations: saveRelations,
+				deleteNodes: deleteNodes,
+				deleteWays: deleteWays,
+				deleteRelations: deleteRelations,
 				isUpdate: true)
 		}
 		if !ok {
@@ -1419,10 +1432,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		// merge info from SQL database
 		do {
 			let db = try Database(name: "")
-			var newData = OsmDownloadData()
-			newData.nodes = try db.queryNodes()
-			newData.ways = try db.queryWays()
-			newData.relations = try db.queryRelations()
+			let newData = try OsmDownloadData(nodes: db.queryNodes(),
+			                                  ways: db.queryWays(),
+			                                  relations: db.queryRelations())
 			try mapData.merge(newData)
 
 			mapData.consistencyCheck()
@@ -1798,10 +1810,12 @@ extension OsmMapData {
 		print("Discard sweep time = \(t)")
 
 		// make a copy of items to save because the dictionary might get updated by the time the Database block runs
-		// The database only holds server data; modified objects live in the archive.
-		let saveNodes = nodes.values.filter { !$0.isModified }
-		let saveWays = ways.values.filter { !$0.isModified }
-		let saveRelations = relations.values.filter { !$0.isModified }
+		// The database only holds server data, and modified objects no longer are that.
+		// Converting to value types here, on the main thread, means the background
+		// write can't observe edits made while it's running.
+		let saveNodes = nodes.values.compactMap { $0.isModified ? nil : OsmNodeData($0) }
+		let saveWays = ways.values.compactMap { $0.isModified ? nil : OsmWayData($0) }
+		let saveRelations = relations.values.compactMap { $0.isModified ? nil : OsmRelationData($0) }
 
 		Database.dispatchQueue.async(execute: { [self] in
 			var t2 = CACurrentMediaTime()
