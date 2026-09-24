@@ -591,7 +591,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					"bbox": "\(rc.origin.x),\(rc.origin.y),\(rc.origin.x + rc.size.width),\(rc.origin.y + rc.size.height)"
 				])
 			Task {
-				let result: Result<OsmDownloadData, Swift.Error>
+				let result: Result<OsmServerData, Swift.Error>
 				do {
 					let data = try await OsmDownloader.osmData(forUrl: url)
 					result = .success(data)
@@ -635,7 +635,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	/// - it only ever contains server data, never anything the user has edited
 	/// - the background write never reads objects that the main thread might be editing
 	@MainActor
-	func saveAndMerge(_ data: OsmDownloadData) async throws {
+	func saveAndMerge(_ data: OsmServerData) async throws {
 		// Skip objects we already have, unless the server's version is newer.
 		// (A modified object's server copy is already in the database, or in its `server` field.)
 		func isNew(_ data: OsmObjectData<some Any>, current: OsmBaseObject?) -> Bool {
@@ -677,7 +677,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	// MARK: Download
 
-	func merge(_ newData: OsmDownloadData) throws {
+	func merge(_ newData: OsmServerData) throws {
 		if newData.nodes.count + newData.ways.count + newData.relations.count == 0 {
 			return
 		}
@@ -1258,11 +1258,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// The database was just deleted. Put the server's copy of everything we kept back
 		// into it, since a later download will see these objects as already present.
-		let saveNodes = nodes.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
-		let saveWays = ways.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
-		let saveRelations = relations.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
+		let serverData = unmodifiedServerData()
 		Database.dispatchQueue.async { // queued behind the delete
-			_ = OsmMapData.writeDatabase(saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
+			_ = OsmMapData.writeDatabase(saveNodes: serverData.nodes, saveWays: serverData.ways, saveRelations: serverData.relations,
 			                             deleteNodes: [], deleteWays: [], deleteRelations: [],
 			                             isUpdate: false)
 		}
@@ -1272,6 +1270,16 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	static func pathToArchiveFile() -> URL {
 		return ArchivePath.osmDataArchive.url()
+	}
+
+	/// The server copy of every server-originated object, for writing to the database.
+	/// For modified objects this is the saved server state; for unmodified objects it's the object itself.
+	/// New objects (ident < 0) are excluded — they live only in the archive.
+	func unmodifiedServerData() -> OsmServerData {
+		OsmServerData(
+			nodes: nodes.values.compactMap { $0.ident > 0 ? ($0.serverData ?? OsmNodeData($0)) : nil },
+			ways: ways.values.compactMap { $0.ident > 0 ? ($0.serverData ?? OsmWayData($0)) : nil },
+			relations: relations.values.compactMap { $0.ident > 0 ? ($0.serverData ?? OsmRelationData($0)) : nil })
 	}
 
 	/// Writes to the database. Must be called on Database.dispatchQueue.
@@ -1443,9 +1451,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		// merge info from SQL database
 		do {
 			let db = try Database(name: "")
-			let newData = try OsmDownloadData(nodes: db.queryNodes(),
-			                                  ways: db.queryWays(),
-			                                  relations: db.queryRelations())
+			let newData = try OsmServerData(nodes: db.queryNodes(),
+			                                ways: db.queryWays(),
+			                                relations: db.queryRelations())
 			try mapData.merge(newData)
 
 			mapData.consistencyCheck()
@@ -1828,9 +1836,7 @@ extension OsmMapData {
 		// server copy, for anything else the object itself. Converting to value types
 		// here, on the main thread, means the background write can't observe edits made
 		// while it's running. New objects (ident < 0) live only in the archive.
-		let saveNodes = nodes.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
-		let saveWays = ways.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
-		let saveRelations = relations.values.compactMap { $0.ident > 0 ? $0.serverData : nil }
+		let serverData = unmodifiedServerData()
 
 		Database.dispatchQueue.async(execute: { [self] in
 			var t2 = CACurrentMediaTime()
@@ -1841,7 +1847,7 @@ extension OsmMapData {
 				let db2 = try Database(name: "tmp")
 				tmpPath = db2.path
 				try db2.createTables()
-				try db2.save(saveNodes: saveNodes, saveWays: saveWays, saveRelations: saveRelations,
+				try db2.save(saveNodes: serverData.nodes, saveWays: serverData.ways, saveRelations: serverData.relations,
 				             deleteNodes: [], deleteWays: [], deleteRelations: [],
 				             isUpdate: false)
 				// need to let db2 go out of scope here so file is no longer in use

@@ -10,9 +10,7 @@ final class OsmNode: OsmBaseObject {
 
 	private(set) var latLon: LatLon
 	/// The last state received from the server, kept only while the object has local edits
-	private(set) var server: OsmNodeData?
-	/// What belongs in the SQL database for this object
-	var serverData: OsmNodeData { server ?? OsmNodeData(self) }
+	private(set) var serverData: OsmNodeData?
 	var wayCount: Int {
 		didSet {
 			// a node is drawn differently depending on whether it belongs to a way
@@ -88,17 +86,17 @@ final class OsmNode: OsmBaseObject {
 	func serverUpdate(with data: OsmNodeData) {
 		super.serverUpdate(header: data)
 		latLon = data.latLon
-		server = nil
+		serverData = nil
 	}
 
 	override func captureServerCopy() {
-		if ident > 0, server == nil {
-			server = OsmNodeData(self)
+		if ident > 0, serverData == nil {
+			serverData = OsmNodeData(self)
 		}
 	}
 
 	override func clearServerCopy() {
-		server = nil
+		serverData = nil
 	}
 
 	convenience init(_ data: OsmNodeData) {
@@ -158,7 +156,7 @@ final class OsmNode: OsmBaseObject {
 		latLon = LatLon(latitude: lat, longitude: lon)
 		wayCount = 0
 		if let data = coder.decodeObject(of: NSData.self, forKey: "server") as Data? {
-			server = OsmNodeData(serializedData: data)
+			serverData = OsmNodeData(serializedData: data)
 		}
 		super.init(coder: coder)
 	}
@@ -167,7 +165,7 @@ final class OsmNode: OsmBaseObject {
 		super.encode(with: coder)
 		coder.encode(latLon.lat, forKey: "lat")
 		coder.encode(latLon.lon, forKey: "lon")
-		if let data = server?.serializedData() {
+		if let data = serverData?.serializedData() {
 			coder.encode(data, forKey: "server")
 		}
 	}

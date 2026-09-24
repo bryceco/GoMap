@@ -106,6 +106,7 @@
 		0282C4C7265F32E800F2D282 /* Sqlite3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C6265F32E800F2D282 /* Sqlite3.swift */; };
 		0282C4C926617E7400F2D282 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0282C4C826617E7400F2D282 /* MapView.swift */; };
 		028365C92EFDFF1E002B9E34 /* UnitFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028365C82EFDFC22002B9E34 /* UnitFormatter.swift */; };
+		02839E1430656BFB008396B9 /* OsmServerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02839E1330656BFB008396B9 /* OsmServerData.swift */; };
 		0286EAA52656F15A007CFEE9 /* EditorMapLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */; };
 		0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022012BA24A015E800C1728F /* EditorMapLayer+Ocean.swift */; };
 		0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096D1263EA7E100E3B129 /* LayerProperties.swift */; };
@@ -482,6 +483,7 @@
 		0282C4C6265F32E800F2D282 /* Sqlite3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sqlite3.swift; sourceTree = "<group>"; };
 		0282C4C826617E7400F2D282 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MapView.swift; path = Shared/MapView.swift; sourceTree = "<group>"; };
 		028365C82EFDFC22002B9E34 /* UnitFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitFormatter.swift; sourceTree = "<group>"; };
+		02839E1330656BFB008396B9 /* OsmServerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmServerData.swift; sourceTree = "<group>"; };
 		0287D25129947B2900BEAD9E /* QuestChooser.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = QuestChooser.storyboard; sourceTree = "<group>"; };
 		0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "OsmMapData+Edit.swift"; sourceTree = "<group>"; };
 		0288169D265895FA00C30EA2 /* OsmMapData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OsmMapData.swift; sourceTree = "<group>"; };
@@ -1304,6 +1306,7 @@
 				C3D096EF263EBE5D00E3B129 /* OsmNode.swift */,
 				C3D096F2263EBE5E00E3B129 /* OsmRelation.swift */,
 				02FF1EC72BDC1E180071C96F /* OsmServer.swift */,
+				02839E1330656BFB008396B9 /* OsmServerData.swift */,
 				021FADEE25884BB900F6E1C0 /* OsmTags.swift */,
 				0203B06329B3D62900B020DF /* OsmType.swift */,
 				C3D096F0263EBE5D00E3B129 /* OsmWay.swift */,
@@ -1787,6 +1790,7 @@
 				02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */,
 				02225DA729EB3AE900859F9D /* GpxTrack.swift in Sources */,
 				02008650265B25DC008F37DD /* Database.swift in Sources */,
+				02839E1430656BFB008396B9 /* OsmServerData.swift in Sources */,
 				0210AE072F19A9DF0031F047 /* GpxTracks.swift in Sources */,
 				02FC7F962D7FD6E800DC333D /* CustomFeatureController.swift in Sources */,
 				020E160B267A82050037DE49 /* TileServer.swift in Sources */,

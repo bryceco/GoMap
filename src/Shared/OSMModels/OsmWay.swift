@@ -13,9 +13,7 @@ final class OsmWay: OsmBaseObject {
 	var nodeRefs: [OsmIdentifier]? // only used during construction
 	private(set) var nodes: [OsmNode]
 	/// The last state received from the server, kept only while the object has local edits
-	private(set) var server: OsmWayData?
-	/// What belongs in the SQL database for this object
-	var serverData: OsmWayData { server ?? OsmWayData(self) }
+	private(set) var serverData: OsmWayData?
 
 	override var description: String {
 		return "OsmWay \(super.description)"
@@ -69,17 +67,17 @@ final class OsmWay: OsmBaseObject {
 		}
 		nodes = []
 		nodeRefs = data.nodeRefs
-		server = nil
+		serverData = nil
 	}
 
 	override func captureServerCopy() {
-		if ident > 0, server == nil {
-			server = OsmWayData(self)
+		if ident > 0, serverData == nil {
+			serverData = OsmWayData(self)
 		}
 	}
 
 	override func clearServerCopy() {
-		server = nil
+		serverData = nil
 	}
 
 	convenience init(_ data: OsmWayData) {
@@ -565,7 +563,7 @@ final class OsmWay: OsmBaseObject {
 		}
 		self.nodes = nodes
 		if let data = coder.decodeObject(of: NSData.self, forKey: "server") as Data? {
-			server = OsmWayData(serializedData: data)
+			serverData = OsmWayData(serializedData: data)
 		}
 		super.init(coder: coder)
 		for node in nodes {
@@ -576,7 +574,7 @@ final class OsmWay: OsmBaseObject {
 	override func encode(with coder: NSCoder) {
 		super.encode(with: coder)
 		coder.encode(nodes, forKey: "nodes")
-		if let data = server?.serializedData() {
+		if let data = serverData?.serializedData() {
 			coder.encode(data, forKey: "server")
 		}
 	}

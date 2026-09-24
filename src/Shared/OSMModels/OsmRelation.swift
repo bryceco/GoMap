@@ -13,9 +13,7 @@ final class OsmRelation: OsmBaseObject {
 
 	private(set) var members: [OsmMember]
 	/// The last state received from the server, kept only while the object has local edits
-	private(set) var server: OsmRelationData?
-	/// What belongs in the SQL database for this object
-	var serverData: OsmRelationData { server ?? OsmRelationData(self) }
+	private(set) var serverData: OsmRelationData?
 
 	override var description: String {
 		return "OsmRelation \(super.description)"
@@ -124,17 +122,17 @@ final class OsmRelation: OsmBaseObject {
 	func serverUpdate(with data: OsmRelationData) {
 		super.serverUpdate(header: data)
 		members = data.members
-		server = nil
+		serverData = nil
 	}
 
 	override func captureServerCopy() {
-		if ident > 0, server == nil {
-			server = OsmRelationData(self)
+		if ident > 0, serverData == nil {
+			serverData = OsmRelationData(self)
 		}
 	}
 
 	override func clearServerCopy() {
-		server = nil
+		serverData = nil
 	}
 
 	convenience init(_ data: OsmRelationData) {
@@ -442,7 +440,7 @@ final class OsmRelation: OsmBaseObject {
 	override func encode(with coder: NSCoder) {
 		super.encode(with: coder)
 		coder.encode(members, forKey: "members")
-		if let data = server?.serializedData() {
+		if let data = serverData?.serializedData() {
 			coder.encode(data, forKey: "server")
 		}
 	}
@@ -483,7 +481,7 @@ final class OsmRelation: OsmBaseObject {
 		}
 		self.members = members
 		if let data = coder.decodeObject(of: NSData.self, forKey: "server") as Data? {
-			server = OsmRelationData(serializedData: data)
+			serverData = OsmRelationData(serializedData: data)
 		}
 		super.init(coder: coder)
 	}
