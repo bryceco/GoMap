@@ -1801,9 +1801,12 @@ extension OsmMapData {
 			}
 		})
 
-		// fixup relation references
+		// fixup relation references and update spatial index
 		for relation in relations.values {
+			let bbox = relation.boundingBox
+			relation.clearCachedProperties()
 			_ = relation.resolveToMapData(self)
+			spatial.updateMember(relation, fromBox: bbox)
 		}
 
 		t = CACurrentMediaTime() - t
