@@ -4497,9 +4497,9 @@ http://glyphish.com
         <note>Class = "UIButton"; normalTitle = "Edit"; ObjectID = "hcE-yO-3eH";</note>
       </trans-unit>
       <trans-unit id="ikj-u9-9Bn.text" xml:space="preserve">
-        <source>Changeset comment</source>
-        <target state="translated">Muudatuste kommentaar</target>
-        <note>Class = "UILabel"; text = "Changeset comment"; ObjectID = "ikj-u9-9Bn";</note>
+        <source>Changeset comment:</source>
+        <target state="translated">Muudatuste kommentaar:</target>
+        <note>Class = "UILabel"; text = "Changeset comment:"; ObjectID = "ikj-u9-9Bn";</note>
       </trans-unit>
       <trans-unit id="ps9-Hb-Vow.placeholder" xml:space="preserve">
         <source>survey, Bing, etc.</source>
@@ -4512,9 +4512,9 @@ http://glyphish.com
         <note>Class = "UILabel"; text = "Describe your changes... "; ObjectID = "xNB-pJ-M20";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
-        <source>Source</source>
-        <target state="translated">Allikas</target>
-        <note>Class = "UILabel"; text = "Source"; ObjectID = "yZR-tZ-66S";</note>
+        <source>Source:</source>
+        <target state="translated">Allikas:</target>
+        <note>Class = "UILabel"; text = "Source:"; ObjectID = "yZR-tZ-66S";</note>
       </trans-unit>
     </body>
   </file>
