@@ -133,10 +133,10 @@ class MapLayersView: UIView {
 		allLayers.append(mapMarkersView)
 
 #if DEBUG && false
-		quadDownloadLayer = QuadDownloadLayer(mapData: AppDelegate.shared.mapView.editorLayer.mapData,
+		quadDownloadLayer = QuadDownloadLayer(mapData: AppDelegate.shared.mainView.mapView.mapData,
 		                                      viewPort: viewPort)
 		if let quadDownloadLayer {
-			quadDownloadLayer.zPosition = ZLAYER.QUADDOWNLOAD.rawValue
+			quadDownloadLayer.zPosition = MAIN_ZLAYER.QUADDOWNLOAD.rawValue
 			quadDownloadLayer.isHidden = false
 			allLayers.append(quadDownloadLayer)
 		}

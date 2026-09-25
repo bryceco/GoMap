@@ -44,48 +44,46 @@ final class QuadDownloadLayer: CALayer {
 		if isHidden {
 			return
 		}
-		// update locations of tiles
-		let tRotation = viewPort.mapTransform.rotation()
 		sublayers = []
 		mapData.region.enumerate({ quad in
 			if !quad.isDownloaded, !quad.busy {
 				return
 			}
-			let upperLeft = viewPort.mapTransform.screenPoint(
-				forLatLon: LatLon(quad.rect.origin),
+			let rect = quad.rect
+			let p1 = viewPort.mapTransform.screenPoint(
+				forLatLon: LatLon(lon: rect.origin.x, lat: rect.origin.y),
 				birdsEye: true)
-			let bottomRight = viewPort.mapTransform.screenPoint(
-				forLatLon: LatLon(lon: quad.rect.origin.x + quad.rect.size.width,
-				                  lat: quad.rect.origin.y + quad.rect.size.height),
+			let p2 = viewPort.mapTransform.screenPoint(
+				forLatLon: LatLon(lon: rect.origin.x + rect.size.width, lat: rect.origin.y),
 				birdsEye: true)
-			let screenRect = CGRect(
-				x: upperLeft.x,
-				y: upperLeft.y,
-				width: bottomRight.x - upperLeft.x,
-				height: bottomRight.y - upperLeft.y)
-			/*
-			 if !screenRect.intersects(self.bounds) {
-			 	return
-			 }
-			 */
+			let p3 = viewPort.mapTransform.screenPoint(
+				forLatLon: LatLon(lon: rect.origin.x + rect.size.width, lat: rect.origin.y + rect.size.height),
+				birdsEye: true)
+			let p4 = viewPort.mapTransform.screenPoint(
+				forLatLon: LatLon(lon: rect.origin.x, lat: rect.origin.y + rect.size.height),
+				birdsEye: true)
+
 			let color: CGColor
 			if quad.busy {
 				color = UIColor.yellow.withAlphaComponent(0.3).cgColor
 			} else {
 				color = UIColor.green.withAlphaComponent(0.15).cgColor
 			}
-			let layer = CALayer()
-			layer.frame = screenRect
-			layer.backgroundColor = color
-//			layer.anchorPoint = CGPoint(x: 0, y: 0)
-			layer.borderColor = UIColor.black.cgColor
-			layer.borderWidth = 1.0
 
-			// we don't support screen rotation so this is broken
-			let t = CGAffineTransform(rotationAngle: CGFloat(tRotation))
-			layer.setAffineTransform(t)
+			let path = CGMutablePath()
+			path.move(to: p1)
+			path.addLine(to: p2)
+			path.addLine(to: p3)
+			path.addLine(to: p4)
+			path.closeSubpath()
 
-			self.addSublayer(layer)
+			let shapeLayer = CAShapeLayer()
+			shapeLayer.path = path
+			shapeLayer.fillColor = color
+			shapeLayer.strokeColor = UIColor.black.cgColor
+			shapeLayer.lineWidth = 1.0
+
+			self.addSublayer(shapeLayer)
 		})
 	}
 
