@@ -233,7 +233,7 @@ final class Database {
 		}
 
 		let nodeStatement = try db.prepare(
-			"INSERT INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);")
+			"INSERT OR REPLACE INTO NODES (user,timestamp,version,changeset,uid,longitude,latitude,ident) VALUES (?,?,?,?,?,?,?,?);")
 		let tagStatement = try db.prepare("INSERT INTO node_tags (ident,key,value) VALUES (?,?,?);")
 
 		for node in nodes {
@@ -274,7 +274,7 @@ final class Database {
 		}
 
 		let wayStatement = try db
-			.prepare("INSERT INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);")
+			.prepare("INSERT OR REPLACE INTO ways (ident,user,timestamp,version,changeset,uid,nodecount) VALUES (?,?,?,?,?,?,?);")
 		let tagStatement = try db.prepare("INSERT INTO way_tags (ident,key,value) VALUES (?,?,?);")
 		let nodeStatement = try db.prepare("INSERT INTO way_nodes (ident,node_id,node_index) VALUES (?,?,?);")
 
@@ -326,7 +326,7 @@ final class Database {
 
 		let baseStatement = try db
 			.prepare(
-				"INSERT INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);")
+				"INSERT OR REPLACE INTO relations (ident,user,timestamp,version,changeset,uid,membercount) VALUES (?,?,?,?,?,?,?);")
 		let tagStatement = try db.prepare("INSERT INTO relation_tags (ident,key,value) VALUES (?,?,?);")
 		let memberStatement = try db
 			.prepare("INSERT INTO relation_members (ident,type,ref,role,member_index) VALUES (?,?,?,?,?);")
@@ -423,6 +423,9 @@ final class Database {
 
 	// MARK: update
 
+	/// Saving is idempotent: parent rows use INSERT OR REPLACE, and because
+	/// foreign_keys=ON the replace cascades to the tag/node/member tables,
+	/// so re-saving an object never duplicates its child rows.
 	func save(
 		saveNodes: [OsmServerNode],
 		saveWays: [OsmServerWay],

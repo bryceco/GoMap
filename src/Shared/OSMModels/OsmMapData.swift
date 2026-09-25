@@ -612,14 +612,35 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 	}
 
+	/// The most recent saveAndMerge task. Each call waits for the previous one so that
+	/// downloads are saved and merged one at a time, in arrival order. Without this, two
+	/// concurrent downloads both filter against memory before either has merged, and the
+	/// version comparison in isNew() races.
+	@MainActor
+	private var previousSaveAndMerge: Task<Void, any Swift.Error>?
+
 	/// Saves data downloaded from the server to the database, then merges it into memory.
+	/// Calls are serialized: a new download is not processed until the previous one has merged.
+	/// This ensures that when determining which nodes to save they will already exist in the
+	/// nodes diectionary.
+	@MainActor
+	func saveAndMerge(_ data: OsmServerData) async throws {
+		let previous = previousSaveAndMerge
+		let task = Task { @MainActor in
+			_ = try? await previous?.value // wait for the prior download, but don't inherit its error
+			try await self.saveAndMergeSerially(data)
+		}
+		previousSaveAndMerge = task
+		try await task.value
+	}
+
 	/// The database is written first, from the freshly parsed objects, so that:
 	/// - it only ever contains server data, never anything the user has edited
 	/// - the background write never reads objects that the main thread might be editing
 	@MainActor
-	func saveAndMerge(_ data: OsmServerData) async throws {
+	private func saveAndMergeSerially(_ data: OsmServerData) async throws {
 		// Skip objects we already have, unless the server's version is newer.
-		// (A modified object's server copy is already in the database, or in its `server` field.)
+		// (A modified object's server copy is already in the database, or in its `serverObject` field.)
 		func isNew(_ data: OsmServerObject<some Any>, current: OsmBaseObject?) -> Bool {
 			guard let current else { return true }
 			return current.version < data.version
@@ -629,7 +650,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		let saveWays = data.ways.filter { isNew($0, current: ways[$0.ident]) }
 		let saveRelations = data.relations.filter { isNew($0, current: relations[$0.ident]) }
 
-		let ok = await withCheckedContinuation { continuation in
+		_ = await withCheckedContinuation { continuation in
 			// dispatch async so main thread doesn't block
 			Database.dispatchQueue.async {
 				continuation.resume(returning: OsmMapData.writeDatabase(
@@ -637,10 +658,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					deleteNodes: [], deleteWays: [], deleteRelations: [],
 					isUpdate: false))
 			}
-		}
-		if !ok {
-			// database failure: it has been deleted, so everything must be downloaded again
-			region.rootQuad.reset()
 		}
 		// merge even if the save failed, so the user gets the data
 		try merge(data)
@@ -1265,8 +1282,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	/// Writes to the database. Must be called on Database.dispatchQueue.
-	/// Returns false on failure, in which case the database has been deleted and the caller
-	/// must reset the region so everything gets downloaded again.
+	/// Returns false on failure. The transaction is rolled back so the database remains consistent.
 	private static func writeDatabase(
 		saveNodes: [OsmServerNode],
 		saveWays: [OsmServerWay],
@@ -1291,7 +1307,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			            isUpdate: isUpdate)
 			ok = true
 		} catch {
-			try? Database.delete(withName: "")
+			// The transaction has rolled back, so the database is still consistent.
+			DLog("sql save failed: \(error)")
 			ok = false
 		}
 		t = CACurrentMediaTime() - t
@@ -1406,6 +1423,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	static func withArchivedData() throws -> OsmMapData {
+		let totalStart = CACurrentMediaTime()
+
+		let archiveStart = CACurrentMediaTime()
 		let archiver = OsmMapDataArchiver()
 		let mapData = try archiver.loadArchive()
 		if mapData.spatial.countOfObjects() > 0 {
@@ -1429,8 +1449,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// do this after spatial is built
 		mapData.consistencyCheck()
+		let archiveElapsed = CACurrentMediaTime() - archiveStart
 
 		// merge info from SQL database
+		let dbStart = CACurrentMediaTime()
 		do {
 			let db = try Database(name: "")
 			let newData = try OsmServerData(nodes: db.queryNodes(),
@@ -1448,6 +1470,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			// so discard everything except user edits and download it all again
 			mapData.purgeSoft()
 		}
+		let dbElapsed = CACurrentMediaTime() - dbStart
+
+		let totalElapsed = CACurrentMediaTime() - totalStart
+		print(
+			"Database load: archive \(String(format: "%.3f", archiveElapsed))s, SQL \(String(format: "%.3f", dbElapsed))s, total \(String(format: "%.3f", totalElapsed))s")
 
 		return mapData
 	}
