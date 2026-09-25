@@ -505,23 +505,25 @@ final class EditorMapLayer: CALayer {
 			return
 		}
 
-		mapData.downloadMissingData(inRect: box, withProgress: progress, didUpdate: { [weak self] error in
-			guard let self else { return }
-			if let error {
-				// present error asynchronously so we don't interrupt the current UI action
-				DispatchQueue.main.async { [weak self] in
-					// if we've been hidden don't bother displaying errors
-					guard let self,
-					      !self.isHidden,
-					      !self.owner.isHidden
-					else { return }
-					self.display.presentError(title: nil, error: error, flash: true)
+		MainActor.assumeIsolated {
+			mapData.downloadMissingData(inRect: box, withProgress: progress, didUpdate: { [weak self] error in
+				guard let self else { return }
+				if let error {
+					// present error asynchronously so we don't interrupt the current UI action
+					DispatchQueue.main.async { [weak self] in
+						// if we've been hidden don't bother displaying errors
+						guard let self,
+						      !self.isHidden,
+						      !self.owner.isHidden
+						else { return }
+						self.display.presentError(title: nil, error: error, flash: true)
+					}
+					return
 				}
-				return
-			}
-			setNeedsLayout()
-			owner.didDownloadData()
-		})
+				setNeedsLayout()
+				owner.didDownloadData()
+			})
+		}
 		setNeedsLayout()
 	}
 

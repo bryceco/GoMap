@@ -561,6 +561,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	///	- We then combine (coalesceQuadQueries) adjacent quads into a single rectangle
 	///	- We submit the rect to the server
 	///	- Once we've successfully fetched the data for the rect we tell the QuadMap that it can mark the given QuadBoxes as downloaded
+	@MainActor
 	func downloadMissingData(inRect rect: OSMRect,
 	                         withProgress progress: MapViewProgress,
 	                         didUpdate: @escaping (_ error: Swift.Error?) -> Void)
@@ -614,18 +615,15 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					didGetData = false
 					didUpdate(error) // error fetching data
 				}
-				await MainActor.run {
-
-					for quadBox in query.quadList {
-						self.region.updateDownloadStatus(quadBox, success: didGetData)
-					}
-					progress.progressDecrement()
+				for quadBox in query.quadList {
+					self.region.updateDownloadStatus(quadBox, success: didGetData)
+				}
+				progress.progressDecrement()
 
 #if DEBUG
-					AppDelegate.shared.mainView.mapLayersView.quadDownloadLayer?.setNeedsLayout()
+				AppDelegate.shared.mainView.mapLayersView.quadDownloadLayer?.setNeedsLayout()
 #endif
-					self.archiveModifiedData() // region changed
-				}
+				self.archiveModifiedData() // region changed
 			}
 		}
 	}
