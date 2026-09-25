@@ -166,6 +166,7 @@ final class QuadBox: NSObject, NSSecureCoding {
 		   parent.isDownloaded
 		{
 			// parent was made whole (somehow) before we completed, so nothing to do
+			busy = false
 			if countBusy() == 0 {
 				delete()
 			}
@@ -414,7 +415,13 @@ extension QuadBox {
 		if downloadDate != 0.0,
 		   downloadDate < date
 		{
-			parent?.isDownloaded = false
+			// Every ancestor that was marked whole because of us is no longer whole,
+			// otherwise missingPieces() stops at that ancestor and this region is never refetched.
+			var ancestor = parent
+			while let quad = ancestor, quad.isDownloaded {
+				quad.isDownloaded = false
+				ancestor = quad.parent
+			}
 			delete()
 			return true
 		} else {
