@@ -20,7 +20,8 @@ enum ArchivePath {
 	case aerialProviers
 	case legacyCustomPresets // deprecated, these are stored in UserDefaults now
 	case mapMarkerIgnoreList
-	case osmDataArchive
+	case osmDataArchiveV2 // current archive format
+	case osmDataArchiveV1 // previous archive format, kept until edits are uploaded so a downgrade can read it
 	case sqlite(String)
 	case tagInfo
 
@@ -125,7 +126,17 @@ enum ArchivePath {
 			               	urlWith(name: "mapMarkerIgnoreList", in: .libraryDirectory)
 			               ])
 
-		case .osmDataArchive:
+		case .osmDataArchiveV2:
+			// The name changes whenever the archive format changes, so an older app
+			// never tries to read a newer archive. Bump the number when the format changes.
+			return urlWith(name: "user_edits.v2.archive",
+			               in: Self.appDataFolder.url(),
+			               legacy: [
+			               	urlWith(name: "OSM Downloaded Data.archive", in: .libraryDirectory, bundleID: true),
+			               	urlWith(name: "OSM Downloaded Data.archive", in: .cachesDirectory, bundleID: true)
+			               ])
+
+		case .osmDataArchiveV1:
 			return urlWith(name: "user_edits.archive",
 			               in: Self.appDataFolder.url(),
 			               legacy: [

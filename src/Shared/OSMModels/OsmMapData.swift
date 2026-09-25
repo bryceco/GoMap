@@ -1268,7 +1268,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	static func pathToArchiveFile() -> URL {
-		return ArchivePath.osmDataArchive.url()
+		return ArchivePath.osmDataArchiveV2.url()
 	}
 
 	/// The server copy of every server-originated object, for writing to the database.
@@ -1371,6 +1371,10 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			region.rootQuad.reset()
 		}
 		archiveModifiedData()
+		if modificationCount() == 0 {
+			// Everything is on the server, so there's nothing left to lose on a downgrade.
+			OsmMapDataArchiver.removeLegacyArchives()
+		}
 	}
 
 	func archiveModifiedData() {

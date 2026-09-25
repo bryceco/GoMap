@@ -37,7 +37,11 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 	}
 
 	func loadArchive() throws -> OsmMapData {
-		let url = OsmMapData.pathToArchiveFile()
+		var url = OsmMapData.pathToArchiveFile()
+		if (try? url.checkResourceIsReachable()) != true {
+			// No current-format archive, so fall back to the previous format.
+			url = ArchivePath.osmDataArchiveV1.url()
+		}
 		if (try? url.checkResourceIsReachable()) != true {
 			print("Archive file doesn't exist")
 			throw MapDataError.archiveDoesNotExist
@@ -75,6 +79,14 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 			throw MapDataError.archiveCannotBeDecoded
 		}
 		return decode
+	}
+
+	/// Delete previous-format archives (and old per-version backups).
+	/// Call only once all edits have been uploaded, since until then they are
+	/// the user's only copy if the app is downgraded.
+	static func removeLegacyArchives() {
+		let legacy = ArchivePath.osmDataArchiveV1.url()
+		try? FileManager.default.removeItem(at: legacy)
 	}
 
 	func unarchiver(
