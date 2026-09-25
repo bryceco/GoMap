@@ -107,29 +107,27 @@ class LocationURLParserTestCase: XCTestCase {
 		XCTAssertEqual(result.zoom, 0)
 	}
 
-	func testParseURL_openStreetMapWithMlatMlon() {
+	func testParseURL_openStreetMapWithMlatMlon() throws {
 		// Full URL with fragment — fragment's zoom/lat/lon are used
-		let url1 = URL(string: "https://www.openstreetmap.org/?mlat=34.3898&mlon=-119.9065&zoom=15#map=18/34.389880/-119.906166")!
-		let result1 = LocationParser.mapLocationFrom(url: url1)
-		XCTAssertNotNil(result1)
-		XCTAssertEqual(result1!.latitude, 34.3898, accuracy: 0.001)
-		XCTAssertEqual(result1!.longitude, -119.9065, accuracy: 0.001)
+		let url1 = try XCTUnwrap(URL(string: "https://www.openstreetmap.org/?mlat=34.3898&mlon=-119.9065&zoom=15"
+				+ "#map=18/34.389880/-119.906166"))
+		let result1 = try XCTUnwrap(LocationParser.mapLocationFrom(url: url1))
+		XCTAssertEqual(result1.latitude, 34.3898, accuracy: 0.001)
+		XCTAssertEqual(result1.longitude, -119.9065, accuracy: 0.001)
 
 		// URL with only mlat/mlon query params (no fragment)
-		let url2 = URL(string: "https://www.openstreetmap.org/?mlat=34.3898&mlon=-119.9065&zoom=15")!
-		let result2 = LocationParser.mapLocationFrom(url: url2)
-		XCTAssertNotNil(result2)
-		XCTAssertEqual(result2!.latitude, 34.3898, accuracy: 0.0001)
-		XCTAssertEqual(result2!.longitude, -119.9065, accuracy: 0.0001)
-		XCTAssertEqual(result2!.zoom, 15.0)
+		let url2 = try XCTUnwrap(URL(string: "https://www.openstreetmap.org/?mlat=34.3898&mlon=-119.9065&zoom=15"))
+		let result2 = try XCTUnwrap(LocationParser.mapLocationFrom(url: url2))
+		XCTAssertEqual(result2.latitude, 34.3898, accuracy: 0.0001)
+		XCTAssertEqual(result2.longitude, -119.9065, accuracy: 0.0001)
+		XCTAssertEqual(result2.zoom, 15.0)
 
 		// URL with only mlat/mlon, no zoom
-		let url3 = URL(string: "https://www.openstreetmap.org/?mlat=34.3898&mlon=-119.9065")!
-		let result3 = LocationParser.mapLocationFrom(url: url3)
-		XCTAssertNotNil(result3)
-		XCTAssertEqual(result3!.latitude, 34.3898, accuracy: 0.0001)
-		XCTAssertEqual(result3!.longitude, -119.9065, accuracy: 0.0001)
-		XCTAssertEqual(result3!.zoom, 0.0)
+		let url3 = try XCTUnwrap(URL(string: "https://www.openstreetmap.org/?mlat=34.3898&mlon=-119.9065"))
+		let result3 = try XCTUnwrap(LocationParser.mapLocationFrom(url: url3))
+		XCTAssertEqual(result3.latitude, 34.3898, accuracy: 0.0001)
+		XCTAssertEqual(result3.longitude, -119.9065, accuracy: 0.0001)
+		XCTAssertEqual(result3.zoom, 0.0)
 	}
 
 	func testParseString_coordinateFormats() {
