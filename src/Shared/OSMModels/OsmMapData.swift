@@ -137,27 +137,27 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	func objectsContaining(_ object: OsmBaseObject) -> [OsmBaseObject] {
-		var a: [OsmBaseObject] = []
+		var result: [OsmBaseObject] = []
 
 		if let object = object as? OsmNode {
 			// Don't scan everything: for performance reasons only consider visible objects
 			let shownObjects = AppDelegate.shared.mapView.shownObjects
 			for obj in shownObjects {
 				if let way = obj as? OsmWay,
-				   way.nodes.contains(object)
+				   way.nodes.contains(where: { $0 === object })
 				{
-					a.append(way)
+					result.append(way)
 				}
 			}
 		}
 
 		for relation in relations.values {
 			if relation.containsObject(object) {
-				a.append(relation)
+				result.append(relation)
 			}
 		}
 
-		return a
+		return result
 	}
 
 	func enumerateObjects(usingBlock block: (_ obj: OsmBaseObject) -> Void) {

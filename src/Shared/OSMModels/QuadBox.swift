@@ -310,7 +310,7 @@ final class QuadBox: NSObject, NSSecureCoding {
 			children[index.rawValue]!.addMember(member: member, bbox: bbox, depth: depth + 1)
 		} else {
 			// add to self
-			if members.contains(member) {
+			if members.contains(where: { $0 === member }) {
 				// it's already in this box
 				return
 			}
@@ -324,7 +324,7 @@ final class QuadBox: NSObject, NSSecureCoding {
 
 	@discardableResult
 	func removeMember(_ member: OsmBaseObject, bbox: OSMRect) -> Bool {
-		if let index = members.firstIndex(of: member) {
+		if let index = members.firstIndex(where: { $0 === member }) {
 			members.remove(at: index)
 			return true
 		}
@@ -344,7 +344,7 @@ final class QuadBox: NSObject, NSSecureCoding {
 	}
 
 	func getQuadBoxContaining(_ member: OsmBaseObject, bbox: OSMRect) -> QuadBox? {
-		if members.firstIndex(of: member) != nil {
+		if members.contains(where: { $0 === member }) {
 			return self
 		}
 		// find a child member could fit into

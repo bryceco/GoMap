@@ -423,15 +423,27 @@ final class OsmRelation: OsmBaseObject {
 	}
 
 	func containsObject(_ target: OsmBaseObject) -> Bool {
-		for obj in allMemberObjects() {
-			if obj === target {
-				return true
-			}
-			if let node = target as? OsmNode,
-			   let way = obj as? OsmWay,
-			   way.nodes.contains(where: { $0 === node })
-			{
-				return true
+		var visitedRelations = Set<ObjectIdentifier>([ObjectIdentifier(self)])
+		var needToVisit = [self]
+		while let relation = needToVisit.popLast() {
+			for member in relation.members {
+				guard let obj = member.obj else { continue }
+				if obj === target {
+					return true
+				}
+				if let node = target as? OsmNode,
+				   let way = obj as? OsmWay,
+				   way.nodes.contains(where: { $0 === node })
+				{
+					return true
+				}
+				if let rel = obj as? OsmRelation {
+					let id = ObjectIdentifier(rel)
+					if !visitedRelations.contains(id) {
+						visitedRelations.insert(id)
+						needToVisit.append(rel)
+					}
+				}
 			}
 		}
 		return false
