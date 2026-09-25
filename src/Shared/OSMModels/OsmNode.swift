@@ -74,8 +74,8 @@ final class OsmNode: OsmBaseObject {
 		return p0.distanceToLineSegment(p1, p2)
 	}
 
-	func setLongitude(_ longitude: Double, latitude: Double, _ token: EditToken) {
-		latLon = LatLon(latitude: latitude, longitude: longitude)
+	func setLatLon(_ latLon: LatLon, _ token: EditToken) {
+		self.latLon = latLon
 		clearCachedProperties()
 	}
 

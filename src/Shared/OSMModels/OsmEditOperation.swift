@@ -41,7 +41,7 @@ enum OsmEditOperation {
 	case setDeleted(OsmBaseObject, Bool)
 	case setTags(OsmBaseObject, [String: String])
 
-	// MARK: OsmNode (was setLongitude; stores target LatLon directly)
+	// MARK: OsmNode (stores target LatLon directly)
 	case moveNode(OsmNode, to: LatLon)
 
 	// MARK: OsmWay (spatial index update for the way absorbed into apply)
@@ -93,7 +93,7 @@ extension OsmEditOperation {
 			let oldLatLon = node.latLon
 			let parents = mapData.objectsContaining(node).map { ($0, $0.boundingBox) }
 			let oldNodeBox = node.boundingBox
-			node.setLongitude(newLatLon.lon, latitude: newLatLon.lat, token)
+			node.setLatLon(newLatLon, token)
 			mapData.spatial.updateMember(node, fromBox: oldNodeBox)
 			for (parent, oldBox) in parents {
 				parent.clearCachedProperties() // invalidates cached bbox
