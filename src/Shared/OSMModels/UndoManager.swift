@@ -150,7 +150,9 @@ class MyUndoManager: NSObject, NSSecureCoding {
 			let action = undoStack[i]
 			guard groupIds.contains(action.group) else { continue }
 			action.type.apply(to: mapData)
-			affectedObjects.formUnion(action.type.modifyObjects)
+			if let obj = action.type.modifiesObject {
+				affectedObjects.insert(obj)
+			}
 		}
 
 		// Remove the reverted actions and wipe the redo stack.
@@ -159,7 +161,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 
 		// Recompute isModified: an object is still modified only if it remains
 		// on the undo stack.
-		let liveModified = Set(undoStack.flatMap { $0.type.modifyObjects })
+		let liveModified = Set(undoStack.compactMap { $0.type.modifiesObject })
 		for obj in affectedObjects {
 			obj.setModified(liveModified.contains(obj))
 		}
@@ -202,7 +204,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		}
 
 		// Preserve what the server sent us before the first edit changes it
-		for obj in type.modifyObjects {
+		if let obj = type.modifiesObject {
 			obj.captureServerCopy()
 		}
 
@@ -220,7 +222,7 @@ class MyUndoManager: NSObject, NSSecureCoding {
 		}
 
 		// Forward edits always mark objects as modified.
-		for obj in type.modifyObjects {
+		if let obj = type.modifiesObject {
 			obj.setModified(true)
 		}
 
@@ -257,14 +259,14 @@ class MyUndoManager: NSObject, NSSecureCoding {
 			} else {
 				undoStack.append(inverse)
 			}
-			affectedObjects.formUnion(action.type.modifyObjects)
+			if let obj = action.type.modifiesObject { affectedObjects.insert(obj) }
 		}
 
 		// Recompute isModified for affected objects.
 		// After undo: an object is still modified only if it remains on the undo stack.
 		// After redo: all affected objects are back on the undo stack, so always modified.
 		if isUndoing {
-			let liveModified = Set(stack.flatMap { $0.type.modifyObjects })
+			let liveModified = Set(stack.compactMap { $0.type.modifiesObject })
 			for obj in affectedObjects {
 				obj.setModified(liveModified.contains(obj))
 			}

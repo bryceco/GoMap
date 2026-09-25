@@ -283,27 +283,27 @@ extension OsmEditOperation {
 	}
 }
 
-// MARK: - modifyObjects
+// MARK: - modifiesObject
 
 extension OsmEditOperation {
-	/// Objects whose `isModified` flag should be updated when this operation is applied.
+	/// The object whose `isModified` flag should be updated when this operation is applied.
 	/// `comment` is excluded because it doesn't mark objects as dirty.
-	var modifyObjects: Set<OsmBaseObject> {
+	var modifiesObject: OsmBaseObject? {
 		switch self {
 		case .comment:
-			return []
+			return nil
 		case let .setDeleted(obj, _),
 		     let .setTags(obj, _):
-			return [obj]
+			return obj
 		case let .moveNode(node, _):
-			return [node]
+			return node
 		case let .addNode(way, _, _),
 		     let .removeNode(way, _):
-			return [way]
+			return way
 		case let .assignMembers(rel, _),
 		     let .addMember(rel, _, _),
 		     let .removeMember(rel, _):
-			return [rel]
+			return rel
 		}
 	}
 }
