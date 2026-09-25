@@ -390,12 +390,12 @@ final class OsmRelation: OsmBaseObject {
 		return center // this is a failure condition
 	}
 
-	override func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
+	override func distanceToLineSegment(from latLon1: LatLon, to latLon2: LatLon) -> Double {
 		var dist = 1_000000.0
 		for member in members {
 			if let object = member.obj {
 				if object.isRelation() == nil {
-					let d = object.distance(toLineSegment: point1, point: point2)
+					let d = object.distanceToLineSegment(from: latLon1, to: latLon2)
 					if d < dist {
 						dist = d
 					}

@@ -262,7 +262,7 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 		fatalError()
 	}
 
-	func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
+	func distanceToLineSegment(from latLon1: LatLon, to latLon2: LatLon) -> Double {
 		// This is specialized for OsmNode, OsmWay, OsmRelation so we should never get here
 		fatalError()
 	}

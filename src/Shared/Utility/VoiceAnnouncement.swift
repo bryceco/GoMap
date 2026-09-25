@@ -104,8 +104,7 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 				return
 			}
 			// make sure it is within distance
-			let dist = obj.distance(toLineSegment: OSMPointFromCoordinate(self.previousCoord),
-			                        point: OSMPointFromCoordinate(coord))
+			let dist = obj.distanceToLineSegment(from: self.previousCoord, to: coord)
 
 			if dist < self.radius {
 				if let currentHighway = self.currentHighway,
@@ -212,9 +211,4 @@ class VoiceAnnouncement: NSObject, AVSpeechSynthesizerDelegate {
 	func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
 		speechSynthesizer(synthesizer, didFinish: utterance)
 	}
-}
-
-private func OSMPointFromCoordinate(_ coord: LatLon) -> OSMPoint {
-	let point = OSMPoint(x: coord.lon, y: coord.lat)
-	return point
 }

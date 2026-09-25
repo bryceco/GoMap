@@ -296,19 +296,21 @@ final class OsmWay: OsmBaseObject {
 		return LatLon(bestPoint)
 	}
 
-	override func distance(toLineSegment point1: OSMPoint, point point2: OSMPoint) -> Double {
+	override func distanceToLineSegment(from latLon1: LatLon, to latLon2: LatLon) -> Double {
 		if nodes.count == 1 {
-			return nodes.last!.distance(toLineSegment: point1, point: point2)
+			return nodes.last!.distanceToLineSegment(from: latLon1, to: latLon2)
 		}
 		var dist = 1_000000.0
 		var prevNode: OsmNode?
+		let osmPoint1 = OSMPoint(latLon1)
+		let osmPoint2 = OSMPoint(latLon2)
 		for node in nodes {
 			if let prevNode = prevNode,
-			   LineSegmentsIntersect(prevNode.location(), node.location(), point1, point2)
+			   LineSegmentsIntersect(prevNode.location(), node.location(), osmPoint1, osmPoint2)
 			{
 				return 0.0
 			}
-			let d = node.distance(toLineSegment: point1, point: point2)
+			let d = node.distanceToLineSegment(from: latLon1, to: latLon2)
 			if d < dist {
 				dist = d
 			}

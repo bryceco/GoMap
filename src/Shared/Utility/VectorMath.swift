@@ -242,20 +242,19 @@ extension OSMPoint {
 	}
 
 	public func distanceToLineSegment(_ line1: OSMPoint, _ line2: OSMPoint) -> Double {
-		let length2 = MagSquared(Sub(line1, line2))
+		let ab = Sub(line2, line1)
+		let length2 = MagSquared(ab)
 		if length2 == 0.0 {
 			return distanceToPoint(line1)
 		}
-		let t = Dot(Sub(self, line1), Sub(line2, line1)) / Double(length2)
-		if t < 0.0 {
+		let t = Dot(Sub(self, line1), ab) / length2
+		if t <= 0.0 {
 			return distanceToPoint(line1)
 		}
-		if t > 1.0 {
+		if t >= 1.0 {
 			return distanceToPoint(line2)
 		}
-
-		let projection = Add(line1, Mult(Sub(line2, line1), Double(t)))
-		return distanceToPoint(projection)
+		return distanceToPoint(Add(line1, Mult(ab, t)))
 	}
 
 	func distanceFromLine(_ lineStart: OSMPoint, _ lineDirection: OSMPoint) -> Double {
