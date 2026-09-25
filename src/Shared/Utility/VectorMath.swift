@@ -377,6 +377,19 @@ extension OSMRect {
 			origin.y + size.height >= b.origin.y + b.size.height
 	}
 
+	/// True if the two rects share a complete edge, so that their union is also a rect.
+	func sharesEdge(with b: OSMRect) -> Bool {
+		if size.width == b.size.width, origin.x == b.origin.x {
+			// stacked vertically
+			return origin.y == b.origin.y + b.size.height || origin.y + size.height == b.origin.y
+		}
+		if size.height == b.size.height, origin.y == b.origin.y {
+			// side by side
+			return origin.x == b.origin.x + b.size.width || origin.x + size.width == b.origin.x
+		}
+		return false
+	}
+
 	func union(_ b: OSMRect) -> OSMRect {
 		let minX = Double(min(origin.x, b.origin.x))
 		let minY = Double(min(origin.y, b.origin.y))

@@ -500,37 +500,17 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			query.rect = quad.rect
 			return query
 		}
-		loop: while true {
-			for q in queries {
-				if let index = queries.firstIndex(where: {
-					if q.rect.size.width == $0.rect.size.width {
-						// equal widths
-						if q.rect.origin.x == $0.rect.origin.x {
-							// matching left-right sides
-							if q.rect.origin.y == $0.rect.origin.y + $0.rect.size.height ||
-								q.rect.origin.y + q.rect.size.height == $0.rect.origin.y
-							{
-								// stacked vertically
-								return true
-							}
-						}
-					}
-					if q.rect.size.height == $0.rect.size.height {
-						// equal heights
-						if q.rect.origin.y == $0.rect.origin.y {
-							// matching top-bottom
-							if q.rect.origin.x == $0.rect.origin.x + $0.rect.size.width ||
-								q.rect.origin.x + q.rect.size.width == $0.rect.origin.x
-							{
-								// stacked horizontally
-								return true
-							}
-						}
-					}
-					return false
-				}) {
-					// combine them
-					let other = queries[index]
+		// Repeatedly merge any two queries that share an edge. A query keeps absorbing
+		// neighbors until none remain, and we make another pass whenever a merge might
+		// have created a new adjacency for an earlier query.
+		var merged = true
+		while merged {
+			merged = false
+			var i = 0
+			while i < queries.count {
+				let q = queries[i]
+				if let j = queries.indices.first(where: { $0 != i && q.rect.sharesEdge(with: queries[$0].rect) }) {
+					let other = queries[j]
 					let newRect = q.rect.union(other.rect)
 #if DEBUG
 					let areaDiff = newRect.size.width * newRect.size.height
@@ -539,11 +519,15 @@ final class OsmMapData: NSObject, NSSecureCoding {
 #endif
 					q.rect = newRect
 					q.quadList += other.quadList
-					queries.remove(at: index)
-					continue loop
+					queries.remove(at: j)
+					if j < i {
+						i -= 1
+					}
+					merged = true
+				} else {
+					i += 1
 				}
 			}
-			break
 		}
 		return queries
 	}
