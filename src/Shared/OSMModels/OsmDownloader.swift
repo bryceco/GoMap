@@ -139,7 +139,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 				parser.abortParsing()
 				return
 			}
-			let node = OsmNodeData(
+			let node = OsmServerNode(
 				ident: ident,
 				version: version,
 				changeset: changeset,
@@ -164,7 +164,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 				parser.abortParsing()
 				return
 			}
-			let way = OsmWayData(
+			let way = OsmServerWay(
 				ident: ident,
 				version: version,
 				changeset: changeset,
@@ -189,7 +189,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 				parser.abortParsing()
 				return
 			}
-			let relation = OsmRelationData(
+			let relation = OsmServerRelation(
 				ident: ident,
 				version: version,
 				changeset: changeset,

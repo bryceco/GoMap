@@ -436,7 +436,7 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 
 	/// Replace the server-visible fields with a newer version from the server.
 	/// Subclasses call this and then update their own body.
-	func serverUpdate<Body>(header data: OsmObjectData<Body>) {
+	func serverUpdate<Body>(header data: OsmServerObject<Body>) {
 		assert(ident == data.ident)
 		assert(version < data.version)
 		tags = data.tags

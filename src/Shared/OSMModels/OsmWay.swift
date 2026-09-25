@@ -13,7 +13,7 @@ final class OsmWay: OsmBaseObject {
 	var nodeRefs: [OsmIdentifier]? // only used during construction
 	private(set) var nodes: [OsmNode]
 	/// The last state received from the server, kept only while the object has local edits
-	private(set) var serverData: OsmWayData?
+	private(set) var serverObject: OsmServerWay?
 
 	override var description: String {
 		return "OsmWay \(super.description)"
@@ -59,7 +59,7 @@ final class OsmWay: OsmBaseObject {
 	}
 
 	/// After calling this the caller must call resolveToMapData() to rebuild `nodes`
-	func serverUpdate(with data: OsmWayData) {
+	func serverUpdate(with data: OsmServerWay) {
 		super.serverUpdate(header: data)
 		// undo wayCount in contained nodes
 		for node in nodes {
@@ -67,20 +67,20 @@ final class OsmWay: OsmBaseObject {
 		}
 		nodes = []
 		nodeRefs = data.nodeRefs
-		serverData = nil
+		serverObject = nil
 	}
 
 	override func captureServerCopy() {
-		if ident > 0, serverData == nil {
-			serverData = OsmWayData(self)
+		if ident > 0, serverObject == nil {
+			serverObject = OsmServerWay(self)
 		}
 	}
 
 	override func clearServerCopy() {
-		serverData = nil
+		serverObject = nil
 	}
 
-	convenience init(_ data: OsmWayData) {
+	convenience init(_ data: OsmServerWay) {
 		self.init(withVersion: data.version, changeset: data.changeset, user: data.user, uid: data.uid,
 		          ident: data.ident, timestamp: data.timestamp, tags: data.tags, nodeRefs: data.nodeRefs)
 	}
@@ -563,7 +563,7 @@ final class OsmWay: OsmBaseObject {
 		}
 		self.nodes = nodes
 		if let data = coder.decodeObject(of: NSData.self, forKey: "server") as Data? {
-			serverData = OsmWayData(serializedData: data)
+			serverObject = OsmServerWay(serializedData: data)
 		}
 		super.init(coder: coder)
 		for node in nodes {
@@ -574,7 +574,7 @@ final class OsmWay: OsmBaseObject {
 	override func encode(with coder: NSCoder) {
 		super.encode(with: coder)
 		coder.encode(nodes, forKey: "nodes")
-		if let data = serverData?.serializedData() {
+		if let data = serverObject?.serializedData() {
 			coder.encode(data, forKey: "server")
 		}
 	}

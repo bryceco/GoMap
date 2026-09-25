@@ -638,7 +638,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	func saveAndMerge(_ data: OsmServerData) async throws {
 		// Skip objects we already have, unless the server's version is newer.
 		// (A modified object's server copy is already in the database, or in its `server` field.)
-		func isNew(_ data: OsmObjectData<some Any>, current: OsmBaseObject?) -> Bool {
+		func isNew(_ data: OsmServerObject<some Any>, current: OsmBaseObject?) -> Bool {
 			guard let current else { return true }
 			return current.version < data.version
 		}
@@ -1277,18 +1277,18 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	/// New objects (ident < 0) are excluded — they live only in the archive.
 	func unmodifiedServerData() -> OsmServerData {
 		OsmServerData(
-			nodes: nodes.values.compactMap { $0.ident > 0 ? ($0.serverData ?? OsmNodeData($0)) : nil },
-			ways: ways.values.compactMap { $0.ident > 0 ? ($0.serverData ?? OsmWayData($0)) : nil },
-			relations: relations.values.compactMap { $0.ident > 0 ? ($0.serverData ?? OsmRelationData($0)) : nil })
+			nodes: nodes.values.compactMap { $0.ident > 0 ? ($0.serverObject ?? OsmServerNode($0)) : nil },
+			ways: ways.values.compactMap { $0.ident > 0 ? ($0.serverObject ?? OsmServerWay($0)) : nil },
+			relations: relations.values.compactMap { $0.ident > 0 ? ($0.serverObject ?? OsmServerRelation($0)) : nil })
 	}
 
 	/// Writes to the database. Must be called on Database.dispatchQueue.
 	/// Returns false on failure, in which case the database has been deleted and the caller
 	/// must reset the region so everything gets downloaded again.
 	private static func writeDatabase(
-		saveNodes: [OsmNodeData],
-		saveWays: [OsmWayData],
-		saveRelations: [OsmRelationData],
+		saveNodes: [OsmServerNode],
+		saveWays: [OsmServerWay],
+		saveRelations: [OsmServerRelation],
 		deleteNodes: [OsmIdentifier],
 		deleteWays: [OsmIdentifier],
 		deleteRelations: [OsmIdentifier],
@@ -1352,9 +1352,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// Synchronous: the user is already waiting for the upload to finish, and the
 		// objects must reach the database before the undo stack (and so the archive) forgets them.
-		let saveNodes = insertNode.map { OsmNodeData($0) }
-		let saveWays = insertWay.map { OsmWayData($0) }
-		let saveRelations = insertRelation.map { OsmRelationData($0) }
+		let saveNodes = insertNode.map { OsmServerNode($0) }
+		let saveWays = insertWay.map { OsmServerWay($0) }
+		let saveRelations = insertRelation.map { OsmServerRelation($0) }
 		let deleteNodes = deleteNode.map(\.ident)
 		let deleteWays = deleteWay.map(\.ident)
 		let deleteRelations = deleteRelation.map(\.ident)

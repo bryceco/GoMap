@@ -5,7 +5,7 @@ import Foundation
 /// produce, what the database writes, and what OsmNode/OsmWay/OsmRelation are built from.
 /// Being a value type it can be handed to the database queue without copying and without
 /// any risk that the main thread edits it while it's being written.
-struct OsmObjectData<Body> {
+struct OsmServerObject<Body> {
 	let ident: OsmIdentifier
 	let version: Int
 	let changeset: Int64
@@ -18,6 +18,7 @@ struct OsmObjectData<Body> {
 	init(ident: OsmIdentifier, version: Int, changeset: Int64, user: String, uid: Int,
 	     timestamp: String, tags: [String: String], body: Body)
 	{
+		DbgAssert(ident > 0)
 		self.ident = ident
 		self.version = version
 		self.changeset = changeset
@@ -29,8 +30,10 @@ struct OsmObjectData<Body> {
 	}
 
 	/// Copy the server-visible fields of a live object. Only for objects that were
-	/// received from the server (ident > 0); new objects never go in the database.
+	/// received from the server (ident > 0); user-created objects never go in the database.
 	private init(_ obj: OsmBaseObject, body: Body) {
+		DbgAssert(obj.ident > 0)
+		DbgAssert(!obj.isModified)
 		ident = obj.ident
 		version = obj.version
 		changeset = obj.changeset
@@ -42,10 +45,10 @@ struct OsmObjectData<Body> {
 	}
 }
 
-extension OsmObjectData: Sendable where Body: Sendable {}
-extension OsmObjectData: Codable where Body: Codable {}
+extension OsmServerObject: Sendable where Body: Sendable {}
+extension OsmServerObject: Codable where Body: Codable {}
 
-extension OsmObjectData where Body: Codable {
+extension OsmServerObject where Body: Codable {
 	/// Serialize to binary plist for archiving
 	func serializedData() -> Data {
 		let encoder = PropertyListEncoder()
@@ -62,31 +65,31 @@ extension OsmObjectData where Body: Codable {
 	}
 }
 
-typealias OsmNodeData = OsmObjectData<LatLon>
-typealias OsmWayData = OsmObjectData<[OsmIdentifier]>
-typealias OsmRelationData = OsmObjectData<[OsmMember]>
+typealias OsmServerNode = OsmServerObject<LatLon>
+typealias OsmServerWay = OsmServerObject<[OsmIdentifier]>
+typealias OsmServerRelation = OsmServerObject<[OsmMember]>
 
-extension OsmObjectData where Body == LatLon {
+extension OsmServerObject where Body == LatLon {
 	var latLon: LatLon { body }
 	init(_ node: OsmNode) { self.init(node, body: node.latLon) }
 }
 
-extension OsmObjectData where Body == [OsmIdentifier] {
+extension OsmServerObject where Body == [OsmIdentifier] {
 	var nodeRefs: [OsmIdentifier] { body }
 	init(_ way: OsmWay) { self.init(way, body: way.nodes.map(\.ident)) }
 }
 
-extension OsmObjectData where Body == [OsmMember] {
+extension OsmServerObject where Body == [OsmMember] {
 	var members: [OsmMember] { body }
 	init(_ relation: OsmRelation) { self.init(relation, body: relation.members) }
 }
 
 struct OsmServerData {
-	var nodes: [OsmNodeData] = []
-	var ways: [OsmWayData] = []
-	var relations: [OsmRelationData] = []
+	var nodes: [OsmServerNode] = []
+	var ways: [OsmServerWay] = []
+	var relations: [OsmServerRelation] = []
 
-	init(nodes: [OsmNodeData] = [], ways: [OsmWayData] = [], relations: [OsmRelationData] = []) {
+	init(nodes: [OsmServerNode] = [], ways: [OsmServerWay] = [], relations: [OsmServerRelation] = []) {
 		self.nodes = nodes
 		self.ways = ways
 		self.relations = relations

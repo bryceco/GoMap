@@ -227,7 +227,7 @@ final class Database {
 
 	// MARK: save
 
-	private func saveNodes(_ nodes: [OsmNodeData]) throws {
+	private func saveNodes(_ nodes: [OsmServerNode]) throws {
 		if nodes.count == 0 {
 			return
 		}
@@ -268,7 +268,7 @@ final class Database {
 		}
 	}
 
-	private func saveWays(_ ways: [OsmWayData]) throws {
+	private func saveWays(_ ways: [OsmServerWay]) throws {
 		if ways.count == 0 {
 			return
 		}
@@ -319,7 +319,7 @@ final class Database {
 		}
 	}
 
-	private func saveRelations(_ relations: [OsmRelationData]) throws {
+	private func saveRelations(_ relations: [OsmServerRelation]) throws {
 		if relations.count == 0 {
 			return
 		}
@@ -424,9 +424,9 @@ final class Database {
 	// MARK: update
 
 	func save(
-		saveNodes: [OsmNodeData],
-		saveWays: [OsmWayData],
-		saveRelations: [OsmRelationData],
+		saveNodes: [OsmServerNode],
+		saveWays: [OsmServerWay],
+		saveRelations: [OsmServerRelation],
 		deleteNodes: [OsmIdentifier],
 		deleteWays: [OsmIdentifier],
 		deleteRelations: [OsmIdentifier],
@@ -479,13 +479,13 @@ final class Database {
 		return dict
 	}
 
-	func queryNodes() throws -> [OsmNodeData] {
+	func queryNodes() throws -> [OsmServerNode] {
 		let nodeStatement =
 			try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,longitude,latitude FROM nodes;")
 
 		let tagsDict = try queryTagTable("node_tags", sizeEstimate: 5000)
 
-		var nodes: [OsmNodeData] = []
+		var nodes: [OsmServerNode] = []
 		nodes.reserveCapacity(100000)
 
 		while try nodeStatement.step(hasResult: Sqlite.ROW) {
@@ -500,7 +500,7 @@ final class Database {
 
 			let tags = tagsDict[ident] ?? [:]
 
-			let node = OsmNodeData(
+			let node = OsmServerNode(
 				ident: ident,
 				version: Int(version),
 				changeset: Int64(changeset),
@@ -523,7 +523,7 @@ final class Database {
 		var nodeRefs: [OsmIdentifier]
 	}
 
-	func queryWays() throws -> [OsmWayData] {
+	func queryWays() throws -> [OsmServerWay] {
 		let wayStatement = try db.prepare("SELECT ident,user,timestamp,version,changeset,uid,nodecount FROM ways")
 		let tagsDict = try queryTagTable("way_tags", sizeEstimate: 20000)
 
@@ -549,7 +549,7 @@ final class Database {
 		try fillNodeRefs(into: &wayMeta)
 
 		return wayMeta.map { ident, meta in
-			OsmWayData(
+			OsmServerWay(
 				ident: ident,
 				version: Int(meta.version),
 				changeset: meta.changeset,
@@ -583,7 +583,7 @@ final class Database {
 		var members: [OsmMember?]
 	}
 
-	func queryRelations() throws -> [OsmRelationData] {
+	func queryRelations() throws -> [OsmServerRelation] {
 		let relationStatement = try db
 			.prepare("SELECT ident,user,timestamp,version,changeset,uid,membercount FROM relations")
 
@@ -610,7 +610,7 @@ final class Database {
 		try fillMembers(into: &relationMeta)
 
 		return relationMeta.map { ident, meta in
-			OsmRelationData(
+			OsmServerRelation(
 				ident: ident,
 				version: Int(meta.version),
 				changeset: meta.changeset,
