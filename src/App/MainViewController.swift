@@ -386,7 +386,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 		viewState.onChange.subscribe(self) { [weak self] in
 			self?.viewStateDidChange()
 		}
-		viewStateDidChange()
 
 		AppState.shared.tileServerList.onChange.subscribe(self) { [weak self] in
 			self?.promptForBetterBackgroundImagery()
@@ -419,6 +418,13 @@ final class MainViewController: UIViewController, DPadDelegate,
 				// turn on GPS which will move us to current location
 				gpsState = .LOCATION
 			}
+
+			// Set visible layers after viewport is initialized, so tile
+			// layers don't fetch tiles at the wrong location.
+			viewStateDidChange()
+
+			// If the current imagery doesn't cover this location switch to Bing.
+			promptForBetterBackgroundImagery()
 		}
 	}
 
