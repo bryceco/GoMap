@@ -1393,7 +1393,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// update self with minimized versions appropriate for saving
 		let modified = modifiedObjects()
-		// FIXME: if an object gets duplicated in the undo manager somehow then
+
+		// if an object gets duplicated in the undo manager somehow then
 		// this code will crash because the ident key is duplicated. This requires
 		// tracking down the cause of the duplication, not fixing it here.
 		nodes = Dictionary(uniqueKeysWithValues: modified.nodes.map({ ($0.ident, $0) }))
@@ -1433,9 +1434,11 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	static func withArchivedData() throws -> OsmMapData {
-		let archiveStart = CACurrentMediaTime()
+		var t = CACurrentMediaTime()
 		let archiver = OsmMapDataArchiver()
 		let mapData = try archiver.loadArchive()
+		let archiveElapsed = CACurrentMediaTime() - t
+
 		if mapData.spatial.countOfObjects() > 0 {
 			print("spatial accidentally saved, please fix")
 			mapData.spatial.rootQuad.reset()
@@ -1457,18 +1460,21 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 		// do this after spatial is built
 		mapData.consistencyCheck()
-		let archiveElapsed = CACurrentMediaTime() - archiveStart
 
 		// merge info from SQL database
-		let dbStart = CACurrentMediaTime()
+		t = CACurrentMediaTime()
 		do {
 			let db = try Database(name: "")
 			let newData = try OsmServerData(nodes: db.queryNodes(),
 			                                ways: db.queryWays(),
 			                                relations: db.queryRelations())
+			let dbElapsed = CACurrentMediaTime() - t
+
 			try mapData.merge(newData)
 
 			mapData.consistencyCheck()
+
+			print("Archive read = \(archiveElapsed), Database read = \(dbElapsed)")
 		} catch {
 			// database couldn't be read
 			print("Error: \(error.localizedDescription)")
@@ -1478,9 +1484,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			// so discard everything except user edits and download it all again
 			mapData.purgeSoft()
 		}
-		let dbElapsed = CACurrentMediaTime() - dbStart
-
-		print("Archive read = \(archiveElapsed), Database read = \(dbElapsed)")
 
 		return mapData
 	}

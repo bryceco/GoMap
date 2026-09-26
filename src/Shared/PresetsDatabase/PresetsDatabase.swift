@@ -386,7 +386,6 @@ final class PresetsDatabase {
 			                             ignore: [],
 			                             update: nil)
 		}
-		print("All preset fields loaded")
 	}
 #endif
 }
