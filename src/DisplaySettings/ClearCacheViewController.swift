@@ -113,8 +113,6 @@ class ClearCacheViewController: TableViewControllerMac {
 						NSLocalizedString("%.2f MB, %ld files", comment: ""),
 						Double(size) / (1024 * 1024),
 						count)
-
-					print(ByteCountFormatter())
 				}
 			}
 		}

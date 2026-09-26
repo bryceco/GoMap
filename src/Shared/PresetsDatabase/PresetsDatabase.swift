@@ -89,7 +89,7 @@ final class PresetsDatabase {
 #if DEBUG
 		for preset in presets.values {
 			if let relation = preset.relation {
-				print("\(preset.featureID): \(relation)\n")
+				print("\(preset.featureID): \(relation.type) relation")
 			}
 		}
 #endif

@@ -1427,8 +1427,6 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	static func withArchivedData() throws -> OsmMapData {
-		let totalStart = CACurrentMediaTime()
-
 		let archiveStart = CACurrentMediaTime()
 		let archiver = OsmMapDataArchiver()
 		let mapData = try archiver.loadArchive()
@@ -1476,9 +1474,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 		let dbElapsed = CACurrentMediaTime() - dbStart
 
-		let totalElapsed = CACurrentMediaTime() - totalStart
-		print(
-			"Database load: archive \(String(format: "%.3f", archiveElapsed))s, SQL \(String(format: "%.3f", dbElapsed))s, total \(String(format: "%.3f", totalElapsed))s")
+		print("Archive read = \(archiveElapsed), Database read = \(dbElapsed)")
 
 		return mapData
 	}
