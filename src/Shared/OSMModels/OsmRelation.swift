@@ -121,7 +121,7 @@ final class OsmRelation: OsmBaseObject {
 
 	func serverUpdate(with data: OsmServerRelation) {
 		super.serverUpdate(header: data)
-		members = data.members
+		members = data.members.map { OsmMember($0) }
 		serverObject = nil
 	}
 
@@ -137,7 +137,8 @@ final class OsmRelation: OsmBaseObject {
 
 	convenience init(_ data: OsmServerRelation) {
 		self.init(withVersion: data.version, changeset: data.changeset, user: data.user, uid: data.uid,
-		          ident: data.ident, timestamp: data.timestamp, tags: data.tags, members: data.members)
+		          ident: data.ident, timestamp: data.timestamp, tags: data.tags,
+		          members: data.members.map { OsmMember($0) })
 	}
 
 	override func computeBoundingBox() {

@@ -6,10 +6,7 @@
 //  Copyright © 2020 Bryce Cogswell. All rights reserved.
 //
 
-// FIXME: @unchecked because `obj` is mutable. It's only ever set on the main thread, and the
-// members that cross threads (freshly parsed or read from the database) always have obj == nil.
-// Goes away once OsmMember becomes a struct.
-final class OsmMember: NSObject, NSSecureCoding, Codable, @unchecked Sendable {
+final class OsmMember: NSObject, NSSecureCoding, Codable {
 	static let supportsSecureCoding = true
 
 	let ref: OsmIdentifier
@@ -27,6 +24,10 @@ final class OsmMember: NSObject, NSSecureCoding, Codable, @unchecked Sendable {
 		obj = nil
 		self.role = role
 		super.init()
+	}
+
+	convenience init(_ serverMember: OsmServerMember) {
+		self.init(type: serverMember.type, ref: serverMember.ref, role: serverMember.role)
 	}
 
 	init(obj: OsmBaseObject, role: String?) {

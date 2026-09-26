@@ -67,7 +67,27 @@ extension OsmServerObject where Body: Codable {
 
 typealias OsmServerNode = OsmServerObject<LatLon>
 typealias OsmServerWay = OsmServerObject<[OsmIdentifier]>
-typealias OsmServerRelation = OsmServerObject<[OsmMember]>
+typealias OsmServerRelation = OsmServerObject<[OsmServerMember]>
+
+/// A relation member exactly as the server describes it: type, ref, and role
+/// with no resolved object reference. This is the value-type counterpart of OsmMember.
+struct OsmServerMember: Codable {
+	let type: OSM_TYPE
+	let ref: OsmIdentifier
+	let role: String?
+
+	init(type: OSM_TYPE, ref: OsmIdentifier, role: String?) {
+		self.type = type
+		self.ref = ref
+		self.role = role
+	}
+
+	init(_ member: OsmMember) {
+		type = member.type
+		ref = member.ref
+		role = member.role
+	}
+}
 
 extension OsmServerObject where Body == LatLon {
 	var latLon: LatLon { body }
@@ -79,9 +99,9 @@ extension OsmServerObject where Body == [OsmIdentifier] {
 	init(_ way: OsmWay) { self.init(way, body: way.nodes.map(\.ident)) }
 }
 
-extension OsmServerObject where Body == [OsmMember] {
-	var members: [OsmMember] { body }
-	init(_ relation: OsmRelation) { self.init(relation, body: relation.members) }
+extension OsmServerObject where Body == [OsmServerMember] {
+	var members: [OsmServerMember] { body }
+	init(_ relation: OsmRelation) { self.init(relation, body: relation.members.map(OsmServerMember.init)) }
 }
 
 struct OsmServerData {

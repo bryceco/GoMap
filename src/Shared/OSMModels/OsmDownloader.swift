@@ -43,7 +43,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 	private var currentAttributeDict: [String: String] = [:]
 	private var currentTags: [String: String] = [:]
 	private var currentNodeRefs: [OsmIdentifier] = []
-	private var currentMembers: [OsmMember] = []
+	private var currentMembers: [OsmServerMember] = []
 
 	private(set) var result = OsmServerData()
 
@@ -99,7 +99,7 @@ class OsmDownloadParser: NSObject, XMLParserDelegate {
 				return
 			}
 			let role = attributeDict["role"]
-			currentMembers.append(OsmMember(type: type, ref: ref, role: role))
+			currentMembers.append(OsmServerMember(type: type, ref: ref, role: role))
 
 		case "osm":
 			let version = attributeDict["version"]

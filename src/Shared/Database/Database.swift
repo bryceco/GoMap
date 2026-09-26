@@ -583,7 +583,7 @@ final class Database {
 		let user: String, timestamp: String, tags: [String: String]
 		let version: Int32, uid: Int32
 		let changeset: Int64
-		var members: [OsmMember?]
+		var members: [OsmServerMember?]
 	}
 
 	func queryRelations() throws -> [OsmServerRelation] {
@@ -607,7 +607,7 @@ final class Database {
 			relationMeta[ident] = RelationMetadata(
 				user: user, timestamp: timestamp, tags: tags,
 				version: version, uid: uid, changeset: changeset,
-				members: [OsmMember?](repeating: nil, count: Int(membercount)))
+				members: [OsmServerMember?](repeating: nil, count: Int(membercount)))
 		}
 
 		try fillMembers(into: &relationMeta)
@@ -638,7 +638,7 @@ final class Database {
 			guard relationMeta[ident] != nil else {
 				throw DatabaseError.relationReferencedByMemberDoesNotExist
 			}
-			let member = try OsmMember(type: OSM_TYPE(string: type), ref: ref, role: role)
+			let member = try OsmServerMember(type: OSM_TYPE(string: type), ref: ref, role: role)
 			relationMeta[ident]!.members[Int(member_index)] = member
 		}
 	}
