@@ -361,7 +361,7 @@ private func RunLoopObserverCallBack(
 	}
 }
 
-/// A supergroup is a collection of undo groups that share at least one OSM object,
+/// ConnectedObjects is a collection of undo groups that share at least one OSM object,
 /// merged together with the full set of objects those groups touch.
 struct ConnectedObjects {
 	/// All OSM objects referenced by any action in any of the constituent groups.
@@ -406,32 +406,44 @@ extension MyUndoManager {
 	/// into a single supergroup.  Transitive merges are applied so that if A shares an
 	/// object with B and B shares a different object with C, all three form one supergroup.
 	///
+	/// Any modified object the stack doesn't reference (e.g. edits made before an
+	/// upgrade that discarded an incompatible undo archive) is placed in a synthetic
+	/// group so it is never lost, even if the user keeps editing before uploading.
+	///
 	/// The result is sorted by each supergroup's minimum constituent group id.
 	func connectedObjects() -> [ConnectedObjects] {
+		// Use the same predicate as modificationCount(): for deleted objects, any
+		// existing-server object (ident > 0) needs to be uploaded; for non-deleted
+		// objects, check isModified.
+		func needsUpload(_ obj: OsmBaseObject) -> Bool {
+			obj.deleted ? obj.ident > 0 : obj.isModified
+		}
+
 		// Step 1: collect the set of OSM objects touched by each group.
 		var groupObjects: [Int: Set<OsmBaseObject>] = [:]
 		for action in undoStack {
 			groupObjects[action.group, default: []].formUnion(action.osmObjects)
 		}
 
-		guard !groupObjects.isEmpty else {
-			// Undo stack is empty — fall back to isModified on each object.
-			// This handles upgrades where an incompatible undo archive was discarded
-			// but per-object modification flags (encoded separately) survived.
-			guard let mapData = mapData else { return [] }
-			// Use the same predicate as modificationCount(): for deleted objects, any
-			// existing-server object (ident > 0) needs to be uploaded; for non-deleted
-			// objects, check isModified.
-			func needsUpload(_ obj: OsmBaseObject) -> Bool {
-				obj.deleted ? obj.ident > 0 : obj.isModified
-			}
-			let modified: Set<OsmBaseObject> = Set(
-				mapData.nodes.values.filter(needsUpload) +
+		// Step 1b: Handle modified objects that don't appear in undo stack
+		// because we're upgrading from an incompatible version.
+		if let mapData = mapData {
+			// They all go in one synthetic group so they're uploaded
+			// together and get merged with any real group that later touches one of them.
+			// A negative id can't collide with real group ids (run-loop counters are >= 0)
+			// and sorts first, so these show up as the oldest component.
+			let known = groupObjects.values.reduce(into: Set<OsmBaseObject>()) { $0.formUnion($1) }
+			let orphans: Set<OsmBaseObject> = Set(
+				(mapData.nodes.values.filter(needsUpload) +
 					mapData.ways.values.filter(needsUpload) +
 					mapData.relations.values.filter(needsUpload))
-			guard !modified.isEmpty else { return [] }
-			return [ConnectedObjects(objects: modified, undoGroups: [0])]
+					.filter { !known.contains($0) })
+			if !orphans.isEmpty {
+				groupObjects[-1] = orphans
+			}
 		}
+
+		guard !groupObjects.isEmpty else { return [] }
 
 		// Step 2: build reverse map — object → [groupId].
 		var groupsForObject: [OsmBaseObject: [Int]] = [:]
@@ -477,9 +489,6 @@ extension MyUndoManager {
 
 		// Step 5: separate components that have uploadable objects from no-ops
 		// (e.g. objects created then deleted without ever reaching the server).
-		func needsUpload(_ obj: OsmBaseObject) -> Bool {
-			obj.deleted ? obj.ident > 0 : obj.isModified
-		}
 		var uploadable: [(groupIds: Set<Int>, objects: Set<OsmBaseObject>)] = []
 		var noOpGroupIds: Set<Int> = []
 		for component in components.values {

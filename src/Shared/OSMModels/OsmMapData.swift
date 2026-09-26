@@ -1164,16 +1164,16 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		let modNodes = undoObjects.compactMap({ $0 as? OsmNode })
 		let modRelations = undoObjects.compactMap({ $0 as? OsmRelation })
 
-#if DEBUG
-		// Verify that every modified object exists in the UndoManager.
-		// There might still be newly created, modified, deleted objects, which we ignore.
-		let n = Set<OsmNode>(nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified }))
-		let w = Set<OsmWay>(ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified }))
-		let r = Set<OsmRelation>(relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified }))
-		assert(n.isSubset(of: modNodes))
-		assert(w.isSubset(of: modWays))
-		assert(r.isSubset(of: modRelations))
-#endif
+		if false && isUnderDebugger() {
+			// Verify that every modified object exists in the UndoManager.
+			// There might still be newly created, modified, deleted objects, which we ignore.
+			let n = Set<OsmNode>(nodes.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified }))
+			let w = Set<OsmWay>(ways.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified }))
+			let r = Set<OsmRelation>(relations.values.filter({ $0.deleted ? ($0.ident > 0) : $0.isModified }))
+			assert(n.isSubset(of: modNodes))
+			assert(w.isSubset(of: modWays))
+			assert(r.isSubset(of: modRelations))
+		}
 
 		return ModifiedObjects(nodes: modNodes, ways: modWays, relations: modRelations)
 	}
