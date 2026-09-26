@@ -425,12 +425,14 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 	func serverUpdate(ident: OsmIdentifier,
 	                  version: Int,
 	                  changeset: OsmIdentifier,
+	                  user: String,
 	                  timestamp: Date)
 	{
 		DbgAssert((self.ident < 0 && ident > 0) || self.ident == ident)
 		self.ident = ident
 		self.version = version
 		self.changeset = changeset
+		self.user = user
 		self.timestamp = Self.rfc3339DateFormatter().string(from: timestamp)
 	}
 

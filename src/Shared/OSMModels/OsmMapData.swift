@@ -831,6 +831,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			throw Error.otherError("Upload failed: invalid server response")
 		}
 		let timestamp = Date()
+		let userName = AppDelegate.shared.userName ?? ""
 		var sqlUpdate: [OsmBaseObject: Bool] = [:]
 		var skippedDelete = false
 		for element in (diffResult.children ?? []).compactMap({ $0 as? DDXMLElement }) {
@@ -847,17 +848,20 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			case "node":
 				skippedDelete = try OsmMapData.updateObjectDictionary(&nodes, oldId: oldId, newId: newId,
 				                                                      version: newVersion, changeset: changesetID,
-				                                                      timestamp: timestamp, sqlUpdate: &sqlUpdate)
+				                                                      user: userName, timestamp: timestamp,
+				                                                      sqlUpdate: &sqlUpdate)
 					|| skippedDelete
 			case "way":
 				skippedDelete = try OsmMapData.updateObjectDictionary(&ways, oldId: oldId, newId: newId,
 				                                                      version: newVersion, changeset: changesetID,
-				                                                      timestamp: timestamp, sqlUpdate: &sqlUpdate)
+				                                                      user: userName, timestamp: timestamp,
+				                                                      sqlUpdate: &sqlUpdate)
 					|| skippedDelete
 			case "relation":
 				skippedDelete = try OsmMapData.updateObjectDictionary(&relations, oldId: oldId, newId: newId,
 				                                                      version: newVersion, changeset: changesetID,
-				                                                      timestamp: timestamp, sqlUpdate: &sqlUpdate)
+				                                                      user: userName, timestamp: timestamp,
+				                                                      sqlUpdate: &sqlUpdate)
 					|| skippedDelete
 			default:
 				DLog("Bad upload diff document")
@@ -880,6 +884,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		newId: OsmIdentifier,
 		version newVersion: Int,
 		changeset: Int64,
+		user: String,
 		timestamp: Date,
 		sqlUpdate: inout [OsmBaseObject: Bool]) throws -> Bool
 	{
@@ -907,6 +912,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		object.serverUpdate(ident: newId,
 		                    version: newVersion,
 		                    changeset: changeset,
+		                    user: user,
 		                    timestamp: timestamp)
 		sqlUpdate[object] = true // mark for insertion
 
