@@ -203,7 +203,6 @@ class GpxViewController: TableViewControllerMac {
 			body += "identifiable"
 			body += "\r\n--\(boundary)--\r\n"
 			request.httpBody = body.data(using: .utf8)
-			request.setValue(String(format: "%ld", body.count), forHTTPHeaderField: "Content-Length")
 			let immutableRequest = request
 
 			Task {
