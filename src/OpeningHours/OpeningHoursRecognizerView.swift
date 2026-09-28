@@ -91,13 +91,12 @@ struct CameraViewWrapper: UIViewRepresentable {
 
 	func makeUIView(context: Context) -> CameraView {
 		let cam = CameraView(frame: .zero)
-		cam.observationsCallback = { observations, camera in
-			recognizer.updateWithLiveObservations(observations: observations, camera: camera)
+		cam.frameCallback = { pixelBuffer, camera in
+			recognizer.updateWithLiveFrame(pixelBuffer, camera: camera)
 		}
 		cam.shouldRecordCallback = {
 			!recognizer.finished
 		}
-		cam.languages = [recognizer.language.isoCode]
 		cam.startRunning()
 		return cam
 	}

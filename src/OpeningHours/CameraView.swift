@@ -6,7 +6,6 @@
 
 import AVFoundation
 import UIKit
-import Vision
 
 @available(iOS 13.0, macCatalyst 14.0, *)
 class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutputSampleBufferDelegate {
@@ -16,9 +15,8 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 	private let videoOutputQueue = DispatchQueue(label: "com.gomaposm.openinghours.VideoOutputQueue")
 
 	var photoCallback: ((CGImage) -> Void)?
-	var observationsCallback: (([VNRecognizedTextObservation], CameraView) -> Void)?
+	var frameCallback: ((CVPixelBuffer, CameraView) -> Void)?
 	var shouldRecordCallback: (() -> (Bool))?
-	var languages: [String] = []
 
 	override func layoutSubviews() {
 		super.layoutSubviews()
@@ -168,56 +166,30 @@ class CameraView: UIView, AVCapturePhotoCaptureDelegate, AVCaptureVideoDataOutpu
 		}
 	}
 
-	private func addBoxes(forObservations results: [VNRecognizedTextObservation]) {
-		var boxes = [CGRect]()
-		for result in results {
-			if let candidate = result.topCandidates(1).first,
-			   let box = try? candidate.boundingBox(for: candidate.string.startIndex..<candidate.string.endIndex)?
-			   .boundingBox
-			{
-				boxes.append(box)
-			}
-		}
-		addBoxes(boxes: boxes, color: UIColor.red)
-	}
-
 	func captureOutput(_ output: AVCaptureOutput,
 	                   didOutput sampleBuffer: CMSampleBuffer,
 	                   from connection: AVCaptureConnection)
 	{
 		guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { return }
 
-		let request = VNRecognizeTextRequest(completionHandler: { [weak self] request, _ in
-			guard let self else { return }
-
-			// we need to check this before we tear down the boxes
-			if !(self.shouldRecordCallback?() ?? true) {
-				// stop recording
-				DispatchQueue.main.sync {
-					self.stopRunning()
-				}
-				return
+		// we need to check this before we tear down the boxes
+		if !(shouldRecordCallback?() ?? true) {
+			// stop recording
+			DispatchQueue.main.sync {
+				self.stopRunning()
 			}
+			return
+		}
 
-			guard let results = request.results as? [VNRecognizedTextObservation] else { return }
-			self.addBoxes(forObservations: results)
-			self.observationsCallback?(results, self)
-			self.displayBoxes()
+		// the recognizer runs Vision synchronously on this queue, which throttles the camera
+		frameCallback?(pixelBuffer, self)
+		displayBoxes()
 
-			if !(self.shouldRecordCallback?() ?? true) {
-				// stop recording
-				DispatchQueue.main.sync {
-					self.stopRunning()
-				}
+		if !(shouldRecordCallback?() ?? true) {
+			// stop recording
+			DispatchQueue.main.sync {
+				self.stopRunning()
 			}
-		})
-		request.recognitionLevel = .accurate
-//		request.usesLanguageCorrection = false
-		request.recognitionLanguages = languages
-
-		let requestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer,
-		                                           orientation: CGImagePropertyOrientation.right,
-		                                           options: [:])
-		try? requestHandler.perform([request])
+		}
 	}
 }

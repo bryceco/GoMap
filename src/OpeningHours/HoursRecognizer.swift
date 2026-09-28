@@ -1093,6 +1093,13 @@ public class HoursRecognizer: ObservableObject {
 		}
 #endif
 
+		// show all recognized lines in the video feed
+		let invertedTransform = transform.inverted()
+		let lineBoxes = stringLines.map { line in
+			line.dropFirst().reduce(line.first!.rect, { $0.union($1.rect) }).applying(invertedTransform)
+		}
+		camera?.addBoxes(boxes: lineBoxes, color: UIColor.red)
+
 		// convert strings to tokens
 		var tokenSets = HoursRecognizer.tokenLinesForStringLines(stringLines, language: language)
 
@@ -1172,7 +1179,6 @@ public class HoursRecognizer: ObservableObject {
 		let resultString = HoursRecognizer.hoursStringForHours(resultArray)
 
 		// show the selected tokens in the video feed
-		let invertedTransform = transform.inverted()
 		let tokenBoxes = tokenSets.joined().map({ $0.rect.applying(invertedTransform) })
 		camera?.addBoxes(boxes: tokenBoxes, color: UIColor.green)
 
@@ -1198,10 +1204,12 @@ public class HoursRecognizer: ObservableObject {
 		}
 	}
 
-	func updateWithLiveObservations(observations: [VNRecognizedTextObservation], camera: CameraView?) {
-		updateWithObservations(observations: observations,
-		                       transform: CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: 1),
-		                       camera: camera)
+	// Called on the camera's video queue for each frame
+	func updateWithLiveFrame(_ pixelBuffer: CVPixelBuffer, camera: CameraView?) {
+		recognize(.pixelBuffer(pixelBuffer),
+		          orientation: .right,
+		          transform: CGAffineTransform(scaleX: 1, y: -1).translatedBy(x: 0, y: 1),
+		          camera: camera)
 	}
 
 	func setImage(image: CGImage, isRotated: Bool) {
@@ -1212,15 +1220,42 @@ public class HoursRecognizer: ObservableObject {
 		let transform = isRotated ? CGAffineTransform(scaleX: 1.0, y: -1.0).rotated(by: -CGFloat.pi / 2)
 			: CGAffineTransform.identity
 
+		recognize(.cgImage(image), orientation: .up, transform: transform, camera: nil)
+	}
+
+	private enum ImageSource {
+		case cgImage(CGImage)
+		case pixelBuffer(CVPixelBuffer)
+	}
+
+	// Runs Vision synchronously on the calling thread. Blocking is intentional: on the
+	// live path it throttles the camera to one in-flight request.
+	private func recognize(_ source: ImageSource,
+	                       orientation: CGImagePropertyOrientation,
+	                       transform: CGAffineTransform,
+	                       camera: CameraView?)
+	{
+		// use the newest model revision the OS supports
 		let request = VNRecognizeTextRequest(completionHandler: { request, error in
 			guard error == nil,
 			      let observations = request.results as? [VNRecognizedTextObservation] else { return }
-			self.updateWithObservations(observations: observations, transform: transform, camera: nil)
+			self.updateWithObservations(observations: observations, transform: transform, camera: camera)
 		})
 		request.recognitionLevel = .accurate
+		request.recognitionLanguages = [language.isoCode]
+		if let newest = VNRecognizeTextRequest.supportedRevisions.max() {
+			request.revision = newest
+		}
 //		request.customWords = ["AM","PM"]
 //		request.usesLanguageCorrection = true
-		let requestHandler = VNImageRequestHandler(cgImage: image, options: [:])
+
+		let requestHandler: VNImageRequestHandler
+		switch source {
+		case let .cgImage(image):
+			requestHandler = VNImageRequestHandler(cgImage: image, orientation: orientation, options: [:])
+		case let .pixelBuffer(buffer):
+			requestHandler = VNImageRequestHandler(cvPixelBuffer: buffer, orientation: orientation, options: [:])
+		}
 		try? requestHandler.perform([request])
 	}
 }
