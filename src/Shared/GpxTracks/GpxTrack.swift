@@ -28,8 +28,102 @@ final class GpxPoint: NSObject, NSSecureCoding {
 	}()
 
 	static func parseGpxTime(_ time: String) -> Date? {
-		return iso8601Fractional.date(from: time)
+		return parseGpxTimeFast(time)
+			?? iso8601Fractional.date(from: time)
 			?? iso8601Plain.date(from: time)
+	}
+
+	/// Hand-rolled ISO 8601 parser for GPX timestamps.
+	/// Handles: "2024-05-01T12:34:56Z", "2024-05-01T12:34:56.123Z",
+	///          "2024-05-01T12:34:56+02:00", "2024-05-01T12:34:56.123+02:00"
+	private static func parseGpxTimeFast(_ str: String) -> Date? {
+		/// Parse `count` ASCII digits from `buf` at `offset` into an Int.
+		func parseInt(_ buf: [UInt8], _ offset: Int, _ count: Int) -> Int? {
+			guard offset + count <= buf.count else { return nil }
+			var result = 0
+			for i in offset ..< offset + count {
+				let d = buf[i]
+				guard d >= UInt8(ascii: "0"), d <= UInt8(ascii: "9") else { return nil }
+				result = result * 10 + Int(d - UInt8(ascii: "0"))
+			}
+			return result
+		}
+
+		// Minimum: "2024-05-01T12:34:56Z" = 20 chars
+		guard str.count >= 20 else { return nil }
+		let u = Array(str.utf8)
+		// Parse date: YYYY-MM-DDThh:mm:ss
+		guard u[4] == UInt8(ascii: "-"),
+		      u[7] == UInt8(ascii: "-"),
+		      u[10] == UInt8(ascii: "T"),
+		      u[13] == UInt8(ascii: ":"),
+		      u[16] == UInt8(ascii: ":")
+		else { return nil }
+
+		guard let year = parseInt(u, 0, 4),
+		      let month = parseInt(u, 5, 2), (1...12).contains(month),
+		      let day = parseInt(u, 8, 2), (1...31).contains(day),
+		      let hour = parseInt(u, 11, 2), (0...23).contains(hour),
+		      let minute = parseInt(u, 14, 2), (0...59).contains(minute),
+		      let second = parseInt(u, 17, 2), (0...60).contains(second) // 60 for leap second
+		else { return nil }
+
+		var idx = 19
+		var fractionalSeconds = 0.0
+
+		// Optional fractional seconds
+		if idx < u.count, u[idx] == UInt8(ascii: ".") {
+			idx += 1
+			var frac = 0.0
+			var divisor = 10.0
+			while idx < u.count, u[idx] >= UInt8(ascii: "0"), u[idx] <= UInt8(ascii: "9") {
+				frac += Double(u[idx] - UInt8(ascii: "0")) / divisor
+				divisor *= 10.0
+				idx += 1
+			}
+			fractionalSeconds = frac
+		}
+
+		// Timezone: Z, +HH:MM, or -HH:MM
+		var tzOffset = 0
+		guard idx < u.count else { return nil }
+		if u[idx] == UInt8(ascii: "Z") {
+			tzOffset = 0
+		} else if u[idx] == UInt8(ascii: "+") || u[idx] == UInt8(ascii: "-") {
+			let sign = u[idx] == UInt8(ascii: "+") ? 1 : -1
+			idx += 1
+			guard idx + 4 < u.count || idx + 4 == u.count else { return nil }
+			guard let tzH = parseInt(u, idx, 2) else { return nil }
+			idx += 2
+			if idx < u.count, u[idx] == UInt8(ascii: ":") { idx += 1 }
+			guard let tzM = parseInt(u, idx, 2) else { return nil }
+			tzOffset = sign * (tzH * 3600 + tzM * 60)
+		} else {
+			return nil
+		}
+
+		// Build timeIntervalSince1970 using a table of cumulative days per month
+		let isLeap = (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
+		let cumulativeDays = isLeap
+			? [0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335]
+			: [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334]
+
+		// Days from 1970-01-01 to year-01-01
+		let y = year - 1
+		let daysToYear = 365 * (year - 1970)
+			+ (y / 4 - 484)    // leap years since 1970: y/4 - 1969/4
+			- (y / 100 - 19)   // minus century years: y/100 - 1969/100
+			+ (y / 400 - 4)    // plus 400-year cycles: y/400 - 1969/400
+
+		let dayOfYear = cumulativeDays[month - 1] + (day - 1)
+		let totalSeconds = Double(daysToYear + dayOfYear) * 86400.0
+			+ Double(hour) * 3600.0
+			+ Double(minute) * 60.0
+			+ Double(second)
+			+ fractionalSeconds
+			- Double(tzOffset)
+
+		return Date(timeIntervalSince1970: totalSeconds)
 	}
 
 	let latLon: LatLon
@@ -52,68 +146,6 @@ final class GpxPoint: NSObject, NSSecureCoding {
 		self.desc = desc
 		self.extensions = extensions
 		super.init()
-	}
-
-	convenience init(withXML pt: DDXMLNode) throws {
-		guard
-			let pt = pt as? DDXMLElement,
-			let lat2 = pt.attribute(forName: "lat")?.stringValue,
-			let lon2 = pt.attribute(forName: "lon")?.stringValue,
-			let lat = Double(lat2),
-			let lon = Double(lon2)
-		else {
-			throw GpxError.badGpxFormat
-		}
-
-		let latLon = LatLon(latitude: lat, longitude: lon)
-		var timestamp: Date?
-		var elevation = 0.0
-		if let time = pt.elements(forName: "time").last?.stringValue {
-			timestamp = Self.parseGpxTime(time)
-		}
-		if let ele2 = pt.elements(forName: "ele").last?.stringValue,
-		   let ele = Double(ele2)
-		{
-			elevation = ele
-		}
-
-		var name = ""
-		var description = ""
-		var extensions: [DDXMLNode] = []
-
-		for child in pt.children ?? [] {
-			guard let child = child as? DDXMLElement else {
-				continue
-			}
-			switch child.name {
-			case "name":
-				name = child.stringValue ?? ""
-			case "desc":
-				// description might be a regular string or an HTML string
-				let hasHTMLElements = child.children?.contains { node in node.kind == XMLElementKind } ?? false
-				if hasHTMLElements {
-					// HTML tags: get inner XML
-					description = child.children?.map { $0.xmlString }.joined() ?? ""
-				} else {
-					// plain text or CDATA
-					description = child.stringValue ?? ""
-				}
-			case "extensions":
-				if let children = child.children {
-					extensions = children
-				}
-			default:
-				break
-			}
-		}
-
-		self.init(latLon: latLon,
-		          accuracy: 0.0,
-		          elevation: elevation,
-		          timestamp: timestamp,
-		          name: name,
-		          desc: description,
-		          extensions: extensions)
 	}
 
 	required init(coder aDecoder: NSCoder) {
@@ -370,84 +402,6 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		return data
 	}
 
-	convenience init(xmlData data: Data) throws {
-		guard data.count > 0,
-		      let doc = try? DDXMLDocument(data: data, options: 0)
-		else {
-			throw GpxError.noData
-		}
-
-		guard let ns1 = DDXMLElement.namespace(withName: "ns1",
-		                                       stringValue: "http://www.topografix.com/GPX/1/0") as? DDXMLNode,
-			let ns2 = DDXMLElement.namespace(withName: "ns2",
-			                                 stringValue: "http://www.topografix.com/GPX/1/1") as? DDXMLNode,
-			let ns3 = DDXMLElement.namespace(withName: "ns3",
-			                                 stringValue: "http://topografix.com/GPX/1/1") as? DDXMLNode // HOT OSM uses this
-		else {
-			throw GpxError.badGpxFormat
-		}
-
-		doc.rootElement()?.addNamespace(ns1)
-		doc.rootElement()?.addNamespace(ns2)
-		doc.rootElement()?.addNamespace(ns3)
-
-		let nsList = [
-			"ns1:",
-			"ns2:",
-			"ns3:",
-			""
-		]
-		var trkNodes: [DDXMLNode] = []
-		var wptNodes: [DDXMLNode] = []
-		for ns in nsList {
-			let trkPath = "./\(ns)gpx/\(ns)trk/\(ns)trkseg/\(ns)trkpt"
-			let wptPath = "./\(ns)gpx/\(ns)wpt"
-			trkNodes = (try? doc.nodes(forXPath: trkPath)) ?? []
-			wptNodes = (try? doc.nodes(forXPath: wptPath)) ?? []
-			if trkNodes.count > 0 || wptNodes.count > 0 {
-				break
-			}
-		}
-		if wptNodes.count == 0, trkNodes.count < 2 {
-			throw GpxError.fewerThanTwoPoints
-		}
-
-		let trkPoints: [GpxPoint] = try trkNodes.map { try GpxPoint(withXML: $0) }
-		let wptPoints: [GpxPoint] = try wptNodes.map { try GpxPoint(withXML: $0) }
-
-		// Read track name from <trk><name>
-		var trackName: String?
-		for ns in nsList {
-			let namePath = "./\(ns)gpx/\(ns)trk/\(ns)name"
-			if let nameNode = (try? doc.nodes(forXPath: namePath))?.first,
-			   let str = nameNode.stringValue, !str.isEmpty
-			{
-				trackName = str
-				break
-			}
-		}
-
-		// Read creation date from <metadata><time> as fallback
-		var metadataDate: Date?
-		for ns in nsList {
-			let timePath = "./\(ns)gpx/\(ns)metadata/\(ns)time"
-			if let timeNode = (try? doc.nodes(forXPath: timePath))?.first,
-			   let str = timeNode.stringValue
-			{
-				metadataDate = OsmBaseObject.rfc3339DateFormatter().date(from: str)
-				break
-			}
-		}
-
-		self.init()
-		points = trkPoints
-		wayPoints = wptPoints
-		creationDate = trkPoints.first?.timestamp ?? wptPoints.first?.timestamp ?? metadataDate ?? Date()
-		if let trackName {
-			name = trackName
-		}
-	}
-
 	convenience init(xmlFile url: URL) throws {
 		guard
 			let data = try? Data(contentsOf: url)
@@ -455,6 +409,33 @@ final class GpxTrack: NSObject, NSSecureCoding {
 			throw GpxError.noData
 		}
 		try self.init(xmlData: data)
+	}
+
+	// MARK: Streaming XML parser (SAX-based, much faster than DOM)
+
+	convenience init(xmlData data: Data) throws {
+		guard data.count > 0 else {
+			throw GpxError.noData
+		}
+		let handler = GpxSAXParser()
+		let parser = XMLParser(data: data)
+		parser.delegate = handler
+		guard parser.parse(), handler.error == nil else {
+			throw handler.error ?? GpxError.badGpxFormat
+		}
+		if handler.wayPoints.isEmpty, handler.trkPoints.count < 2 {
+			throw GpxError.fewerThanTwoPoints
+		}
+		self.init()
+		points = handler.trkPoints
+		wayPoints = handler.wayPoints
+		creationDate = handler.trkPoints.first?.timestamp
+			?? handler.wayPoints.first?.timestamp
+			?? handler.metadataDate
+			?? Date()
+		if let trackName = handler.trackName {
+			name = trackName
+		}
 	}
 
 	func lengthInMeters() -> Double {
@@ -508,5 +489,143 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		aCoder.encode(wayPoints, forKey: "waypoints")
 		aCoder.encode(name, forKey: "name")
 		aCoder.encode(creationDate, forKey: "creationDate")
+	}
+}
+
+// MARK: - SAX-based GPX parser
+
+private final class GpxSAXParser: NSObject, XMLParserDelegate {
+	var trkPoints: [GpxPoint] = []
+	var wayPoints: [GpxPoint] = []
+	var trackName: String?
+	var metadataDate: Date?
+	var error: Error?
+
+	// Element path stack (without namespace prefixes)
+	private var elementStack: [String] = []
+	private var textBuffer = ""
+
+	// Current point being built (for trkpt / wpt)
+	private var currentLat: Double?
+	private var currentLon: Double?
+	private var currentTime: Date?
+	private var currentElevation: Double = 0.0
+	private var currentName = ""
+	private var currentDesc = ""
+	private var isWaypoint = false
+
+	private func localName(_ name: String) -> String {
+		// Strip namespace prefix if present (e.g. "ns1:trkpt" -> "trkpt")
+		if let idx = name.firstIndex(of: ":") {
+			return String(name[name.index(after: idx)...])
+		}
+		return name
+	}
+
+	func parser(_ parser: XMLParser,
+	            didStartElement elementName: String,
+	            namespaceURI: String?,
+	            qualifiedName: String?,
+	            attributes: [String: String] = [:])
+	{
+		let local = localName(elementName)
+		elementStack.append(local)
+		textBuffer = ""
+
+		switch local {
+		case "trkpt", "wpt":
+			guard let latStr = attributes["lat"],
+			      let lonStr = attributes["lon"],
+			      let lat = Double(latStr),
+			      let lon = Double(lonStr)
+			else { return }
+			currentLat = lat
+			currentLon = lon
+			currentTime = nil
+			currentElevation = 0.0
+			currentName = ""
+			currentDesc = ""
+			isWaypoint = (local == "wpt")
+		default:
+			break
+		}
+	}
+
+	func parser(_ parser: XMLParser, foundCharacters string: String) {
+		textBuffer += string
+	}
+
+	func parser(_ parser: XMLParser, foundCDATA CDATABlock: Data) {
+		if let str = String(data: CDATABlock, encoding: .utf8) {
+			textBuffer += str
+		}
+	}
+
+	func parser(_ parser: XMLParser,
+	            didEndElement elementName: String,
+	            namespaceURI: String?,
+	            qualifiedName: String?)
+	{
+		let local = localName(elementName)
+		defer { elementStack.removeLast() }
+
+		let text = textBuffer.trimmingCharacters(in: .whitespacesAndNewlines)
+
+		// Inside a trkpt or wpt
+		if let _ = currentLat, elementStack.contains("trkpt") || elementStack.contains("wpt") {
+			switch local {
+			case "time":
+				currentTime = GpxPoint.parseGpxTime(text)
+			case "ele":
+				currentElevation = Double(text) ?? 0.0
+			case "name":
+				currentName = text
+			case "desc":
+				currentDesc = text
+			case "trkpt", "wpt":
+				if let lat = currentLat, let lon = currentLon {
+					let pt = GpxPoint(latLon: LatLon(latitude: lat, longitude: lon),
+					                  accuracy: 0.0,
+					                  elevation: currentElevation,
+					                  timestamp: currentTime,
+					                  name: currentName,
+					                  desc: currentDesc,
+					                  extensions: [])
+					if isWaypoint {
+						wayPoints.append(pt)
+					} else {
+						trkPoints.append(pt)
+					}
+				}
+				currentLat = nil
+				currentLon = nil
+			default:
+				break
+			}
+			return
+		}
+
+		// Track name: gpx > trk > name
+		if local == "name",
+		   elementStack.count >= 3,
+		   elementStack[elementStack.count - 2] == "trk",
+		   !text.isEmpty
+		{
+			trackName = text
+			return
+		}
+
+		// Metadata time: gpx > metadata > time
+		if local == "time",
+		   elementStack.count >= 3,
+		   elementStack[elementStack.count - 2] == "metadata"
+		{
+			metadataDate = GpxPoint.parseGpxTime(text)
+			return
+		}
+	}
+
+	func parser(_ parser: XMLParser, parseErrorOccurred parseError: Error) {
+		error = parseError
 	}
 }
