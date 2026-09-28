@@ -13,6 +13,25 @@ import KissXML
 final class GpxPoint: NSObject, NSSecureCoding {
 	static let supportsSecureCoding = true
 
+	// Accepts "2024-05-01T12:34:56Z" as well as fractional seconds and "+02:00" style offsets,
+	// which many GPS devices/apps emit.
+	private static let iso8601Fractional: ISO8601DateFormatter = {
+		let f = ISO8601DateFormatter()
+		f.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+		return f
+	}()
+
+	private static let iso8601Plain: ISO8601DateFormatter = {
+		let f = ISO8601DateFormatter()
+		f.formatOptions = [.withInternetDateTime]
+		return f
+	}()
+
+	static func parseGpxTime(_ time: String) -> Date? {
+		return iso8601Fractional.date(from: time)
+			?? iso8601Plain.date(from: time)
+	}
+
 	let latLon: LatLon
 	let accuracy: Double
 	let elevation: Double
@@ -50,7 +69,7 @@ final class GpxPoint: NSObject, NSSecureCoding {
 		var timestamp: Date?
 		var elevation = 0.0
 		if let time = pt.elements(forName: "time").last?.stringValue {
-			timestamp = OsmBaseObject.rfc3339DateFormatter().date(from: time)
+			timestamp = Self.parseGpxTime(time)
 		}
 		if let ele2 = pt.elements(forName: "ele").last?.stringValue,
 		   let ele = Double(ele2)
