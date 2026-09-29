@@ -62,6 +62,8 @@
 		0236B4713054275F00D663F9 /* XmlEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0236B4703054275F00D663F9 /* XmlEditorViewController.swift */; };
 		023B892B19C148790060CDB5 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 023B892A19C148790060CDB5 /* Images.xcassets */; };
 		02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */; };
+		0243B965306C048E00D7E7C4 /* update.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0243B963306C048E00D7E7C4 /* update.sh */; };
+		0243B966306C048E00D7E7C4 /* POI-Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0243B962306C048E00D7E7C4 /* POI-Icons.xcassets */; };
 		0244398D29C9402B009FC2D0 /* TileServerList+JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0244398C29C9402B009FC2D0 /* TileServerList+JSON.swift */; };
 		0244399429CA4461009FC2D0 /* HoursRecognizer.json in Resources */ = {isa = PBXBuildFile; fileRef = 0244399329CA4461009FC2D0 /* HoursRecognizer.json */; };
 		0246A78126A4AA3A00941A44 /* DirectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0246A78326A4AA3A00941A44 /* DirectionViewController.xib */; };
@@ -124,7 +126,6 @@
 		0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB2299D84F7002EED90 /* MaxarAerial.secret */; };
 		02969EBA2DF630A6003BA34A /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02969EB92DF630A6003BA34A /* Array+Extension.swift */; };
 		029853B72C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */; };
-		029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */; };
 		02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925626416BF5000A2A99 /* GpxLayer.swift */; };
 		02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924F2640329B000A2A99 /* TileServerList.swift */; };
 		02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */; };
@@ -433,6 +434,8 @@
 		023B892A19C148790060CDB5 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		02401F351DE021EE00F32AF5 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		02401F3A1DE157B800F32AF5 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		0243B962306C048E00D7E7C4 /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "POI-Icons.xcassets"; sourceTree = "<group>"; };
+		0243B963306C048E00D7E7C4 /* update.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = update.sh; sourceTree = "<group>"; };
 		0244398C29C9402B009FC2D0 /* TileServerList+JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TileServerList+JSON.swift"; sourceTree = "<group>"; };
 		0244399329CA4461009FC2D0 /* HoursRecognizer.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = HoursRecognizer.json; sourceTree = "<group>"; };
 		0246A78226A4AA3A00941A44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/DirectionViewController.xib; sourceTree = "<group>"; };
@@ -447,7 +450,6 @@
 		02505C5829A52EA80078D60D /* QuestDefinitionWithFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFilters.swift; sourceTree = "<group>"; };
 		02505C5A29A52EEE0078D60D /* QuestDefinitionWithFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestDefinitionWithFeatures.swift; sourceTree = "<group>"; };
 		0250C8DF2E7CBD7700192893 /* mul */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; name = mul; path = mul.lproj/TurnRestrictions.xcstrings; sourceTree = "<group>"; };
-		0254C6CD2579CD88000705B4 /* POI-Icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "POI-Icons"; sourceTree = "<group>"; };
 		02572B722F10D8C400216EE3 /* MessageDisplay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDisplay.swift; sourceTree = "<group>"; };
 		02581F31301410AD00FC4D3A /* RotateObjectOverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotateObjectOverlayViewController.swift; sourceTree = "<group>"; };
 		025B841619DCF55C0053C637 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
@@ -498,7 +500,6 @@
 		0293FEB2299D84F7002EED90 /* MaxarAerial.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MaxarAerial.secret; sourceTree = "<group>"; };
 		02969EB92DF630A6003BA34A /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasemapTileServerListViewController.swift; sourceTree = "<group>"; };
-		029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = "POI-Icons.xcassets"; path = "POI-Icons/POI-Icons.xcassets"; sourceTree = "<group>"; };
 		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		02A4E35D3056CB99003B5A71 /* UndoAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoAction.swift; sourceTree = "<group>"; };
 		02A4E35F3057E3CF003B5A71 /* OsmEditOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmEditOperation.swift; sourceTree = "<group>"; };
@@ -770,6 +771,15 @@
 			path = TurnRestrictions;
 			sourceTree = "<group>";
 		};
+		0243B964306C048E00D7E7C4 /* POI-Icons */ = {
+			isa = PBXGroup;
+			children = (
+				0243B962306C048E00D7E7C4 /* POI-Icons.xcassets */,
+				0243B963306C048E00D7E7C4 /* update.sh */,
+			);
+			path = "POI-Icons";
+			sourceTree = "<group>";
+		};
 		0244399529CA9A02009FC2D0 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -926,16 +936,15 @@
 				027E90B43017097B00E1A0F1 /* Nominatim */,
 				027E90AF3016CBEC00E1A0F1 /* Notes */,
 				02CB2409265DB7D600835F32 /* OpeningHours */,
+				02148A572FFA1461002D513D /* Panoramax */,
 				02A3598F2704E51700101369 /* POI */,
+				0243B964306C048E00D7E7C4 /* POI-Icons */,
 				028F504619BA2F460093C423 /* presets */,
-				0254C6CD2579CD88000705B4 /* POI-Icons */,
-				029A17C7257AB8A70035C6ED /* POI-Icons.xcassets */,
 				02CB523C299097C3007F758D /* Quests */,
 				0244399529CA9A02009FC2D0 /* Settings */,
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				022114FB2E6CDCF800D76061 /* TurnRestrictions */,
 				647C150D24268DB7008A9366 /* Upload */,
-				02148A572FFA1461002D513D /* Panoramax */,
 			);
 			name = GoMap;
 			sourceTree = "<group>";
@@ -1567,7 +1576,6 @@
 				02EA545B2AB7CCA3004688F9 /* InfoPlist.xcstrings in Resources */,
 				02CE3CE32990A2C800DDACE0 /* QuestSolver.storyboard in Resources */,
 				027E90B33017096B00E1A0F1 /* Nominatim.storyboard in Resources */,
-				029A17C8257AB8A70035C6ED /* POI-Icons.xcassets in Resources */,
 				028F504719BA2F460093C423 /* presets in Resources */,
 				02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */,
 				02CE3CEB2991B5FA00DDACE0 /* QuestIcons.xcassets in Resources */,
@@ -1575,6 +1583,8 @@
 				02ACBA4D16713CCB00BB4414 /* MainStoryboard.storyboard in Resources */,
 				0291D83724427AFA00F793BE /* Display.storyboard in Resources */,
 				027AB4FA250E9C8000C404CD /* Settings.storyboard in Resources */,
+				0243B965306C048E00D7E7C4 /* update.sh in Resources */,
+				0243B966306C048E00D7E7C4 /* POI-Icons.xcassets in Resources */,
 				0244399429CA4461009FC2D0 /* HoursRecognizer.json in Resources */,
 				02ED19811BBF119C00A57CF4 /* Launch Screen.storyboard in Resources */,
 				02E9ABC42BA54C9500F0EF69 /* PrivacyInfo.xcprivacy in Resources */,
