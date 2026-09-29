@@ -16,6 +16,23 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 	var gpxTrack = GpxTrack()
 	var tableView: GpxViewController?
 
+	func configureDetails(with track: GpxTrack) {
+		let dur = Int(round(track.duration()))
+		duration.text = String(format: "%d:%02d:%02d", dur / 3600, dur / 60 % 60, dur % 60)
+		if track.wayPoints.count > 0 {
+			details.text = String.localizedStringWithFormat(
+				NSLocalizedString("%ld meters, %ld points, %ld waypoints", comment: "length of a gpx track"),
+				Int(track.lengthInMeters()),
+				track.points.count,
+				track.wayPoints.count)
+		} else {
+			details.text = String.localizedStringWithFormat(
+				NSLocalizedString("%ld meters, %ld points", comment: "length of a gpx track"),
+				Int(track.lengthInMeters()),
+				track.points.count)
+		}
+	}
+
 	@IBAction func doAction(_ sender: Any) {
 		let alert = UIAlertController(
 			title: NSLocalizedString("Share", comment: "Title for sharing options"),
@@ -274,16 +291,18 @@ class GpxViewController: TableViewControllerMac {
 		let date = now.addingTimeInterval(delta)
 		timer = Timer(fire: date, interval: 1.0, repeats: true, block: { [weak self] timer in
 			guard let self = self else { return }
-			if gpxTracks.activeTrack != nil {
+			if let track = gpxTracks.activeTrack {
 				DispatchQueue.main.async { [weak self] in
 					let index = IndexPath(row: 0, section: SECTION_ACTIVE_TRACK)
 					guard
 						let tableView = self?.tableView,
 						tableView.window != nil, // must be on-screen
 						index.section < tableView.numberOfSections,
-						index.row < tableView.numberOfRows(inSection: index.section)
+						index.row < tableView.numberOfRows(inSection: index.section),
+						let cell = tableView.cellForRow(at: index) as? GpxTrackTableCell
 					else { return }
-					tableView.reloadRows(at: [index], with: .none)
+					// Update cell content directly to avoid disrupting swipe-to-delete on other cells
+					cell.configureDetails(with: track)
 				}
 			} else {
 				timer.invalidate()
@@ -409,27 +428,11 @@ class GpxViewController: TableViewControllerMac {
 		let track = indexPath.section == SECTION_ACTIVE_TRACK ? gpxTracks.activeTrack!
 			: gpxTracks.savedTracks[indexPath.row]
 		let startDate = DateFormatter.localizedString(from: track.creationDate, dateStyle: .short, timeStyle: .short)
-		let dur = Int(round(track.duration()))
-		let duration = String(format: "%d:%02d:%02d", dur / 3600, dur / 60 % 60, dur % 60)
-		let subtitle: String
-		if track.wayPoints.count > 0 {
-			subtitle = String.localizedStringWithFormat(
-				NSLocalizedString("%ld meters, %ld points, %ld waypoints", comment: "length of a gpx track"),
-				Int(track.lengthInMeters()),
-				track.points.count,
-				track.wayPoints.count)
-		} else {
-			subtitle = String.localizedStringWithFormat(
-				NSLocalizedString("%ld meters, %ld points", comment: "length of a gpx track"),
-				Int(track.lengthInMeters()),
-				track.points.count)
-		}
 		let cell = tableView.dequeueReusableCell(
 			withIdentifier: "GpxTrackTableCell",
 			for: indexPath) as! GpxTrackTableCell
 		cell.startDate.text = track.name ?? startDate
-		cell.duration.text = duration
-		cell.details.text = subtitle
+		cell.configureDetails(with: track)
 		cell.gpxTrack = track
 		cell.tableView = self
 		let key = track.name ?? track.fileBaseName()
