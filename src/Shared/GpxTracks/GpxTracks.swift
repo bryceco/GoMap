@@ -236,6 +236,32 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		}
 	}
 
+	/// Parse a single file into a GpxTrack, or nil if it can't be parsed.
+	private static func parseTrackFile(url: URL, file: String) -> (track: GpxTrack, isTrackFile: Bool)? {
+		if file.hasSuffix(".gpx") {
+			guard
+				let data = try? Data(contentsOf: url),
+				let decoded = try? GpxTrack(xmlData: data)
+			else {
+				return nil
+			}
+			return (decoded, false)
+		} else if file.hasSuffix(".track") {
+			guard
+				let data = try? Data(contentsOf: url, options: .alwaysMapped),
+				let decoded = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [GpxTrack.self,
+				                                                                  GpxPoint.self,
+				                                                                  NSDate.self,
+				                                                                  NSArray.self],
+				                                                      from: data) as? GpxTrack
+			else {
+				return nil
+			}
+			return (decoded, true)
+		}
+		return nil
+	}
+
 	// load data
 	private func loadSavedTracks() -> [GpxTrack] {
 		let deleteIfCreatedBefore = expirationDays == 0
@@ -243,47 +269,34 @@ final class GpxTracks: DiskCacheSizeProtocol {
 			: Date(timeIntervalSinceNow: TimeInterval(-expirationDays * 24 * 60 * 60))
 
 		let dir = saveDirectory()
-		var files = (try? FileManager.default.contentsOfDirectory(atPath: dir.path)) ?? []
+		let files = (try? FileManager.default.contentsOfDirectory(atPath: dir.path)) ?? []
+		let trackFiles = files.filter { $0.hasSuffix(".gpx") || $0.hasSuffix(".track") }
 
-		// file names are timestamps, so sort increasing newest first
-		files = files.sorted { $0.compare($1, options: .caseInsensitive) == .orderedAscending }.reversed()
-
-		nonGpxTracks = []
-		let tracks: [GpxTrack] = files.compactMap { file in
+		// Parse files in parallel
+		var results = [(track: GpxTrack, isTrackFile: Bool)?](repeating: nil, count: trackFiles.count)
+		DispatchQueue.concurrentPerform(iterations: trackFiles.count) { index in
+			let file = trackFiles[index]
 			let url = dir.appendingPathComponent(file)
-			let track: GpxTrack
-			if file.hasSuffix(".gpx") {
-				guard
-					let data = try? Data(contentsOf: url),
-					let decoded = try? GpxTrack(xmlData: data)
-				else {
-					return nil
-				}
-				track = decoded
-			} else if file.hasSuffix(".track") {
-				guard
-					let data = try? Data(contentsOf: url, options: .alwaysMapped),
-					let decoded = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [GpxTrack.self,
-					                                                                  GpxPoint.self,
-					                                                                  NSDate.self,
-					                                                                  NSArray.self],
-					                                                      from: data) as? GpxTrack
-				else {
-					return nil
-				}
-				track = decoded
-				nonGpxTracks.append(track)
-			} else {
-				return nil
-			}
-
-			if track.creationDate.timeIntervalSince(deleteIfCreatedBefore) < 0 {
-				// skip because its too old
-				deleteFile(for: track)
-				return nil
-			}
-			return track
+			results[index] = Self.parseTrackFile(url: url, file: file)
 		}
+
+		// Collect results sequentially
+		nonGpxTracks = []
+		var tracks: [GpxTrack] = []
+		for result in results {
+			guard let (track, isTrackFile) = result else { continue }
+			if track.creationDate.timeIntervalSince(deleteIfCreatedBefore) < 0 {
+				deleteFile(for: track)
+				continue
+			}
+			if isTrackFile {
+				nonGpxTracks.append(track)
+			}
+			tracks.append(track)
+		}
+
+		// sort newest first
+		tracks.sort { $0.creationDate > $1.creationDate }
 		return tracks
 	}
 

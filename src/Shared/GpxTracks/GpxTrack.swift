@@ -470,7 +470,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 
 	private static let fileNameFormatter: DateFormatter = {
 		let df = DateFormatter()
-		df.dateFormat = "yyyy-MM-dd__HH-mm-ss.SSS"
+		df.dateFormat = "yyyyMMdd_HHmmss.SSS"
 		df.locale = Locale(identifier: "en_US_POSIX")
 		df.timeZone = .current
 		return df
