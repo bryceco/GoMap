@@ -427,13 +427,13 @@ class GpxViewController: TableViewControllerMac {
 		let cell = tableView.dequeueReusableCell(
 			withIdentifier: "GpxTrackTableCell",
 			for: indexPath) as! GpxTrackTableCell
-		cell.startDate.text = track.name == track.fileName() ? startDate : track.name
+		cell.startDate.text = track.name ?? startDate
 		cell.duration.text = duration
 		cell.details.text = subtitle
 		cell.gpxTrack = track
 		cell.tableView = self
-		let name = track.name
-		if gpxTracks.uploadedTracks[name] != nil {
+		let key = track.name ?? track.fileBaseName()
+		if gpxTracks.uploadedTracks[key] != nil {
 			cell.uploadButton.setImage(nil, for: .normal)
 			cell.uploadButton.setTitle("\u{2714}", for: .normal)
 		} else {

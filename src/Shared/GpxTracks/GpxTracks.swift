@@ -19,11 +19,15 @@ final class GpxTracks: DiskCacheSizeProtocol {
 
 	init() {
 		let uploads = UserPrefs.shared.gpxUploadedGpxTracks.value ?? [:]
-		uploadedTracks = uploads.mapValues({ $0.boolValue })
+		// Migrate old keys that used "1234567.890.track" format to fileBaseName()
+		uploadedTracks = Dictionary(uniqueKeysWithValues: uploads.map { key, value in
+			let migratedKey = key.hasSuffix(".track") ? String(key.dropLast(6)) : key
+			return (migratedKey, value.boolValue)
+		})
 	}
 
 	// all tracks except the active track, sorted with most recent first
-	private(set) lazy var savedTracks: [GpxTrack] = loadSavedTracks() {
+	private(set) lazy var savedTracks: [GpxTrack] = consolidateTrackFiles(loadSavedTracks()) {
 		didSet {
 			onChangeTracks.notify()
 		}
@@ -34,6 +38,8 @@ final class GpxTracks: DiskCacheSizeProtocol {
 			OnChangeCurrent.notify()
 		}
 	}
+
+	private var nonGpxTracks: [GpxTrack] = []
 
 	// track picked in view controller
 	weak var selectedTrack: GpxTrack? {
@@ -72,8 +78,13 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		}
 
 		save(toDisk: activeTrack)
+		nonGpxTracks.insert(activeTrack, at: 0) // newest-first, like nonGpxTracks ordering
 		self.activeTrack = nil
 		selectedTrack = nil
+
+		if !continuingCurrentTrack {
+			savedTracks = consolidateTrackFiles(savedTracks)
+		}
 	}
 
 	private func save(toDisk track: GpxTrack) {
@@ -81,7 +92,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 			// make sure save directory exists
 			var time = TimeInterval(CACurrentMediaTime())
 			let dir = saveDirectory()
-			let path = dir.appendingPathComponent(track.fileName())
+			let path = dir.appendingPathComponent(track.fileTrackName())
 			do {
 				try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true, attributes: nil)
 				let data = try NSKeyedArchiver.archivedData(withRootObject: track, requiringSecureCoding: true)
@@ -101,9 +112,13 @@ final class GpxTracks: DiskCacheSizeProtocol {
 	}
 
 	private func deleteFile(for track: GpxTrack) {
-		let path = saveDirectory().appendingPathComponent(track.fileName())
-		try? FileManager.default.removeItem(at: path)
-		uploadedTracks.removeValue(forKey: track.name)
+		let dir = saveDirectory()
+		// Remove both current and legacy filenames
+		for base in [track.fileBaseName(), track.legacyFileBaseName()] {
+			try? FileManager.default.removeItem(at: dir.appendingPathComponent(base + ".track"))
+			try? FileManager.default.removeItem(at: dir.appendingPathComponent(base + ".gpx"))
+		}
+		uploadedTracks.removeValue(forKey: track.name ?? track.fileBaseName())
 	}
 
 	func delete(track: GpxTrack) {
@@ -113,7 +128,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 	}
 
 	func markTrackUploaded(_ track: GpxTrack) {
-		uploadedTracks[track.name] = true
+		uploadedTracks[track.name ?? track.fileBaseName()] = true
 		onChangeTracks.notify()
 	}
 
@@ -233,19 +248,32 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		// file names are timestamps, so sort increasing newest first
 		files = files.sorted { $0.compare($1, options: .caseInsensitive) == .orderedAscending }.reversed()
 
+		nonGpxTracks = []
 		let tracks: [GpxTrack] = files.compactMap { file in
-			guard file.hasSuffix(".track") else {
-				return nil
-			}
 			let url = dir.appendingPathComponent(file)
-			guard
-				let data = try? Data(contentsOf: url, options: .alwaysMapped),
-				let track = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [GpxTrack.self,
-				                                                                GpxPoint.self,
-				                                                                NSDate.self,
-				                                                                NSArray.self],
-				                                                    from: data) as? GpxTrack
-			else {
+			let track: GpxTrack
+			if file.hasSuffix(".gpx") {
+				guard
+					let data = try? Data(contentsOf: url),
+					let decoded = try? GpxTrack(xmlData: data)
+				else {
+					return nil
+				}
+				track = decoded
+			} else if file.hasSuffix(".track") {
+				guard
+					let data = try? Data(contentsOf: url, options: .alwaysMapped),
+					let decoded = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [GpxTrack.self,
+					                                                                  GpxPoint.self,
+					                                                                  NSDate.self,
+					                                                                  NSArray.self],
+					                                                      from: data) as? GpxTrack
+				else {
+					return nil
+				}
+				track = decoded
+				nonGpxTracks.append(track)
+			} else {
 				return nil
 			}
 
@@ -259,12 +287,59 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		return tracks
 	}
 
+	/// Consolidates .track files that are continuations of each other into single .gpx files.
+	/// Returns the updated track list with non-gpx tracks replaced by merged tracks.
+	private func consolidateTrackFiles(_ tracks: [GpxTrack]) -> [GpxTrack] {
+		guard !nonGpxTracks.isEmpty else { return tracks }
+
+		let maxGapSeconds: TimeInterval = 5
+		let dir = saveDirectory()
+
+		// Walk oldest to newest, appending continuations onto the oldest track in each group
+		var current = nonGpxTracks.last!
+		var mergedTracks: [GpxTrack] = []
+
+		for newerTrack in nonGpxTracks.reversed().dropFirst() {
+			if let currentLast = current.points.last?.timestamp,
+			   let newerFirst = newerTrack.points.first?.timestamp,
+			   newerFirst.timeIntervalSince(currentLast) < maxGapSeconds
+			{
+				// continuation: append newer points into current
+				current.appendPoints(from: newerTrack)
+			} else {
+				// gap: finalize current and start a new group
+				mergedTracks.append(current)
+				current = newerTrack
+			}
+		}
+		mergedTracks.append(current)
+
+		// Write merged tracks as .gpx files
+		for track in mergedTracks {
+			if let gpxData = track.gpxXmlData() {
+				try? gpxData.write(to: dir.appendingPathComponent(track.fileGpxName()))
+			}
+		}
+
+		// Delete all the original .track files (try both current and legacy filenames)
+		for track in nonGpxTracks {
+			try? FileManager.default.removeItem(at: dir.appendingPathComponent(track.fileTrackName()))
+			try? FileManager.default.removeItem(at: dir.appendingPathComponent(track.legacyFileBaseName() + ".track"))
+		}
+
+		// Replace nonGpxTracks entries with the merged tracks
+		let nonGpxSet = Set(nonGpxTracks.map { ObjectIdentifier($0) })
+		nonGpxTracks = []
+		return (tracks.filter { !nonGpxSet.contains(ObjectIdentifier($0)) } + mergedTracks)
+			.sorted { $0.creationDate > $1.creationDate }
+	}
+
 	func getDiskCacheSize() async -> (size: Int, count: Int) {
 		var size = 0
 		let dir = saveDirectory()
 		let files = (try? FileManager.default.contentsOfDirectory(atPath: dir.path)) ?? []
 		for file in files {
-			if file.hasSuffix(".track") {
+			if file.hasSuffix(".track") || file.hasSuffix(".gpx") {
 				let path = dir.appendingPathComponent(file).path
 				var status = stat()
 				stat((path as NSString).fileSystemRepresentation, &status)

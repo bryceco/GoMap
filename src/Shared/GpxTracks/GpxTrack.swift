@@ -41,7 +41,7 @@ final class GpxPoint: NSObject, NSSecureCoding {
 		func parseInt(_ buf: [UInt8], _ offset: Int, _ count: Int) -> Int? {
 			guard offset + count <= buf.count else { return nil }
 			var result = 0
-			for i in offset ..< offset + count {
+			for i in offset..<offset + count {
 				let d = buf[i]
 				guard d >= UInt8(ascii: "0"), d <= UInt8(ascii: "9") else { return nil }
 				result = result * 10 + Int(d - UInt8(ascii: "0"))
@@ -111,9 +111,9 @@ final class GpxPoint: NSObject, NSSecureCoding {
 		// Days from 1970-01-01 to year-01-01
 		let y = year - 1
 		let daysToYear = 365 * (year - 1970)
-			+ (y / 4 - 484)    // leap years since 1970: y/4 - 1969/4
-			- (y / 100 - 19)   // minus century years: y/100 - 1969/100
-			+ (y / 400 - 4)    // plus 400-year cycles: y/400 - 1969/400
+			+ (y / 4 - 484) // leap years since 1970: y/4 - 1969/4
+			- (y / 100 - 19) // minus century years: y/100 - 1969/100
+			+ (y / 400 - 4) // plus 400-year cycles: y/400 - 1969/400
 
 		let dayOfYear = cumulativeDays[month - 1] + (day - 1)
 		let totalSeconds = Double(daysToYear + dayOfYear) * 86400.0
@@ -194,17 +194,15 @@ final class GpxTrack: NSObject, NSSecureCoding {
 	private var recording = false
 	private var distance = 0.0
 
-	private var _name: String?
-	var name: String {
-		get {
-			return _name ?? fileName()
-		}
-		set(name) {
-			_name = name
-		}
+	var name: String?
+
+	/// The date when the track was created. Derived from the first point's timestamp
+	/// when available, falling back to a stored date for waypoint-only imports.
+	var creationDate: Date {
+		return points.first?.timestamp ?? _creationDate
 	}
 
-	var creationDate = Date() // when trace was recorded or downloaded
+	private var _creationDate = Date()
 	private(set) var points: [GpxPoint] = []
 	private(set) var wayPoints: [GpxPoint] = []
 	private var geoJSONFeature: GeoJSONFeature?
@@ -248,9 +246,6 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		if let prev = prev {
 			let d = coordinate.greatCircleDistance(to: prev.latLon)
 			distance += d
-		} else {
-			// Use the first timestamp as the creation date
-			creationDate = location.timestamp
 		}
 
 		let pt = GpxPoint(latLon: coordinate,
@@ -294,6 +289,14 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		super.init()
 	}
 
+	/// Appends points and waypoints from a newer track to this track.
+	func appendPoints(from track: GpxTrack) {
+		points.append(contentsOf: track.points)
+		wayPoints.append(contentsOf: track.wayPoints)
+		geoJSONFeature = nil
+		distance = 0.0
+	}
+
 	func gpxXmlString() -> String? {
 		let dateFormatter = OsmBaseObject.rfc3339DateFormatter()
 
@@ -323,7 +326,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		root.addChild(trkElement)
 
 		// Track name (only written if explicitly set, not the auto-generated filename)
-		if let trackName = _name,
+		if let trackName = name,
 		   let nameElement = DDXMLNode.element(withName: "name") as? DDXMLElement
 		{
 			nameElement.stringValue = trackName
@@ -429,9 +432,9 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		self.init()
 		points = handler.trkPoints
 		wayPoints = handler.wayPoints
-		creationDate = handler.trkPoints.first?.timestamp
+		_creationDate = handler.metadataDate
+			?? handler.trkPoints.first?.timestamp
 			?? handler.wayPoints.first?.timestamp
-			?? handler.metadataDate
 			?? Date()
 		if let trackName = handler.trackName {
 			name = trackName
@@ -465,8 +468,29 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		}
 	}
 
-	func fileName() -> String {
-		return String(format: "%.3f.track", creationDate.timeIntervalSince1970)
+	private static let fileNameFormatter: DateFormatter = {
+		let df = DateFormatter()
+		df.dateFormat = "yyyy-MM-dd__HH-mm-ss.SSS"
+		df.locale = Locale(identifier: "en_US_POSIX")
+		df.timeZone = .current
+		return df
+	}()
+
+	func fileBaseName() -> String {
+		return Self.fileNameFormatter.string(from: creationDate)
+	}
+
+	/// The old unix-timestamp filename used by old versions.
+	func legacyFileBaseName() -> String {
+		return String(format: "%.3f", creationDate.timeIntervalSince1970)
+	}
+
+	func fileGpxName() -> String {
+		return fileBaseName() + ".gpx"
+	}
+
+	func fileTrackName() -> String {
+		return fileBaseName() + ".track"
 	}
 
 	func duration() -> TimeInterval {
@@ -480,8 +504,14 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		super.init()
 		points = aDecoder.decodeObject(of: [NSArray.self, GpxPoint.self], forKey: "points") as? [GpxPoint] ?? []
 		wayPoints = aDecoder.decodeObject(of: [NSArray.self, GpxPoint.self], forKey: "waypoints") as? [GpxPoint] ?? []
-		name = aDecoder.decodeObject(of: NSString.self, forKey: "name") as String? ?? ""
-		creationDate = aDecoder.decodeObject(of: NSDate.self, forKey: "creationDate") as Date? ?? Date()
+		_creationDate = aDecoder.decodeObject(of: NSDate.self, forKey: "creationDate") as Date? ?? Date()
+		// Discard auto-generated names stored by older versions
+		let decodedName = aDecoder.decodeObject(of: NSString.self, forKey: "name") as String? ?? ""
+		if !decodedName.isEmpty,
+		   decodedName != legacyFileBaseName() + ".track"
+		{
+			name = decodedName
+		}
 	}
 
 	func encode(with aCoder: NSCoder) {
