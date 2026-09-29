@@ -166,6 +166,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 			// do automatic value updates for special keys
 			// add https:// prefix to website=
 			if let newValue = OsmTags.convertWikiUrlToReference(withKey: key, value: value)
+				?? OsmTags.stripContactPrefix(withKey: key, value: value)
 				?? OsmTags.convertWebsiteValueToHttps(withKey: key, value: value)
 				?? OsmTags.fixUpOpeningHours(withKey: key, value: value)
 			{

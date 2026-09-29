@@ -180,6 +180,22 @@ final class OsmTags {
 		return nil
 	}
 
+	static func stripContactPrefix(withKey key: String, value: String) -> String? {
+		let mailto = "mailto:"
+		let tel = "tel:"
+		if isKey(key, variantOf: "email"),
+		   value.hasPrefix(mailto)
+		{
+			return String(value.dropFirst(mailto.count))
+		}
+		if isKey(key, variantOf: "phone") || isKey(key, variantOf: "fax"),
+		   value.hasPrefix(tel)
+		{
+			return String(value.dropFirst(tel.count))
+		}
+		return nil
+	}
+
 	static func convertWebsiteValueToHttps(withKey key: String, value url: String) -> String? {
 		guard isKey(key, variantOf: "website") else {
 			// not a website value
