@@ -56,15 +56,9 @@ class RulerView: UIView {
 		shapeLayer.strokeColor = UIColor.black.cgColor
 		shapeLayer.fillColor = nil
 
+		// Use a system font with monospaced digits so the ruler text doesn't jitter as values change
 		let font = UIFont.preferredFont(forTextStyle: .caption2)
-		let fontDescriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .caption2)
-		let monospacedFontDescriptor = fontDescriptor.addingAttributes([
-			.featureSettings: [[
-				UIFontDescriptor.FeatureKey.featureIdentifier: kNumberSpacingType,
-				UIFontDescriptor.FeatureKey.typeIdentifier: kMonospacedNumbersSelector
-			]]
-		])
-		let monospacedFont = UIFont(descriptor: monospacedFontDescriptor, size: font.pointSize)
+		let monospacedFont = UIFont.monospacedDigitSystemFont(ofSize: font.pointSize, weight: .regular)
 		textLayer.font = monospacedFont
 		textLayer.fontSize = 12 // font.pointSize;
 		textLayer.foregroundColor = UIColor.black.cgColor
