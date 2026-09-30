@@ -224,10 +224,12 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
 		super.traitCollectionDidChange(previousTraitCollection)
 		if #available(iOS 13.0, *),
-		   traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection),
-		   let view = mainView.mapLayersView.basemapLayer as? MercatorTileLayer
+		   traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection)
 		{
-			view.updateDarkMode()
+			if let view = mainView.mapLayersView.basemapLayer as? MercatorTileLayer {
+				view.updateDarkMode()
+			}
+			mainView.mapLayersView.globeLayer.updateDarkMode()
 		}
 	}
 

@@ -545,7 +545,10 @@ final class EditorMapLayer: CALayer {
 	}
 
 	func updateMapLocation() {
-		guard !isHidden, !owner.isHidden, AppDelegate.shared.mainView.isInitialized else {
+		guard !isHidden, !owner.isHidden,
+		      !AppDelegate.shared.mainView.viewState.zoomedOut,
+		      AppDelegate.shared.mainView.isInitialized
+		else {
 			// user zoomed out and we got hidden, so immediately stop downloading
 			Task {
 				await mapData.cancelCurrentDownloads()

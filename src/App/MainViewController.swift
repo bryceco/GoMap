@@ -86,6 +86,31 @@ final class ViewStateAndOverlays {
 		}
 	}
 
+	/// Once the longer edge of the screen spans more than this many degrees of longitude
+	/// the earth's curvature becomes noticeable, so the flat basemap/aerial imagery is
+	/// replaced by the globe. Using a span rather than a zoom level makes the switch
+	/// happen at the same visual scale on phones and iPads.
+	static let globeLongitudeSpanThreshold = 40.0
+
+	/// True when the view is zoomed out far enough that the earth's curvature would be
+	/// noticeable on a flat map. This is only about scale; see `shouldShowGlobe` for
+	/// whether the globe is actually displayed.
+	// Initial value is true since viewPort transform initial value is identity
+	var zoomedOutForGlobe = true {
+		didSet {
+			if oldValue != zoomedOutForGlobe {
+				onChange.notify()
+			}
+		}
+	}
+
+	/// True when the globe should be displayed in place of the flat basemap or aerial imagery:
+	/// zoomed out far enough, and in a state where the editor isn't showing, since the
+	/// editor is never drawn on the globe.
+	var shouldShowGlobe: Bool {
+		return zoomedOutForGlobe && (effectiveState == .AERIAL || effectiveState == .BASEMAP)
+	}
+
 	// When zoomed out the user's preferred state is overridden:
 	//   Editor only --> Basemap
 	//   Editor+Aerial --> Aerial+Locator
@@ -402,6 +427,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		viewPort.mapTransform.onChange.subscribe(self) { [weak self] in
+			self?.updateZoomedOutForGlobe()
 			self?.updateCurrentRegionForLocationUsingCountryCoder()
 			self?.checkForChangedTileOverlayLayers()
 
@@ -1044,6 +1070,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 	@objc func handleRotationGesture(_ rotationGesture: RotationGestureRecognizer) {
 		// Rotate screen
 		guard settings.enableRotation,
+		      !viewState.shouldShowGlobe, // the globe is locked north-up
 		      mapView.isRotateObjectMode == nil
 		else {
 			return
@@ -1226,7 +1253,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 	func headingChanged(_ heading: Double, accuracy: Double) {
 		let screenAngle = viewPort.mapTransform.rotation()
 
-		if gpsState == .HEADING {
+		if gpsState == .HEADING,
+		   !viewState.shouldShowGlobe // the globe is locked north-up
+		{
 			// rotate view to new heading
 			let center = viewPort.screenCenterPoint()
 			let delta = -(heading + screenAngle)
@@ -1428,12 +1457,30 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
+	/// Determine if we've zoomed out enough to switch from the flat map to the globe:
+	/// at zoom z the whole world is 256*2^z points wide, so compute how many
+	/// degrees of longitude the longer screen edge covers.
+	func updateZoomedOutForGlobe() {
+		let worldPoints = 256.0 * pow(2.0, viewPort.mapTransform.zoom())
+		let bounds = mapLayersView.bounds
+		let screenPoints = Double(max(bounds.width, bounds.height))
+		let longitudeSpan = 360.0 * screenPoints / worldPoints
+		viewState.zoomedOutForGlobe = longitudeSpan > ViewStateAndOverlays.globeLongitudeSpanThreshold
+	}
+
 	func viewStateDidChange() {
 		CATransaction.begin()
 		CATransaction.setAnimationDuration(0.5)
 
+		// When zoomed out far enough the globe replaces the flat imagery layer,
+		// displaying the same imagery (Bing when aerial, Mapnik when basemap, etc.)
+		let showGlobe = viewState.shouldShowGlobe
+		let globeWasShowing = mapLayersView.globeIsShowing
+		var globeImagery: MercatorTileLayer?
+
 		mapLayersView.locatorLayer.isHidden = !viewState.effectiveOverlays.contains(.LOCATOR)
 			|| mapLayersView.locatorLayer.tileServer.apiKey == ""
+			|| showGlobe
 
 		aerialAlignmentButton.isHidden = true
 		dPadView.isHidden = true
@@ -1452,12 +1499,22 @@ final class MainViewController: UIViewController, DPadDelegate,
 		case MapViewState.AERIAL:
 			mapLayersView.aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
 			mapView.isHidden = true
-			mapLayersView.aerialLayer.isHidden = false
+			mapLayersView.aerialLayer.isHidden = false // hidden by setGlobeShowing() once the globe covers it
 			mapLayersView.basemapLayer.isHidden = true
+			globeImagery = mapLayersView.aerialLayer
 		case MapViewState.BASEMAP:
 			mapView.isHidden = true
 			mapLayersView.aerialLayer.isHidden = true
-			mapLayersView.basemapLayer.isHidden = false
+			mapLayersView.basemapLayer.isHidden = false // hidden by setGlobeShowing() once the globe covers it
+			// Vector (MapLibre) basemaps can't be shown on the globe, so they stay flat
+			// when zoomed out; only raster tile basemaps get the globe.
+			globeImagery = mapLayersView.basemapLayer as? MercatorTileLayer
+		}
+
+		mapLayersView.setGlobeShowing(showGlobe, replacing: globeImagery)
+		if showGlobe, globeImagery != nil, !globeWasShowing {
+			// The globe is always displayed north-up
+			viewPort.rotateToHeading(0.0)
 		}
 
 		let showZoomInLabel = (viewState.state == .EDITOR || viewState.state == .EDITORAERIAL) && viewState.zoomedOut

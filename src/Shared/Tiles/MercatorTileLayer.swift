@@ -19,14 +19,22 @@ private func modulus(_ a: Int, _ n: Int) -> Int {
 
 @MainActor
 final class MercatorTileLayer: CALayer {
-	private var webCache: PersistentWebCache<UIImage>?
+	// Readable so the globe can share this layer's tile cache when it replaces it
+	private(set) var tileCache: TileServerCache?
 	private var layerDict: [String: CALayer] = [:] // map of tiles currently displayed
 
 	let viewPort: MapViewPort
 	let progress: MapViewProgress
 	private var isPerformingLayout = false
 
-	var supportDarkMode = false
+	var supportDarkMode = false {
+		didSet {
+			// the cache bakes in the dark-mode setting, so rebuild it if that changes
+			if supportDarkMode != oldValue, tileCache != nil {
+				tileCache = TileServerCache(tileServer: tileServer, supportDarkMode: supportDarkMode)
+			}
+		}
+	}
 
 	// MARK: Implementation
 
@@ -36,6 +44,7 @@ final class MercatorTileLayer: CALayer {
 		progress = layer.progress
 		tileServer = layer.tileServer
 		supportDarkMode = layer.supportDarkMode
+		tileCache = layer.tileCache
 		super.init(layer: layer)
 	}
 
@@ -76,9 +85,7 @@ final class MercatorTileLayer: CALayer {
 			layerDict.removeAll()
 
 			// update service
-			webCache = PersistentWebCache(name: tileServer.identifier,
-			                              memorySize: 20 * 1000 * 1000,
-			                              daysToKeep: tileServer.daysToCache())
+			tileCache = TileServerCache(tileServer: tileServer, supportDarkMode: supportDarkMode)
 			setNeedsLayout()
 		}
 	}
@@ -117,14 +124,14 @@ final class MercatorTileLayer: CALayer {
 	}
 
 	func updateDarkMode() {
-		webCache?.resetMemoryCache()
+		tileCache?.resetMemoryCache()
 		layerDict.removeAll()
 		sublayers = nil
 		setNeedsLayout()
 	}
 
 	func purgeTileCache() {
-		webCache?.removeAllObjects()
+		tileCache?.removeAllObjects()
 		layerDict.removeAll()
 		sublayers = nil
 		URLCache.shared.removeAllCachedResponses()
@@ -254,25 +261,8 @@ final class MercatorTileLayer: CALayer {
 			addSublayer(layer)
 
 			// check memory cache
-			let cacheKey = QuadKey(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
-			let cachedImage: UIImage? = webCache!.object(
-				withKey: cacheKey,
-				fallbackURL: { [self] in
-					self.tileServer.url(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
-				},
-				objectForData: { data in
-					if data.count == 0 || self.tileServer.isPlaceholderImage(data) {
-						return nil
-					}
-					if self.supportDarkMode,
-					   #available(iOS 13.0, *),
-					   UIScreen.main.traitCollection.userInterfaceStyle == .dark
-					{
-						return DarkModeImage.shared.darkModeImageFor(data: data)
-					} else {
-						return UIImage(data: data)
-					}
-				},
+			let cachedImage = tileCache!.image(
+				forZoom: zoomLevel, tileX: tileModX, tileY: tileModY,
 				completion: { [self] result in
 					switch result {
 					case let .success(image):
@@ -422,20 +412,10 @@ final class MercatorTileLayer: CALayer {
 
 	// this function is used for bulk downloading tiles
 	func downloadTile(forKey cacheKey: String, completion: @escaping () -> Void) {
-		let (tileX, tileY, zoomLevel) = QuadKeyToTileXY(cacheKey)
-		let data2 = webCache!.object(withKey: cacheKey,
-		                             fallbackURL: {
-		                             	self.tileServer.url(forZoom: zoomLevel, tileX: tileX, tileY: tileY)
-		                             },
-		                             objectForData: { data in
-		                             	if data.count == 0 || self.tileServer.isPlaceholderImage(data) {
-		                             		return nil
-		                             	}
-		                             	return UIImage(data: data)
-		                             }, completion: { _ in
-		                             	completion()
-		                             })
-		if data2 != nil {
+		let cached = tileCache!.image(forKey: cacheKey, completion: { _ in
+			completion()
+		})
+		if cached != nil {
 			completion()
 		}
 	}
@@ -474,7 +454,7 @@ final class MercatorTileLayer: CALayer {
 
 extension MercatorTileLayer: TilesProvider {
 	func currentTiles() -> [String] {
-		return webCache!.allKeys()
+		return tileCache!.allKeys()
 	}
 
 	func maxZoom() -> Int {
@@ -484,7 +464,7 @@ extension MercatorTileLayer: TilesProvider {
 
 extension MercatorTileLayer: DiskCacheSizeProtocol {
 	func getDiskCacheSize() async -> (size: Int, count: Int) {
-		return await webCache!.getDiskCacheSize()
+		return await tileCache!.getDiskCacheSize()
 	}
 }
 

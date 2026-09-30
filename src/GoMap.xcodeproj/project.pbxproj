@@ -140,6 +140,10 @@
 		02A59EE1297F6E6A00B0A676 /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */; };
 		02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EE82981D75700B0A676 /* OAuth2.swift */; };
 		02A59EEB298312F500B0A676 /* Require.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EEA298312F500B0A676 /* Require.swift */; };
+		02A63B87306D4B3200082CD9 /* TileServerGlobeSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A63B86306D4B3200082CD9 /* TileServerGlobeSource.swift */; };
+		02A63B89306D4B3E00082CD9 /* GlobeBasemapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A63B88306D4B3E00082CD9 /* GlobeBasemapView.swift */; };
+		02A63B8B306D668700082CD9 /* GlobeRenderer in Frameworks */ = {isa = PBXBuildFile; productRef = 02A63B8A306D668700082CD9 /* GlobeRenderer */; };
+		02A63B8D306EE72A00082CD9 /* TileServerCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A63B8C306EE72A00082CD9 /* TileServerCache.swift */; };
 		02ACBA3416713CCB00BB4414 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3316713CCB00BB4414 /* UIKit.framework */; };
 		02ACBA3616713CCB00BB4414 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3516713CCB00BB4414 /* Foundation.framework */; };
 		02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02ACBA3716713CCB00BB4414 /* CoreGraphics.framework */; };
@@ -511,6 +515,10 @@
 		02A59EE0297F6E6A00B0A676 /* Dictionary+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		02A59EE82981D75700B0A676 /* OAuth2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuth2.swift; sourceTree = "<group>"; };
 		02A59EEA298312F500B0A676 /* Require.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Require.swift; sourceTree = "<group>"; };
+		02A63B85306D407700082CD9 /* GlobeRenderer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = GlobeRenderer; path = /Users/bryce/SourceCode/GitHub/GlobeRenderer; sourceTree = "<absolute>"; };
+		02A63B86306D4B3200082CD9 /* TileServerGlobeSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServerGlobeSource.swift; sourceTree = "<group>"; };
+		02A63B88306D4B3E00082CD9 /* GlobeBasemapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobeBasemapView.swift; sourceTree = "<group>"; };
+		02A63B8C306EE72A00082CD9 /* TileServerCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TileServerCache.swift; sourceTree = "<group>"; };
 		02ACBA2F16713CCB00BB4414 /* Go Map!!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Go Map!!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02ACBA3316713CCB00BB4414 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		02ACBA3516713CCB00BB4414 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -707,6 +715,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				02401F361DE021EE00F32AF5 /* ExternalAccessory.framework in Frameworks */,
+				02A63B8B306D668700082CD9 /* GlobeRenderer in Frameworks */,
 				02EDCC081683EC2D007F9934 /* CFNetwork.framework in Frameworks */,
 				027AD5D219F5A18700120654 /* CoreFoundation.framework in Frameworks */,
 				02ACBA3816713CCB00BB4414 /* CoreGraphics.framework in Frameworks */,
@@ -888,6 +897,7 @@
 				02D6238026A6628300A4F147 /* PhotoShare */,
 				02CBF3B62BE8529A000DE2AD /* GpxWidget */,
 				02ACBA3216713CCB00BB4414 /* Frameworks */,
+				02A63B85306D407700082CD9 /* GlobeRenderer */,
 				02ACBA3016713CCB00BB4414 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1207,12 +1217,15 @@
 		02F5329A267AD0250088DF41 /* Tiles */ = {
 			isa = PBXGroup;
 			children = (
+				02A63B88306D4B3E00082CD9 /* GlobeBasemapView.swift */,
 				02F3F8422B96CDA600ECB99F /* MapLibreVectorTilesView.swift */,
 				C3FA925326411C2B000A2A99 /* MercatorTileLayer.swift */,
 				C3FA925126411557000A2A99 /* TileQuadKey.swift */,
 				020E160A267A82050037DE49 /* TileServer.swift */,
+				02A63B86306D4B3200082CD9 /* TileServerGlobeSource.swift */,
 				C3FA924F2640329B000A2A99 /* TileServerList.swift */,
 				0244398C29C9402B009FC2D0 /* TileServerList+JSON.swift */,
+				02A63B8C306EE72A00082CD9 /* TileServerCache.swift */,
 			);
 			name = Tiles;
 			path = Shared/Tiles;
@@ -1405,6 +1418,7 @@
 			packageProductDependencies = (
 				025CCA11271244B800074726 /* KissXML */,
 				02F3F8402B96CCAE00ECB99F /* MapLibre */,
+				02A63B8A306D668700082CD9 /* GlobeRenderer */,
 			);
 			productName = OSMiOS;
 			productReference = 02ACBA2F16713CCB00BB4414 /* Go Map!!.app */;
@@ -1558,6 +1572,7 @@
 			packageReferences = (
 				025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */,
 				02F3F83F2B96CCAE00ECB99F /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */,
+				02A63B84306D3ECE00082CD9 /* XCRemoteSwiftPackageReference "GlobeRenderer" */,
 			);
 			productRefGroup = 02ACBA3016713CCB00BB4414 /* Products */;
 			projectDirPath = "";
@@ -1668,10 +1683,12 @@
 				02CBF3C82BE85829000DE2AD /* GpxTrackWidgetManager.swift in Sources */,
 				ED56E5B526026542000B368C /* ClearCacheViewController.swift in Sources */,
 				026FC7682650A17B005DDAFF /* VoiceAnnouncement.swift in Sources */,
+				02A63B8D306EE72A00082CD9 /* TileServerCache.swift in Sources */,
 				ED56E5E426028181000B368C /* DisplayViewController.swift in Sources */,
 				020F4ADE24AAD4E700D9E34A /* PresetsDatabase.swift in Sources */,
 				02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */,
 				C3D096CB263E9A1100E3B129 /* DownloadThreadPool.swift in Sources */,
+				02A63B89306D4B3E00082CD9 /* GlobeBasemapView.swift in Sources */,
 				02D276912E8B289400A21863 /* EXIFInfo.swift in Sources */,
 				02930750268BFB6700B2A326 /* QuadDownloadLayer.swift in Sources */,
 				C3D096FC263F118500E3B129 /* FpsLabel.swift in Sources */,
@@ -1753,6 +1770,7 @@
 				023320A42BE1DB9900E3311A /* DPadView.swift in Sources */,
 				02D1ABA12F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift in Sources */,
 				ED9649C12601C33E00EC0A60 /* AdvancedSettingsViewController.swift in Sources */,
+				02A63B87306D4B3200082CD9 /* TileServerGlobeSource.swift in Sources */,
 				C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */,
 				02CA15512824A6B40047B0E5 /* String+Ext.swift in Sources */,
 				02CD9974265C65C200213AD6 /* EditorFilters.swift in Sources */,
@@ -2767,6 +2785,14 @@
 				kind = branch;
 			};
 		};
+		02A63B84306D3ECE00082CD9 /* XCRemoteSwiftPackageReference "GlobeRenderer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/bryceco/GlobeRenderer";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		02F3F83F2B96CCAE00ECB99F /* XCRemoteSwiftPackageReference "maplibre-gl-native-distribution" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/maplibre/maplibre-gl-native-distribution";
@@ -2782,6 +2808,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 025CCA10271244B800074726 /* XCRemoteSwiftPackageReference "KissXML" */;
 			productName = KissXML;
+		};
+		02A63B8A306D668700082CD9 /* GlobeRenderer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GlobeRenderer;
 		};
 		02F3F8402B96CCAE00ECB99F /* MapLibre */ = {
 			isa = XCSwiftPackageProductDependency;

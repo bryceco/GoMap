@@ -11,6 +11,7 @@ import UIKit
 enum MAIN_ZLAYER: CGFloat {
 	case AERIAL = -100
 	case BASEMAP = -98
+	case GLOBE = -97 // above both flat layers so it can fade in over them
 	case LOCATOR = -50
 	case DATA = -30
 	case MAPVIEW = -20
@@ -43,6 +44,8 @@ class MapLayersView: UIView {
 	// opaque background layers
 	private(set) var aerialLayer: MercatorTileLayer!
 	var basemapLayer: (MapLayersView.LayerOrView & DiskCacheSizeProtocol)!
+	// replaces aerialLayer/basemapLayer when zoomed out far enough to see the earth's curvature
+	private(set) var globeLayer: GlobeBasemapView!
 	// transparent foreground layers
 	private(set) var gpxLayer: GpxLayer!
 	private(set) var locatorLayer: MercatorTileLayer!
@@ -85,11 +88,45 @@ class MapLayersView: UIView {
 		}
 	}
 
+	/// True while the globe is replacing the flat basemap/aerial imagery
+	var globeIsShowing: Bool {
+		return !(globeLayer?.isHidden ?? true)
+	}
+
+	/// Show or hide the globe in place of `flatLayer`, the aerial or basemap tile layer
+	/// whose imagery it displays. The globe fades in over the flat layer once its tiles
+	/// have loaded, and the flat layer is hidden only after the globe is fully opaque.
+	/// Overlay layers are drawn with a flat Mercator projection, so they'd be misaligned
+	/// on the globe and are hidden while it is displayed.
+	func setGlobeShowing(_ showing: Bool, replacing flatLayer: MercatorTileLayer?) {
+		let showing = showing && flatLayer != nil
+
+		gpxLayer.isHidden = !mainView.settings.displayGpxTracks || showing
+		dataOverlayLayer.isHidden = !displayDataOverlayLayers || showing
+		mapMarkersView.isHidden = showing
+		for layer in allLayers where layer.hasTileServer?.overlay == true {
+			layer.isHidden = showing
+		}
+
+		if showing, let flatLayer {
+			globeLayer.configure(from: flatLayer)
+			// keep the flat layer visible underneath until the globe is opaque
+			flatLayer.isHidden = false
+			globeLayer.fadeIn { [weak self] in
+				guard let self, self.globeLayer.isFullyVisible else { return }
+				flatLayer.isHidden = true
+			}
+		} else {
+			// the caller has already made the appropriate flat layer visible underneath
+			globeLayer.fadeOut()
+		}
+	}
+
 	var displayDataOverlayLayers = false {
 		didSet {
 			UserPrefs.shared.mapViewEnableDataOverlay.value = displayDataOverlayLayers
 
-			dataOverlayLayer.isHidden = !displayDataOverlayLayers
+			dataOverlayLayer.isHidden = !displayDataOverlayLayers || globeIsShowing
 
 			if displayDataOverlayLayers {
 				dataOverlayLayer.setNeedsLayout()
@@ -115,6 +152,11 @@ class MapLayersView: UIView {
 		aerialLayer.tileServer = AppState.shared.tileServerList.currentServer
 		aerialLayer.isHidden = true
 		allLayers.append(aerialLayer)
+
+		globeLayer = GlobeBasemapView(viewPort: viewPort)
+		globeLayer.layer.zPosition = MAIN_ZLAYER.GLOBE.rawValue
+		globeLayer.isHidden = true
+		allLayers.append(globeLayer)
 
 		gpxLayer = GpxLayer(viewPort: viewPort)
 		gpxLayer.zPosition = MAIN_ZLAYER.GPX.rawValue
@@ -171,7 +213,8 @@ class MapLayersView: UIView {
 		displayDataOverlayLayers = UserPrefs.shared.mapViewEnableDataOverlay.value ?? false
 
 		mainView.settings.$displayGpxTracks.callAndSubscribe(self) { [weak self] displayGpxTracks in
-			self?.gpxLayer.isHidden = !displayGpxTracks
+			guard let self else { return }
+			self.gpxLayer.isHidden = !displayGpxTracks || self.globeIsShowing
 			LocationProvider.shared.allowsBackgroundLocationUpdates
 				= AppState.shared.gpxTracks.recordTracksInBackground && displayGpxTracks
 		}
@@ -255,7 +298,7 @@ class MapLayersView: UIView {
 				let layer = MercatorTileLayer(viewPort: viewPort, progress: mainView)
 				layer.zPosition = MAIN_ZLAYER.GPX.rawValue
 				layer.tileServer = tileServer
-				layer.isHidden = false
+				layer.isHidden = globeIsShowing
 				allLayers.append(layer)
 				self.layer.addSublayer(layer)
 			}
