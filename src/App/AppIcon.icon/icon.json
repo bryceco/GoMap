@@ -1,0 +1,58 @@
+{
+  "fill" : {
+    "linear-gradient" : [
+      "display-p3:0.20392,0.28627,0.36863,1.00000",
+      "srgb:0.17255,0.24314,0.31373,1.00000"
+    ],
+    "orientation" : {
+      "start" : {
+        "x" : 0.5,
+        "y" : 0
+      },
+      "stop" : {
+        "x" : 0.5,
+        "y" : 0.7
+      }
+    }
+  },
+  "groups" : [
+    {
+      "layers" : [
+        {
+          "image-name" : "1 Pin.svg",
+          "name" : "1 Pin"
+        },
+        {
+          "image-name" : "2 Land.svg",
+          "name" : "2 Land"
+        },
+        {
+          "image-name" : "3 Park.svg",
+          "name" : "3 Park"
+        },
+        {
+          "image-name" : "4 Water.svg",
+          "name" : "4 Water"
+        },
+        {
+          "image-name" : "5 Base.svg",
+          "name" : "5 Base"
+        }
+      ],
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
