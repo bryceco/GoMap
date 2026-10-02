@@ -314,6 +314,8 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		}
 
 		showingHistory = false
+		resultsArray = []
+		tableView.reloadData()
 		activityIndicator.startAnimating()
 		searchTask = Task {
 			defer {
