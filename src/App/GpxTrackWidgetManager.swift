@@ -104,13 +104,15 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 	}
 
 	func updateTrack() {
+		let gpxTracks = AppState.shared.gpxTracks
 		guard let activity = activity,
-		      let track = AppState.shared.gpxTracks.activeTrack
+		      gpxTracks.activeTrack != nil,
+		      let startDate = gpxTracks.activeTrackStartDate
 		else {
 			return
 		}
-		let state = GpxTrackAttributes.ContentState(startTime: track.creationDate,
-		                                            pointCount: track.points.count)
+		let state = GpxTrackAttributes.ContentState(startTime: startDate,
+		                                            pointCount: gpxTracks.activeTrackTotalPointCount)
 		Task {
 			await activity.update(using: state)
 		}
@@ -118,8 +120,9 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 
 	func pauseTrack() {
 		print("pause")
+		let gpxTracks = AppState.shared.gpxTracks
 		guard let activity = activity,
-		      let track = AppState.shared.gpxTracks.activeTrack
+		      gpxTracks.activeTrack != nil
 		else {
 			return
 		}
@@ -127,22 +130,23 @@ final class GpxTrackWidgetManager: GpxTrackWidgetManagerProtocol {
 		Task {
 			var state = activity.content.state
 			state.endTime = Date()
-			state.pointCount = track.points.count
+			state.pointCount = gpxTracks.activeTrackTotalPointCount
 			state.status = .paused
 			await activity.update(using: state)
 		}
 	}
 
 	func endTrack(fromWidget: Bool) {
+		let gpxTracks = AppState.shared.gpxTracks
 		guard let activity = activity,
-		      let track = AppState.shared.gpxTracks.activeTrack
+		      gpxTracks.activeTrack != nil
 		else {
 			return
 		}
 		Task {
 			var state = activity.content.state
 			state.endTime = Date()
-			state.pointCount = track.points.count
+			state.pointCount = gpxTracks.activeTrackTotalPointCount
 			state.status = .ended
 			await activity.end(using: state, dismissalPolicy: .immediate)
 		}

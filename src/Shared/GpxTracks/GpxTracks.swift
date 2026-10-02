@@ -14,6 +14,18 @@ final class GpxTracks: DiskCacheSizeProtocol {
 	private static let DefaultExpirationDays = 7
 	private var stabilizingCount = 0
 
+	/// The total point count across all chunks of the current recording session.
+	var activeTrackTotalPointCount: Int {
+		// nonGpxTracks holds previous chunks from the current session (cleared after consolidation)
+		return nonGpxTracks.reduce(0, { $0 + $1.points.count }) + (activeTrack?.points.count ?? 0)
+	}
+
+	/// The original start date of the current recording session (before any splits).
+	var activeTrackStartDate: Date? {
+		// nonGpxTracks is newest-first, so .last is the oldest (original) chunk
+		return nonGpxTracks.last?.creationDate ?? activeTrack?.creationDate
+	}
+
 	let onChangeTracks = NotificationService<Void>()
 	let OnChangeCurrent = NotificationService<Void>()
 
@@ -297,6 +309,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 
 		// sort newest first
 		tracks.sort { $0.creationDate > $1.creationDate }
+		nonGpxTracks.sort { $0.creationDate > $1.creationDate }
 		return tracks
 	}
 
