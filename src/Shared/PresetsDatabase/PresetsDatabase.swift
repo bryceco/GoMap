@@ -127,12 +127,24 @@ final class PresetsDatabase {
 					for (path, pathData) in nsiData {
 						let pathDict = try cast(pathData, to: [String: Any].self)
 						let items = pathDict["items"] as? [[String: Any]] ?? []
-						let parentID = path.drop(while: { $0 != "/" }).dropFirst()
-						let parentFeature = self.stdFeatures[String(parentID)]
-						for item in items {
-							if let p = PresetFeature(withNSIPath: path, item: item, parentFeature: parentFeature) {
-								nsiPresets[p.featureID] = p
+						// Walk up the preset hierarchy to find the closest matching
+						// standard preset (e.g. "emergency/water_rescue" -> "emergency")
+						var lookupID: String? = String(path.drop(while: { $0 != "/" }).dropFirst())
+						var parentFeature: PresetFeature?
+						while let id = lookupID {
+							if let feature = self.stdFeatures[id] {
+								parentFeature = feature
+								break
 							}
+							lookupID = PresetFeature.parentIDofID(id)
+						}
+						guard let parentFeature else {
+							print("NSI path '\(path)' has no matching standard preset")
+							continue
+						}
+						for item in items {
+							let p = PresetFeature(withNSIPath: path, item: item, parentFeature: parentFeature)
+							nsiPresets[p.featureID] = p
 						}
 					}
 					let nsiIndex = Self.buildTagIndex([self.stdFeatures, nsiPresets],
@@ -252,28 +264,19 @@ final class PresetsDatabase {
 	}
 
 	// go up the feature tree and return the first instance of the requested field value
-	private class func inheritedFieldForPresetsDict(_ presetDict: [String: PresetFeature],
-	                                                featureID: String?,
-	                                                field fieldGetter: @escaping (_ feature: PresetFeature) -> Any?)
-		-> Any?
+	func inheritedValueOfFeature(_ featureID: String?,
+	                             fieldGetter: @escaping (_ feature: PresetFeature) -> Any?) -> Any?
 	{
 		var featureID = featureID
-		while featureID != nil {
-			if let feature = presetDict[featureID!],
+		while let id = featureID {
+			if let feature = presetFeatureForFeatureID(id),
 			   let field = fieldGetter(feature)
 			{
 				return field
 			}
-			featureID = PresetFeature.parentIDofID(featureID!)
+			featureID = PresetFeature.parentIDofID(id)
 		}
 		return nil
-	}
-
-	func inheritedValueOfFeature(_ featureID: String?,
-	                             fieldGetter: @escaping (_ feature: PresetFeature) -> Any?) -> Any?
-	{
-		// This is currently never used for NSI entries, so we can ignore nsiPresets
-		return PresetsDatabase.inheritedFieldForPresetsDict(stdFeatures, featureID: featureID, field: fieldGetter)
 	}
 
 	func presetFeatureForFeatureID(_ featureID: String) -> PresetFeature? {

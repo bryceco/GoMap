@@ -176,54 +176,25 @@ class PresetFeature: CustomDebugStringConvertible {
 	/// Initializes a PresetFeature from a single NSI v8.0 item dict and its containing path.
 	/// The featureID is derived as `path/item["id"]`.
 	/// `parentFeature` is the standard preset corresponding to `path` (e.g. "amenity/fast_food"
-	/// for path "brands/amenity/fast_food") and is used to inherit geometry and icon.
-	convenience init?(withNSIPath path: String,
-	                  item: [String: Any],
-	                  parentFeature: PresetFeature?)
+	/// for path "brands/amenity/fast_food") and is used to inherit geometry, icon, and fields.
+	convenience init(withNSIPath path: String,
+	                 item: [String: Any],
+	                 parentFeature: PresetFeature)
 	{
-		guard let id = item["id"] as? String,
-		      let tags = item["tags"] as? [String: String],
-		      let displayName = item["displayName"] as? String
-		else {
-			assertionFailure("bad NSI item")
-			return nil
-		}
-
-		// Geometry: prefer the parent standard preset. If it's absent (NSI covers tag values
-		// that iD presets don't), infer from the OSM key embedded in the path.
-		// Path format: "<tree>/<key>/..." e.g. "transit/route/bus", "brands/shop/truck".
-		let geometry: [GEOMETRY]
-		if let g = parentFeature?.geometry, !g.isEmpty {
-			geometry = g
-		} else {
-			let osmKey = path.split(separator: "/").dropFirst().first.map(String.init) ?? ""
-			switch osmKey {
-			case "route":
-				// Route relations (bus, tram, train, etc.) are relations whose members are ways
-				geometry = [.RELATION, .LINE]
-			case "boundary":
-				// Administrative/protected boundaries are closed areas or multipolygon relations
-				geometry = [.AREA, .RELATION]
-			case "amenity", "advertising", "club", "emergency", "healthcare",
-			     "leisure", "office", "shop":
-				// Physical locations not yet in iD presets; nodes and closed ways
-				geometry = [.POINT, .AREA]
-			default:
-				assertionFailure("NSI path '\(path)' has no parent preset or geometry")
-				return nil
-			}
-		}
+		let id = item["id"] as! String
+		let tags = item["tags"] as! [String: String]
+		let displayName = item["displayName"] as! String
 
 		self.init(
 			_addTags: nil, // v8.0 merged addTags into tags
 			aliases: [],
 			featureID: "\(path)/\(id)",
-			fieldsWithRedirect: nil,
-			geometry: geometry,
-			icon: item["icon"] as? String ?? parentFeature?.iconName,
+			fieldsWithRedirect: parentFeature.fieldsWithRedirect,
+			geometry: parentFeature.geometry,
+			icon: item["icon"] as? String ?? parentFeature.iconName,
 			locationSet: LocationSet(withJson: item["locationSet"]),
 			matchScore: item["matchScore"] as? Double ?? 2.0,
-			moreFieldsWithRedirect: nil,
+			moreFieldsWithRedirect: parentFeature.moreFieldsWithRedirect,
 			nameWithRedirect: displayName,
 			nsiSuggestion: true,
 			reference: nil,
