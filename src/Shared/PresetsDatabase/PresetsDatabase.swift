@@ -298,7 +298,7 @@ final class PresetsDatabase {
 	}
 
 	func presetFeatureMatching(tags objectTags: [String: String]?,
-	                           geometry: GEOMETRY?,
+	                           geometry: GEOMETRY?, // nil means ignore geometry when matching
 	                           location: RegionInfoForLocation,
 	                           includeNSI: Bool,
 	                           withPresetKey: String? = nil,
@@ -347,9 +347,10 @@ final class PresetsDatabase {
 		// Fallback: if addr: tags are present but nothing specific matched, use the Address
 		// preset. The preset's "addr:*" tag key can never score via normal matching, so it
 		// requires this special case (mirrors iD editor behavior, ref #4353).
-		if bestFeature == nil || bestFeature!.isGeneric() || !bestFeature!.searchable,
+		if bestFeature == nil || bestFeature!.isGeneric(),
 		   objectTags.keys.contains(where: { $0.hasPrefix("addr:") }),
-		   let addressFeature = stdFeatures["address"]
+		   let addressFeature = stdFeatures["address"],
+		   geometry == nil || addressFeature.geometry.contains(geometry!)
 		{
 			bestFeature = addressFeature
 		}
