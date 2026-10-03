@@ -55,6 +55,16 @@ extension PresetsDatabase {
 				return diff < 0
 			}
 
+			// Among NSI entries, prefer brands (the primary business) over
+			// operators/flags/transit (ancillary features)
+			if feature1.nsiSuggestion {
+				let isBrand1 = feature1.featureID.hasPrefix("brands/")
+				let isBrand2 = feature2.featureID.hasPrefix("brands/")
+				if isBrand1 != isBrand2 {
+					return isBrand1
+				}
+			}
+
 			let name1 = feature1.friendlyName()
 			let name2 = feature2.friendlyName()
 			return name1.caseInsensitiveCompare(name2) == .orderedAscending

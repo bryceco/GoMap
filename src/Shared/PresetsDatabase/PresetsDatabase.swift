@@ -141,6 +141,7 @@ final class PresetsDatabase {
 					DispatchQueue.main.async {
 						self.nsiFeatures = nsiPresets
 						self.nsiFeatureIndex = nsiIndex
+						self.localCacheDirty = true
 #if DEBUG
 						if isUnderDebugger() {
 							self.testAllPresetFields()
@@ -167,6 +168,7 @@ final class PresetsDatabase {
 				}
 				DispatchQueue.main.async {
 					self.nsiGeoJson = featureDict
+					self.localCacheDirty = true
 				}
 			} catch {
 				MessageDisplay.shared.showInternalError(error, context: "NSI geojson")
