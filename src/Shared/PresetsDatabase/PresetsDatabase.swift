@@ -8,6 +8,25 @@
 
 import Foundation
 
+/// Decodable representation of nsi_presets.json
+struct NSIFile: Decodable {
+	fileprivate let nsi: [String: Category]
+
+	struct Category: Decodable {
+		fileprivate let items: [Item]
+	}
+
+	struct Item: Decodable {
+		let id: String
+		let displayName: String
+		let tags: [String: String]
+		let locationSet: LocationSet?
+		let matchScore: Double?
+		let matchNames: [String]?
+		let icon: String?
+	}
+}
+
 final class PresetsDatabase {
 	static let shared = {
 		do {
@@ -55,7 +74,6 @@ final class PresetsDatabase {
 
 	init() throws {
 		let startTime = Date()
-		let readTime = Date()
 
 		// default top-level items for an untagged geometry
 		let defaults = try JSONDecoder().decode([String: [String]].self,
@@ -117,21 +135,18 @@ final class PresetsDatabase {
 			DispatchQueue.global(qos: .userInitiated).async {
 				do {
 					let startTime = Date()
-					let nsiDict = try cast(Self.jsonForFile("nsi_presets.json"), to: [String: Any].self)
+					let nsiData = try Self.dataForFile("nsi_presets.json")
 					let readTime = Date()
-					// NSI v8.0 format: "nsi" key contains paths, each with an "items" array.
-					// NSI paths are tree-prefixed (e.g. "brands/amenity/fast_food"); stripping the
-					// first component gives the matching iD standard preset ID ("amenity/fast_food").
-					let nsiData = try cast(nsiDict["nsi"], to: [String: Any].self)
+					let nsiFile = try JSONDecoder().decode(NSIFile.self, from: nsiData)
+					// NSI v8.0 format: paths are tree-prefixed (e.g. "brands/amenity/fast_food");
+					// stripping the first component gives the iD standard preset ID.
 					var nsiPresets = [String: PresetFeature]()
-					for (path, pathData) in nsiData {
-						let pathDict = try cast(pathData, to: [String: Any].self)
-						let items = pathDict["items"] as? [[String: Any]] ?? []
+					for (path, pathEntry) in nsiFile.nsi {
 						guard let parentFeature = self.stdFeatureForNSIPath(path) else {
 							print("NSI path '\(path)' has no matching standard preset")
 							continue
 						}
-						for item in items {
+						for item in pathEntry.items {
 							let p = PresetFeature(withNSIPath: path, item: item, parentFeature: parentFeature)
 							nsiPresets[p.featureID] = p
 						}
@@ -174,8 +189,7 @@ final class PresetsDatabase {
 				MessageDisplay.shared.showInternalError(error, context: "NSI geojson")
 			}
 		}
-		print("PresetsDatabase read = \(readTime.timeIntervalSince(startTime)), " +
-			"decode = \(Date().timeIntervalSince(readTime))")
+		print("PresetsDatabase decode = \(Date().timeIntervalSince(startTime))")
 	}
 
 	/// basePresets is always the regular presets

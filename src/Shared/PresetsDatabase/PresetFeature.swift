@@ -178,31 +178,27 @@ class PresetFeature: CustomDebugStringConvertible {
 	/// `parentFeature` is the standard preset corresponding to `path` (e.g. "amenity/fast_food"
 	/// for path "brands/amenity/fast_food") and is used to inherit geometry, icon, and fields.
 	convenience init(withNSIPath path: String,
-	                 item: [String: Any],
+	                 item: NSIFile.Item,
 	                 parentFeature: PresetFeature)
 	{
-		let id = item["id"] as! String
-		let tags = item["tags"] as! [String: String]
-		let displayName = item["displayName"] as! String
-
 		self.init(
 			_addTags: nil, // v8.0 merged addTags into tags
 			aliases: [],
-			featureID: "\(path)/\(id)",
+			featureID: "\(path)/\(item.id)",
 			fieldsWithRedirect: parentFeature.fieldsWithRedirect,
 			geometry: parentFeature.geometry,
-			icon: item["icon"] as? String ?? parentFeature.iconName,
-			locationSet: LocationSet(withJson: item["locationSet"]),
-			matchScore: item["matchScore"] as? Double ?? 2.0,
+			icon: item.icon ?? parentFeature.iconName,
+			locationSet: item.locationSet ?? LocationSet(withJson: nil),
+			matchScore: item.matchScore ?? 2.0,
 			moreFieldsWithRedirect: parentFeature.moreFieldsWithRedirect,
-			nameWithRedirect: displayName,
+			nameWithRedirect: item.displayName,
 			nsiSuggestion: true,
 			reference: nil,
 			relation: nil,
 			_removeTags: nil,
 			searchable: true,
-			tags: tags,
-			terms: item["matchNames"] as? [String] ?? [])
+			tags: item.tags,
+			terms: item.matchNames ?? [])
 	}
 
 	let nsiSuggestion: Bool // is from NSI
