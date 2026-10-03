@@ -24,7 +24,7 @@ final class MercatorTileLayer: CALayer {
 
 	let viewPort: MapViewPort
 	let progress: MapViewProgress
-	private var isPerformingLayout = AtomicInt(0)
+	private var isPerformingLayout = false
 
 	var supportDarkMode = false
 
@@ -251,9 +251,7 @@ final class MercatorTileLayer: CALayer {
 			layer.setValue(tileKey, forKey: "tileKey")
 			layerDict[tileKey] = layer
 
-			isPerformingLayout.increment()
 			addSublayer(layer)
-			isPerformingLayout.decrement()
 
 			// check memory cache
 			let cacheKey = QuadKey(forZoom: zoomLevel, tileX: tileModX, tileY: tileModY)
@@ -322,13 +320,6 @@ final class MercatorTileLayer: CALayer {
 		}
 	}
 
-	override func setNeedsLayout() {
-		if isPerformingLayout.value() != 0 {
-			return
-		}
-		super.setNeedsLayout()
-	}
-
 	private func setSublayerPositions(_ _layerDict: [String: CALayer]) {
 		// update locations of tiles
 		let metersPerPixel = viewPort.metersPerPixel()
@@ -356,7 +347,9 @@ final class MercatorTileLayer: CALayer {
 		}
 	}
 
-	private func layoutSublayersSafe() {
+	/// Manages the tile sublayer tree: fetches needed tiles, positions all tiles,
+	/// and removes tiles that are offscreen or redundant.
+	private func updateVisibleTiles() {
 		let rect = viewPort.boundingMapRectForScreen()
 		var zoomLevel = self.zoomLevel()
 
@@ -406,21 +399,25 @@ final class MercatorTileLayer: CALayer {
 			}
 		}
 
-		// update locations of tiles
+		// update locations of tiles and remove unneeded ones
 		setSublayerPositions(layerDict)
 		removeUnneededTiles(for: OSMRect(bounds), zoomLevel: zoomLevel)
 	}
 
-	override func layoutSublayers() {
-		if isHidden {
-			return
+	override func setNeedsLayout() {
+		if !isPerformingLayout {
+			super.setNeedsLayout()
 		}
-		isPerformingLayout.increment()
+	}
+
+	override func layoutSublayers() {
+		guard !isHidden else { return }
+		isPerformingLayout = true
 		CATransaction.begin()
 		CATransaction.setDisableActions(true)
-		layoutSublayersSafe()
+		updateVisibleTiles()
 		CATransaction.commit()
-		isPerformingLayout.decrement()
+		isPerformingLayout = false
 	}
 
 	// this function is used for bulk downloading tiles
