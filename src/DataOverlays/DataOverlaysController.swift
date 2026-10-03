@@ -74,7 +74,7 @@ class DataOverlaysController: TableViewControllerMac {
 		case .geojsonSection:
 			return geoJsonList.count + 1
 		case .predefinedSection:
-			return overlayList.count
+			return overlayList.count + 1
 		default:
 			return 0
 		}
@@ -95,12 +95,16 @@ class DataOverlaysController: TableViewControllerMac {
 				return cell
 			}
 		case .predefinedSection:
-			let server = overlayList[indexPath.row]
 			let cell = tableView.dequeueReusableCell(withIdentifier: "UserDataTableCell", for: indexPath)
 				as! UserDataTableCell
-			cell.title?.text = server.name
-			cell.onOff.isOn = overlaySelections.contains(server.identifier)
-
+			if indexPath.row == 0 {
+				cell.title?.text = NSLocalizedString("Modified Objects", comment: "")
+				cell.onOff.isOn = AppDelegate.shared.mainView.settings.showModifiedObjectHalo
+			} else {
+				let server = overlayList[indexPath.row - 1]
+				cell.title?.text = server.name
+				cell.onOff.isOn = overlaySelections.contains(server.identifier)
+			}
 			return cell
 		default:
 			return UITableViewCell(frame: .zero)
@@ -142,13 +146,17 @@ class DataOverlaysController: TableViewControllerMac {
 		case .geojsonSection:
 			geoJsonList.toggleVisible(indexPath.row)
 		case .predefinedSection:
-			let server = overlayList[indexPath.row]
-			if cell.onOff.isOn {
-				overlaySelections.append(server.identifier)
+			if indexPath.row == 0 {
+				AppDelegate.shared.mainView.settings.showModifiedObjectHalo = cell.onOff.isOn
 			} else {
-				overlaySelections.removeAll(where: { $0 == server.identifier })
+				let server = overlayList[indexPath.row - 1]
+				if cell.onOff.isOn {
+					overlaySelections.append(server.identifier)
+				} else {
+					overlaySelections.removeAll(where: { $0 == server.identifier })
+				}
+				AppDelegate.shared.mainView.settings.tileOverlaySelections = overlaySelections
 			}
-			AppDelegate.shared.mainView.settings.tileOverlaySelections = overlaySelections
 		default:
 			fatalError()
 		}

@@ -153,6 +153,12 @@ final class MainViewController: UIViewController, DPadDelegate,
 				UserPrefs.shared.tileOverlaySelections.value = tileOverlaySelections
 			}
 		}
+
+		@Notify var showModifiedObjectHalo = UserPrefs.shared.showModifiedObjectHalo.value ?? false {
+			didSet {
+				UserPrefs.shared.showModifiedObjectHalo.value = showModifiedObjectHalo
+			}
+		}
 	}
 
 	@IBOutlet var settingsButton: UIButton!

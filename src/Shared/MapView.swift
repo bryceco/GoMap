@@ -135,23 +135,28 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			self?.mapTransformDidChange()
 		}
 
-		func checkForNoNameChange(overlayMask: MapViewOverlays, overlays: [String]) {
-			// if they toggled display of the noname layer we need to refresh the editor layer
+		func checkForOverlayChange(overlayMask: MapViewOverlays, overlays: [String]) {
+			// if they toggled display of the noname or modified objects layer we need to refresh the editor layer
 			let overlaysEnabled = overlayMask.contains(.DATAOVERLAY)
 			let noNameEnabled = overlays.contains(TileServer.noName.identifier)
-			if (overlaysEnabled && noNameEnabled) != self.useNoNameRoadHalo() {
+			if (overlaysEnabled && noNameEnabled) != self.useNoNameRoadHalo()
+				|| (overlaysEnabled && self.mainView.settings.showModifiedObjectHalo) != self.useModifiedObjectHalo()
+			{
 				self.editorLayer.clearCachedProperties()
 			}
 		}
 		AppDelegate.shared.mainView.settings.$tileOverlaySelections.subscribe(self) { [weak self] value in
 			guard let self else { return }
-			checkForNoNameChange(overlayMask: self.mainView.viewState.overlayMask,
-			                     overlays: value)
+			checkForOverlayChange(overlayMask: self.mainView.viewState.overlayMask,
+			                      overlays: value)
 		}
 		mainView.viewState.onChange.subscribe(self) { [weak self] in
 			guard let self else { return }
-			checkForNoNameChange(overlayMask: mainView.viewState.overlayMask,
-			                     overlays: AppDelegate.shared.mainView.settings.tileOverlaySelections)
+			checkForOverlayChange(overlayMask: mainView.viewState.overlayMask,
+			                      overlays: AppDelegate.shared.mainView.settings.tileOverlaySelections)
+		}
+		AppDelegate.shared.mainView.settings.$showModifiedObjectHalo.subscribe(self) { [weak self] _ in
+			self?.editorLayer.clearCachedProperties()
 		}
 
 		layer.masksToBounds = true
@@ -1096,6 +1101,11 @@ extension MapView: EditorMapLayerOwner {
 
 	func useNoNameRoadHalo() -> Bool {
 		return mainView.mapLayersView.noNameLayer() != nil
+	}
+
+	func useModifiedObjectHalo() -> Bool {
+		return mainView.mapLayersView.displayDataOverlayLayers
+			&& mainView.settings.showModifiedObjectHalo
 	}
 
 	func useAutomaticCacheManagement() -> Bool {

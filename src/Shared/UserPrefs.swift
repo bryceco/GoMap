@@ -123,6 +123,7 @@ final class UserPrefs {
 	// GeoJSON
 	let geoJsonFileList = Pref<[String: Bool]>(key: "GeoJsonFileList")
 	let tileOverlaySelections = Pref<[String]>(key: "tileOverlaySelections")
+	let showModifiedObjectHalo = Pref<Bool>(key: "showModifiedObjectHalo")
 
 	// Quest stuff
 	let questTypeEnabledDict = Pref<[String: Bool]>(key: "QuestTypeEnabledDict", ubiquitous: true)

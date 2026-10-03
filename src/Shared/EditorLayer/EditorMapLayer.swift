@@ -21,6 +21,7 @@ private let DEFAULT_LINEJOIN = CAShapeLayerLineJoin.round
 private let MinIconSizeInPixels: CGFloat = 24.0
 private let Pixels_Per_Character: CGFloat = 8.0
 private let NodeHighlightRadius: CGFloat = 6.0
+private let ModifiedObjectHaloColor = UIColor.yellow
 
 // MARK: MenuLocation enum
 
@@ -47,6 +48,7 @@ protocol EditorMapLayerOwner: UIView {
 	func useTurnRestrictions() -> Bool
 	func useAutomaticCacheManagement() -> Bool
 	func useNoNameRoadHalo() -> Bool
+	func useModifiedObjectHalo() -> Bool
 
 	// editing actions handled by owner
 	func presentTagEditor(_ sender: Any?)
@@ -932,6 +934,27 @@ final class EditorMapLayer: CALayer {
 				}
 			} // casing
 
+			// provide a halo for modified objects
+			if owner.useModifiedObjectHalo() {
+				if object.isModified {
+					let haloLayer = CAShapeLayerWithProperties()
+					haloLayer.anchorPoint = CGPoint(x: 0, y: 0)
+					haloLayer.position = CGPoint(refPoint)
+					haloLayer.path = path
+					haloLayer.strokeColor = ModifiedObjectHaloColor.cgColor
+					haloLayer.fillColor = isArea ? ModifiedObjectHaloColor.withAlphaComponent(0.15).cgColor : nil
+					haloLayer.lineWidth = renderInfo.lineWidth + 6
+					haloLayer.lineCap = DEFAULT_LINECAP
+					haloLayer.lineJoin = DEFAULT_LINEJOIN
+					haloLayer.zPosition = Z_HALO
+					let haloProps = haloLayer.properties
+					haloProps.position = refPoint
+					haloProps.lineWidth = haloLayer.lineWidth
+
+					layers.append(haloLayer)
+				}
+			}
+
 			// way line
 			var lineWidth = renderInfo.lineWidth
 			if lineWidth == 0 {
@@ -1059,12 +1082,16 @@ final class EditorMapLayer: CALayer {
 		let pt = MapTransform.mapPoint(forLatLon: node.latLon)
 		var drawRef = true
 
+		// A modified way-node with no interesting tags only needs the halo, not an icon or box
+		let isModifiedNodeInWay = node.isModified && node.wayCount > 0 && !node.hasInterestingTags()
+
 		// fetch icon
 		let location = AppDelegate.shared.mainView.currentRegion
-		let feature = PresetsDatabase.shared.presetFeatureMatching(tags: node.tags,
-		                                                           geometry: node.geometry(),
-		                                                           location: location,
-		                                                           includeNSI: false)
+		let feature = isModifiedNodeInWay ? nil :
+			PresetsDatabase.shared.presetFeatureMatching(tags: node.tags,
+			                                             geometry: node.geometry(),
+			                                             location: location,
+			                                             includeNSI: false)
 		var icon = feature?.iconScaled24
 		if icon == nil {
 			let poiList = ["amenity", "highway", "name"]
@@ -1125,7 +1152,7 @@ final class EditorMapLayer: CALayer {
 			let props = layer.properties
 			props.position = pt
 			layers.append(layer)
-		} else {
+		} else if !isModifiedNodeInWay {
 			// draw generic box
 			let color = defaultColor(for: node)
 			if let houseNumber = color != nil ? nil : HouseNumberForObjectTags(node.tags) {
@@ -1179,6 +1206,31 @@ final class EditorMapLayer: CALayer {
 				label.properties.offset = CGPoint(x: 12, y: 0)
 				layers.append(label)
 			}
+		}
+
+		// provide a halo for modified nodes
+		if owner.useModifiedObjectHalo(),
+		   node.isModified
+		{
+			let haloSize = isModifiedNodeInWay ? NodeHighlightRadius * 2 + 4 : MinIconSizeInPixels + 6
+			let haloLayer = CAShapeLayerWithProperties()
+			haloLayer.frame = CGRect(x: -haloSize / 2,
+			                         y: -haloSize / 2,
+			                         width: haloSize,
+			                         height: haloSize)
+			haloLayer.position = CGPoint(x: pt.x, y: pt.y)
+			haloLayer.path = CGPath(ellipseIn: CGRect(x: 0, y: 0,
+			                                          width: haloSize,
+			                                          height: haloSize),
+			                        transform: nil)
+			haloLayer.strokeColor = ModifiedObjectHaloColor.cgColor
+			haloLayer.fillColor = nil
+			haloLayer.lineWidth = 3.0
+			haloLayer.zPosition = Z_HALO
+			let haloProps = haloLayer.properties
+			haloProps.position = pt
+
+			layers.append(haloLayer)
 		}
 
 		return layers
@@ -1537,7 +1589,9 @@ final class EditorMapLayer: CALayer {
 				// resolve visibility status
 				if !obj.deleted {
 					if let node = obj as? OsmNode {
-						if node.wayCount == 0 || node.hasInterestingTags() {
+						if node.wayCount == 0 || node.hasInterestingTags()
+							|| (owner.useModifiedObjectHalo() && node.isModified)
+						{
 							show = .YES
 						}
 					} else {
