@@ -170,7 +170,6 @@ final class EditorMapLayer: CALayer {
 	var shownObjects: ContiguousArray<OsmBaseObject> = []
 	var fadingOutSet: [OsmBaseObject] = []
 	var highlightLayers: [CALayer] = []
-	var isPerformingLayout = false
 	var baseLayer: CATransformLayer
 
 	struct DragState {
@@ -1801,21 +1800,10 @@ final class EditorMapLayer: CALayer {
 			return
 		}
 
-		isPerformingLayout = true
 		CATransaction.begin()
 		CATransaction.setDisableActions(true)
 		layoutSublayersSafe()
 		CATransaction.commit()
-		isPerformingLayout = false
-	}
-
-	override func setNeedsLayout() {
-		if isPerformingLayout {
-			print("recursive set needs layout")
-			DbgAssert(false)
-			return
-		}
-		super.setNeedsLayout()
 	}
 
 	// MARK: Highlighting and Selection
