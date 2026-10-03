@@ -278,6 +278,9 @@ class PresetFeature: CustomDebugStringConvertible {
 	}
 
 	func summary() -> String? {
+		if nsiSuggestion {
+			return PresetsDatabase.shared.stdFeatureForNSIPath(featureID)?.localizedName
+		}
 		let parentID = PresetFeature.parentIDofID(featureID)
 		let result = PresetsDatabase.shared.inheritedValueOfFeature(parentID, fieldGetter: { $0.localizedName })
 		return result as? String

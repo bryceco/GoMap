@@ -127,18 +127,7 @@ final class PresetsDatabase {
 					for (path, pathData) in nsiData {
 						let pathDict = try cast(pathData, to: [String: Any].self)
 						let items = pathDict["items"] as? [[String: Any]] ?? []
-						// Walk up the preset hierarchy to find the closest matching
-						// standard preset (e.g. "emergency/water_rescue" -> "emergency")
-						var lookupID: String? = String(path.drop(while: { $0 != "/" }).dropFirst())
-						var parentFeature: PresetFeature?
-						while let id = lookupID {
-							if let feature = self.stdFeatures[id] {
-								parentFeature = feature
-								break
-							}
-							lookupID = PresetFeature.parentIDofID(id)
-						}
-						guard let parentFeature else {
+						guard let parentFeature = self.stdFeatureForNSIPath(path) else {
 							print("NSI path '\(path)' has no matching standard preset")
 							continue
 						}
@@ -281,6 +270,20 @@ final class PresetsDatabase {
 
 	func presetFeatureForFeatureID(_ featureID: String) -> PresetFeature? {
 		return stdFeatures[featureID] ?? nsiFeatures[featureID]
+	}
+
+	/// Given an NSI tree-prefixed path or featureID (e.g., "brands/amenity/fast_food" or
+	/// "brands/amenity/fast_food/walmart-abc"), find the closest matching standard preset
+	/// by stripping the tree prefix and walking up the hierarchy.
+	func stdFeatureForNSIPath(_ nsiPath: String) -> PresetFeature? {
+		var presetID: String? = String(nsiPath.drop(while: { $0 != "/" }).dropFirst())
+		while let id = presetID {
+			if let feature = stdFeatures[id] {
+				return feature
+			}
+			presetID = PresetFeature.parentIDofID(id)
+		}
+		return nil
 	}
 
 	/// Returns the address format for the given country code,
