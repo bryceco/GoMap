@@ -21863,6 +21863,18 @@
     "Align Node" : {
       "comment" : "Edit action",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zarovnat bod"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Düğümü Hizala"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -26640,6 +26652,18 @@
     "Changeset comment" : {
       "comment" : "Header for the changeset comment section on the upload screen",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Komentář k sadě změn"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişiklik kümesi yorumu"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -26864,6 +26888,18 @@
     "Close Area" : {
       "comment" : "Edit action",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uzavřít plochu"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bölgeyi Kapat"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -31633,6 +31669,18 @@
     "Describe your changes..." : {
       "comment" : "Placeholder text shown in the empty changeset comment field",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Popište vaše změny…"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yaptığınız değişiklikleri açıklayın..."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -31917,6 +31965,18 @@
     "Discard Changes" : {
       "comment" : "Title for discard-group confirmation alert",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zahodit změny"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Değişiklikleri İptal Et"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -37337,6 +37397,18 @@
     },
     "Invalid closing path" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neplatná uzavírací cesta"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Geçersiz kapanış yolu"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44084,6 +44156,18 @@
     },
     "No connecting path found to close the way" : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nenalezena navazující cesta pro uzavření linie"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yolu kapatacak bir bağlantı yolu bulunamadı"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -55973,6 +56057,18 @@
     "Some changes are in a different location and have been deselected. Upload them as a separate changeset." : {
       "comment" : "Warning shown on upload screen when distant edit groups are automatically deselected",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Některé změny jsou v jiném umístění a byly odvybrány. Nahrajte je jako separátní sadu změn."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bazı değişiklikler farklı bir konumda bulunuyor ve seçimleri kaldırılmış durumda. Bunları ayrı bir değişiklik kümesi olarak yükleyin."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -56203,6 +56299,18 @@
     "Source" : {
       "comment" : "Header for the data source section on the upload screen",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zdroj"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kaynak"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -58013,6 +58121,18 @@
     },
     "Tap a highlighted path to close the area, or tap elsewhere to cancel." : {
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klepněte na zvýrazněnou cestu k uzavření oblasti, nebo klepněte mimo pro zrušení."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alanı kapatmak için vurgulanmış bir yola dokunun veya işlemi iptal etmek için başka bir yere dokunun."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59925,6 +60045,18 @@
     "These edits will be permanently discarded and cannot be recovered." : {
       "comment" : "Body of discard-group confirmation alert",
       "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tyto úpravy budou trvale zahozeny a nepůjde je obnovit."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu düzenlemeler kalıcı olarak silinecek ve geri getirilemeyecektir."
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
