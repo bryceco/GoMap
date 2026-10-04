@@ -174,36 +174,36 @@ class GpxTrackTestCase: XCTestCase {
 	// MARK: - GPX Import/Export Round Trip
 
 	private let sampleGpx = """
-		<?xml version="1.0" encoding="UTF-8"?>
-		<gpx creator="TestApp" version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
-		  <metadata>
-		    <time>2026-10-03T14:00:03Z</time>
-		  </metadata>
-		  <trk>
-		    <name>Test Track</name>
-		    <trkseg>
-		      <trkpt lat="47.12345" lon="11.98765">
-		        <time>2026-10-03T14:00:03Z</time>
-		        <ele>512.5</ele>
-		      </trkpt>
-		      <trkpt lat="47.12400" lon="11.98800">
-		        <time>2026-10-03T14:01:03Z</time>
-		        <ele>515.0</ele>
-		      </trkpt>
-		      <trkpt lat="47.12500" lon="11.98900">
-		        <time>2026-10-03T14:02:03Z</time>
-		        <ele>520.0</ele>
-		      </trkpt>
-		    </trkseg>
-		  </trk>
-		  <wpt lat="47.13000" lon="11.99000">
-		    <time>2026-10-03T14:05:00Z</time>
-		    <ele>530.0</ele>
-		    <name>Summit</name>
-		    <desc>Nice view</desc>
-		  </wpt>
-		</gpx>
-		"""
+	<?xml version="1.0" encoding="UTF-8"?>
+	<gpx creator="TestApp" version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+	  <metadata>
+	    <time>2026-10-03T14:00:03Z</time>
+	  </metadata>
+	  <trk>
+	    <name>Test Track</name>
+	    <trkseg>
+	      <trkpt lat="47.12345" lon="11.98765">
+	        <time>2026-10-03T14:00:03Z</time>
+	        <ele>512.5</ele>
+	      </trkpt>
+	      <trkpt lat="47.12400" lon="11.98800">
+	        <time>2026-10-03T14:01:03Z</time>
+	        <ele>515.0</ele>
+	      </trkpt>
+	      <trkpt lat="47.12500" lon="11.98900">
+	        <time>2026-10-03T14:02:03Z</time>
+	        <ele>520.0</ele>
+	      </trkpt>
+	    </trkseg>
+	  </trk>
+	  <wpt lat="47.13000" lon="11.99000">
+	    <time>2026-10-03T14:05:00Z</time>
+	    <ele>530.0</ele>
+	    <name>Summit</name>
+	    <desc>Nice view</desc>
+	  </wpt>
+	</gpx>
+	"""
 
 	private func importSampleTrack() -> GpxTrack? {
 		guard let data = sampleGpx.data(using: .utf8),
@@ -367,13 +367,13 @@ class GpxTrackTestCase: XCTestCase {
 
 	func testImportGpx_singlePoint() {
 		let gpx = """
-			<?xml version="1.0"?>
-			<gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
-			  <trk><trkseg>
-			    <trkpt lat="47.0" lon="11.0"><time>2026-01-01T00:00:00Z</time></trkpt>
-			  </trkseg></trk>
-			</gpx>
-			"""
+		<?xml version="1.0"?>
+		<gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+		  <trk><trkseg>
+		    <trkpt lat="47.0" lon="11.0"><time>2026-01-01T00:00:00Z</time></trkpt>
+		  </trkseg></trk>
+		</gpx>
+		"""
 		guard let data = gpx.data(using: .utf8)
 		else { return XCTFail("Failed to encode GPX string") }
 		XCTAssertThrowsError(try GpxTrack(xmlData: data)) { error in
@@ -383,13 +383,13 @@ class GpxTrackTestCase: XCTestCase {
 
 	func testImportGpx_waypointOnlyIsValid() {
 		let gpx = """
-			<?xml version="1.0"?>
-			<gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
-			  <wpt lat="47.0" lon="11.0">
-			    <name>Marker</name>
-			  </wpt>
-			</gpx>
-			"""
+		<?xml version="1.0"?>
+		<gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+		  <wpt lat="47.0" lon="11.0">
+		    <name>Marker</name>
+		  </wpt>
+		</gpx>
+		"""
 		guard let data = gpx.data(using: .utf8),
 		      let track = try? GpxTrack(xmlData: data)
 		else { return XCTFail("Failed to import waypoint-only GPX") }
@@ -399,14 +399,14 @@ class GpxTrackTestCase: XCTestCase {
 
 	func testImportGpx_noTimestamps() {
 		let gpx = """
-			<?xml version="1.0"?>
-			<gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
-			  <trk><trkseg>
-			    <trkpt lat="47.0" lon="11.0"></trkpt>
-			    <trkpt lat="47.1" lon="11.1"></trkpt>
-			  </trkseg></trk>
-			</gpx>
-			"""
+		<?xml version="1.0"?>
+		<gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+		  <trk><trkseg>
+		    <trkpt lat="47.0" lon="11.0"></trkpt>
+		    <trkpt lat="47.1" lon="11.1"></trkpt>
+		  </trkseg></trk>
+		</gpx>
+		"""
 		guard let data = gpx.data(using: .utf8),
 		      let track = try? GpxTrack(xmlData: data)
 		else { return XCTFail("Failed to import GPX without timestamps") }
@@ -419,18 +419,18 @@ class GpxTrackTestCase: XCTestCase {
 	func testImportGpx_namespacePrefixes() {
 		// Some GPS devices emit namespace-prefixed elements
 		let gpx = """
-			<?xml version="1.0"?>
-			<ns1:gpx version="1.1" xmlns:ns1="http://www.topografix.com/GPX/1/1">
-			  <ns1:trk><ns1:trkseg>
-			    <ns1:trkpt lat="47.0" lon="11.0">
-			      <ns1:time>2026-01-01T12:00:00Z</ns1:time>
-			    </ns1:trkpt>
-			    <ns1:trkpt lat="47.1" lon="11.1">
-			      <ns1:time>2026-01-01T12:01:00Z</ns1:time>
-			    </ns1:trkpt>
-			  </ns1:trkseg></ns1:trk>
-			</ns1:gpx>
-			"""
+		<?xml version="1.0"?>
+		<ns1:gpx version="1.1" xmlns:ns1="http://www.topografix.com/GPX/1/1">
+		  <ns1:trk><ns1:trkseg>
+		    <ns1:trkpt lat="47.0" lon="11.0">
+		      <ns1:time>2026-01-01T12:00:00Z</ns1:time>
+		    </ns1:trkpt>
+		    <ns1:trkpt lat="47.1" lon="11.1">
+		      <ns1:time>2026-01-01T12:01:00Z</ns1:time>
+		    </ns1:trkpt>
+		  </ns1:trkseg></ns1:trk>
+		</ns1:gpx>
+		"""
 		guard let data = gpx.data(using: .utf8),
 		      let track = try? GpxTrack(xmlData: data)
 		else { return XCTFail("Failed to import namespace-prefixed GPX") }

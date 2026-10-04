@@ -1197,7 +1197,9 @@ final class EditorMapLayer: CALayer {
 		}
 
 		if drawRef {
-			if let ref = node.tags["ref"] ?? node.tags["addr:housenumber"] {
+			if let ref = node.tags["ref"] ?? node.tags["addr:housenumber"],
+			   UUID(uuidString: ref) == nil // some refs are UUIDs, which are ugly to display
+			{
 				let label = CurvedGlyphLayer.layerWithString(ref)
 				label.anchorPoint = CGPoint(x: 0.0, y: 0.5)
 				label.position = CGPoint(x: pt.x, y: pt.y)
