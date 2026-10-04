@@ -10,7 +10,7 @@ import UIKit
 
 /// This class is used only for debugging.
 /// It displays the quads that are downloading OSM data.
-/// See: MapView.quadDownloadLayer and OsmMapData.downloadMissingData()
+/// See: MapLayersView.quadDownloadLayer and OsmMapData.downloadMissingData()
 final class QuadDownloadLayer: CALayer {
 	private let mapData: OsmMapData
 	private let viewPort: MapViewPort

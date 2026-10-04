@@ -266,25 +266,6 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		recording = false
 	}
 
-	convenience init(rect: CGRect) {
-		self.init()
-		let track = GpxTrack()
-		let nw = CLLocation(latitude: CLLocationDegrees(rect.origin.y),
-		                    longitude: CLLocationDegrees(rect.origin.x))
-		let ne = CLLocation(latitude: CLLocationDegrees(rect.origin.y),
-		                    longitude: CLLocationDegrees(rect.origin.x + rect.size.width))
-		let se = CLLocation(latitude: CLLocationDegrees(rect.origin.y + rect.size.height),
-		                    longitude: CLLocationDegrees(rect.origin.x + rect.size.width))
-		let sw = CLLocation(latitude: CLLocationDegrees(rect.origin.y + rect.size.height),
-		                    longitude: CLLocationDegrees(rect.origin.x))
-		track.addPoint(nw)
-		track.addPoint(ne)
-		track.addPoint(se)
-		track.addPoint(sw)
-		track.addPoint(nw)
-		track.finish()
-	}
-
 	override init() {
 		super.init()
 	}
