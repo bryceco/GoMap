@@ -190,6 +190,7 @@
 		02CE3CE7299187C100DDACE0 /* TelephoneToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */; };
 		02CE3CE929919FC400DDACE0 /* MapPinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CE3CE829919FC400DDACE0 /* MapPinButton.swift */; };
 		02CE3CEB2991B5FA00DDACE0 /* QuestIcons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */; };
+		02CEA15F3072CA3D0054E9D8 /* GpxTrackTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CEA15E3072CA3D0054E9D8 /* GpxTrackTestCase.swift */; };
 		02D1ABA12F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D1ABA02F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift */; };
 		02D276902E8B289400A21863 /* EXIFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2768F2E8B289400A21863 /* EXIFInfo.swift */; };
 		02D276912E8B289400A21863 /* EXIFInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02D2768F2E8B289400A21863 /* EXIFInfo.swift */; };
@@ -565,6 +566,7 @@
 		02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelephoneToolbar.swift; sourceTree = "<group>"; };
 		02CE3CE829919FC400DDACE0 /* MapPinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPinButton.swift; sourceTree = "<group>"; };
 		02CE3CEA2991B5FA00DDACE0 /* QuestIcons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = QuestIcons.xcassets; sourceTree = "<group>"; };
+		02CEA15E3072CA3D0054E9D8 /* GpxTrackTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxTrackTestCase.swift; sourceTree = "<group>"; };
 		02D1ABA02F6DBE1700C2AE7E /* RightClickGestureRecognizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RightClickGestureRecognizer.swift; path = Shared/RightClickGestureRecognizer.swift; sourceTree = "<group>"; };
 		02D2768F2E8B289400A21863 /* EXIFInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXIFInfo.swift; sourceTree = "<group>"; };
 		02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetValueTextField.swift; sourceTree = "<group>"; };
@@ -1271,17 +1273,18 @@
 		64348CEB225E7CD900ADE7FB /* GoMapTests */ = {
 			isa = PBXGroup;
 			children = (
+				64348CEC225E7CD900ADE7FB /* GoMapTests.swift */,
+				02CEA15E3072CA3D0054E9D8 /* GpxTrackTestCase.swift */,
 				64E21EB622651F0D004605D7 /* Helpers */,
-				64C072F9226227D500598078 /* PresetKeyTagCase.swift */,
+				64348CEE225E7CD900ADE7FB /* Info.plist */,
+				64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */,
 				64348CFA225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift */,
 				64348CF6225E867800ADE7FB /* Mocks */,
-				64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */,
-				64348CEC225E7CD900ADE7FB /* GoMapTests.swift */,
-				64C072FC22622B9C00598078 /* Vendor */,
-				64348CEE225E7CD900ADE7FB /* Info.plist */,
 				64E21EB422651C06004605D7 /* OSMMapDataTestCase.swift */,
-				64305F7323E723B200232BB9 /* LocationURLParserTestCase.swift */,
+				64348D02225E8E4300ADE7FB /* OsmNode_DirectionTestCase.swift */,
 				02148A532FF43E40002D513D /* PresetFeatureChangeCase.swift */,
+				64C072F9226227D500598078 /* PresetKeyTagCase.swift */,
+				64C072FC22622B9C00598078 /* Vendor */,
 			);
 			path = GoMapTests;
 			sourceTree = "<group>";
@@ -1289,9 +1292,9 @@
 		64348CF6225E867800ADE7FB /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				64348CF9225E867800ADE7FB /* CLHeadingMock.swift */,
 				64348CF7225E867800ADE7FB /* HeadingProviderMock.swift */,
 				64348CF8225E867800ADE7FB /* MeasureDirectionViewModelDelegateMock.swift */,
-				64348CF9225E867800ADE7FB /* CLHeadingMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1895,6 +1898,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02CEA15F3072CA3D0054E9D8 /* GpxTrackTestCase.swift in Sources */,
 				64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */,
 				02148A542FF43E40002D513D /* PresetFeatureChangeCase.swift in Sources */,
 				64C072FA226227D500598078 /* PresetKeyTagCase.swift in Sources */,
