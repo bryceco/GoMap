@@ -29,7 +29,7 @@ jobs:
             
       - name: Run Tests on iPhone Simulator
         run: |
-          cd src/iOS
+          cd src
           xcodebuild test \
             -scheme GoMapTests \
             -destination 'platform=iOS Simulator,name=iPhone Air' \
