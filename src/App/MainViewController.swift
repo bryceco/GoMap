@@ -272,6 +272,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 		// initialize map markers database
 		updateMapMarkers(delay: 1.0, including: [])
+		AppState.shared.gpxTracks.onChangeTracks.subscribe(self) { [weak self] in
+			// if we import a new track it might contain waypoints
+			self?.updateMapMarkers(including: .gpx)
+		}
 
 		// long press for quick access to aerial imagery
 		let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayButtonLongPressGesture(_:)))
@@ -1680,6 +1684,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		mapLayersView.mapMarkersView.updateRegion(withDelay: delay,
+		                                          mapData: mapView.mapData,
 		                                          including: including)
 	}
 }

@@ -13,7 +13,6 @@ import Foundation
 	private var pendingUpdateTask: Task<Void, Never>?
 	private var markerForIdentifier: [String: MapMarker] = [:] // map the marker key (unique string) to a marker
 	private var ignoreList: MapMarkerIgnoreList
-	weak var mapData: OsmMapData!
 	var progress: MapViewProgress?
 
 	init() {
@@ -163,6 +162,7 @@ import Foundation
 	}
 
 	func updateRegion(withDelay delay: TimeInterval,
+	                  mapData: OsmMapData,
 	                  including: MapMarkerSet,
 	                  completion: @escaping () -> Void)
 	{

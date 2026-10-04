@@ -17,19 +17,12 @@ class MapMarkersView: UIView {
 		set { mapMarkerDatabase.progress = newValue }
 	}
 
-	init(viewPort: MapViewPort, mapData: OsmMapData) {
+	init(viewPort: MapViewPort) {
 		self.viewPort = viewPort
 		super.init(frame: .zero)
 
-		self.mapMarkerDatabase.mapData = mapData
-
 		viewPort.mapTransform.onChange.subscribe(self) { [weak self] in
 			self?.updateMapMarkerButtonPositions()
-		}
-
-		AppState.shared.gpxTracks.onChangeTracks.subscribe(self) { [weak self] in
-			// if we import a new track it might contain waypoints
-			self?.updateRegion(withDelay: 0.0, including: .gpx)
 		}
 
 		/*
@@ -139,9 +132,11 @@ class MapMarkersView: UIView {
 	}
 
 	func updateRegion(withDelay delay: TimeInterval,
+	                  mapData: OsmMapData,
 	                  including: MapMarkerDatabase.MapMarkerSet)
 	{
 		mapMarkerDatabase.updateRegion(withDelay: delay,
+		                               mapData: mapData,
 		                               including: including,
 		                               completion: {
 		                               	self.updateMapMarkerButtonPositions()

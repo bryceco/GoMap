@@ -34,14 +34,16 @@ final class QuestMarker: MapMarker {
 
 	override func handleButtonPress(in mainView: MainViewController, markerView: MapMarkersView) {
 		if mainView.mapView.isHidden {
-			let alert = AlertPopup(title: "\(self.object!.friendlyDescription())",
+			let alert = AlertPopup(title: self.object!.friendlyDescription(),
 			                       message: quest.title)
 			alert.addAction(title: "OK", handler: nil)
 			mainView.present(alert, animated: true)
 		} else {
 			let onClose = {
 				// Need to update the QuestMarker icon
-				markerView.updateRegion(withDelay: 0.0, including: [.quest])
+				markerView.updateRegion(withDelay: 0.0,
+				                        mapData: mainView.mapView.mapData,
+				                        including: [.quest])
 			}
 			let vc = QuestSolverController.instantiate(marker: self,
 			                                           object: self.object!,
