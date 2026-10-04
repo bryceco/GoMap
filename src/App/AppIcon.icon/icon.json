@@ -1,7 +1,7 @@
 {
   "fill" : {
     "linear-gradient" : [
-      "display-p3:0.20392,0.28627,0.36863,1.00000",
+      "srgb:0.20392,0.28627,0.36863,1.00000",
       "srgb:0.17255,0.24314,0.31373,1.00000"
     ],
     "orientation" : {
@@ -11,7 +11,7 @@
       },
       "stop" : {
         "x" : 0.5,
-        "y" : 0.7
+        "y" : 1
       }
     }
   },
@@ -44,7 +44,7 @@
         "opacity" : 0.5
       },
       "translucency" : {
-        "enabled" : true,
+        "enabled" : false,
         "value" : 0.5
       }
     }
