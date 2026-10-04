@@ -111,7 +111,7 @@ final class GpxPoint: NSObject, NSSecureCoding {
 		// Days from 1970-01-01 to year-01-01
 		let y = year - 1
 		let daysToYear = 365 * (year - 1970)
-			+ (y / 4 - 484) // leap years since 1970: y/4 - 1969/4
+			+ (y / 4 - 492) // leap years since 1970: y/4 - 1969/4
 			- (y / 100 - 19) // minus century years: y/100 - 1969/100
 			+ (y / 400 - 4) // plus 400-year cycles: y/400 - 1969/400
 
