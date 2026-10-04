@@ -1199,6 +1199,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				locationBallView.isHidden = true
 				mapView.voiceAnnouncement?.enabled = false
 				AppState.shared.gpxTracks.endActiveTrack(continuingCurrentTrack: false)
+				UIApplication.shared.isIdleTimerDisabled = false
 			} else {
 				if oldValue == .NONE {
 					isFirstGpsUpdate = true
@@ -1207,6 +1208,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				locationBallView.isHidden = false
 				LocationProvider.shared.start()
 				mapView.voiceAnnouncement?.enabled = true
+				UIApplication.shared.isIdleTimerDisabled = true
 				if oldValue == .NONE {
 					// because recording GPX tracks is cheap we record them any time GPS is enabled
 					AppState.shared.gpxTracks.startNewTrack(continuingCurrentTrack: false)
