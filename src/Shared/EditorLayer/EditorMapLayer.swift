@@ -1787,13 +1787,37 @@ final class EditorMapLayer: CALayer {
 						if object.isNode() != nil {
 							// its a node with text, such as an address node
 						} else {
-							// its a label on a building or polygon
+							// Check if the label fits inside the area.
+							// First do a cheap bounding box check, then if
+							// needed do an accurate check against the polygon.
 							let rcMap = MapTransform.mapRect(forLatLonRect: object.boundingBox)
 							let rcScreen = viewPort.mapTransform.boundingScreenRect(forMapRect: rcMap)
 							if layer.bounds.size.width >= 1.1 * rcScreen.size.width {
-								// text label is too big so hide it
 								layer.removeFromSuperlayer()
 								continue
+							}
+							// The bounding box is much larger than the actual
+							// footprint for rotated buildings, so also check
+							// against the real shape path.
+							if let shapePath = layers.lazy
+								.compactMap({ ($0 as? CAShapeLayer)?.path }).first
+							{
+								let refPt = layers.first(where: { $0 is CAShapeLayer })!
+									.properties.position
+								let labelLocal = CGPoint(
+									x: CGFloat((props.position.x - refPt.x) * PATH_SCALING),
+									y: CGFloat((props.position.y - refPt.y) * PATH_SCALING))
+								let margin = 2.0 * 1.1 * tScale
+								let hw = layer.bounds.size.width / margin
+								let hh = layer.bounds.size.height / margin
+								if !shapePath.contains(CGPoint(x: labelLocal.x - hw, y: labelLocal.y - hh)) ||
+									!shapePath.contains(CGPoint(x: labelLocal.x + hw, y: labelLocal.y - hh)) ||
+									!shapePath.contains(CGPoint(x: labelLocal.x - hw, y: labelLocal.y + hh)) ||
+									!shapePath.contains(CGPoint(x: labelLocal.x + hw, y: labelLocal.y + hh))
+								{
+									layer.removeFromSuperlayer()
+									continue
+								}
 							}
 						}
 					} else if layer.properties.isDirectional {
