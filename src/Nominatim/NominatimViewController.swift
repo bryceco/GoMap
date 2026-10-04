@@ -147,8 +147,12 @@ class NominatimViewController: UIViewController, UISearchBarDelegate, UITableVie
 		tableView.deselectRow(at: indexPath, animated: true)
 		if showingHistory {
 			// history item
-			searchBar.text = historyArray.items[indexPath.row]
+			let text = historyArray.items[indexPath.row]
+			searchBar.text = text
+			// Check for special cases (lat/lon, OSM notes, etc.)
 			searchBarSearchButtonClicked(searchBar)
+			// Trigger Nominatim search for regular queries
+			searchBar(searchBar, textDidChange: text)
 			return
 		}
 
