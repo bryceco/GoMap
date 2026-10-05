@@ -56080,6 +56080,9 @@
         }
       }
     },
+    "Some changes contain objects with no tags and have been deselected. Add tags before uploading." : {
+      "comment" : "Warning shown on upload screen when a group contains untagged objects"
+    },
     "Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." : {
       "localizations" : {
         "ar" : {

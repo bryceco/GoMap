@@ -248,8 +248,23 @@ private final class GroupSectionHeader: UITableViewHeaderFooterView {
 		}
 	}
 
-	func configure(title: String, isChecked checked: Bool, onSelect: @escaping () -> Void, onDiscard: @escaping () -> Void) {
+	var isEnabled: Bool = true {
+		didSet {
+			if !isEnabled {
+				let name = "xmark.circle"
+				checkImageView.image = UIImage(systemName: name)
+				checkImageView.tintColor = .systemRed
+			}
+			contentView.alpha = isEnabled ? 1.0 : 0.6
+			gestureRecognizers?.forEach { $0.isEnabled = isEnabled }
+		}
+	}
+
+	func configure(title: String, isChecked checked: Bool, isEnabled enabled: Bool,
+	               onSelect: @escaping () -> Void, onDiscard: @escaping () -> Void)
+	{
 		titleLabel.text = title
+		isEnabled = enabled
 		isChecked = checked
 		self.onSelect = onSelect
 		self.onDiscard = onDiscard
@@ -343,6 +358,7 @@ class UploadViewController: UIViewController {
 		case comment
 		case source
 		case distanceWarning
+		case untaggedWarning
 		case noChanges
 		case group(Int) // index into connectedGroups
 	}
@@ -375,6 +391,7 @@ class UploadViewController: UIViewController {
 	private var sections: [Section] = [.comment, .source]
 	private var connectedGroups: [ConnectedObjects] = []
 	private var selectedGroupIndices: Set<Int> = []
+	private var untaggedGroupIndices: Set<Int> = []
 
 	private var selectedGroups: [ConnectedObjects] {
 		connectedGroups.indices.filter { selectedGroupIndices.contains($0) }.map { connectedGroups[$0] }
@@ -449,15 +466,19 @@ class UploadViewController: UIViewController {
 	/// Recomputes the change groups, their default selection, and the table layout.
 	private func reloadGroups() {
 		connectedGroups = mapData?.undoManager.connectedObjects() ?? []
-		selectedGroupIndices = nearbyGroupIndices()
+		untaggedGroupIndices = groupIndicesWithUntaggedObjects()
+		selectedGroupIndices = nearbyGroupIndices().subtracting(untaggedGroupIndices)
 
 		sections = [.comment, .source]
 		if connectedGroups.isEmpty {
 			sections.append(.noChanges)
 		} else {
-			if selectedGroupIndices.count < connectedGroups.count {
+			if selectedGroupIndices.count + untaggedGroupIndices.count < connectedGroups.count {
 				// Some distant groups were automatically deselected
 				sections.append(.distanceWarning)
+			}
+			if !untaggedGroupIndices.isEmpty {
+				sections.append(.untaggedWarning)
 			}
 			sections += connectedGroups.indices.map { Section.group($0) }
 		}
@@ -551,6 +572,26 @@ class UploadViewController: UIViewController {
 		return Set(connectedGroups.indices.filter { find($0) == targetRoot })
 	}
 
+	/// Returns the indices of groups that contain untagged objects which should have tags.
+	/// Nodes that are part of ways are ignored since they are just geometry points.
+	/// Deleted objects are also ignored since their tags don't matter.
+	private func groupIndicesWithUntaggedObjects() -> Set<Int> {
+		var result = Set<Int>()
+		for (index, group) in connectedGroups.enumerated() {
+			let hasUntagged = group.objects.contains { obj in
+				guard !obj.deleted else { return false }
+				if let node = obj as? OsmNode, node.wayCount > 0 {
+					return false
+				}
+				return obj.tags.isEmpty
+			}
+			if hasUntagged {
+				result.insert(index)
+			}
+		}
+		return result
+	}
+
 	private func summaryLabel(for group: ConnectedObjects) -> String {
 		guard let doc = OsmXmlGenerator.createXmlFor(objects: group.objects,
 		                                             generator: AppDelegate.shared.generator)
@@ -564,6 +605,7 @@ class UploadViewController: UIViewController {
 	}
 
 	private func toggleGroup(at groupIndex: Int) {
+		guard !untaggedGroupIndices.contains(groupIndex) else { return }
 		if selectedGroupIndices.contains(groupIndex) {
 			selectedGroupIndices.remove(groupIndex)
 		} else {
@@ -882,7 +924,7 @@ extension UploadViewController: UITableViewDataSource {
 		switch sections[section] {
 		case .comment: return UploadStrings.commentHeader
 		case .source: return UploadStrings.sourceHeader
-		case .distanceWarning, .noChanges, .group: return nil
+		case .distanceWarning, .untaggedWarning, .noChanges, .group: return nil
 		}
 	}
 
@@ -900,6 +942,16 @@ extension UploadViewController: UITableViewDataSource {
 				text: NSLocalizedString(
 					"Some changes are in a different location and have been deselected. Upload them as a separate changeset.",
 					comment: "Warning shown on upload screen when distant edit groups are automatically deselected"),
+				style: .warning)
+			return cell
+		case .untaggedWarning:
+			let cell = tableView.dequeueReusableCell(
+				withIdentifier: MessageCell.reuseIdentifier,
+				for: indexPath) as! MessageCell
+			cell.configure(
+				text: NSLocalizedString(
+					"Some changes contain objects with no tags and have been deselected. Add tags before uploading.",
+					comment: "Warning shown on upload screen when a group contains untagged objects"),
 				style: .warning)
 			return cell
 		case .noChanges:
@@ -954,13 +1006,28 @@ extension UploadViewController: UITableViewDelegate {
 		let group = connectedGroups[groupIndex]
 		header.configure(title: summaryLabel(for: group),
 		                 isChecked: selectedGroupIndices.contains(groupIndex),
+		                 isEnabled: !untaggedGroupIndices.contains(groupIndex),
 		                 onSelect: { [weak self] in self?.toggleGroup(at: groupIndex) },
 		                 onDiscard: { [weak self] in self?.confirmDiscard(at: groupIndex) })
 		return header
 	}
 
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		UITableView.automaticDimension
+		switch sections[section] {
+		case .distanceWarning, .untaggedWarning:
+			return .leastNonzeroMagnitude
+		default:
+			return UITableView.automaticDimension
+		}
+	}
+
+	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		switch sections[section] {
+		case .distanceWarning, .untaggedWarning:
+			return 5
+		default:
+			return UITableView.automaticDimension
+		}
 	}
 
 	func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
