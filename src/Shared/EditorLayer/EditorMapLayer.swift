@@ -23,6 +23,62 @@ private let Pixels_Per_Character: CGFloat = 8.0
 private let NodeHighlightRadius: CGFloat = 6.0
 private let ModifiedObjectHaloColor = UIColor.yellow
 
+/// Approximate the point deepest inside a polygon (pole of inaccessibility).
+/// Keeps the centroid unless a grid point is clearly deeper inside.
+/// This improves label placement for U-shaped, L-shaped, or irregular buildings
+/// where the geometric centroid may fall outside the polygon.
+/// For multipolygons, pass all rings (outer and inner) so courtyards count as outside.
+private func labelPoint(rings: [[OSMPoint]], centroid: OSMPoint) -> OSMPoint {
+	// Signed distance to the outline: positive inside, negative outside.
+	func depth(_ p: OSMPoint) -> Double {
+		var inside = false
+		var minSq = Double.greatestFiniteMagnitude
+		for ring in rings {
+			var a = ring[ring.count - 1]
+			for b in ring {
+				if (a.y > p.y) != (b.y > p.y),
+				   p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x
+				{
+					inside.toggle()
+				}
+				let dx = b.x - a.x, dy = b.y - a.y
+				let len = dx * dx + dy * dy
+				let t = len > 0 ? max(0, min(1, ((p.x - a.x) * dx + (p.y - a.y) * dy) / len)) : 0
+				let ex = p.x - (a.x + t * dx), ey = p.y - (a.y + t * dy)
+				minSq = min(minSq, ex * ex + ey * ey)
+				a = b
+			}
+		}
+		return (inside ? 1 : -1) * minSq.squareRoot()
+	}
+
+	var minX = Double.greatestFiniteMagnitude, minY = Double.greatestFiniteMagnitude
+	var maxX = -Double.greatestFiniteMagnitude, maxY = -Double.greatestFiniteMagnitude
+	for ring in rings {
+		for p in ring {
+			minX = min(minX, p.x); minY = min(minY, p.y)
+			maxX = max(maxX, p.x); maxY = max(maxY, p.y)
+		}
+	}
+	let w = maxX - minX, h = maxY - minY
+
+	var best = centroid
+	var bestDepth = max(depth(centroid), 0) * 1.25 // prefer centroid unless clearly beaten
+	let n = 8
+	for i in 0..<n {
+		for j in 0..<n {
+			let p = OSMPoint(x: minX + w * (Double(i) + 0.5) / Double(n),
+			                 y: minY + h * (Double(j) + 0.5) / Double(n))
+			let d = depth(p)
+			if d > bestDepth {
+				best = p
+				bestDepth = d
+			}
+		}
+	}
+	return best
+}
+
 // MARK: MenuLocation enum
 
 // Specifies where the owner should places UIAlert messages and menus
@@ -1010,9 +1066,27 @@ final class EditorMapLayer: CALayer {
 		if object.geometry() == .AREA {
 			let houseNumber = HouseNumberForObjectTags(object.tags)
 			if let name = object.givenName() ?? houseNumber {
-				// place a label in the center of the object
+				// Place a label inside the object. For simple convex shapes the centroid
+				// works fine, but for U/L-shaped or other concave buildings the centroid
+				// can fall outside the polygon. In those cases we find the approximate
+				// pole of inaccessibility — the point deepest inside the shape.
 				let point = object.centerPoint()
-				let pt = MapTransform.mapPoint(forLatLon: point)
+				var pt = MapTransform.mapPoint(forLatLon: point)
+
+				if let way = object as? OsmWay,
+				   way.nodes.count > 5
+				{
+					let ring = way.nodes.map { MapTransform.mapPoint(forLatLon: $0.latLon) }
+					pt = labelPoint(rings: [ring], centroid: pt)
+				} else if let relation = object as? OsmRelation,
+				          relation.isMultipolygon()
+				{
+					let loopList = relation.buildMultipolygonRepairing(true)
+					if !loopList.isEmpty {
+						let rings = loopList.map { loop in loop.map { MapTransform.mapPoint(forLatLon: $0.latLon) } }
+						pt = labelPoint(rings: rings, centroid: pt)
+					}
+				}
 
 				let layer = CurvedGlyphLayer.layerWithString(name)
 				layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -1808,9 +1882,9 @@ final class EditorMapLayer: CALayer {
 							let k = PATH_SCALING / (2.0 * overflow)
 							// screen offset from label center -> path-local point
 							let toPath = CGAffineTransform(a: inv.a * k, b: inv.b * k,
-														   c: inv.c * k, d: inv.d * k,
-														   tx: (props.position.x - refPt.x) * PATH_SCALING,
-														   ty: (props.position.y - refPt.y) * PATH_SCALING)
+							                               c: inv.c * k, d: inv.d * k,
+							                               tx: (props.position.x - refPt.x) * PATH_SCALING,
+							                               ty: (props.position.y - refPt.y) * PATH_SCALING)
 
 							let rcMap = MapTransform.mapRect(forLatLonRect: object.boundingBox)
 							let rcScreen = viewPort.mapTransform.boundingScreenRect(forMapRect: rcMap)
