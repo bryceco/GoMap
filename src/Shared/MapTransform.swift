@@ -26,7 +26,7 @@ final class MapTransform {
 
 	// This matrix translates between a "mapPoint" (a 256x256 mercator map of the world) and the screen
 	private var _transform = OSMTransform.identity
-	private var _inverse = OSMTransform.identity
+	private(set) var inverseTransform = OSMTransform.identity
 	var transform: OSMTransform {
 		get {
 			return _transform
@@ -36,10 +36,10 @@ final class MapTransform {
 			if let t = Self.wrapTransform(newValue, inverse: inverse) {
 				// needed to wrap/clip the transform
 				_transform = t
-				_inverse = t.inverse()
+				inverseTransform = t.inverse()
 			} else {
 				_transform = newValue
-				_inverse = inverse
+				inverseTransform = inverse
 			}
 			onChange.notify()
 		}
@@ -172,7 +172,7 @@ final class MapTransform {
 			                          birdsEyeDistance: Double(birdsEyeDistance),
 			                          birdsEyeRotation: Double(birdsEyeRotation))
 		}
-		point = point.withTransform(_inverse)
+		point = point.withTransform(inverseTransform)
 		return point
 	}
 
@@ -219,7 +219,7 @@ final class MapTransform {
 	}
 
 	func mapRect(fromScreenRect rect: OSMRect) -> OSMRect {
-		return rect.withTransform(_inverse)
+		return rect.withTransform(inverseTransform)
 	}
 
 	// MARK: Transform screenRect <--> latLonRect

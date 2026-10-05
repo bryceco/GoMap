@@ -1007,22 +1007,34 @@ final class EditorMapLayer: CALayer {
 
 		// Names
 		// Use object name, or address if no name
-		if object.geometry() == .AREA,
-		   let name = object.givenName() ?? HouseNumberForObjectTags(object.tags)
-		{
-			// place a label in the center of the object
-			let point = object.centerPoint()
-			let pt = MapTransform.mapPoint(forLatLon: point)
+		if object.geometry() == .AREA {
+			let houseNumber = HouseNumberForObjectTags(object.tags)
+			if let name = object.givenName() ?? houseNumber {
+				// place a label in the center of the object
+				let point = object.centerPoint()
+				let pt = MapTransform.mapPoint(forLatLon: point)
 
-			let layer = CurvedGlyphLayer.layerWithString(name)
-			layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-			layer.position = CGPoint(x: pt.x, y: pt.y)
-			layer.zPosition = Z_TEXT
+				let layer = CurvedGlyphLayer.layerWithString(name)
+				layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+				layer.position = CGPoint(x: pt.x, y: pt.y)
+				layer.zPosition = Z_TEXT
 
-			let props = layer.properties
-			props.position = pt
+				let props = layer.properties
+				props.position = pt
 
-			layers.append(layer)
+				// Create a shorter fallback with just
+				// the house number for when the full label doesn't fit.
+				if let houseNumber, houseNumber != name {
+					let fallback = CurvedGlyphLayer.layerWithString(houseNumber)
+					fallback.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+					fallback.position = CGPoint(x: pt.x, y: pt.y)
+					fallback.zPosition = Z_TEXT
+					fallback.properties.position = pt
+					props.fallbackLayer = fallback
+				}
+
+				layers.append(layer)
+			}
 		}
 
 		// Turn Restrictions
@@ -1756,6 +1768,7 @@ final class EditorMapLayer: CALayer {
 				// configure the layer for presentation
 				let isShapeLayer = layer is CAShapeLayer
 				let props = layer.properties
+				var displayLayer: CALayer = layer
 
 				if props.is3D || (isShapeLayer && object.isNode() == nil) {
 					// way or area -- need to rotate and scale
@@ -1786,38 +1799,45 @@ final class EditorMapLayer: CALayer {
 						// get size of building (or whatever) into which we need to fit the text
 						if object.isNode() != nil {
 							// its a node with text, such as an address node
-						} else {
-							// Check if the label fits inside the area.
-							// First do a cheap bounding box check, then if
-							// needed do an accurate check against the polygon.
+						} else if let shapeLayer = layers.first(where: { $0 is CAShapeLayer }) as? CAShapeLayerWithProperties,
+						          let shapePath = shapeLayer.path
+						{
+							let refPt = shapeLayer.properties.position
+							let inv = viewPort.mapTransform.inverseTransform
+							let overflow = 0.9
+							let k = PATH_SCALING / (2.0 * overflow)
+							// screen offset from label center -> path-local point
+							let toPath = CGAffineTransform(a: inv.a * k, b: inv.b * k,
+														   c: inv.c * k, d: inv.d * k,
+														   tx: (props.position.x - refPt.x) * PATH_SCALING,
+														   ty: (props.position.y - refPt.y) * PATH_SCALING)
+
 							let rcMap = MapTransform.mapRect(forLatLonRect: object.boundingBox)
 							let rcScreen = viewPort.mapTransform.boundingScreenRect(forMapRect: rcMap)
-							if layer.bounds.size.width >= 1.1 * rcScreen.size.width {
-								layer.removeFromSuperlayer()
-								continue
+
+							func fitsInArea(_ testLayer: CALayer) -> Bool {
+								let w = testLayer.bounds.width, h = testLayer.bounds.height
+								if w >= overflow * rcScreen.width || h >= overflow * rcScreen.height {
+									return false
+								}
+								return shapePath.contains(CGPoint(x: w, y: h), transform: toPath)
+									&& shapePath.contains(CGPoint(x: -w, y: h), transform: toPath)
+									&& shapePath.contains(CGPoint(x: w, y: -h), transform: toPath)
+									&& shapePath.contains(CGPoint(x: -w, y: -h), transform: toPath)
 							}
-							// The bounding box is much larger than the actual
-							// footprint for rotated buildings, so also check
-							// against the real shape path.
-							if let shapePath = layers.lazy
-								.compactMap({ ($0 as? CAShapeLayer)?.path }).first
-							{
-								let refPt = layers.first(where: { $0 is CAShapeLayer })!
-									.properties.position
-								let labelLocal = CGPoint(
-									x: CGFloat((props.position.x - refPt.x) * PATH_SCALING),
-									y: CGFloat((props.position.y - refPt.y) * PATH_SCALING))
-								let margin = 2.0 * 1.1 * tScale
-								let hw = layer.bounds.size.width / margin
-								let hh = layer.bounds.size.height / margin
-								if !shapePath.contains(CGPoint(x: labelLocal.x - hw, y: labelLocal.y - hh)) ||
-									!shapePath.contains(CGPoint(x: labelLocal.x + hw, y: labelLocal.y - hh)) ||
-									!shapePath.contains(CGPoint(x: labelLocal.x - hw, y: labelLocal.y + hh)) ||
-									!shapePath.contains(CGPoint(x: labelLocal.x + hw, y: labelLocal.y + hh))
+
+							if !fitsInArea(layer) {
+								layer.removeFromSuperlayer()
+								if let fallback = props.fallbackLayer,
+								   fitsInArea(fallback)
 								{
-									layer.removeFromSuperlayer()
+									displayLayer = fallback
+								} else {
+									props.fallbackLayer?.removeFromSuperlayer()
 									continue
 								}
+							} else {
+								props.fallbackLayer?.removeFromSuperlayer()
 							}
 						}
 					} else if layer.properties.isDirectional {
@@ -1827,27 +1847,28 @@ final class EditorMapLayer: CALayer {
 						// its an icon or a generic box
 					}
 
+					// apply final position to the icon or text layer
 					let scale = Double(UIScreen.main.scale)
 					var pt2 = OSMPoint(viewPort.mapTransform.screenPoint(forMapPoint: props.position, birdsEye: false))
 					pt2.x = round(pt2.x * scale) / scale
 					pt2.y = round(pt2.y * scale) / scale
 					DbgAssert(pt2.y.isFinite)
-					layer.position = CGPoint(x: CGFloat(pt2.x) + props.offset.x,
-					                         y: CGFloat(pt2.y) + props.offset.y)
+					displayLayer.position = CGPoint(x: CGFloat(pt2.x) + props.offset.x,
+					                                y: CGFloat(pt2.y) + props.offset.y)
 				}
 
 				// add the layer if not already present
-				if layer.superlayer == nil {
+				if displayLayer.superlayer == nil {
 					if FADE_INOUT {
-						layer.removeAllAnimations()
-						layer.opacity = 0.0
+						displayLayer.removeAllAnimations()
+						displayLayer.opacity = 0.0
 					}
-					baseLayer.addSublayer(layer)
+					baseLayer.addSublayer(displayLayer)
 					if FADE_INOUT {
 						CATransaction.begin()
 						CATransaction.setAnimationDuration(1.0)
 						CATransaction.setDisableActions(false)
-						layer.opacity = 1.0
+						displayLayer.opacity = 1.0
 						CATransaction.commit()
 					}
 				}
