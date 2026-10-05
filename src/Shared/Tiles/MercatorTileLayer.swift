@@ -362,7 +362,7 @@ final class MercatorTileLayer: CALayer {
 		func tileValue(_ value: Double) -> Int? {
 			guard
 				value.isFinite,
-				value >= 0.0,
+				value >= -5_000000.0,
 				value <= 5_000000.0
 			else { return nil }
 			return Int(value)

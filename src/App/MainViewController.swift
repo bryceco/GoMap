@@ -1254,7 +1254,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		if !userOverrodeLocationPosition,
-		   UIApplication.shared.applicationState == .active
+		   isFirstGpsUpdate || UIApplication.shared.applicationState == .active
 		{
 			// Move view to center on new location.
 
