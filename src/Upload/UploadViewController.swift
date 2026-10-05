@@ -638,6 +638,7 @@ class UploadViewController: UIViewController {
 	private func discardGroup(_ group: ConnectedObjects) {
 		mapData.undoManager.discardGroups(group.undoGroups)
 		reloadGroups()
+		AppDelegate.shared.mapView.setNeedsLayout()
 	}
 
 	private func currentImagery() -> String {
