@@ -38,9 +38,11 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 
 	func loadArchive() throws -> OsmMapData {
 		var url = OsmMapData.pathToArchiveFile()
+		var isLegacyArchive = false
 		if (try? url.checkResourceIsReachable()) != true {
 			// No current-format archive, so fall back to the previous format.
 			url = ArchivePath.osmDataArchiveV1.url()
+			isLegacyArchive = true
 		}
 		if (try? url.checkResourceIsReachable()) != true {
 			print("Archive file doesn't exist")
@@ -77,6 +79,10 @@ class OsmMapDataArchiver: NSObject, NSKeyedUnarchiverDelegate {
 				throw error
 			}
 			throw MapDataError.archiveCannotBeDecoded
+		}
+		if isLegacyArchive {
+			// Older versions might have buggy data that needs to be redownloaded
+			decode.region.rootQuad.reset()
 		}
 		return decode
 	}
