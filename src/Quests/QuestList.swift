@@ -438,11 +438,18 @@ class QuestList {
 
 	// MARK: Import/export
 
-	func importQuests(fromText text: String) throws {
+	func importQuests(fromText text: String, replaceAll: Bool = false) throws {
 		let data = Data(text.utf8)
 		do {
-			let list = try QuestUserList(fromJsonData: data)
-			for quest in list.list {
+			let newQuests = try QuestUserList(fromJsonData: data)
+
+			if replaceAll {
+				// Remove all existing user quests
+				list.removeAll(where: { isUserQuest($0) })
+				userQuests.list.removeAll()
+			}
+
+			for quest in newQuests.list {
 				try addUserQuest(quest, replacing: nil)
 			}
 		} catch {

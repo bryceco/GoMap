@@ -229,9 +229,9 @@ class QuestChooserController: UITableViewController {
 
 	// MARK: Import/Export
 
-	func doImport(fromText text: String) {
+	func doImport(fromText text: String, replaceAll: Bool = false) {
 		do {
-			try QuestList.shared.importQuests(fromText: text)
+			try QuestList.shared.importQuests(fromText: text, replaceAll: replaceAll)
 
 			let alert = UIAlertController(
 				title: NSLocalizedString("Success", comment: ""),
@@ -260,14 +260,54 @@ class QuestChooserController: UITableViewController {
 			title: NSLocalizedString("Import Quests", comment: ""),
 			message: NSLocalizedString("Paste the JSON for your quests into the field below", comment: ""),
 			preferredStyle: .alert)
-		alert.addTextField(configurationHandler: { _ in })
+
+		// Build a custom content view with text field + replace checkbox
+		let textField = UITextField()
+		textField.borderStyle = .roundedRect
+		textField.textAlignment = .center
+		textField.font = .preferredFont(forTextStyle: .body)
+		textField.translatesAutoresizingMaskIntoConstraints = false
+
+		let replaceSwitch = UISwitch()
+		replaceSwitch.isOn = false
+
+		let replaceLabel = UILabel()
+		replaceLabel.text = NSLocalizedString("Replace all existing quests", comment: "")
+		replaceLabel.font = .preferredFont(forTextStyle: .footnote)
+		replaceLabel.adjustsFontForContentSizeCategory = true
+
+		let switchStack = UIStackView(arrangedSubviews: [replaceSwitch, replaceLabel])
+		switchStack.axis = .horizontal
+		switchStack.spacing = 8
+		switchStack.alignment = .center
+
+		let mainStack = UIStackView(arrangedSubviews: [textField, switchStack])
+		mainStack.axis = .vertical
+		mainStack.spacing = 12
+		mainStack.translatesAutoresizingMaskIntoConstraints = false
+
+		let containerVC = UIViewController()
+		containerVC.view.addSubview(mainStack)
+		NSLayoutConstraint.activate([
+			textField.heightAnchor.constraint(equalToConstant: 34),
+			mainStack.topAnchor.constraint(equalTo: containerVC.view.topAnchor, constant: 4),
+			mainStack.leadingAnchor.constraint(equalTo: containerVC.view.leadingAnchor),
+			mainStack.trailingAnchor.constraint(equalTo: containerVC.view.trailingAnchor),
+			mainStack.bottomAnchor.constraint(equalTo: containerVC.view.bottomAnchor, constant: -4)
+		])
+		containerVC.preferredContentSize = CGSize(width: 250, height: 84)
+		alert.setValue(containerVC, forKey: "contentViewController")
+
 		alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-		                              style: .default, handler: nil))
+		                              style: .cancel))
 		alert.addAction(UIAlertAction(title: NSLocalizedString("Import", comment: ""),
 		                              style: .default, handler: { [weak self] _ in
-		                              	self?.doImport(fromText: alert.textFields?.first?.text ?? "")
+		                              	self?.doImport(fromText: textField.text ?? "",
+		                              	               replaceAll: replaceSwitch.isOn)
 		                              }))
-		present(alert, animated: true)
+		present(alert, animated: true) {
+			textField.becomeFirstResponder()
+		}
 	}
 
 	@IBAction func exportQuests(_ sender: Any?) {
