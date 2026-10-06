@@ -82,12 +82,29 @@ final class QuestUserList: Codable {
 		case filterQuestList
 	}
 
+	/// Decodes one quest in a list, swallowing failures so that a single unreadable quest
+	/// (for example one written by a newer app version) doesn't discard every other quest.
+	private struct LenientQuest<Quest: QuestDefinition>: Decodable {
+		let quest: Quest?
+
+		init(from decoder: Decoder) {
+			do {
+				quest = try Quest(from: decoder)
+			} catch {
+				print("Skipping unreadable quest: \(error)")
+				quest = nil
+			}
+		}
+	}
+
 	init(from decoder: Decoder) throws {
 		do {
 			let values = try decoder.container(keyedBy: CodingKeys.self)
-			let simple = try values.decode([QuestDefinitionWithFeatures].self, forKey: .featureQuestList)
-			let advanced = try values.decode([QuestDefinitionWithFilters].self, forKey: .filterQuestList)
-			list = simple + advanced
+			let simple = try values.decode([LenientQuest<QuestDefinitionWithFeatures>].self,
+			                               forKey: .featureQuestList)
+			let advanced = try values.decode([LenientQuest<QuestDefinitionWithFilters>].self,
+			                                 forKey: .filterQuestList)
+			list = simple.compactMap { $0.quest } + advanced.compactMap { $0.quest }
 		} catch {
 			print("\(error)")
 			throw error
@@ -363,7 +380,7 @@ class QuestList {
 		list += userQuests.list.compactMap { try? $0.makeQuestInstance() }
 		sortList()
 
-		UserPrefs.shared.questUserDefinedList.onChange.subscribe(self, handler: { [weak self] pref in
+		UserPrefs.shared.questUserDefinedListV2.onChange.subscribe(self, handler: { [weak self] pref in
 			self?.userQuests = QuestUserList(fromUserPrefsWith: pref)
 		})
 	}
@@ -381,12 +398,25 @@ class QuestList {
 
 	func loadPrefs() {
 		enabled = UserPrefs.shared.questTypeEnabledDict.value ?? [:]
-		userQuests = QuestUserList(fromUserPrefsWith: UserPrefs.shared.questUserDefinedList)
+
+		// Try the current key first; fall back to V1 for migration
+		if UserPrefs.shared.questUserDefinedListV2.value != nil {
+			userQuests = QuestUserList(fromUserPrefsWith: UserPrefs.shared.questUserDefinedListV2)
+		} else {
+			userQuests = QuestUserList(fromUserPrefsWith: UserPrefs.shared.questUserDefinedListV1)
+			if !userQuests.list.isEmpty {
+				// Migrate to the current key
+				saveQuestList()
+			}
+		}
 	}
 
-	func savePrefs() {
+	private func saveEnabledDict() {
 		UserPrefs.shared.questTypeEnabledDict.value = enabled
-		userQuests.save(toUserPrefsWith: UserPrefs.shared.questUserDefinedList)
+	}
+
+	private func saveQuestList() {
+		userQuests.save(toUserPrefsWith: UserPrefs.shared.questUserDefinedListV2)
 	}
 
 	func addUserQuest(_ quest: QuestDefinition,
@@ -409,14 +439,15 @@ class QuestList {
 
 		userQuests.list.sort(by: { a, b in a.title < b.title })
 		sortList()
-		savePrefs()
+		saveQuestList()
 	}
 
 	func remove(at index: Int) {
 		let item = list.remove(at: index)
 		userQuests.list.removeAll(where: { $0.title == item.title })
 		enabled.removeValue(forKey: item.ident)
-		savePrefs()
+		saveEnabledDict()
+		saveQuestList()
 	}
 
 	func questsForObject(_ object: OsmBaseObject) -> [QuestProtocol] {
@@ -425,7 +456,7 @@ class QuestList {
 
 	func setEnabled(_ quest: QuestProtocol, _ isEnabled: Bool) {
 		enabled[quest.ident] = isEnabled
-		savePrefs()
+		saveEnabledDict()
 	}
 
 	func isEnabled(_ quest: QuestProtocol) -> Bool {
@@ -459,20 +490,13 @@ class QuestList {
 	}
 
 	func exportQuests() throws -> String {
-		do {
-			let encoder = JSONEncoder()
-			if #available(iOS 13.0, *) {
-				encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
-			} else {
-				encoder.outputFormatting = [.prettyPrinted]
-			}
-			let data = try encoder.encode(QuestList.shared.userQuests)
-			guard let text = String(data: data, encoding: .utf8) else {
-				throw QuestError.noStringEquivalent
-			}
-			return text
-		} catch {
-			throw error
+		let encoder = JSONEncoder()
+		if #available(iOS 13.0, *) {
+			encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
+		} else {
+			encoder.outputFormatting = [.prettyPrinted]
 		}
+		let data = try encoder.encode(QuestList.shared.userQuests)
+		return String(decoding: data, as: UTF8.self)
 	}
 }

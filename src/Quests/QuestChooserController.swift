@@ -185,21 +185,14 @@ class QuestChooserController: UITableViewController {
 	@available(iOS 15.0.0, *)
 	func openAdvancedQuestBuilder(quest: QuestDefinitionWithFilters?) {
 		let questData = quest ??
-			QuestDefinitionWithFilters(title: "Add Cuisine",
+			QuestDefinitionWithFilters(title: NSLocalizedString("Add Cuisine",
+			                                                    comment: "Sample title for a Quest"),
 			                           label: "🍽️",
 			                           editKeys: ["cuisine"],
-			                           filters: [
-			                           	QuestDefinitionFilter(
-			                           		tagKey: "amenity",
-			                           		tagValue: "restaurant",
-			                           		relation: .equal,
-			                           		included: .include),
-			                           	QuestDefinitionFilter(
-			                           		tagKey: "cuisine",
-			                           		tagValue: "",
-			                           		relation: .equal,
-			                           		included: .include)
-			                           ],
+			                           filterTree: QuestFilterGroup(op: .and, children: [
+			                           	.condition(QuestFilterCondition(key: "amenity", op: .equals, value: "restaurant")),
+			                           	.condition(QuestFilterCondition(key: "cuisine", op: .missing))
+			                           ]),
 			                           geometry: QuestDefinitionWithFilters.Geometries())
 		var view = AdvancedQuestBuilder(quest: questData)
 		view.onSave = { [weak self] newQuest in

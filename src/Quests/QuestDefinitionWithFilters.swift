@@ -8,6 +8,8 @@
 
 import Foundation
 
+/// A single key/value test in the legacy flat filter list. Quests saved before nested groups
+/// existed store only this list; it is converted to a tree on load and never written again.
 struct QuestDefinitionFilter: Codable, Identifiable, CustomStringConvertible, CustomDebugStringConvertible {
 	enum Relation: String, Codable {
 		case equal = "="
@@ -39,29 +41,6 @@ struct QuestDefinitionFilter: Codable, Identifiable, CustomStringConvertible, Cu
 	var debugDescription: String {
 		return description
 	}
-
-	func makePredicate() -> (([String: String]) -> Bool) {
-		switch relation {
-		case .equal:
-			switch tagValue {
-			case "":
-				return { $0[tagKey] == nil }
-			case "*":
-				return { $0[tagKey] != nil }
-			default:
-				return { $0[tagKey] == tagValue }
-			}
-		case .notEqual:
-			switch tagValue {
-			case "":
-				return { $0[tagKey] != nil }
-			case "*":
-				return { $0[tagKey] == nil }
-			default:
-				return { $0[tagKey] != tagValue }
-			}
-		}
-	}
 }
 
 struct QuestDefinitionWithFilters: QuestDefinition {
@@ -88,14 +67,15 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 	var title: String
 	var label: String
 	var editKeys: [String]
-	var filters: [QuestDefinitionFilter]
+	/// The nested AND/OR tree of conditions an object must satisfy.
+	var filterTree: QuestFilterGroup
 	var geometry: Geometries
 
-	init(title: String, label: String, editKeys: [String], filters: [QuestDefinitionFilter], geometry: Geometries) {
+	init(title: String, label: String, editKeys: [String], filterTree: QuestFilterGroup, geometry: Geometries) {
 		self.title = title
 		self.label = label
 		self.editKeys = editKeys
-		self.filters = filters
+		self.filterTree = filterTree
 		self.geometry = geometry
 	}
 
@@ -107,16 +87,18 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 		case editKeys
 		case tagKeys // old alias for editKeys
 		case tagKey // old alias for editKeys
-		case filters
+		case filters // legacy flat list, read but no longer written
+		case filterTree
 		case geometry
 	}
 
 	init(from decoder: Decoder) throws {
 		do {
 			let container = try decoder.container(keyedBy: CodingKeys.self)
-			title = try container.decode(String.self, forKey: .title)
-			label = try container.decode(String.self, forKey: .label)
+			let title = try container.decode(String.self, forKey: .title)
+			let label = try container.decode(String.self, forKey: .label)
 			// editKeys has been renamed several times:
+			let editKeys: [String]
 			if let string = try? container.decode(String.self, forKey: .tagKey) {
 				editKeys = string.split(separator: ",").map { String($0) }
 			} else if let tagKeys = try? container.decode([String].self, forKey: .tagKeys) {
@@ -124,7 +106,28 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 			} else {
 				editKeys = try container.decode([String].self, forKey: .editKeys)
 			}
-			filters = try container.decode([QuestDefinitionFilter].self, forKey: .filters)
+
+			// The tree is authoritative. Quests saved before it existed have only the flat list,
+			// and a tree this version can't read (written by a newer version) falls back to the list too.
+			let filterTree: QuestFilterGroup
+			if container.contains(.filterTree) {
+				do {
+					filterTree = try container.decode(QuestFilterGroup.self, forKey: .filterTree)
+				} catch {
+					guard container.contains(.filters) else { throw error }
+					print("Unreadable filterTree for quest '\(title)', using flat filters instead: \(error)")
+					let filters = try container.decode([QuestDefinitionFilter].self, forKey: .filters)
+					filterTree = QuestFilterGroup(filters: filters, editKeys: editKeys)
+				}
+			} else {
+				let filters = try container.decode([QuestDefinitionFilter].self, forKey: .filters)
+				filterTree = QuestFilterGroup(filters: filters, editKeys: editKeys)
+			}
+
+			self.title = title
+			self.label = label
+			self.editKeys = editKeys
+			self.filterTree = filterTree
 			geometry = (try? container.decode(Geometries.self, forKey: .geometry)) ?? Geometries()
 		} catch {
 			print("\(error)")
@@ -137,90 +140,11 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 		try container.encode(title, forKey: .title)
 		try container.encode(label, forKey: .label)
 		try container.encode(editKeys, forKey: .editKeys)
-		try container.encode(filters, forKey: .filters)
+		try container.encode(filterTree, forKey: .filterTree)
 		try container.encode(geometry, forKey: .geometry)
 	}
 
 	// MARK: makeQuestInstance
-
-	/*
-	 highway = primary
-	 highway = secondary // gets ORed with previous
-	 highway != lamp
-	 highway != path		// gets ANDed with previous
-	 */
-	private typealias Predicate = ([String: String]) -> Bool
-	private static func makeGroups(list: [QuestDefinitionFilter], editKeys: [String])
-		-> [(predicate: Predicate, included: QuestDefinitionFilter.Included)]
-	{
-		var list = list
-		var groups: [(Predicate, QuestDefinitionFilter.Included)] = []
-		while let rule = list.popLast() {
-			// collect all items that match first item for key and relation
-			var pred = rule.makePredicate()
-
-			while let otherIndex = list.indices.first(where: {
-				let other = list[$0]
-				// special case to detect situation where the user wants to edit any of several missing editKeys
-				if editKeys.contains(rule.tagKey),
-				   editKeys.contains(other.tagKey),
-				   rule.relation == .equal,
-				   other.relation == .equal,
-				   rule.tagValue == "",
-				   other.tagValue == "",
-				   rule.included == .include,
-				   other.included == .include
-				{
-					return true
-				}
-				return other.tagKey == rule.tagKey
-					&& other.relation == rule.relation
-					&& other.included == rule.included
-			}) {
-				let rhs = list[otherIndex].makePredicate()
-				list.remove(at: otherIndex)
-				let lhs = pred
-				switch rule.relation {
-				case .equal:
-					pred = { tags in lhs(tags) || rhs(tags) }
-				case .notEqual:
-					pred = { tags in lhs(tags) && rhs(tags) }
-				}
-			}
-			groups.append((pred, rule.included))
-		}
-		return groups
-	}
-
-	private static func makePredicateFor(filters: [QuestDefinitionFilter],
-	                                     editKeys: [String]) throws -> (([String: String]) -> Bool)
-	{
-		if filters.contains(where: { $0.tagKey == "" }) {
-			throw QuestError.emptyKeyString
-		}
-		if filters.first(where: { $0.included == .include }) == nil {
-			throw QuestError.noFiltersDefined
-		}
-
-		// handle filters
-		var groups = makeGroups(list: filters, editKeys: editKeys)
-
-		let group = groups.popLast()!
-		let p = group.predicate
-		var pred = group.included == .include ? p : { !p($0) }
-
-		while let rhsGroup = groups.popLast() {
-			let lhs = pred
-			let rhs = rhsGroup.predicate
-			if rhsGroup.included == .include {
-				pred = { lhs($0) && rhs($0) }
-			} else {
-				pred = { lhs($0) && !rhs($0) }
-			}
-		}
-
-		return pred
-	}
 
 	private static func makePredicateFor(geometry: Geometries) -> ((GEOMETRY) -> Bool)? {
 		if geometry.isEmpty() {
@@ -240,8 +164,11 @@ struct QuestDefinitionWithFilters: QuestDefinition {
 		{
 			throw QuestError.illegalLabel(label)
 		}
+		if filterTree.children.isEmpty {
+			throw QuestError.noFiltersDefined
+		}
 
-		let filterPred = try Self.makePredicateFor(filters: filters, editKeys: editKeys)
+		let filterPred = try filterTree.makePredicate()
 		let pred: (OsmBaseObject) -> Bool
 		if let geomPred = Self.makePredicateFor(geometry: geometry) {
 			pred = { geomPred($0.geometry()) && filterPred($0.tags) }

@@ -74,21 +74,35 @@ class QuestInstance: QuestProtocol {
 enum QuestError: LocalizedError {
 	case unknownKey(String)
 	case unknownFeature(String)
-	case noStringEquivalent
 	case illegalLabel(String)
 	case noFiltersDefined
-	case unrecognizedUserDefinitionType
 	case emptyKeyString
+	case emptyValueString
+	case malformedFilterTree
 
 	public var errorDescription: String? {
 		switch self {
-		case let .unknownKey(text): return "The tag key '\(text)' is not referenced by any features"
-		case let .unknownFeature(text): return "The feature '\(text)' does not exist"
-		case .noStringEquivalent: return "Unable to convert the data to string"
-		case let .illegalLabel(text): return "The quest label '\(text)' must be a single character"
-		case .unrecognizedUserDefinitionType: return "A quest definition is of an unrecognized type"
-		case .noFiltersDefined: return "No filters are defined for the quest"
-		case .emptyKeyString: return "Empty tag key is not permitted"
+		case let .unknownKey(text):
+			return String(format: NSLocalizedString("The tag key '%@' is not referenced by any features",
+			                                        comment: "Quest validation error"), text)
+		case let .unknownFeature(text):
+			return String(format: NSLocalizedString("The feature '%@' does not exist",
+			                                        comment: "Quest validation error"), text)
+		case let .illegalLabel(text):
+			return String(format: NSLocalizedString("The quest label '%@' must be a single character",
+			                                        comment: "Quest validation error"), text)
+		case .noFiltersDefined:
+			return NSLocalizedString("No filters are defined for the quest",
+			                         comment: "Quest validation error")
+		case .emptyKeyString:
+			return NSLocalizedString("Empty tag key is not permitted",
+			                         comment: "Quest validation error")
+		case .emptyValueString:
+			return NSLocalizedString("Empty tag value is not permitted",
+			                         comment: "Quest validation error")
+		case .malformedFilterTree:
+			return NSLocalizedString("The quest filter is malformed",
+			                         comment: "Quest validation error")
 		}
 	}
 }
