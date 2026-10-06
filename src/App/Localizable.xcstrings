@@ -18917,6 +18917,9 @@
         }
       }
     },
+    "Add a row for each condition an object must match. Tap AND/OR to change how a group's rows combine, and + to add a condition or nested group of conditions." : {
+
+    },
     "Add Building Type" : {
       "comment" : "A type of quest",
       "localizations" : {
@@ -22325,6 +22328,9 @@
         }
       }
     },
+    "Always matches" : {
+      "comment" : "Warning that a quest filter group's conditions match every object"
+    },
     "An error occured while exporting: %@" : {
       "comment" : "Show an error message",
       "localizations" : {
@@ -22574,6 +22580,12 @@
           }
         }
       }
+    },
+    "AND" : {
+      "comment" : "Logical operator combining quest filter conditions"
+    },
+    "AND/OR group" : {
+      "comment" : "Menu item adding a nested AND/OR group to a quest filter"
     },
     "Area" : {
       "comment" : "Area of an object in m^2\nObject geometry: a closed way or multipolygon)",
@@ -28312,6 +28324,7 @@
       }
     },
     "Create a row in the table for each key/value pair and whether matching objects should be included or excluded. Leave the value empty to indicate the key is not present. Use key=* to match any value." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -33918,6 +33931,12 @@
         }
       }
     },
+    "Empty tag key is not permitted" : {
+      "comment" : "Quest validation error"
+    },
+    "Empty tag value is not permitted" : {
+      "comment" : "Quest validation error"
+    },
     "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" : {
       "localizations" : {
         "ar" : {
@@ -34660,6 +34679,9 @@
         }
       }
     },
+    "exists" : {
+      "comment" : "the tag key is present"
+    },
     "Extending a 'via' in a Turn Restriction will break the relation" : {
       "localizations" : {
         "ar" : {
@@ -35009,8 +35031,12 @@
         }
       }
     },
+    "Filter" : {
+      "comment" : "Header for quest filter section"
+    },
     "Filters" : {
       "comment" : "Header for quest filters section",
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {
@@ -37843,6 +37869,18 @@
           }
         }
       }
+    },
+    "Key = value" : {
+      "comment" : "Menu item adding a quest filter condition"
+    },
+    "Key ≠ value" : {
+      "comment" : "Menu item adding a quest filter condition"
+    },
+    "Key exists" : {
+      "comment" : "Menu item adding a quest filter condition"
+    },
+    "Key missing" : {
+      "comment" : "Menu item adding a quest filter condition"
     },
     "Keys" : {
       "comment" : "The tag keys section of a quest definition",
@@ -41598,6 +41636,9 @@
         }
       }
     },
+    "missing" : {
+      "comment" : "the tag key is absent"
+    },
     "Missing way to connect to" : {
       "localizations" : {
         "ar" : {
@@ -43920,6 +43961,9 @@
         }
       }
     },
+    "Never matches" : {
+      "comment" : "Warning that a quest filter group's conditions contradict each other"
+    },
     "no" : {
       "localizations" : {
         "cs" : {
@@ -44333,6 +44377,9 @@
           }
         }
       }
+    },
+    "No filters are defined for the quest" : {
+      "comment" : "Quest validation error"
     },
     "No Left Turn restriction" : {
       "localizations" : {
@@ -48272,6 +48319,9 @@
           }
         }
       }
+    },
+    "OR" : {
+      "comment" : "Logical operator combining quest filter conditions"
     },
     "OSM Data" : {
       "comment" : "Delete cached data",
@@ -58416,6 +58466,9 @@
         }
       }
     },
+    "The feature '%@' does not exist" : {
+      "comment" : "Quest validation error"
+    },
     "The merged nodes contain conflicting tags" : {
       "localizations" : {
         "ar" : {
@@ -58870,6 +58923,12 @@
         }
       }
     },
+    "The quest filter is malformed" : {
+      "comment" : "Quest validation error"
+    },
+    "The quest label '%@' must be a single character" : {
+      "comment" : "Quest validation error"
+    },
     "The restriction cannot be deleted" : {
       "localizations" : {
         "ar" : {
@@ -59240,6 +59299,9 @@
           }
         }
       }
+    },
+    "The tag key '%@' is not referenced by any features" : {
+      "comment" : "Quest validation error"
     },
     "The target way is ambiguous" : {
       "localizations" : {
@@ -60571,6 +60633,7 @@
       }
     },
     "This page allows you to design quests with more specific criteria than the regular Quest Builder page." : {
+      "extractionState" : "stale",
       "localizations" : {
         "cs" : {
           "stringUnit" : {

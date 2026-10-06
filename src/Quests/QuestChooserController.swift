@@ -188,18 +188,10 @@ class QuestChooserController: UITableViewController {
 			QuestDefinitionWithFilters(title: "Add Cuisine",
 			                           label: "🍽️",
 			                           editKeys: ["cuisine"],
-			                           filters: [
-			                           	QuestDefinitionFilter(
-			                           		tagKey: "amenity",
-			                           		tagValue: "restaurant",
-			                           		relation: .equal,
-			                           		included: .include),
-			                           	QuestDefinitionFilter(
-			                           		tagKey: "cuisine",
-			                           		tagValue: "",
-			                           		relation: .equal,
-			                           		included: .include)
-			                           ],
+			                           filterTree: QuestFilterGroup(op: .and, children: [
+			                           	.condition(QuestFilterCondition(key: "amenity", op: .equals, value: "restaurant")),
+			                           	.condition(QuestFilterCondition(key: "cuisine", op: .missing))
+			                           ]),
 			                           geometry: QuestDefinitionWithFilters.Geometries())
 		var view = AdvancedQuestBuilder(quest: questData)
 		view.onSave = { [weak self] newQuest in

@@ -127,7 +127,8 @@ final class UserPrefs {
 
 	// Quest stuff
 	let questTypeEnabledDict = Pref<[String: Bool]>(key: "QuestTypeEnabledDict", ubiquitous: true)
-	let questUserDefinedList = Pref<Data>(key: "QuestUserDefinedList", ubiquitous: true)
+	let questUserDefinedListV1 = Pref<Data>(key: "QuestUserDefinedList", ubiquitous: true)
+	let questUserDefinedListV2 = Pref<Data>(key: "QuestUserDefinedList2", ubiquitous: true)
 
 	// Tile Server List
 	let lastImageryDownloadDate = Pref<Date>(key: "lastImageryDownloadDate")
