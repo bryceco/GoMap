@@ -1088,26 +1088,20 @@ final class EditorMapLayer: CALayer {
 					}
 				}
 
-				let layer = CurvedGlyphLayer.layerWithString(name)
-				layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-				layer.position = CGPoint(x: pt.x, y: pt.y)
-				layer.zPosition = Z_TEXT
-
-				let props = layer.properties
-				props.position = pt
-
-				// Create a shorter fallback with just
-				// the house number for when the full label doesn't fit.
+				// Labels in order of preference. Layout shows the first one that fits,
+				// so the house number is used when the full name is too large.
+				var labels = [name]
 				if let houseNumber, houseNumber != name {
-					let fallback = CurvedGlyphLayer.layerWithString(houseNumber)
-					fallback.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-					fallback.position = CGPoint(x: pt.x, y: pt.y)
-					fallback.zPosition = Z_TEXT
-					fallback.properties.position = pt
-					props.fallbackLayer = fallback
+					labels.append(houseNumber)
 				}
-
-				layers.append(layer)
+				for text in labels {
+					let layer = CurvedGlyphLayer.layerWithString(text)
+					layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+					layer.position = CGPoint(x: pt.x, y: pt.y)
+					layer.zPosition = Z_TEXT
+					layer.properties.position = pt
+					layers.append(layer)
+				}
 			}
 		}
 
@@ -1837,12 +1831,12 @@ final class EditorMapLayer: CALayer {
 
 		for object in shownObjects {
 			let layers = getShapeLayers(for: object)
+			var labelShown = false
 
 			for layer in layers {
 				// configure the layer for presentation
 				let isShapeLayer = layer is CAShapeLayer
 				let props = layer.properties
-				var displayLayer: CALayer = layer
 
 				if props.is3D || (isShapeLayer && object.isNode() == nil) {
 					// way or area -- need to rotate and scale
@@ -1873,6 +1867,10 @@ final class EditorMapLayer: CALayer {
 						// get size of building (or whatever) into which we need to fit the text
 						if object.isNode() != nil {
 							// its a node with text, such as an address node
+						} else if labelShown {
+							// a preferred label for this object is already displayed
+							layer.removeFromSuperlayer()
+							continue
 						} else if let shapeLayer = layers.first(where: { $0 is CAShapeLayer }) as? CAShapeLayerWithProperties,
 						          let shapePath = shapeLayer.path
 						{
@@ -1902,18 +1900,10 @@ final class EditorMapLayer: CALayer {
 
 							if !fitsInArea(layer) {
 								layer.removeFromSuperlayer()
-								if let fallback = props.fallbackLayer,
-								   fitsInArea(fallback)
-								{
-									displayLayer = fallback
-								} else {
-									props.fallbackLayer?.removeFromSuperlayer()
-									continue
-								}
-							} else {
-								props.fallbackLayer?.removeFromSuperlayer()
+								continue
 							}
 						}
+						labelShown = true
 					} else if layer.properties.isDirectional {
 						// a direction layer (direction=*), so it needs to rotate with the map
 						layer.setAffineTransform(CGAffineTransform(rotationAngle: CGFloat(tRotation)))
@@ -1927,22 +1917,22 @@ final class EditorMapLayer: CALayer {
 					pt2.x = round(pt2.x * scale) / scale
 					pt2.y = round(pt2.y * scale) / scale
 					DbgAssert(pt2.y.isFinite)
-					displayLayer.position = CGPoint(x: CGFloat(pt2.x) + props.offset.x,
-					                                y: CGFloat(pt2.y) + props.offset.y)
+					layer.position = CGPoint(x: CGFloat(pt2.x) + props.offset.x,
+					                         y: CGFloat(pt2.y) + props.offset.y)
 				}
 
 				// add the layer if not already present
-				if displayLayer.superlayer == nil {
+				if layer.superlayer == nil {
 					if FADE_INOUT {
-						displayLayer.removeAllAnimations()
-						displayLayer.opacity = 0.0
+						layer.removeAllAnimations()
+						layer.opacity = 0.0
 					}
-					baseLayer.addSublayer(displayLayer)
+					baseLayer.addSublayer(layer)
 					if FADE_INOUT {
 						CATransaction.begin()
 						CATransaction.setAnimationDuration(1.0)
 						CATransaction.setDisableActions(false)
-						displayLayer.opacity = 1.0
+						layer.opacity = 1.0
 						CATransaction.commit()
 					}
 				}

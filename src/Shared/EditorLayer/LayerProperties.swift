@@ -15,7 +15,6 @@ final class LayerProperties {
 	public var lineWidth: CGFloat = 0.0
 	public var is3D = false
 	public var isDirectional = false
-	public var fallbackLayer: CATextLayerWithProperties?
 
 	// Build a transform matrix that we can add to a CAShapeLayer to correctly
 	// transform the map-point values stored in its CGPath to screen points.
