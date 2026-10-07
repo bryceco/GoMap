@@ -592,10 +592,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 		let size = view.bounds.size
 		let delta = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
 		switch key.keyCode {
-		case .keyboardRightArrow: viewPort.adjustOrigin(by: CGPoint(x: -delta.x, y: 0))
-		case .keyboardLeftArrow: viewPort.adjustOrigin(by: CGPoint(x: delta.x, y: 0))
-		case .keyboardDownArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: -delta.y))
-		case .keyboardUpArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: delta.y))
+		case .keyboardRightArrow: panMap(by: CGPoint(x: -delta.x, y: 0))
+		case .keyboardLeftArrow: panMap(by: CGPoint(x: delta.x, y: 0))
+		case .keyboardDownArrow: panMap(by: CGPoint(x: 0, y: -delta.y))
+		case .keyboardUpArrow: panMap(by: CGPoint(x: 0, y: delta.y))
 		default:
 			return mapView.keypressAction(key: key)
 		}
@@ -964,6 +964,31 @@ final class MainViewController: UIViewController, DPadDelegate,
 		DisplayLink.shared.remove(.screenPanningInertia)
 	}
 
+	/// Mercator scale shrinks by cos(latitude) toward the poles, so panning the flat
+	/// transform at a fixed zoom makes the globe appear to zoom in as it rotates toward
+	/// a pole. While the globe is showing, compensate by rescaling about the screen
+	/// center so the ground scale there stays constant, as rotating a real globe would.
+	func panMap(by delta: CGPoint) {
+		guard viewState.shouldShowGlobe else {
+			viewPort.adjustOrigin(by: delta)
+			return
+		}
+		let oldLat = viewPort.screenCenterLatLon().lat
+		viewPort.adjustOrigin(by: delta)
+		let newLat = viewPort.screenCenterLatLon().lat
+		let ratio = cos(newLat * .pi / 180) / cos(oldLat * .pi / 180)
+		viewPort.adjustZoom(by: ratio, aroundScreenPoint: viewPort.screenCenterPoint(),
+		                    minScale: globeMinMercatorScale())
+	}
+
+	/// The Mercator scale below which the globe would be farther away than zoom 0
+	/// at the current latitude. Replaces the flat map's zoom 0 floor while the globe
+	/// is showing, since near the poles that floor is reached at a globe zoom where
+	/// the earth doesn't yet fit on screen.
+	func globeMinMercatorScale() -> Double {
+		return cos(viewPort.screenCenterLatLon().lat * .pi / 180)
+	}
+
 	@objc func handlePanGesture(_ pan: UIPanGestureRecognizer) {
 		userOverrodeLocationPosition = true
 
@@ -984,7 +1009,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				}
 			}
 			let translation = pan.translation(in: mapView)
-			viewPort.adjustOrigin(by: translation)
+			panMap(by: translation)
 			pan.setTranslation(CGPoint(x: 0, y: 0), in: self.view)
 		} else if pan.state == .ended || pan.state == .cancelled {
 			// cancelled occurs when we throw an error dialog
@@ -1015,7 +1040,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				let dt = CGFloat(displayLink.duration)
 				let translation = CGPoint(x: CGFloat(1 - t) * initialVelocity.x * dt,
 				                          y: CGFloat(1 - t) * initialVelocity.y * dt)
-				self.viewPort.adjustOrigin(by: translation)
+				self.panMap(by: translation)
 			})
 #endif
 		} else if pan.state == .failed {
@@ -1058,7 +1083,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 				zoomCenter = pinch.location(in: mapView)
 			}
 			let scale = pinch.scale / prevousPinchScale
-			viewPort.adjustZoom(by: scale, aroundScreenPoint: zoomCenter)
+			viewPort.adjustZoom(by: scale, aroundScreenPoint: zoomCenter,
+			                    minScale: viewState.shouldShowGlobe ? globeMinMercatorScale() : 1.0)
 			prevousPinchScale = pinch.scale
 		case .ended:
 			break
@@ -1460,8 +1486,13 @@ final class MainViewController: UIViewController, DPadDelegate,
 	/// Determine if we've zoomed out enough to switch from the flat map to the globe:
 	/// at zoom z the whole world is 256*2^z points wide, so compute how many
 	/// degrees of longitude the longer screen edge covers.
+	/// The zoom is corrected by cos(latitude) to the equivalent equatorial zoom, i.e.
+	/// the globe's own zoom, so the switch happens at the same ground scale at every
+	/// latitude rather than drifting with Mercator's distortion.
 	func updateZoomedOutForGlobe() {
-		let worldPoints = 256.0 * pow(2.0, viewPort.mapTransform.zoom())
+		let lat = viewPort.screenCenterLatLon().lat * .pi / 180
+		let zoom = viewPort.mapTransform.zoom() + log2(cos(lat))
+		let worldPoints = 256.0 * pow(2.0, zoom)
 		let bounds = mapLayersView.bounds
 		let screenPoints = Double(max(bounds.width, bounds.height))
 		let longitudeSpan = 360.0 * screenPoints / worldPoints

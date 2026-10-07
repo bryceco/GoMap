@@ -73,7 +73,9 @@ extension MapViewPort {
 		mapTransform.transform = t
 	}
 
-	func adjustZoom(by ratio: CGFloat, aroundScreenPoint zoomCenter: CGPoint) {
+	/// `minScale` is the smallest Mercator scale allowed; 1.0 is zoom 0, where the
+	/// whole world fits in 256 points. The globe passes a smaller value near the poles.
+	func adjustZoom(by ratio: CGFloat, aroundScreenPoint zoomCenter: CGPoint, minScale: Double = 1.0) {
 		guard ratio.isFinite,
 		      ratio > 0,
 		      ratio != 1.0
@@ -85,8 +87,8 @@ extension MapViewPort {
 
 		let scale = mapTransform.scale()
 		var ratio = Double(ratio)
-		if ratio * scale < 1.0 {
-			ratio = 1.0 / scale
+		if ratio * scale < minScale {
+			ratio = minScale / scale
 		}
 		if ratio * scale > maxZoomIn {
 			ratio = maxZoomIn / scale
