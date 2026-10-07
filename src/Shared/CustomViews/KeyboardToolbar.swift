@@ -155,21 +155,40 @@ class KeyboardToolbar: UIInputView {
 				button.layer.cornerRadius = 10
 			}
 		} else {
-			switch item.kind {
-			case let .title(string):
-				button.setTitle(string, for: .normal)
-				button.setTitleColor(.label, for: .normal)
-			case let .icon(name):
-				button.setImage(UIImage(systemName: name), for: .normal)
-				button.tintColor = .systemBlue
-			case let .image(img):
-				button.setImage(img, for: .normal)
-				button.tintColor = .systemBlue
-			default:
-				break
+			if #available(iOS 15, *) {
+				var config = UIButton.Configuration.plain()
+				switch item.kind {
+				case let .title(string):
+					config.title = string
+					config.baseForegroundColor = .label
+				case let .icon(name):
+					config.image = UIImage(systemName: name)
+					config.baseForegroundColor = .systemBlue
+				case let .image(img):
+					config.image = img
+					config.baseForegroundColor = .systemBlue
+				default:
+					break
+				}
+				config.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10)
+				button.configuration = config
+			} else {
+				switch item.kind {
+				case let .title(string):
+					button.setTitle(string, for: .normal)
+					button.setTitleColor(.label, for: .normal)
+				case let .icon(name):
+					button.setImage(UIImage(systemName: name), for: .normal)
+					button.tintColor = .systemBlue
+				case let .image(img):
+					button.setImage(img, for: .normal)
+					button.tintColor = .systemBlue
+				default:
+					break
+				}
+				button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
 			}
 			button.backgroundColor = Self.buttonBackgroundColor
-			button.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
 			button.layer.borderWidth = 1
 			button.layer.cornerRadius = 10
 			button.layer.borderColor = UIColor.clear.cgColor

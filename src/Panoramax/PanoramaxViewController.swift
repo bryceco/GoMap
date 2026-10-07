@@ -201,7 +201,7 @@ class PanoramaxViewController: UIViewController {
 		photoPicker.onError = {}
 		photoPicker.onAccept = { image, imageData in
 			Task {
-				try await self.uploadImage(image: image, imageData: imageData)
+				await self.uploadImage(image: image, imageData: imageData)
 			}
 		}
 		photoPicker.modalPresentationStyle = .fullScreen
@@ -236,12 +236,12 @@ class PanoramaxViewController: UIViewController {
 			return
 		}
 		Task {
-			try await uploadImage(image: image, imageData: data)
+			await uploadImage(image: image, imageData: data)
 		}
 	}
 
 	@MainActor
-	func uploadImage(image: UIImage, imageData: Data) async throws {
+	func uploadImage(image: UIImage, imageData: Data) async {
 		// get date and name
 		let date = Date()
 		let formatter = DateFormatter()
@@ -273,7 +273,7 @@ class PanoramaxViewController: UIViewController {
 						// try again
 						// Without the pause the server doesn't always accept our cookie
 						try await Task.sleep(nanoseconds: 100_000000)
-						try await self.uploadImage(image: image, imageData: imageData)
+						await self.uploadImage(image: image, imageData: imageData)
 						return
 					}
 					throw error

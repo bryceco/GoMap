@@ -186,8 +186,6 @@ class AlertPopup: UIViewController {
 			cancelButton.imageView?.contentMode = .scaleAspectFit
 			cancelButton.contentHorizontalAlignment = .center
 			cancelButton.semanticContentAttribute = .forceLeftToRight
-			cancelButton.imageEdgeInsets = UIEdgeInsets(top: 0, left: -8,
-			                                            bottom: 0, right: 8)
 			cancelButton.backgroundColor = .systemBackground
 			cancelButton.layer.cornerRadius = cornerRadius
 		}
