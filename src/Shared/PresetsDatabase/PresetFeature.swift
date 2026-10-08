@@ -36,7 +36,7 @@ struct PresetRelationMemberRole: CustomStringConvertible {
 
 	init(withDict dict: [String: Any]) {
 		self.role = dict["role"] as! String
-		self.geometry = (dict["geometry"] as! [String]).map { GEOMETRY(rawValue: $0)! }
+		self.geometry = (dict["geometry"] as! [String]? ?? []).map { GEOMETRY(rawValue: $0)! }
 		self.minCount = dict["min"] as! Int?
 		self.maxCount = dict["max"] as! Int?
 		self.matchTags = dict["matchTags"] as! [[String: String]]?
@@ -48,8 +48,12 @@ struct PresetRelationMemberRole: CustomStringConvertible {
 // Present only on presets that include a "relation" sub-object in presets.json.
 struct PresetRelationType: CustomStringConvertible {
 	enum RelationType: String {
-		case multipolygon
 		case boundary
+		case destination_sign
+		case multipolygon
+		case restriction
+		case site
+		case waterway
 	}
 
 	let type: RelationType
