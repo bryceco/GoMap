@@ -169,6 +169,17 @@ final class MainViewController: UIViewController, DPadDelegate,
 	@IBOutlet var undoRedoView: UIVisualEffectView!
 	@IBOutlet var searchButton: UIButton!
 	@IBOutlet var compassButton: CompassButton!
+	@IBOutlet private var compassTopConstraint: NSLayoutConstraint!
+	@IBOutlet private var locationTrailingConstraint: NSLayoutConstraint!
+	@IBOutlet private var addNodeCenterYConstraint: NSLayoutConstraint!
+	@IBOutlet private var rulerLeadingConstraint: NSLayoutConstraint!
+	@IBOutlet private var rulerBottomConstraint: NSLayoutConstraint!
+	@IBOutlet private var settingsLeadingConstraint: NSLayoutConstraint!
+	@IBOutlet private var settingsBottomConstraint: NSLayoutConstraint!
+	@IBOutlet private var uploadTrailingConstraint: NSLayoutConstraint!
+	@IBOutlet private var uploadBottomConstraint: NSLayoutConstraint!
+	@IBOutlet private var aerialLogoTopConstraint: NSLayoutConstraint!
+	private var addNodeEdgeConstraint: NSLayoutConstraint?
 	@IBOutlet var aerialServiceLogo: UIButton!
 	@IBOutlet var helpButton: UIButton!
 	@IBOutlet var centerOnGPSButton: UIButton!
@@ -478,6 +489,153 @@ final class MainViewController: UIViewController, DPadDelegate,
 	override func viewDidLayoutSubviews() {
 		let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
 		statusBarBackground.isHidden = windowScene?.statusBarManager?.isStatusBarHidden ?? false
+		updateButtonsForVerticalBarRegion()
+	}
+
+	/// On iPhone Duo the camera and status items sit in a strip along one edge that is
+	/// outside the safe area. Move the buttons along that edge into the strip, clear of
+	/// the system items, instead of leaving them at the edge of the safe area.
+	private func updateButtonsForVerticalBarRegion() {
+		// defaults from the storyboard
+		var compassTop: CGFloat = 10
+		var locationTrailing: CGFloat = 10
+		var addNodeEdge: CGFloat = 10
+		var addNodeCenterY: CGFloat = 71
+		var bottomLeftShift: CGFloat = 0
+		var bottomRightShift: CGFloat = 0
+		var bottomDrop: CGFloat = 0
+		var aerialLogoTop: CGFloat = 9
+		let isLeft = settings.buttonLayout == .buttonsOnLeft
+
+		if #available(iOS 27.1, *),
+		   view.effectiveUserInterfaceLayoutDirection == .leftToRight
+		{
+			let insets = view.safeAreaInsets
+			let bounds = view.bounds
+			let safeTop = insets.top
+			let safeBottom = bounds.maxY - insets.bottom
+			let occlusions = view.reservedRegions(kind: .occlusion).filter(\.isActive).map(\.frame)
+			// A strip is a one-sided inset containing an occlusion, on a device where
+			// the system uses a vertical bar. A regular iPhone can also have a one-sided
+			// inset containing the Dynamic Island, but its verticalBarEdge is unspecified.
+			let hasVerticalBar = traitCollection.verticalBarEdge != .unspecified
+			let rightStrip = CGRect(x: bounds.maxX - insets.right, y: 0, width: insets.right, height: bounds.height)
+			let leftStrip = CGRect(x: 0, y: 0, width: insets.left, height: bounds.height)
+			let rightOcclusions = hasVerticalBar && insets.right > insets.left ? occlusions.filter { $0.intersects(rightStrip) } : []
+			let leftOcclusions = hasVerticalBar && insets.left > insets.right ? occlusions.filter { $0.intersects(leftStrip) } : []
+
+			// Folded: the ruler and the bottom row of buttons sit 12 points from the
+			// bottom of the screen (the same as their side margin) instead of above
+			// the safe area.
+			if !leftOcclusions.isEmpty || !rightOcclusions.isEmpty {
+				bottomDrop = max(0, insets.bottom - 2)
+			}
+			// computed, because the ruler's current frame depends on bottomDrop
+			let rulerTop = safeBottom - 65 + bottomDrop - rulerView.frame.height
+
+			// Compass and Location: top of the right strip, below the system items
+			if !rightOcclusions.isEmpty,
+			   let y = Self.fitSpan(height: locationButton.frame.maxY - compassButton.frame.minY,
+			                        preferred: safeTop + compassTop,
+			                        lower: safeTop + compassTop,
+			                        upper: safeBottom,
+			                        avoiding: rightOcclusions)
+			{
+				compassTop = y - safeTop
+				locationTrailing = -(insets.right + locationButton.frame.width) / 2
+			}
+
+			// Ruler, Settings and Search: against the left edge, if the system items aren't there
+			if !leftOcclusions.isEmpty,
+			   !leftOcclusions.contains(where: { $0.maxY > rulerTop })
+			{
+				bottomLeftShift = insets.left
+			}
+
+			// Undo/Redo and Upload: against the right edge, if the system items aren't there
+			if !rightOcclusions.isEmpty,
+			   !rightOcclusions.contains(where: { $0.maxY > rulerTop })
+			{
+				bottomRightShift = insets.right
+			}
+
+			// Unfolded portrait: the status items are in the top right corner, so the
+			// aerial logo, imagery offset and info buttons don't need to be below them.
+			// An inactive division (the fold) tells us this is the inner display.
+			let hasFold = !view.reservedRegions(kind: .division, options: .includeInactive).isEmpty
+			if hasFold,
+			   insets.left == insets.right,
+			   let logoStack = helpButton.superview,
+			   let offsetStack = aerialAlignmentButton.superview
+			{
+				// the top margin used when the status items are at the side
+				let topMargin: CGFloat = 24
+				let nearby = occlusions.filter { $0.minX < offsetStack.frame.maxX }
+				if let y = Self.fitSpan(height: logoStack.frame.height,
+				                        preferred: min(safeTop, topMargin) + aerialLogoTop,
+				                        lower: min(safeTop, topMargin) + aerialLogoTop,
+				                        upper: safeBottom,
+				                        avoiding: nearby)
+				{
+					aerialLogoTop = min(aerialLogoTop, y - safeTop)
+				}
+			}
+
+			// Display and + buttons: in the strip on whichever side the user chose,
+			// as close to their usual height as the system items allow
+			let stripOcclusions = isLeft ? leftOcclusions : rightOcclusions
+			let stripWidth = isLeft ? insets.left : insets.right
+			let height = addNodeButton.frame.maxY - displayButton.frame.minY
+			let preferred = (safeTop + safeBottom) / 2 + addNodeCenterY + addNodeButton.frame.height / 2 - height
+			// they are constrained to be below the Center button
+			let lower = safeTop + compassTop + centerOnGPSButton.frame.maxY - compassButton.frame.minY + 15
+			if !stripOcclusions.isEmpty,
+			   let y = Self.fitSpan(height: height,
+			                        preferred: preferred,
+			                        lower: lower,
+			                        upper: rulerTop - 8,
+			                        avoiding: stripOcclusions)
+			{
+				addNodeCenterY += y - preferred
+				addNodeEdge = -(stripWidth + addNodeButton.frame.width) / 2
+			}
+		}
+
+		func set(_ constraint: NSLayoutConstraint?, _ constant: CGFloat) {
+			if let constraint, constraint.constant != constant {
+				constraint.constant = constant
+			}
+		}
+		set(compassTopConstraint, compassTop)
+		set(locationTrailingConstraint, locationTrailing)
+		set(addNodeEdgeConstraint, isLeft ? addNodeEdge : -addNodeEdge)
+		set(addNodeCenterYConstraint, addNodeCenterY)
+		set(rulerLeadingConstraint, bottomLeftShift - 12)
+		set(rulerBottomConstraint, 65 - bottomDrop)
+		set(settingsLeadingConstraint, 12 - bottomLeftShift)
+		set(uploadTrailingConstraint, 12 - bottomRightShift)
+		set(settingsBottomConstraint, 10 - bottomDrop)
+		set(uploadBottomConstraint, bottomDrop - 10)
+		set(aerialLogoTopConstraint, aerialLogoTop)
+	}
+
+	/// Returns the top of a vertical span of `height` that is nearest to `preferred`, lies
+	/// within `lower...upper` and doesn't overlap any of `obstacles`, or nil if none fits.
+	private static func fitSpan(height: CGFloat,
+	                            preferred: CGFloat,
+	                            lower: CGFloat,
+	                            upper: CGFloat,
+	                            avoiding obstacles: [CGRect]) -> CGFloat?
+	{
+		let last = upper - height
+		guard lower <= last else { return nil }
+		let candidates = [min(max(preferred, lower), last)]
+			+ obstacles.flatMap { [$0.maxY, $0.minY - height] }
+		return candidates
+			.filter { y in
+				y >= lower && y <= last && !obstacles.contains { $0.minY < y + height && $0.maxY > y }
+			}
+			.min { abs($0 - preferred) < abs($1 - preferred) }
 	}
 
 	// MARK: Button state updates
@@ -548,8 +706,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 			toItem: c.secondItem,
 			attribute: attribute,
 			multiplier: 1.0,
-			constant: isLeft ? abs(c.constant) : -abs(c.constant))
+			constant: isLeft ? 10 : -10)
 		superview.addConstraint(c2)
+		// the constant gets adjusted in updateButtonsForVerticalBarRegion()
+		addNodeEdgeConstraint = c2
+		view.setNeedsLayout()
 	}
 
 	// MARK: Notifications

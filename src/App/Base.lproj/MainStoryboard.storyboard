@@ -357,26 +357,36 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="addNodeButton" destination="53z-ij-akY" id="X8s-iv-8Kl"/>
+                        <outlet property="addNodeCenterYConstraint" destination="VwN-nB-ehp" id="dUo-Pl-CnY"/>
                         <outlet property="aerialAlignmentButton" destination="DFj-Vi-kBz" id="5Ed-eV-oPi"/>
                         <outlet property="aerialServiceLogo" destination="2Ka-IT-DQC" id="iZ8-RY-FEe"/>
+                        <outlet property="aerialLogoTopConstraint" destination="hoY-LX-KKj" id="dUo-Lg-Top"/>
                         <outlet property="centerOnGPSButton" destination="Fo4-Nq-pAz" id="GSu-R7-dan"/>
                         <outlet property="compassButton" destination="E22-sL-sNt" id="WSB-0m-Fil"/>
+                        <outlet property="compassTopConstraint" destination="ppF-tq-PYy" id="dUo-Cp-Top"/>
                         <outlet property="dPadView" destination="FM9-uI-awq" id="g1G-br-0Vd"/>
                         <outlet property="displayButton" destination="UQ6-Pa-U58" id="lto-1X-HyX"/>
                         <outlet property="flashLabel" destination="LtX-Xt-YXq" id="mfb-NN-gTX"/>
                         <outlet property="fpsLabel" destination="9t5-wq-j1u" id="We8-om-6Cr"/>
                         <outlet property="helpButton" destination="TnL-YC-BCg" id="Hq9-at-1I1"/>
                         <outlet property="locationButton" destination="rdp-7O-8Ad" id="fnP-To-Zhg"/>
+                        <outlet property="locationTrailingConstraint" destination="2oq-dd-G4Q" id="dUo-Lc-Trl"/>
                         <outlet property="mapView" destination="fss-Ag-fKJ" id="dCu-lv-5cU"/>
                         <outlet property="progressIndicator" destination="Zh9-uC-62t" id="PlQ-ss-wjk"/>
                         <outlet property="redoButton" destination="tmm-lt-HSk" id="P0O-q4-hlG"/>
                         <outlet property="rulerView" destination="TJj-HW-GPO" id="y6m-qe-yvc"/>
+                        <outlet property="rulerLeadingConstraint" destination="3AR-HX-AI7" id="dUo-Rl-Ldg"/>
+                        <outlet property="rulerBottomConstraint" destination="r2v-ah-zmD" id="dUo-Rl-Btm"/>
                         <outlet property="searchButton" destination="X1d-Y3-CcW" id="Fl5-cx-g49"/>
                         <outlet property="settingsButton" destination="9O3-HG-HvC" id="Xv7-pm-1Cm"/>
+                        <outlet property="settingsLeadingConstraint" destination="Q13-4n-waC" id="dUo-St-Ldg"/>
+                        <outlet property="settingsBottomConstraint" destination="3dS-wg-VtV" id="dUo-St-Btm"/>
                         <outlet property="statusBarBackground" destination="uDR-wZ-Dsb" id="YFU-eF-4mg"/>
                         <outlet property="undoButton" destination="gwJ-lB-zMc" id="hH3-DO-Cny"/>
                         <outlet property="undoRedoView" destination="yPg-PO-9HK" id="Asd-6X-Isa"/>
                         <outlet property="uploadButton" destination="YRw-Aj-GwS" id="4Vd-GX-cdu"/>
+                        <outlet property="uploadBottomConstraint" destination="I7y-94-ztw" id="dUo-Up-Btm"/>
+                        <outlet property="uploadTrailingConstraint" destination="bGw-oa-eIq" id="dUo-Up-Trl"/>
                         <outlet property="zoomInToEditLabel" destination="N5Q-nV-TPG" id="Vyf-0j-ia3"/>
                         <segue destination="SGm-iA-IYT" kind="modal" identifier="NotesSegue" id="ROf-ZO-hu1"/>
                         <segue destination="Dsa-9O-Cca" kind="modal" identifier="poiSegue" id="GP1-Ol-g7i"/>
