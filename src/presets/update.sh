@@ -2,7 +2,15 @@
 
 set -e
 
-DIST="https://raw.githubusercontent.com/openstreetmap/id-tagging-schema/main/dist"
+# Determine which id-tagging-schema ref to pull from.
+if [ "$1" = "--dev" ]; then
+	REF="interim"
+else
+	REF="main"
+fi
+echo "Using id-tagging-schema ref: $REF"
+
+DIST="https://raw.githubusercontent.com/openstreetmap/id-tagging-schema/$REF/dist"
 
 # Download presets
 presets=(preset_categories
