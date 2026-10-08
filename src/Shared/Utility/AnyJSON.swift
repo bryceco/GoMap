@@ -39,6 +39,37 @@ enum AnyJSON: Hashable, Codable {
 		}
 	}
 
+	/// Attempts to wrap an untyped value (from JSONSerialization, etc.) as AnyJSON.
+	/// Returns nil if the value is not a recognized JSON type.
+	init?(any value: Any) {
+		switch value {
+		case is NSNull:
+			self = .null
+		case let s as String:
+			self = .string(s)
+		case let b as Bool:
+			self = .bool(b)
+		case let n as NSNumber:
+			self = .double(n.doubleValue)
+		case let a as [Any]:
+			var items = [AnyJSON]()
+			for element in a {
+				guard let item = AnyJSON(any: element) else { return nil }
+				items.append(item)
+			}
+			self = .array(items)
+		case let d as [String: Any]:
+			var items = [String: AnyJSON]()
+			for (key, val) in d {
+				guard let item = AnyJSON(any: val) else { return nil }
+				items[key] = item
+			}
+			self = .dictionary(items)
+		default:
+			return nil
+		}
+	}
+
 	public init(from decoder: Decoder) throws {
 		let container = try decoder.singleValueContainer()
 		if container.decodeNil() {
