@@ -1503,7 +1503,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		let latLon = viewPort.screenCenterLatLon()
 		if let plist = UserPrefs.shared.latestAerialCheckLatLon.value,
 		   let prevLatLon = LatLon(plist),
-		   latLon.greatCircleDistance(to: prevLatLon) < 1000
+		   latLon.greatCircleDistance(to: prevLatLon) < 10000
 		{
 			return
 		}
@@ -1521,6 +1521,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 			return
 		} else if !tileServerList.currentServer.best,
 		          tileServerList.currentServer.isGlobalImagery(),
+		          !tileServerList.userDefinedServices().contains(tileServerList.currentServer),
 		          let best = tileServerList.bestService(at: latLon)
 		{
 			// There's better imagery available at this location
