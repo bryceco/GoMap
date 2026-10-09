@@ -397,9 +397,9 @@ class UploadViewController: UIViewController {
 		connectedGroups.indices.filter { selectedGroupIndices.contains($0) }.map { connectedGroups[$0] }
 	}
 
-	var recentCommentList = MostRecentlyUsed<String>(maxCount: 5,
+	var recentCommentList = MostRecentlyUsed<String>(maxCount: 12,
 	                                                 userPrefsKey: UserPrefs.shared.recentCommitComments)
-	var recentSourceList = MostRecentlyUsed<String>(maxCount: 5,
+	var recentSourceList = MostRecentlyUsed<String>(maxCount: 12,
 	                                                userPrefsKey: UserPrefs.shared.recentSourceComments)
 
 	override func viewDidLoad() {
