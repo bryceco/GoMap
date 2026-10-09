@@ -79,10 +79,8 @@ extension PresetsDatabase {
 	func allTagValuesForKey(_ key: String) -> Set<String> {
 		var set = Set<String>()
 		for field in presetFields.values {
-			if let k = field.key,
-			   k == key,
-			   let list = field.options
-			{
+			guard let list = field.options else { continue }
+			if field.key == key || (field.keys?.contains(key) ?? false) {
 				set.formUnion(list)
 			}
 		}
