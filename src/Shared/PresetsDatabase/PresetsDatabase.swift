@@ -45,7 +45,6 @@ final class PresetsDatabase {
 	let stdFeatureIndex: [String: [PresetFeature]] // generic preset index
 	var nsiFeatureIndex: [String: [PresetFeature]] // generic+NSI index
 	var nsiGeoJson: [String: GeoJSONGeometry] // geojson regions for NSI
-	let discarded: DiscardedTags
 
 	class func pathForFile(_ file: String) throws -> URL {
 		guard let bundle = Bundle.main.resourceURL else {
@@ -69,6 +68,7 @@ final class PresetsDatabase {
 	let presetCategories: [String: PresetCategory] // map a top-level category ("building") to a set of specific features ("building/retail")
 	let presetFields: [String: PresetField] // possible values for a preset key ("oneway=")
 	let deprecations: DeprecatedTags
+	let discarded: DiscardedTags
 
 	lazy var taginfoCache = TagInfo()
 

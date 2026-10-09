@@ -83,14 +83,24 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	static let isSetHighlight = UIColor.systemBlue
 	static let isSetDeprecated = UIColor.systemOrange
+	static let isSetDiscarded = UIColor.systemRed
 
-	/// Returns the appropriate gutter color: nil if key or value is empty, orange if deprecated, blue otherwise.
+	/// Returns the appropriate gutter color: nil if key or value is empty,
+	/// red if discarded, orange if deprecated, blue otherwise.
 	static func isSetColor(forKey key: String, value: String) -> UIColor? {
 		guard
 			!key.isEmpty,
 			!value.isEmpty
-		else { return nil }
-		return PresetsDatabase.shared.deprecations.contains(key: key, value: value) ? isSetDeprecated : isSetHighlight
+		else {
+			return nil
+		}
+		if PresetsDatabase.shared.discarded.shouldDiscard(key: key, value: value) {
+			return isSetDiscarded
+		}
+		if PresetsDatabase.shared.deprecations.contains(key: key, value: value) {
+			return isSetDeprecated
+		}
+		return isSetHighlight
 	}
 
 	override func viewDidLoad() {
