@@ -320,7 +320,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			cell.text1.spellCheckingType = .no
 			cell.text2.defaultInputAccessoryView = prevNextToolbar
 
-			cell.isSet.backgroundColor = kv.k == "" || kv.v == "" ? nil : UIColor.systemBlue
+			cell.isSet.backgroundColor = POICommonTagsViewController.isSetColor(forKey: kv.k, value: kv.v)
 			return cell
 		} else if indexPath.section == 1 {
 			// Relations
@@ -384,7 +384,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		guard let indexPath = tableView.indexPath(for: kvCell) else { return }
 		let kv = (k: kvCell.key, v: kvCell.value)
 		tags[indexPath.row] = kv
-		kvCell.isSet.backgroundColor = kv.k == "" || kv.v == "" ? nil : UIColor.systemBlue
+		kvCell.isSet.backgroundColor = POICommonTagsViewController.isSetColor(forKey: kv.k, value: kv.v)
 
 		let tabController = tabBarController as! POITabBarController
 		saveButton.isEnabled = tabController.isTagDictChanged(tags.keyValueDictionary())

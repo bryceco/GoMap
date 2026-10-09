@@ -82,6 +82,16 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	private var extraTags: KeyValueTableSection! // array of key/values not covered by presets
 
 	static let isSetHighlight = UIColor.systemBlue
+	static let isSetDeprecated = UIColor.systemOrange
+
+	/// Returns the appropriate gutter color: nil if key or value is empty, orange if deprecated, blue otherwise.
+	static func isSetColor(forKey key: String, value: String) -> UIColor? {
+		guard
+			!key.isEmpty,
+			!value.isEmpty
+		else { return nil }
+		return PresetsDatabase.shared.deprecations.contains(key: key, value: value) ? isSetDeprecated : isSetHighlight
+	}
 
 	override func viewDidLoad() {
 		// have to update presets before call super because super asks for the number of sections
@@ -381,7 +391,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				cell.text1?.text = extraTags[indexPath.row].k
 				cell.text2?.text = extraTags[indexPath.row].v
 				cell.text2.key = cell.text1?.text ?? ""
-				cell.isSet.backgroundColor = cell.value == "" ? nil : Self.isSetHighlight
+				cell.isSet.backgroundColor = Self.isSetColor(forKey: cell.key, value: cell.value)
 				return cell
 			}
 			if indexPath.section > (allPresets?.sectionCount() ?? 0) {
@@ -415,7 +425,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				                                         for: indexPath) as! FeaturePresetAreaCell
 				cell.valueField.delegate = self
 				let value = keyValueDict[presetKey.tagKey] ?? ""
-				cell.isSet.backgroundColor = value == "" ? nil : Self.isSetHighlight
+				cell.isSet.backgroundColor = Self.isSetColor(forKey: presetKey.tagKey, value: value)
 				cell.valueField.text = value
 				cell.valueField.returnKeyType = .done
 				cell.accessoryType = .none
@@ -494,7 +504,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				cell.valueField.addTarget(self, action: #selector(textFieldEditingDidBegin(_:)), for: .editingDidBegin)
 				cell.valueField.addTarget(self, action: #selector(textFieldDidEndEditing(_:)), for: .editingDidEnd)
 
-				cell.isSet.backgroundColor = keyValueDict[presetKey.tagKey] == nil ? nil : Self.isSetHighlight
+				cell.isSet.backgroundColor = Self.isSetColor(forKey: presetKey.tagKey, value: keyValueDict[presetKey.tagKey] ?? "")
 
 				if !presetKey.isYesNo(),
 				   let presets = presetKey.presetValues,
