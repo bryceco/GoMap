@@ -63,7 +63,7 @@ struct PresetRelationType: CustomStringConvertible {
 	var description: String {
 		let dupes = allowDuplicateMembers ? " allowDuplicates" : ""
 		let memberLines = memberRoles.map { "    \($0.description)" }.joined(separator: "\n")
-		return "PresetRelationShape(type=\(type.rawValue)\(dupes)\n\(memberLines)\n)"
+		return "PresetRelationType(type=\(type.rawValue)\(dupes)\n\(memberLines)\n)"
 	}
 
 	init(withDict dict: [String: Any]) {

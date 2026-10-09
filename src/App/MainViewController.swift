@@ -507,7 +507,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		var aerialLogoTop: CGFloat = 9
 		let isLeft = settings.buttonLayout == .buttonsOnLeft
 
-		#if compiler(>=6.4) // Xcode 27+: iPhone Duo layout adjustments
+#if compiler(>=6.4) // Xcode 27+: iPhone Duo layout adjustments
 		if #available(iOS 27.1, *),
 		   view.effectiveUserInterfaceLayoutDirection == .leftToRight
 		{
@@ -601,7 +601,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				addNodeEdge = -(stripWidth + addNodeButton.frame.width) / 2
 			}
 		}
-		#endif
+#endif
 
 		func set(_ constraint: NSLayoutConstraint?, _ constant: CGFloat) {
 			if let constraint, constraint.constant != constant {
