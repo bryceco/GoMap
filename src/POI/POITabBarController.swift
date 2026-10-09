@@ -12,6 +12,7 @@ class POITabBarController: UITabBarController {
 	var relationList: [OsmRelation] = []
 	var selection: OsmBaseObject?
 	var preservedFeatureTypeSearchText: String?
+	var allAutocompleteTagKeys: [String] = []
 
 #if targetEnvironment(macCatalyst)
 	/// One segmented control per tab, kept in sync, providing tab switching since the tab bar
@@ -27,6 +28,11 @@ class POITabBarController: UITabBarController {
 		self.selection = selection
 		keyValueDict = selection?.tags ?? [:]
 		relationList = selection?.parentRelations ?? []
+
+		// Build autocomplete key list once, shared by All Tags and Common Tags
+		var keys = PresetsDatabase.shared.allTagKeys()
+		keys.formUnion(appDelegate.mapView.mapData.tagKeys())
+		allAutocompleteTagKeys = Array(keys)
 
 		var tabIndex = UserPrefs.shared.poiTabIndex.value ?? 0
 		if tabIndex == 2,

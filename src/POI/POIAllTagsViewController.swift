@@ -194,6 +194,10 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		tabController?.keyValueDict = tags.keyValueDictionary()
 	}
 
+	var allAutocompleteTagKeys: [String] {
+		(tabBarController as? POITabBarController)?.allAutocompleteTagKeys ?? []
+	}
+
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		loadState()

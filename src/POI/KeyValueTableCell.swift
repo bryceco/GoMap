@@ -40,6 +40,7 @@ class TextPairTableCell: UITableViewCell {
 
 protocol KeyValueTableCellOwner: UITableViewController {
 	var allPresetKeys: [PresetDisplayKey] { get }
+	var allAutocompleteTagKeys: [String] { get }
 	var currentTextField: UITextField? { get set }
 	func keyValueEditingChanged(for kv: KeyValueTableCell)
 	func keyValueEditingEnded(for kv: KeyValueTableCell)
@@ -256,10 +257,10 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 			// save original value in case user changes it
 			priorKeyValue = text1.text ?? ""
 
-			// get list of keys
-			let set = PresetsDatabase.shared.allTagKeys()
-			let list = Array(set)
-			textField.autocompleteStrings = list
+			// get list of keys (cached by the owning view controller)
+			if let keys = keyValueCellOwner?.allAutocompleteTagKeys {
+				textField.autocompleteStrings = keys
+			}
 		}
 	}
 

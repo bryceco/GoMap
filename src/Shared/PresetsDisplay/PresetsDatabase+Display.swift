@@ -73,24 +73,7 @@ extension PresetsDatabase {
 	}
 
 	func allTagKeys() -> Set<String> {
-		var set = Set<String>()
-		for field in presetFields.values {
-			set.formUnion(field.allKeys)
-		}
-		for feature in PresetsDatabase.shared.stdFeatures.values {
-			set.formUnion(feature.tags.keys)
-		}
-		// these are additionl tags that people might want (e.g. for autocomplete)
-		set.formUnion(Set([
-			"official_name",
-			"alt_name",
-			"short_name",
-			"old_name",
-			"reg_name",
-			"nat_name",
-			"loc_name"
-		]))
-		return set
+		return allTagKeysCache
 	}
 
 	func allTagValuesForKey(_ key: String) -> Set<String> {

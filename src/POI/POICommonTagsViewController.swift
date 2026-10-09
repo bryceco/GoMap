@@ -873,6 +873,10 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	// These are needed to satisfy requirements as KeyValueTableCell owner
 	var allPresetKeys: [PresetDisplayKey] { allPresets?.allPresetKeys() ?? [] }
+	var allAutocompleteTagKeys: [String] {
+		(tabBarController as? POITabBarController)?.allAutocompleteTagKeys ?? []
+	}
+
 	var currentTextField: UITextField?
 
 	func keyValueEditingChanged(for kv: KeyValueTableCell) {

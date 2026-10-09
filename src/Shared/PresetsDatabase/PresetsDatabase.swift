@@ -72,6 +72,27 @@ final class PresetsDatabase {
 
 	lazy var taginfoCache = TagInfo()
 
+	lazy var allTagKeysCache: Set<String> = {
+		var set = Set<String>()
+		for field in presetFields.values {
+			set.formUnion(field.allKeys)
+		}
+		for feature in stdFeatures.values {
+			set.formUnion(feature.tags.keys)
+		}
+		// these are additional tags that people might want (e.g. for autocomplete)
+		set.formUnion([
+			"official_name",
+			"alt_name",
+			"short_name",
+			"old_name",
+			"reg_name",
+			"nat_name",
+			"loc_name"
+		])
+		return set
+	}()
+
 	init() throws {
 		let startTime = Date()
 

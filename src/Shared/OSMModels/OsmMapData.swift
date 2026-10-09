@@ -188,6 +188,20 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		spatial.findObjects(inArea: bbox, block: block)
 	}
 
+	func tagKeys() -> Set<String> {
+		var set = Set<String>()
+		for object in nodes.values {
+			set.formUnion(object.tags.keys)
+		}
+		for object in ways.values {
+			set.formUnion(object.tags.keys)
+		}
+		for object in relations.values {
+			set.formUnion(object.tags.keys)
+		}
+		return set
+	}
+
 	func tagValues(forKey key: String) -> Set<String> {
 		var set = Set<String>()
 
