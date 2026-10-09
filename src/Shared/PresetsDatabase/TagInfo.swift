@@ -126,6 +126,38 @@ class TagInfo {
 		return cached?.result ?? []
 	}
 
+	// Fetch the most popular tag keys from taginfo.
+	// Returns cached results immediately and refreshes asynchronously if stale.
+	func popularKeys(count: Int, update: (() -> Void)?) -> [String] {
+		let cacheKey = "popularKeys:\(count)"
+		let cached = taginfoCache[cacheKey]
+		let date = cached?.date ?? Date.distantPast
+
+		if let update = update,
+		   Date().timeIntervalSince(date) > 30 * 24 * 60 * 60
+		{
+			taginfoCache[cacheKey] = ResultType(date: Date(), result: []) // mark as in-transit
+			DispatchQueue.global(qos: .default).async {
+				let abibase = OSM_SERVER.taginfoUrl.appendingPathComponent("api/4/")
+				let urlString = abibase.absoluteString
+					.appending("keys/all?page=1&rp=\(count)&sortname=count_all&sortorder=desc")
+				guard let url = URL(string: urlString),
+				      let rawData = try? Data(contentsOf: url),
+				      let json = try? JSONSerialization.jsonObject(with: rawData) as? [String: Any],
+				      let results = json["data"] as? [[String: Any]]
+				else { return }
+
+				let keys = results.compactMap { $0["key"] as? String }
+				DispatchQueue.main.async {
+					self.taginfoCache[cacheKey] = ResultType(date: Date(), result: keys)
+					update()
+					self.save()
+				}
+			}
+		}
+		return cached?.result ?? []
+	}
+
 	// search the taginfo database
 	class func wikiInfoFor(key: String, value: String, update: @escaping (String) -> Void) {
 		DispatchQueue.global(qos: .default).async(execute: {

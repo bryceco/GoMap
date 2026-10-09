@@ -29,10 +29,7 @@ class POITabBarController: UITabBarController {
 		keyValueDict = selection?.tags ?? [:]
 		relationList = selection?.parentRelations ?? []
 
-		// Build autocomplete key list once, shared by All Tags and Common Tags
-		var keys = PresetsDatabase.shared.allTagKeys()
-		keys.formUnion(appDelegate.mapView.mapData.tagKeys())
-		allAutocompleteTagKeys = Array(keys)
+		rebuildAutocompleteTagKeys()
 
 		var tabIndex = UserPrefs.shared.poiTabIndex.value ?? 0
 		if tabIndex == 2,
@@ -78,6 +75,16 @@ class POITabBarController: UITabBarController {
 			windowScene.sizeRestrictions?.minimumSize = CGSize(width: 600, height: 450)
 			windowScene.sizeRestrictions?.maximumSize = CGSize(width: 2000, height: 2000)
 		}
+	}
+
+	private func rebuildAutocompleteTagKeys() {
+		var keys = PresetsDatabase.shared.allTagKeys()
+		keys.formUnion(AppDelegate.shared.mapView.mapData.tagKeys())
+		let popularKeys = PresetsDatabase.shared.taginfoCache.popularKeys(count: 500) { [weak self] in
+			self?.rebuildAutocompleteTagKeys()
+		}
+		keys.formUnion(popularKeys)
+		allAutocompleteTagKeys = Array(keys)
 	}
 
 	func removeValueFromKeyValueDict(key: String) {
