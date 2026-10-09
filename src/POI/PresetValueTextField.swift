@@ -124,11 +124,24 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		   PresetsDatabase.shared.eligibleForAutocomplete(key)
 		{
 			var set: Set<String> = PresetsDatabase.shared.allTagValuesForKey(key)
-			let appDelegate = AppDelegate.shared
-			let values = appDelegate.mapView.mapData.tagValues(forKey: key)
-			set = set.union(values)
-			let list: [String] = Array(set)
-			autocompleteStrings = list
+			set.formUnion(AppDelegate.shared.mapView.mapData.tagValues(forKey: key))
+
+			// Include taginfo values (cached, with async refresh)
+			let taginfoValues = PresetsDatabase.shared.taginfoCache.taginfoFor(
+				key: key,
+				searchKeys: false,
+				update: { [weak self] in
+					guard let self else { return }
+					var updated = set
+					let tagInfo = PresetsDatabase.shared.taginfoCache.taginfoFor(key: self.key,
+					                                                             searchKeys: false,
+					                                                             update: nil)
+					updated.formUnion(tagInfo)
+					self.autocompleteStrings = Array(updated)
+				})
+			set.formUnion(taginfoValues)
+
+			autocompleteStrings = Array(set)
 		}
 	}
 
