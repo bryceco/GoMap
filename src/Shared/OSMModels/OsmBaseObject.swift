@@ -555,6 +555,14 @@ class OsmBaseObject: NSObject, NSSecureCoding, NSCopying {
 		                                                              includeNSI: true),
 			!feature.isGeneric()
 		{
+			// For NSI features whose name duplicates the object's given name,
+			// show the underlying feature type instead (e.g. "Fast Food" not "McDonald's")
+			if feature.nsiSuggestion,
+			   feature.friendlyName() == givenName(),
+			   let parentName = feature.summary()
+			{
+				return parentName
+			}
 			return feature.friendlyName()
 		}
 
