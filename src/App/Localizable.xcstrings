@@ -18917,6 +18917,9 @@
         }
       }
     },
+    "Add a changeset comment to help other mappers understand your changes." : {
+      "comment" : "Recommendation shown when the changeset comment is empty"
+    },
     "Add a row for each condition an object must match. Tap AND/OR to change how a group's rows combine, and + to add a condition or nested group of conditions." : {
 
     },

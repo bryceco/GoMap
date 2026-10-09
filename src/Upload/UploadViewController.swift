@@ -356,6 +356,7 @@ class UploadViewController: UIViewController {
 	/// Table layout. Comment and source are always present; the rest depends on the pending edits.
 	private enum Section {
 		case comment
+		case emptyCommentWarning
 		case source
 		case distanceWarning
 		case untaggedWarning
@@ -463,13 +464,21 @@ class UploadViewController: UIViewController {
 
 	// MARK: - Sections
 
+	private var isCommentEmpty: Bool {
+		(commentTextView.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+	}
+
 	/// Recomputes the change groups, their default selection, and the table layout.
 	private func reloadGroups() {
 		connectedGroups = mapData?.undoManager.connectedObjects() ?? []
 		untaggedGroupIndices = groupIndicesWithUntaggedObjects()
 		selectedGroupIndices = nearbyGroupIndices().subtracting(untaggedGroupIndices)
 
-		sections = [.comment, .source]
+		sections = [.comment]
+		if isCommentEmpty {
+			sections.append(.emptyCommentWarning)
+		}
+		sections.append(.source)
 		if connectedGroups.isEmpty {
 			sections.append(.noChanges)
 		} else {
@@ -499,6 +508,24 @@ class UploadViewController: UIViewController {
 		commitButton.isEnabled = hasSelection
 		exportOscButton.isEnabled = hasSelection
 		editXmlButton.isEnabled = hasSelection
+	}
+
+	/// Inserts or removes the empty-comment warning section
+	private func updateEmptyCommentWarning() {
+		let warningIndex = sections.firstIndex { if case .emptyCommentWarning = $0 { return true }; return false }
+		if isCommentEmpty {
+			if warningIndex == nil {
+				// Insert right after .comment (index 0)
+				let insertAt = 1
+				sections.insert(.emptyCommentWarning, at: insertAt)
+				tableView.insertSections(IndexSet(integer: insertAt), with: .fade)
+			}
+		} else {
+			if let idx = warningIndex {
+				sections.remove(at: idx)
+				tableView.deleteSections(IndexSet(integer: idx), with: .fade)
+			}
+		}
 	}
 
 	/// Asks the table to re-measure self-sizing rows (i.e. the comment cell) without reloading them.
@@ -669,7 +696,9 @@ class UploadViewController: UIViewController {
 	@objc func clearCommentText(_ sender: Any) {
 		commentTextView.text = ""
 		clearCommentButton.isHidden = true
+		commentCell.updatePlaceholderVisibility()
 		updateCommentHeightIfNeeded()
+		updateEmptyCommentWarning()
 	}
 
 	private func showHistorySheet(_ list: [String], button: UIButton, textView: UIView) {
@@ -685,6 +714,7 @@ class UploadViewController: UIViewController {
 				}
 				self.commentCell.updatePlaceholderVisibility()
 				self.updateCommentHeightIfNeeded()
+				self.updateEmptyCommentWarning()
 			}))
 		}
 		actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
@@ -868,6 +898,7 @@ extension UploadViewController: UITextViewDelegate {
 			clearCommentButton.isHidden = commentTextView.text.count == 0
 			commentCell.updatePlaceholderVisibility()
 			updateCommentHeightIfNeeded()
+			updateEmptyCommentWarning()
 		}
 	}
 
@@ -925,7 +956,7 @@ extension UploadViewController: UITableViewDataSource {
 		switch sections[section] {
 		case .comment: return UploadStrings.commentHeader
 		case .source: return UploadStrings.sourceHeader
-		case .distanceWarning, .untaggedWarning, .noChanges, .group: return nil
+		case .emptyCommentWarning, .distanceWarning, .untaggedWarning, .noChanges, .group: return nil
 		}
 	}
 
@@ -933,6 +964,15 @@ extension UploadViewController: UITableViewDataSource {
 		switch sections[indexPath.section] {
 		case .comment:
 			return commentCell
+		case .emptyCommentWarning:
+			let cell = tableView.dequeueReusableCell(
+				withIdentifier: MessageCell.reuseIdentifier,
+				for: indexPath) as! MessageCell
+			cell.configure(
+				text: NSLocalizedString("Add a changeset comment to help other mappers understand your changes.",
+				                        comment: "Recommendation shown when the changeset comment is empty"),
+				style: .warning)
+			return cell
 		case .source:
 			return sourceCell
 		case .distanceWarning:
@@ -1015,7 +1055,7 @@ extension UploadViewController: UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		switch sections[section] {
-		case .distanceWarning, .untaggedWarning:
+		case .emptyCommentWarning, .distanceWarning, .untaggedWarning:
 			return .leastNonzeroMagnitude
 		default:
 			return UITableView.automaticDimension
@@ -1024,7 +1064,7 @@ extension UploadViewController: UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		switch sections[section] {
-		case .distanceWarning, .untaggedWarning:
+		case .emptyCommentWarning, .distanceWarning, .untaggedWarning:
 			return 5
 		default:
 			return UITableView.automaticDimension
