@@ -6,6 +6,7 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 import UniformTypeIdentifiers
 
@@ -50,14 +51,6 @@ extension EditorMapLayer {
 		return true
 	}
 
-	private func pasteTagsMerge(_ object: OsmBaseObject, tags: [String: String]) {
-		// Merge tags
-		let newTags = OsmTags.Merge(ourTags: object.tags, otherTags: tags, allowConflicts: true)!
-		mapData.setTags(newTags, for: object)
-		setNeedsLayout()
-		owner.didUpdateObject()
-	}
-
 	private func pasteTagsReplace(_ object: OsmBaseObject, tags: [String: String]) {
 		// Replace all tags
 		mapData.setTags(tags, for: object)
@@ -84,29 +77,28 @@ extension EditorMapLayer {
 		}
 		guard let selectedPrimary = selectedPrimary else { return }
 
-		if selectedPrimary.tags.count > 0 {
-			let question = String.localizedStringWithFormat(
-				NSLocalizedString("Pasting %ld tag(s)", comment: ""),
-				pastedTags.count)
-			let alertPaste = UIAlertController(
-				title: NSLocalizedString("Paste", comment: ""),
-				message: question,
-				preferredStyle: .alert)
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-			                                   style: .cancel,
-			                                   handler: nil))
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""),
-			                                   style: .default, handler: { [self] _ in
-			                                   	self.pasteTagsMerge(selectedPrimary, tags: pastedTags)
-			                                   }))
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""),
-			                                   style: .default,
-			                                   handler: { [self] _ in
-			                                   	self.pasteTagsReplace(selectedPrimary, tags: pastedTags)
-			                                   }))
-			presentAlert(alert: alertPaste, location: .none)
-		} else {
+		if selectedPrimary.tags.isEmpty {
+			// No existing tags, just apply directly.
 			pasteTagsReplace(selectedPrimary, tags: pastedTags)
+			return
+		}
+
+		let model = TagMergeModel(current: selectedPrimary.tags, incoming: pastedTags)
+		if model.isNoOp {
+			display.flashMessage(title: nil, message: NSLocalizedString("Tags are identical", comment: ""))
+			return
+		}
+
+		guard let presenter = display.topViewController else { return }
+		TagMergeView.present(from: presenter,
+		                     model: model,
+		                     source: .paste,
+		                     objectName: selectedPrimary.friendlyDescription())
+		{ [self] tags in
+			guard let tags else { return } // user cancelled
+			mapData.setTags(tags, for: selectedPrimary)
+			setNeedsLayout()
+			owner.didUpdateObject()
 		}
 	}
 

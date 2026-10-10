@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02008650265B25DC008F37DD /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028816A2265AD9D100C30EA2 /* Database.swift */; };
+		02008C603079BD50007158A3 /* TagMergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02008C5F3079BD50007158A3 /* TagMergeView.swift */; };
 		0200C1C22703B42600A79804 /* LocationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0200C1C12703B42600A79804 /* LocationParser.swift */; };
 		0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0200FECC2908B0EB002C3F94 /* GeoJSON.swift */; };
 		02024EBC2FD4F09900B9BF09 /* KeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02024EBB2FD4F09900B9BF09 /* KeyboardToolbar.swift */; };
@@ -384,6 +385,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02008C5F3079BD50007158A3 /* TagMergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMergeView.swift; sourceTree = "<group>"; };
 		0200C1C12703B42600A79804 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationParser.swift; path = ../Shared/Location/LocationParser.swift; sourceTree = "<group>"; };
 		0200FECC2908B0EB002C3F94 /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeoJSON.swift; path = Shared/GeoJSON.swift; sourceTree = "<group>"; };
 		02024EBB2FD4F09900B9BF09 /* KeyboardToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbar.swift; sourceTree = "<group>"; };
@@ -1051,6 +1053,7 @@
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
 				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
 				02FBDB5C2E873D9200A70CEF /* StatusBarGradient.swift */,
+				02008C5F3079BD50007158A3 /* TagMergeView.swift */,
 				02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */,
 				028C51E525CB7A23004A88F7 /* TristateButton.swift */,
 			);
@@ -1720,6 +1723,7 @@
 				02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */,
 				02C8C56D26F4479A003B0122 /* WayPointMarker.swift in Sources */,
 				02F9CEA72F16BDFE00ADED7C /* LocationProvider.swift in Sources */,
+				02008C603079BD50007158A3 /* TagMergeView.swift in Sources */,
 				0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */,
 				0244398D29C9402B009FC2D0 /* TileServerList+JSON.swift in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,

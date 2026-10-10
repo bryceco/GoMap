@@ -7030,6 +7030,17 @@
         }
       }
     },
+    "%d added · %d changed · %d removed" : {
+      "comment" : "Summary of tag changes",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$d added · %2$d changed · %3$d removed"
+          }
+        }
+      }
+    },
     "%ld Days" : {
       "comment" : "One or more days",
       "localizations" : {
@@ -21107,6 +21118,9 @@
         }
       }
     },
+    "added" : {
+      "comment" : "Tag will be added"
+    },
     "added to multipolygon relation" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -22620,6 +22634,9 @@
     },
     "AND/OR group" : {
       "comment" : "Menu item adding a nested AND/OR group to a quest filter"
+    },
+    "Apply %d Changes" : {
+      "comment" : "Button, %d is a count of tag changes"
     },
     "Area" : {
       "comment" : "Area of an object in m^2\nObject geometry: a closed way or multipolygon)",
@@ -26540,6 +26557,9 @@
         }
       }
     },
+    "changed" : {
+      "comment" : "Tag value will change"
+    },
     "Changeset" : {
       "comment" : "OSM changeset identifier",
       "localizations" : {
@@ -26942,6 +26962,9 @@
           }
         }
       }
+    },
+    "Clipboard" : {
+      "comment" : "Column header: tags being pasted"
     },
     "Close Area" : {
       "comment" : "Edit action",
@@ -32773,6 +32796,12 @@
         }
       }
     },
+    "Dragged node" : {
+      "comment" : "Column header: tags on the node being dragged"
+    },
+    "Dragged node joining %@" : {
+      "comment" : "Merge Tags subtitle, %@ is an object name"
+    },
     "duplicate" : {
       "comment" : "create a duplicate",
       "localizations" : {
@@ -36598,6 +36627,9 @@
           }
         }
       }
+    },
+    "Identical tags not shown: %@" : {
+      "comment" : "%@ is a list of tag keys"
     },
     "Identifier" : {
       "comment" : "OSM node/way/relation identifier",
@@ -41345,6 +41377,8 @@
     },
     "Members can't be removed from this type of relation" : {
 
+    "Merge All" : {
+      "comment" : "Accept all incoming tags, keep the rest"
     },
     "Merge Tags" : {
       "localizations" : {
@@ -46576,6 +46610,9 @@
         }
       }
     },
+    "Not set" : {
+      "comment" : "Tag is not present on the object; choosing this skips the tag"
+    },
     "Note #%@" : {
       "comment" : "OSM note title with ID number",
       "localizations" : {
@@ -47422,6 +47459,9 @@
           }
         }
       }
+    },
+    "On object" : {
+      "comment" : "Column header: tags currently on the object"
     },
     "Only Left Turn restriction" : {
       "localizations" : {
@@ -49658,6 +49698,7 @@
       }
     },
     "Pasting %ld tag(s)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "variations" : {
@@ -50362,6 +50403,9 @@
           }
         }
       }
+    },
+    "Pasting onto %@" : {
+      "comment" : "Merge Tags subtitle, %@ is an object name"
     },
     "Pause GPX" : {
       "localizations" : {
@@ -52951,10 +52995,20 @@
         }
       }
     },
+    "Remove tag" : {
+      "comment" : "Tag is not in the incoming tags; choosing this removes it"
+    },
+    "removed" : {
+      "comment" : "Tag will be removed"
+    },
+    "Replace All" : {
+      "comment" : "Discard all existing tags"
+    },
     "Replace all existing quests" : {
 
     },
     "Replace Tags" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -53358,6 +53412,9 @@
           }
         }
       }
+    },
+    "Reset" : {
+      "comment" : "Discard per-tag choices"
     },
     "Restrict" : {
       "comment" : "Edit action",
@@ -58256,6 +58313,9 @@
         }
       }
     },
+    "Tags are identical" : {
+
+    },
     "Take New Photo" : {
       "comment" : "Option to take a photo with the camera",
       "localizations" : {
@@ -58372,6 +58432,9 @@
           }
         }
       }
+    },
+    "Target node" : {
+      "comment" : "Column header: tags on the node dragged onto"
     },
     "The + button can be positioned on either the left or right side of the screen" : {
       "localizations" : {
