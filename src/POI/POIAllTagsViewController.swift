@@ -87,8 +87,6 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 		super.viewDidLoad()
 
-		editButtonItem.target = self
-		editButtonItem.action = #selector(toggleTableRowEditing(_:))
 		navigationItem.rightBarButtonItems = [navigationItem.rightBarButtonItem, editButtonItem].compactMap { $0 }
 
 		tableView.estimatedRowHeight = 44.0
@@ -473,16 +471,12 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		return 50.0
 	}
 
-	@IBAction func toggleTableRowEditing(_ sender: Any) {
+	override func setEditing(_ editing: Bool, animated: Bool) {
+		super.setEditing(editing, animated: animated)
 		let tabController = tabBarController as! POITabBarController
 
-		let editing = !tableView.isEditing
 		navigationItem.leftBarButtonItem?.isEnabled = !editing
 		navigationItem.rightBarButtonItem?.isEnabled = !editing && tabController.isTagDictChanged()
-		tableView.setEditing(editing, animated: true)
-		let button = sender as? UIBarButtonItem
-		button?.title = editing ? NSLocalizedString("Done", comment: "") : NSLocalizedString("Edit", comment: "")
-		button?.style = editing ? .done : .plain
 	}
 
 	// Don't allow deleting the "Add Tag" row
