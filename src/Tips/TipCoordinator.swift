@@ -94,19 +94,25 @@ func configureTipsIfNeeded() {
 
 @available(iOS 17.0, *)
 extension UIViewController {
-	/// Present the first eligible tip from the list. One tip per appearance.
-	func showFirstTip(_ tips: [(any Tip, UIView?)]) {
+	/// Present each eligible tip in order, waiting for dismissal between them.
+	func showTips(_ tips: [(any Tip, UIView?)]) {
 		Task { @MainActor in
-			// TipKit's data store loads asynchronously after Tips.configure().
-			// shouldDisplayUpdates emits false during loading, then true once ready.
 			for (tip, view) in tips {
 				guard let view, view.window != nil else { continue }
+
+				// Wait for tip to become eligible (data store loads async).
+				// If the tip is invalidated the sequence completes and we skip it.
 				for await shouldDisplay in tip.shouldDisplayUpdates {
 					guard shouldDisplay else { continue }
-					guard presentedViewController == nil else { return }
-					present(TipUIPopoverViewController(tip, sourceItem: view), animated: true)
-					return
+					break
 				}
+				guard tip.shouldDisplay else { continue }
+
+				// Wait for any previous popover to be dismissed.
+				while presentedViewController != nil {
+					try? await Task.sleep(for: .milliseconds(200))
+				}
+				present(TipUIPopoverViewController(tip, sourceItem: view), animated: true)
 			}
 		}
 	}

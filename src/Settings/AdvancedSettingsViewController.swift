@@ -55,7 +55,7 @@ class AdvancedSettingsViewController: TableViewControllerMac, UIAdaptivePresenta
 		super.viewDidAppear(animated)
 
 		if #available(iOS 17.0, *) {
-			showFirstTip([(AppTips.alternateServer, hostnameButton)])
+			showTips([(AppTips.alternateServer, hostnameButton)])
 		}
 	}
 
