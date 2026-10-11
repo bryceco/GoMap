@@ -13,11 +13,11 @@ struct AppTip: Tip {
 
 	var options: [TipOption] { [Tips.MaxDisplayCount(1)] }
 
-	init(title: String, message: String, symbol: String) {
+	init(title: String, message: String, image: Image? = nil) {
 		self.id = title
 		self.title = Text(title)
 		self.message = Text(message)
-		self.image = Image(systemName: symbol)
+		self.image = image
 	}
 }
 
@@ -27,31 +27,27 @@ struct AppTip: Tip {
 enum AppTips {
 	static let location = AppTip(title: "Re-center the map",
 	                             message: "Tap once to jump to your location and again to follow your heading.",
-	                             symbol: "location.circle")
+	                             image: Image(systemName: "location"))
 	static let orientation = AppTip(title: "Stay oriented",
 	                                message: "Use the compass to switch between north-up and heading-up views.",
-	                                symbol: "location.north.line")
+	                                image: Image(uiImage: UIImage(named: "temaki-compass")!.withRenderingMode(.alwaysTemplate)))
 	static let search = AppTip(title: "Find places quickly",
 	                           message: "Search for addresses, places, and presets without leaving the map.",
-	                           symbol: "magnifyingglass")
+	                           image: Image(systemName: "magnifyingglass"))
 	static let mapLayers = AppTip(title: "Switch map layers",
 	                              message: "Tap for display options or long-press to pick recent imagery.",
-	                              symbol: "square.stack.3d.up")
+	                              image: Image(systemName: "map"))
 	static let addButton = AppTip(title: "Add features faster",
 	                              message: "Tap to add at the crosshairs or drag and long-press for precise placement.",
-	                              symbol: "plus.circle")
+	                              image: Image(systemName: "plus"))
 	static let gpxTraces = AppTip(title: "Record GPX traces",
-	                              message: "Keep the switch on to capture or review your GPS tracks while you map.",
-	                              symbol: "map")
+	                              message: "Keep the switch on to capture or review your GPS tracks while you map.")
 	static let quests = AppTip(title: "Tackle quests",
-	                           message: "Show quests to discover nearby tasks contributed by the community.",
-	                           symbol: "flag")
+	                           message: "Show quests to discover nearby tasks contributed by the community.")
 	static let dataLayers = AppTip(title: "Overlay more data",
-	                               message: "Enable data layers to compare third-party maps and QA overlays while editing.",
-	                               symbol: "square.grid.3x2")
+	                               message: "Enable data layers to compare third-party maps and QA overlays while editing.")
 	static let alternateServer = AppTip(title: "Map beyond OSM",
-	                                    message: "Pick OpenHistoricalMap or OpenGeofiction to contribute to other communities.",
-	                                    symbol: "globe")
+	                                    message: "Pick OpenHistoricalMap or OpenGeofiction to contribute to other communities.")
 }
 
 // MARK: - Configuration
