@@ -92,22 +92,30 @@ extension UIViewController {
 				while presentedViewController != nil {
 					try? await Task.sleep(for: .milliseconds(200))
 				}
-				// Anchor at the view's inner edge so the arrow points to the
-				// border rather than the center of the button.
-				let guide = UILayoutGuide()
-				view.addLayoutGuide(guide)
-				let onRight = view.frame.midX > (view.superview?.bounds.midX ?? 0)
-				NSLayoutConstraint.activate([
-					guide.topAnchor.constraint(equalTo: view.topAnchor),
-					guide.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-					guide.widthAnchor.constraint(equalToConstant: 1),
-					onRight
-						? guide.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-						: guide.trailingAnchor.constraint(equalTo: view.trailingAnchor)
-				])
-				view.layoutIfNeeded()
-				present(TipUIPopoverViewController(tip, sourceItem: guide), animated: true)
+
+				let anchor = tipAnchor(for: view)
+				let popover = TipUIPopoverViewController(tip, sourceItem: view)
+				popover.popoverPresentationController?.sourceRect = anchor.rect
+				popover.popoverPresentationController?.permittedArrowDirections = anchor.arrow
+				present(popover, animated: true)
 			}
+		}
+	}
+}
+
+@available(iOS 17.0, *)
+extension UIViewController {
+	/// Anchor on the edge of `view` that faces away from the nearest screen edge,
+	/// and force the matching arrow, so the arrow touches the button's border.
+	private func tipAnchor(for view: UIView) -> (rect: CGRect, arrow: UIPopoverArrowDirection) {
+		let f = view.convert(view.bounds, to: self.view)
+		let b = view.bounds
+		if f.midY > self.view.bounds.midY {
+			// lower half of screen: popover above, arrow touches the top edge
+			return (CGRect(x: b.minX, y: b.minY, width: b.width, height: 1), .down)
+		} else {
+			// upper half: popover below, arrow touches the bottom edge
+			return (CGRect(x: b.minX, y: b.maxY - 1, width: b.width, height: 1), .up)
 		}
 	}
 }
