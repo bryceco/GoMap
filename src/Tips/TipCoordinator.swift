@@ -112,7 +112,21 @@ extension UIViewController {
 				while presentedViewController != nil {
 					try? await Task.sleep(for: .milliseconds(200))
 				}
-				present(TipUIPopoverViewController(tip, sourceItem: view), animated: true)
+				// Anchor at the view's inner edge so the arrow points to the
+				// border rather than the center of the button.
+				let guide = UILayoutGuide()
+				view.addLayoutGuide(guide)
+				let onRight = view.frame.midX > (view.superview?.bounds.midX ?? 0)
+				NSLayoutConstraint.activate([
+					guide.topAnchor.constraint(equalTo: view.topAnchor),
+					guide.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+					guide.widthAnchor.constraint(equalToConstant: 1),
+					onRight
+						? guide.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+						: guide.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+				])
+				view.layoutIfNeeded()
+				present(TipUIPopoverViewController(tip, sourceItem: guide), animated: true)
 			}
 		}
 	}
