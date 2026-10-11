@@ -13,8 +13,8 @@ struct AppTip: Tip {
 
 	var options: [TipOption] { [Tips.MaxDisplayCount(1)] }
 
-	init(_ id: String, _ title: String, _ message: String, symbol: String) {
-		self.id = id
+	init(title: String, message: String, symbol: String) {
+		self.id = title
 		self.title = Text(title)
 		self.message = Text(message)
 		self.image = Image(systemName: symbol)
@@ -25,42 +25,33 @@ struct AppTip: Tip {
 
 @available(iOS 17.0, *)
 enum AppTips {
-	static let location = AppTip("location",
-		"Re-center the map",
-		"Tap once to jump to your location and again to follow your heading.",
-		symbol: "location.circle")
-	static let orientation = AppTip("orientation",
-		"Stay oriented",
-		"Use the compass to switch between north-up and heading-up views.",
-		symbol: "location.north.line")
-	static let search = AppTip("search",
-		"Find places quickly",
-		"Search for addresses, places, and presets without leaving the map.",
-		symbol: "magnifyingglass")
-	static let mapLayers = AppTip("mapLayers",
-		"Switch map layers",
-		"Tap for display options or long-press to pick recent imagery.",
-		symbol: "square.stack.3d.up")
-	static let addButton = AppTip("addButton",
-		"Add features faster",
-		"Tap to add at the crosshairs or drag and long-press for precise placement.",
-		symbol: "plus.circle")
-	static let gpxTraces = AppTip("gpxTraces",
-		"Record GPX traces",
-		"Keep the switch on to capture or review your GPS tracks while you map.",
-		symbol: "map")
-	static let quests = AppTip("quests",
-		"Tackle quests",
-		"Show quests to discover nearby tasks contributed by the community.",
-		symbol: "flag")
-	static let dataLayers = AppTip("dataLayers",
-		"Overlay more data",
-		"Enable data layers to compare third-party maps and QA overlays while editing.",
-		symbol: "square.grid.3x2")
-	static let alternateServer = AppTip("alternateServer",
-		"Map beyond OSM",
-		"Pick OpenHistoricalMap or OpenGeofiction to contribute to other communities.",
-		symbol: "globe")
+	static let location = AppTip(title: "Re-center the map",
+	                             message: "Tap once to jump to your location and again to follow your heading.",
+	                             symbol: "location.circle")
+	static let orientation = AppTip(title: "Stay oriented",
+	                                message: "Use the compass to switch between north-up and heading-up views.",
+	                                symbol: "location.north.line")
+	static let search = AppTip(title: "Find places quickly",
+	                           message: "Search for addresses, places, and presets without leaving the map.",
+	                           symbol: "magnifyingglass")
+	static let mapLayers = AppTip(title: "Switch map layers",
+	                              message: "Tap for display options or long-press to pick recent imagery.",
+	                              symbol: "square.stack.3d.up")
+	static let addButton = AppTip(title: "Add features faster",
+	                              message: "Tap to add at the crosshairs or drag and long-press for precise placement.",
+	                              symbol: "plus.circle")
+	static let gpxTraces = AppTip(title: "Record GPX traces",
+	                              message: "Keep the switch on to capture or review your GPS tracks while you map.",
+	                              symbol: "map")
+	static let quests = AppTip(title: "Tackle quests",
+	                           message: "Show quests to discover nearby tasks contributed by the community.",
+	                           symbol: "flag")
+	static let dataLayers = AppTip(title: "Overlay more data",
+	                               message: "Enable data layers to compare third-party maps and QA overlays while editing.",
+	                               symbol: "square.grid.3x2")
+	static let alternateServer = AppTip(title: "Map beyond OSM",
+	                                    message: "Pick OpenHistoricalMap or OpenGeofiction to contribute to other communities.",
+	                                    symbol: "globe")
 }
 
 // MARK: - Configuration
