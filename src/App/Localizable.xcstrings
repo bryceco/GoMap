@@ -19142,6 +19142,9 @@
         }
       }
     },
+    "Add features faster" : {
+
+    },
     "Add Highway Surface" : {
       "comment" : "A type of quest",
       "localizations" : {
@@ -34221,6 +34224,9 @@
         }
       }
     },
+    "Enable data layers to compare third-party maps and QA overlays while editing." : {
+
+    },
     "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" : {
       "localizations" : {
         "ar" : {
@@ -35465,6 +35471,9 @@
           }
         }
       }
+    },
+    "Find places quickly" : {
+
     },
     "ft" : {
       "comment" : "Height or width in feet, please abbreviate",
@@ -38201,6 +38210,9 @@
     "Keep" : {
       "comment" : "Keep the tag value\nTag value will be kept"
     },
+    "Keep the switch on to capture or review your GPS tracks while you map." : {
+
+    },
     "Key = value" : {
       "comment" : "Menu item adding a quest filter condition",
       "localizations" : {
@@ -40746,6 +40758,9 @@
     },
     "Map" : {
       "comment" : "Map menu in Mac menu bar"
+    },
+    "Map beyond OSM" : {
+
     },
     "Map Tiles" : {
       "comment" : "Delete cached data",
@@ -49119,6 +49134,9 @@
         }
       }
     },
+    "Overlay more data" : {
+
+    },
     "Paste" : {
       "comment" : "Edit action",
       "localizations" : {
@@ -51069,6 +51087,9 @@
         }
       }
     },
+    "Pick OpenHistoricalMap or OpenGeofiction to contribute to other communities." : {
+
+    },
     "Please wait" : {
       "localizations" : {
         "ar" : {
@@ -52416,6 +52437,9 @@
         }
       }
     },
+    "Re-center the map" : {
+
+    },
     "Read more on the Wiki" : {
 
     },
@@ -52555,6 +52579,9 @@
           }
         }
       }
+    },
+    "Record GPX traces" : {
+
     },
     "Redo" : {
       "localizations" : {
@@ -55354,6 +55381,9 @@
         }
       }
     },
+    "Search for addresses, places, and presets without leaving the map." : {
+
+    },
     "Select a highway approaching the intersection" : {
       "localizations" : {
         "ar" : {
@@ -56669,6 +56699,9 @@
         }
       }
     },
+    "Show quests to discover nearby tasks contributed by the community." : {
+
+    },
     "Show Recent Items" : {
       "localizations" : {
         "ar" : {
@@ -57909,6 +57942,9 @@
         }
       }
     },
+    "Stay oriented" : {
+
+    },
     "Stop" : {
       "localizations" : {
         "ar" : {
@@ -58488,6 +58524,9 @@
         }
       }
     },
+    "Switch map layers" : {
+
+    },
     "t" : {
       "comment" : "Weight in metric tons, please abbreviate",
       "localizations" : {
@@ -58570,6 +58609,9 @@
           }
         }
       }
+    },
+    "Tackle quests" : {
+
     },
     "Tag Key" : {
       "localizations" : {
@@ -58939,6 +58981,15 @@
           }
         }
       }
+    },
+    "Tap for display options or long-press to pick recent imagery." : {
+
+    },
+    "Tap once to jump to your location and again to follow your heading." : {
+
+    },
+    "Tap to add at the crosshairs or drag and long-press for precise placement." : {
+
     },
     "Target node" : {
       "comment" : "Column header: tags on the node dragged onto"
@@ -65027,6 +65078,9 @@
           }
         }
       }
+    },
+    "Use the compass to switch between north-up and heading-up views." : {
+
     },
     "User" : {
       "comment" : "OSM user name",

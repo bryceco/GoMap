@@ -452,6 +452,16 @@ final class MainViewController: UIViewController, DPadDelegate,
 			// If the current imagery doesn't cover this location switch to Bing.
 			promptForBetterBackgroundImagery()
 		}
+
+		if #available(iOS 17.0, *) {
+			showFirstTip([
+				(AppTips.location, locationButton),
+				(AppTips.orientation, compassButton),
+				(AppTips.search, searchButton),
+				(AppTips.mapLayers, displayButton),
+				(AppTips.addButton, addNodeButton)
+			])
+		}
 	}
 
 	func setupAccessibility() {

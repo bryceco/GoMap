@@ -104,6 +104,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// access the current OSM server to force capabilities download
 		_ = OSM_SERVER
+		configureTipsIfNeeded()
 		return true
 	}
 

@@ -156,6 +156,7 @@
 		02AF69142F2B53A70000ABA2 /* OsmMapDataArchiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AF69132F2B53A70000ABA2 /* OsmMapDataArchiver.swift */; };
 		02AFBF242458C1E800BE43F4 /* BingPlaceholderImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */; };
 		02B2E25E2C3F3DC600815F08 /* DarkModeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B2E25D2C3F3DC600815F08 /* DarkModeImage.swift */; };
+		02B3AC62307B3D4F001380CC /* TipCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B3AC61307B3D4F001380CC /* TipCoordinator.swift */; };
 		02B5669D294F9D7E00710632 /* MagnifyingGlass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */; };
 		02B5669F294FDCF200710632 /* CrossHairsLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B5669E294FDCF200710632 /* CrossHairsLayer.swift */; };
 		02BB355B29B6757C00FB52E5 /* NsiLogoDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02BB355A29B6757C00FB52E5 /* NsiLogoDatabase.swift */; };
@@ -536,6 +537,7 @@
 		02AF69132F2B53A70000ABA2 /* OsmMapDataArchiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmMapDataArchiver.swift; sourceTree = "<group>"; };
 		02AFBF232458C1E700BE43F4 /* BingPlaceholderImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = BingPlaceholderImage.png; path = Shared/BingPlaceholderImage.png; sourceTree = "<group>"; };
 		02B2E25D2C3F3DC600815F08 /* DarkModeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeImage.swift; sourceTree = "<group>"; };
+		02B3AC61307B3D4F001380CC /* TipCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipCoordinator.swift; sourceTree = "<group>"; };
 		02B5669C294F9D7E00710632 /* MagnifyingGlass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagnifyingGlass.swift; sourceTree = "<group>"; };
 		02B5669E294FDCF200710632 /* CrossHairsLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrossHairsLayer.swift; sourceTree = "<group>"; };
 		02B6BE9B245D19B8004E4DAC /* EsriPlaceholderImage.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = EsriPlaceholderImage.jpg; path = Shared/EsriPlaceholderImage.jpg; sourceTree = "<group>"; };
@@ -964,6 +966,7 @@
 				02ACBCFF16713F7F00BB4414 /* Shared */,
 				022114FB2E6CDCF800D76061 /* TurnRestrictions */,
 				647C150D24268DB7008A9366 /* Upload */,
+				02B3AC60307B3D2F001380CC /* Tips */,
 			);
 			name = GoMap;
 			sourceTree = "<group>";
@@ -1030,6 +1033,14 @@
 				02608623305005F1000D7FA7 /* BlinkOverlay.swift */,
 			);
 			name = Shared;
+			sourceTree = "<group>";
+		};
+		02B3AC60307B3D2F001380CC /* Tips */ = {
+			isa = PBXGroup;
+			children = (
+				02B3AC61307B3D4F001380CC /* TipCoordinator.swift */,
+			);
+			path = Tips;
 			sourceTree = "<group>";
 		};
 		02B52E7828CAA8F800CB55F3 /* CustomViews */ = {
@@ -1707,6 +1718,7 @@
 				02A59EE92981D75700B0A676 /* OAuth2.swift in Sources */,
 				02C35E162F12E0AF00BE5948 /* MapViewPort.swift in Sources */,
 				02572B732F10D8C400216EE3 /* MessageDisplay.swift in Sources */,
+				02B3AC62307B3D4F001380CC /* TipCoordinator.swift in Sources */,
 				02969EBA2DF630A6003BA34A /* Array+Extension.swift in Sources */,
 				02505C5929A52EA80078D60D /* QuestDefinitionWithFilters.swift in Sources */,
 				02024EBC2FD4F09900B9BF09 /* KeyboardToolbar.swift in Sources */,

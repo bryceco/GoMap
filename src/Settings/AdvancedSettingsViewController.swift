@@ -51,6 +51,14 @@ class AdvancedSettingsViewController: TableViewControllerMac, UIAdaptivePresenta
 		switchMaxFPS.isOn = UserPrefs.shared.maximizeFrameRate.value ?? false
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		if #available(iOS 17.0, *) {
+			showFirstTip([(AppTips.alternateServer, hostnameButton)])
+		}
+	}
+
 	func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
 		guard
 			let server = OsmServer.serverForUrl(string: hostname.text!)
