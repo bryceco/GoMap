@@ -329,18 +329,30 @@ extension EditorMapLayer {
 			let dragWay = selectedWay
 			var segment = -1
 			let hit = hitTestDragConnection(for: dragNode, segment: &segment)
-			if var hit = hit as? OsmNode {
+			if let hit = hit as? OsmNode {
 				// replace dragged node with hit node
 				do {
 					let merge = try mapData.canMerge(dragNode, into: hit)
-					hit = merge()
-					if dragWay.isArea() {
-						selectedNode = nil
-						let pt = viewPort.mapTransform.screenPoint(forLatLon: hit.latLon, birdsEye: true)
-						owner.placePushpin(at: pt, object: dragWay)
-					} else {
-						selectedNode = hit
-						owner.placePushpinForSelection(at: nil)
+					let survivor = merge()
+					finishNodeMerge(survivor: survivor, dragWay: dragWay)
+				} catch let OsmMapData.EditError.tagConflict(current, incoming, finishMerge) {
+					// Structural checks passed but tags conflict — let user resolve
+					let model = TagMergeModel(current: current, incoming: incoming)
+					guard let presenter = display.topViewController else { return }
+					TagMergeView.present(from: presenter,
+					                     model: model,
+					                     source: .nodeDrag,
+					                     objectName: hit.friendlyDescription())
+					{ [self] tags in
+						if let tags {
+							let survivor = finishMerge(tags)
+							finishNodeMerge(survivor: survivor, dragWay: dragWay)
+						} else {
+							// User cancelled — undo the drag to snap the node back
+							mapData.undo()
+							mapData.removeMostRecentRedo()
+							setNeedsLayout()
+						}
 					}
 				} catch {
 					display.showAlert(error.localizedDescription, message: nil)
@@ -396,6 +408,18 @@ extension EditorMapLayer {
 			                                  }))
 			presentAlert(alert: alertMove, location: .none)
 		}
+	}
+
+	private func finishNodeMerge(survivor: OsmNode, dragWay: OsmWay) {
+		if dragWay.isArea() {
+			selectedNode = nil
+			let pt = viewPort.mapTransform.screenPoint(forLatLon: survivor.latLon, birdsEye: true)
+			owner.placePushpin(at: pt, object: dragWay)
+		} else {
+			selectedNode = survivor
+			owner.placePushpinForSelection(at: nil)
+		}
+		setNeedsLayout()
 	}
 
 	func hitTestDragConnection(for node: OsmNode, segment: inout Int) -> OsmBaseObject? {

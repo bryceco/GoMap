@@ -18,10 +18,15 @@ extension OsmMapData {
 
 	enum EditError: LocalizedError {
 		case text(String)
+		/// Tag conflict during node merge. Carries the two tag sets and a closure
+		/// that completes the merge when given resolved tags.
+		case tagConflict(current: [String: String], incoming: [String: String],
+		                 finishMerge: ([String: String]) -> OsmNode)
 
 		public var errorDescription: String? {
 			switch self {
 			case let .text(text): return text
+			case .tagConflict: return NSLocalizedString("The merged nodes contain conflicting tags", comment: "")
 			}
 		}
 	}
@@ -310,14 +315,6 @@ extension OsmMapData {
 
 	// used when dragging a node into another node
 	func canMerge(_ node1: OsmNode, into node2: OsmNode) throws -> EditActionReturnNode {
-		guard let mergedTags = OsmTags.Merge(
-			ourTags: node1.tags,
-			otherTags: node2.tags,
-			allowConflicts: false)
-		else {
-			throw EditError.text(NSLocalizedString("The merged nodes contain conflicting tags", comment: ""))
-		}
-
 		let survivor: OsmNode
 		if node1.ident < 0 {
 			survivor = node2
@@ -486,13 +483,13 @@ extension OsmMapData {
 			}
 		}
 
-		return { [self] in
+		let finishMerge: ([String: String]) -> OsmNode = { [self] resolvedTags in
 			if survivor == node1 {
 				// update survivor to have location of other node
 				setLatLon(node2.latLon, forNode: survivor)
 			}
 
-			setTags(mergedTags, for: survivor)
+			setTags(resolvedTags, for: survivor)
 
 			// need to replace the node in all objects everywhere
 			for (_, way) in ways {
@@ -512,6 +509,18 @@ extension OsmMapData {
 			}
 			deleteNodeUnsafe(deadNode)
 			return survivor
+		}
+
+		// Check for tag conflicts after structural validation passes
+		if let mergedTags = OsmTags.Merge(ourTags: node1.tags, otherTags: node2.tags, allowConflicts: false) {
+			// No conflicts — return a simple closure
+			return { finishMerge(mergedTags) }
+		} else {
+			// Tags conflict — throw with enough context for the UI to resolve
+			throw EditError.tagConflict(
+				current: survivor.tags,
+				incoming: deadNode.tags,
+				finishMerge: finishMerge)
 		}
 	}
 

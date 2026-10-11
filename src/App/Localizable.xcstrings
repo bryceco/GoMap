@@ -41373,10 +41373,9 @@
       }
     },
     "Members can't be added to this type of relation" : {
-
     },
     "Members can't be removed from this type of relation" : {
-
+    },
     "Merge All" : {
       "comment" : "Accept all incoming tags, keep the rest"
     },

@@ -14,8 +14,7 @@ enum TagMergeSource {
 	case paste
 	case nodeDrag
 
-	/// A node drag has already happened, so it can't be cancelled from here.
-	var allowsCancel: Bool { self == .paste }
+	var allowsCancel: Bool { true }
 
 	var subtitleFormat: String {
 		switch self {
