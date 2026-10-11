@@ -4,17 +4,17 @@ import UIKit
 
 // MARK: - Tip definition
 
-/// Generic tip whose phantom `Tag` type gives each specialisation a unique
-/// identity in TipKit's data store.
 @available(iOS 17.0, *)
-struct AppTip<Tag>: Tip {
+struct AppTip: Tip {
+	let id: String
 	let title: Text
 	let message: Text?
 	let image: Image?
 
 	var options: [TipOption] { [Tips.MaxDisplayCount(1)] }
 
-	init(_ title: String, _ message: String, symbol: String) {
+	init(_ id: String, _ title: String, _ message: String, symbol: String) {
+		self.id = id
 		self.title = Text(title)
 		self.message = Text(message)
 		self.image = Image(systemName: symbol)
@@ -25,50 +25,39 @@ struct AppTip<Tag>: Tip {
 
 @available(iOS 17.0, *)
 enum AppTips {
-	// Phantom tag types — each makes AppTip<T> a distinct Tip for TipKit.
-	enum Location {}
-	enum Orientation {}
-	enum Search {}
-	enum MapLayers {}
-	enum AddButton {}
-	enum GpxTraces {}
-	enum Quests {}
-	enum DataLayers {}
-	enum AlternateServer {}
-
-	static let location = AppTip<Location>(
+	static let location = AppTip("location",
 		"Re-center the map",
 		"Tap once to jump to your location and again to follow your heading.",
 		symbol: "location.circle")
-	static let orientation = AppTip<Orientation>(
+	static let orientation = AppTip("orientation",
 		"Stay oriented",
 		"Use the compass to switch between north-up and heading-up views.",
 		symbol: "location.north.line")
-	static let search = AppTip<Search>(
+	static let search = AppTip("search",
 		"Find places quickly",
 		"Search for addresses, places, and presets without leaving the map.",
 		symbol: "magnifyingglass")
-	static let mapLayers = AppTip<MapLayers>(
+	static let mapLayers = AppTip("mapLayers",
 		"Switch map layers",
 		"Tap for display options or long-press to pick recent imagery.",
 		symbol: "square.stack.3d.up")
-	static let addButton = AppTip<AddButton>(
+	static let addButton = AppTip("addButton",
 		"Add features faster",
 		"Tap to add at the crosshairs or drag and long-press for precise placement.",
 		symbol: "plus.circle")
-	static let gpxTraces = AppTip<GpxTraces>(
+	static let gpxTraces = AppTip("gpxTraces",
 		"Record GPX traces",
 		"Keep the switch on to capture or review your GPS tracks while you map.",
 		symbol: "map")
-	static let quests = AppTip<Quests>(
+	static let quests = AppTip("quests",
 		"Tackle quests",
 		"Show quests to discover nearby tasks contributed by the community.",
 		symbol: "flag")
-	static let dataLayers = AppTip<DataLayers>(
+	static let dataLayers = AppTip("dataLayers",
 		"Overlay more data",
 		"Enable data layers to compare third-party maps and QA overlays while editing.",
 		symbol: "square.grid.3x2")
-	static let alternateServer = AppTip<AlternateServer>(
+	static let alternateServer = AppTip("alternateServer",
 		"Map beyond OSM",
 		"Pick OpenHistoricalMap or OpenGeofiction to contribute to other communities.",
 		symbol: "globe")
