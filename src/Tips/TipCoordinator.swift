@@ -10,14 +10,16 @@ struct AppTip: Tip {
 	let title: Text
 	let message: Text?
 	let image: Image?
+	let rules: [Rule]
 
 	var options: [TipOption] { [Tips.MaxDisplayCount(1)] }
 
-	init(title: String, message: String, image: Image? = nil) {
+	init(title: String, message: String, image: Image? = nil, rules: [Rule] = []) {
 		self.id = title
 		self.title = Text(title)
 		self.message = Text(message)
 		self.image = image
+		self.rules = rules
 	}
 }
 
@@ -85,7 +87,7 @@ extension UIViewController {
 				guard tip.shouldDisplay else { continue }
 
 				// Wait for any previous popover to be dismissed.
-				while presentedViewController != nil {
+				while view.isHidden || presentedViewController != nil {
 					try? await Task.sleep(for: .milliseconds(200))
 				}
 
