@@ -131,6 +131,18 @@ class DisplayViewController: UITableViewController {
 		setButtonLayoutTitle()
 	}
 
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+
+		if #available(iOS 17.0, *) {
+			showFirstTip([
+				(AppTips.gpxTraces, gpxLoggingSwitch),
+				(AppTips.quests, questsSwitch),
+				(AppTips.dataLayers, dataOverlaySwitch)
+			])
+		}
+	}
+
 	override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell,
 	                        forRowAt indexPath: IndexPath)
 	{

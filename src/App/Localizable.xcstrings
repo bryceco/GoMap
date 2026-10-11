@@ -19092,6 +19092,9 @@
     "Add Cuisine" : {
       "comment" : "Sample title for a Quest"
     },
+    "Add features faster" : {
+
+    },
     "Add Highway Surface" : {
       "comment" : "A type of quest",
       "localizations" : {
@@ -33944,6 +33947,9 @@
     "Empty tag value is not permitted" : {
       "comment" : "Quest validation error"
     },
+    "Enable data layers to compare third-party maps and QA overlays while editing." : {
+
+    },
     "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" : {
       "localizations" : {
         "ar" : {
@@ -35166,6 +35172,9 @@
           }
         }
       }
+    },
+    "Find places quickly" : {
+
     },
     "ft" : {
       "comment" : "Height or width in feet, please abbreviate",
@@ -37877,6 +37886,9 @@
         }
       }
     },
+    "Keep the switch on to capture or review your GPS tracks while you map." : {
+
+    },
     "Key = value" : {
       "comment" : "Menu item adding a quest filter condition"
     },
@@ -40363,6 +40375,9 @@
           }
         }
       }
+    },
+    "Map beyond OSM" : {
+
     },
     "Map Tiles" : {
       "comment" : "Delete cached data",
@@ -48543,6 +48558,9 @@
         }
       }
     },
+    "Overlay more data" : {
+
+    },
     "Paste" : {
       "comment" : "Edit action",
       "localizations" : {
@@ -50480,6 +50498,9 @@
         }
       }
     },
+    "Pick OpenHistoricalMap or OpenGeofiction to contribute to other communities." : {
+
+    },
     "Please wait" : {
       "localizations" : {
         "ar" : {
@@ -51820,6 +51841,9 @@
         }
       }
     },
+    "Re-center the map" : {
+
+    },
     "Recent Aerial Imagery" : {
       "comment" : "Alert title message",
       "localizations" : {
@@ -51956,6 +51980,9 @@
           }
         }
       }
+    },
+    "Record GPX traces" : {
+
     },
     "Redo" : {
       "localizations" : {
@@ -54671,6 +54698,9 @@
         }
       }
     },
+    "Search for addresses, places, and presets without leaving the map." : {
+
+    },
     "Select a highway approaching the intersection" : {
       "localizations" : {
         "ar" : {
@@ -55975,6 +56005,9 @@
         }
       }
     },
+    "Show quests to discover nearby tasks contributed by the community." : {
+
+    },
     "Show Recent Items" : {
       "localizations" : {
         "ar" : {
@@ -57185,6 +57218,9 @@
         }
       }
     },
+    "Stay oriented" : {
+
+    },
     "Stop" : {
       "localizations" : {
         "ar" : {
@@ -57764,6 +57800,9 @@
         }
       }
     },
+    "Switch map layers" : {
+
+    },
     "t" : {
       "comment" : "Weight in metric tons, please abbreviate",
       "localizations" : {
@@ -57846,6 +57885,9 @@
           }
         }
       }
+    },
+    "Tackle quests" : {
+
     },
     "Tag Key" : {
       "localizations" : {
@@ -58206,6 +58248,15 @@
           }
         }
       }
+    },
+    "Tap for display options or long-press to pick recent imagery." : {
+
+    },
+    "Tap once to jump to your location and again to follow your heading." : {
+
+    },
+    "Tap to add at the crosshairs or drag and long-press for precise placement." : {
+
     },
     "The + button can be positioned on either the left or right side of the screen" : {
       "localizations" : {
@@ -64366,6 +64417,9 @@
           }
         }
       }
+    },
+    "Use the compass to switch between north-up and heading-up views." : {
+
     },
     "User" : {
       "comment" : "OSM user name",
