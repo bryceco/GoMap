@@ -454,7 +454,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		if #available(iOS 17.0, *) {
-			showFirstTip([
+			showTips([
 				(AppTips.location, locationButton),
 				(AppTips.orientation, compassButton),
 				(AppTips.search, searchButton),

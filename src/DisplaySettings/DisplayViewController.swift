@@ -135,7 +135,7 @@ class DisplayViewController: UITableViewController {
 		super.viewDidAppear(animated)
 
 		if #available(iOS 17.0, *) {
-			showFirstTip([
+			showTips([
 				(AppTips.gpxTraces, gpxLoggingSwitch),
 				(AppTips.quests, questsSwitch),
 				(AppTips.dataLayers, dataOverlaySwitch)
