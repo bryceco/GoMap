@@ -32660,6 +32660,9 @@
         }
       }
     },
+    "Download all members" : {
+      "comment" : "Button to download the members of a relation"
+    },
     "Downloaded nodes, ways and relations, and any edits you have made." : {
       "localizations" : {
         "cs" : {
@@ -52406,6 +52409,12 @@
           }
         }
       }
+    },
+    "Relation Member" : {
+      "comment" : "Title of the page listing the relations an object is a member of"
+    },
+    "Relation Members" : {
+      "comment" : "Title of the page listing the members of a relation"
     },
     "Relation Tags" : {
       "localizations" : {

@@ -9,29 +9,6 @@
 import SwiftUI
 import UIKit
 
-extension PresetsDatabase {
-	/// The feature describing the member roles of a relation with the given tags, if there is one.
-	func relationFeature(forTags tags: [String: String],
-	                     geometry: GEOMETRY,
-	                     location: RegionInfoForLocation) -> PresetFeature?
-	{
-		if let feature = presetFeatureMatching(tags: tags, geometry: geometry, location: location, includeNSI: false),
-		   feature.relation != nil
-		{
-			return feature
-		}
-		// A multipolygon tagged as a forest matches the forest feature,
-		// which doesn't know about roles, so fall back to the relation type.
-		if let type = tags["type"],
-		   let feature = presetFeatureForFeatureID("type/\(type)"),
-		   feature.relation != nil
-		{
-			return feature
-		}
-		return nil
-	}
-}
-
 extension PresetRelationMemberRole {
 	/// Whether an object has the geometry and tags expected for this role
 	func accepts(_ object: OsmBaseObject) -> Bool {
@@ -67,9 +44,8 @@ struct RelationRoleGroup: Identifiable {
 		let isExpected: Bool // geometry and tags are appropriate for the role
 
 		var object: OsmBaseObject? { member.obj } // nil if not downloaded
-		var title: String {
-			return member.obj?.friendlyDescriptionWithDetails() ?? "\(member.type.string) \(member.ref)"
-		}
+		var identifier: String { "\(member.type.string) \(member.ref)" } // "way 123"
+		var name: String? { member.obj?.friendlyDescription() }
 	}
 
 	let role: String // the OSM role, which may be empty
@@ -134,9 +110,10 @@ struct RelationMembership: Identifiable {
 	{
 		var list: [RelationMembership] = []
 		for relation in relations {
-			let feature = PresetsDatabase.shared.relationFeature(forTags: relation.tags,
-			                                                     geometry: relation.geometry(),
-			                                                     location: location)
+			let feature = PresetsDatabase.shared.presetFeatureMatching(tags: relation.tags,
+			                                                           geometry: .RELATION,
+			                                                           location: location,
+			                                                           includeNSI: false)
 			// an object can be in the same relation more than once
 			for member in relation.members where member.obj === object {
 				list.append(RelationMembership(id: list.count,
@@ -150,16 +127,31 @@ struct RelationMembership: Identifiable {
 
 @available(iOS 15.0, *)
 struct POIRelationsView: View {
+	var featureType: String? // localized name of the selected object's feature
+	var name: String? // name of the selected object
 	var groups: [RelationRoleGroup] = []
 	var memberships: [RelationMembership] = []
 	var onSelect: (OsmBaseObject) -> Void = { _ in }
+	var onDownload: (() async -> Void)? // nil if all members are downloaded
+	@State private var isDownloading = false
 
 	var body: some View {
 		List {
+			// identify the selected object the same way Common Tags does
+			if featureType != nil || name != nil {
+				Section {
+					if let featureType {
+						infoRow(NSLocalizedString("Type", comment: "The 'Type' header in Common Tags"), featureType)
+					}
+					if let name {
+						infoRow(PresetsDatabase.shared.presetFields["name"]?.localizedLabel ?? "Name", name)
+					}
+				}
+			}
 			ForEach(groups) { group in
 				Section {
 					ForEach(group.members) { member in
-						row(title: member.title,
+						row(title: memberTitle(member),
 						    object: member.object,
 						    detail: member.isExpected
 						    	? nil
@@ -174,9 +166,7 @@ struct POIRelationsView: View {
 				} header: {
 					header(for: group)
 				} footer: {
-					if group.id == groups.last?.id,
-					   groups.contains(where: { $0.members.contains(where: { $0.object == nil }) })
-					{
+					if group.id == groups.last?.id, onDownload != nil {
 						// same text as All Tags
 						Text(NSLocalizedString(
 							"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'.",
@@ -184,10 +174,30 @@ struct POIRelationsView: View {
 					}
 				}
 			}
+			if let onDownload {
+				Section {
+					Button(action: {
+						isDownloading = true
+						Task {
+							await onDownload()
+							isDownloading = false
+						}
+					}, label: {
+						HStack {
+							Text("Download all members", comment: "Button to download the members of a relation")
+							Spacer()
+							if isDownloading {
+								ProgressView()
+							}
+						}
+					})
+					.disabled(isDownloading)
+				}
+			}
 			if !memberships.isEmpty {
 				Section(header: Text("Member of", comment: "Header for the relations an object belongs to")) {
 					ForEach(memberships) { membership in
-						row(title: membership.relation.friendlyDescriptionWithDetails(),
+						row(title: Text(verbatim: membership.relation.friendlyDescriptionWithDetails()),
 						    object: membership.relation,
 						    detail: membership.roleLabel,
 						    isWarning: false)
@@ -196,6 +206,16 @@ struct POIRelationsView: View {
 			}
 		}
 		.listStyle(.grouped)
+	}
+
+	private func infoRow(_ label: String, _ value: String) -> some View {
+		HStack {
+			Text(verbatim: label)
+				.foregroundColor(.secondary)
+			Spacer()
+			Text(verbatim: value)
+				.multilineTextAlignment(.trailing)
+		}
 	}
 
 	private func header(for group: RelationRoleGroup) -> some View {
@@ -215,13 +235,23 @@ struct POIRelationsView: View {
 		.textCase(nil)
 	}
 
+	/// A member's identifier, such as "way 123", followed by its name if it's downloaded
+	private func memberTitle(_ member: RelationRoleGroup.Member) -> Text {
+		let identifier = Text(verbatim: member.identifier)
+		guard let name = member.name else {
+			return identifier
+		}
+		return identifier + Text(verbatim: "  " + name).foregroundColor(.secondary)
+	}
+
 	/// A row for an object we can navigate to, or one that isn't downloaded if object is nil
-	private func row(title: String, object: OsmBaseObject?, detail: String?, isWarning: Bool) -> some View {
+	private func row(title: Text, object: OsmBaseObject?, detail: String?, isWarning: Bool) -> some View {
 		Button(action: { if let object { onSelect(object) } }, label: {
 			HStack {
 				VStack(alignment: .leading, spacing: 2) {
-					Text(verbatim: title)
+					title
 						.foregroundColor(object == nil ? .secondary : .primary)
+						.multilineTextAlignment(.leading)
 					if let detail {
 						Text(verbatim: detail)
 							.font(.footnote)
@@ -245,8 +275,6 @@ struct POIRelationsView: View {
 class POIRelationsViewController: UIHostingController<POIRelationsView> {
 	convenience init() {
 		self.init(rootView: POIRelationsView())
-		navigationItem.title = NSLocalizedString("Relations",
-		                                         comment: "Title of the page listing relation members")
 		navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel,
 		                                                   target: self,
 		                                                   action: #selector(cancel(_:)))
@@ -257,7 +285,10 @@ class POIRelationsViewController: UIHostingController<POIRelationsView> {
 
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		refresh()
+	}
 
+	private func refresh() {
 		guard let tabController = tabBarController as? POITabBarController,
 		      let object = tabController.selection
 		else {
@@ -265,16 +296,35 @@ class POIRelationsViewController: UIHostingController<POIRelationsView> {
 		}
 		navigationItem.rightBarButtonItem?.isEnabled = tabController.isTagDictChanged()
 
-		// The tags may have been edited in another tab, which can change the roles we show
+		// The tags may have been edited in another tab, which can change the feature and its roles
+		let tags = tabController.keyValueDict
 		let location = AppDelegate.shared.mainView.currentRegion
+		// For a relation we want the relation type, such as Multipolygon, which also defines the roles.
+		// A multipolygon has area geometry and would otherwise match a feature like Forest.
+		let relation = object.isRelation()
+		let feature = PresetsDatabase.shared.presetFeatureMatching(
+			tags: tags,
+			geometry: relation != nil ? .RELATION : object.geometry(),
+			location: location,
+			includeNSI: false)
+		// Only relations have members. Other objects just list the relations they belong to.
 		var groups: [RelationRoleGroup] = []
-		if let relation = object.isRelation() {
-			let feature = PresetsDatabase.shared.relationFeature(forTags: tabController.keyValueDict,
-			                                                     geometry: relation.geometry(),
-			                                                     location: location)
+		var onDownload: (() async -> Void)?
+		if let relation {
 			groups = RelationRoleGroup.groups(for: relation, feature: feature)
+			if relation.members.contains(where: { $0.obj == nil }) {
+				onDownload = { [weak self] in await self?.downloadMembers(of: relation) }
+			}
+			navigationItem.title = NSLocalizedString("Relation Members",
+			                                         comment: "Title of the page listing the members of a relation")
+		} else {
+			navigationItem.title = NSLocalizedString(
+				"Relation Member",
+				comment: "Title of the page listing the relations an object is a member of")
 		}
 		rootView = POIRelationsView(
+			featureType: feature?.localizedName,
+			name: tags["name"],
 			groups: groups,
 			memberships: RelationMembership.memberships(of: object,
 			                                            in: tabController.relationList,
@@ -282,7 +332,23 @@ class POIRelationsViewController: UIHostingController<POIRelationsView> {
 			onSelect: { [weak tabController] object in
 				guard let tabController else { return }
 				tabController.switchSelection(to: object, currentTags: tabController.keyValueDict)
-			})
+			},
+			onDownload: onDownload)
+	}
+
+	private func downloadMembers(of relation: OsmRelation) async {
+		let mapView = AppDelegate.shared.mapView!
+		do {
+			try await mapView.mapData.downloadMembers(of: relation)
+		} catch {
+			let alert = UIAlertController(title: NSLocalizedString("Error", comment: ""),
+			                              message: error.localizedDescription,
+			                              preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+			present(alert, animated: true)
+		}
+		mapView.setNeedsLayout() // draw the new objects
+		refresh()
 	}
 
 	@objc func cancel(_ sender: Any?) {

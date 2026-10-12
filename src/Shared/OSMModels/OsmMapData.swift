@@ -682,6 +682,14 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 	}
 
+	/// Downloads a relation along with all of its members, including the nodes of member ways.
+	@MainActor
+	func downloadMembers(of relation: OsmRelation) async throws {
+		let url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/relation/\(relation.ident)/full")
+		let data = try await OsmDownloader.osmData(forUrl: url)
+		try await saveAndMerge(data)
+	}
+
 	func cancelCurrentDownloads() async {
 		if DownloadThreadPool.osmPool.downloadsInProgress() > 0 {
 			await DownloadThreadPool.osmPool.cancelAllDownloads()
