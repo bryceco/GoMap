@@ -53,14 +53,14 @@ class POITabBarController: UITabBarController {
 		   let selection,
 		   selection is OsmRelation || !relationList.isEmpty
 		{
-			// show relations page between All Tags and Attributes
+			// show relations page after the other tabs
 			let nav = UINavigationController(rootViewController: POIRelationsViewController())
 			nav.tabBarItem = UITabBarItem(
 				title: NSLocalizedString("Relations", comment: "Title of the page listing relation members"),
 				image: UIImage(systemName: "point.3.connected.trianglepath.dotted"),
 				selectedImage: nil)
-			viewControllers?.insert(nav, at: 2)
-			tabIDs.insert(.relations, at: 2)
+			viewControllers?.append(nav)
+			tabIDs.append(.relations)
 		}
 		selectedIndex = tabIDs.firstIndex(where: { $0.rawValue == UserPrefs.shared.poiTabIndex.value }) ?? 0
 
