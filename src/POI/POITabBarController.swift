@@ -14,6 +14,17 @@ class POITabBarController: UITabBarController {
 	var preservedFeatureTypeSearchText: String?
 	var allAutocompleteTagKeys: [String] = []
 
+	/// Identifies a tab when saving the user's preferred tab, since not all tabs are always present.
+	private enum TabID: Int {
+		case commonTags = 0
+		case allTags = 1
+		case attributes = 2
+		case relations = 3
+	}
+
+	/// The tabs that are present, in the order they're displayed
+	private var tabIDs: [TabID] = [.commonTags, .allTags, .attributes]
+
 #if targetEnvironment(macCatalyst)
 	/// One segmented control per tab, kept in sync, providing tab switching since the tab bar
 	/// doesn't render inside a macCatalyst modal window (iOS 26 Liquid Glass regression).
@@ -31,19 +42,27 @@ class POITabBarController: UITabBarController {
 
 		rebuildAutocompleteTagKeys()
 
-		var tabIndex = UserPrefs.shared.poiTabIndex.value ?? 0
-		if tabIndex == 2,
-		   selection == nil
-		{
-			tabIndex = 0
-		}
 		if selection == nil {
 			// don't show attributes page
 			var vcList = viewControllers!
 			vcList.removeLast()
 			self.viewControllers = vcList
+			tabIDs.removeLast()
 		}
-		selectedIndex = tabIndex
+		if #available(iOS 15.0, *),
+		   let selection,
+		   selection is OsmRelation || !relationList.isEmpty
+		{
+			// show relations page between All Tags and Attributes
+			let nav = UINavigationController(rootViewController: POIRelationsViewController())
+			nav.tabBarItem = UITabBarItem(
+				title: NSLocalizedString("Relations", comment: "Title of the page listing relation members"),
+				image: UIImage(systemName: "point.3.connected.trianglepath.dotted"),
+				selectedImage: nil)
+			viewControllers?.insert(nav, at: 2)
+			tabIDs.insert(.relations, at: 2)
+		}
+		selectedIndex = tabIDs.firstIndex(where: { $0.rawValue == UserPrefs.shared.poiTabIndex.value }) ?? 0
 
 		// hide attributes tab on new objects
 		updatePOIAttributesTabBarItemVisibility(withSelectedObject: selection)
@@ -127,6 +146,46 @@ class POITabBarController: UITabBarController {
 		}
 	}
 
+	/// Dismiss ourself and reopen on a different object, such as a parent relation or a relation member.
+	/// This isn't allowed if the current object has unsaved changes.
+	func switchSelection(to object: OsmBaseObject, currentTags: [String: String]) {
+		if isTagDictChanged(currentTags) {
+			let alert = UIAlertController(
+				title: NSLocalizedString("Object modified", comment: ""),
+				message: NSLocalizedString(
+					"You must save or discard changes to the current object before editing its associated relation",
+					comment: ""),
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+			present(alert, animated: true)
+			return
+		}
+
+		let mapView = AppDelegate.shared.mapView!
+
+		var newPoint = mapView.pushPin!.arrowPoint
+		let latLon1 = mapView.viewPort.mapTransform.latLon(forScreenPoint: newPoint)
+		let latLon = object.latLonOnObject(forLatLon: latLon1)
+
+		newPoint = mapView.viewPort.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
+		if !mapView.bounds.contains(newPoint) {
+			// new object is far away
+			mapView.selectObject(object)
+		} else {
+			mapView.selectObject(object)
+			mapView.placePushpin(at: newPoint, object: object)
+		}
+
+		// dismiss ourself and switch to the new object
+		mapView.refreshPushpinText() // update pushpin description to the new object
+		let presenter = presentingViewController
+		dismiss(animated: true) {
+			if let presenter {
+				presenter.performSegue(withIdentifier: "poiSegue", sender: nil)
+			}
+		}
+	}
+
 	func setFeatureKey(_ key: String, value: String?) {
 		if let value = value,
 		   value.count > 0
@@ -159,7 +218,7 @@ class POITabBarController: UITabBarController {
 			let tabIndex = tabBar.items?.firstIndex(of: item),
 			tabIndex != selectedIndex
 		else { return }
-		UserPrefs.shared.poiTabIndex.value = tabIndex
+		UserPrefs.shared.poiTabIndex.value = tabIDs[tabIndex].rawValue
 		selectedIndex = tabIndex
 	}
 
@@ -184,7 +243,7 @@ class POITabBarController: UITabBarController {
 		let newIndex = sender.selectedSegmentIndex
 		guard newIndex != selectedIndex else { return }
 		selectedIndex = newIndex
-		UserPrefs.shared.poiTabIndex.value = newIndex
+		UserPrefs.shared.poiTabIndex.value = tabIDs[newIndex].rawValue
 		// Keep all copies in sync so the correct tab is highlighted after switching.
 		for seg in macSegControls {
 			seg.selectedSegmentIndex = newIndex

@@ -538,20 +538,6 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		if identifier == "POITypeSegue" {
 			return true
 		}
-		let tabController = tabBarController as! POITabBarController
-		let dict = tags.keyValueDictionary()
-		if tabController.isTagDictChanged(dict) {
-			let alert = UIAlertController(
-				title: NSLocalizedString("Object modified", comment: ""),
-				message: NSLocalizedString(
-					"You must save or discard changes to the current object before editing its associated relation",
-					comment: ""),
-				preferredStyle: .alert)
-			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
-			present(alert, animated: true)
-			return false
-		}
-
 		// switch to relation or relation member
 		guard let cell = sender as? UITableViewCell else { return false }
 		guard let indexPath = tableView.indexPath(for: cell) else { return false }
@@ -570,29 +556,8 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		} else {
 			return false
 		}
-		let mapView = AppDelegate.shared.mapView!
-
-		var newPoint = mapView.pushPin!.arrowPoint
-		let latLon1 = mapView.viewPort.mapTransform.latLon(forScreenPoint: newPoint)
-		let latLon = object.latLonOnObject(forLatLon: latLon1)
-
-		newPoint = mapView.viewPort.mapTransform.screenPoint(forLatLon: latLon, birdsEye: true)
-		if !mapView.bounds.contains(newPoint) {
-			// new object is far away
-			mapView.selectObject(object)
-		} else {
-			mapView.selectObject(object)
-			mapView.placePushpin(at: newPoint, object: object)
-		}
-
-		// dismiss ourself and switch to the relation
-		mapView.refreshPushpinText() // update pushpin description to the relation
-		let presenter = self.presentingViewController
-		dismiss(animated: true) {
-			if let presenter {
-				presenter.performSegue(withIdentifier: "poiSegue", sender: nil)
-			}
-		}
+		let tabController = tabBarController as! POITabBarController
+		tabController.switchSelection(to: object, currentTags: tags.keyValueDictionary())
 		return false
 	}
 }

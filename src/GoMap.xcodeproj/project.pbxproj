@@ -135,6 +135,7 @@
 		02A123ED264CAE6F005638C1 /* Atomic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A123EC264CAE6F005638C1 /* Atomic.swift */; };
 		02A123EE264CBBE5005638C1 /* DisplayLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096C1263E567200E3B129 /* DisplayLink.swift */; };
 		02A123F1264EF139005638C1 /* QuadMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924A263FFD7E000A2A99 /* QuadMap.swift */; };
+		02A1C3E62E9C5A0000B7D4A1 /* POIRelationsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A1C3E52E9C5A0000B7D4A1 /* POIRelationsViewController.swift */; };
 		02A4E35E3056CB99003B5A71 /* UndoAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A4E35D3056CB99003B5A71 /* UndoAction.swift */; };
 		02A4E3603057E3CF003B5A71 /* OsmEditOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A4E35F3057E3CF003B5A71 /* OsmEditOperation.swift */; };
 		02A59EDB297DE4E100B0A676 /* PresetField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A59EDA297DE4E100B0A676 /* PresetField.swift */; };
@@ -508,6 +509,7 @@
 		02969EB92DF630A6003BA34A /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasemapTileServerListViewController.swift; sourceTree = "<group>"; };
 		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
+		02A1C3E52E9C5A0000B7D4A1 /* POIRelationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIRelationsViewController.swift; sourceTree = "<group>"; };
 		02A4E35D3056CB99003B5A71 /* UndoAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoAction.swift; sourceTree = "<group>"; };
 		02A4E35F3057E3CF003B5A71 /* OsmEditOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsmEditOperation.swift; sourceTree = "<group>"; };
 		02A59EDA297DE4E100B0A676 /* PresetField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetField.swift; sourceTree = "<group>"; };
@@ -875,6 +877,7 @@
 				ED964A002601D6A900EC0A60 /* POICommonTagsViewController.swift */,
 				C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */,
 				ED9649F82601D58900EC0A60 /* POIPresetValuePickerController.swift */,
+				02A1C3E52E9C5A0000B7D4A1 /* POIRelationsViewController.swift */,
 				ED9649F02601CEC800EC0A60 /* POITabBarController.swift */,
 				02D2FD4E29B016BC00483F4D /* PresetValueTextField.swift */,
 			);
@@ -1865,6 +1868,7 @@
 				02CB52362990801E007F758D /* QuestList.swift in Sources */,
 				02F72BCC2E35828100B6C76C /* NotificationService.swift in Sources */,
 				02E049BA2650B0E10028B57F /* TurnRestrictController.swift in Sources */,
+				02A1C3E62E9C5A0000B7D4A1 /* POIRelationsViewController.swift in Sources */,
 				ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */,
 				022B2FDB2718CCAC00AB4C28 /* MapboxLocator.secret in Sources */,
 				02148A562FFA1433002D513D /* PanoramaxServer.swift in Sources */,

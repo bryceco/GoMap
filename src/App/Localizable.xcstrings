@@ -17189,6 +17189,9 @@
         }
       }
     },
+    "%lld not downloaded" : {
+      "comment" : "The number of relation members that aren't downloaded"
+    },
     "%lu tiles needed" : {
       "comment" : "Always plural",
       "localizations" : {
@@ -22729,6 +22732,9 @@
           }
         }
       }
+    },
+    "At most %d" : {
+      "comment" : "A relation has more members with a role than are allowed"
     },
     "Attention" : {
       "localizations" : {
@@ -40962,6 +40968,9 @@
         }
       }
     },
+    "Member of" : {
+      "comment" : "Header for the relations an object belongs to"
+    },
     "Member of multipolygon relation" : {
       "localizations" : {
         "ar" : {
@@ -44908,6 +44917,9 @@
         }
       }
     },
+    "No role" : {
+      "comment" : "A relation member that doesn't have a role assigned"
+    },
     "No route data found." : {
       "localizations" : {
         "cs" : {
@@ -46313,6 +46325,9 @@
           }
         }
       }
+    },
+    "None" : {
+      "comment" : "A relation has no members with a role"
     },
     "Not found" : {
       "comment" : "User credentials not found",
@@ -52662,6 +52677,7 @@
       }
     },
     "Relations" : {
+      "comment" : "Title of the page listing relation members",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -52953,6 +52969,9 @@
           }
         }
       }
+    },
+    "Required" : {
+      "comment" : "A relation doesn't have a member with a required role"
     },
     "Requires a closed way with at least 3 nodes" : {
       "localizations" : {
@@ -62646,6 +62665,9 @@
           }
         }
       }
+    },
+    "Unexpected for this role" : {
+      "comment" : "A relation member has the wrong geometry or tags for its role"
     },
     "Unknown" : {
       "comment" : "Placeholder for a tag value field with no field-specific placeholder.",
