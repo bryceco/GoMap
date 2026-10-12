@@ -134,6 +134,7 @@ struct POIRelationsView: View {
 	var onSelect: (OsmBaseObject) -> Void = { _ in }
 	var onDownload: (() async -> Void)? // nil if all members are downloaded
 	@State private var isDownloading = false
+	@State private var collapsedGroups: Set<String>?
 
 	var body: some View {
 		List {
@@ -150,23 +151,27 @@ struct POIRelationsView: View {
 			}
 			ForEach(groups) { group in
 				Section {
-					ForEach(group.members) { member in
-						row(title: memberTitle(member),
-						    object: member.object,
-						    detail: member.isExpected
-						    	? nil
-						    	: String(localized: "Unexpected for this role",
-						    	         comment: "A relation member has the wrong geometry or tags for its role"),
-						    isWarning: !member.isExpected)
-					}
-					if group.members.isEmpty {
-						Text("None", comment: "A relation has no members with a role")
-							.foregroundColor(.secondary)
+					if !(collapsedGroups ?? []).contains(group.id) {
+						ForEach(group.members) { member in
+							row(title: memberTitle(member),
+							    object: member.object,
+							    detail: member.isExpected
+							    	? nil
+							    	: String(localized: "Unexpected for this role",
+							    	         comment: "A relation member has the wrong geometry or tags for its role"),
+							    isWarning: !member.isExpected)
+						}
+						if group.members.isEmpty {
+							Text("None", comment: "A relation has no members with a role")
+								.foregroundColor(.secondary)
+						}
 					}
 				} header: {
 					header(for: group)
 				} footer: {
-					if group.id == groups.last?.id, onDownload != nil {
+					if !(collapsedGroups ?? []).contains(group.id),
+					   group.id == groups.last?.id, onDownload != nil
+					{
 						// same text as All Tags
 						Text(NSLocalizedString(
 							"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'.",
@@ -206,6 +211,11 @@ struct POIRelationsView: View {
 			}
 		}
 		.listStyle(.grouped)
+		.onAppear {
+			if collapsedGroups == nil {
+				collapsedGroups = Set(groups.filter { $0.members.count >= 5 }.map(\.id))
+			}
+		}
 	}
 
 	private func infoRow(_ label: String, _ value: String) -> some View {
@@ -219,20 +229,35 @@ struct POIRelationsView: View {
 	}
 
 	private func header(for group: RelationRoleGroup) -> some View {
-		HStack {
-			Text(verbatim: group.label)
-			if group.label != group.role, !group.role.isEmpty {
-				// experienced mappers know roles by their OSM name
-				Text(verbatim: group.role)
+		Button(action: {
+			withAnimation {
+				if collapsedGroups?.contains(group.id) == true {
+					collapsedGroups?.remove(group.id)
+				} else {
+					collapsedGroups = (collapsedGroups ?? []).union([group.id])
+				}
+			}
+		}) {
+			HStack {
+				Image(systemName: collapsedGroups?.contains(group.id) == true ? "chevron.right" : "chevron.down")
+					.font(.footnote.weight(.semibold))
+					.foregroundColor(.secondary)
+				Text(verbatim: group.label)
+				if group.label != group.role, !group.role.isEmpty {
+					// experienced mappers know roles by their OSM name
+					Text(verbatim: group.role)
+						.fontWeight(.regular)
+				}
+				Text(verbatim: "(\(group.members.count))")
 					.fontWeight(.regular)
+				Spacer()
+				if let warning = group.warning {
+					Label(warning, systemImage: "exclamationmark.triangle.fill")
+						.foregroundColor(.orange)
+				}
 			}
-			Spacer()
-			if let warning = group.warning {
-				Label(warning, systemImage: "exclamationmark.triangle.fill")
-					.foregroundColor(.orange)
-			}
+			.textCase(nil)
 		}
-		.textCase(nil)
 	}
 
 	/// A member's identifier, such as "way 123", followed by its name if it's downloaded
