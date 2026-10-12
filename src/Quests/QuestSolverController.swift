@@ -376,7 +376,7 @@ extension QuestSolverController {
 			return
 		}
 		guard
-			let cell = (sender as? UIView)?.superviewOfType(UITableViewCell.self),
+			let cell = (sender as? UIView)?.superview(ofType: UITableViewCell.self),
 			let cell = cell as? QuestSolverTextEntryCell
 		else {
 			return
@@ -396,7 +396,7 @@ extension QuestSolverController {
 	@IBAction func infoButtonPressed(_ sender: Any?) {
 		guard
 			let button = sender as? UIButton,
-			let cell = button.superviewOfType(QuestSolverTextEntryCell.self)
+			let cell = button.superview(ofType: QuestSolverTextEntryCell.self)
 		else {
 			return
 		}

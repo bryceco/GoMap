@@ -518,7 +518,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 	func panoramaxUpdate(photoID: String) {
 		// Because the table cells can reload while taking the photo we
 		// need to locate the correct cell again:
-		guard let tableView = superviewOfType(UITableView.self) else {
+		guard let tableView = superview(ofType: UITableView.self) else {
 			return
 		}
 		guard let cell = tableView.visibleCells.compactMap({
@@ -546,7 +546,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		let vc = PanoramaxViewController.create()
 		vc.panoramax = PanoramaxServer(serverURL: URL(string: "https://panoramax.openstreetmap.fr")!)
 		vc.photoID = text ?? ""
-		if let tabController = self.ancestorOfType(POITabBarController.self),
+		if let tabController = self.ancestor(ofType: POITabBarController.self),
 		   let selection = tabController.selection
 		{
 			// specify tags we want to upload to panoramax

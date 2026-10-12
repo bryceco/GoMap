@@ -123,8 +123,8 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 	}
 
 	func frameForCompletionTableView() -> CGRect {
-		guard let cell = superviewOfType(UITableViewCell.self),
-		      let tableView = enclosingTableView ?? cell.superviewOfType(UITableView.self)
+		guard let cell = superview(ofType: UITableViewCell.self),
+		      let tableView = enclosingTableView ?? cell.superview(ofType: UITableView.self)
 		else {
 			return .zero
 		}
@@ -149,8 +149,8 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 		if filteredCompletions.count != 0 {
 			if completionTableView == nil {
 				guard
-					let cell = superviewOfType(UITableViewCell.self),
-					let tableView = cell.superviewOfType(UITableView.self),
+					let cell = superview(ofType: UITableViewCell.self),
+					let tableView = cell.superview(ofType: UITableView.self),
 					let indexPath = tableView.indexPath(for: cell)
 				else { return }
 				enclosingTableView = tableView
@@ -213,7 +213,7 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 
 			enclosingTableView?.isScrollEnabled = true
 			if let enclosingTableView,
-			   let cell = superviewOfType(UITableViewCell.self),
+			   let cell = superview(ofType: UITableViewCell.self),
 			   let cellIndexPath = enclosingTableView.indexPath(for: cell)
 			{
 				enclosingTableView.scrollToRow(at: cellIndexPath, at: .middle, animated: true)
@@ -270,7 +270,7 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 		// Check whether they are pasting a set of tags
 		if let pb = UIPasteboard.general.string,
 		   let tags = OsmTags.tagsForString(pb),
-		   let cell = superviewOfType(KeyValueTableCell.self),
+		   let cell = superview(ofType: KeyValueTableCell.self),
 		   let owner = cell.keyValueCellOwner
 		{
 			owner.pasteTags(tags)

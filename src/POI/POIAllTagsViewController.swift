@@ -54,19 +54,16 @@ private class SectionHeaderCell: UITableViewHeaderFooterView {
 	}
 
 	@objc func pickFeature(_ sender: Any?) {
-		var r: UIResponder = self
-		while true {
-			if let vc = r as? POIAllTagsViewController {
-				let storyboard = UIStoryboard(name: "POI", bundle: nil)
-				let myVC = storyboard.instantiateViewController(withIdentifier: "PoiTypeViewController")
-					as! POIFeaturePickerViewController
-				myVC.delegate = vc
-				vc.navigationController?.pushViewController(myVC, animated: true)
-				return
-			}
-			guard let next = r.next else { return }
-			r = next
+		guard
+			let tagsVC = nearestResponder(ofType: POIAllTagsViewController.self)
+		else {
+			return
 		}
+
+		let picker = UIStoryboard(name: "POI", bundle: nil)
+			.instantiateViewController(withIdentifier: "PoiTypeViewController") as! POIFeaturePickerViewController
+		picker.delegate = tagsVC
+		tagsVC.navigationController?.pushViewController(picker, animated: true)
 	}
 }
 
@@ -411,7 +408,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	}
 
 	func tab(toNext forward: Bool) {
-		guard let pair = currentTextField?.superviewOfType(TextPairTableCell.self),
+		guard let pair = currentTextField?.superview(ofType: TextPairTableCell.self),
 		      var indexPath = tableView.indexPath(for: pair)
 		else { return }
 

@@ -754,7 +754,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	@IBAction func textFieldEditingDidBegin(_ textField: AutocompleteTextField?) {
 		if let textField = textField {
 			// get list of values for current key
-			let cell = textField.superviewOfType(FeaturePresetCell.self)!
+			let cell = textField.superview(ofType: FeaturePresetCell.self)!
 			if case let .key(presetKey) = cell.presetKey {
 				let key = presetKey.tagKey
 				if PresetsDatabase.shared.eligibleForAutocomplete(key) {
@@ -773,7 +773,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		if #available(iOS 13.0, *) {
 			tabBarController?.isModalInPresentation = saveButton.isEnabled
 		}
-		if let cell = textField.superviewOfType(UITableViewCell.self) {
+		if let cell = textField.superview(ofType: UITableViewCell.self) {
 			switch cell {
 			case let cell as FeaturePresetCell:
 				cell.isSet.backgroundColor = cell.valueField.text == "" ? nil : Self.isSetHighlight
@@ -791,7 +791,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	@IBAction func textFieldDidEndEditing(_ textField: UITextField) {
-		guard let cell = textField.superviewOfType(FeaturePresetCell.self),
+		guard let cell = textField.superview(ofType: FeaturePresetCell.self),
 		      case let .key(presetKey) = cell.presetKey
 		else { return }
 
@@ -823,7 +823,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	func textViewDidBeginEditing(_ textView: UITextView) {
-		if let cell = textView.superviewOfType(FeaturePresetAreaCell.self) {
+		if let cell = textView.superview(ofType: FeaturePresetAreaCell.self) {
 			cell.removePlaceholderText()
 		}
 	}
@@ -839,7 +839,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	}
 
 	func textViewDidEndEditing(_ textView: UITextView) {
-		guard let cell = textView.superviewOfType(FeaturePresetAreaCell.self)
+		guard let cell = textView.superview(ofType: FeaturePresetAreaCell.self)
 		else { return }
 
 		let value2 = textView.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
@@ -871,7 +871,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	func valueChanged(for textField: PresetValueTextField, ended: Bool) {
 		guard ended else { return }
-		guard let cell = textField.superviewOfType(FeaturePresetCell.self)
+		guard let cell = textField.superview(ofType: FeaturePresetCell.self)
 		else {
 			return
 		}
