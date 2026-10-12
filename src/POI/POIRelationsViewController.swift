@@ -63,14 +63,18 @@ private func localizedRoleLabel(_ role: String, feature: PresetFeature?) -> Stri
 struct RelationRoleGroup: Identifiable {
 	struct Member: Identifiable {
 		let id: Int // index of the member in the relation
-		let object: OsmBaseObject
+		let member: OsmMember
 		let isExpected: Bool // geometry and tags are appropriate for the role
+
+		var object: OsmBaseObject? { member.obj } // nil if not downloaded
+		var title: String {
+			return member.obj?.friendlyDescriptionWithDetails() ?? "\(member.type.string) \(member.ref)"
+		}
 	}
 
 	let role: String // the OSM role, which may be empty
 	let label: String // localized name of the role
-	let members: [Member] // downloaded members only
-	let missingCount: Int // members that aren't downloaded
+	let members: [Member] // in the order they appear in the relation
 	let warning: String?
 
 	var id: String { role }
@@ -81,26 +85,25 @@ struct RelationRoleGroup: Identifiable {
 		let presetRoles = feature?.relation?.memberRoles ?? []
 		var roles = presetRoles.map { $0.role }
 		var members: [String: [Member]] = [:]
-		var missing: [String: Int] = [:]
 
 		for (index, member) in relation.members.enumerated() {
 			let role = member.role ?? ""
 			if !roles.contains(role) {
 				roles.append(role)
 			}
-			if let object = member.obj {
-				let presetRole = presetRoles.first(where: { $0.role == role })
-				members[role, default: []].append(Member(id: index,
-				                                         object: object,
-				                                         isExpected: presetRole?.accepts(object) ?? true))
-			} else {
-				missing[role, default: 0] += 1
+			// we can only check members that are downloaded
+			var isExpected = true
+			if let object = member.obj,
+			   let presetRole = presetRoles.first(where: { $0.role == role })
+			{
+				isExpected = presetRole.accepts(object)
 			}
+			members[role, default: []].append(Member(id: index, member: member, isExpected: isExpected))
 		}
 
 		return roles.map { role in
 			let presetRole = presetRoles.first(where: { $0.role == role })
-			let count = (members[role]?.count ?? 0) + (missing[role] ?? 0)
+			let count = members[role]?.count ?? 0
 			var warning: String?
 			if let min = presetRole?.minCount, count < min {
 				warning = NSLocalizedString("Required",
@@ -114,7 +117,6 @@ struct RelationRoleGroup: Identifiable {
 			return RelationRoleGroup(role: role,
 			                         label: localizedRoleLabel(role, feature: feature),
 			                         members: members[role] ?? [],
-			                         missingCount: missing[role] ?? 0,
 			                         warning: warning)
 		}
 	}
@@ -155,29 +157,40 @@ struct POIRelationsView: View {
 	var body: some View {
 		List {
 			ForEach(groups) { group in
-				Section(header: header(for: group)) {
+				Section {
 					ForEach(group.members) { member in
-						row(for: member.object,
+						row(title: member.title,
+						    object: member.object,
 						    detail: member.isExpected
 						    	? nil
 						    	: String(localized: "Unexpected for this role",
 						    	         comment: "A relation member has the wrong geometry or tags for its role"),
 						    isWarning: !member.isExpected)
 					}
-					if group.missingCount > 0 {
-						Text("\(group.missingCount) not downloaded",
-						     comment: "The number of relation members that aren't downloaded")
-							.foregroundColor(.secondary)
-					} else if group.members.isEmpty {
+					if group.members.isEmpty {
 						Text("None", comment: "A relation has no members with a role")
 							.foregroundColor(.secondary)
+					}
+				} header: {
+					header(for: group)
+				} footer: {
+					if group.id == groups.last?.id,
+					   groups.contains(where: { $0.members.contains(where: { $0.object == nil }) })
+					{
+						// same text as All Tags
+						Text(NSLocalizedString(
+							"You can navigate to a relation member only if it is already downloaded.\nThese members are marked with '>'.",
+							comment: ""))
 					}
 				}
 			}
 			if !memberships.isEmpty {
 				Section(header: Text("Member of", comment: "Header for the relations an object belongs to")) {
 					ForEach(memberships) { membership in
-						row(for: membership.relation, detail: membership.roleLabel, isWarning: false)
+						row(title: membership.relation.friendlyDescriptionWithDetails(),
+						    object: membership.relation,
+						    detail: membership.roleLabel,
+						    isWarning: false)
 					}
 				}
 			}
@@ -202,12 +215,13 @@ struct POIRelationsView: View {
 		.textCase(nil)
 	}
 
-	private func row(for object: OsmBaseObject, detail: String?, isWarning: Bool) -> some View {
-		Button(action: { onSelect(object) }, label: {
+	/// A row for an object we can navigate to, or one that isn't downloaded if object is nil
+	private func row(title: String, object: OsmBaseObject?, detail: String?, isWarning: Bool) -> some View {
+		Button(action: { if let object { onSelect(object) } }, label: {
 			HStack {
 				VStack(alignment: .leading, spacing: 2) {
-					Text(verbatim: object.friendlyDescriptionWithDetails())
-						.foregroundColor(.primary)
+					Text(verbatim: title)
+						.foregroundColor(object == nil ? .secondary : .primary)
 					if let detail {
 						Text(verbatim: detail)
 							.font(.footnote)
@@ -215,11 +229,14 @@ struct POIRelationsView: View {
 					}
 				}
 				Spacer()
-				Image(systemName: "chevron.right")
-					.font(.footnote.weight(.semibold))
-					.foregroundColor(Color(uiColor: .tertiaryLabel))
+				if object != nil {
+					Image(systemName: "chevron.right")
+						.font(.footnote.weight(.semibold))
+						.foregroundColor(Color(uiColor: .tertiaryLabel))
+				}
 			}
 		})
+		.disabled(object == nil)
 	}
 }
 

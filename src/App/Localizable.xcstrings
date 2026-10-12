@@ -17189,9 +17189,6 @@
         }
       }
     },
-    "%lld not downloaded" : {
-      "comment" : "The number of relation members that aren't downloaded"
-    },
     "%lu tiles needed" : {
       "comment" : "Always plural",
       "localizations" : {
