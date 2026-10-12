@@ -34,6 +34,22 @@ struct PresetRelationMemberRole: CustomStringConvertible {
 		return parts.joined(separator: " ")
 	}
 
+	/// Whether an object has the geometry and tags expected for this role
+	func accepts(_ object: OsmBaseObject) -> Bool {
+		if !geometry.isEmpty, !geometry.contains(object.geometry()) {
+			return false
+		}
+		guard let matchTags else {
+			return true
+		}
+		return matchTags.contains(where: { dict in
+			dict.allSatisfy { key, value in
+				guard let v = object.tags[key] else { return false }
+				return value == "*" || value == v
+			}
+		})
+	}
+
 	init(withDict dict: [String: Any]) {
 		self.role = dict["role"] as! String
 		self.geometry = (dict["geometry"] as! [String]? ?? []).map { GEOMETRY(rawValue: $0)! }
@@ -64,6 +80,13 @@ struct PresetRelationType: CustomStringConvertible {
 		let dupes = allowDuplicateMembers ? " allowDuplicates" : ""
 		let memberLines = memberRoles.map { "    \($0.description)" }.joined(separator: "\n")
 		return "PresetRelationType(type=\(type.rawValue)\(dupes)\n\(memberLines)\n)"
+	}
+
+	/// The roles an object can have as the first member of a new relation.
+	/// If the relation has required roles then the first member must have one of them.
+	func initialRoles(for object: OsmBaseObject) -> [PresetRelationMemberRole] {
+		let required = memberRoles.filter { ($0.minCount ?? 0) > 0 }
+		return (required.isEmpty ? memberRoles : required).filter { $0.accepts(object) }
 	}
 
 	init(withDict dict: [String: Any]) {

@@ -634,11 +634,16 @@ extension EditorMapLayer {
 			}
 		}
 
-		if selectedRelation?.isMultipolygon() ?? false, selectedPrimary.isWay() != nil {
+		if let selectedRelation,
+		   selectedPrimary.isWay() != nil,
+		   editableRelationFeature(for: selectedRelation) != nil
+		{
 			// delete way from relation
 			let alertDelete = UIAlertController(
 				title: NSLocalizedString("Delete", comment: ""),
-				message: NSLocalizedString("Member of multipolygon relation", comment: ""),
+				message: selectedRelation.isMultipolygon()
+					? NSLocalizedString("Member of multipolygon relation", comment: "")
+					: NSLocalizedString("Member of relation", comment: ""),
 				preferredStyle: .actionSheet)
 			alertDelete.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
 			                                    style: .cancel,
@@ -890,18 +895,27 @@ extension EditorMapLayer {
 				owner.presentTurnRestrictionEditor()
 			case .CREATE_RELATION:
 				guard let selectedPrimary = selectedPrimary else { return }
-				func create(_ type: String) {
+				func create(_ feature: PresetFeature, role: String) {
 					do {
 						let relation = mapData.createRelation()
-						var tags = selectedPrimary.tags
-						tags["type"] = type
+						var tags = feature.objectTagsUpdatedForFeature(
+							[:],
+							geometry: .RELATION,
+							location: AppDelegate.shared.mainView.currentRegion)
+						// the tags of a multipolygon are moved from the way to the relation
+						let isMultipolygon = feature.relation?.type == .multipolygon
+						if isMultipolygon {
+							tags = selectedPrimary.tags.merging(tags, uniquingKeysWith: { _, new in new })
+						}
 						mapData.setTags(tags, for: relation)
 						// need the relation type to be set before adding
 						let add = try mapData.canAdd(selectedPrimary,
 						                             to: relation,
-						                             withRole: "outer")
+						                             withRole: role)
 						add()
-						mapData.setTags([:], for: selectedPrimary)
+						if isMultipolygon {
+							mapData.setTags([:], for: selectedPrimary)
+						}
 						selectedNode = nil
 						selectedWay = nil
 						selectedRelation = relation
@@ -916,19 +930,75 @@ extension EditorMapLayer {
 						display.showAlert(error.localizedDescription, message: nil)
 					}
 				}
+				let rc = CGRect(origin: owner.pushpinView()?.arrowPoint ?? .zero, size: .zero)
+				// Ask which role the first member has. We ask even if there's only
+				// one choice so it's obvious to the user what role the member is getting.
+				func chooseRole(for feature: PresetFeature, from roles: [PresetRelationMemberRole]) {
+					let roleSheet = UIAlertController(
+						title: feature.localizedName,
+						message: NSLocalizedString("Select role",
+						                           comment: "Choose the role of the first member of a new relation"),
+						preferredStyle: .actionSheet)
+					for role in roles {
+						roleSheet.addAction(UIAlertAction(title: localizedRoleLabel(role.role, feature: feature),
+						                                  style: .default,
+						                                  handler: { _ in
+						                                  	create(feature, role: role.role)
+						                                  }))
+					}
+					roleSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+					                                  style: .cancel,
+					                                  handler: nil))
+					presentAlert(alert: roleSheet, location: .rect(rc))
+				}
+				// Offer the relation types that define member roles and can start with the selected object,
+				// along with the roles the object could have in each.
+				typealias RelationChoice = (feature: PresetFeature, roles: [PresetRelationMemberRole])
+				let choices: [RelationChoice] = PresetsDatabase.shared.stdFeatures.values
+					.filter { $0.featureID.hasPrefix("type/") && $0.relation != nil }
+					.map { ($0, $0.relation!.initialRoles(for: selectedPrimary)) }
+					.filter { !$0.1.isEmpty }
+				func addChoices(_ list: [RelationChoice], to sheet: UIAlertController) {
+					for choice in list.sorted(by: { $0.feature.localizedName < $1.feature.localizedName }) {
+						sheet.addAction(UIAlertAction(title: choice.feature.localizedName,
+						                              style: .default,
+						                              handler: { _ in
+						                              	chooseRole(for: choice.feature, from: choice.roles)
+						                              }))
+					}
+					sheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+					                              style: .cancel,
+					                              handler: nil))
+				}
+				// A relation type with many variants, such as turn restrictions, is shown as
+				// a single item that opens a second list, so it doesn't crowd out the others.
+				var topLevel: [RelationChoice] = []
+				var submenus: [(title: String, list: [RelationChoice])] = []
+				for (type, list) in Dictionary(grouping: choices, by: { $0.feature.relation!.type }) {
+					if list.count <= 3 {
+						topLevel += list
+					} else {
+						let parent = PresetsDatabase.shared.presetFeatureForFeatureID("type/\(type.rawValue)")
+						submenus.append((parent?.localizedName ?? type.rawValue, list))
+					}
+				}
+				func showSubmenu(_ title: String, _ list: [RelationChoice]) {
+					let sheet = UIAlertController(title: title, message: nil, preferredStyle: .actionSheet)
+					addChoices(list, to: sheet)
+					presentAlert(alert: sheet, location: .rect(rc))
+				}
 				let actionSheet = UIAlertController(
 					title: NSLocalizedString("Create Relation Type", comment: ""),
 					message: nil,
 					preferredStyle: .actionSheet)
-				actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Multipolygon", comment: ""),
-				                                    style: .default,
-				                                    handler: { _ in
-				                                    	create("multipolygon")
-				                                    }))
-				actionSheet.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-				                                    style: .cancel,
-				                                    handler: nil))
-				let rc = CGRect(origin: owner.pushpinView()?.arrowPoint ?? .zero, size: .zero)
+				addChoices(topLevel, to: actionSheet)
+				for submenu in submenus.sorted(by: { $0.title < $1.title }) {
+					actionSheet.addAction(UIAlertAction(title: submenu.title + "…",
+					                                    style: .default,
+					                                    handler: { _ in
+					                                    	showSubmenu(submenu.title, submenu.list)
+					                                    }))
+				}
 				presentAlert(alert: actionSheet, location: .rect(rc))
 				return
 			case .CLOSE_AREA:
@@ -999,6 +1069,19 @@ extension EditorMapLayer {
 		}
 	}
 
+	// MARK: Relations
+
+	/// The feature for a relation that we allow members to be added to and removed from.
+	/// These are the relation types that define member roles, which excludes routes.
+	func editableRelationFeature(for relation: OsmRelation) -> PresetFeature? {
+		let feature = PresetsDatabase.shared.presetFeatureMatching(
+			tags: relation.tags,
+			geometry: .RELATION,
+			location: AppDelegate.shared.mainView.currentRegion,
+			includeNSI: false)
+		return feature?.relation != nil ? feature : nil
+	}
+
 	// MARK: Create node/ways
 
 	func longPressAtPoint(_ point: CGPoint) {
@@ -1009,43 +1092,52 @@ extension EditorMapLayer {
 
 		// special case for adding members to relations:
 		if let relation = selectedPrimary as? OsmRelation,
-		   relation.isMultipolygon()
+		   let feature = editableRelationFeature(for: relation),
+		   let relationType = feature.relation
 		{
-			let ways = objects.compactMap({ $0 as? OsmWay })
-			if ways.count == 1,
-			   let way = ways.first,
-			   !relation.members.contains(where: { $0.obj == way })
-			{
-				let confirm = UIAlertController(
-					title: NSLocalizedString("Add way to multipolygon?", comment: ""),
-					message: nil,
-					preferredStyle: .alert)
-				let addMmember: ((String?) -> Void) = { [self] role in
-					do {
-						let add = try self.mapData.canAdd(way,
-						                                  to: self.selectedRelation!,
-						                                  withRole: role)
-						add()
-						display.flashMessage(title: nil,
-						                     message: NSLocalizedString("added to multipolygon relation", comment: ""))
-						self.setNeedsLayout()
-					} catch {
-						display.showAlert(NSLocalizedString("Error", comment: ""),
-						                  message: error.localizedDescription)
-					}
+			// pair each object under the finger with the roles it could have
+			var choices: [(object: OsmBaseObject, role: String)] = []
+			for object in objects where object != relation {
+				if !relationType.allowDuplicateMembers,
+				   relation.members.contains(where: { $0.obj == object })
+				{
+					continue
 				}
-				confirm.addAction(UIAlertAction(
-					title: NSLocalizedString("Add outer member", comment: "Add to relation"),
-					style: .default,
-					handler: { _ in
-						addMmember("outer")
-					}))
-				confirm.addAction(UIAlertAction(
-					title: NSLocalizedString("Add inner member", comment: "Add to relation"),
-					style: .default,
-					handler: { _ in
-						addMmember("inner")
-					}))
+				for role in relationType.memberRoles where role.accepts(object) {
+					// don't offer a role that already has as many members as it's allowed
+					if let max = role.maxCount,
+					   relation.members(byRole: role.role).count >= max
+					{
+						continue
+					}
+					choices.append((object, role.role))
+				}
+			}
+			if let first = choices.first {
+				// if there are several objects then each choice needs to say which object it's for
+				let isSingleObject = choices.allSatisfy { $0.object == first.object }
+				let confirm = UIAlertController(
+					title: NSLocalizedString("Add to relation?", comment: ""),
+					message: isSingleObject ? first.object.friendlyDescription() : nil,
+					preferredStyle: .alert)
+				for choice in choices {
+					let roleLabel = localizedRoleLabel(choice.role, feature: feature)
+					confirm.addAction(UIAlertAction(
+						title: isSingleObject ? roleLabel : "\(choice.object.friendlyDescription()): \(roleLabel)",
+						style: .default,
+						handler: { [self] _ in
+							do {
+								let add = try mapData.canAdd(choice.object, to: relation, withRole: choice.role)
+								add()
+								display.flashMessage(title: nil,
+								                     message: NSLocalizedString("added to relation", comment: ""))
+								setNeedsLayout()
+							} catch {
+								display.showAlert(NSLocalizedString("Error", comment: ""),
+								                  message: error.localizedDescription)
+							}
+						}))
+				}
 				confirm
 					.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
 					                         style: .cancel,

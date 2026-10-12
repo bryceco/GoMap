@@ -97,28 +97,32 @@ extension OsmMapData {
 	func canAdd(_ obj: OsmBaseObject, to relation: OsmRelation, withRole role: String?) throws -> EditAction {
 		var role = role
 
-		if !relation.isMultipolygon() {
-			throw EditError.text(NSLocalizedString("Only multipolygon relations are supported", comment: ""))
+		if relation.isRoute() {
+			// routes need their members to be ordered
+			throw EditError.text(NSLocalizedString("Members can't be added to this type of relation", comment: ""))
 		}
-		guard let newWay = obj.isWay() else {
+		if relation.isMultipolygon(), obj.isWay() == nil {
 			throw EditError.text(NSLocalizedString("Can only add ways to multipolygons", comment: ""))
 		}
 
-		// place the member adjacent to a way its connected to, if any
-		var index = 0
-		for m in relation.members {
-			index += 1
-			guard let w = m.obj as? OsmWay,
-			      m.role == "inner" || m.role == "outer"
-			else {
-				continue
-			}
-			if newWay.connectsTo(way: w) != nil {
-				if role != nil, role! != m.role {
-					throw EditError.text(NSLocalizedString("Cannot connect an inner way to an outer way", comment: ""))
+		// place an inner/outer way adjacent to a way its connected to, if any, otherwise at the end
+		var index = relation.members.count
+		if let newWay = obj.isWay(), role == nil || role == "inner" || role == "outer" {
+			for (i, m) in relation.members.enumerated() {
+				guard let w = m.obj as? OsmWay,
+				      m.role == "inner" || m.role == "outer"
+				else {
+					continue
 				}
-				role = m.role // copy the role of the way it's connected to
-				break
+				if newWay.connectsTo(way: w) != nil {
+					if role != nil, role! != m.role {
+						throw EditError.text(NSLocalizedString("Cannot connect an inner way to an outer way",
+						                                       comment: ""))
+					}
+					role = m.role // copy the role of the way it's connected to
+					index = i + 1
+					break
+				}
 			}
 		}
 
@@ -127,7 +131,7 @@ extension OsmMapData {
 		}
 
 		return { [self] in
-			let newMember = OsmMember(obj: newWay, role: role)
+			let newMember = OsmMember(obj: obj, role: role)
 			self.addMemberUnsafe(newMember, to: relation, at: index)
 		}
 	}
@@ -180,8 +184,9 @@ extension OsmMapData {
 	// MARK: canRemoveObject:fromRelation
 
 	func canRemove(_ obj: OsmBaseObject, from relation: OsmRelation) throws -> EditAction {
-		if !relation.isMultipolygon() {
-			throw EditError.text(NSLocalizedString("Only multipolygon relations are supported", comment: ""))
+		if relation.isRoute() {
+			throw EditError.text(NSLocalizedString("Members can't be removed from this type of relation",
+			                                       comment: ""))
 		}
 		return { [self] in
 			for index in relation.members.indices.reversed() {

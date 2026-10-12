@@ -19219,6 +19219,7 @@
     },
     "Add inner member" : {
       "comment" : "Add to relation",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -20038,6 +20039,7 @@
     },
     "Add outer member" : {
       "comment" : "Add to relation",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -20810,7 +20812,11 @@
         }
       }
     },
+    "Add to relation?" : {
+
+    },
     "Add way to multipolygon?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -21090,6 +21096,7 @@
       }
     },
     "added to multipolygon relation" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -21230,6 +21237,9 @@
           }
         }
       }
+    },
+    "added to relation" : {
+
     },
     "Adding members:" : {
       "localizations" : {
@@ -41107,6 +41117,9 @@
         }
       }
     },
+    "Member of relation" : {
+
+    },
     "Members" : {
       "localizations" : {
         "ar" : {
@@ -41254,6 +41267,12 @@
           }
         }
       }
+    },
+    "Members can't be added to this type of relation" : {
+
+    },
+    "Members can't be removed from this type of relation" : {
+
     },
     "Merge Tags" : {
       "localizations" : {
@@ -43296,6 +43315,7 @@
       }
     },
     "Multipolygon" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -47438,6 +47458,7 @@
       }
     },
     "Only multipolygon relations are supported" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

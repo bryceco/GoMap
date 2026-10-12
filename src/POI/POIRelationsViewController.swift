@@ -9,25 +9,7 @@
 import SwiftUI
 import UIKit
 
-extension PresetRelationMemberRole {
-	/// Whether an object has the geometry and tags expected for this role
-	func accepts(_ object: OsmBaseObject) -> Bool {
-		if !geometry.isEmpty, !geometry.contains(object.geometry()) {
-			return false
-		}
-		guard let matchTags else {
-			return true
-		}
-		return matchTags.contains(where: { dict in
-			dict.allSatisfy { key, value in
-				guard let v = object.tags[key] else { return false }
-				return value == "*" || value == v
-			}
-		})
-	}
-}
-
-private func localizedRoleLabel(_ role: String, feature: PresetFeature?) -> String {
+func localizedRoleLabel(_ role: String, feature: PresetFeature?) -> String {
 	if let label = feature?.localizedRelationRoleLabel(for: role) {
 		return label
 	}
@@ -243,11 +225,6 @@ struct POIRelationsView: View {
 					.font(.footnote.weight(.semibold))
 					.foregroundColor(.secondary)
 				Text(verbatim: group.label)
-				if group.label != group.role, !group.role.isEmpty {
-					// experienced mappers know roles by their OSM name
-					Text(verbatim: group.role)
-						.fontWeight(.regular)
-				}
 				Text(verbatim: "(\(group.members.count))")
 					.fontWeight(.regular)
 				Spacer()
