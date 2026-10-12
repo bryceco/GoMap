@@ -80,6 +80,12 @@ class PresetTranslations: Codable {
 		return languageCodes.compactMap { languageDict[$0]?.presets?.presets[feature.featureID]?.name }.first
 	}
 
+	func relationRoleLabel(for feature: PresetFeature, role: String) -> String? {
+		return languageCodes.compactMap {
+			languageDict[$0]?.presets?.presets[feature.featureID]?.relation?.role_labels?[role]
+		}.first { !$0.isEmpty }
+	}
+
 	func label(for field: PresetField) -> String? {
 		return languageCodes.compactMap { languageDict[$0]?.presets?.fields[field.identifier]?.label }.first
 	}
@@ -149,6 +155,11 @@ class PresetTranslations: Codable {
 		let name: String? // FIXME: only optional because iD-tagging-schema is temporarily broken
 		let terms: [String]?
 		let aliases: [String]?
+		let relation: Relation?
+	}
+
+	struct Relation: Codable {
+		let role_labels: [String: String]? // localized names for relation member roles
 	}
 
 	struct Field: Codable {

@@ -230,6 +230,11 @@ class PresetFeature: CustomDebugStringConvertible {
 		return PresetTranslations.shared.name(for: feature) ?? feature.nameWithRedirect
 	}
 
+	// Localized name for a relation member role (e.g. "outer"), if the preset defines one
+	func localizedRelationRoleLabel(for role: String) -> String? {
+		return PresetTranslations.shared.relationRoleLabel(for: self, role: role)
+	}
+
 	var fields: [String]? {
 		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
 		guard
