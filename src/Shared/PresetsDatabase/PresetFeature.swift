@@ -534,17 +534,17 @@ class PresetFeature: CustomDebugStringConvertible {
 		if let score = Self.scoreForTextCompare(base: .name, text: localizedName, search: searchText) {
 			return score
 		}
+		for term in terms {
+			if let score = Self.scoreForTextCompare(base: .term, text: term, search: searchText) {
+				return score
+			}
+		}
 		guard !nsiSuggestion else {
-			// Only compare against name for NSI
+			// Only compare against name and matchNames for NSI
 			return nil
 		}
 		for alias in aliases {
 			if let score = Self.scoreForTextCompare(base: .alias, text: alias, search: searchText) {
-				return score
-			}
-		}
-		for term in terms {
-			if let score = Self.scoreForTextCompare(base: .term, text: term, search: searchText) {
 				return score
 			}
 		}
