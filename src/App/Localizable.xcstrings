@@ -19063,6 +19063,12 @@
             "value" : "Přidat značení přechodu"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tambahkan Marka Penyeberangan"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21886,6 +21892,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zarovnat bod"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sejajarkan Simpul"
           }
         },
         "tr" : {
@@ -26689,6 +26701,12 @@
             "value" : "Komentář k sadě změn"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Komentar Changeset"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -26923,6 +26941,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Uzavřít plochu"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tutup Area"
           }
         },
         "tr" : {
@@ -28154,6 +28178,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Text poznámky nelze zpracovat"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Catatan tidak dapat diurai"
           }
         },
         "nl" : {
@@ -31707,6 +31737,12 @@
             "value" : "Popište vaše změny…"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jelaskan perubahan Anda..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32001,6 +32037,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zahodit změny"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Buang Perubahan"
           }
         },
         "tr" : {
@@ -36056,6 +36098,12 @@
             "value" : "HealthKit není na tomto zařízení k dispozici."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "HealthKit tidak tersedia di perangkat ini."
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -37418,6 +37466,12 @@
             "value" : "Handelsketten/Markennamen einschließen"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sertakan Nama Jaringan/Merek"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -37450,6 +37504,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neplatná uzavírací cesta"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jalur penutup tidak valid"
           }
         },
         "tr" : {
@@ -44245,6 +44305,12 @@
             "value" : "Nenalezena navazující cesta pro uzavření linie"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak ditemukan jalur penghubung untuk menutup way"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44554,6 +44620,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Žádné údaje o poloze"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak Ada Data Lokasi"
           }
         },
         "nl" : {
@@ -44946,6 +45018,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Data trasy nenalezena."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tidak ditemukan data rute."
           }
         },
         "ru" : {
@@ -46493,6 +46571,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Poznámka #%@"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Catatan #%@"
           }
         },
         "nl" : {
@@ -56175,6 +56259,12 @@
             "value" : "Některé změny jsou v jiném umístění a byly odvybrány. Nahrajte je jako separátní sadu změn."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beberapa perubahan berada di lokasi lain dan telah dibatalkan pemilihannya. Unggah perubahan tersebut sebagai changeset terpisah."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -56418,6 +56508,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zdroj"
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sumber"
           }
         },
         "tr" : {
@@ -58242,6 +58338,12 @@
             "value" : "Klepněte na zvýrazněnou cestu k uzavření oblasti, nebo klepněte mimo pro zrušení."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ketuk jalur yang disorot untuk menutup area, atau ketuk di tempat lain untuk membatalkan."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -58953,6 +59055,12 @@
             "value" : "Snímek neobsahuje údaje o poloze. Panoramax vyžaduje nahrání snímků jen s údaji o místě jejich pořízení."
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto ini tidak memuat data lokasi. Panoramax mengharuskan foto yang diunggah memuat data lokasi."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -59198,6 +59306,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Vybraný snímek nelze převést do JPEG. Panoramax přijímá pouze JPEG soubory."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Foto yang dipilih tidak dapat dikonversi ke JPEG. Hanya gambar JPEG yang dapat diunggah ke Panoramax."
           }
         },
         "nl" : {
@@ -60176,6 +60290,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Tyto úpravy budou trvale zahozeny a nepůjde je obnovit."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Perubahan ini akan dibuang secara permanen dan tidak dapat dipulihkan."
           }
         },
         "tr" : {
@@ -63523,6 +63643,12 @@
             "value" : "Chyba aktualizace"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kesalahan Pembaruan"
+          }
+        },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
@@ -63971,6 +64097,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nahraní bylo úspěšné, ale odpověď serveru byla porušená.\n\nPřed pokračováním do mapy vyčistěte mezipaměť OSM dat."
+          }
+        },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unggahan berhasil, tetapi server mengembalikan data yang tidak sesuai.\n\nGunakan Hapus Cache > Data OSM sebelum melanjutkan pemetaan."
           }
         },
         "ru" : {

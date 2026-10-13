@@ -6095,6 +6095,12 @@
             "value" : "Nupp"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tombol"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",

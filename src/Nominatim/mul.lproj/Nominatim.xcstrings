@@ -113,6 +113,12 @@
             "value" : "Specify a name (\"New York\"), a URL or other text containing lat/lon coordinates, a reference to an OSM object (\"way 51014987\"), or an OSM note (\"note 536129\").:"
           }
         },
+        "id" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masukkan nama (\"New York\"), URL atau teks lain yang memuat koordinat lintang/bujur, referensi ke objek OSM (\"way 51014987\"), atau catatan OSM (\"note 536129\").:"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",

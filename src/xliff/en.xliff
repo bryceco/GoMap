@@ -574,6 +574,16 @@
         <target state="new">A relation the node belongs to is not fully downloaded</target>
         <note />
       </trans-unit>
+      <trans-unit id="AND" xml:space="preserve">
+        <source>AND</source>
+        <target state="new">AND</target>
+        <note>Logical operator combining quest filter conditions</note>
+      </trans-unit>
+      <trans-unit id="AND/OR group" xml:space="preserve">
+        <source>AND/OR group</source>
+        <target state="new">AND/OR group</target>
+        <note>Menu item adding a nested AND/OR group to a quest filter</note>
+      </trans-unit>
       <trans-unit id="Accept" xml:space="preserve">
         <source>Accept</source>
         <target state="new">Accept</target>
@@ -588,6 +598,11 @@
         <source>Add Crossing Markings</source>
         <target state="new">Add Crossing Markings</target>
         <note>A type of quest</note>
+      </trans-unit>
+      <trans-unit id="Add Cuisine" xml:space="preserve">
+        <source>Add Cuisine</source>
+        <target state="new">Add Cuisine</target>
+        <note>Sample title for a Quest</note>
       </trans-unit>
       <trans-unit id="Add Highway Surface" xml:space="preserve">
         <source>Add Highway Surface</source>
@@ -634,6 +649,16 @@
         <target state="new">Add Website</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add a changeset comment to help other mappers understand your changes." xml:space="preserve">
+        <source>Add a changeset comment to help other mappers understand your changes.</source>
+        <target state="new">Add a changeset comment to help other mappers understand your changes.</target>
+        <note>Recommendation shown when the changeset comment is empty</note>
+      </trans-unit>
+      <trans-unit id="Add a row for each condition an object must match. Tap AND/OR to change how a group's rows combine, and + to add a condition or nested group of conditions." xml:space="preserve">
+        <source>Add a row for each condition an object must match. Tap AND/OR to change how a group's rows combine, and + to add a condition or nested group of conditions.</source>
+        <target state="new">Add a row for each condition an object must match. Tap AND/OR to change how a group's rows combine, and + to add a condition or nested group of conditions.</target>
+        <note />
+      </trans-unit>
       <trans-unit id="Add inner member" xml:space="preserve">
         <source>Add inner member</source>
         <target state="new">Add inner member</target>
@@ -648,6 +673,11 @@
         <source>Add outer member</source>
         <target state="new">Add outer member</target>
         <note>Add to relation</note>
+      </trans-unit>
+      <trans-unit id="Add to relation?" xml:space="preserve">
+        <source>Add to relation?</source>
+        <target state="new">Add to relation?</target>
+        <note />
       </trans-unit>
       <trans-unit id="Add way to multipolygon?" xml:space="preserve">
         <source>Add way to multipolygon?</source>
@@ -704,6 +734,11 @@
         <target state="new">All map tiles for the currently selected base map (Mapnik, Americana, etc).</target>
         <note />
       </trans-unit>
+      <trans-unit id="Always matches" xml:space="preserve">
+        <source>Always matches</source>
+        <target state="new">Always matches</target>
+        <note>Warning that a quest filter group's conditions match every object</note>
+      </trans-unit>
       <trans-unit id="An error occured while exporting: %@" xml:space="preserve">
         <source>An error occured while exporting: %@</source>
         <target state="new">An error occured while exporting: %@</target>
@@ -719,6 +754,11 @@
         <target state="new">Area</target>
         <note>Area of an object in m^2
 Object geometry: a closed way or multipolygon)</note>
+      </trans-unit>
+      <trans-unit id="At most %d" xml:space="preserve">
+        <source>At most %d</source>
+        <target state="new">At most %d</target>
+        <note>A relation has more members with a role than are allowed</note>
       </trans-unit>
       <trans-unit id="Attention" xml:space="preserve">
         <source>Attention</source>
@@ -1035,6 +1075,11 @@ Discard changes</note>
         <target state="new">Down</target>
         <note>Move up/down buttons</note>
       </trans-unit>
+      <trans-unit id="Download all members" xml:space="preserve">
+        <source>Download all members</source>
+        <target state="new">Download all members</target>
+        <note>Button to download the members of a relation</note>
+      </trans-unit>
       <trans-unit id="Downloaded nodes, ways and relations, and any edits you have made." xml:space="preserve">
         <source>Downloaded nodes, ways and relations, and any edits you have made.</source>
         <target state="new">Downloaded nodes, ways and relations, and any edits you have made.</target>
@@ -1074,6 +1119,16 @@ Discard changes</note>
         <source>Editor with Aerial</source>
         <target state="new">Editor with Aerial</target>
         <note />
+      </trans-unit>
+      <trans-unit id="Empty tag key is not permitted" xml:space="preserve">
+        <source>Empty tag key is not permitted</source>
+        <target state="new">Empty tag key is not permitted</target>
+        <note>Quest validation error</note>
+      </trans-unit>
+      <trans-unit id="Empty tag value is not permitted" xml:space="preserve">
+        <source>Empty tag value is not permitted</source>
+        <target state="new">Empty tag value is not permitted</target>
+        <note>Quest validation error</note>
       </trans-unit>
       <trans-unit id="Ensure Location Services is enabled and you have granted this application access.&#10;&#10;Error: %@" xml:space="preserve">
         <source>Ensure Location Services is enabled and you have granted this application access.
@@ -1118,6 +1173,11 @@ Error: %@</target>
         <source>Extract Node</source>
         <target state="new">Extract Node</target>
         <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Filter" xml:space="preserve">
+        <source>Filter</source>
+        <target state="new">Filter</target>
+        <note>Header for quest filter section</note>
       </trans-unit>
       <trans-unit id="Filters" xml:space="preserve">
         <source>Filters</source>
@@ -1244,6 +1304,26 @@ Error: %@</target>
         <target state="new">Joining would invalidate a Turn Restriction the way belongs to</target>
         <note />
       </trans-unit>
+      <trans-unit id="Key = value" xml:space="preserve">
+        <source>Key = value</source>
+        <target state="new">Key = value</target>
+        <note>Menu item adding a quest filter condition</note>
+      </trans-unit>
+      <trans-unit id="Key ≠ value" xml:space="preserve">
+        <source>Key ≠ value</source>
+        <target state="new">Key ≠ value</target>
+        <note>Menu item adding a quest filter condition</note>
+      </trans-unit>
+      <trans-unit id="Key exists" xml:space="preserve">
+        <source>Key exists</source>
+        <target state="new">Key exists</target>
+        <note>Menu item adding a quest filter condition</note>
+      </trans-unit>
+      <trans-unit id="Key missing" xml:space="preserve">
+        <source>Key missing</source>
+        <target state="new">Key missing</target>
+        <note>Menu item adding a quest filter condition</note>
+      </trans-unit>
       <trans-unit id="Keys" xml:space="preserve">
         <source>Keys</source>
         <target state="new">Keys</target>
@@ -1339,14 +1419,34 @@ Error: %@</target>
         <target state="new">Measure Direction</target>
         <note />
       </trans-unit>
+      <trans-unit id="Member of" xml:space="preserve">
+        <source>Member of</source>
+        <target state="new">Member of</target>
+        <note>Header for the relations an object belongs to</note>
+      </trans-unit>
       <trans-unit id="Member of multipolygon relation" xml:space="preserve">
         <source>Member of multipolygon relation</source>
         <target state="new">Member of multipolygon relation</target>
         <note />
       </trans-unit>
+      <trans-unit id="Member of relation" xml:space="preserve">
+        <source>Member of relation</source>
+        <target state="new">Member of relation</target>
+        <note />
+      </trans-unit>
       <trans-unit id="Members" xml:space="preserve">
         <source>Members</source>
         <target state="new">Members</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Members can't be added to this type of relation" xml:space="preserve">
+        <source>Members can't be added to this type of relation</source>
+        <target state="new">Members can't be added to this type of relation</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Members can't be removed from this type of relation" xml:space="preserve">
+        <source>Members can't be removed from this type of relation</source>
+        <target state="new">Members can't be removed from this type of relation</target>
         <note />
       </trans-unit>
       <trans-unit id="Merge Tags" xml:space="preserve">
@@ -1363,6 +1463,11 @@ Error: %@</target>
         <source>Modified</source>
         <target state="new">Modified</target>
         <note>last modified date</note>
+      </trans-unit>
+      <trans-unit id="Modified Objects" xml:space="preserve">
+        <source>Modified Objects</source>
+        <target state="new">Modified Objects</target>
+        <note />
       </trans-unit>
       <trans-unit id="Modify" xml:space="preserve">
         <source>Modify</source>
@@ -1431,6 +1536,11 @@ It is an advanced operation that should only be undertaken if you have a thoroug
         <note>Never delete old GPX tracks
 Never delete old tracks</note>
       </trans-unit>
+      <trans-unit id="Never matches" xml:space="preserve">
+        <source>Never matches</source>
+        <target state="new">Never matches</target>
+        <note>Warning that a quest filter group's conditions contradict each other</note>
+      </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
         <source>No Data</source>
         <target state="new">No Data</target>
@@ -1471,6 +1581,11 @@ Never delete old tracks</note>
         <target state="new">No connecting path found to close the way</target>
         <note />
       </trans-unit>
+      <trans-unit id="No filters are defined for the quest" xml:space="preserve">
+        <source>No filters are defined for the quest</source>
+        <target state="new">No filters are defined for the quest</target>
+        <note>Quest validation error</note>
+      </trans-unit>
       <trans-unit id="No match" xml:space="preserve">
         <source>No match</source>
         <target state="new">No match</target>
@@ -1480,6 +1595,11 @@ Never delete old tracks</note>
         <source>No results found</source>
         <target state="new">No results found</target>
         <note />
+      </trans-unit>
+      <trans-unit id="No role" xml:space="preserve">
+        <source>No role</source>
+        <target state="new">No role</target>
+        <note>A relation member that doesn't have a role assigned</note>
       </trans-unit>
       <trans-unit id="No route data found." xml:space="preserve">
         <source>No route data found.</source>
@@ -1516,6 +1636,11 @@ Never delete old tracks</note>
         <target state="new">Node must be the first or last node of the way</target>
         <note />
       </trans-unit>
+      <trans-unit id="None" xml:space="preserve">
+        <source>None</source>
+        <target state="new">None</target>
+        <note>A relation has no members with a role</note>
+      </trans-unit>
       <trans-unit id="Not found" xml:space="preserve">
         <source>Not found</source>
         <target state="new">Not found</target>
@@ -1545,6 +1670,11 @@ Never delete old tracks</note>
         <source>OK</source>
         <target state="new">OK</target>
         <note />
+      </trans-unit>
+      <trans-unit id="OR" xml:space="preserve">
+        <source>OR</source>
+        <target state="new">OR</target>
+        <note>Logical operator combining quest filter conditions</note>
       </trans-unit>
       <trans-unit id="OSM Data" xml:space="preserve">
         <source>OSM Data</source>
@@ -1716,6 +1846,16 @@ Never delete old tracks</note>
         <target state="new">Relation Attributes</target>
         <note />
       </trans-unit>
+      <trans-unit id="Relation Member" xml:space="preserve">
+        <source>Relation Member</source>
+        <target state="new">Relation Member</target>
+        <note>Title of the page listing the relations an object is a member of</note>
+      </trans-unit>
+      <trans-unit id="Relation Members" xml:space="preserve">
+        <source>Relation Members</source>
+        <target state="new">Relation Members</target>
+        <note>Title of the page listing the members of a relation</note>
+      </trans-unit>
       <trans-unit id="Relation Tags" xml:space="preserve">
         <source>Relation Tags</source>
         <target state="new">Relation Tags</target>
@@ -1729,12 +1869,22 @@ Never delete old tracks</note>
       <trans-unit id="Relations" xml:space="preserve">
         <source>Relations</source>
         <target state="new">Relations</target>
-        <note />
+        <note>Title of the page listing relation members</note>
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
         <target state="new">Replace Tags</target>
         <note />
+      </trans-unit>
+      <trans-unit id="Replace all existing quests" xml:space="preserve">
+        <source>Replace all existing quests</source>
+        <target state="new">Replace all existing quests</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Required" xml:space="preserve">
+        <source>Required</source>
+        <target state="new">Required</target>
+        <note>A relation doesn't have a member with a required role</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
         <source>Requires a closed way with at least 3 nodes</source>
@@ -1811,6 +1961,11 @@ Never delete old tracks</note>
         <target state="new">Select a highway approaching the intersection</target>
         <note />
       </trans-unit>
+      <trans-unit id="Select role" xml:space="preserve">
+        <source>Select role</source>
+        <target state="new">Select role</target>
+        <note>Choose the role of the first member of a new relation</note>
+      </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
         <source>Select the language used for Presets. Other app content will use your default language.</source>
         <target state="new">Select the language used for Presets. Other app content will use your default language.</target>
@@ -1856,6 +2011,11 @@ Title for sharing options</note>
         <source>Some changes are in a different location and have been deselected. Upload them as a separate changeset.</source>
         <target state="new">Some changes are in a different location and have been deselected. Upload them as a separate changeset.</target>
         <note>Warning shown on upload screen when distant edit groups are automatically deselected</note>
+      </trans-unit>
+      <trans-unit id="Some changes contain objects with no tags and have been deselected. Add tags before uploading." xml:space="preserve">
+        <source>Some changes contain objects with no tags and have been deselected. Add tags before uploading.</source>
+        <target state="new">Some changes contain objects with no tags and have been deselected. Add tags before uploading.</target>
+        <note>Warning shown on upload screen when a group contains untagged objects</note>
       </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
         <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
@@ -1957,6 +2117,11 @@ Title for sharing options</note>
         <target state="new">The current location cannot be determined: </target>
         <note />
       </trans-unit>
+      <trans-unit id="The feature '%@' does not exist" xml:space="preserve">
+        <source>The feature '%@' does not exist</source>
+        <target state="new">The feature '%@' does not exist</target>
+        <note>Quest validation error</note>
+      </trans-unit>
       <trans-unit id="The merged nodes contain conflicting tags" xml:space="preserve">
         <source>The merged nodes contain conflicting tags</source>
         <target state="new">The merged nodes contain conflicting tags</target>
@@ -1977,6 +2142,16 @@ Title for sharing options</note>
         <target state="new">The photo does not contain location data. Panoramax requires that uploaded photos contain location data.</target>
         <note />
       </trans-unit>
+      <trans-unit id="The quest filter is malformed" xml:space="preserve">
+        <source>The quest filter is malformed</source>
+        <target state="new">The quest filter is malformed</target>
+        <note>Quest validation error</note>
+      </trans-unit>
+      <trans-unit id="The quest label '%@' must be a single character" xml:space="preserve">
+        <source>The quest label '%@' must be a single character</source>
+        <target state="new">The quest label '%@' must be a single character</target>
+        <note>Quest validation error</note>
+      </trans-unit>
       <trans-unit id="The restriction cannot be deleted" xml:space="preserve">
         <source>The restriction cannot be deleted</source>
         <target state="new">The restriction cannot be deleted</target>
@@ -1996,6 +2171,11 @@ Title for sharing options</note>
         <source>The selected way must be completely visible</source>
         <target state="new">The selected way must be completely visible</target>
         <note />
+      </trans-unit>
+      <trans-unit id="The tag key '%@' is not referenced by any features" xml:space="preserve">
+        <source>The tag key '%@' is not referenced by any features</source>
+        <target state="new">The tag key '%@' is not referenced by any features</target>
+        <note>Quest validation error</note>
       </trans-unit>
       <trans-unit id="The target way is ambiguous" xml:space="preserve">
         <source>The target way is ambiguous</source>
@@ -2131,6 +2311,11 @@ Select the highway from which you are approaching the intersection, then tap an 
         <target state="new">Undo</target>
         <note />
       </trans-unit>
+      <trans-unit id="Unexpected for this role" xml:space="preserve">
+        <source>Unexpected for this role</source>
+        <target state="new">Unexpected for this role</target>
+        <note>A relation member has the wrong geometry or tags for its role</note>
+      </trans-unit>
       <trans-unit id="Unknown" xml:space="preserve">
         <source>Unknown</source>
         <target state="new">Unknown</target>
@@ -2235,6 +2420,11 @@ You should use Clear Cache &gt; OSM Data before continuing to map.</target>
         <target state="new">Way Tags</target>
         <note />
       </trans-unit>
+      <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Cuisine':" xml:space="preserve">
+        <source>What is the name of this quest? This is best written in the form of an action like 'Add Cuisine':</source>
+        <target state="new">What is the name of this quest? This is best written in the form of an action like 'Add Cuisine':</target>
+        <note>'Add Cuisine' should match the use this sample text elsewhere in the app</note>
+      </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
         <source>What is the name of this quest? This is best written in the form of an action like 'Add Surface':</source>
         <target state="new">What is the name of this quest? This is best written in the form of an action like 'Add Surface':</target>
@@ -2328,6 +2518,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">added to multipolygon relation</target>
         <note />
       </trans-unit>
+      <trans-unit id="added to relation" xml:space="preserve">
+        <source>added to relation</source>
+        <target state="new">added to relation</target>
+        <note />
+      </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
         <source>computing size...</source>
         <target state="new">computing size...</target>
@@ -2398,6 +2593,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <target state="new">duplicate</target>
         <note>create a duplicate</note>
       </trans-unit>
+      <trans-unit id="exists" xml:space="preserve">
+        <source>exists</source>
+        <target state="new">exists</target>
+        <note>the tag key is present</note>
+      </trans-unit>
       <trans-unit id="ft" xml:space="preserve">
         <source>ft</source>
         <target state="new">ft</target>
@@ -2442,6 +2642,11 @@ You may want to clear the cache (under Display settings) to improve performance.
         <source>mi</source>
         <target state="new">mi</target>
         <note>Distance in miles, please abbreviate</note>
+      </trans-unit>
+      <trans-unit id="missing" xml:space="preserve">
+        <source>missing</source>
+        <target state="new">missing</target>
+        <note>the tag key is absent</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
         <source>move</source>
