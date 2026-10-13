@@ -61,6 +61,8 @@ class CompassButton: UIButton {
 			path.close()
 			north.path = path.cgPath
 			north.fillColor = UIColor.systemRed.cgColor
+			north.strokeColor = UIColor.white.cgColor
+			north.lineWidth = 0.5
 			north.position = CGPoint(x: radius, y: radius)
 		}
 		do {
@@ -71,6 +73,8 @@ class CompassButton: UIButton {
 			path.close()
 			south.path = path.cgPath
 			south.fillColor = UIColor.lightGray.cgColor
+			south.strokeColor = UIColor.white.cgColor
+			south.lineWidth = 0.5
 			south.position = CGPoint(x: radius, y: radius)
 		}
 		do {
