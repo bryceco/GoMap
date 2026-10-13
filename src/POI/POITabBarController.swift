@@ -13,6 +13,8 @@ class POITabBarController: UITabBarController {
 	var selection: OsmBaseObject?
 	var preservedFeatureTypeSearchText: String?
 	var allAutocompleteTagKeys: [String] = []
+	/// Members the user removed from the selected relation. Like tags, they aren't applied until we commit.
+	var removedMembers: Set<OsmMember> = []
 
 	/// Identifies a tab when saving the user's preferred tab, since not all tabs are always present.
 	private enum TabID: Int {
@@ -197,10 +199,24 @@ class POITabBarController: UITabBarController {
 	}
 
 	func commitChanges() {
-		AppDelegate.shared.mapView.setTagsForCurrentObject(tags: keyValueDict)
+		let mapView = AppDelegate.shared.mapView!
+		if let relation = selection as? OsmRelation, !removedMembers.isEmpty {
+			let members = relation.members.filter { !removedMembers.contains($0) }
+			mapView.mapData.updateMembersUnsafe(members, in: relation)
+			mapView.setNeedsLayout()
+		}
+		// don't add a "set tags" undo step if only the members changed
+		if keyValueDict != selection?.tags {
+			mapView.setTagsForCurrentObject(tags: keyValueDict)
+		}
 	}
 
+	/// Whether there are changes to save: either the given tags differ from the
+	/// selected object's tags, or relation members have been removed.
 	func isTagDictChanged(_ newDictionary: [String: String]) -> Bool {
+		if !removedMembers.isEmpty {
+			return true
+		}
 		guard let tags = AppDelegate.shared.mapView.selectedPrimary?.tags
 		else {
 			// it's a brand new object

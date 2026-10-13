@@ -54983,6 +54983,9 @@
         }
       }
     },
+    "Select role" : {
+      "comment" : "Choose the role of the first member of a new relation"
+    },
     "Select the language used for Presets. Other app content will use your default language." : {
       "localizations" : {
         "cs" : {

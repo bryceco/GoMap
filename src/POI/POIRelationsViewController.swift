@@ -39,12 +39,16 @@ struct RelationRoleGroup: Identifiable {
 
 	/// Roles defined by the feature are listed first, in the order the feature defines them, and
 	/// are present even when the relation has no members with that role. Any other roles follow.
-	static func groups(for relation: OsmRelation, feature: PresetFeature?) -> [RelationRoleGroup] {
+	/// Members the user has removed, but which haven't been saved yet, are left out.
+	static func groups(for relation: OsmRelation,
+	                   feature: PresetFeature?,
+	                   removed: Set<OsmMember>) -> [RelationRoleGroup]
+	{
 		let presetRoles = feature?.relation?.memberRoles ?? []
 		var roles = presetRoles.map { $0.role }
 		var members: [String: [Member]] = [:]
 
-		for (index, member) in relation.members.enumerated() {
+		for (index, member) in relation.members.enumerated() where !removed.contains(member) {
 			let role = member.role ?? ""
 			if !roles.contains(role) {
 				roles.append(role)
@@ -115,6 +119,7 @@ struct POIRelationsView: View {
 	var memberships: [RelationMembership] = []
 	var onSelect: (OsmBaseObject) -> Void = { _ in }
 	var onDownload: (() async -> Void)? // nil if all members are downloaded
+	var onRemove: (([OsmMember]) -> Void)? // nil if members can't be removed
 	@State private var isDownloading = false
 	@State private var collapsedGroups: Set<String>?
 
@@ -143,6 +148,7 @@ struct POIRelationsView: View {
 							    	         comment: "A relation member has the wrong geometry or tags for its role"),
 							    isWarning: !member.isExpected)
 						}
+						.onDelete(perform: deleteAction(for: group))
 						if group.members.isEmpty {
 							Text("None", comment: "A relation has no members with a role")
 								.foregroundColor(.secondary)
@@ -197,6 +203,16 @@ struct POIRelationsView: View {
 			if collapsedGroups == nil {
 				collapsedGroups = Set(groups.filter { $0.members.count >= 5 }.map(\.id))
 			}
+		}
+	}
+
+	/// Swipe-to-delete for the members in a group, or nil if members can't be removed
+	private func deleteAction(for group: RelationRoleGroup) -> ((IndexSet) -> Void)? {
+		guard let onRemove else {
+			return nil
+		}
+		return { offsets in
+			onRemove(offsets.map { group.members[$0].member })
 		}
 	}
 
@@ -297,6 +313,7 @@ class POIRelationsViewController: UIHostingController<POIRelationsView> {
 			return
 		}
 		navigationItem.rightBarButtonItem?.isEnabled = tabController.isTagDictChanged()
+		tabController.isModalInPresentation = tabController.isTagDictChanged()
 
 		// The tags may have been edited in another tab, which can change the feature and its roles
 		let tags = tabController.keyValueDict
@@ -312,8 +329,20 @@ class POIRelationsViewController: UIHostingController<POIRelationsView> {
 		// Only relations have members. Other objects just list the relations they belong to.
 		var groups: [RelationRoleGroup] = []
 		var onDownload: (() async -> Void)?
+		var onRemove: (([OsmMember]) -> Void)?
 		if let relation {
-			groups = RelationRoleGroup.groups(for: relation, feature: feature)
+			let removed = tabController.removedMembers
+			groups = RelationRoleGroup.groups(for: relation, feature: feature, removed: removed)
+			// Members can be removed from the relation types that define roles, which excludes
+			// routes where the order matters. The last member can't be removed.
+			if feature?.relation != nil,
+			   relation.members.filter({ !removed.contains($0) }).count > 1
+			{
+				onRemove = { [weak self, weak tabController] members in
+					tabController?.removedMembers.formUnion(members)
+					self?.refresh()
+				}
+			}
 			if relation.members.contains(where: { $0.obj == nil }) {
 				onDownload = { [weak self] in await self?.downloadMembers(of: relation) }
 			}
@@ -335,7 +364,8 @@ class POIRelationsViewController: UIHostingController<POIRelationsView> {
 				guard let tabController else { return }
 				tabController.switchSelection(to: object, currentTags: tabController.keyValueDict)
 			},
-			onDownload: onDownload)
+			onDownload: onDownload,
+			onRemove: onRemove)
 	}
 
 	private func downloadMembers(of relation: OsmRelation) async {
