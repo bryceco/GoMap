@@ -23,6 +23,11 @@ struct PresetAddressFormat: Decodable {
 		"unit", "block_number", "floor", "conscriptionnumber"
 	]
 
+	/// Keys whose values are often mixed-script (e.g. "5A") and must not decide the label's base direction.
+	private static let isolatedKeys: Set<String> = [
+		"housenumber", "unit", "block_number", "floor", "conscriptionnumber"
+	]
+
 	/// Formats a short street-level address from the given tags,
 	/// using this format's key ordering but only including street-level fields.
 	/// Returns nil if no street-level address tags are present.
@@ -39,7 +44,13 @@ struct PresetAddressFormat: Decodable {
 					   let value = tags["addr:\(alt)"],
 					   !value.isEmpty
 					{
-						parts.append(value)
+						if Self.isolatedKeys.contains(alt) {
+							// Add BIDI control characters: FSI & PDI
+							// This says don't look at this text for determining layout direction
+							parts.append("\u{2068}\(value)\u{2069}")
+						} else {
+							parts.append(value)
+						}
 						break
 					}
 				}
