@@ -1273,7 +1273,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				// treat as tap, but make sure it occured inside the button
 				let touch = recognizer.location(in: recognizer.view)
 				if recognizer.view?.bounds.contains(touch) ?? false {
-					mapView.rightClick(at: mapView.bounds.center())
+					mapView.addNode(at: mapView.bounds.center())
 				}
 			}
 			plusButtonTimestamp = 0.0

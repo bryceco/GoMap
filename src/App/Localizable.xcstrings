@@ -19443,6 +19443,9 @@
         }
       }
     },
+    "Add Node" : {
+      "comment" : "Edit action"
+    },
     "add node to way" : {
       "localizations" : {
         "ar" : {
@@ -19769,6 +19772,9 @@
           }
         }
       }
+    },
+    "Add Note…" : {
+      "comment" : "Edit action"
     },
     "add object to relation" : {
       "localizations" : {
@@ -48823,6 +48829,9 @@
           }
         }
       }
+    },
+    "Paste Tags" : {
+      "comment" : "Edit action"
     },
     "Paste the JSON for your quests into the field below" : {
       "localizations" : {

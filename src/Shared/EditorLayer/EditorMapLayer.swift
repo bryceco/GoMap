@@ -145,16 +145,29 @@ enum EDIT_ACTION: Int {
 	case CREATE_RELATION
 	case CLOSE_AREA
 	case ALIGN_NODE
+	// used by context menu only:
+	case DROP_PIN
 
 	/// Localized names of edit actions
-	func actionTitle(abbreviated: Bool = false) -> (label: String, image: UIImage?) {
+	func actionTitle(contextMenu: Bool = true) -> (label: String, image: UIImage?) {
 		switch self {
 		case .ADDNOTE:
-			return (NSLocalizedString("Add Note", comment: "Edit action"),
-			        UIImage(systemName: "note.text.badge.plus"))
+			return (contextMenu
+				? NSLocalizedString("Add Note…", comment: "Edit action")
+				: NSLocalizedString("Add Note", comment: "Edit action"),
+				UIImage(systemName: "note.text.badge.plus"))
+		case .ALIGN_NODE:
+			return (NSLocalizedString("Align Node", comment: "Edit action"),
+			        UIImage(systemName: "arrow.up.to.line.alt"))
+		case .DROP_PIN:
+			return (NSLocalizedString("Add Node", comment: "Edit action"),
+			        UIImage(systemName: "plus"))
 		case .CIRCULARIZE:
 			return (NSLocalizedString("Make Circular", comment: "Edit action"),
 			        UIImage(systemName: "circle"))
+		case .CLOSE_AREA:
+			return (NSLocalizedString("Close Area", comment: "Edit action"),
+			        UIImage(systemName: "arrow.triangle.turn.up.right.circle"))
 		case .COPYTAGS:
 			return (NSLocalizedString("Copy Tags", comment: "Edit action"),
 			        UIImage(systemName: "doc.on.doc"))
@@ -183,8 +196,10 @@ enum EDIT_ACTION: Int {
 			return (NSLocalizedString("More...", comment: "Edit action"),
 			        UIImage(systemName: "line.3.horizontal"))
 		case .PASTETAGS:
-			return (NSLocalizedString("Paste", comment: "Edit action"),
-			        UIImage(systemName: "doc.on.clipboard"))
+			return (contextMenu
+				? NSLocalizedString("Paste Tags", comment: "Edit action")
+				: NSLocalizedString("Paste", comment: "Edit action"),
+				UIImage(systemName: "doc.on.clipboard"))
 		case .RECTANGULARIZE:
 			return (NSLocalizedString("Make Rectangular", comment: "Edit action"),
 			        UIImage(systemName: "rectangle"))
@@ -192,9 +207,9 @@ enum EDIT_ACTION: Int {
 			return (NSLocalizedString("Reverse", comment: "Edit action"),
 			        UIImage(systemName: "arrow.left.arrow.right"))
 		case .RESTRICT:
-			return (abbreviated
-				? NSLocalizedString("Restrict", comment: "Edit action")
-				: NSLocalizedString("Turn Restrictions", comment: "Edit action"),
+			return (contextMenu
+				? NSLocalizedString("Turn Restrictions", comment: "Edit action")
+				: NSLocalizedString("Restrict", comment: "Edit action"),
 				UIImage(systemName: "nosign"))
 		case .ROTATE:
 			return (NSLocalizedString("Rotate", comment: "Edit action"),
@@ -205,12 +220,6 @@ enum EDIT_ACTION: Int {
 		case .STRAIGHTEN:
 			return (NSLocalizedString("Straighten", comment: "Edit action"),
 			        UIImage(systemName: "line.diagonal"))
-		case .CLOSE_AREA:
-			return (NSLocalizedString("Close Area", comment: "Edit action"),
-			        UIImage(systemName: "arrow.triangle.turn.up.right.circle"))
-		case .ALIGN_NODE:
-			return (NSLocalizedString("Align Node", comment: "Edit action"),
-			        UIImage(systemName: "arrow.up.to.line.alt"))
 		}
 	}
 }

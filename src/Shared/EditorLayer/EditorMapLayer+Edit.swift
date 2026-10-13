@@ -798,7 +798,7 @@ extension EditorMapLayer {
 				owner.didUpdateObject()
 			}
 		case .SPLIT, .JOIN, .DISCONNECT, .EXTRACTNODE, .RESTRICT, .ADDNOTE, .DELETE, .MORE, .CLOSE_AREA,
-		     .ALIGN_NODE:
+		     .ALIGN_NODE, .DROP_PIN:
 			break
 		}
 
@@ -1043,6 +1043,9 @@ extension EditorMapLayer {
 				let newLatLon = LatLon(x: projected.x, y: latp2lat(projected.y))
 				mapData.setLatLon(newLatLon, forNode: node)
 				owner.placePushpinForSelection(at: nil)
+			case .DROP_PIN:
+				// handled by MapView (requires screen location)
+				DbgAssert(false)
 			}
 		} catch {
 			display.showAlert(error.localizedDescription, message: nil)

@@ -119,6 +119,10 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		} else {
 			// not supported
 		}
+		if #available(iOS 16.0, *) {
+			// used to present the right-click context menu
+			addInteraction(UIEditMenuInteraction(delegate: self))
+		}
 #endif
 
 		// magnifying glass
@@ -461,7 +465,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 					pasteButton.target = editorLayer
 					return pasteButton
 				} else {
-					let titleIcon = action.actionTitle(abbreviated: true)
+					let titleIcon = action.actionTitle(contextMenu: false)
 					let button = ButtonClosure(type: .system)
 					button.translatesAutoresizingMaskIntoConstraints = false
 					button.setTitle(titleIcon.label, for: .normal)
@@ -950,8 +954,12 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 			}
 
 			let point = tap.location(in: self)
-			if mainView.plusButtonTimestamp != 0.0 {
-				// user is doing a long-press on + button
+			var isOptionClick = false
+			if #available(iOS 13.4, *) {
+				isOptionClick = tap.modifierFlags.contains(.alternate)
+			}
+			if mainView.plusButtonTimestamp != 0.0 || isOptionClick {
+				// user is doing a long-press on + button, or Option-click with a mouse
 				editorLayer.addNode(at: point)
 			} else {
 				editorLayer.selectObjectAtPoint(point)
@@ -975,8 +983,9 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration?
 	{
 		let location = interaction.location(in: self)
-		rightClick(at: location)
-		return nil
+		return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
+			self?.contextMenu(at: location)
+		}
 	}
 
 	@objc func handleRightClick(_ recognizer: UIGestureRecognizer) {
@@ -985,8 +994,70 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	}
 
 	func rightClick(at location: CGPoint) {
-		// right-click is equivalent to holding + and clicking
+		guard #available(iOS 16.0, *),
+		      let interaction = interactions.compactMap({ $0 as? UIEditMenuInteraction }).first
+		else { return }
+		// Let the current mouse event finish before the menu appears
+		DispatchQueue.main.async {
+			interaction.presentEditMenu(with: UIEditMenuConfiguration(identifier: nil, sourcePoint: location))
+		}
+	}
+
+	/// Equivalent to holding + and clicking
+	func addNode(at location: CGPoint) {
 		editorLayer.addNode(at: location)
+	}
+
+	/// The menu shown for a right-click at the given location
+	func contextMenu(at location: CGPoint) -> UIMenu {
+		if editorLayer.selectedPrimary != nil {
+			// The edit toolbar actions, followed by everything in the More... menu
+			func editItem(_ action: EDIT_ACTION) -> UIAction {
+				let title = action.actionTitle()
+				return UIAction(title: title.label,
+				                image: title.image,
+				                attributes: action == .DELETE ? .destructive : [],
+				                handler: { [weak self] _ in
+				                	self?.editorLayer.performEdit(action)
+				                })
+			}
+			let primary = editControlActions.filter { $0 != .MORE }
+			let more = editorLayer.editActionsAvailable().filter { !primary.contains($0) }
+			let groups = [primary, more].filter { !$0.isEmpty }
+			return UIMenu(title: "", children: groups.map {
+				UIMenu(title: "", options: .displayInline, children: $0.map(editItem))
+			})
+		}
+
+		// Nothing selected: drop a new pin at the click, optionally followed by another action
+		func addItem(_ titleImage: (label: String, image: UIImage?),
+		             handler: ((MapView) -> Void)? = nil) -> UIAction
+		{
+			return UIAction(title: titleImage.label,
+			                image: titleImage.image,
+			                handler: { [weak self] _ in
+			                	guard let self else { return }
+			                	self.removePin()
+			                	self.editorLayer.addNode(at: location)
+			                	if self.pushPin != nil {
+			                		handler?(self)
+			                	}
+			                })
+		}
+		var items = [
+			addItem(EDIT_ACTION.DROP_PIN.actionTitle())
+		]
+		if UIPasteboard.general.hasStrings {
+			items.append(
+				addItem(EDIT_ACTION.PASTETAGS.actionTitle()) {
+					$0.editorLayer.performEdit(.PASTETAGS)
+				})
+		}
+		items.append(
+			addItem(EDIT_ACTION.ADDNOTE.actionTitle()) {
+				$0.addNote()
+			})
+		return UIMenu(title: "", children: items)
 	}
 
 	// This is used to highlight objects when hovering with a mouse
@@ -1029,6 +1100,16 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	}
 
 	func updateSpeechBalloonPosition() {}
+}
+
+@available(iOS 16.0, *)
+extension MapView: UIEditMenuInteractionDelegate {
+	func editMenuInteraction(_ interaction: UIEditMenuInteraction,
+	                         menuFor configuration: UIEditMenuConfiguration,
+	                         suggestedActions: [UIMenuElement]) -> UIMenu?
+	{
+		return contextMenu(at: configuration.sourcePoint)
+	}
 }
 
 @available(iOS 15.0, *)
