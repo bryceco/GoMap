@@ -16,19 +16,18 @@ private struct TextLoc {
 }
 
 private final class PathPoints {
-	public let points: [CGPoint]
-	public let length: CGFloat
+	let points: [CGPoint]
+	let length: CGFloat
 	private var offset: CGFloat = 0.0
 	private var segment = 0
 
-	init(WithPath path: CGPath) {
+	init(path: CGPath) {
 		points = path.getPoints()
-		var len: CGFloat = 0.0
-		if points.count >= 2 {
-			for i in 1..<points.count {
-				len += hypot(points[i].x - points[i - 1].x,
-				             points[i].y - points[i - 1].y)
-			}
+		var len: CGFloat = 0
+		for i in 1..<points.count {
+			let p1 = points[i - 1]
+			let p2 = points[i]
+			len += hypot(p2.x - p1.x, p2.y - p1.y)
 		}
 		length = len
 	}
@@ -38,8 +37,8 @@ private final class PathPoints {
 		offset = 0.0
 	}
 
-	func advanceOffsetBy(_ delta2: CGFloat) -> Bool {
-		var delta = delta2
+	func advanceOffsetBy(_ delta: CGFloat) -> Bool {
+		var delta = delta
 		while segment < points.count - 1 {
 			let len = hypot(points[segment + 1].x - points[segment].x,
 			                points[segment + 1].y - points[segment].y)
@@ -74,23 +73,16 @@ private final class PathPoints {
 	}
 }
 
-private final class StringGlyphsCache: NSCache<NSString, StringGlyphs> {
-	override init() {
-		super.init()
-		countLimit = 100
-	}
-}
-
 private final class StringGlyphs {
-	// static stuff
-	public static var uiFont = UIFont.preferredFont(forTextStyle: .subheadline)
+	static var uiFont = UIFont.preferredFont(forTextStyle: .subheadline)
 
-	private static let cache = { () -> StringGlyphsCache in
-		let c = StringGlyphsCache()
+	private static let cache: NSCache<NSString, StringGlyphs> = {
+		let c = NSCache<NSString, StringGlyphs>()
+		c.countLimit = 100
 		NotificationCenter.default.addObserver(
 			forName: UIContentSizeCategory.didChangeNotification,
 			object: nil,
-			queue: OperationQueue.main,
+			queue: .main,
 			using: { _ in
 				resetCache()
 			})
@@ -102,105 +94,83 @@ private final class StringGlyphs {
 		cache.removeAllObjects()
 	}
 
-	// objects
+	let runs: [CTRun]
+	let rect: CGRect
 
-	public let runs: [CTRun]
-	public let rect: CGRect
-
-	private init?(withString string: NSString) {
+	private init?(string: NSString) {
 		let attrString = NSAttributedString(string: string as String,
-		                                    attributes: [NSAttributedString.Key.font: StringGlyphs.uiFont])
+		                                    attributes: [.font: StringGlyphs.uiFont])
 		let ctLine = CTLineCreateWithAttributedString(attrString)
-		guard let runs = (CTLineGetGlyphRuns(ctLine) as? [CTRun]) else {
+		guard let runs = CTLineGetGlyphRuns(ctLine) as? [CTRun] else {
 			return nil
 		}
 		self.runs = runs
-		rect = CTLineGetBoundsWithOptions(ctLine, CTLineBoundsOptions.useGlyphPathBounds)
+		rect = CTLineGetBoundsWithOptions(ctLine, .useGlyphPathBounds)
 	}
 
-	public static func glyphsForRun(_ run: CTRun) -> [CGGlyph] {
+	static func glyphsForRun(_ run: CTRun) -> [CGGlyph] {
 		let count = CTRunGetGlyphCount(run)
-		let glyphs = [CGGlyph](unsafeUninitializedCapacity: count) { buffer, initializedCount in
-			CTRunGetGlyphs(run, CFRangeMake(0, count), buffer.baseAddress!)
+		return [CGGlyph](unsafeUninitializedCapacity: count) { buffer, initializedCount in
+			CTRunGetGlyphs(run, CFRange(location: 0, length: count), buffer.baseAddress!)
 			initializedCount = count
 		}
-		return glyphs
 	}
 
-	public static func advancesForRun(_ run: CTRun) -> [CGSize] {
+	static func advancesForRun(_ run: CTRun) -> [CGSize] {
 		let count = CTRunGetGlyphCount(run)
-		let advances = [CGSize](unsafeUninitializedCapacity: count) { buffer, initializedCount in
-			CTRunGetAdvances(run, CFRangeMake(0, count), buffer.baseAddress!)
+		return [CGSize](unsafeUninitializedCapacity: count) { buffer, initializedCount in
+			CTRunGetAdvances(run, CFRange(location: 0, length: count), buffer.baseAddress!)
 			initializedCount = count
 		}
-		return advances
 	}
 
-	public static func stringIndicesForRun(_ run: CTRun) -> [CFIndex] {
-		let count = CTRunGetGlyphCount(run)
-		let advances = [CFIndex](unsafeUninitializedCapacity: count) { buffer, initializedCount in
-			CTRunGetStringIndices(run, CFRangeMake(0, count), buffer.baseAddress!)
-			initializedCount = count
-		}
-		return advances
+	static func fontForRun(_ run: CTRun) -> CTFont {
+		(CTRunGetAttributes(run) as Dictionary)[kCTFontAttributeName] as! CTFont
 	}
 
-	public static func fontForRun(_ run: CTRun) -> CTFont {
-		let attr = CTRunGetAttributes(run) as Dictionary
-		let value = attr["NSFont" as NSString]
-		let font = value as! CTFont
-		return font
-	}
-
-	public static func stringGlyphsForString(string: NSString) -> StringGlyphs? {
-		if let glyphs = StringGlyphs.cache.object(forKey: string) {
+	static func forString(_ string: NSString) -> StringGlyphs? {
+		if let glyphs = cache.object(forKey: string) {
 			return glyphs
-		} else if let glyphs = StringGlyphs(withString: string) {
-			StringGlyphs.cache.setObject(glyphs, forKey: string as NSString)
-			return glyphs
-		} else {
+		}
+		guard let glyphs = StringGlyphs(string: string) else {
 			return nil
 		}
+		cache.setObject(glyphs, forKey: string)
+		return glyphs
 	}
 }
 
 final class CurvedGlyphLayer {
-	// static stuff
-	public static var foreColor = UIColor.white
-	public static var backColor = UIColor.black.withAlphaComponent(0.3)
+	static var foreColor = UIColor.white
+	static var backColor = UIColor.black.withAlphaComponent(0.3)
 
 	static var whiteOnBlack = true {
 		didSet {
 			if oldValue != whiteOnBlack {
 				GlyphLayer.clearCache()
-				CurvedGlyphLayer.foreColor = whiteOnBlack ? UIColor.white : UIColor.black
-				CurvedGlyphLayer.backColor = (whiteOnBlack ? UIColor.black : UIColor.white).withAlphaComponent(0.3)
+				foreColor = whiteOnBlack ? .white : .black
+				backColor = (whiteOnBlack ? UIColor.black : .white).withAlphaComponent(0.3)
 			}
 		}
 	}
 
-	// objects
-
 	private let stringGlyphs: StringGlyphs
 	private let pathPoints: PathPoints
 
-	// calling init() on a CALayer subclass from Obj-C doesn't work on iOS 9
-	private init(withGlyphs stringGlyphs: StringGlyphs, frame _: CGRect, pathPoints: PathPoints) {
-		self.stringGlyphs = stringGlyphs
+	private init(glyphs: StringGlyphs, pathPoints: PathPoints) {
+		stringGlyphs = glyphs
 		self.pathPoints = pathPoints
 	}
 
-	public static func layer(WithString string: NSString, alongPath path: CGPath) -> CurvedGlyphLayer? {
-		guard let glyphRuns = StringGlyphs.stringGlyphsForString(string: string) else { return nil }
-		let pathPoints = PathPoints(WithPath: path)
+	static func layer(withString string: String, alongPath path: CGPath) -> CurvedGlyphLayer? {
+		guard let glyphRuns = StringGlyphs.forString(string as NSString) else { return nil }
+		let pathPoints = PathPoints(path: path)
 
 		if glyphRuns.rect.size.width + 8 >= pathPoints.length {
 			return nil // doesn't fit
 		}
 
-		let frame = path.boundingBox.insetBy(dx: -20, dy: -20)
-		let layer = CurvedGlyphLayer(withGlyphs: glyphRuns, frame: frame, pathPoints: pathPoints)
-		return layer
+		return CurvedGlyphLayer(glyphs: glyphRuns, pathPoints: pathPoints)
 	}
 
 	func glyphLayers() -> [GlyphLayer]? {
@@ -242,7 +212,8 @@ final class CurvedGlyphLayer {
 						if abs(a) * (180.0 / CGFloat.pi) > 1.0 {
 							// hit an angle so stop the run
 							if a < 0 {
-								// If this is an acute angle then we need to advance a little extra so the next run doesn't overlap with this run
+								// If this is an acute angle then we need to advance a little extra
+								// so the next run doesn't overlap with this run
 								let h = baselineOffset / 2 + size.height
 								if -a < CGFloat.pi / 2 {
 									let d = h * sin(-a)
@@ -304,9 +275,9 @@ final class CurvedGlyphLayer {
 		let attrString = NSAttributedString(
 			string: string,
 			attributes: [
-				NSAttributedString.Key.foregroundColor: CurvedGlyphLayer.foreColor.cgColor,
-				NSAttributedString.Key.font: font,
-				NSAttributedString.Key.paragraphStyle: paragraphStyle
+				.foregroundColor: CurvedGlyphLayer.foreColor.cgColor,
+				.font: font,
+				.paragraphStyle: paragraphStyle
 			])
 
 		let framesetter = CTFramesetterCreateWithAttributedString(attrString)
@@ -315,7 +286,7 @@ final class CurvedGlyphLayer {
 		var maxWidth = MAX_TEXT_WIDTH
 		while true {
 			bounds.size = CTFramesetterSuggestFrameSizeWithConstraints(framesetter,
-			                                                           CFRangeMake(0, attrString.length),
+			                                                           CFRange(location: 0, length: attrString.length),
 			                                                           nil,
 			                                                           CGSize(width: maxWidth, height: 1000.0),
 			                                                           nil)
@@ -331,9 +302,9 @@ final class CurvedGlyphLayer {
 		layer.bounds = bounds
 
 		layer.string = attrString
-		layer.truncationMode = CATextLayerTruncationMode.none
+		layer.truncationMode = .none
 		layer.isWrapped = true
-		layer.alignmentMode = CATextLayerAlignmentMode.left // because our origin is -3 this is actually centered
+		layer.alignmentMode = .left // because our origin is -3 this is actually centered
 
 		layer.backgroundColor = backColor.cgColor
 
@@ -342,7 +313,7 @@ final class CurvedGlyphLayer {
 }
 
 final class GlyphLayer: CALayerWithProperties {
-	private static let cache = { () -> NSCache<NSData, GlyphLayer> in
+	private static let cache: NSCache<NSData, GlyphLayer> = {
 		let c = NSCache<NSData, GlyphLayer>()
 		c.countLimit = 200
 		NotificationCenter.default.addObserver(
@@ -361,7 +332,7 @@ final class GlyphLayer: CALayerWithProperties {
 	var inUse: Bool
 
 	private func copy() -> GlyphLayer {
-		return GlyphLayer(withCopy: self)
+		return GlyphLayer(copying: self)
 	}
 
 	override func removeFromSuperlayer() {
@@ -378,7 +349,7 @@ final class GlyphLayer: CALayerWithProperties {
 		cache.removeAllObjects()
 	}
 
-	private init(withFont font: CTFont, glyphs: [CGGlyph], positions: [CGPoint]) {
+	private init(font: CTFont, glyphs: [CGGlyph], positions: [CGPoint]) {
 		self.glyphs = glyphs
 		self.positions = positions
 		self.font = font
@@ -388,27 +359,22 @@ final class GlyphLayer: CALayerWithProperties {
 		let descent = CTFontGetDescent(font)
 		bounds = CGRect(x: 0, y: descent, width: positions.last!.x, height: size.height)
 		contentsScale = UIScreen.main.scale
-		anchorPoint = CGPoint.zero
+		anchorPoint = .zero
 		backgroundColor = CurvedGlyphLayer.backColor.cgColor
 		setNeedsDisplay()
 	}
 
-	private init(withCopy copy: GlyphLayer) {
-		glyphs = copy.glyphs
-		positions = copy.positions
-		font = copy.font
+	private init(copying source: GlyphLayer) {
+		glyphs = source.glyphs
+		positions = source.positions
+		font = source.font
 		inUse = true
 		super.init()
-		contentsScale = copy.contentsScale
-		anchorPoint = copy.anchorPoint
-		bounds = copy.bounds
-		backgroundColor = copy.backgroundColor
-#if false
-		// BUG: apparently the contents can be invalidated without us being notified, resulting in missing glyphs
-		contents = copy.contents // use existing backing store so we don't have to redraw
-#else
-		setNeedsDisplay() // FIXME: need to either fix this problem or cache better
-#endif
+		contentsScale = source.contentsScale
+		anchorPoint = source.anchorPoint
+		bounds = source.bounds
+		backgroundColor = source.backgroundColor
+		setNeedsDisplay()
 	}
 
 	override init(layer: Any) {
@@ -420,7 +386,7 @@ final class GlyphLayer: CALayerWithProperties {
 		super.init(layer: layer)
 	}
 
-	public static func layer(withFont font: CTFont, glyphs: [CGGlyph], positions: [CGPoint]) -> GlyphLayer? {
+	static func layer(withFont font: CTFont, glyphs: [CGGlyph], positions: [CGPoint]) -> GlyphLayer? {
 		let key = glyphs.withUnsafeBytes { a in
 			NSData(bytes: a.baseAddress, length: a.count)
 		}
@@ -430,11 +396,10 @@ final class GlyphLayer: CALayerWithProperties {
 			}
 			layer.inUse = true
 			return layer
-		} else {
-			let layer = GlyphLayer(withFont: font, glyphs: glyphs, positions: positions)
-			cache.setObject(layer, forKey: key)
-			return layer
 		}
+		let layer = GlyphLayer(font: font, glyphs: glyphs, positions: positions)
+		cache.setObject(layer, forKey: key)
+		return layer
 	}
 
 	@available(*, unavailable)
@@ -444,7 +409,7 @@ final class GlyphLayer: CALayerWithProperties {
 
 	override func draw(in context: CGContext) {
 		context.saveGState()
-		context.textMatrix = CGAffineTransform.identity
+		context.textMatrix = .identity
 		context.translateBy(x: 0, y: bounds.size.height)
 		context.scaleBy(x: 1.0, y: -1.0)
 		context.setFillColor(CurvedGlyphLayer.foreColor.cgColor)

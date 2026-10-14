@@ -1643,7 +1643,7 @@ final class EditorMapLayer: CALayer {
 					if let path = pathClipped(toViewRect: way.isWay()!, length: &length),
 					   length >= CGFloat(name.count) * Pixels_Per_Character
 					{
-						if let layer = CurvedGlyphLayer.layer(WithString: name as NSString, alongPath: path),
+						if let layer = CurvedGlyphLayer.layer(withString: name, alongPath: path),
 						   let a = layer.glyphLayers(),
 						   a.count > 0
 						{
