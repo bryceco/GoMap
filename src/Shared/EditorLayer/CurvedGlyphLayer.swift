@@ -313,8 +313,11 @@ final class CurvedGlyphLayer {
 }
 
 final class GlyphLayer: CALayerWithProperties {
-	private static let cache: NSCache<NSData, GlyphLayer> = {
-		let c = NSCache<NSData, GlyphLayer>()
+	// Glyph runs rasterized once and shared by every layer that displays the same run.
+	// Caching the image rather than the layer is safe: a CGImage is immutable and has
+	// no superlayer, so any number of layers can show it at once.
+	private static let imageCache: NSCache<NSData, CGImage> = {
+		let c = NSCache<NSData, CGImage>()
 		c.countLimit = 200
 		NotificationCenter.default.addObserver(
 			forName: UIContentSizeCategory.didChangeNotification,
@@ -326,18 +329,8 @@ final class GlyphLayer: CALayerWithProperties {
 		return c
 	}()
 
-	private let glyphs: [CGGlyph]
-	private let positions: [CGPoint]
-	private let font: CTFont
-	var inUse: Bool
-
-	private func copy() -> GlyphLayer {
-		return GlyphLayer(copying: self)
-	}
-
-	override func removeFromSuperlayer() {
-		inUse = false
-		super.removeFromSuperlayer()
+	static func clearCache() {
+		imageCache.removeAllObjects()
 	}
 
 	override func action(forKey _: String) -> CAAction? {
@@ -345,15 +338,37 @@ final class GlyphLayer: CALayerWithProperties {
 		return NSNull()
 	}
 
-	static func clearCache() {
-		cache.removeAllObjects()
+	private static func cacheKey(font: CTFont, glyphs: [CGGlyph]) -> NSData {
+		// Glyph IDs are only meaningful within a font, so the font is part of the key.
+		let key = NSMutableData()
+		var size = CTFontGetSize(font)
+		withUnsafeBytes(of: &size) { key.append($0.baseAddress!, length: $0.count) }
+		key.append(Data((CTFontCopyPostScriptName(font) as String).utf8))
+		glyphs.withUnsafeBytes { key.append($0.baseAddress!, length: $0.count) }
+		return key
+	}
+
+	private static func image(font: CTFont, glyphs: [CGGlyph], positions: [CGPoint], bounds: CGRect) -> CGImage? {
+		guard bounds.width > 0, bounds.height > 0 else {
+			return nil
+		}
+		let format = UIGraphicsImageRendererFormat.default()
+		format.scale = UIScreen.main.scale
+		format.opaque = false
+		let renderer = UIGraphicsImageRenderer(size: bounds.size, format: format)
+		return renderer.image { ctx in
+			let context = ctx.cgContext
+			// Draw in the layer's bounds coordinate space, as draw(in:) would
+			context.translateBy(x: -bounds.origin.x, y: -bounds.origin.y)
+			context.textMatrix = .identity
+			context.translateBy(x: 0, y: bounds.size.height)
+			context.scaleBy(x: 1.0, y: -1.0)
+			context.setFillColor(CurvedGlyphLayer.foreColor.cgColor)
+			CTFontDrawGlyphs(font, glyphs, positions, glyphs.count, context)
+		}.cgImage
 	}
 
 	private init(font: CTFont, glyphs: [CGGlyph], positions: [CGPoint]) {
-		self.glyphs = glyphs
-		self.positions = positions
-		self.font = font
-		inUse = true
 		super.init()
 		let size = CTFontGetBoundingBox(font).size
 		let descent = CTFontGetDescent(font)
@@ -361,59 +376,22 @@ final class GlyphLayer: CALayerWithProperties {
 		contentsScale = UIScreen.main.scale
 		anchorPoint = .zero
 		backgroundColor = CurvedGlyphLayer.backColor.cgColor
-		setNeedsDisplay()
-	}
 
-	private init(copying source: GlyphLayer) {
-		glyphs = source.glyphs
-		positions = source.positions
-		font = source.font
-		inUse = true
-		super.init()
-		contentsScale = source.contentsScale
-		anchorPoint = source.anchorPoint
-		bounds = source.bounds
-		backgroundColor = source.backgroundColor
-		setNeedsDisplay()
-	}
-
-	override init(layer: Any) {
-		let layer = layer as! GlyphLayer
-		glyphs = layer.glyphs
-		positions = layer.positions
-		font = layer.font
-		inUse = true
-		super.init(layer: layer)
+		let key = Self.cacheKey(font: font, glyphs: glyphs)
+		if let image = Self.imageCache.object(forKey: key) {
+			contents = image
+		} else if let image = Self.image(font: font, glyphs: glyphs, positions: positions, bounds: bounds) {
+			Self.imageCache.setObject(image, forKey: key)
+			contents = image
+		}
 	}
 
 	static func layer(withFont font: CTFont, glyphs: [CGGlyph], positions: [CGPoint]) -> GlyphLayer? {
-		let key = glyphs.withUnsafeBytes { a in
-			NSData(bytes: a.baseAddress, length: a.count)
-		}
-		if let layer = cache.object(forKey: key) {
-			if layer.inUse {
-				return layer.copy()
-			}
-			layer.inUse = true
-			return layer
-		}
-		let layer = GlyphLayer(font: font, glyphs: glyphs, positions: positions)
-		cache.setObject(layer, forKey: key)
-		return layer
+		return GlyphLayer(font: font, glyphs: glyphs, positions: positions)
 	}
 
 	@available(*, unavailable)
 	required init?(coder _: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
-	}
-
-	override func draw(in context: CGContext) {
-		context.saveGState()
-		context.textMatrix = .identity
-		context.translateBy(x: 0, y: bounds.size.height)
-		context.scaleBy(x: 1.0, y: -1.0)
-		context.setFillColor(CurvedGlyphLayer.foreColor.cgColor)
-		CTFontDrawGlyphs(font, glyphs, positions, glyphs.count, context)
-		context.restoreGState()
 	}
 }
