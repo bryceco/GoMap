@@ -18,14 +18,17 @@ struct PresetAddressFormat: Decodable {
 	}
 
 	/// Street-level address keys appropriate for a short pushpin-style display.
-	private static let streetLevelKeys: Set<String> = [
-		"housename", "housenumber", "street", "place",
-		"unit", "block_number", "floor", "conscriptionnumber"
-	]
-
-	/// Keys whose values are often mixed-script (e.g. "5A") and must not decide the label's base direction.
-	private static let isolatedKeys: Set<String> = [
-		"housenumber", "unit", "block_number", "floor", "conscriptionnumber"
+	/// The Bool value indicates whether the key is "isolated" — its values are often
+	/// mixed-script (e.g. "5A") and must not decide the label's base direction.
+	private static let streetLevelKeys: [String: Bool] = [
+		"housename": false,
+		"housenumber": true,
+		"street": false,
+		"place": false,
+		"unit": true,
+		"block_number": true,
+		"floor": true,
+		"conscriptionnumber": true
 	]
 
 	/// Formats a short street-level address from the given tags,
@@ -40,11 +43,11 @@ struct PresetAddressFormat: Decodable {
 
 				// Try each alternative, using the first street-level one that has a value
 				for alt in alternatives {
-					if Self.streetLevelKeys.contains(alt),
+					if let isolated = Self.streetLevelKeys[alt],
 					   let value = tags["addr:\(alt)"],
 					   !value.isEmpty
 					{
-						if Self.isolatedKeys.contains(alt) {
+						if isolated {
 							// Add BIDI control characters: FSI & PDI
 							// This says don't look at this text for determining layout direction
 							parts.append("\u{2068}\(value)\u{2069}")
