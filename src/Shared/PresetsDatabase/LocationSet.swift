@@ -28,7 +28,7 @@ struct LocationSet {
 		init(_ value: Any) {
 			switch value {
 			case let s as String:
-				if s == "001" {
+				if s == "001" || s == "Planet" {
 					self = .world
 				} else if s.hasSuffix(".geojson") {
 					self = .geojson(s)
@@ -131,7 +131,7 @@ extension LocationSet.LocationEntry: Decodable {
 	init(from decoder: Decoder) throws {
 		let container = try decoder.singleValueContainer()
 		if let string = try? container.decode(String.self) {
-			if string == "001" {
+			if string == "001" || string == "Planet" {
 				self = .world
 			} else if string.hasSuffix(".geojson") {
 				self = .geojson(string)
