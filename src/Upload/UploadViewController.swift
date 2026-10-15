@@ -506,8 +506,8 @@ class UploadViewController: UIViewController {
 	private func updateActionButtons() {
 		let hasSelection = !selectedGroupIndices.isEmpty
 		commitButton.isEnabled = hasSelection
-		exportOscButton.isEnabled = hasSelection
 		editXmlButton.isEnabled = hasSelection
+		exportOscButton.isEnabled = !connectedGroups.isEmpty
 	}
 
 	/// Inserts or removes the empty-comment warning section
@@ -868,9 +868,9 @@ class UploadViewController: UIViewController {
 	}
 
 	@objc func exportOscFile(_ sender: Any) {
-		let objects = selectedGroups.reduce(into: Set<OsmBaseObject>()) { $0.formUnion($1.objects) }
+		let objects = connectedGroups.reduce(into: Set<OsmBaseObject>()) { $0.formUnion($1.objects) }
 		let doc = OsmXmlGenerator.createXmlFor(objects: objects, generator: AppDelegate.shared.generator)
-		guard !selectedGroupIndices.isEmpty,
+		guard !connectedGroups.isEmpty,
 		      let text = doc?.xmlString(withOptions: UInt(XMLNodePrettyPrint)).data(using: .utf8),
 		      let path = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first?
 		      .appendingPathComponent("osmChange.osc"),
