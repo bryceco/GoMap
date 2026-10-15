@@ -584,7 +584,10 @@ class UploadViewController: UIViewController {
 		}
 		for i in 0..<count {
 			for j in (i + 1)..<count {
-				guard let bi = expandedBoxes[i], let bj = expandedBoxes[j] else { continue }
+				guard
+					let bi = expandedBoxes[i],
+					let bj = expandedBoxes[j]
+				else { continue }
 				if bi.intersectsRect(bj) {
 					parent[find(i)] = find(j)
 				}
@@ -607,7 +610,14 @@ class UploadViewController: UIViewController {
 		for (index, group) in connectedGroups.enumerated() {
 			let hasUntagged = group.objects.contains { obj in
 				guard !obj.deleted else { return false }
-				if let node = obj as? OsmNode, node.wayCount > 0 {
+				if let node = obj as? OsmNode,
+				   node.wayCount > 0
+				{
+					return false
+				}
+				if let way = obj as? OsmWay,
+				   way.isMultipolygonMember()
+				{
 					return false
 				}
 				return obj.tags.isEmpty

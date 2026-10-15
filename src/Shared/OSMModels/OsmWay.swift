@@ -179,7 +179,9 @@ final class OsmWay: OsmBaseObject {
 
 	func isMultipolygonMember() -> Bool {
 		for parent in parentRelations {
-			if parent.isMultipolygon(), !parent.tags.isEmpty {
+			if parent.isMultipolygon(),
+			   !parent.tags.isEmpty
+			{
 				return true
 			}
 		}
