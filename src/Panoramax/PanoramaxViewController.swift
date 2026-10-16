@@ -201,7 +201,7 @@ class PanoramaxViewController: UIViewController {
 		photoPicker.onError = {}
 		photoPicker.onAccept = { image, imageData in
 			Task {
-				await self.uploadImage(image: image, imageData: imageData)
+				await self.uploadImage(image: image, imageData: imageData, date: Date())
 			}
 		}
 		photoPicker.modalPresentationStyle = .fullScreen
@@ -235,15 +235,25 @@ class PanoramaxViewController: UIViewController {
 			present(alert, animated: true)
 			return
 		}
+		// Extract the original capture date from EXIF metadata
+		var captureDate = Date()
+		if let exif = properties[kCGImagePropertyExifDictionary as String] as? [String: Any],
+		   let dateString = exif[kCGImagePropertyExifDateTimeOriginal as String] as? String
+		{
+			let formatter = DateFormatter()
+			formatter.dateFormat = "yyyy:MM:dd HH:mm:ss"
+			formatter.locale = Locale(identifier: "en_US_POSIX")
+			if let date = formatter.date(from: dateString) {
+				captureDate = date
+			}
+		}
 		Task {
-			await uploadImage(image: image, imageData: data)
+			await uploadImage(image: image, imageData: data, date: captureDate)
 		}
 	}
 
 	@MainActor
-	func uploadImage(image: UIImage, imageData: Data) async {
-		// get date and name
-		let date = Date()
+	func uploadImage(image: UIImage, imageData: Data, date: Date) async {
 		let formatter = DateFormatter()
 		formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
 		let name = formatter.string(from: date) + ".jpg"
@@ -273,7 +283,7 @@ class PanoramaxViewController: UIViewController {
 						// try again
 						// Without the pause the server doesn't always accept our cookie
 						try await Task.sleep(nanoseconds: 100_000000)
-						await self.uploadImage(image: image, imageData: imageData)
+						await self.uploadImage(image: image, imageData: imageData, date: date)
 						return
 					}
 					throw error
