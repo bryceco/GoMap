@@ -34,7 +34,8 @@ final class DisplayLink {
 	func setFrameRate() {
 		if #available(iOS 15.0, *) {
 			let maxFPS = Float(UIScreen.main.maximumFramesPerSecond)
-			let preferredFPS = (UserPrefs.shared.maximizeFrameRate.value ?? false) ? maxFPS : 60.0
+			guard maxFPS >= 30 else { return }
+			let preferredFPS = (UserPrefs.shared.maximizeFrameRate.value ?? false) ? maxFPS : min(60.0, maxFPS)
 			let rng = CAFrameRateRange(minimum: 30.0,
 			                           maximum: maxFPS,
 			                           preferred: preferredFPS)
