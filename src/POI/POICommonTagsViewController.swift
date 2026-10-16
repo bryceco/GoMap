@@ -843,7 +843,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		else { return }
 
 		let value2 = textView.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) ?? ""
-		let value = OsmTags.fixUpOpeningHours(withKey: cell.presetKey.tagKey, value: value2) ?? value2
+		let value = OsmTags.fixUpOpeningHours(withType: cell.presetKey.type, value: value2) ?? value2
 		textView.text = value
 		textViewDidChange(textView)
 		updateTagDict(withValue: value, forKey: cell.presetKey.tagKey)

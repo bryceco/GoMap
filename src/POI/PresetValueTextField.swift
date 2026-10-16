@@ -178,10 +178,15 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 
 			// do automatic value updates for special keys
 			// add https:// prefix to website=
+			let fieldType = presetKey?.type
+				?? owner.allPresetKeys.first(where: { key == $0.tagKey })?.type
+				?? PresetsDatabase.shared.presetFields.values.first(where: {
+					$0.key == key || ($0.keys?.contains(key) ?? false)
+				})?.type
 			if let newValue = OsmTags.convertWikiUrlToReference(withKey: key, value: value)
 				?? OsmTags.stripContactPrefix(withKey: key, value: value)
 				?? OsmTags.convertWebsiteValueToHttps(withKey: key, value: value)
-				?? OsmTags.fixUpOpeningHours(withKey: key, value: value)
+				?? OsmTags.fixUpOpeningHours(withType: fieldType, value: value)
 			{
 				value = newValue
 			}

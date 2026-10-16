@@ -212,8 +212,8 @@ final class OsmTags {
 		return "https://" + url
 	}
 
-	static func fixUpOpeningHours(withKey key: String, value: String) -> String? {
-		guard Self.isKey(key, variantOf: "opening_hours") else {
+	static func fixUpOpeningHours(withType type: PresetField.FieldType?, value: String) -> String? {
+		guard type == .schedule else {
 			return nil
 		}
 		var value = value
@@ -256,6 +256,12 @@ final class OsmTags {
 			   let f2 = fixTime(t2)
 			{
 				value += f1 + "-" + f2
+				continue
+			} else if let t1 = t1,
+			          dash == nil,
+			          let f1 = fixTime(t1)
+			{
+				value += f1
 				continue
 			}
 			value += t1 ?? ""
