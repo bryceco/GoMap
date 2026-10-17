@@ -68,15 +68,14 @@ class FeaturePresetAreaCell: UITableViewCell {
 }
 
 class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, UITextViewDelegate,
-	POIFeaturePickerDelegate, KeyValueTableCellOwner, PresetValueTextFieldOwner
+	POIFeaturePickerDelegate, KeyValueTableCellOwner, PresetValueTextFieldOwner, PresetDisplayObserver
 {
 	@IBOutlet var saveButton: UIBarButtonItem!
 	private var allPresets: PresetDisplayForFeature? {
 		didSet { computeExtraTags() }
 	}
 
-	private var selectedFeature: PresetFeature? // the feature selected by the user, not derived from tags (e.g. Address)
-	private var currentFeature: PresetFeature? // the feature that was most recently inferred from the tags
+	private var currentFeature: PresetFeature? { (tabBarController as! POITabBarController).currentFeature }
 	private var childPushed = false
 	private var drillDownGroup: PresetDisplayGroup?
 	private var extraTags: KeyValueTableSection! // array of key/values not covered by presets
@@ -182,32 +181,23 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		else { return }
 
 		let currentSignature = allPresets?.allPresetKeys().map { $0.tagKey } ?? []
-		let object = tabController.selection
-		let geometry = object?.geometry() ?? GEOMETRY.POINT
-		// Mirror updatePresets()'s update closure so newly revealed fields whose
-		// value lists come from TagInfo still get their async refresh installed.
-		let newPresets = PresetDisplayForFeature(
-			withFeature: currentFeature,
-			objectTags: tabController.keyValueDict,
-			geometry: geometry,
-			update: { [weak self] in
-				if let self,
-				   !self.isEditing
-				{
-					self.allPresets = PresetDisplayForFeature(
-						withFeature: self.currentFeature,
-						objectTags: tabController.keyValueDict,
-						geometry: geometry,
-						update: nil)
-					self.tableView.reloadData()
-				}
-			})
+		let newPresets = tabController.presetDisplay
 		let newSignature = newPresets.allPresetKeys().map { $0.tagKey }
 
 		if currentSignature != newSignature {
 			allPresets = newPresets
 			tableView.reloadData()
 		}
+	}
+
+	/// TagInfo results arrived for one of the fields
+	func presetsDidChange() {
+		guard drillDownGroup == nil,
+		      !isEditing,
+		      let tabController = tabBarController as? POITabBarController
+		else { return }
+		allPresets = tabController.presetDisplay
+		tableView.reloadData()
 	}
 
 	func updatePresets() {
@@ -219,42 +209,13 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		}
 
 		if drillDownGroup == nil {
-			let dict = tabController.keyValueDict
-			let object = tabController.selection
-			let geometry = object?.geometry() ?? GEOMETRY.POINT
-
-			// update most recent feature
-			selectedFeature = selectedFeature ?? PresetsDatabase.shared.presetFeatureMatching(
-				tags: dict,
-				geometry: geometry,
-				location: AppDelegate.shared.mainView.currentRegion,
-				includeNSI: true)
-			currentFeature = selectedFeature
-
-			if let feature = selectedFeature {
+			if let feature = tabController.currentFeature {
+				let geometry = tabController.geometry
 				POIFeaturePickerViewController.loadMostRecent(forGeometry: geometry)
 				POIFeaturePickerViewController.updateMostRecentArray(withSelection: feature, geometry: geometry)
 			}
 
-			allPresets = PresetDisplayForFeature(
-				withFeature: selectedFeature,
-				objectTags: dict,
-				geometry: geometry,
-				update: { [weak self] in
-					// This closure is called whenever results from TagInfo return, which
-					// may be much later, even after we've been dismissed. We need to rebuild
-					// the preset list in response.
-					if let self,
-					   !self.isEditing
-					{
-						self.allPresets = PresetDisplayForFeature(
-							withFeature: self.currentFeature,
-							objectTags: tabController.keyValueDict,
-							geometry: geometry,
-							update: nil)
-						self.tableView.reloadData()
-					}
-				})
+			allPresets = tabController.presetDisplay
 			computeExtraTags()
 		}
 
@@ -264,7 +225,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	func computeExtraTags() {
 		var presetKeys = (allPresets?.allPresetKeys() ?? []).map { $0.tagKey }
 		// The first entry is the Feature Type, so we need to special case it
-		if let feature = selectedFeature,
+		if let feature = currentFeature,
 		   presetKeys.first == ""
 		{
 			presetKeys.remove(at: 0)
@@ -293,8 +254,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	override func viewWillDisappear(_ animated: Bool) {
 		view.endEditing(true)
 		super.viewWillDisappear(animated)
-		selectedFeature = nil
-		currentFeature = nil
 		childPushed = true
 	}
 
@@ -336,13 +295,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 	func featurePicker(_ typeViewController: POIFeaturePickerViewController,
 	                   didChangeFeatureTo newFeature: PresetFeature)
 	{
-		selectedFeature = newFeature
-		let tabController = tabBarController as! POITabBarController
-		let geometry = tabController.selection?.geometry() ?? GEOMETRY.POINT
-		let location = AppDelegate.shared.mainView.currentRegion
-		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
-		                                                                    geometry: geometry,
-		                                                                    location: location)
+		(tabBarController as! POITabBarController).setFeature(newFeature)
 	}
 
 	// MARK: - Table view data source
@@ -475,7 +428,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 				let text = allPresets?.featureName ?? ""
 				cell.valueField.text = text
 				cell.valueField.isEnabled = false
-				cell.isSet.backgroundColor = (selectedFeature?.addTags.count ?? 0) > 0 ? Self.isSetHighlight : nil
+				cell.isSet.backgroundColor = (currentFeature?.addTags.count ?? 0) > 0 ? Self.isSetHighlight : nil
 
 				let setupIcon: (UIImage) -> Void = { icon in
 					let view = UIImageView(image: icon)
@@ -929,7 +882,6 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		}
 
 		// the feature type might have changed, so recompute everything
-		selectedFeature = nil
 		updatePresets()
 	}
 }

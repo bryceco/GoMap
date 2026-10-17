@@ -7,14 +7,98 @@
 
 import UIKit
 
+/// Adopted by tabs that display POITabBarController.presetDisplay, so they can
+/// reload when the field list changes asynchronously.
+protocol PresetDisplayObserver: AnyObject {
+	func presetsDidChange()
+}
+
 class POITabBarController: UITabBarController {
-	var keyValueDict = [String: String]()
+	var keyValueDict = [String: String]() {
+		didSet {
+			if keyValueDict != oldValue {
+				// the feature and its fields are derived from the tags, so rebuild them lazily
+				featureNeedsMatching = true
+				cachedPresets = nil
+			}
+		}
+	}
+
 	var relationList: [OsmRelation] = []
 	var selection: OsmBaseObject?
 	var preservedFeatureTypeSearchText: String?
 	var allAutocompleteTagKeys: [String] = []
 	/// Members the user removed from the selected relation. Like tags, they aren't applied until we commit.
 	var removedMembers: Set<OsmMember> = []
+
+	/// The feature the user explicitly picked, if any. It takes precedence over tag matching
+	/// (while its tags still hold) because some features can't be re-derived from their tags.
+	private var pickedFeature: PresetFeature?
+	private var cachedFeature: PresetFeature? // nil can mean "no match", so track validity separately
+	private var featureNeedsMatching = true
+
+	var geometry: GEOMETRY { selection?.geometry() ?? .POINT }
+
+	/// The preset feature for keyValueDict: the user's pick while its tags still match,
+	/// otherwise the best match for the current tags. Recomputed whenever the tags change.
+	var currentFeature: PresetFeature? {
+		if !featureNeedsMatching {
+			return cachedFeature
+		}
+		featureNeedsMatching = false
+		let location = AppDelegate.shared.mainView.currentRegion
+		if let picked = pickedFeature,
+		   picked.matchObjectTagsScore(keyValueDict, geometry: geometry, location: location) > 0
+		{
+			cachedFeature = picked
+		} else {
+			pickedFeature = nil
+			cachedFeature = PresetsDatabase.shared.presetFeatureMatching(
+				tags: keyValueDict,
+				geometry: geometry,
+				location: location,
+				includeNSI: true)
+		}
+		return cachedFeature
+	}
+
+	/// Records a feature picked by the user and rewrites the tags for it.
+	func setFeature(_ feature: PresetFeature) {
+		keyValueDict = feature.objectTagsUpdatedForFeature(keyValueDict,
+		                                                   geometry: geometry,
+		                                                   location: AppDelegate.shared.mainView.currentRegion)
+		// set after the tags, since assigning them invalidates the feature
+		pickedFeature = feature
+		cachedFeature = feature
+		featureNeedsMatching = false
+		cachedPresets = nil
+	}
+
+	private var cachedPresets: PresetDisplayForFeature?
+
+	/// The fields for currentFeature, given the current tags. Rebuilt whenever the tags
+	/// change, or when TagInfo results arrive for one of the fields.
+	var presetDisplay: PresetDisplayForFeature {
+		if let cachedPresets {
+			return cachedPresets
+		}
+		let presets = PresetDisplayForFeature(
+			withFeature: currentFeature,
+			objectTags: keyValueDict,
+			geometry: geometry,
+			update: { [weak self] in
+				// Called when results from TagInfo return, which may be much later.
+				// Drop the cache so the next read rebuilds, and let the visible tab re-read it.
+				guard let self else { return }
+				cachedPresets = nil
+				((selectedViewController as? UINavigationController)?.topViewController
+					as? PresetDisplayObserver)?.presetsDidChange()
+			})
+		cachedPresets = presets
+		return presets
+	}
+
+	var allPresetKeys: [PresetDisplayKey] { presetDisplay.allPresetKeys() }
 
 	/// Identifies a tab when saving the user's preferred tab, since not all tabs are always present.
 	private enum TabID: Int {

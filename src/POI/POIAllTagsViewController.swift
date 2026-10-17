@@ -67,13 +67,15 @@ private class SectionHeaderCell: UITableViewHeaderFooterView {
 	}
 }
 
-class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate, KeyValueTableCellOwner {
-	var allPresetKeys: [PresetDisplayKey] = []
+class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate, KeyValueTableCellOwner,
+	PresetDisplayObserver
+{
+	var allPresetKeys: [PresetDisplayKey] { (tabBarController as! POITabBarController).allPresetKeys }
 	private var tags: KeyValueTableSection!
 	private var relations: [OsmRelation] = []
 	private var members: [OsmMember] = []
 	@IBOutlet var saveButton: UIBarButtonItem!
-	private var currentFeature: PresetFeature?
+	private var currentFeature: PresetFeature? { (tabBarController as! POITabBarController).currentFeature }
 	var currentTextField: UITextField?
 	private var prevNextToolbar: KeyboardToolbar!
 
@@ -118,21 +120,11 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		prevNextToolbar = KeyboardToolbar(items: items)
 	}
 
-	// return nil if unchanged, else row to set focus
-	func updateWithRecomendations(forFeature forceReload: Bool) -> Int? {
+	// Rebuilds the table from the tab controller's tags plus placeholder rows for
+	// the current feature's fields. Returns the row to set focus to.
+	// Callers must have written the table's tags back to the tab controller first.
+	func updateWithRecomendations() -> Int {
 		let tabController = tabBarController as! POITabBarController
-		let geometry = tabController.selection?.geometry() ?? GEOMETRY.POINT
-		let dict = tags.keyValueDictionary()
-		let newFeature = PresetsDatabase.shared.presetFeatureMatching(
-			tags: dict,
-			geometry: geometry,
-			location: AppDelegate.shared.mainView.currentRegion,
-			includeNSI: true)
-
-		if !forceReload, newFeature?.featureID == currentFeature?.featureID {
-			return nil
-		}
-		currentFeature = newFeature
 
 		// Keep entries with key & value
 		var list = tags.allTags
@@ -142,19 +134,11 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 		list.append(("", ""))
 
-		// add placeholder keys
-		if let newFeature = currentFeature {
-			let presets = PresetDisplayForFeature(withFeature: newFeature,
-			                                      objectTags: dict,
-			                                      geometry: geometry,
-			                                      update: nil)
-			allPresetKeys = presets.allPresetKeys()
-			let newKeys: Set<String> = Set(allPresetKeys.map({ $0.tagKey }).filter({ $0 != "" }))
-				.subtracting(tags.allTags.map { $0.k })
-
-			for key in Array(newKeys).sorted() {
-				list.append((key, ""))
-			}
+		// add placeholder keys for the current feature's fields
+		let newKeys: Set<String> = Set(allPresetKeys.map({ $0.tagKey }).filter({ $0 != "" }))
+			.subtracting(tags.allTags.map { $0.k })
+		for key in Array(newKeys).sorted() {
+			list.append((key, ""))
 		}
 		tags.setWithoutSorting(list)
 		tableView.reloadData()
@@ -165,6 +149,13 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		}
 
 		return nextRow
+	}
+
+	/// TagInfo results arrived for one of the fields, so value suggestions may have changed
+	func presetsDidChange() {
+		if !isEditing {
+			tableView.reloadData()
+		}
 	}
 
 	func loadState() {
@@ -181,7 +172,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 		tags.set(tabController.keyValueDict.map { ($0.key, $0.value) })
 
-		_ = updateWithRecomendations(forFeature: true)
+		_ = updateWithRecomendations()
 	}
 
 	func saveState() {
@@ -235,13 +226,8 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 	func featurePicker(_ typeViewController: POIFeaturePickerViewController,
 	                   didChangeFeatureTo newFeature: PresetFeature)
 	{
-		let tabController = tabBarController as! POITabBarController
-		let geometry = tabController.selection?.geometry() ?? GEOMETRY.POINT
-		let location = AppDelegate.shared.mainView.currentRegion
-		tabController.keyValueDict = newFeature.objectTagsUpdatedForFeature(tabController.keyValueDict,
-		                                                                    geometry: geometry,
-		                                                                    location: location)
-		_ = updateWithRecomendations(forFeature: true)
+		(tabBarController as! POITabBarController).setFeature(newFeature)
+		// the table is reloaded from the tab controller in viewWillAppear when the picker pops
 	}
 
 	// MARK: - Table view data source
@@ -404,7 +390,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		self.tags.set(dict.map { (k: $0.key, v: $0.value) })
 
 		saveState()
-		_ = updateWithRecomendations(forFeature: true)
+		_ = updateWithRecomendations()
 	}
 
 	func tab(toNext forward: Bool) {
