@@ -15,7 +15,11 @@ extension NSAttributedString {
 		// called from the main thread. loadFromHTML parses HTML out-of-process and is
 		// safe to call from any context.
 		let result: NSAttributedString? = await withCheckedContinuation { continuation in
-			NSAttributedString.loadFromHTML(data: data, options: [:]) { attrStr, _, _ in
+			// assume the document data is UTF-8
+			let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+				.characterEncoding: NSUTF8StringEncoding
+			]
+			NSAttributedString.loadFromHTML(data: data, options: options) { attrStr, _, _ in
 				continuation.resume(returning: attrStr)
 			}
 		}
