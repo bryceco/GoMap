@@ -106,7 +106,7 @@ final class PresetsDatabase {
 			})
 
 		presetFields = try JSONDecoder()
-			.decode([String: FieldJSON].self, from: Self.dataForFile("fields.json"))
+			.decode([String: PresetFieldJSON].self, from: Self.dataForFile("fields.json"))
 			.mapValuesWithKeys { key, json in PresetField(identifier: key, from: json) }
 			.filter { _, field in field.usage != "changeset" }
 

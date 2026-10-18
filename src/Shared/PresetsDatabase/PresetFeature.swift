@@ -112,6 +112,9 @@ class PresetFeature: CustomDebugStringConvertible {
 
 	let _addTags: [String: String]?
 	let aliases: [String] // an alias is a localizable alternative to 'name'
+	// Preset IDs expected as vertices of this (line/area) feature, most common first.
+	// Entries may be "{presetID}" redirects to another preset's list.
+	let expectedVerticesWithRedirect: [String]?
 	let featureID: String
 	let fieldsWithRedirect: [String]?
 	let geometry: [GEOMETRY]
@@ -123,6 +126,7 @@ class PresetFeature: CustomDebugStringConvertible {
 	let reference: [String: String]?
 	let relation: PresetRelationType?
 	let _removeTags: [String: String]?
+	let replacement: String? // ID of a preset that should be used instead of this one
 	let searchable: Bool
 	let tags: [String: String]
 	let terms: [String]
@@ -133,6 +137,7 @@ class PresetFeature: CustomDebugStringConvertible {
 
 	init(_addTags: [String: String]?,
 	     aliases: [String], // an alias is a localizable alternative to 'name'
+	     expectedVerticesWithRedirect: [String]?,
 	     featureID: String,
 	     fieldsWithRedirect: [String]?,
 	     geometry: [GEOMETRY],
@@ -145,12 +150,14 @@ class PresetFeature: CustomDebugStringConvertible {
 	     reference: [String: String]?,
 	     relation: PresetRelationType?,
 	     _removeTags: [String: String]?,
+	     replacement: String?,
 	     searchable: Bool,
 	     tags: [String: String],
 	     terms: [String])
 	{
 		self._addTags = _addTags
 		self.aliases = aliases
+		self.expectedVerticesWithRedirect = expectedVerticesWithRedirect
 		self.featureID = featureID
 		self.fieldsWithRedirect = fieldsWithRedirect
 		self.geometry = geometry
@@ -163,6 +170,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		self.reference = reference
 		self.relation = relation
 		self._removeTags = _removeTags
+		self.replacement = replacement
 		self.searchable = searchable
 		self.tags = tags
 		self.terms = terms
@@ -177,6 +185,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		self.init(
 			_addTags: jsonDict["addTags"] as! [String: String]?,
 			aliases: (jsonDict["aliases"] as! String?)?.split(separator: "\n").map({ String($0) }) ?? [],
+			expectedVerticesWithRedirect: (jsonDict["related"] as! [String: Any]?)?["expectedVertices"] as! [String]?,
 			featureID: featureID,
 			fieldsWithRedirect: jsonDict["fields"] as! [String]?,
 			geometry: (jsonDict["geometry"] as! [String]).map { GEOMETRY(rawValue: $0)! },
@@ -189,6 +198,7 @@ class PresetFeature: CustomDebugStringConvertible {
 			reference: jsonDict["reference"] as! [String: String]?,
 			relation: PresetRelationType(withJson: jsonDict["relation"]),
 			_removeTags: jsonDict["removeTags"] as! [String: String]?,
+			replacement: jsonDict["replacement"] as! String?,
 			searchable: jsonDict["searchable"] as! Bool? ?? true,
 			tags: jsonDict["tags"] as! [String: String],
 			terms: {
@@ -211,6 +221,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		self.init(
 			_addTags: nil, // v8.0 merged addTags into tags
 			aliases: [],
+			expectedVerticesWithRedirect: parentFeature.expectedVerticesWithRedirect,
 			featureID: "\(path)/\(item.id)",
 			fieldsWithRedirect: parentFeature.fieldsWithRedirect,
 			geometry: parentFeature.geometry,
@@ -223,6 +234,7 @@ class PresetFeature: CustomDebugStringConvertible {
 			reference: nil,
 			relation: nil,
 			_removeTags: nil,
+			replacement: nil,
 			searchable: true,
 			tags: item.tags,
 			terms: item.matchNames ?? [])
@@ -258,6 +270,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		return PresetTranslations.shared.relationRoleLabel(for: self, role: role)
 	}
 
+	/// Returns nil (not []) when unspecified, so `inheritedValueOfFeature` can walk up the parent chain.
 	var fields: [String]? {
 		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
 		guard
@@ -279,6 +292,7 @@ class PresetFeature: CustomDebugStringConvertible {
 		}
 	}
 
+	/// Returns nil (not []) when unspecified, so `inheritedValueOfFeature` can walk up the parent chain.
 	var moreFields: [String]? {
 		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
 		guard let moreFieldsWithRedirect = moreFieldsWithRedirect else { return nil }
@@ -291,6 +305,24 @@ class PresetFeature: CustomDebugStringConvertible {
 					return [String]()
 				}
 				return preset.moreFields ?? []
+			}
+			return [$0]
+		}
+	}
+
+	// Preset IDs expected as vertices of this feature, most common first, with "{presetID}" redirects resolved.
+	var expectedVertices: [String] {
+		// This has to be done in a lazy manner because the redirect may not exist yet when we are instantiated
+		guard let expectedVerticesWithRedirect else { return [] }
+		return expectedVerticesWithRedirect.flatMap {
+			if $0.hasPrefix("{"), $0.hasSuffix("}") {
+				let redirect = String($0.dropFirst().dropLast())
+				guard let preset = PresetsDatabase.shared.presetFeatureForFeatureID(redirect) else {
+					print("bad preset redirect: \(redirect)")
+					DbgAssert(false)
+					return [String]()
+				}
+				return preset.expectedVertices
 			}
 			return [$0]
 		}

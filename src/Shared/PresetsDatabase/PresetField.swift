@@ -116,7 +116,8 @@ extension PresetField.PrerequisiteTag: Decodable {
 }
 
 // The raw JSON shape for a single entry in fields.json.
-struct FieldJSON: Decodable {
+// Necessary so we can include the identifier in the class below.
+struct PresetFieldJSON: Decodable {
 	var type: String
 	var usage: String?
 	var key: String?
@@ -124,6 +125,12 @@ struct FieldJSON: Decodable {
 	var defaultValue: String?
 	var options: [String]?
 	var autoSuggestions: Bool?
+	var customValues: Bool?
+	var snakeCase: Bool?
+	var allowDuplicates: Bool?
+	var minValue: Double?
+	var maxValue: Double?
+	var increment: Double?
 	var replacement: String?
 	var reference: [String: String]?
 	var icons: [String: String]?
@@ -145,7 +152,9 @@ struct FieldJSON: Decodable {
 	enum CodingKeys: String, CodingKey {
 		case type, usage, key, keys
 		case defaultValue = "default"
-		case options, autoSuggestions, replacement, reference, icons
+		case options, autoSuggestions, customValues, snakeCase = "snake_case", allowDuplicates
+		case minValue, maxValue, increment
+		case replacement, reference, icons
 		case universal, caseSensitive, geometry, prerequisiteTag, locationSet
 		case urlFormat, pattern
 		case label, placeholder, placeholders, labels
@@ -163,6 +172,12 @@ final class PresetField: CustomDebugStringConvertible {
 	let defaultValue: String?
 	let options: [String]?
 	let autoSuggestions: Bool
+	let customValues: Bool // combo fields: user may type a value not in the options list
+	let snakeCase: Bool // combo fields: replace spaces with underscores in the value
+	let allowDuplicates: Bool // semiCombo fields: the same value may appear more than once
+	let minValue: Double? // number & integer fields
+	let maxValue: Double? // number & integer fields
+	let increment: Double // number & integer fields: stepper step size
 	let replacement: String?
 	let reference: [String: String]?
 	private let iconsRaw: [String: String]?
@@ -184,7 +199,7 @@ final class PresetField: CustomDebugStringConvertible {
 	// Used by crossRef(for:) to resolve localizable properties and icons.
 	private let fieldCrossRefs: [String: String]
 
-	init(identifier: String, from json: FieldJSON) {
+	init(identifier: String, from json: PresetFieldJSON) {
 		guard let fieldType = FieldType(rawValue: json.type) else {
 			fatalError("Unknown field type: '\(json.type)'")
 		}
@@ -196,6 +211,12 @@ final class PresetField: CustomDebugStringConvertible {
 		self.defaultValue = json.defaultValue
 		self.options = json.options
 		self.autoSuggestions = json.autoSuggestions ?? true
+		self.customValues = json.customValues ?? true
+		self.snakeCase = json.snakeCase ?? true
+		self.allowDuplicates = json.allowDuplicates ?? false
+		self.minValue = json.minValue
+		self.maxValue = json.maxValue
+		self.increment = json.increment ?? 1.0
 		self.replacement = json.replacement
 		self.reference = json.reference
 		self.iconsRaw = json.icons

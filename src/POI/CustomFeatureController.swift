@@ -21,6 +21,7 @@ class CustomFeature: PresetFeature, Codable {
 			includeNSI: false)
 		super.init(_addTags: nil,
 		           aliases: [],
+		           expectedVerticesWithRedirect: impliedFeature?.expectedVerticesWithRedirect,
 		           featureID: featureID,
 		           fieldsWithRedirect: impliedFeature?.fieldsWithRedirect ?? [],
 		           geometry: geometry,
@@ -33,6 +34,7 @@ class CustomFeature: PresetFeature, Codable {
 		           reference: nil,
 		           relation: nil,
 		           _removeTags: nil,
+		           replacement: nil,
 		           searchable: true,
 		           tags: tags,
 		           terms: [])
