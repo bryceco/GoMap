@@ -26122,6 +26122,9 @@
         }
       }
     },
+    "Cancel Upload?" : {
+
+    },
     "Cannot compose message" : {
       "comment" : "e-mail message",
       "localizations" : {
@@ -27755,6 +27758,9 @@
           }
         }
       }
+    },
+    "Continue Upload" : {
+
     },
     "Copied" : {
       "comment" : "text was copied to the system clipboard",

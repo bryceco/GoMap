@@ -188,6 +188,7 @@
                     </view>
                     <connections>
                         <outlet property="captureButton" destination="UHs-xX-ud5" id="NjG-oy-oJ0"/>
+                        <outlet property="doneButton" destination="Hd5-Oz-btw" id="dBn-kL-p7Q"/>
                         <outlet property="photoDate" destination="oXi-Zl-eyS" id="VbS-Xf-B0A"/>
                         <outlet property="photoUser" destination="0Yp-Fi-FNh" id="KZa-YU-yNN"/>
                         <outlet property="photoView" destination="kQK-pl-MGI" id="Rsm-0m-mUU"/>

@@ -90,7 +90,9 @@ class PanoramaxViewController: UIViewController {
 	@IBOutlet var photoDate: UILabel!
 	@IBOutlet var websiteButton: UIButton!
 	@IBOutlet var captureButton: UIButton!
+	@IBOutlet var doneButton: UIButton!
 	var progress: UIActivityIndicatorView!
+	private var uploadTask: Task<Void, Never>?
 
 	class func create() -> PanoramaxViewController {
 		let sb = UIStoryboard(name: "Panoramax", bundle: nil)
@@ -146,7 +148,26 @@ class PanoramaxViewController: UIViewController {
 
 	@IBAction
 	func done(_ sender: Any) {
-		dismiss(animated: true)
+		guard uploadTask != nil else {
+			dismiss(animated: true)
+			return
+		}
+		let alert = UIAlertController(
+			title: NSLocalizedString("Cancel Upload?", comment: ""),
+			message: nil,
+			preferredStyle: .alert)
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Cancel", comment: ""),
+			style: .destructive)
+		{ _ in
+			self.uploadTask?.cancel()
+			self.uploadTask = nil
+			self.dismiss(animated: true)
+		})
+		alert.addAction(UIAlertAction(
+			title: NSLocalizedString("Continue Upload", comment: ""),
+			style: .cancel))
+		present(alert, animated: true)
 	}
 
 	@IBAction
@@ -260,13 +281,16 @@ class PanoramaxViewController: UIViewController {
 
 		// Run upload in a detached task so the UI isn't blocked. Semantic tag
 		// upload is handled by the server's background queue after this returns.
-		Task {
+		uploadTask = Task {
 			progress.startAnimating()
 			captureButton.isEnabled = false
+			doneButton.setTitle(NSLocalizedString("Cancel", comment: ""), for: .normal)
 			defer {
+				self.uploadTask = nil
 				self.progress.stopAnimating()
 				self.progress.isHidden = true
 				self.captureButton.isEnabled = true
+				self.doneButton.setTitle(NSLocalizedString("Done", comment: ""), for: .normal)
 			}
 			do {
 				let photoID: String
