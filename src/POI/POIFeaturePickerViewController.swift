@@ -30,6 +30,8 @@ private let nsiToggleCellReuseId = "NsiToggleCell"
 class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate {
 	private var featureList: [PresetFeatureOrCategory] = []
 	private var searchArray: [PresetFeature] = []
+	/// Features from parent ways' expectedVertices, used to boost them to the top of lists.
+	private var suggestedFeatureIDs = Set<String>()
 	@IBOutlet var searchBar: UISearchBar!
 	private var isTopLevel = false
 
@@ -77,6 +79,28 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		} else {
 			isTopLevel = true
 			featureList = PresetsDatabase.shared.featuresAndCategoriesForGeometry(geometry)
+		}
+
+		// Collect expectedVertices from the selected way to boost them in sort order
+		if geometry == .VERTEX,
+		   let way = AppDelegate.shared.mapView.selections.way,
+		   let wayFeature = PresetsDatabase.shared.presetFeatureMatching(tags: way.tags,
+		                                                                 geometry: way.geometry(),
+		                                                                 location: AppDelegate.shared.mainView.currentRegion,
+		                                                                 includeNSI: false)
+		{
+			suggestedFeatureIDs = Set(wayFeature.expectedVertices)
+			if !suggestedFeatureIDs.isEmpty {
+				let promoted = featureList.filter {
+					if case let .feature(f) = $0 { return suggestedFeatureIDs.contains(f.featureID) }
+					return false
+				}
+				let rest = featureList.filter {
+					if case let .feature(f) = $0 { return !suggestedFeatureIDs.contains(f.featureID) }
+					return true
+				}
+				featureList = promoted + rest
+			}
 		}
 	}
 
@@ -285,12 +309,19 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 
 	private func refreshSearchResults() {
 		let geometry = currentSelectionGeometry()
-		searchArray = PresetsDatabase.shared.featuresInCategory(
+		var results = PresetsDatabase.shared.featuresInCategory(
 			parentCategory,
 			matching: searchBar.text ?? "",
 			geometry: geometry,
 			location: AppDelegate.shared.mainView.currentRegion,
 			includeNSI: includeNSI)
+		// Move suggested features to the top of search results
+		if !suggestedFeatureIDs.isEmpty {
+			let promoted = results.filter { suggestedFeatureIDs.contains($0.featureID) }
+			let rest = results.filter { !suggestedFeatureIDs.contains($0.featureID) }
+			results = promoted + rest
+		}
+		searchArray = results
 	}
 
 	private func pickerIcon(for feature: PresetFeature) -> UIImage? {
