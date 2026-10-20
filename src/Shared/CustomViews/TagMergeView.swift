@@ -46,6 +46,11 @@ final class TagMergeModel: ObservableObject {
 		case incoming
 	}
 
+	enum Mode: Int, CaseIterable {
+		case merge
+		case replace
+	}
+
 	enum Status {
 		case kept
 		case changed
@@ -56,53 +61,47 @@ final class TagMergeModel: ObservableObject {
 		var isChange: Bool { self == .changed || self == .added || self == .removed }
 	}
 
-	/// A key whose value differs between the two tag sets.
 	struct Row: Identifiable {
 		let key: String
 		let current: String?
 		let incoming: String?
+		let isIdentical: Bool
 		var id: String { key }
 	}
 
 	let current: [String: String]
 	let incoming: [String: String]
-	/// Differing keys: conflicts first, then incoming-only, then current-only.
-	let rows: [Row]
-	/// Keys with the same value on both sides. These are never touched.
-	let identicalKeys: [String]
+	/// All keys, sorted alphabetically. Includes both differing and identical rows.
+	let allRows: [Row]
+	/// Only the rows that differ (used for choices, counts, etc.).
+	var rows: [Row] { allRows.filter { !$0.isIdentical } }
 
 	@Published var choice: [String: Side]
 
 	init(current: [String: String], incoming: [String: String]) {
-		var conflicts: [Row] = []
-		var incomingOnly: [Row] = []
-		var currentOnly: [Row] = []
-		var identical: [String] = []
+		var allRows: [Row] = []
 		for key in Set(current.keys).union(incoming.keys).sorted() {
-			let row = Row(key: key, current: current[key], incoming: incoming[key])
-			if row.current == row.incoming {
-				identical.append(key)
-			} else if row.current == nil {
-				incomingOnly.append(row)
-			} else if row.incoming == nil {
-				currentOnly.append(row)
-			} else {
-				conflicts.append(row)
-			}
+			let isIdentical = current[key] == incoming[key]
+			allRows.append(Row(key: key, current: current[key], incoming: incoming[key],
+			                   isIdentical: isIdentical))
 		}
-		let rows = conflicts + incomingOnly + currentOnly
 		self.current = current
 		self.incoming = incoming
-		self.rows = rows
-		self.identicalKeys = identical
-		self.choice = TagMergeModel.mergeChoice(for: rows)
+		self.allRows = allRows
+		self.choice = Self.defaultChoice(for: allRows.filter { !$0.isIdentical }, mode: .merge)
 	}
 
-	/// Merge takes the incoming value wherever there is one.
-	private static func mergeChoice(for rows: [Row]) -> [String: Side] {
+	private static func defaultChoice(for rows: [Row], mode: Mode) -> [String: Side] {
 		var choice: [String: Side] = [:]
 		for row in rows {
-			choice[row.key] = row.incoming != nil ? .incoming : .current
+			switch mode {
+			case .merge:
+				// Incoming wins where present; current-only tags are kept.
+				choice[row.key] = row.incoming != nil ? .incoming : .current
+			case .replace:
+				// Incoming wins always; current-only tags are removed.
+				choice[row.key] = .incoming
+			}
 		}
 		return choice
 	}
@@ -139,12 +138,18 @@ final class TagMergeModel: ObservableObject {
 		rows.contains { $0.current != nil && $0.incoming != nil }
 	}
 
-	var isCustomized: Bool {
-		choice != TagMergeModel.mergeChoice(for: rows)
+	/// Which preset the current choices match, if any.
+	var activeMode: Mode? {
+		for mode in Mode.allCases {
+			if choice == Self.defaultChoice(for: rows, mode: mode) {
+				return mode
+			}
+		}
+		return nil
 	}
 
-	func reset() {
-		choice = TagMergeModel.mergeChoice(for: rows)
+	func apply(_ mode: Mode) {
+		choice = Self.defaultChoice(for: rows, mode: mode)
 	}
 
 	func status(of row: Row) -> Status {
@@ -176,20 +181,26 @@ struct TagMergeView: View {
 
 	var body: some View {
 		VStack(spacing: 0) {
-			header
-			columnHeaders
+			VStack(spacing: 0) {
+				header
+				presetButtons
+				columnHeaders
+				Divider()
+			}
+			.background(Color(UIColor.systemGroupedBackground))
 			ScrollView {
 				VStack(spacing: 10) {
-					ForEach(model.rows) { row in
-						self.rowView(row)
+					ForEach(model.allRows) { row in
+						if row.isIdentical {
+							self.identicalRowView(row)
+						} else {
+							self.rowView(row)
+						}
 					}
-					identicalNote
 				}
 				.padding(.horizontal, 16)
 				.padding(.bottom, 8)
 			}
-			Divider()
-			footer
 		}
 		.background(Color(UIColor.systemGroupedBackground).edgesIgnoringSafeArea(.all))
 	}
@@ -209,6 +220,11 @@ struct TagMergeView: View {
 						}
 					}
 					Spacer()
+					Button(action: { self.completion(self.model.selectedTags) }) {
+						Text(NSLocalizedString("Done", comment: ""))
+							.fontWeight(.bold)
+							.frame(minHeight: 44)
+					}
 				}
 			}
 			.frame(minHeight: 44)
@@ -219,6 +235,17 @@ struct TagMergeView: View {
 		.padding(.horizontal, 16)
 		.padding(.top, 8)
 		.padding(.bottom, 10)
+	}
+
+	private var presetButtons: some View {
+		HStack(spacing: 10) {
+			presetButton(NSLocalizedString("Merge", comment: "Apply merge preset to all tags"),
+			             active: model.activeMode == .merge) { model.apply(.merge) }
+			presetButton(NSLocalizedString("Replace", comment: "Apply replace preset to all tags"),
+			             active: model.activeMode == .replace) { model.apply(.replace) }
+		}
+		.padding(.horizontal, 16)
+		.padding(.bottom, 6)
 	}
 
 	private var columnHeaders: some View {
@@ -262,46 +289,69 @@ struct TagMergeView: View {
 
 	private func valueButton(_ row: TagMergeModel.Row, side: TagMergeModel.Side) -> some View {
 		let value = side == .current ? row.current : row.incoming
-		let placeholder = side == .current
-			? NSLocalizedString("Not set", comment: "Tag is not present on the object; choosing this skips the tag")
-			: NSLocalizedString("Remove tag", comment: "Tag is not in the incoming tags; choosing this removes it")
+		let placeholder = NSLocalizedString("(none)", comment: "Tag is not present")
 		let selected = model.choice[row.key] == side
-		let textColor: Color = selected ? .white : (value == nil ? .secondary : .primary)
-		let fill = selected ? Color.accentColor : Color(UIColor.secondarySystemGroupedBackground)
+		let shape = RoundedRectangle(cornerRadius: 10)
+		let text = Text(value ?? placeholder)
+		let isSingleToken = value?.rangeOfCharacter(from: .whitespacesAndNewlines) == nil
 		return Button(action: { self.model.choice[row.key] = side }) {
-			Text(value ?? placeholder)
-				.font(.callout)
-				.foregroundColor(textColor)
-				.multilineTextAlignment(.leading)
-				.padding(.horizontal, 10)
-				.padding(.vertical, 6)
-				.frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
-				.background(RoundedRectangle(cornerRadius: 10).fill(fill))
+			HStack(alignment: .firstTextBaseline, spacing: 6) {
+				Image(systemName: selected ? "checkmark.circle.fill" : "circle")
+					.imageScale(.small)
+					.foregroundColor(selected ? .accentColor : Color(UIColor.tertiaryLabel))
+					.accessibility(hidden: true)
+				(value == nil ? text.italic() : text)
+					.font(.callout)
+					.foregroundColor(value == nil ? .secondary : .primary)
+					.multilineTextAlignment(.leading)
+					.lineLimit(isSingleToken ? 1 : nil)
+					.minimumScaleFactor(isSingleToken ? 0.6 : 1)
+			}
+			.padding(.horizontal, 10)
+			.padding(.vertical, 11)
+			.frame(minHeight: 44)
+			.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+			.background(shape.fill(selected
+					? Color.accentColor.opacity(0.15)
+					: Color(UIColor.secondarySystemGroupedBackground)))
+			.overlay(selected ? nil : shape.strokeBorder(Color(UIColor.separator), lineWidth: 1))
+			.contentShape(shape)
 		}
 		.buttonStyle(PlainButtonStyle())
 		.accessibility(addTraits: selected ? .isSelected : [])
 	}
 
-	private var identicalNote: some View {
-		Group {
-			if !model.identicalKeys.isEmpty {
-				Text(String(format: NSLocalizedString("Identical tags not shown: %@",
-				                                      comment: "%@ is a list of tag keys"),
-				            model.identicalKeys.joined(separator: ", ")))
-					.font(.footnote)
+	private func identicalRowView(_ row: TagMergeModel.Row) -> some View {
+		VStack(spacing: 4) {
+			HStack(alignment: .firstTextBaseline) {
+				Text(row.key)
+					.font(.subheadline)
+					.fontWeight(.semibold)
+				Spacer()
+				Text(NSLocalizedString("Keep", comment: "Keep the tag value"))
+					.font(.caption)
+					.fontWeight(.semibold)
 					.foregroundColor(.secondary)
-					.frame(maxWidth: .infinity, alignment: .leading)
 			}
+			Text(row.current ?? "")
+				.font(.callout)
+				.foregroundColor(.secondary)
+				.multilineTextAlignment(.leading)
+				.padding(.horizontal, 10)
+				.padding(.vertical, 6)
+				.frame(maxWidth: .infinity, alignment: .leading)
+				.background(RoundedRectangle(cornerRadius: 10)
+					.fill(Color(UIColor.secondarySystemGroupedBackground)))
 		}
 	}
 
 	private static func label(for status: TagMergeModel.Status) -> String {
 		switch status {
-		case .kept: return NSLocalizedString("kept", comment: "Tag keeps its current value")
-		case .changed: return NSLocalizedString("changed", comment: "Tag value will change")
-		case .added: return NSLocalizedString("added", comment: "Tag will be added")
-		case .notAdded: return NSLocalizedString("not added", comment: "Tag will not be added")
-		case .removed: return NSLocalizedString("removed", comment: "Tag will be removed")
+		case .kept: return NSLocalizedString("Keep", comment: "Tag value will be kept")
+		case .changed: return NSLocalizedString("Change", comment: "Tag value will change")
+		case .added: return NSLocalizedString("Add", comment: "Tag will be added")
+		case .notAdded: return NSLocalizedString("Skip", comment: "Tag will not be added")
+		case .removed: return NSLocalizedString("Remove", comment: "Tag will be removed")
 		}
 	}
 
@@ -314,68 +364,28 @@ struct TagMergeView: View {
 		}
 	}
 
-	// MARK: Footer
+	// MARK: Preset buttons
 
-	private var footer: some View {
-		VStack(spacing: 8) {
-			Text(summary)
-				.font(.footnote)
-				.foregroundColor(.secondary)
-			HStack(spacing: 10) {
-				if model.isCustomized {
-					actionButton(NSLocalizedString("Reset", comment: "Discard per-tag choices"),
-					             color: .accentColor, filled: false)
-					{
-						self.model.reset()
-					}
-					actionButton(String(format: NSLocalizedString("Apply %d Changes",
-					                                              comment: "Button, %d is a count of tag changes"),
-					                    model.changeCount),
-					             color: .accentColor, filled: true)
-					{
-						self.completion(self.model.selectedTags)
-					}
-				} else {
-					actionButton(NSLocalizedString("Replace All", comment: "Discard all existing tags"),
-					             color: .red, filled: false)
-					{
-						self.completion(self.model.replacedTags)
-					}
-					actionButton(NSLocalizedString("Merge All", comment: "Accept all incoming tags, keep the rest"),
-					             color: .accentColor, filled: true)
-					{
-						self.completion(self.model.mergedTags)
-					}
-				}
-			}
-		}
-		.padding(.horizontal, 16)
-		.padding(.vertical, 10)
-		.background(Color(UIColor.secondarySystemGroupedBackground).edgesIgnoringSafeArea(.bottom))
-	}
-
-	private var summary: String {
-		String(format: NSLocalizedString("%d added · %d changed · %d removed",
-		                                 comment: "Summary of tag changes"),
-		       model.count(of: .added),
-		       model.count(of: .changed),
-		       model.count(of: .removed))
-	}
-
-	private func actionButton(_ title: String,
-	                          color: Color,
-	                          filled: Bool,
-	                          action: @escaping () -> Void) -> some View
-	{
+	private func presetButton(_ title: String, active: Bool, action: @escaping () -> Void) -> some View {
 		Button(action: action) {
-			Text(title)
-				.font(.headline)
-				.foregroundColor(filled ? .white : color)
-				.frame(maxWidth: .infinity, minHeight: 50)
-				.background(RoundedRectangle(cornerRadius: 12).fill(filled ? color : Color.clear))
-				.overlay(RoundedRectangle(cornerRadius: 12).stroke(color, lineWidth: 1.5))
+			HStack(spacing: 6) {
+				if active {
+					Image(systemName: "checkmark")
+						.font(.subheadline.weight(.semibold))
+				}
+				Text(title)
+					.font(.subheadline)
+					.fontWeight(active ? .semibold : .medium)
+			}
+			.foregroundColor(.accentColor)
+			.frame(maxWidth: .infinity, minHeight: 36)
+			.background(RoundedRectangle(cornerRadius: 8)
+				.fill(active ? Color.accentColor.opacity(0.15) : Color.clear))
+			.overlay(RoundedRectangle(cornerRadius: 8)
+				.stroke(Color.accentColor, lineWidth: active ? 1.5 : 1))
 		}
 		.buttonStyle(PlainButtonStyle())
+		.accessibility(addTraits: active ? .isSelected : [])
 	}
 }
 

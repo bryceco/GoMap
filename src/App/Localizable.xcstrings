@@ -2608,6 +2608,9 @@
         }
       }
     },
+    "(none)" : {
+      "comment" : "Tag is not present"
+    },
     "(relation %@)" : {
       "localizations" : {
         "ar" : {
@@ -7026,17 +7029,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 公尺"
-          }
-        }
-      }
-    },
-    "%d added · %d changed · %d removed" : {
-      "comment" : "Summary of tag changes",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "%1$d added · %2$d changed · %3$d removed"
           }
         }
       }
@@ -18928,6 +18920,9 @@
         }
       }
     },
+    "Add" : {
+      "comment" : "Tag will be added"
+    },
     "Add a changeset comment to help other mappers understand your changes." : {
       "comment" : "Recommendation shown when the changeset comment is empty"
     },
@@ -21118,9 +21113,6 @@
         }
       }
     },
-    "added" : {
-      "comment" : "Tag will be added"
-    },
     "added to multipolygon relation" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -22634,9 +22626,6 @@
     },
     "AND/OR group" : {
       "comment" : "Menu item adding a nested AND/OR group to a quest filter"
-    },
-    "Apply %d Changes" : {
-      "comment" : "Button, %d is a count of tag changes"
     },
     "Area" : {
       "comment" : "Area of an object in m^2\nObject geometry: a closed way or multipolygon)",
@@ -26422,6 +26411,7 @@
       }
     },
     "Change" : {
+      "comment" : "Tag value will change",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -26556,9 +26546,6 @@
           }
         }
       }
-    },
-    "changed" : {
-      "comment" : "Tag value will change"
     },
     "Changeset" : {
       "comment" : "OSM changeset identifier",
@@ -36628,9 +36615,6 @@
         }
       }
     },
-    "Identical tags not shown: %@" : {
-      "comment" : "%@ is a list of tag keys"
-    },
     "Identifier" : {
       "comment" : "OSM node/way/relation identifier",
       "localizations" : {
@@ -37996,6 +37980,9 @@
           }
         }
       }
+    },
+    "Keep" : {
+      "comment" : "Keep the tag value\nTag value will be kept"
     },
     "Key = value" : {
       "comment" : "Menu item adding a quest filter condition"
@@ -41373,13 +41360,16 @@
       }
     },
     "Members can't be added to this type of relation" : {
+
     },
     "Members can't be removed from this type of relation" : {
+
     },
-    "Merge All" : {
-      "comment" : "Accept all incoming tags, keep the rest"
+    "Merge" : {
+      "comment" : "Apply merge preset to all tags"
     },
     "Merge Tags" : {
+      "comment" : "Title of the tag merge sheet",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -46608,9 +46598,6 @@
           }
         }
       }
-    },
-    "Not set" : {
-      "comment" : "Tag is not present on the object; choosing this skips the tag"
     },
     "Note #%@" : {
       "comment" : "OSM note title with ID number",
@@ -52994,14 +52981,14 @@
         }
       }
     },
-    "Remove tag" : {
-      "comment" : "Tag is not in the incoming tags; choosing this removes it"
+    "Remove" : {
+      "comment" : "Tag will be removed"
     },
     "removed" : {
       "comment" : "Tag will be removed"
     },
-    "Replace All" : {
-      "comment" : "Discard all existing tags"
+    "Replace" : {
+      "comment" : "Apply replace preset to all tags"
     },
     "Replace all existing quests" : {
 
@@ -53411,9 +53398,6 @@
           }
         }
       }
-    },
-    "Reset" : {
-      "comment" : "Discard per-tag choices"
     },
     "Restrict" : {
       "comment" : "Edit action",
@@ -56320,6 +56304,9 @@
           }
         }
       }
+    },
+    "Skip" : {
+      "comment" : "Tag will not be added"
     },
     "Some changes are in a different location and have been deselected. Upload them as a separate changeset." : {
       "comment" : "Warning shown on upload screen when distant edit groups are automatically deselected",
