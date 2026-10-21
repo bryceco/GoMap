@@ -74,9 +74,10 @@ final class TagMergeModel: ObservableObject {
 	/// All keys, sorted alphabetically. Includes both differing and identical rows.
 	let allRows: [Row]
 	/// Only the rows that differ (used for choices, counts, etc.).
-	var rows: [Row] { allRows.filter { !$0.isIdentical } }
+	var conflictRows: [Row] { allRows.filter { !$0.isIdentical } }
 
 	@Published var choice: [String: Side]
+	@Published var preferredMode: Mode = .merge
 
 	init(current: [String: String], incoming: [String: String]) {
 		var allRows: [Row] = []
@@ -121,7 +122,7 @@ final class TagMergeModel: ObservableObject {
 	/// The result of the user's per-tag choices.
 	var selectedTags: [String: String] {
 		var result = current
-		for row in rows {
+		for row in conflictRows {
 			let value = choice[row.key] == .incoming ? row.incoming : row.current
 			result[row.key] = value // nil removes the key
 		}
@@ -130,18 +131,20 @@ final class TagMergeModel: ObservableObject {
 
 	// MARK: State
 
-	/// Nothing differs, so the caller should show a "no change" toast instead of the sheet.
-	var isNoOp: Bool { rows.isEmpty }
-
 	/// At least one key is present on both sides with different values.
 	var hasConflicts: Bool {
-		rows.contains { $0.current != nil && $0.incoming != nil }
+		conflictRows.contains { $0.current != nil && $0.incoming != nil }
 	}
 
 	/// Which preset the current choices match, if any.
 	var activeMode: Mode? {
-		for mode in Mode.allCases {
-			if choice == Self.defaultChoice(for: rows, mode: mode) {
+		// Check preferred mode first so that when both modes produce
+		// identical choices the user's last selection wins.
+		if choice == Self.defaultChoice(for: conflictRows, mode: preferredMode) {
+			return preferredMode
+		}
+		for mode in Mode.allCases where mode != preferredMode {
+			if choice == Self.defaultChoice(for: conflictRows, mode: mode) {
 				return mode
 			}
 		}
@@ -149,7 +152,8 @@ final class TagMergeModel: ObservableObject {
 	}
 
 	func apply(_ mode: Mode) {
-		choice = Self.defaultChoice(for: rows, mode: mode)
+		preferredMode = mode
+		choice = Self.defaultChoice(for: conflictRows, mode: mode)
 	}
 
 	func status(of row: Row) -> Status {
@@ -164,11 +168,11 @@ final class TagMergeModel: ObservableObject {
 	}
 
 	func count(of status: Status) -> Int {
-		rows.filter { self.status(of: $0) == status }.count
+		conflictRows.filter { self.status(of: $0) == status }.count
 	}
 
 	var changeCount: Int {
-		rows.filter { status(of: $0).isChange }.count
+		conflictRows.filter { status(of: $0).isChange }.count
 	}
 }
 
@@ -394,8 +398,6 @@ struct TagMergeView: View {
 extension TagMergeView {
 	/// Presents the sheet and calls `completion` once it has been dismissed,
 	/// with the resulting tags or nil if the user cancelled.
-	///
-	/// Callers should check `model.isNoOp` first and show a toast instead.
 	static func present(from parent: UIViewController,
 	                    model: TagMergeModel,
 	                    source: TagMergeSource,
@@ -404,6 +406,7 @@ extension TagMergeView {
 	{
 		weak var presented: UIViewController?
 		let view = TagMergeView(model: model, source: source, objectName: objectName) { tags in
+			// tags is nil if user cancelled
 			presented?.dismiss(animated: true) {
 				completion(tags)
 			}

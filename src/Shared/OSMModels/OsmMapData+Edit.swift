@@ -512,15 +512,15 @@ extension OsmMapData {
 		}
 
 		// Check for tag conflicts after structural validation passes
-		if let mergedTags = OsmTags.Merge(ourTags: node1.tags, otherTags: node2.tags, allowConflicts: false) {
-			// No conflicts — return a simple closure
+		switch OsmTags.mergeTags(current: survivor.tags, incoming: deadNode.tags) {
+		case .identical:
+			return { finishMerge(survivor.tags) }
+		case .trivial(let mergedTags):
 			return { finishMerge(mergedTags) }
-		} else {
-			// Tags conflict — throw with enough context for the UI to resolve
-			throw EditError.tagConflict(
-				current: survivor.tags,
-				incoming: deadNode.tags,
-				finishMerge: finishMerge)
+		case .merged, .conflicted:
+			throw EditError.tagConflict(current: survivor.tags,
+			                            incoming: deadNode.tags,
+			                            finishMerge: finishMerge)
 		}
 	}
 
@@ -896,17 +896,11 @@ extension OsmMapData {
 					// All other relations (Routes, Multipolygons, etc):
 					// 1. Both `wayA` and `wayB` remain in the relation
 					// 2. But must be inserted as a pair
-
 					if relation == wayIsOuter {
-						if let merged = OsmTags.Merge(
-							ourTags: relation.tags,
-							otherTags: wayA.tags,
-							allowConflicts: true)
-						{
-							setTags(merged, for: relation)
-							setTags([:], for: wayA)
-							setTags([:], for: wayB)
-						}
+						let merged = relation.tags.merging(wayA.tags) { _, incoming in incoming }
+						setTags(merged, for: relation)
+						setTags([:], for: wayA)
+						setTags([:], for: wayB)
 					}
 
 					// if this is a route relation we want to add the new member in such a way that the route maintains a consecutive sequence of ways
@@ -1099,9 +1093,13 @@ extension OsmMapData {
 		loc = otherWay.nodes.firstIndex(of: selectedNode) ?? 0
 		_ = try canAddNode(to: otherWay, at: loc > 0 ? loc : loc + 1)
 
-		guard let newTags = OsmTags.Merge(ourTags: selectedWay.tags, otherTags: otherWay.tags, allowConflicts: false)
-		else {
-			// tag conflict
+		let newTags: [String: String]
+		switch OsmTags.mergeTags(current: selectedWay.tags, incoming: otherWay.tags) {
+		case .identical:
+			newTags = selectedWay.tags
+		case .trivial(let merged), .merged(let merged):
+			newTags = merged
+		case .conflicted:
 			throw EditError.text(NSLocalizedString("The ways contain incompatible tags", comment: ""))
 		}
 

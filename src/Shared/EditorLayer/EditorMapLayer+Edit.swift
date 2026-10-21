@@ -83,22 +83,22 @@ extension EditorMapLayer {
 			return
 		}
 
-		let model = TagMergeModel(current: selectedPrimary.tags, incoming: pastedTags)
-		if model.isNoOp {
+		switch OsmTags.mergeTags(current: selectedPrimary.tags, incoming: pastedTags) {
+		case .identical:
 			display.flashMessage(title: nil, message: NSLocalizedString("Tags are identical", comment: ""))
-			return
-		}
-
-		guard let presenter = display.topViewController else { return }
-		TagMergeView.present(from: presenter,
-		                     model: model,
-		                     source: .paste,
-		                     objectName: selectedPrimary.friendlyDescription())
-		{ [self] tags in
-			guard let tags else { return } // user cancelled
-			mapData.setTags(tags, for: selectedPrimary)
-			setNeedsLayout()
-			owner.didUpdateObject()
+		case .trivial, .merged, .conflicted:
+			let model = TagMergeModel(current: selectedPrimary.tags, incoming: pastedTags)
+			guard let presenter = display.topViewController else { return }
+			TagMergeView.present(from: presenter,
+			                     model: model,
+			                     source: .paste,
+			                     objectName: selectedPrimary.friendlyDescription())
+			{ [self] tags in
+				guard let tags else { return } // user cancelled
+				mapData.setTags(tags, for: selectedPrimary)
+				setNeedsLayout()
+				owner.didUpdateObject()
+			}
 		}
 	}
 
@@ -1432,13 +1432,13 @@ extension EditorMapLayer {
 extension EditorMapLayer: UIPasteConfigurationSupporting {
 	var pasteConfiguration: UIPasteConfiguration? {
 		get {
-			UIPasteConfiguration(acceptableTypeIdentifiers: [UTType.text.identifier])
+			UIPasteConfiguration(acceptableTypeIdentifiers: [UTType.plainText.identifier])
 		}
 		set {}
 	}
 
 	func canPaste(_ itemProviders: [NSItemProvider]) -> Bool {
-		let can = itemProviders.contains { $0.hasItemConformingToTypeIdentifier(UTType.text.identifier) }
+		let can = itemProviders.contains { $0.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) }
 		return can
 	}
 
