@@ -15,6 +15,7 @@ public final class HUDLabel: UIView {
 		let l = UILabel()
 		l.translatesAutoresizingMaskIntoConstraints = false
 		l.numberOfLines = 0
+		l.minimumScaleFactor = 0.5
 		return l
 	}()
 
@@ -56,6 +57,11 @@ public final class HUDLabel: UIView {
 	public var numberOfLines: Int {
 		get { label.numberOfLines }
 		set { label.numberOfLines = newValue }
+	}
+
+	public var adjustsFontSizeToFitWidth: Bool {
+		get { label.adjustsFontSizeToFitWidth }
+		set { label.adjustsFontSizeToFitWidth = newValue }
 	}
 
 	public var adjustsFontForContentSizeCategory: Bool {
