@@ -338,6 +338,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		// tell our error display manager where to display messages
 		MessageDisplay.shared.topViewController = self
 		MessageDisplay.shared.flashLabel = flashLabel
+		MessageDisplay.shared.flashLinkConstraint = flashLabel.bottonAnchor.constraint(equalTo: rulerView.topAnchor, constant: -12)
 
 		// Install gesture recognizers
 
