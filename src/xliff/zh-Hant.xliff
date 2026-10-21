@@ -1339,10 +1339,12 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Members can't be added to this type of relation" xml:space="preserve">
         <source>Members can't be added to this type of relation</source>
+        <target state="translated">無法加入成員到這一類型關聯</target>
         <note/>
       </trans-unit>
       <trans-unit id="Members can't be removed from this type of relation" xml:space="preserve">
         <source>Members can't be removed from this type of relation</source>
+        <target state="translated">成員無法加入這一類型的關聯</target>
         <note/>
       </trans-unit>
       <trans-unit id="Merge Tags" xml:space="preserve">
@@ -1362,6 +1364,7 @@ Error: %@</source>
       </trans-unit>
       <trans-unit id="Modified Objects" xml:space="preserve">
         <source>Modified Objects</source>
+        <target state="translated">已經變動的物件</target>
         <note/>
       </trans-unit>
       <trans-unit id="Modify" xml:space="preserve">
@@ -1433,6 +1436,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Never matches" xml:space="preserve">
         <source>Never matches</source>
+        <target state="translated">永遠無法吻合</target>
         <note>Warning that a quest filter group's conditions contradict each other</note>
       </trans-unit>
       <trans-unit id="No Data" xml:space="preserve">
