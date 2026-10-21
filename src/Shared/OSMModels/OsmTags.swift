@@ -126,10 +126,10 @@ final class OsmTags {
 	}
 
 	enum MergeOutcome {
-		case identical                   // No differences at all
-		case trivial([String: String])   // One side empty, or differences only on non-interesting keys
-		case merged([String: String])    // Merged without conflicts, but interesting keys were combined
-		case conflicted                  // Interesting-key conflicts need user resolution
+		case identical // No differences at all
+		case trivial([String: String]) // One side empty, or differences only on non-interesting keys
+		case merged([String: String]) // Merged without conflicts, but interesting keys were combined
+		case conflicted // Interesting-key conflicts need user resolution
 	}
 
 	static func mergeTags(current: [String: String], incoming: [String: String]) -> MergeOutcome {

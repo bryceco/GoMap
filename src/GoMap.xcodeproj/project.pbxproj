@@ -130,6 +130,8 @@
 		0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB2299D84F7002EED90 /* MaxarAerial.secret */; };
 		02969EBA2DF630A6003BA34A /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02969EB92DF630A6003BA34A /* Array+Extension.swift */; };
 		029853B72C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */; };
+		029F9079308979D30041E2FC /* ReverseWayTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029F9078308979D30041E2FC /* ReverseWayTestCase.swift */; };
+		029F907D308983170041E2FC /* OsmMapData+TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029F907C308983170041E2FC /* OsmMapData+TestData.swift */; };
 		02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925626416BF5000A2A99 /* GpxLayer.swift */; };
 		02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924F2640329B000A2A99 /* TileServerList.swift */; };
 		02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */; };
@@ -510,6 +512,8 @@
 		0293FEB2299D84F7002EED90 /* MaxarAerial.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MaxarAerial.secret; sourceTree = "<group>"; };
 		02969EB92DF630A6003BA34A /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasemapTileServerListViewController.swift; sourceTree = "<group>"; };
+		029F9078308979D30041E2FC /* ReverseWayTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseWayTestCase.swift; sourceTree = "<group>"; };
+		029F907C308983170041E2FC /* OsmMapData+TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OsmMapData+TestData.swift"; sourceTree = "<group>"; };
 		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		02A1C3E52E9C5A0000B7D4A1 /* POIRelationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIRelationsViewController.swift; sourceTree = "<group>"; };
 		02A4E35D3056CB99003B5A71 /* UndoAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoAction.swift; sourceTree = "<group>"; };
@@ -1297,6 +1301,7 @@
 				02148A532FF43E40002D513D /* PresetFeatureChangeCase.swift */,
 				64C072F9226227D500598078 /* PresetKeyTagCase.swift */,
 				024A134130781F90005A4DC7 /* QuestFilterTestCase.swift */,
+				029F9078308979D30041E2FC /* ReverseWayTestCase.swift */,
 			);
 			path = GoMapTests;
 			sourceTree = "<group>";
@@ -1328,6 +1333,7 @@
 				02A4E35F3057E3CF003B5A71 /* OsmEditOperation.swift */,
 				0288169D265895FA00C30EA2 /* OsmMapData.swift */,
 				0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */,
+				029F907C308983170041E2FC /* OsmMapData+TestData.swift */,
 				02AF69132F2B53A70000ABA2 /* OsmMapDataArchiver.swift */,
 				C3D096EE263EBE5D00E3B129 /* OsmMember.swift */,
 				C3D096EF263EBE5D00E3B129 /* OsmNode.swift */,
@@ -1713,6 +1719,7 @@
 				028C51E625CB7A23004A88F7 /* TristateButton.swift in Sources */,
 				C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */,
 				02B5669F294FDCF200710632 /* CrossHairsLayer.swift in Sources */,
+				029F907D308983170041E2FC /* OsmMapData+TestData.swift in Sources */,
 				02C8C56926F44759003B0122 /* FixmeMarker.swift in Sources */,
 				021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */,
 				0281BD9630747E5700A55774 /* QuestFilterValidation.swift in Sources */,
@@ -1906,6 +1913,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				029F9079308979D30041E2FC /* ReverseWayTestCase.swift in Sources */,
 				02CEA15F3072CA3D0054E9D8 /* GpxTrackTestCase.swift in Sources */,
 				64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */,
 				024A134230781F90005A4DC7 /* QuestFilterTestCase.swift in Sources */,
