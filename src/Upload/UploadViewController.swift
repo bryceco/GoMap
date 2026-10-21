@@ -805,7 +805,7 @@ class UploadViewController: UIViewController {
 		let imagery = currentImagery()
 
 		do {
-			try await mapData.uploadChangeset(for: selectedGroups,
+			let changesetID = try await mapData.uploadChangeset(for: selectedGroups,
 			                                  comment: comment,
 			                                  source: source,
 			                                  imagery: imagery,
@@ -814,9 +814,12 @@ class UploadViewController: UIViewController {
 			dismiss(animated: true)
 			MainActor.runAfter(nanoseconds: 300_000000) {
 				appDelegate.mapView.setNeedsLayout()
-				MessageDisplay.shared.flashMessage(title: nil,
-				                                   message: NSLocalizedString("Upload complete!", comment: ""),
-				                                   duration: 1.5)
+				MessageDisplay.shared.flashMessage(
+					title: nil,
+					message: String.localizedStringWithFormat(NSLocalizedString("Changes saved in changeset %@", comment: ""),
+					                                          String(changesetID)),
+					duration: 4.0,
+					link: OSM_SERVER.serverURL.appendingPathComponent("changeset/\(changesetID)"))
 				var editCount = UserPrefs.shared.uploadCountPerVersion.value ?? 0
 				editCount += 1
 				UserPrefs.shared.uploadCountPerVersion.value = editCount
