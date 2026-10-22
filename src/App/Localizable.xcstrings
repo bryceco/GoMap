@@ -26549,6 +26549,7 @@
     },
     "Changes saved in changeset %@" : {
       "comment" : "A message that appears in a banner at the top of the screen after a set of changes has been uploaded to the OpenStreetMap server. The argument is the changeset ID."
+    },
     "Changeset" : {
       "comment" : "OSM changeset identifier",
       "localizations" : {
