@@ -1378,6 +1378,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				}
 			}
 			updateGpsButtonState()
+			WatchGpxSession.shared.update(force: true)
 		}
 	}
 
