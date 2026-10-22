@@ -53,11 +53,29 @@ class PanoramaxWebViewController: UIViewController, WKNavigationDelegate {
 		if let url = navigationAction.request.url,
 		   url.absoluteString == PanoramaxServer.redirect_uri
 		{
-			panoramax.authRedirectHandler(url: url, options: [:])
 			decisionHandler(.cancel)
+			// The session cookie was just set in the web view's cookie store, which
+			// is only lazily synced to HTTPCookieStorage.shared (used by URLSession).
+			// Copy it over explicitly so the retried upload doesn't get a 401 and
+			// prompt the user to authorize a second time.
+			webView.configuration.websiteDataStore.httpCookieStore.getAllCookies { cookies in
+				for cookie in cookies {
+					HTTPCookieStorage.shared.setCookie(cookie)
+				}
+				self.panoramax.authRedirectHandler(url: url, options: [:])
+			}
 			return
 		}
 		decisionHandler(.allow)
+	}
+
+	func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+		// The Panoramax viewer calls focus() on the MapLibre canvas after it initializes,
+		// and WebKit scrolls the focused element into view, pushing the page header
+		// off the top. Safari ignores programmatic focus scrolling; WKWebView doesn't.
+		webView.evaluateJavaScript("""
+		HTMLCanvasElement.prototype.focus = function() { HTMLElement.prototype.focus.call(this, { preventScroll: true }); };
+		""")
 	}
 
 	@IBAction
@@ -305,8 +323,6 @@ class PanoramaxViewController: UIViewController {
 					{
 						try await self.panoramax.authorizeUser(withVC: self)
 						// try again
-						// Without the pause the server doesn't always accept our cookie
-						try await Task.sleep(nanoseconds: 100_000000)
 						await self.uploadImage(image: image, imageData: imageData, date: date)
 						return
 					}
