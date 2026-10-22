@@ -29521,6 +29521,17 @@
         }
       }
     },
+    "Current zoom: %@. Download zoom %@–%@ (%@ at zoom %@)." : {
+      "comment" : "Offline screen header: current zoom, download range of zoom levels, and resolution in meters/pixel",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Current zoom: %1$@. Download zoom %2$@–%3$@ (%4$@ at zoom %5$@)."
+          }
+        }
+      }
+    },
     "Database error" : {
       "localizations" : {
         "ar" : {

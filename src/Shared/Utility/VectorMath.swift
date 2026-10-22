@@ -710,6 +710,13 @@ func metersToDegrees(meters: Double, latitude: Double) -> Double {
 	return degrees
 }
 
+/// Ground resolution of Web Mercator tile imagery at a given zoom level and latitude.
+/// Each tile is 256×256 pixels; this returns how many meters one tile pixel covers.
+func tileMetersPerPixel(atZoom zoom: Int, latitude: Double) -> Double {
+	let earthCircumference = 2 * .pi * EarthRadius // ~40,075,016 m
+	return earthCircumference * cos(latitude * .pi / 180) / (256.0 * pow(2.0, Double(zoom)))
+}
+
 /// Returns the approximate Earth surface area visible (in square meters)
 /// on a 430×932 pt display at a given Web Mercator zoom level.
 ///

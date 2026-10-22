@@ -54,6 +54,32 @@ class OfflineViewController: TableViewControllerMac {
 		}
 	}
 
+	// MARK: - Section header with zoom info
+
+	override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		guard section == 0 else { return nil }
+
+		let viewPort = AppDelegate.shared.mainView.viewPort
+		let zoom = viewPort.mapTransform.zoom()
+		let minDownloadZoom = Int(floor(zoom))
+		let maxDownloadZoom = minDownloadZoom + 2
+
+		let metersPerPixel = tileMetersPerPixel(atZoom: maxDownloadZoom,
+		                                        latitude: viewPort.screenCenterLatLon().lat)
+
+		let resolution: String
+		if metersPerPixel >= 1.0 {
+			resolution = String(format: "%.1f m/pixel", metersPerPixel)
+		} else {
+			resolution = String(format: "%.0f cm/pixel", metersPerPixel * 100)
+		}
+
+		return String.localizedStringWithFormat(
+			NSLocalizedString("Current zoom: %@. Download zoom %@–%@ (%@ at zoom %@).",
+			                  comment: "Offline screen header: current zoom, download range of zoom levels, and resolution in meters/pixel"),
+			String(format: "%.1f", zoom), "\(minDownloadZoom)", "\(maxDownloadZoom)", resolution, "\(maxDownloadZoom)")
+	}
+
 	override func viewWillDisappear(_ animated: Bool) {
 		super.viewWillDisappear(animated)
 		for cell in [aerialCell, basemapCell] {
