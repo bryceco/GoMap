@@ -1091,12 +1091,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		let objects = groups.reduce(into: Set<OsmBaseObject>()) { $0.formUnion($1.objects) }
 		let groupIds = groups.reduce(into: Set<Int>()) { $0.formUnion($1.undoGroups) }
 		return try await uploadChangeset(.objects(objects),
-		                          comment: comment,
-		                          source: source,
-		                          imagery: imagery,
-		                          generator: generator,
-		                          locale: locale,
-		                          groupIds: groupIds)
+		                                 comment: comment,
+		                                 source: source,
+		                                 imagery: imagery,
+		                                 generator: generator,
+		                                 locale: locale,
+		                                 groupIds: groupIds)
 	}
 
 	func changesetAsXml() -> String? {

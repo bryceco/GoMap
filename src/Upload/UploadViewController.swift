@@ -806,11 +806,11 @@ class UploadViewController: UIViewController {
 
 		do {
 			let changesetID = try await mapData.uploadChangeset(for: selectedGroups,
-			                                  comment: comment,
-			                                  source: source,
-			                                  imagery: imagery,
-			                                  generator: generator,
-			                                  locale: locale)
+			                                                    comment: comment,
+			                                                    source: source,
+			                                                    imagery: imagery,
+			                                                    generator: generator,
+			                                                    locale: locale)
 			dismiss(animated: true)
 			MainActor.runAfter(nanoseconds: 300_000000) {
 				appDelegate.mapView.setNeedsLayout()

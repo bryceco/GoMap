@@ -77,11 +77,10 @@ class OAuth2 {
 	}
 
 	private func url(withPath path: String, with dict: [String: String]) -> URL {
-		let url = serverURL.appendingPathComponent(basePath).appendingPathComponent(path)
-		var components = URLComponents(url: url,
-		                               resolvingAgainstBaseURL: true)!
-		components.queryItems = dict.map({ k, v in URLQueryItem(name: k, value: v) })
-		return components.url!
+		return serverURL
+			.appendingPathComponent(basePath)
+			.appendingPathComponent(path)
+			.appendingQueryItems(dict)
 	}
 
 	private var authCallback: ((Result<Void, Error>) -> Void)?

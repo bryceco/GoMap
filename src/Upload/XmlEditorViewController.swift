@@ -83,12 +83,12 @@ final class XmlEditorViewController: UIViewController {
 		do {
 			let xmlDoc = try DDXMLDocument(xmlString: textView.text ?? "", options: 0)
 			let changesetID = try await mapData.uploadChangeset(.xml(xmlDoc),
-			                                  comment: comment,
-			                                  source: source,
-			                                  imagery: imagery,
-			                                  generator: generator,
-			                                  locale: locale,
-			                                  groupIds: undoGroups)
+			                                                    comment: comment,
+			                                                    source: source,
+			                                                    imagery: imagery,
+			                                                    generator: generator,
+			                                                    locale: locale,
+			                                                    groupIds: undoGroups)
 			navigationController?.dismiss(animated: true)
 			let appDelegate = AppDelegate.shared
 			MainActor.runAfter(nanoseconds: 300_000000) {
