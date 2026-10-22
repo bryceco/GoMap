@@ -200,8 +200,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 
 	private func updateAssociatedContent() {
 		// Swift doesn't like too many ??'s so we break it into pieces 🤷‍♂️
-		let associatedView1 = getFormatWarningButton()
-		    ?? getSurveyDateButton()
+		let associatedView1 = getSurveyDateButton()
 			?? getAssociatedColor()
 			?? getOpeningHoursButton()
 			?? getWebsiteButton()
@@ -210,6 +209,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 			?? getYesNoButton(keyValueDict: owner?.keyValueDict ?? [:])
 			?? getUnitsButton()
 			?? getPhotographButton()
+			?? getFormatWarningButton()
 
 		rightView = associatedView1 ?? associatedView2
 		rightViewMode = rightView != nil ? .always : .never
@@ -220,47 +220,6 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		}
 	}
 
-	// MARK: Value format warning
-
-	private func getFormatWarningButton() -> UIView? {
-		guard key != "",
-		      let value = text,
-		      value != "",
-		      let regex = WikiPage.shared.valueFormat(forKey: key, update: { [weak self] in
-		      	self?.updateAssociatedContent()
-		      }),
-		      !WikiPage.value(value, matches: regex)
-		else { return nil }
-		let button = UIButton(type: .system)
-		button.setImage(UIImage(systemName: "exclamationmark.triangle.fill"), for: .normal)
-		button.tintColor = .systemOrange
-		button.accessibilityLabel = NSLocalizedString("Unexpected format", comment: "")
-		button.addTarget(self, action: #selector(showFormatWarning), for: .touchUpInside)
-		return button
-	}
-
-	@objc private func showFormatWarning() {
-		guard let viewController = owner.viewController,
-		      let regex = WikiPage.shared.valueFormat(forKey: key, update: {})
-		else { return }
-		let message = String.localizedStringWithFormat(
-			NSLocalizedString("The OpenStreetMap Wiki says values for %@ should match this pattern:\n\n%@",
-			                  comment: "tag key, regular expression"),
-			key,
-			String(regex.pattern.dropFirst(4).dropLast(2)))
-		let alert = UIAlertController(title: NSLocalizedString("Unexpected Format", comment: ""),
-		                              message: message,
-		                              preferredStyle: .alert)
-		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
-		alert.addAction(UIAlertAction(title: NSLocalizedString("Read more on the Wiki", comment: ""),
-		                              style: .default)
-		{ [key] _ in
-			let url = WikiPage.shared.urlFor(pageTitle: "Key:" + key)
-			viewController.present(SFSafariViewController(url: url), animated: true)
-		})
-		viewController.present(alert, animated: true)
-	}
-	
 	// MARK: Color preview
 
 	private func getAssociatedColor() -> UIView? {
@@ -601,5 +560,46 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		}
 		vc.delegate = self
 		owner.viewController?.present(vc, animated: true)
+	}
+
+	// MARK: Value format warning
+
+	private func getFormatWarningButton() -> UIView? {
+		guard key != "",
+		      let value = text,
+		      value != "",
+		      let regex = WikiPage.shared.valueRegex(forKey: key, update: { [weak self] in
+		      	self?.updateAssociatedContent()
+		      }),
+		      regex.firstMatch(in: value, range: NSRange(value.startIndex..., in: value)) == nil
+		else { return nil }
+		let button = UIButton(type: .system)
+		button.setImage(UIImage(systemName: "exclamationmark.triangle"), for: .normal)
+		button.tintColor = .systemOrange
+		button.accessibilityLabel = NSLocalizedString("Unexpected Format", comment: "")
+		button.addTarget(self, action: #selector(showFormatWarning), for: .touchUpInside)
+		return button
+	}
+
+	@objc private func showFormatWarning() {
+		guard let viewController = owner.viewController,
+		      let regex = WikiPage.shared.valueRegex(forKey: key, update: {})
+		else { return }
+		let message = String.localizedStringWithFormat(
+			NSLocalizedString("The OpenStreetMap Wiki says values for %@ should match this pattern:\n\n%@",
+			                  comment: "tag key, regular expression"),
+			key,
+			String(regex.pattern.dropFirst(4).dropLast(2)))
+		let alert = UIAlertController(title: NSLocalizedString("Unexpected Format", comment: ""),
+		                              message: message,
+		                              preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+		alert.addAction(UIAlertAction(title: NSLocalizedString("Read more on the Wiki", comment: ""),
+		                              style: .default)
+		{ [key] _ in
+			let url = WikiPage.shared.urlFor(pageTitle: "Key:" + key)
+			viewController.present(SFSafariViewController(url: url), animated: true)
+			})
+		viewController.present(alert, animated: true)
 	}
 }

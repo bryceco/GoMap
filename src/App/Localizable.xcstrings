@@ -51999,6 +51999,9 @@
         }
       }
     },
+    "Read more on the Wiki" : {
+
+    },
     "Recent Aerial Imagery" : {
       "comment" : "Alert title message",
       "localizations" : {
@@ -59125,6 +59128,17 @@
         }
       }
     },
+    "The OpenStreetMap Wiki says values for %@ should match this pattern:\n\n%@" : {
+      "comment" : "tag key, regular expression",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "The OpenStreetMap Wiki says values for %1$@ should match this pattern:\n\n%2$@"
+          }
+        }
+      }
+    },
     "The photo does not contain location data. Panoramax requires that uploaded photos contain location data." : {
       "localizations" : {
         "cs" : {
@@ -62896,6 +62910,9 @@
     },
     "Unexpected for this role" : {
       "comment" : "A relation member has the wrong geometry or tags for its role"
+    },
+    "Unexpected Format" : {
+
     },
     "Unknown" : {
       "comment" : "Placeholder for a tag value field with no field-specific placeholder.",

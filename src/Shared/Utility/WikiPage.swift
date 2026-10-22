@@ -157,13 +157,27 @@ class WikiPage {
 		}
 	}
 
+	// Caches descriptions of tags
 	private let descriptionCache = PersistentWebCache<KeyValueDescription>(name: "wikiTagStore",
 	                                                                       memorySize: 10_000000,
 	                                                                       daysToKeep: 14.0)
+	// Caches icons for values
 	private let imageCache = PersistentWebCache<UIImage>(name: "wikiImageStore",
 	                                                     memorySize: 10_000000,
 	                                                     daysToKeep: 14.0)
-	private class ValueFormat {
+	// Caches P13 regex validation rules for tag values
+	private let valueFormatCache = PersistentWebCache<TagValueRegex>(name: "wikiValueFormatStore",
+	                                                                 memorySize: 1_000000,
+	                                                                 daysToKeep: 14.0)
+
+	func resetCache() {
+		descriptionCache.removeAllObjects()
+		imageCache.removeAllObjects()
+		valueFormatCache.removeAllObjects()
+	}
+
+	// Wraps the regular expression as an optional, so cache can specify that it is unavailable
+	private class TagValueRegex {
 		let regex: NSRegularExpression?
 
 		init(regex: NSRegularExpression?) {
@@ -171,29 +185,18 @@ class WikiPage {
 		}
 	}
 
-	private let valueFormatCache = PersistentWebCache<ValueFormat>(name: "wikiValueFormatStore",
-	                                                               memorySize: 1_000000,
-	                                                               daysToKeep: 14.0)
-	
-	func resetCache() {
-		descriptionCache.removeAllObjects()
-		imageCache.removeAllObjects()
-		valueFormatCache.removeAllObjects()
-	}
-
-	func valueFormat(forKey key: String, update: @escaping () -> Void) -> NSRegularExpression? {
+	func valueRegex(forKey key: String, update: @escaping () -> Void) -> NSRegularExpression? {
 		return valueFormatCache.object(
 			withKey: key,
 			fallbackURL: {
-				var comps = URLComponents(string: "https://wiki.openstreetmap.org/w/api.php")!
-				comps.queryItems = [
-					URLQueryItem(name: "action", value: "wbgetentities"),
-					URLQueryItem(name: "sites", value: "wiki"),
-					URLQueryItem(name: "titles", value: "Key:" + key.replacingOccurrences(of: "_", with: " ")),
-					URLQueryItem(name: "props", value: "claims|sitelinks"),
-					URLQueryItem(name: "format", value: "json")
-				]
-				return comps.url
+				URL(string: "https://wiki.openstreetmap.org/w/api.php")!
+					.appendingQueryItems([
+						"action": "wbgetentities",
+						"sites": "wiki",
+						"titles": "Key:" + key.replacingOccurrences(of: "_", with: " "),
+						"props": "claims|sitelinks",
+						"format": "json"
+					])
 			},
 			objectForData: { data in
 				guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
@@ -201,20 +204,20 @@ class WikiPage {
 				else { return nil }
 				guard let entity = self.entity(in: entities, withTitlePrefix: "Key:"),
 				      let pattern = self.valueFor(property: "P13", inEntity: entity, langQID: "")
-				else { return ValueFormat(regex: nil) }
-				return ValueFormat(regex: try? NSRegularExpression(pattern: "^(?:\(pattern))$"))
+				else { return TagValueRegex(regex: nil) }
+				do {
+					let regex = try NSRegularExpression(pattern: "^(\(pattern))$")
+					return TagValueRegex(regex: regex)
+				} catch {
+					print("WikiPage: invalid P13 regex for key '\(key)': \(error.localizedDescription)")
+					return TagValueRegex(regex: nil)
+				}
 			},
 			completion: { result in
 				if (try? result.get())?.regex != nil {
 					update()
 				}
 			})?.regex
-	}
-
-	static func value(_ value: String, matches regex: NSRegularExpression) -> Bool {
-		func matches(_ text: String) -> Bool {
-			return regex.firstMatch(in: text, range: NSRange(text.startIndex..., in: text)) != nil
-		}
 	}
 
 	private func propertyListFor(property: String, inEntity entity: [String: Any]) -> [[String: Any]]? {
@@ -384,7 +387,6 @@ class WikiPage {
 		let meta = descriptionCache.object(
 			withKey: language + ":" + key + "=" + value,
 			fallbackURL: {
-				var comps = URLComponents(string: "https://wiki.openstreetmap.org/w/api.php")!
 				var titles: [String] = []
 				titles.append("Key:" + key)
 				if value != "" {
@@ -395,18 +397,17 @@ class WikiPage {
 				if otherLang != "" {
 					titles.append("Locale:" + otherLang)
 				}
-				comps.queryItems = [
-					URLQueryItem(name: "action", value: "wbgetentities"),
-					URLQueryItem(name: "sites", value: "wiki"),
-					URLQueryItem(name: "titles", value: titles
+				return URL(string: "https://wiki.openstreetmap.org/w/api.php")!.appendingQueryItems([
+					"action": "wbgetentities",
+					"sites": "wiki",
+					"titles": titles
 						.map { $0.replacingOccurrences(of: "_", with: " ") }
-						.joined(separator: "|")),
-					URLQueryItem(name: "languages", value: languages
+						.joined(separator: "|"),
+					"languages": languages
 						.map { $0.replacingOccurrences(of: "_", with: " ") }
-						.joined(separator: "|")),
-					URLQueryItem(name: "format", value: "json")
-				]
-				return comps.url ?? URL(string: "")
+						.joined(separator: "|"),
+					"format": "json"
+				])
 			},
 			objectForData: { data in
 				self.descriptionForJson(data: data, language: language, imageWidth: imageWidth)
@@ -513,8 +514,8 @@ extension WikiPage {
 					title: title ?? "",
 					message: "\(tag)\n\n\(description)",
 					preferredStyle: .alert)
-				alert.addAction(.init(title: "Done", style: .cancel, handler: nil))
-				alert.addAction(.init(title: "Read more on the Wiki", style: .default) { _ in
+				alert.addAction(.init(title: NSLocalizedString("OK", comment: ""), style: .cancel, handler: nil))
+				alert.addAction(.init(title: NSLocalizedString("Read more on the Wiki", comment: ""), style: .default) { _ in
 					if let wikiPageTitle {
 						let url = self.urlFor(pageTitle: wikiPageTitle)
 						self.openSafariWith(parentVC: parentVC, url: url)

@@ -185,6 +185,7 @@ class ClearCacheViewController: TableViewControllerMac {
 		case .otherCaches:
 			clearCachesDirectory()
 			URLCache.shared.removeAllCachedResponses()
+			WikiPage.shared.resetCache()
 		}
 		dismiss(animated: true)
 	}
