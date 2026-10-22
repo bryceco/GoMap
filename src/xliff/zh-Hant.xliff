@@ -1732,10 +1732,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Relation Member" xml:space="preserve">
         <source>Relation Member</source>
+        <target state="translated">關聯成員</target>
         <note>Title of the page listing the relations an object is a member of</note>
       </trans-unit>
       <trans-unit id="Relation Members" xml:space="preserve">
         <source>Relation Members</source>
+        <target state="translated">關聯成員</target>
         <note>Title of the page listing the members of a relation</note>
       </trans-unit>
       <trans-unit id="Relation Tags" xml:space="preserve">
@@ -1760,10 +1762,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Replace all existing quests" xml:space="preserve">
         <source>Replace all existing quests</source>
+        <target state="translated">取代所有既有的任務</target>
         <note/>
       </trans-unit>
       <trans-unit id="Required" xml:space="preserve">
         <source>Required</source>
+        <target state="translated">必須</target>
         <note>A relation doesn't have a member with a required role</note>
       </trans-unit>
       <trans-unit id="Requires a closed way with at least 3 nodes" xml:space="preserve">
@@ -1843,6 +1847,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Select role" xml:space="preserve">
         <source>Select role</source>
+        <target state="translated">選取成員角色</target>
         <note>Choose the role of the first member of a new relation</note>
       </trans-unit>
       <trans-unit id="Select the language used for Presets. Other app content will use your default language." xml:space="preserve">
