@@ -23,7 +23,7 @@ extension OsmMapData {
 				              version: 1, changeset: 0, user: "", uid: 0, timestamp: "",
 				              tags: d["tags"] as? [String: String] ?? [:],
 				              body: LatLon(lon: Self.asDouble(d["lon"]!),
-				                          lat: Self.asDouble(d["lat"]!)))
+				                           lat: Self.asDouble(d["lat"]!)))
 			}
 		}
 
@@ -39,9 +39,9 @@ extension OsmMapData {
 		if let relations = dict["relations"] as? [[String: Any]] {
 			serverData.relations = try relations.map { d in
 				let members = try (d["members"] as? [[String: Any]] ?? []).map { m in
-					OsmServerMember(type: try OSM_TYPE(string: m["type"] as! String),
-					                ref: Self.asInt64(m["ref"]!),
-					                role: m["role"] as? String)
+					try OsmServerMember(type: OSM_TYPE(string: m["type"] as! String),
+					                    ref: Self.asInt64(m["ref"]!),
+					                    role: m["role"] as? String)
 				}
 				return OsmServerRelation(ident: Self.asInt64(d["id"]!),
 				                         version: 1, changeset: 0, user: "", uid: 0, timestamp: "",

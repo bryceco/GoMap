@@ -347,9 +347,9 @@ class ReverseWayTestCase: XCTestCase {
 			],
 			"ways": [["id": 10, "nodes": [1, 2]]]
 		])
-		let node1 = mapData.nodes[1]!
-		let node2 = mapData.nodes[2]!
-		let way = mapData.ways[10]!
+		let node1 = try XCTUnwrap(mapData.nodes[1])
+		let node2 = try XCTUnwrap(mapData.nodes[2])
+		let way = try XCTUnwrap(mapData.ways[10])
 
 		let action = try mapData.canReverse(way)
 		action()
