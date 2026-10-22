@@ -84,9 +84,13 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 	}
 
 	override func prepareForReuse() {
+		super.prepareForReuse()
 		textView?.removeFromSuperview()
 		textView = nil
+		text1.text = ""
 		text2.isHidden = false
+		text2.key = ""
+		text2.text = ""
 	}
 
 	override func willTransition(to state: UITableViewCell.StateMask) {

@@ -12,6 +12,12 @@ class FeaturePresetCell: UITableViewCell {
 	@IBOutlet var valueField: PresetValueTextField!
 	@IBOutlet var isSet: UIView!
 	var presetKey: PresetKeyOrGroup?
+
+	override func prepareForReuse() {
+		super.prepareForReuse()
+		valueField.key = ""
+		valueField.text = ""
+	}
 }
 
 class FeatureTypeCell: UITableViewCell {
