@@ -668,7 +668,7 @@ struct LatLon: Equatable, Codable {
 	// http://www.movable-type.co.uk/scripts/latlong.html
 	/// Distance between two lon,lat  points in degrees, result in meters
 	func greatCircleDistance(to other: LatLon) -> Double {
-		return GreatCircleDistance2(self, other)
+		return GreatCircleDistance(self, other)
 	}
 
 	// Add PList representation
@@ -710,6 +710,13 @@ func metersToDegrees(meters: Double, latitude: Double) -> Double {
 	return degrees
 }
 
+/// Ground resolution of Web Mercator tile imagery at a given zoom level and latitude.
+/// Each tile is 256×256 pixels; this returns how many meters one tile pixel covers.
+func tileMetersPerPixel(atZoom zoom: Int, latitude: Double) -> Double {
+	let earthCircumference = 2 * .pi * EarthRadius // ~40,075,016 m
+	return earthCircumference * cos(latitude * .pi / 180) / (256.0 * pow(2.0, Double(zoom)))
+}
+
 /// Returns the approximate Earth surface area visible (in square meters)
 /// on a 430×932 pt display at a given Web Mercator zoom level.
 ///
@@ -733,7 +740,7 @@ func visibleEarthAreaAt(zoom: Double) -> Double {
 
 // http://www.movable-type.co.uk/scripts/latlong.html
 /// Distance between two lon,lat  points in degrees, result in meters
-func GreatCircleDistance2(_ p1: LatLon, _ p2: LatLon) -> Double {
+func GreatCircleDistance(_ p1: LatLon, _ p2: LatLon) -> Double {
 	// haversine formula
 	let dlon = (p2.lon - p1.lon) * .pi / 180
 	let dlat = (p2.lat - p1.lat) * .pi / 180
@@ -744,7 +751,7 @@ func GreatCircleDistance2(_ p1: LatLon, _ p2: LatLon) -> Double {
 }
 
 func GreatCircleDistance(_ p1: CLLocationCoordinate2D, _ p2: CLLocationCoordinate2D) -> Double {
-	return GreatCircleDistance2(LatLon(p1), LatLon(p2))
+	return GreatCircleDistance(LatLon(p1), LatLon(p2))
 }
 
 // area of a closed polygon (first and last points repeat), and boolean if it's clockwise

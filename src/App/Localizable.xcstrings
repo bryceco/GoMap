@@ -2608,6 +2608,9 @@
         }
       }
     },
+    "(none)" : {
+      "comment" : "Tag is not present"
+    },
     "(relation %@)" : {
       "localizations" : {
         "ar" : {
@@ -18917,6 +18920,9 @@
         }
       }
     },
+    "Add" : {
+      "comment" : "Tag will be added"
+    },
     "Add a changeset comment to help other mappers understand your changes." : {
       "comment" : "Recommendation shown when the changeset comment is empty"
     },
@@ -26405,6 +26411,7 @@
       }
     },
     "Change" : {
+      "comment" : "Tag value will change",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -26944,6 +26951,9 @@
           }
         }
       }
+    },
+    "Clipboard" : {
+      "comment" : "Column header: tags being pasted"
     },
     "Close Area" : {
       "comment" : "Edit action",
@@ -29509,6 +29519,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "當前的航跡"
+          }
+        }
+      }
+    },
+    "Current zoom: %@. Download zoom %@–%@ (%@ at zoom %@)." : {
+      "comment" : "Offline screen header: current zoom, download range of zoom levels, and resolution in meters/pixel",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Current zoom: %1$@. Download zoom %2$@–%3$@ (%4$@ at zoom %5$@)."
           }
         }
       }
@@ -32774,6 +32795,12 @@
           }
         }
       }
+    },
+    "Dragged node" : {
+      "comment" : "Column header: tags on the node being dragged"
+    },
+    "Dragged node joining %@" : {
+      "comment" : "Merge Tags subtitle, %@ is an object name"
     },
     "duplicate" : {
       "comment" : "create a duplicate",
@@ -37967,6 +37994,9 @@
         }
       }
     },
+    "Keep" : {
+      "comment" : "Keep the tag value\nTag value will be kept"
+    },
     "Key = value" : {
       "comment" : "Menu item adding a quest filter condition"
     },
@@ -41348,7 +41378,11 @@
     "Members can't be removed from this type of relation" : {
 
     },
+    "Merge" : {
+      "comment" : "Apply merge preset to all tags"
+    },
     "Merge Tags" : {
+      "comment" : "Title of the tag merge sheet",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -47425,6 +47459,9 @@
         }
       }
     },
+    "On object" : {
+      "comment" : "Column header: tags currently on the object"
+    },
     "Only Left Turn restriction" : {
       "localizations" : {
         "ar" : {
@@ -49660,6 +49697,7 @@
       }
     },
     "Pasting %ld tag(s)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "variations" : {
@@ -50364,6 +50402,9 @@
           }
         }
       }
+    },
+    "Pasting onto %@" : {
+      "comment" : "Merge Tags subtitle, %@ is an object name"
     },
     "Pause GPX" : {
       "localizations" : {
@@ -52953,10 +52994,20 @@
         }
       }
     },
+    "Remove" : {
+      "comment" : "Tag will be removed"
+    },
+    "removed" : {
+      "comment" : "Tag will be removed"
+    },
+    "Replace" : {
+      "comment" : "Apply replace preset to all tags"
+    },
     "Replace all existing quests" : {
 
     },
     "Replace Tags" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -56267,6 +56318,9 @@
         }
       }
     },
+    "Skip" : {
+      "comment" : "Tag will not be added"
+    },
     "Some changes are in a different location and have been deselected. Upload them as a separate changeset." : {
       "comment" : "Warning shown on upload screen when distant edit groups are automatically deselected",
       "localizations" : {
@@ -58258,6 +58312,9 @@
         }
       }
     },
+    "Tags are identical" : {
+
+    },
     "Take New Photo" : {
       "comment" : "Option to take a photo with the camera",
       "localizations" : {
@@ -58374,6 +58431,9 @@
           }
         }
       }
+    },
+    "Target node" : {
+      "comment" : "Column header: tags on the node dragged onto"
     },
     "The + button can be positioned on either the left or right side of the screen" : {
       "localizations" : {

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02008650265B25DC008F37DD /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028816A2265AD9D100C30EA2 /* Database.swift */; };
+		02008C603079BD50007158A3 /* TagMergeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02008C5F3079BD50007158A3 /* TagMergeView.swift */; };
 		0200C1C22703B42600A79804 /* LocationParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0200C1C12703B42600A79804 /* LocationParser.swift */; };
 		0200FECD2908B0EB002C3F94 /* GeoJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0200FECC2908B0EB002C3F94 /* GeoJSON.swift */; };
 		02024EBC2FD4F09900B9BF09 /* KeyboardToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02024EBB2FD4F09900B9BF09 /* KeyboardToolbar.swift */; };
@@ -129,6 +130,8 @@
 		0293FEB3299D84F7002EED90 /* MaxarAerial.secret in Sources */ = {isa = PBXBuildFile; fileRef = 0293FEB2299D84F7002EED90 /* MaxarAerial.secret */; };
 		02969EBA2DF630A6003BA34A /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02969EB92DF630A6003BA34A /* Array+Extension.swift */; };
 		029853B72C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */; };
+		029F9079308979D30041E2FC /* ReverseWayTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029F9078308979D30041E2FC /* ReverseWayTestCase.swift */; };
+		029F907D308983170041E2FC /* OsmMapData+TestData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 029F907C308983170041E2FC /* OsmMapData+TestData.swift */; };
 		02A123E9264C8B60005638C1 /* GpxLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA925626416BF5000A2A99 /* GpxLayer.swift */; };
 		02A123EA264C8BA3005638C1 /* TileServerList.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3FA924F2640329B000A2A99 /* TileServerList.swift */; };
 		02A123EB264C9B17005638C1 /* RenderInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096B8263DFA2A00E3B129 /* RenderInfo.swift */; };
@@ -384,6 +387,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		02008C5F3079BD50007158A3 /* TagMergeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagMergeView.swift; sourceTree = "<group>"; };
 		0200C1C12703B42600A79804 /* LocationParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LocationParser.swift; path = ../Shared/Location/LocationParser.swift; sourceTree = "<group>"; };
 		0200FECC2908B0EB002C3F94 /* GeoJSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeoJSON.swift; path = Shared/GeoJSON.swift; sourceTree = "<group>"; };
 		02024EBB2FD4F09900B9BF09 /* KeyboardToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardToolbar.swift; sourceTree = "<group>"; };
@@ -508,6 +512,8 @@
 		0293FEB2299D84F7002EED90 /* MaxarAerial.secret */ = {isa = PBXFileReference; lastKnownFileType = text; path = MaxarAerial.secret; sourceTree = "<group>"; };
 		02969EB92DF630A6003BA34A /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		029853B62C1B4F1E00C31C95 /* BasemapTileServerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasemapTileServerListViewController.swift; sourceTree = "<group>"; };
+		029F9078308979D30041E2FC /* ReverseWayTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReverseWayTestCase.swift; sourceTree = "<group>"; };
+		029F907C308983170041E2FC /* OsmMapData+TestData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "OsmMapData+TestData.swift"; sourceTree = "<group>"; };
 		02A123EC264CAE6F005638C1 /* Atomic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Atomic.swift; sourceTree = "<group>"; };
 		02A1C3E52E9C5A0000B7D4A1 /* POIRelationsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POIRelationsViewController.swift; sourceTree = "<group>"; };
 		02A4E35D3056CB99003B5A71 /* UndoAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UndoAction.swift; sourceTree = "<group>"; };
@@ -1051,6 +1057,7 @@
 				C3D096B5263DF82F00E3B129 /* RulerView.swift */,
 				C365A566263FCA55007DEC94 /* SpeechBalloonView.swift */,
 				02FBDB5C2E873D9200A70CEF /* StatusBarGradient.swift */,
+				02008C5F3079BD50007158A3 /* TagMergeView.swift */,
 				02CE3CE6299187C100DDACE0 /* TelephoneToolbar.swift */,
 				028C51E525CB7A23004A88F7 /* TristateButton.swift */,
 			);
@@ -1294,6 +1301,7 @@
 				02148A532FF43E40002D513D /* PresetFeatureChangeCase.swift */,
 				64C072F9226227D500598078 /* PresetKeyTagCase.swift */,
 				024A134130781F90005A4DC7 /* QuestFilterTestCase.swift */,
+				029F9078308979D30041E2FC /* ReverseWayTestCase.swift */,
 			);
 			path = GoMapTests;
 			sourceTree = "<group>";
@@ -1325,6 +1333,7 @@
 				02A4E35F3057E3CF003B5A71 /* OsmEditOperation.swift */,
 				0288169D265895FA00C30EA2 /* OsmMapData.swift */,
 				0288169C265895FA00C30EA2 /* OsmMapData+Edit.swift */,
+				029F907C308983170041E2FC /* OsmMapData+TestData.swift */,
 				02AF69132F2B53A70000ABA2 /* OsmMapDataArchiver.swift */,
 				C3D096EE263EBE5D00E3B129 /* OsmMember.swift */,
 				C3D096EF263EBE5D00E3B129 /* OsmNode.swift */,
@@ -1710,6 +1719,7 @@
 				028C51E625CB7A23004A88F7 /* TristateButton.swift in Sources */,
 				C3D096DC263EB7DE00E3B129 /* MyApplication.swift in Sources */,
 				02B5669F294FDCF200710632 /* CrossHairsLayer.swift in Sources */,
+				029F907D308983170041E2FC /* OsmMapData+TestData.swift in Sources */,
 				02C8C56926F44759003B0122 /* FixmeMarker.swift in Sources */,
 				021FADEF25884BB900F6E1C0 /* OsmTags.swift in Sources */,
 				0281BD9630747E5700A55774 /* QuestFilterValidation.swift in Sources */,
@@ -1720,6 +1730,7 @@
 				02EDBF6B26535BEB00B7072E /* OsmMember.swift in Sources */,
 				02C8C56D26F4479A003B0122 /* WayPointMarker.swift in Sources */,
 				02F9CEA72F16BDFE00ADED7C /* LocationProvider.swift in Sources */,
+				02008C603079BD50007158A3 /* TagMergeView.swift in Sources */,
 				0286EAA726570382007CFEE9 /* LayerProperties.swift in Sources */,
 				0244398D29C9402B009FC2D0 /* TileServerList+JSON.swift in Sources */,
 				EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */,
@@ -1902,6 +1913,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				029F9079308979D30041E2FC /* ReverseWayTestCase.swift in Sources */,
 				02CEA15F3072CA3D0054E9D8 /* GpxTrackTestCase.swift in Sources */,
 				64348CFE225E867800ADE7FB /* MeasureDirectionViewModelTestCase.swift in Sources */,
 				024A134230781F90005A4DC7 /* QuestFilterTestCase.swift in Sources */,

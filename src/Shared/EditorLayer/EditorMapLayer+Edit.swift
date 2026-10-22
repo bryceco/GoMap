@@ -6,6 +6,7 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 import UniformTypeIdentifiers
 
@@ -50,14 +51,6 @@ extension EditorMapLayer {
 		return true
 	}
 
-	private func pasteTagsMerge(_ object: OsmBaseObject, tags: [String: String]) {
-		// Merge tags
-		let newTags = OsmTags.Merge(ourTags: object.tags, otherTags: tags, allowConflicts: true)!
-		mapData.setTags(newTags, for: object)
-		setNeedsLayout()
-		owner.didUpdateObject()
-	}
-
 	private func pasteTagsReplace(_ object: OsmBaseObject, tags: [String: String]) {
 		// Replace all tags
 		mapData.setTags(tags, for: object)
@@ -84,29 +77,28 @@ extension EditorMapLayer {
 		}
 		guard let selectedPrimary = selectedPrimary else { return }
 
-		if selectedPrimary.tags.count > 0 {
-			let question = String.localizedStringWithFormat(
-				NSLocalizedString("Pasting %ld tag(s)", comment: ""),
-				pastedTags.count)
-			let alertPaste = UIAlertController(
-				title: NSLocalizedString("Paste", comment: ""),
-				message: question,
-				preferredStyle: .alert)
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
-			                                   style: .cancel,
-			                                   handler: nil))
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Merge Tags", comment: ""),
-			                                   style: .default, handler: { [self] _ in
-			                                   	self.pasteTagsMerge(selectedPrimary, tags: pastedTags)
-			                                   }))
-			alertPaste.addAction(UIAlertAction(title: NSLocalizedString("Replace Tags", comment: ""),
-			                                   style: .default,
-			                                   handler: { [self] _ in
-			                                   	self.pasteTagsReplace(selectedPrimary, tags: pastedTags)
-			                                   }))
-			presentAlert(alert: alertPaste, location: .none)
-		} else {
+		if selectedPrimary.tags.isEmpty {
+			// No existing tags, just apply directly.
 			pasteTagsReplace(selectedPrimary, tags: pastedTags)
+			return
+		}
+
+		switch OsmTags.mergeTags(current: selectedPrimary.tags, incoming: pastedTags) {
+		case .identical:
+			display.flashMessage(title: nil, message: NSLocalizedString("Tags are identical", comment: ""))
+		case .trivial, .merged, .conflicted:
+			let model = TagMergeModel(current: selectedPrimary.tags, incoming: pastedTags)
+			guard let presenter = display.topViewController else { return }
+			TagMergeView.present(from: presenter,
+			                     model: model,
+			                     source: .paste,
+			                     objectName: selectedPrimary.friendlyDescription())
+			{ [self] tags in
+				guard let tags else { return } // user cancelled
+				mapData.setTags(tags, for: selectedPrimary)
+				setNeedsLayout()
+				owner.didUpdateObject()
+			}
 		}
 	}
 
@@ -337,18 +329,30 @@ extension EditorMapLayer {
 			let dragWay = selectedWay
 			var segment = -1
 			let hit = hitTestDragConnection(for: dragNode, segment: &segment)
-			if var hit = hit as? OsmNode {
+			if let hit = hit as? OsmNode {
 				// replace dragged node with hit node
 				do {
 					let merge = try mapData.canMerge(dragNode, into: hit)
-					hit = merge()
-					if dragWay.isArea() {
-						selectedNode = nil
-						let pt = viewPort.mapTransform.screenPoint(forLatLon: hit.latLon, birdsEye: true)
-						owner.placePushpin(at: pt, object: dragWay)
-					} else {
-						selectedNode = hit
-						owner.placePushpinForSelection(at: nil)
+					let survivor = merge()
+					finishNodeMerge(survivor: survivor, dragWay: dragWay)
+				} catch let OsmMapData.EditError.tagConflict(current, incoming, finishMerge) {
+					// Structural checks passed but tags conflict — let user resolve
+					let model = TagMergeModel(current: current, incoming: incoming)
+					guard let presenter = display.topViewController else { return }
+					TagMergeView.present(from: presenter,
+					                     model: model,
+					                     source: .nodeDrag,
+					                     objectName: hit.friendlyDescription())
+					{ [self] tags in
+						if let tags {
+							let survivor = finishMerge(tags)
+							finishNodeMerge(survivor: survivor, dragWay: dragWay)
+						} else {
+							// User cancelled — undo the drag to snap the node back
+							mapData.undo()
+							mapData.removeMostRecentRedo()
+							setNeedsLayout()
+						}
 					}
 				} catch {
 					display.showAlert(error.localizedDescription, message: nil)
@@ -404,6 +408,18 @@ extension EditorMapLayer {
 			                                  }))
 			presentAlert(alert: alertMove, location: .none)
 		}
+	}
+
+	private func finishNodeMerge(survivor: OsmNode, dragWay: OsmWay) {
+		if dragWay.isArea() {
+			selectedNode = nil
+			let pt = viewPort.mapTransform.screenPoint(forLatLon: survivor.latLon, birdsEye: true)
+			owner.placePushpin(at: pt, object: dragWay)
+		} else {
+			selectedNode = survivor
+			owner.placePushpinForSelection(at: nil)
+		}
+		setNeedsLayout()
 	}
 
 	func hitTestDragConnection(for node: OsmNode, segment: inout Int) -> OsmBaseObject? {
@@ -1416,13 +1432,13 @@ extension EditorMapLayer {
 extension EditorMapLayer: UIPasteConfigurationSupporting {
 	var pasteConfiguration: UIPasteConfiguration? {
 		get {
-			UIPasteConfiguration(acceptableTypeIdentifiers: [UTType.text.identifier])
+			UIPasteConfiguration(acceptableTypeIdentifiers: [UTType.plainText.identifier])
 		}
 		set {}
 	}
 
 	func canPaste(_ itemProviders: [NSItemProvider]) -> Bool {
-		let can = itemProviders.contains { $0.hasItemConformingToTypeIdentifier(UTType.text.identifier) }
+		let can = itemProviders.contains { $0.hasItemConformingToTypeIdentifier(UTType.plainText.identifier) }
 		return can
 	}
 

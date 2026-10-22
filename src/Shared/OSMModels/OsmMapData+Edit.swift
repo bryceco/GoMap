@@ -18,10 +18,15 @@ extension OsmMapData {
 
 	enum EditError: LocalizedError {
 		case text(String)
+		/// Tag conflict during node merge. Carries the two tag sets and a closure
+		/// that completes the merge when given resolved tags.
+		case tagConflict(current: [String: String], incoming: [String: String],
+		                 finishMerge: ([String: String]) -> OsmNode)
 
 		public var errorDescription: String? {
 			switch self {
 			case let .text(text): return text
+			case .tagConflict: return NSLocalizedString("The merged nodes contain conflicting tags", comment: "")
 			}
 		}
 	}
@@ -310,14 +315,6 @@ extension OsmMapData {
 
 	// used when dragging a node into another node
 	func canMerge(_ node1: OsmNode, into node2: OsmNode) throws -> EditActionReturnNode {
-		guard let mergedTags = OsmTags.Merge(
-			ourTags: node1.tags,
-			otherTags: node2.tags,
-			allowConflicts: false)
-		else {
-			throw EditError.text(NSLocalizedString("The merged nodes contain conflicting tags", comment: ""))
-		}
-
 		let survivor: OsmNode
 		if node1.ident < 0 {
 			survivor = node2
@@ -486,13 +483,13 @@ extension OsmMapData {
 			}
 		}
 
-		return { [self] in
+		let finishMerge: ([String: String]) -> OsmNode = { [self] resolvedTags in
 			if survivor == node1 {
 				// update survivor to have location of other node
 				setLatLon(node2.latLon, forNode: survivor)
 			}
 
-			setTags(mergedTags, for: survivor)
+			setTags(resolvedTags, for: survivor)
 
 			// need to replace the node in all objects everywhere
 			for (_, way) in ways {
@@ -512,6 +509,18 @@ extension OsmMapData {
 			}
 			deleteNodeUnsafe(deadNode)
 			return survivor
+		}
+
+		// Check for tag conflicts after structural validation passes
+		switch OsmTags.mergeTags(current: survivor.tags, incoming: deadNode.tags) {
+		case .identical:
+			return { finishMerge(survivor.tags) }
+		case let .trivial(mergedTags):
+			return { finishMerge(mergedTags) }
+		case .merged, .conflicted:
+			throw EditError.tagConflict(current: survivor.tags,
+			                            incoming: deadNode.tags,
+			                            finishMerge: finishMerge)
 		}
 	}
 
@@ -572,14 +581,8 @@ extension OsmMapData {
 		let roleReversals = [
 			"forward": "backward",
 			"backward": "forward",
-			"north": "south",
-			"south": "north",
-			"east": "west",
-			"west": "east"
-		]
-		let nodeReversals = [
-			"forward": "backward",
-			"backward": "forward"
+			"forwards": "backward",
+			"backwards": "forward"
 		]
 
 		return { [self] in
@@ -598,21 +601,23 @@ extension OsmMapData {
 			// reverse tags on way
 			var newWayTags: [String: String] = [:]
 			for (key, value) in way.tags {
-				var k = key
-				var v = value
-				k = reverseKey(key)
-				v = reverseValue(key, value)
+				let k = Self.reverseKey(key)
+				let v = Self.reverseValue(key, value, allTags: way.tags)
 				newWayTags[k] = v
 			}
 			setTags(newWayTags, for: way)
 
-			// reverse direction tags on nodes in way
+			// reverse tags on nodes in way
 			for node in way.nodes {
-				let value = node.tags["direction"] ?? ""
-				if let replacement = nodeReversals[value] {
-					var nodeTags = node.tags
-					nodeTags["direction"] = replacement
-					setTags(nodeTags, for: node)
+				guard !node.tags.isEmpty else { continue }
+				var newNodeTags: [String: String] = [:]
+				for (key, value) in node.tags {
+					let k = Self.reverseKey(key)
+					let v = Self.reverseValue(key, value, allTags: node.tags)
+					newNodeTags[k] = v
+				}
+				if newNodeTags != node.tags {
+					setTags(newNodeTags, for: node)
 				}
 			}
 
@@ -887,17 +892,11 @@ extension OsmMapData {
 					// All other relations (Routes, Multipolygons, etc):
 					// 1. Both `wayA` and `wayB` remain in the relation
 					// 2. But must be inserted as a pair
-
 					if relation == wayIsOuter {
-						if let merged = OsmTags.Merge(
-							ourTags: relation.tags,
-							otherTags: wayA.tags,
-							allowConflicts: true)
-						{
-							setTags(merged, for: relation)
-							setTags([:], for: wayA)
-							setTags([:], for: wayB)
-						}
+						let merged = relation.tags.merging(wayA.tags) { _, incoming in incoming }
+						setTags(merged, for: relation)
+						setTags([:], for: wayA)
+						setTags([:], for: wayB)
 					}
 
 					// if this is a route relation we want to add the new member in such a way that the route maintains a consecutive sequence of ways
@@ -1090,9 +1089,13 @@ extension OsmMapData {
 		loc = otherWay.nodes.firstIndex(of: selectedNode) ?? 0
 		_ = try canAddNode(to: otherWay, at: loc > 0 ? loc : loc + 1)
 
-		guard let newTags = OsmTags.Merge(ourTags: selectedWay.tags, otherTags: otherWay.tags, allowConflicts: false)
-		else {
-			// tag conflict
+		let newTags: [String: String]
+		switch OsmTags.mergeTags(current: selectedWay.tags, incoming: otherWay.tags) {
+		case .identical:
+			newTags = selectedWay.tags
+		case let .trivial(merged), let .merged(merged):
+			newTags = merged
+		case .conflicted:
 			throw EditError.text(NSLocalizedString("The ways contain incompatible tags", comment: ""))
 		}
 
@@ -1315,28 +1318,73 @@ extension OsmMapData {
 
 	// MARK: reverseWay
 
-	private func reverseKey(_ key: String) -> String {
-		let replacements = [
-			":right": ":left",
-			":left": ":right",
-			":forward": ":backward",
-			":backward": ":forward"
+	static func reverseKey(_ key: String) -> String {
+		// Some keys should never be reversed (e.g. red_turn:right)
+		if key.hasPrefix("red_turn:right") || key.hasPrefix("red_turn:left") {
+			return key
+		}
+		// Try infix replacements first (e.g. cycleway:right:surface)
+		let infixReplacements: [(String, String)] = [
+			(":right:", ":left:"),
+			(":left:", ":right:"),
+			(":forward:", ":backward:"),
+			(":backward:", ":forward:")
 		]
-		var newKey = key
-		for (k, v) in replacements {
-			if key.hasSuffix(k) {
-				newKey = newKey.replacingOccurrences(of: k, with: v, options: .backwards, range: nil)
+		for (old, new) in infixReplacements {
+			if key.contains(old) {
+				return key.replacingOccurrences(of: old, with: new)
 			}
 		}
-		return newKey
+		// Then try suffix replacements (e.g. cycleway:right)
+		let suffixReplacements: [(String, String)] = [
+			(":right", ":left"),
+			(":left", ":right"),
+			(":forward", ":backward"),
+			(":backward", ":forward")
+		]
+		for (old, new) in suffixReplacements {
+			if key.hasSuffix(old) {
+				return String(key.dropLast(old.count)) + new
+			}
+		}
+		return key
 	}
 
-	private func isNumeric(_ s: String) -> Bool {
+	private static func isNumeric(_ s: String) -> Bool {
 		return Double(s) != nil
 	}
 
-	private func reverseValue(_ key: String, _ value: String) -> String {
-		if (key == "incline") && isNumeric(value) {
+	/// Check if a key component matches any of the descriptive tag names whose
+	/// values should not be reversed (e.g. name, description, source, etc.)
+	private static func isDescriptiveKey(_ key: String) -> Bool {
+		let descriptiveWords = ["description", "name", "note", "website", "ref",
+		                        "source", "comment", "watch", "attribution"]
+		// Split by : and _ to get key components, matching iD's
+		// /(^|_|:)(description|name|...)(_|:|$)/ regex
+		let components = key.components(separatedBy: CharacterSet(charactersIn: ":_"))
+		return components.contains(where: { descriptiveWords.contains($0) })
+	}
+
+	static func reverseValue(_ key: String, _ value: String, allTags: [String: String]) -> String {
+		// Keys whose values should not be reversed
+		if isDescriptiveKey(key) {
+			return value
+		}
+		if key.hasPrefix("turn:") {
+			return value
+		}
+		if key == "driving_side" {
+			return value
+		}
+		if key == "side" && allTags["highway"] == "cyclist_waiting_aid" {
+			return value
+		}
+		if key == "railway:turnout_side" {
+			return value
+		}
+
+		// Negate numeric incline values
+		if key == "incline" && isNumeric(value) {
 			let ch = value[value.startIndex]
 			if ch == "-" {
 				return String(value.dropFirst())
@@ -1345,23 +1393,20 @@ extension OsmMapData {
 			} else {
 				return "-\(value)"
 			}
-		} else if (key == "incline") || (key == "direction") {
-			if value == "up" {
-				return "down"
-			}
-			if value == "down" {
-				return "up"
-			}
-			return value
-		} else {
-			if value == "left" {
-				return "right"
-			}
-			if value == "right" {
-				return "left"
-			}
-			return value
 		}
+
+		// General value replacements
+		let valueReplacements = [
+			"left": "right",
+			"right": "left",
+			"up": "down",
+			"down": "up",
+			"forward": "backward",
+			"backward": "forward",
+			"forwards": "backward",
+			"backwards": "forward"
+		]
+		return valueReplacements[value] ?? value
 	}
 
 	// MARK: updateMultipolygonRelationRoles

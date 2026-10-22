@@ -125,28 +125,36 @@ final class OsmTags {
 		return newDict
 	}
 
-	// result is nil only if allowConflicts==false
-	static func Merge(ourTags: [String: String], otherTags: [String: String],
-	                  allowConflicts: Bool) -> [String: String]?
-	{
-		guard !ourTags.isEmpty else { return otherTags }
-		guard !otherTags.isEmpty else { return ourTags }
+	enum MergeOutcome {
+		case identical // No differences at all
+		case trivial([String: String]) // One side empty, or differences only on non-interesting keys
+		case merged([String: String]) // Merged without conflicts, but interesting keys were combined
+		case conflicted // Interesting-key conflicts need user resolution
+	}
 
-		var merged = ourTags
-		for (otherKey, otherValue) in otherTags {
-			let ourValue = merged[otherKey]
-			if ourValue == nil || allowConflicts {
-				merged[otherKey] = otherValue
-			} else if ourValue == otherValue {
-				// we already have it but replacement is the same
-			} else if OsmTags.IsInterestingKey(otherKey) {
-				// conflict, so return error
-				return nil
+	static func mergeTags(current: [String: String], incoming: [String: String]) -> MergeOutcome {
+		if current == incoming { return .identical }
+		guard !current.isEmpty else { return .trivial(incoming) }
+		guard !incoming.isEmpty else { return .trivial(current) }
+
+		var merged = current
+		var hasInterestingDifference = false
+		for (key, incomingValue) in incoming {
+			let currentValue = merged[key]
+			if currentValue == nil {
+				merged[key] = incomingValue
+				if IsInterestingKey(key) {
+					hasInterestingDifference = true
+				}
+			} else if currentValue == incomingValue {
+				// already have the same value
+			} else if IsInterestingKey(key) {
+				return .conflicted
 			} else {
-				// we don't allow conflicts, but its not an interesting key/value so just ignore the conflict
+				// uninteresting key with different values — keep current
 			}
 		}
-		return merged
+		return hasInterestingDifference ? .merged(merged) : .trivial(merged)
 	}
 
 	static func convertWikiUrlToReference(withKey key: String, value url: String) -> String? {
