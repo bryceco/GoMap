@@ -163,10 +163,58 @@ class WikiPage {
 	private let imageCache = PersistentWebCache<UIImage>(name: "wikiImageStore",
 	                                                     memorySize: 10_000000,
 	                                                     daysToKeep: 14.0)
+	private class ValueFormat {
+		let regex: NSRegularExpression?
 
+		init(regex: NSRegularExpression?) {
+			self.regex = regex
+		}
+	}
+
+	private let valueFormatCache = PersistentWebCache<ValueFormat>(name: "wikiValueFormatStore",
+	                                                               memorySize: 1_000000,
+	                                                               daysToKeep: 14.0)
+	
 	func resetCache() {
 		descriptionCache.removeAllObjects()
 		imageCache.removeAllObjects()
+		valueFormatCache.removeAllObjects()
+	}
+
+	func valueFormat(forKey key: String, update: @escaping () -> Void) -> NSRegularExpression? {
+		return valueFormatCache.object(
+			withKey: key,
+			fallbackURL: {
+				var comps = URLComponents(string: "https://wiki.openstreetmap.org/w/api.php")!
+				comps.queryItems = [
+					URLQueryItem(name: "action", value: "wbgetentities"),
+					URLQueryItem(name: "sites", value: "wiki"),
+					URLQueryItem(name: "titles", value: "Key:" + key.replacingOccurrences(of: "_", with: " ")),
+					URLQueryItem(name: "props", value: "claims|sitelinks"),
+					URLQueryItem(name: "format", value: "json")
+				]
+				return comps.url
+			},
+			objectForData: { data in
+				guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+				      let entities = json["entities"] as? [String: Any]
+				else { return nil }
+				guard let entity = self.entity(in: entities, withTitlePrefix: "Key:"),
+				      let pattern = self.valueFor(property: "P13", inEntity: entity, langQID: "")
+				else { return ValueFormat(regex: nil) }
+				return ValueFormat(regex: try? NSRegularExpression(pattern: "^(?:\(pattern))$"))
+			},
+			completion: { result in
+				if (try? result.get())?.regex != nil {
+					update()
+				}
+			})?.regex
+	}
+
+	static func value(_ value: String, matches regex: NSRegularExpression) -> Bool {
+		func matches(_ text: String) -> Bool {
+			return regex.firstMatch(in: text, range: NSRange(text.startIndex..., in: text)) != nil
+		}
 	}
 
 	private func propertyListFor(property: String, inEntity entity: [String: Any]) -> [[String: Any]]? {
