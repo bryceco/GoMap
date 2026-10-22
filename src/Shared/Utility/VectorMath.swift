@@ -668,7 +668,7 @@ struct LatLon: Equatable, Codable {
 	// http://www.movable-type.co.uk/scripts/latlong.html
 	/// Distance between two lon,lat  points in degrees, result in meters
 	func greatCircleDistance(to other: LatLon) -> Double {
-		return GreatCircleDistance2(self, other)
+		return GreatCircleDistance(self, other)
 	}
 
 	// Add PList representation
@@ -740,7 +740,7 @@ func visibleEarthAreaAt(zoom: Double) -> Double {
 
 // http://www.movable-type.co.uk/scripts/latlong.html
 /// Distance between two lon,lat  points in degrees, result in meters
-func GreatCircleDistance2(_ p1: LatLon, _ p2: LatLon) -> Double {
+func GreatCircleDistance(_ p1: LatLon, _ p2: LatLon) -> Double {
 	// haversine formula
 	let dlon = (p2.lon - p1.lon) * .pi / 180
 	let dlat = (p2.lat - p1.lat) * .pi / 180
@@ -751,7 +751,7 @@ func GreatCircleDistance2(_ p1: LatLon, _ p2: LatLon) -> Double {
 }
 
 func GreatCircleDistance(_ p1: CLLocationCoordinate2D, _ p2: CLLocationCoordinate2D) -> Double {
-	return GreatCircleDistance2(LatLon(p1), LatLon(p2))
+	return GreatCircleDistance(LatLon(p1), LatLon(p2))
 }
 
 // area of a closed polygon (first and last points repeat), and boolean if it's clockwise
