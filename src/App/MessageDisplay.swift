@@ -6,9 +6,10 @@
 //  Copyright © 2026 Bryce Cogswell. All rights reserved.
 //
 
+import SafariServices
 import UIKit
 
-class MessageDisplay {
+class MessageDisplay: NSObject {
 	static let shared = MessageDisplay()
 
 	weak var flashLabel: HUDLabel! {
@@ -20,14 +21,22 @@ class MessageDisplay {
 			flashLabel.backgroundColor = .black.withAlphaComponent(0.7)
 			flashLabel.textColor = .white
 			flashLabel.contentInsets = .init(top: 4, left: 12, bottom: 4, right: 12)
+			flashLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(flashTapped)))
+			flashLabel.layer.cornerCurve = .continuous
+			flashBlur.frame = flashLabel.bounds
+			flashBlur.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+			flashLabel.insertSubview(flashBlur, at: 0)
 		}
 	}
 
 	weak var topViewController: UIViewController?
+	var flashLinkConstraint: NSLayoutConstraint?
 
 	var lastErrorDate: Date? // to prevent spamming of error dialogs
 	var ignoreNetworkErrorsUntilDate: Date?
 	private var flashGeneration = 0
+	private var flashLink: URL?
+	private lazy var flashBlur = UIVisualEffectView(effect: UIBlurEffect(style: .systemThickMaterial))
 
 	func showAlert(_ alert: UIAlertController) {
 		topViewController?.present(alert, animated: true)
@@ -105,8 +114,35 @@ class MessageDisplay {
 		}
 	}
 
-	func flashMessage(title: String?, message: String, duration: TimeInterval = 1.0) {
-		flashLabel.text = title.map { $0 + "\n\n" + message } ?? message
+	@objc private func flashTapped() {
+		flashLink.map { topViewController?.present(SFSafariViewController(url: $0), animated: true) }
+	}
+
+	func flashMessage(title: String?, message: String, duration: TimeInterval = 1.0, link: URL? = nil) {
+		flashLink = link
+		let text = title.map { $0 + "\n\n" + message } ?? message
+		let font = UIFont.preferredFont(forTextStyle: link == nil ? .title3 : .headline)
+		let attributed = NSMutableAttributedString(string: link == nil ? text : " \(text) ", attributes: [
+			.font: font,
+			.foregroundColor: link == nil ? UIColor.white : UIColor.label
+		])
+		if link != nil {
+			func symbol(_ name: String, _ color: UIColor) -> NSAttributedString {
+				let image = UIImage(systemName: name, withConfiguration: UIImage.SymbolConfiguration(font: font))
+				return NSAttributedString(attachment: NSTextAttachment(image: image!.withTintColor(color, renderingMode: .alwaysOriginal)))
+			}
+			attributed.insert(symbol("checkmark.circle.fill", .systemGreen), at: 0)
+			attributed.append(symbol("chevron.right", .tertiaryLabel))
+		}
+		flashBlur.isHidden = link == nil
+		flashLinkConstraint?.isActive = link != nil
+		flashLabel.numberOfLines = link == nil ? 0 : 1
+		flashLabel.adjustsFontSizeToFitWidth = link != nil
+		flashLabel.backgroundColor = link == nil ? .black.withAlphaComponent(0.7) : .clear
+		flashLabel.layer.cornerRadius = link == nil ? 5 : 16
+		flashLabel.contentInsets = link == nil ? .init(top: 4, left: 12, bottom: 4, right: 12)
+			: .init(top: 12, left: 16, bottom: 12, right: 16)
+		flashLabel.attributedText = attributed
 		flashLabel.superview?.bringSubviewToFront(flashLabel)
 
 		if flashLabel.isHidden {
