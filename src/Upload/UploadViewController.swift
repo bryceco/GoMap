@@ -355,13 +355,14 @@ private final class ChangeGroupCell: UITableViewCell {
 class UploadViewController: UIViewController {
 	/// Table layout. Comment and source are always present; the rest depends on the pending edits.
 	private enum Section {
-		case comment
-		case emptyCommentWarning
-		case source
-		case distanceWarning
-		case untaggedWarning
-		case noChanges
-		case group(Int) // index into connectedGroups
+		case comment // The changeset comment text field
+		case emptyCommentWarning // Banner warning that the comment is empty
+		case source // The changeset source text field
+		case distanceWarning // Banner warning that some groups were auto-deselected because they are far away
+		case untaggedWarning // Banner warning that some groups contain untagged objects
+		case noChanges // Placeholder shown when there are no pending changes
+		case conflictWarning(Int) // Banner shown directly above a group whose upload failed due to an unresolved conflict
+		case group(Int) // A group of connected objects that can be uploaded together
 	}
 
 	var mapData: OsmMapData!
@@ -393,6 +394,11 @@ class UploadViewController: UIViewController {
 	private var connectedGroups: [ConnectedObjects] = []
 	private var selectedGroupIndices: Set<Int> = []
 	private var untaggedGroupIndices: Set<Int> = []
+	/// Groups whose upload failed because the server's version couldn't be merged, keyed by
+	/// ConnectedObjects.minGroupId so the entry survives reloadGroups() and follows a discard.
+	private var conflictMessages: [Int: String] = [:]
+	/// Changeset left open by a failed upload, reused by the next attempt
+	private var pendingChangesetID: Int64?
 
 	private var selectedGroups: [ConnectedObjects] {
 		connectedGroups.indices.filter { selectedGroupIndices.contains($0) }.map { connectedGroups[$0] }
@@ -472,7 +478,12 @@ class UploadViewController: UIViewController {
 	private func reloadGroups() {
 		connectedGroups = mapData?.undoManager.connectedObjects() ?? []
 		untaggedGroupIndices = groupIndicesWithUntaggedObjects()
-		selectedGroupIndices = nearbyGroupIndices().subtracting(untaggedGroupIndices)
+		let conflictGroupIndices = Set(connectedGroups.indices.filter {
+			conflictMessages[connectedGroups[$0].minGroupId] != nil
+		})
+		selectedGroupIndices = nearbyGroupIndices()
+			.subtracting(untaggedGroupIndices)
+			.subtracting(conflictGroupIndices)
 
 		sections = [.comment]
 		if isCommentEmpty {
@@ -482,18 +493,28 @@ class UploadViewController: UIViewController {
 		if connectedGroups.isEmpty {
 			sections.append(.noChanges)
 		} else {
-			if selectedGroupIndices.count + untaggedGroupIndices.count < connectedGroups.count {
+			if selectedGroupIndices.count + untaggedGroupIndices.count + conflictGroupIndices.count < connectedGroups.count {
 				// Some distant groups were automatically deselected
 				sections.append(.distanceWarning)
 			}
 			if !untaggedGroupIndices.isEmpty {
 				sections.append(.untaggedWarning)
 			}
-			sections += connectedGroups.indices.map { Section.group($0) }
+			sections += groupSections()
 		}
 
 		updateActionButtons()
 		tableView.reloadData()
+	}
+
+	/// One section per group, preceded by a warning section for any group that failed to upload.
+	private func groupSections() -> [Section] {
+		connectedGroups.indices.flatMap { index -> [Section] in
+			if conflictMessages[connectedGroups[index].minGroupId] != nil {
+				return [.conflictWarning(index), .group(index)]
+			}
+			return [.group(index)]
+		}
 	}
 
 	private func sectionIndex(forGroup groupIndex: Int) -> Int? {
@@ -810,7 +831,8 @@ class UploadViewController: UIViewController {
 			                                                    source: source,
 			                                                    imagery: imagery,
 			                                                    generator: generator,
-			                                                    locale: locale)
+			                                                    locale: locale,
+			                                                    reusingChangeset: pendingChangesetID)
 			dismiss(animated: true)
 			MainActor.runAfter(nanoseconds: 300_000000) {
 				appDelegate.mapView.setNeedsLayout()
@@ -831,18 +853,72 @@ class UploadViewController: UIViewController {
 			commitButton.isEnabled = true
 			cancelButton.isEnabled = true
 			performSegue(withIdentifier: "loginSegue", sender: self)
+		} catch let error as OsmMapData.Error {
+			progressView.stopAnimating()
+			cancelButton.isEnabled = true
+			if case let .unresolvedConflict(extId, reason, changesetID) = error {
+				pendingChangesetID = changesetID
+				deselectConflictingGroup(containing: extId, reason: reason, error: error)
+			} else {
+				updateActionButtons()
+				presentUploadError(error.localizedDescription)
+			}
 		} catch {
 			progressView.stopAnimating()
 			cancelButton.isEnabled = true
 			updateActionButtons()
-			let alert = UIAlertController(
-				title: NSLocalizedString("Unable to upload changes", comment: ""),
-				message: error.localizedDescription,
-				preferredStyle: .alert)
-			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
-			                              style: .cancel,
-			                              handler: nil))
-			present(alert, animated: true)
+			presentUploadError(error.localizedDescription)
+		}
+	}
+
+	private func presentUploadError(_ message: String) {
+		let alert = UIAlertController(
+			title: NSLocalizedString("Unable to upload changes", comment: ""),
+			message: message,
+			preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
+		                              style: .cancel,
+		                              handler: nil))
+		present(alert, animated: true)
+	}
+
+	/// The server's version of an object couldn't be merged into our edits. Deselect the group
+	/// containing it and explain why, so the user can still upload everything else.
+	private func deselectConflictingGroup(containing extId: OsmExtendedIdentifier, reason: String, error: Error) {
+		guard
+			let groupIndex = connectedGroups.firstIndex(where: { group in
+				group.objects.contains { $0.extendedIdentifier == extId }
+			}),
+			let object = mapData.object(withExtendedIdentifier: extId)
+		else {
+			updateActionButtons()
+			presentUploadError(error.localizedDescription)
+			return
+		}
+		let (name, feature) = object.friendlyDescriptionWithFeature()
+		let description = name.map { "\($0) (\(feature))" } ?? feature
+		conflictMessages[connectedGroups[groupIndex].minGroupId] = String.localizedStringWithFormat(
+			NSLocalizedString(
+				"%1$@ couldn't be uploaded: %2$@. These edits have been deselected so you can upload the rest.",
+				comment: "Warning shown above an edit group that couldn't be uploaded; %1$@ is the object, %2$@ the reason"),
+			description, reason)
+		selectedGroupIndices.remove(groupIndex)
+
+		// Rebuild just the group sections so a warning appears above the affected group
+		sections.removeAll {
+			switch $0 {
+			case .conflictWarning, .group: return true
+			default: return false
+			}
+		}
+		sections += groupSections()
+		updateActionButtons()
+		tableView.reloadData()
+		if let section = sections.firstIndex(where: {
+			if case let .conflictWarning(index) = $0 { return index == groupIndex }
+			return false
+		}) {
+			tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: true)
 		}
 	}
 
@@ -969,7 +1045,7 @@ extension UploadViewController: UITableViewDataSource {
 		switch sections[section] {
 		case .comment: return UploadStrings.commentHeader
 		case .source: return UploadStrings.sourceHeader
-		case .emptyCommentWarning, .distanceWarning, .untaggedWarning, .noChanges, .group: return nil
+		case .emptyCommentWarning, .distanceWarning, .untaggedWarning, .noChanges, .conflictWarning, .group: return nil
 		}
 	}
 
@@ -1015,6 +1091,13 @@ extension UploadViewController: UITableViewDataSource {
 			cell.configure(
 				text: NSLocalizedString("Nothing to upload, no changes have been made.", comment: ""),
 				style: .empty)
+			return cell
+		case let .conflictWarning(groupIndex):
+			let cell = tableView.dequeueReusableCell(
+				withIdentifier: MessageCell.reuseIdentifier,
+				for: indexPath) as! MessageCell
+			cell.configure(text: conflictMessages[connectedGroups[groupIndex].minGroupId] ?? "",
+			               style: .warning)
 			return cell
 		case let .group(groupIndex):
 			return groupCell(for: connectedGroups[groupIndex], at: indexPath)
@@ -1068,7 +1151,7 @@ extension UploadViewController: UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		switch sections[section] {
-		case .emptyCommentWarning, .distanceWarning, .untaggedWarning:
+		case .emptyCommentWarning, .distanceWarning, .untaggedWarning, .conflictWarning:
 			return .leastNonzeroMagnitude
 		default:
 			return UITableView.automaticDimension
@@ -1077,7 +1160,7 @@ extension UploadViewController: UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		switch sections[section] {
-		case .emptyCommentWarning, .distanceWarning, .untaggedWarning:
+		case .emptyCommentWarning, .distanceWarning, .untaggedWarning, .conflictWarning:
 			return 5
 		default:
 			return UITableView.automaticDimension

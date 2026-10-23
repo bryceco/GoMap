@@ -41,9 +41,17 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		case badXML
 		case serverReturnedUnknownObjectId(OsmIdentifier)
 		case serverSkippedDelete
+		/// Another mapper changed the object and the server's version couldn't be merged into ours.
+		/// The changeset was left open so the caller can reuse it on the next attempt.
+		case unresolvedConflict(OsmExtendedIdentifier, reason: String, changesetID: Int64)
 
 		public var errorDescription: String? {
 			switch self {
+			case let .unresolvedConflict(extId, reason, _):
+				return String.localizedStringWithFormat(
+					NSLocalizedString("Changes to %1$@ %2$@ made by another mapper couldn't be merged: %3$@",
+					                  comment: "%1$@ is node/way/relation, %2$@ its ID, %3$@ the reason"),
+					extId.type.string, String(extId.ident), reason)
 			case .unableToOpenDatabase: return "OsmMapDataError.unableToOpenDatabase"
 			case .osmWayResolveToMapDataFoundNilNodeRefs: return "OsmMapDataError.osmWayResolveToMapDataFoundNilNodeRefs"
 			case .osmWayResolveToMapDataCouldntFindNodeRef: return "OsmMapDataError.osmWayResolveToMapDataCouldntFindNodeRef"
@@ -823,13 +831,14 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	// reports a version conflict so the caller can re-fetch and retry.
 	// Returns true if the server skipped any of our deletes because of if-unused.
 	@MainActor private func uploadChangeset(xml xmlChanges: DDXMLDocument, changesetID: Int64) async throws -> Bool {
-		let postData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(changesetID)/upload",
+		let postData: Data
+		do {
+			postData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(changesetID)/upload",
 		                                               queryItems: [:],
 		                                               method: "POST",
 		                                               xml: xmlChanges)
-		let response = String(decoding: postData, as: UTF8.self)
-
-		if response.hasPrefix("Version mismatch") {
+		} catch let UrlSessionError.badStatusCode(409, response) where response.hasPrefix("Version mismatch") {
+			// The server reports a conflict as 409 with the details in the body
 			DLog("Upload error: \(response)")
 			// "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld"
 			let scanner = Scanner(string: response)
@@ -846,6 +855,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			                           objId: objId)
 		}
 
+		let response = String(decoding: postData, as: UTF8.self)
 		guard response.hasPrefix("<?xml") else { throw Error.otherError(response) }
 
 		let diffDoc = try DDXMLDocument(data: postData, options: 0)
@@ -966,11 +976,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 	}
 
-	// create a new changeset to upload to
-	private func openNewChangeset(withComment comment: String,
-	                              source: String,
-	                              imagery: String,
-	                              locale: String) async throws -> Int64
+	// Create a new changeset to upload to, or refresh the tags of one left open by a previous attempt
+	private func openChangeset(reusing pendingID: Int64?,
+	                           withComment comment: String,
+	                           source: String,
+	                           imagery: String,
+	                           locale: String) async throws -> Int64
 	{
 		let creator = "\(await AppDelegate.appName) \(await AppDelegate.appVersion)"
 		var tags = [
@@ -994,6 +1005,18 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		else {
 			throw Error.otherError("Failed to create OSM XML for creating a new changeset.")
 		}
+		if let pendingID {
+			do {
+				// the user may have edited the comment since the failed attempt
+				_ = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(pendingID)",
+				                                    queryItems: [:],
+				                                    method: "PUT",
+				                                    xml: xmlCreate)
+				return pendingID
+			} catch UrlSessionError.badStatusCode {
+				// The server closes idle changesets after an hour, so fall through and open a new one
+			}
+		}
 		let putData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/create",
 		                                              queryItems: [:],
 		                                              method: "PUT",
@@ -1013,14 +1036,16 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	                                imagery: String,
 	                                generator: String,
 	                                locale: String,
-	                                groupIds: Set<Int>) async throws -> Int64
+	                                groupIds: Set<Int>,
+	                                reusingChangeset pendingChangesetID: Int64? = nil) async throws -> Int64
 	{
 		consistencyCheck()
 
-		let changesetID = try await openNewChangeset(withComment: comment,
-		                                             source: source,
-		                                             imagery: imagery,
-		                                             locale: locale)
+		let changesetID = try await openChangeset(reusing: pendingChangesetID,
+		                                          withComment: comment,
+		                                          source: source,
+		                                          imagery: imagery,
+		                                          locale: locale)
 		var skippedDelete = false
 		switch content {
 		case let .xml(xmlChanges):
@@ -1041,17 +1066,27 @@ final class OsmMapData: NSObject, NSSecureCoding {
 					break
 				} catch let mismatch as VersionMismatchError {
 					// version mismatch error: fetch the server's version and update ourself
+					let extId = try OsmExtendedIdentifier(OSM_TYPE(string: mismatch.objType), mismatch.objId)
 					guard attempt < 20 else {
-						throw Error.otherError("Version mismatch on \(mismatch.objType) \(mismatch.objId): too many retries")
+						throw Error.unresolvedConflict(extId,
+						                               reason: NSLocalizedString("too many retries", comment: ""),
+						                               changesetID: changesetID)
 					}
-					// fetch latest version from server
-					var url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/\(mismatch.objType)/\(mismatch.objId)")
-					if mismatch.objType == "way" || mismatch.objType == "relation" {
-						url = url.appendingPathComponent("full")
+					do {
+						// fetch latest version from server
+						var url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/\(mismatch.objType)/\(mismatch.objId)")
+						if mismatch.objType == "way" || mismatch.objType == "relation" {
+							url = url.appendingPathComponent("full")
+						}
+						let data = try await OsmDownloader.osmData(forUrl: url)
+						// merging updates the objects in-place, which works because they are reference objects
+						try await saveAndMerge(data)
+					} catch {
+						// Report which object is the problem so the caller can leave it out of the upload
+						throw Error.unresolvedConflict(extId,
+						                               reason: error.localizedDescription,
+						                               changesetID: changesetID)
 					}
-					let data = try await OsmDownloader.osmData(forUrl: url)
-					// merging updates the objects in-place, which works because they are reference objects
-					try await saveAndMerge(data)
 					attempt += 1
 				}
 			}
@@ -1086,7 +1121,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	                                source: String,
 	                                imagery: String,
 	                                generator: String,
-	                                locale: String) async throws -> Int64
+	                                locale: String,
+	                                reusingChangeset pendingChangesetID: Int64? = nil) async throws -> Int64
 	{
 		let objects = groups.reduce(into: Set<OsmBaseObject>()) { $0.formUnion($1.objects) }
 		let groupIds = groups.reduce(into: Set<Int>()) { $0.formUnion($1.undoGroups) }
@@ -1096,7 +1132,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		                                 imagery: imagery,
 		                                 generator: generator,
 		                                 locale: locale,
-		                                 groupIds: groupIds)
+		                                 groupIds: groupIds,
+		                                 reusingChangeset: pendingChangesetID)
 	}
 
 	func changesetAsXml() -> String? {

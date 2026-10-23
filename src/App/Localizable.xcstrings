@@ -7033,6 +7033,9 @@
         }
       }
     },
+    "%1$@ couldn't be uploaded: %2$@. These edits have been deselected so you can upload the rest." : {
+      "comment" : "Warning shown above an edit group that couldn't be uploaded; %1$@ is the object, %2$@ the reason"
+    },
     "%ld Days" : {
       "comment" : "One or more days",
       "localizations" : {
@@ -26552,6 +26555,9 @@
     },
     "Changes saved in changeset %@" : {
       "comment" : "A message that appears in a banner at the top of the screen after a set of changes has been uploaded to the OpenStreetMap server. The argument is the changeset ID."
+    },
+    "Changes to %1$@ %2$@ made by another mapper couldn't be merged: %3$@" : {
+      "comment" : "%1$@ is node/way/relation, %2$@ its ID, %3$@ the reason"
     },
     "Changeset" : {
       "comment" : "OSM changeset identifier",
@@ -61139,6 +61145,9 @@
           }
         }
       }
+    },
+    "too many retries" : {
+
     },
     "Travel ALLOWED from %@ to %@" : {
       "localizations" : {
