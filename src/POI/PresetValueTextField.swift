@@ -200,16 +200,16 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 
 	private func updateAssociatedContent() {
 		// Swift doesn't like too many ??'s so we break it into pieces 🤷‍♂️
-		let associatedView1 = getSurveyDateButton()
+		let associatedView1 = getFormatWarningButton()
+			?? getSurveyDateButton()
 			?? getAssociatedColor()
 			?? getOpeningHoursButton()
 			?? getWebsiteButton()
-			?? getDirectionButton()
 		let associatedView2 = getHeightButton()
 			?? getYesNoButton(keyValueDict: owner?.keyValueDict ?? [:])
 			?? getUnitsButton()
 			?? getPhotographButton()
-			?? getFormatWarningButton()
+			?? getDirectionButton()
 
 		rightView = associatedView1 ?? associatedView2
 		rightViewMode = rightView != nil ? .always : .never
