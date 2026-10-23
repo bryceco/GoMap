@@ -23,13 +23,13 @@ class GpxTrackTableCell: UITableViewCell, UIActionSheetDelegate {
 			details.text = String.localizedStringWithFormat(
 				NSLocalizedString("%ld meters, %ld points, %ld waypoints", comment: "length of a gpx track"),
 				Int(track.lengthInMeters()),
-				track.points.count,
+				track.pointCount,
 				track.wayPoints.count)
 		} else {
 			details.text = String.localizedStringWithFormat(
 				NSLocalizedString("%ld meters, %ld points", comment: "length of a gpx track"),
 				Int(track.lengthInMeters()),
-				track.points.count)
+				track.pointCount)
 		}
 	}
 

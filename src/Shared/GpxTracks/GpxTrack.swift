@@ -199,19 +199,27 @@ final class GpxTrack: NSObject, NSSecureCoding {
 	/// The date when the track was created. Derived from the first point's timestamp
 	/// when available, falling back to a stored date for waypoint-only imports.
 	var creationDate: Date {
-		return points.first?.timestamp ?? _creationDate
+		return segments.first?.first?.timestamp ?? _creationDate
 	}
 
 	private var _creationDate = Date()
-	private(set) var points: [GpxPoint] = []
+	private(set) var segments: [[GpxPoint]] = []
+	var pointCount: Int { segments.reduce(0) { $0 + $1.count } }
 	private(set) var wayPoints: [GpxPoint] = []
 	private var geoJSONFeature: GeoJSONFeature?
 
 	var geoJSON: GeoJSONFeature {
 		if geoJSONFeature == nil {
-			let geom = points.count >= 2
-				? GeoJSONGeometry(geometry: .lineString(points: points.map { $0.latLon }))
-				: nil
+			let geom: GeoJSONGeometry?
+			let validSegments = segments.filter { $0.count >= 2 }
+			if validSegments.count == 1 {
+				geom = GeoJSONGeometry(geometry: .lineString(points: validSegments[0].map { $0.latLon }))
+			} else if validSegments.count >= 2 {
+				geom = GeoJSONGeometry(geometry: .multiLineString(
+					points: validSegments.map { $0.map { $0.latLon } }))
+			} else {
+				geom = nil
+			}
 			geoJSONFeature = GeoJSONFeature(type: .Feature,
 			                                id: name,
 			                                geometry: geom,
@@ -222,9 +230,9 @@ final class GpxTrack: NSObject, NSSecureCoding {
 
 	func isEqual(to track: GpxTrack) -> Bool {
 		return name == track.name &&
-			points.count == track.points.count &&
-			points.first?.latLon == track.points.first?.latLon &&
-			points.last?.latLon == track.points.last?.latLon &&
+			pointCount == track.pointCount &&
+			segments.first?.first?.latLon == track.segments.first?.first?.latLon &&
+			segments.last?.last?.latLon == track.segments.last?.last?.latLon &&
 			wayPoints.count == track.wayPoints.count &&
 			wayPoints.first?.latLon == track.wayPoints.first?.latLon &&
 			wayPoints.last?.latLon == track.wayPoints.last?.latLon
@@ -234,9 +242,15 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		recording = true
 
 		let coordinate = LatLon(location.coordinate)
-		let prev = points.last
 
-		if let prev = prev,
+		// Ensure at least one segment exists for live recording
+		if segments.isEmpty {
+			segments.append([])
+		}
+
+		let prev = segments[segments.count - 1].last
+
+		if let prev,
 		   prev.latLon.lat == coordinate.lat,
 		   prev.latLon.lon == coordinate.lon
 		{
@@ -256,7 +270,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		                  desc: "",
 		                  extensions: [])
 
-		points.append(pt)
+		segments[segments.count - 1].append(pt)
 
 		// need to recompute shape
 		geoJSONFeature = nil
@@ -270,9 +284,9 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		super.init()
 	}
 
-	/// Appends points and waypoints from a newer track to this track.
-	func appendPoints(from track: GpxTrack) {
-		points.append(contentsOf: track.points)
+	/// Appends segments and waypoints from a newer track to this track.
+	func appendSegments(from track: GpxTrack) {
+		segments.append(contentsOf: track.segments)
 		wayPoints.append(contentsOf: track.wayPoints)
 		geoJSONFeature = nil
 		distance = 0.0
@@ -314,30 +328,32 @@ final class GpxTrack: NSObject, NSSecureCoding {
 			trkElement.addChild(nameElement)
 		}
 
-		guard let segElement = DDXMLNode.element(withName: "trkseg") as? DDXMLElement
-		else { return nil }
-		trkElement.addChild(segElement)
-
-		for pt in points {
-			guard let ptElement = DDXMLNode.element(withName: "trkpt") as? DDXMLElement,
-			      let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latLon.lat)") as? DDXMLNode,
-			      let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.latLon.lon)") as? DDXMLNode
+		for segment in segments {
+			guard let segElement = DDXMLNode.element(withName: "trkseg") as? DDXMLElement
 			else { return nil }
+			trkElement.addChild(segElement)
 
-			segElement.addChild(ptElement)
-			ptElement.addAttribute(attrLat)
-			ptElement.addAttribute(attrLon)
+			for pt in segment {
+				guard let ptElement = DDXMLNode.element(withName: "trkpt") as? DDXMLElement,
+				      let attrLat = DDXMLNode.attribute(withName: "lat", stringValue: "\(pt.latLon.lat)") as? DDXMLNode,
+				      let attrLon = DDXMLNode.attribute(withName: "lon", stringValue: "\(pt.latLon.lon)") as? DDXMLNode
+				else { return nil }
 
-			if let timestamp = pt.timestamp,
-			   let timeElement = DDXMLNode.element(withName: "time") as? DDXMLElement
-			{
-				timeElement.stringValue = dateFormatter.string(from: timestamp)
-				ptElement.addChild(timeElement)
-			}
+				segElement.addChild(ptElement)
+				ptElement.addAttribute(attrLat)
+				ptElement.addAttribute(attrLon)
 
-			if let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement {
-				eleElement.stringValue = "\(pt.elevation)"
-				ptElement.addChild(eleElement)
+				if let timestamp = pt.timestamp,
+				   let timeElement = DDXMLNode.element(withName: "time") as? DDXMLElement
+				{
+					timeElement.stringValue = dateFormatter.string(from: timestamp)
+					ptElement.addChild(timeElement)
+				}
+
+				if let eleElement = DDXMLNode.element(withName: "ele") as? DDXMLElement {
+					eleElement.stringValue = "\(pt.elevation)"
+					ptElement.addChild(eleElement)
+				}
 			}
 		}
 
@@ -407,14 +423,15 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		guard parser.parse(), handler.error == nil else {
 			throw handler.error ?? GpxError.badGpxFormat
 		}
-		if handler.wayPoints.isEmpty, handler.trkPoints.count < 2 {
+		let totalTrkPoints = handler.trkSegments.reduce(0) { $0 + $1.count }
+		if handler.wayPoints.isEmpty, totalTrkPoints < 2 {
 			throw GpxError.fewerThanTwoPoints
 		}
 		self.init()
-		points = handler.trkPoints
+		segments = handler.trkSegments
 		wayPoints = handler.wayPoints
 		_creationDate = handler.metadataDate
-			?? handler.trkPoints.first?.timestamp
+			?? handler.trkSegments.first?.first?.timestamp
 			?? handler.wayPoints.first?.timestamp
 			?? Date()
 		if let trackName = handler.trackName {
@@ -424,13 +441,15 @@ final class GpxTrack: NSObject, NSSecureCoding {
 
 	func lengthInMeters() -> Double {
 		if distance == 0 {
-			var prev: GpxPoint?
-			for pt in points {
-				if let prev = prev {
-					let d = pt.latLon.greatCircleDistance(to: prev.latLon)
-					distance += d
+			for segment in segments {
+				var prev: GpxPoint?
+				for pt in segment {
+					if let prev = prev {
+						let d = pt.latLon.greatCircleDistance(to: prev.latLon)
+						distance += d
+					}
+					prev = pt
 				}
-				prev = pt
 			}
 		}
 		return distance
@@ -440,12 +459,17 @@ final class GpxTrack: NSObject, NSSecureCoding {
 		if let wayPoint = wayPoints.first {
 			return wayPoint.latLon
 		} else {
-			// get midpoint
-			let mid = points.count / 2
-			guard mid < points.count else {
-				return nil
+			let total = pointCount
+			guard total > 0 else { return nil }
+			// Find point at midpoint index across all segments
+			var remaining = total / 2
+			for segment in segments {
+				if remaining < segment.count {
+					return segment[remaining].latLon
+				}
+				remaining -= segment.count
 			}
-			return points[mid].latLon
+			return segments.last?.last?.latLon
 		}
 	}
 
@@ -475,15 +499,19 @@ final class GpxTrack: NSObject, NSSecureCoding {
 	}
 
 	func duration() -> TimeInterval {
-		guard let start = points.first?.timestamp,
-		      let finish = points.last?.timestamp
+		guard let start = segments.first?.first?.timestamp,
+		      let finish = segments.last?.last?.timestamp
 		else { return 0.0 }
 		return finish.timeIntervalSince(start)
 	}
 
 	required init?(coder aDecoder: NSCoder) {
 		super.init()
-		points = aDecoder.decodeObject(of: [NSArray.self, GpxPoint.self], forKey: "points") as? [GpxPoint] ?? []
+		// .track files are only created from live recording, which is always
+		// a single contiguous segment. Multi-segment tracks come from .gpx
+		// files, which use XML parsing instead of NSSecureCoding.
+		let flatPoints = aDecoder.decodeObject(of: [NSArray.self, GpxPoint.self], forKey: "points") as? [GpxPoint] ?? []
+		segments = flatPoints.isEmpty ? [] : [flatPoints]
 		wayPoints = aDecoder.decodeObject(of: [NSArray.self, GpxPoint.self], forKey: "waypoints") as? [GpxPoint] ?? []
 		_creationDate = aDecoder.decodeObject(of: NSDate.self, forKey: "creationDate") as Date? ?? Date()
 		// Discard auto-generated names stored by older versions
@@ -496,7 +524,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 	}
 
 	func encode(with aCoder: NSCoder) {
-		aCoder.encode(points, forKey: "points")
+		aCoder.encode(segments.flatMap { $0 }, forKey: "points")
 		aCoder.encode(wayPoints, forKey: "waypoints")
 		aCoder.encode(name, forKey: "name")
 		aCoder.encode(creationDate, forKey: "creationDate")
@@ -506,7 +534,7 @@ final class GpxTrack: NSObject, NSSecureCoding {
 // MARK: - SAX-based GPX parser
 
 private final class GpxSAXParser: NSObject, XMLParserDelegate {
-	var trkPoints: [GpxPoint] = []
+	var trkSegments: [[GpxPoint]] = []
 	var wayPoints: [GpxPoint] = []
 	var trackName: String?
 	var metadataDate: Date?
@@ -515,6 +543,9 @@ private final class GpxSAXParser: NSObject, XMLParserDelegate {
 	// Element path stack (without namespace prefixes)
 	private var elementStack: [String] = []
 	private var textBuffer = ""
+
+	// Current segment being built
+	private var currentSegmentPoints: [GpxPoint] = []
 
 	// Current point being built (for trkpt / wpt)
 	private var currentLat: Double?
@@ -544,6 +575,8 @@ private final class GpxSAXParser: NSObject, XMLParserDelegate {
 		textBuffer = ""
 
 		switch local {
+		case "trkseg":
+			currentSegmentPoints = []
 		case "trkpt", "wpt":
 			guard let latStr = attributes["lat"],
 			      let lonStr = attributes["lon"],
@@ -605,7 +638,7 @@ private final class GpxSAXParser: NSObject, XMLParserDelegate {
 					if isWaypoint {
 						wayPoints.append(pt)
 					} else {
-						trkPoints.append(pt)
+						currentSegmentPoints.append(pt)
 					}
 				}
 				currentLat = nil
@@ -613,6 +646,13 @@ private final class GpxSAXParser: NSObject, XMLParserDelegate {
 			default:
 				break
 			}
+			return
+		}
+
+		// End of track segment
+		if local == "trkseg", !currentSegmentPoints.isEmpty {
+			trkSegments.append(currentSegmentPoints)
+			currentSegmentPoints = []
 			return
 		}
 

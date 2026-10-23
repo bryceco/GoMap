@@ -224,7 +224,7 @@ class GpxTrackTestCase: XCTestCase {
 	func testImportGpx_pointCount() {
 		guard let track = importSampleTrack()
 		else { return XCTFail("Failed to import sample GPX") }
-		XCTAssertEqual(track.points.count, 3)
+		XCTAssertEqual(track.pointCount, 3)
 		XCTAssertEqual(track.wayPoints.count, 1)
 	}
 
@@ -237,13 +237,13 @@ class GpxTrackTestCase: XCTestCase {
 	func testImportGpx_coordinates() {
 		guard let track = importSampleTrack()
 		else { return XCTFail("Failed to import sample GPX") }
-		XCTAssertEqual(track.points[0].latLon.lat, 47.12345, accuracy: 0.00001)
-		XCTAssertEqual(track.points[0].latLon.lon, 11.98765, accuracy: 0.00001)
+		XCTAssertEqual(track.segments[0][0].latLon.lat, 47.12345, accuracy: 0.00001)
+		XCTAssertEqual(track.segments[0][0].latLon.lon, 11.98765, accuracy: 0.00001)
 	}
 
 	func testImportGpx_timestamps() {
 		guard let track = importSampleTrack(),
-		      let timestamp = track.points[0].timestamp,
+		      let timestamp = track.segments[0][0].timestamp,
 		      let expected = referenceDate(from: "2026-10-03T14:00:03Z")
 		else { return XCTFail("Failed to import sample GPX or missing timestamp") }
 		XCTAssertEqual(timestamp.timeIntervalSince1970,
@@ -254,7 +254,7 @@ class GpxTrackTestCase: XCTestCase {
 	func testImportGpx_elevation() {
 		guard let track = importSampleTrack()
 		else { return XCTFail("Failed to import sample GPX") }
-		XCTAssertEqual(track.points[0].elevation, 512.5, accuracy: 0.01)
+		XCTAssertEqual(track.segments[0][0].elevation, 512.5, accuracy: 0.01)
 	}
 
 	func testImportGpx_creationDate() {
@@ -289,8 +289,8 @@ class GpxTrackTestCase: XCTestCase {
 		      let track2 = roundTripTrack()
 		else { return XCTFail("Round trip failed") }
 		// Timestamps should survive the round trip
-		XCTAssertEqual(track.points.count, track2.points.count)
-		for (p1, p2) in zip(track.points, track2.points) {
+		XCTAssertEqual(track.pointCount, track2.pointCount)
+		for (p1, p2) in zip(track.segments.joined(), track2.segments.joined()) {
 			guard let t1 = p1.timestamp, let t2 = p2.timestamp
 			else { XCTFail("Missing timestamp"); continue }
 			XCTAssertEqual(t1.timeIntervalSince1970,
@@ -303,7 +303,7 @@ class GpxTrackTestCase: XCTestCase {
 		guard let track = importSampleTrack(),
 		      let track2 = roundTripTrack()
 		else { return XCTFail("Round trip failed") }
-		for (p1, p2) in zip(track.points, track2.points) {
+		for (p1, p2) in zip(track.segments.joined(), track2.segments.joined()) {
 			XCTAssertEqual(p1.latLon.lat, p2.latLon.lat, accuracy: 0.000001)
 			XCTAssertEqual(p1.latLon.lon, p2.latLon.lon, accuracy: 0.000001)
 		}
@@ -313,7 +313,7 @@ class GpxTrackTestCase: XCTestCase {
 		guard let track = importSampleTrack(),
 		      let track2 = roundTripTrack()
 		else { return XCTFail("Round trip failed") }
-		for (p1, p2) in zip(track.points, track2.points) {
+		for (p1, p2) in zip(track.segments.joined(), track2.segments.joined()) {
 			XCTAssertEqual(p1.elevation, p2.elevation, accuracy: 0.01)
 		}
 	}
@@ -348,7 +348,7 @@ class GpxTrackTestCase: XCTestCase {
 		// Verify that after import → export → re-import, dates still match
 		// the original ISO8601 reference (catches the +8 day bug)
 		guard let track2 = roundTripTrack(),
-		      let timestamp = track2.points[0].timestamp,
+		      let timestamp = track2.segments[0][0].timestamp,
 		      let expected = referenceDate(from: "2026-10-03T14:00:03Z")
 		else { return XCTFail("Round trip failed or missing timestamp") }
 		XCTAssertEqual(timestamp.timeIntervalSince1970,
@@ -394,7 +394,7 @@ class GpxTrackTestCase: XCTestCase {
 		      let track = try? GpxTrack(xmlData: data)
 		else { return XCTFail("Failed to import waypoint-only GPX") }
 		XCTAssertEqual(track.wayPoints.count, 1)
-		XCTAssertEqual(track.points.count, 0)
+		XCTAssertEqual(track.pointCount, 0)
 	}
 
 	func testImportGpx_noTimestamps() {
@@ -410,11 +410,131 @@ class GpxTrackTestCase: XCTestCase {
 		guard let data = gpx.data(using: .utf8),
 		      let track = try? GpxTrack(xmlData: data)
 		else { return XCTFail("Failed to import GPX without timestamps") }
-		XCTAssertEqual(track.points.count, 2)
-		XCTAssertNil(track.points[0].timestamp)
-		XCTAssertNil(track.points[1].timestamp)
+		XCTAssertEqual(track.pointCount, 2)
+		XCTAssertNil(track.segments[0][0].timestamp)
+		XCTAssertNil(track.segments[0][1].timestamp)
 		XCTAssertEqual(track.duration(), 0.0)
 	}
+
+	// MARK: - Multi-Segment Support
+
+	func testImportGpx_multipleSegments() {
+		let gpx = """
+		<?xml version="1.0"?>
+		<gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+		  <trk>
+		    <trkseg>
+		      <trkpt lat="47.0" lon="11.0"><time>2026-01-01T00:00:00Z</time></trkpt>
+		      <trkpt lat="47.1" lon="11.1"><time>2026-01-01T00:01:00Z</time></trkpt>
+		    </trkseg>
+		    <trkseg>
+		      <trkpt lat="48.0" lon="12.0"><time>2026-01-01T01:00:00Z</time></trkpt>
+		      <trkpt lat="48.1" lon="12.1"><time>2026-01-01T01:01:00Z</time></trkpt>
+		    </trkseg>
+		  </trk>
+		</gpx>
+		"""
+		guard let data = gpx.data(using: .utf8),
+		      let track = try? GpxTrack(xmlData: data)
+		else { return XCTFail("Failed to import multi-segment GPX") }
+		XCTAssertEqual(track.segments.count, 2)
+		XCTAssertEqual(track.segments[0].count, 2)
+		XCTAssertEqual(track.segments[1].count, 2)
+		XCTAssertEqual(track.pointCount, 4)
+	}
+
+	func testRoundTrip_preservesSegments() {
+		let gpx = """
+		<?xml version="1.0"?>
+		<gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+		  <trk>
+		    <trkseg>
+		      <trkpt lat="47.0" lon="11.0"><time>2026-01-01T00:00:00Z</time></trkpt>
+		      <trkpt lat="47.1" lon="11.1"><time>2026-01-01T00:01:00Z</time></trkpt>
+		    </trkseg>
+		    <trkseg>
+		      <trkpt lat="48.0" lon="12.0"><time>2026-01-01T01:00:00Z</time></trkpt>
+		      <trkpt lat="48.1" lon="12.1"><time>2026-01-01T01:01:00Z</time></trkpt>
+		    </trkseg>
+		  </trk>
+		</gpx>
+		"""
+		guard let data = gpx.data(using: .utf8),
+		      let track = try? GpxTrack(xmlData: data),
+		      let exported = track.gpxXmlString(),
+		      let reimportedData = exported.data(using: .utf8),
+		      let reimported = try? GpxTrack(xmlData: reimportedData)
+		else { return XCTFail("Round trip failed") }
+		XCTAssertEqual(reimported.segments.count, 2)
+		XCTAssertEqual(reimported.segments[0].count, 2)
+		XCTAssertEqual(reimported.segments[1].count, 2)
+	}
+
+	func testLengthInMeters_doesNotCrossSegmentBoundary() {
+		let gpx = """
+		<?xml version="1.0"?>
+		<gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+		  <trk>
+		    <trkseg>
+		      <trkpt lat="0.0" lon="0.0"></trkpt>
+		      <trkpt lat="0.0" lon="1.0"></trkpt>
+		    </trkseg>
+		    <trkseg>
+		      <trkpt lat="10.0" lon="0.0"></trkpt>
+		      <trkpt lat="10.0" lon="1.0"></trkpt>
+		    </trkseg>
+		  </trk>
+		</gpx>
+		"""
+		guard let data = gpx.data(using: .utf8),
+		      let track = try? GpxTrack(xmlData: data)
+		else { return XCTFail("Failed to import GPX") }
+		// Each segment is about 111km at their respective latitudes.
+		// Distance should NOT include the ~1111km jump between segments.
+		let length = track.lengthInMeters()
+		XCTAssertLessThan(length, 250000, "Distance should not include cross-segment jump")
+		XCTAssertGreaterThan(length, 200000, "Distance should include both within-segment distances")
+	}
+
+	func testGeoJSON_multiSegmentUsesMultiLineString() {
+		let gpx = """
+		<?xml version="1.0"?>
+		<gpx version="1.1" xmlns="http://www.topografix.com/GPX/1/1">
+		  <trk>
+		    <trkseg>
+		      <trkpt lat="47.0" lon="11.0"></trkpt>
+		      <trkpt lat="47.1" lon="11.1"></trkpt>
+		    </trkseg>
+		    <trkseg>
+		      <trkpt lat="48.0" lon="12.0"></trkpt>
+		      <trkpt lat="48.1" lon="12.1"></trkpt>
+		    </trkseg>
+		  </trk>
+		</gpx>
+		"""
+		guard let data = gpx.data(using: .utf8),
+		      let track = try? GpxTrack(xmlData: data),
+		      let geom = track.geoJSON.geometry
+		else { return XCTFail("Failed") }
+		if case let .multiLineString(lines) = geom.geometryPoints {
+			XCTAssertEqual(lines.count, 2)
+		} else {
+			XCTFail("Expected multiLineString, got \(geom.geometryPoints)")
+		}
+	}
+
+	func testGeoJSON_singleSegmentUsesLineString() {
+		guard let track = importSampleTrack(),
+		      let geom = track.geoJSON.geometry
+		else { return XCTFail("Failed") }
+		if case .lineString = geom.geometryPoints {
+			// expected
+		} else {
+			XCTFail("Expected lineString, got \(geom.geometryPoints)")
+		}
+	}
+
+	// MARK: - Namespace Prefixes
 
 	func testImportGpx_namespacePrefixes() {
 		// Some GPS devices emit namespace-prefixed elements
@@ -434,6 +554,6 @@ class GpxTrackTestCase: XCTestCase {
 		guard let data = gpx.data(using: .utf8),
 		      let track = try? GpxTrack(xmlData: data)
 		else { return XCTFail("Failed to import namespace-prefixed GPX") }
-		XCTAssertEqual(track.points.count, 2)
+		XCTAssertEqual(track.pointCount, 2)
 	}
 }

@@ -17,7 +17,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 	/// The total point count across all chunks of the current recording session.
 	var activeTrackTotalPointCount: Int {
 		// nonGpxTracks holds previous chunks from the current session (cleared after consolidation)
-		return nonGpxTracks.reduce(0, { $0 + $1.points.count }) + (activeTrack?.points.count ?? 0)
+		return nonGpxTracks.reduce(0, { $0 + $1.pointCount }) + (activeTrack?.pointCount ?? 0)
 	}
 
 	/// The original start date of the current recording session (before any splits).
@@ -85,7 +85,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		activeTrack.finish()
 
 		// add to list of previous tracks
-		if activeTrack.points.count > 1 {
+		if activeTrack.pointCount > 1 {
 			savedTracks = [activeTrack] + savedTracks // do assignment to trigger notification
 		}
 
@@ -100,7 +100,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 	}
 
 	private func save(toDisk track: GpxTrack) {
-		if track.points.count >= 2 || track.wayPoints.count > 0 {
+		if track.pointCount >= 2 || track.wayPoints.count > 0 {
 			// make sure save directory exists
 			var time = TimeInterval(CACurrentMediaTime())
 			let dir = saveDirectory()
@@ -113,7 +113,7 @@ final class GpxTracks: DiskCacheSizeProtocol {
 				print("\(error)")
 			}
 			time = TimeInterval(CACurrentMediaTime() - time)
-			DLog("GPX track \(track.points.count) points, save time = \(time)")
+			DLog("GPX track \(track.pointCount) points, save time = \(time)")
 		}
 	}
 
@@ -158,9 +158,9 @@ final class GpxTracks: DiskCacheSizeProtocol {
 	}
 
 	func totalPointCount() -> Int {
-		var total = activeTrack?.points.count ?? 0
+		var total = activeTrack?.pointCount ?? 0
 		for track in savedTracks {
-			total += track.points.count
+			total += track.pointCount
 		}
 		return total
 	}
@@ -194,13 +194,13 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		// save less frequently if we're in the background
 		let saveInterval = UIApplication.shared.applicationState == .active ? 30 : 180
 
-		if activeTrack.points.count % saveInterval == 0 {
+		if activeTrack.pointCount % saveInterval == 0 {
 			saveActiveTrack()
 		}
 
 		// if the number of points is too large then the periodic save will begin taking too long,
 		// and drawing performance will degrade, so start a new track every hour
-		if activeTrack.points.count >= 3600 {
+		if activeTrack.pointCount >= 3600 {
 			endActiveTrack(continuingCurrentTrack: true)
 			startNewTrack(continuingCurrentTrack: true)
 			stabilizingCount = 100 // already stable
@@ -326,12 +326,12 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		var mergedTracks: [GpxTrack] = []
 
 		for newerTrack in nonGpxTracks.reversed().dropFirst() {
-			if let currentLast = current.points.last?.timestamp,
-			   let newerFirst = newerTrack.points.first?.timestamp,
+			if let currentLast = current.segments.last?.last?.timestamp,
+			   let newerFirst = newerTrack.segments.first?.first?.timestamp,
 			   newerFirst.timeIntervalSince(currentLast) < maxGapSeconds
 			{
 				// continuation: append newer points into current
-				current.appendPoints(from: newerTrack)
+				current.appendSegments(from: newerTrack)
 			} else {
 				// gap: finalize current and start a new group
 				mergedTracks.append(current)
