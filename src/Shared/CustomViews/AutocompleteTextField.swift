@@ -64,6 +64,13 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 		}
 	}
 
+	var completionLabels: [String: (title: String, subtitle: String?)] = [:]
+
+	func showCompletions(_ values: [String]) {
+		filteredCompletions = values
+		updateCompletionTableView()
+	}
+
 	func updateAutocomplete(for text: String) {
 		let text = text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
 		// filter completion list by current text
@@ -241,15 +248,24 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 	}
 
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cellIdentifier = "Cell"
-		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
-			?? UITableViewCell(style: .default, reuseIdentifier: cellIdentifier)
-		cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
 		// shouldn't need this check but we got an out-of-range crash report
-		if indexPath.row < filteredCompletions.count {
-			cell.textLabel?.text = filteredCompletions[indexPath.row]
+		let value = indexPath.row < filteredCompletions.count ? filteredCompletions[indexPath.row] : ""
+		let label = completionLabels[value]
+
+		let cellIdentifier = label != nil ? "SubtitleCell" : "Cell"
+		let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)
+			?? UITableViewCell(style: label != nil ? .subtitle : .default, reuseIdentifier: cellIdentifier)
+		cell.textLabel?.font = UIFont.preferredFont(forTextStyle: .body)
+		if let label {
+			cell.textLabel?.text = label.title
+			cell.detailTextLabel?.text = label.subtitle
+			if #available(iOS 13.0, *) {
+				cell.detailTextLabel?.textColor = .secondaryLabel
+			} else {
+				cell.detailTextLabel?.textColor = .gray
+			}
 		} else {
-			cell.textLabel?.text = ""
+			cell.textLabel?.text = value
 		}
 		return cell
 	}

@@ -121,6 +121,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		textColor = nil
 
 		if key != "",
+		   !isWikidataKey,
 		   PresetsDatabase.shared.eligibleForAutocomplete(key)
 		{
 			var set: Set<String> = PresetsDatabase.shared.allTagValuesForKey(key)
@@ -194,6 +195,50 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		text = value
 		updateAssociatedContent()
 		notifyValueChange(ended: true)
+
+		wikidataSearchTask?.cancel()
+		wikidataSearchText = ""
+		completionLabels = [:]
+	}
+
+	private var wikidataSearchTask: Task<Void, Never>?
+	private var wikidataSearchText = ""
+
+	private var isWikidataKey: Bool {
+		return OsmTags.isKey(key, variantOf: "wikidata")
+	}
+
+	override func updateAutocomplete(for text: String) {
+		guard isWikidataKey else {
+			super.updateAutocomplete(for: text)
+			return
+		}
+		let text = text.trimmingCharacters(in: .whitespacesAndNewlines)
+		if text == wikidataSearchText {
+			showCompletions(filteredCompletions)
+			return
+		}
+		wikidataSearchText = text
+		wikidataSearchTask?.cancel()
+		guard text != "", !Wikidata.isQID(text) else {
+			showCompletions([])
+			return
+		}
+		wikidataSearchTask = Task { @MainActor [weak self] in
+			try? await Task.sleep(nanoseconds: 300_000000)
+			guard !Task.isCancelled,
+			      let items = try? await Wikidata.search(text,
+			                                             language: PresetLanguages.preferredPresetLanguageCode()),
+			      !Task.isCancelled,
+			      let self,
+			      self.isEditing
+			else { return }
+			for item in items {
+				let subtitle = [item.id, item.description].compactMap { $0 }.joined(separator: " · ")
+				self.completionLabels[item.id] = (title: item.label, subtitle: subtitle)
+			}
+			self.showCompletions(items.map { $0.id })
+		}
 	}
 
 	// MARK: Accessory buttons

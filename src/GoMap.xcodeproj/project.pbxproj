@@ -274,6 +274,7 @@
 		C365A563263FC53F007DEC94 /* TurnRestrictHwyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A562263FC53F007DEC94 /* TurnRestrictHwyView.swift */; };
 		C365A569263FCC9C007DEC94 /* TapAndDragGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C365A568263FCC9C007DEC94 /* TapAndDragGesture.swift */; };
 		C381C30B263FE518003142BA /* PushPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C381C30A263FE518003142BA /* PushPinView.swift */; };
+		C3A1D0022F9A00010000A001 /* Wikidata.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3A1D0012F9A00010000A001 /* Wikidata.swift */; };
 		C3D0969C263CBC1100E3B129 /* POIFeaturePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */; };
 		C3D096AC263D48F700E3B129 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096AB263D48F700E3B129 /* AppDelegate.swift */; };
 		C3D096AE263D4BFB00E3B129 /* UploadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D096AD263D4BFB00E3B129 /* UploadViewController.swift */; };
@@ -661,6 +662,7 @@
 		C381C305263FD0CA003142BA /* VectorMath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
 		C381C306263FD0E8003142BA /* UndoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UndoManager.swift; sourceTree = "<group>"; };
 		C381C30A263FE518003142BA /* PushPinView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushPinView.swift; sourceTree = "<group>"; };
+		C3A1D0012F9A00010000A001 /* Wikidata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Wikidata.swift; sourceTree = "<group>"; };
 		C3D0969B263CBC1100E3B129 /* POIFeaturePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = POIFeaturePickerViewController.swift; sourceTree = "<group>"; };
 		C3D0969F263CD4BD00E3B129 /* PersistentWebCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentWebCache.swift; sourceTree = "<group>"; };
 		C3D096A2263CEBBC00E3B129 /* EditorMapLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditorMapLayer.swift; sourceTree = "<group>"; };
@@ -1280,6 +1282,7 @@
 				02771D702BFC15C300FE9B79 /* UserFileList.swift */,
 				C381C305263FD0CA003142BA /* VectorMath.swift */,
 				C3D096FA263ED2EC00E3B129 /* VoiceAnnouncement.swift */,
+				C3A1D0012F9A00010000A001 /* Wikidata.swift */,
 				C341E1522639DECC0022E983 /* WikiPage.swift */,
 			);
 			name = Utility;
@@ -1761,6 +1764,7 @@
 				023320A22BE07B2000E3311A /* DataOverlayLayer.swift in Sources */,
 				02F2449A264F635800C42E41 /* PathUtil.swift in Sources */,
 				C341E1532639DECC0022E983 /* WikiPage.swift in Sources */,
+				C3A1D0022F9A00010000A001 /* Wikidata.swift in Sources */,
 				02B5669D294F9D7E00710632 /* MagnifyingGlass.swift in Sources */,
 				0286EAA62656FEAC007CFEE9 /* EditorMapLayer+Ocean.swift in Sources */,
 				023320A42BE1DB9900E3311A /* DPadView.swift in Sources */,
