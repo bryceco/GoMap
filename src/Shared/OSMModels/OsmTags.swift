@@ -46,6 +46,15 @@ final class OsmTags {
 		return Self.isKey(key, variantOf: "fixme") || Self.isKey(key, variantOf: "FIXME")
 	}
 
+	class func isFreeformText(_ key: String) -> Bool {
+		return isKey(key, variantOf: "note")
+			|| isKey(key, variantOf: "comment")
+			|| isKey(key, variantOf: "description")
+			|| isFixme(key)
+			|| isKey(key, variantOf: "inscription")
+			|| isKey(key, variantOf: "source")
+	}
+
 	class func isName(_ key: String) -> Bool {
 		switch key {
 		case "name", "alt_name", "old_name":

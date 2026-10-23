@@ -85,8 +85,6 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 			}
 		} else {
 			switch key {
-			case "note", "comment", "description", "fixme", "inscription", "source":
-				autocapitalizationType = .sentences
 			case "phone", "contact:phone", "fax", "contact:fax":
 				keyboardType = .phonePad
 				if AppEnvironment.usesOnScreenKeyboard {
@@ -94,13 +92,16 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 				}
 			case "maxspeed":
 				keyboardType = .numbersAndPunctuation
+			case _ where OsmTags.isName(key):
+				autocapitalizationType = .words
+			case _ where OsmTags.isKey(key, variantOf: "website"):
+				keyboardType = .URL
+			case _ where OsmTags.isFreeformText(key):
+				autocapitalizationType = .sentences
+				autocorrectionType = .default
+				spellCheckingType = .default
 			default:
-				if OsmTags.isKey(key, variantOf: "website") {
-					keyboardType = .URL
-				}
-				if OsmTags.isName(key) {
-					autocapitalizationType = .words
-				}
+				break
 			}
 		}
 		spellCheckingType = autocorrectionType == .no ? .no : .default

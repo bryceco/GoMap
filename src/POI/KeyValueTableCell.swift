@@ -178,13 +178,12 @@ class KeyValueTableCell: TextPairTableCell, PresetValueTextFieldOwner, UITextFie
 				useTextField()
 			}
 		} else {
-			switch key {
-			case "note", "comment", "description", "fixme", "inscription", "source":
+			if OsmTags.isFreeformText(key) {
 				useTextView()
 				textView?.autocapitalizationType = .sentences
 				textView?.autocorrectionType = .default
 				textView?.spellCheckingType = .default
-			default:
+			} else {
 				useTextField()
 			}
 		}
