@@ -1003,6 +1003,7 @@ Object geometry: a closed way or multipolygon)</note>
       </trans-unit>
       <trans-unit id="Describe your changes..." xml:space="preserve">
         <source>Describe your changes...</source>
+        <target state="translated">Décrivez vos changements...</target>
         <note>Placeholder text shown in the empty changeset comment field</note>
       </trans-unit>
       <trans-unit id="Detach from relation" xml:space="preserve">
@@ -1018,6 +1019,7 @@ Discard changes</note>
       </trans-unit>
       <trans-unit id="Discard Changes" xml:space="preserve">
         <source>Discard Changes</source>
+        <target state="translated">Annuler changements</target>
         <note>Title for discard-group confirmation alert</note>
       </trans-unit>
       <trans-unit id="Disconnect" xml:space="preserve">
@@ -1042,6 +1044,7 @@ Discard changes</note>
       </trans-unit>
       <trans-unit id="Down" xml:space="preserve">
         <source>Down</source>
+        <target state="translated">Bas</target>
         <note>Move up/down buttons</note>
       </trans-unit>
       <trans-unit id="Download all members" xml:space="preserve">
@@ -1585,6 +1588,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Note #%@" xml:space="preserve">
         <source>Note #%@</source>
+        <target state="needs-translation">Note #%@</target>
         <note>OSM note title with ID number</note>
       </trans-unit>
       <trans-unit id="Note History" xml:space="preserve">
@@ -1695,6 +1699,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
+        <target state="needs-translation">GPX en pause</target>
         <note/>
       </trans-unit>
       <trans-unit id="Pause recording GPX tracks." xml:space="preserve">
@@ -1703,6 +1708,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Photo not available" xml:space="preserve">
         <source>Photo not available</source>
+        <target state="translated">Photo non dispo</target>
         <note/>
       </trans-unit>
       <trans-unit id="Please wait" xml:space="preserve">
@@ -1712,10 +1718,12 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Point" xml:space="preserve">
         <source>Point</source>
+        <target state="needs-translation">Point</target>
         <note>Object geometry: a node</note>
       </trans-unit>
       <trans-unit id="Predefined" xml:space="preserve">
         <source>Predefined</source>
+        <target state="translated">Prédéfini</target>
         <note>Items that are built into the app</note>
       </trans-unit>
       <trans-unit id="Previous" xml:space="preserve">
@@ -1858,6 +1866,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Save" xml:space="preserve">
         <source>Save</source>
+        <target state="translated">Enregistrer</target>
         <note>Save changes</note>
       </trans-unit>
       <trans-unit id="Save or discard your changes" xml:space="preserve">
@@ -1866,6 +1875,7 @@ Never delete old tracks</note>
       </trans-unit>
       <trans-unit id="Search" xml:space="preserve">
         <source>Search</source>
+        <target state="translated">Chercher</target>
         <note>Search button label</note>
       </trans-unit>
       <trans-unit id="Select Object" xml:space="preserve">
@@ -1944,6 +1954,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Space" xml:space="preserve">
         <source>Space</source>
+        <target state="translated">Espace</target>
         <note>Space key on the keyboard</note>
       </trans-unit>
       <trans-unit id="Split" xml:space="preserve">
@@ -1963,6 +1974,7 @@ Title for sharing options</note>
       </trans-unit>
       <trans-unit id="Start GPX" xml:space="preserve">
         <source>Start GPX</source>
+        <target state="translated">Démarrer GPX</target>
         <note/>
       </trans-unit>
       <trans-unit id="Start recording GPX tracks." xml:space="preserve">
@@ -2224,6 +2236,7 @@ Sélectionner la voie de provenance, puis taper sur une flèche pour basculer en
       </trans-unit>
       <trans-unit id="Up" xml:space="preserve">
         <source>Up</source>
+        <target state="translated">Haut</target>
         <note>Move up/down buttons</note>
       </trans-unit>
       <trans-unit id="Update" xml:space="preserve">
@@ -3435,6 +3448,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="GIO-W7-q5U.title" xml:space="preserve">
         <source>Custom Fields</source>
+        <target state="needs-translation">Champs perso</target>
         <note>Class = "UINavigationItem"; title = "Custom Fields"; ObjectID = "GIO-W7-q5U";</note>
       </trans-unit>
       <trans-unit id="JAT-qD-dTS.text" xml:space="preserve">
@@ -3499,6 +3513,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="WXF-5S-E8m.text" xml:space="preserve">
         <source>Title</source>
+        <target state="translated">Titre</target>
         <note>Class = "UILabel"; text = "Title"; ObjectID = "WXF-5S-E8m";</note>
       </trans-unit>
       <trans-unit id="Wim-Qa-dYQ.text" xml:space="preserve">
@@ -3507,6 +3522,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="WjA-Nb-uzp.normalTitle" xml:space="preserve">
         <source>Line</source>
+        <target state="translated">Ligne</target>
         <note>Class = "UIButton"; normalTitle = "Line"; ObjectID = "WjA-Nb-uzp";</note>
       </trans-unit>
       <trans-unit id="WoH-od-iKL.text" xml:space="preserve">
@@ -3535,6 +3551,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="eG3-Xz-Nnp.placeholder" xml:space="preserve">
         <source>Dogs Allowed</source>
+        <target state="translated">Chiens admis</target>
         <note>Class = "UITextField"; placeholder = "Dogs Allowed"; ObjectID = "eG3-Xz-Nnp";</note>
       </trans-unit>
       <trans-unit id="eN0-0z-hUp.placeholder" xml:space="preserve" translate="no">
@@ -3543,6 +3560,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
         <source>Point</source>
+        <target state="needs-translation">Point</target>
         <note>Class = "UIButton"; normalTitle = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve" translate="no">
@@ -3639,6 +3657,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="z19-cc-gHZ.text" xml:space="preserve">
         <source>Value</source>
+        <target state="translated">Valeur</target>
         <note>Class = "UILabel"; text = "Value"; ObjectID = "z19-cc-gHZ";</note>
       </trans-unit>
       <trans-unit id="zqH-07-JEp.title" xml:space="preserve">
@@ -3972,6 +3991,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="fdT-wh-QoF.normalTitle" xml:space="preserve">
         <source>Point</source>
+        <target state="translated">Point</target>
         <note>Class = "UIButton"; normalTitle = "Point"; ObjectID = "fdT-wh-QoF";</note>
       </trans-unit>
       <trans-unit id="foC-aN-GtH.placeholder" xml:space="preserve" translate="no">
@@ -4061,6 +4081,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="nil-45-Wvp.normalTitle" xml:space="preserve">
         <source>ⓘ</source>
+        <target state="needs-translation">ⓘ</target>
         <note>Class = "UIButton"; normalTitle = "ⓘ"; ObjectID = "nil-45-Wvp";</note>
       </trans-unit>
       <trans-unit id="nrU-9j-jfm.placeholder" xml:space="preserve" translate="no">
@@ -4230,6 +4251,7 @@ Videz le cache des tuiles Mapnik ou de surcouche pour télécharger les dernièr
       </trans-unit>
       <trans-unit id="7it-6c-BVW.headerTitle" xml:space="preserve">
         <source>OpenStreetMap account</source>
+        <target state="translated">Compte OpenStreetMap</target>
         <note>Class = "UITableViewSection"; headerTitle = "OpenStreetMap account"; ObjectID = "7it-6c-BVW";</note>
       </trans-unit>
       <trans-unit id="34N-Ep-rpf.text" xml:space="preserve">
@@ -4601,6 +4623,7 @@ http://glyphish.com
       </trans-unit>
       <trans-unit id="xNB-pJ-M20.text" xml:space="preserve">
         <source>Describe your changes... </source>
+        <target state="translated">Décrivez vos changements... </target>
         <note>Class = "UILabel"; text = "Describe your changes... "; ObjectID = "xNB-pJ-M20";</note>
       </trans-unit>
       <trans-unit id="yZR-tZ-66S.text" xml:space="preserve">
