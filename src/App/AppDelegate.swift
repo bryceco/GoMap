@@ -197,6 +197,62 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// Insert it into the application menu
 		builder.replace(menu: .preferences, with: settingsMenu)
+
+		builder.remove(menu: .format)
+		builder.remove(menu: .open)
+		builder.remove(menu: .openRecent)
+		builder.remove(menu: .toolbar)
+		builder.remove(menu: .sidebar)
+		builder.remove(menu: .find)
+		if #available(iOS 16.0, *) {
+			builder.remove(menu: .document)
+		}
+
+		builder.insertSibling(mapMenu(), afterMenu: .view)
+	}
+
+	private func mapMenu() -> UIMenu {
+		func command(_ title: String,
+		             _ action: Selector,
+		             _ input: String,
+		             _ modifiers: UIKeyModifierFlags = .command) -> UIKeyCommand
+		{
+			return UIKeyCommand(title: title, action: action, input: input, modifierFlags: modifiers)
+		}
+		func section(_ children: [UIMenuElement]) -> UIMenu {
+			return UIMenu(title: "", options: .displayInline, children: children)
+		}
+		let mvc = MainViewController.self
+		return UIMenu(
+			title: NSLocalizedString("Map", comment: "Map menu in Mac menu bar"),
+			children: [
+				section([
+					command(NSLocalizedString("Zoom In", comment: "Mac menu item"),
+					        #selector(mvc.zoomInMenuItem(_:)), "+"),
+					command(NSLocalizedString("Zoom Out", comment: "Mac menu item"),
+					        #selector(mvc.zoomOutMenuItem(_:)), "-")
+				]),
+				section([
+					command(NSLocalizedString("Center on My Location", comment: "Mac menu item"),
+					        #selector(mvc.centerOnLocationMenuItem(_:)), "l"),
+					command(NSLocalizedString("Follow My Location", comment: "Mac menu item"),
+					        #selector(mvc.followLocationMenuItem(_:)), "l", [.command, .alternate]),
+					command(NSLocalizedString("Face North", comment: "Mac menu item"),
+					        #selector(mvc.faceNorthMenuItem(_:)), "n", [.command, .shift])
+				]),
+				section([
+					command(NSLocalizedString("Search…", comment: "Mac menu item"),
+					        #selector(mvc.searchMenuItem(_:)), "f"),
+					command(NSLocalizedString("Add Node", comment: "Mac menu item"),
+					        #selector(mvc.addNodeMenuItem(_:)), "n")
+				]),
+				section([
+					command(NSLocalizedString("Display Options…", comment: "Mac menu item"),
+					        #selector(mvc.displayOptionsMenuItem(_:)), "d"),
+					command(NSLocalizedString("Upload Changes…", comment: "Mac menu item"),
+					        #selector(mvc.uploadMenuItem(_:)), "u")
+				])
+			])
 	}
 
 	@objc func openPreferences() {
