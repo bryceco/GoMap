@@ -36368,6 +36368,9 @@
         }
       }
     },
+    "How many nodes?" : {
+      "comment" : "Ask the user the number of nodes to use"
+    },
     "I'll do it!" : {
       "comment" : "rate the app now",
       "localizations" : {
@@ -59954,6 +59957,9 @@
           }
         }
       }
+    },
+    "The way has too many nodes that can't be removed." : {
+
     },
     "The way is not sufficiently straight" : {
       "localizations" : {

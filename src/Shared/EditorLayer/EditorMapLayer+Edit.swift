@@ -897,8 +897,36 @@ extension EditorMapLayer {
 					}
 				}
 			case .CIRCULARIZE:
-				let circle = try mapData.canCircularizeWay(selectedWay!)
-				circle()
+				guard let way = selectedWay else { return }
+				let counts = [3, 4, 5, 6, 8, 10, 12, 16, 20, 24, 32]
+				// Validate that the way can be circularized at all (using max node count)
+				_ = try mapData.canCircularizeWay(way, nodeCount: counts.last!)
+				// Present a menu to choose node count
+				let rc = CGRect(origin: owner.pushpinView()?.arrowPoint ?? .zero, size: .zero)
+				let sheet = UIAlertController(
+					title: NSLocalizedString("Make Circular", comment: ""),
+					message: NSLocalizedString("How many nodes?", comment: "Ask the user the number of nodes to use"),
+					preferredStyle: .actionSheet)
+				for count in counts {
+					let prefix = count == 20 ? "✓ " : "\u{2007} "
+					let title = prefix + String.localizedStringWithFormat("%d", count)
+					sheet.addAction(UIAlertAction(title: title, style: .default, handler: { [self] _ in
+						do {
+							let circle = try mapData.canCircularizeWay(way, nodeCount: count)
+							circle()
+							setNeedsLayout()
+							owner.didUpdateObject()
+						} catch {
+							display.showAlert(error.localizedDescription, message: nil)
+						}
+					}))
+				}
+				sheet.addAction(UIAlertAction(
+					title: NSLocalizedString("Cancel", comment: ""),
+					style: .cancel,
+					handler: nil))
+				presentAlert(alert: sheet, location: .rect(rc))
+				return // skip the setNeedsLayout/didUpdateObject at the end since action is deferred
 			case .EDITTAGS:
 				owner.presentTagEditor(nil)
 			case .ADDNOTE:

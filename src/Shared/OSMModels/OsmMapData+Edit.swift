@@ -31,8 +31,6 @@ extension OsmMapData {
 		}
 	}
 
-	// basic stuff:
-
 	// MARK: canDeleteNode
 
 	// Only for solitary nodes. Otherwise use delete node in way.
@@ -203,7 +201,79 @@ extension OsmMapData {
 		}
 	}
 
-	// more complicated stuff:
+	// MARK: canOrthogonalizeWay
+
+	private func filterDotProduct(_ dotp: Double) -> Double {
+		if rectoLowerThreshold > abs(dotp) || abs(dotp) > rectoUpperThreshold {
+			return dotp
+		}
+		return 0.0
+	}
+
+	private func calcMotion(_ b: OSMPoint, _ i: Int, _ array: [OSMPoint], _ pCorner: inout Int,
+	                        _ pDotp: inout Double) -> OSMPoint
+	{
+		let a = array[(i - 1 + array.count) % array.count]
+		let c = array[(i + 1) % array.count]
+		var p = Sub(a, b)
+		var q = Sub(c, b)
+
+		let origin = OSMPoint.zero
+		let scale: Double = 2 * min(p.distanceToPoint(origin), q.distanceToPoint(origin))
+		p = p.unitVector()
+		q = q.unitVector()
+
+		if p.x.isNaN || q.x.isNaN {
+			if pDotp != 0 {
+				pDotp = 1.0
+			}
+			return OSMPoint(x: 0, y: 0)
+		}
+
+		var dotp = filterDotProduct(Dot(p, q))
+
+		// nasty hack to deal with almost-straight segments (angle is closer to 180 than to 90/270).
+		if array.count > 3 {
+			if dotp < -0.707106781186547 {
+				// -sin(PI/4)
+				dotp += 1.0
+			}
+		} else {
+			// for triangles save the best corner
+			if dotp != 0.0, pDotp != 0, abs(Float(dotp)) < Float(pDotp) {
+				pCorner = i
+				pDotp = Double(abs(Float(dotp)))
+			}
+		}
+
+		var r = Add(p, q).unitVector()
+		r = Mult(r, 0.1 * dotp * scale)
+		return r
+	}
+
+	private func normalizedDotProduct(_ i: Int, _ points: [OSMPoint]) -> Double {
+		let a = points[(i - 1 + points.count) % points.count]
+		let b = points[i]
+		let c = points[(i + 1) % points.count]
+		var p = Sub(a, b)
+		var q = Sub(c, b)
+
+		p = p.unitVector()
+		q = q.unitVector()
+
+		return Dot(p, q)
+	}
+
+	private func squareness(_ points: [OSMPoint]) -> Double {
+		var sum = 0.0
+		for i in points.indices {
+			var dotp = normalizedDotProduct(i, points)
+			dotp = filterDotProduct(dotp)
+			sum += 2.0 * min(abs(dotp - 1.0), min(abs(dotp), abs(dotp + 1.0)))
+		}
+		return sum
+	}
+
 	func canOrthogonalizeWay(_ way: OsmWay) throws -> EditAction {
 		// needs a closed way to work properly.
 		if !(way.isWay() != nil) || !way.isClosed() || way.nodes.count < 5 {
@@ -524,6 +594,13 @@ extension OsmMapData {
 		}
 	}
 
+	// MARK: canStraightenWay
+
+	private func positionAlongWay(_ node: OSMPoint, _ start: OSMPoint, _ end: OSMPoint) -> Double {
+		return ((node.x - start.x) * (end.x - start.x) + (node.y - start.y) * (end.y - start.y)) /
+			MagSquared(Sub(end, start))
+	}
+
 	func canStraightenWay(_ way: OsmWay) throws -> EditAction {
 		let count = way.nodes.count
 		var points: [OSMPoint?] = way.nodes.map({ OSMPoint(x: $0.latLon.lon, y: lat2latp($0.latLon.lat)) })
@@ -575,6 +652,99 @@ extension OsmMapData {
 				i -= 1
 			}
 		}
+	}
+
+	// MARK: canReverse
+
+	static func reverseKey(_ key: String) -> String {
+		// Some keys should never be reversed (e.g. red_turn:right)
+		if key.hasPrefix("red_turn:right") || key.hasPrefix("red_turn:left") {
+			return key
+		}
+		// Try infix replacements first (e.g. cycleway:right:surface)
+		let infixReplacements: [(String, String)] = [
+			(":right:", ":left:"),
+			(":left:", ":right:"),
+			(":forward:", ":backward:"),
+			(":backward:", ":forward:")
+		]
+		for (old, new) in infixReplacements {
+			if key.contains(old) {
+				return key.replacingOccurrences(of: old, with: new)
+			}
+		}
+		// Then try suffix replacements (e.g. cycleway:right)
+		let suffixReplacements: [(String, String)] = [
+			(":right", ":left"),
+			(":left", ":right"),
+			(":forward", ":backward"),
+			(":backward", ":forward")
+		]
+		for (old, new) in suffixReplacements {
+			if key.hasSuffix(old) {
+				return String(key.dropLast(old.count)) + new
+			}
+		}
+		return key
+	}
+
+	private static func isNumeric(_ s: String) -> Bool {
+		return Double(s) != nil
+	}
+
+	/// Check if a key component matches any of the descriptive tag names whose
+	/// values should not be reversed (e.g. name, description, source, etc.)
+	private static func isDescriptiveKey(_ key: String) -> Bool {
+		let descriptiveWords = ["description", "name", "note", "website", "ref",
+		                        "source", "comment", "watch", "attribution"]
+		// Split by : and _ to get key components, matching iD's
+		// /(^|_|:)(description|name|...)(_|:|$)/ regex
+		let components = key.components(separatedBy: CharacterSet(charactersIn: ":_"))
+		return components.contains(where: { descriptiveWords.contains($0) })
+	}
+
+	static func reverseValue(_ key: String, _ value: String, allTags: [String: String]) -> String {
+		// Keys whose values should not be reversed
+		if isDescriptiveKey(key) {
+			return value
+		}
+		if key.hasPrefix("turn:") {
+			return value
+		}
+		if key == "driving_side" {
+			return value
+		}
+		if key == "side" && allTags["highway"] == "cyclist_waiting_aid" {
+			return value
+		}
+		if key == "railway:turnout_side" {
+			return value
+		}
+
+		// Negate numeric incline values
+		if key == "incline" && isNumeric(value) {
+			let ch = value[value.startIndex]
+			if ch == "-" {
+				return String(value.dropFirst())
+			} else if ch == "+" {
+				return "-\(value.dropFirst())"
+			} else {
+				return "-\(value)"
+			}
+		}
+
+		// General value replacements
+		let valueReplacements = [
+			"left": "right",
+			"right": "left",
+			"up": "down",
+			"down": "up",
+			"forward": "backward",
+			"backward": "forward",
+			"forwards": "backward",
+			"backwards": "forward"
+		]
+		return valueReplacements[value] ?? value
 	}
 
 	func canReverse(_ way: OsmWay) throws -> EditAction {
@@ -723,7 +893,7 @@ extension OsmMapData {
 		}
 	}
 
-	// MARK: disconnectWayAtNode
+	// MARK: canDisconnectWay
 
 	// disconnect all other ways from the selected way joined to it at node
 	// if the node doesn't belong to any other ways then it's a self-intersection
@@ -761,6 +931,8 @@ extension OsmMapData {
 		}
 	}
 
+	// MARK: canExtractNode
+
 	func canExtractNode(_ node: OsmNode) throws -> EditAction {
 		return { [self] in
 			registerUndoCommentString(NSLocalizedString("Extract Node",
@@ -773,6 +945,66 @@ extension OsmMapData {
 				}
 			}
 		}
+	}
+
+	// MARK: canSplitWay
+
+	// if the way is closed, we need to search for a partner node
+	// to split the way at.
+	//
+	// The following looks for a node that is both far away from
+	// the initial node in terms of way segment length and nearby
+	// in terms of beeline-distance. This assures that areas get
+	// split on the most "natural" points (independent of the number
+	// of nodes).
+	// For example: bone-shaped areas get split across their waist
+	// line, circles across the diameter.
+	private func splitArea(_ nodes: [OsmNode], _ idxA: Int) -> Int {
+		let count = nodes.count
+		var lengths = [Double](repeating: 0.0, count: count)
+		var best: Double = 0
+		var idxB = 0
+
+		assert(idxA >= 0 && idxA < count)
+
+		// calculate lengths
+		var length: Double = 0
+		var i = (idxA + 1) % count
+		while i != idxA {
+			let n1 = nodes[i]
+			let n2 = nodes[(i - 1 + count) % count]
+			length += n1.location().distanceToPoint(n2.location())
+			lengths[i] = length
+			i = (i + 1) % count
+		}
+		lengths[idxA] = 0.0 // never used, but need it to convince static analyzer that it isn't an unitialized variable
+		length = 0
+		i = (idxA - 1 + count) % count
+		while i != idxA {
+			let n1 = nodes[i]
+			let n2 = nodes[(i + 1) % count]
+			length += n1.location().distanceToPoint(n2.location())
+			if length < lengths[i] {
+				lengths[i] = length
+			}
+			i = (i - 1 + count) % count
+		}
+
+		// determine best opposite node to split
+		for i in 0..<count {
+			if i == idxA {
+				continue
+			}
+			let n1 = nodes[idxA]
+			let n2 = nodes[i]
+			let cost = lengths[i] / n1.location().distanceToPoint(n2.location())
+			if cost > best {
+				idxB = i
+				best = cost
+			}
+		}
+
+		return idxB
 	}
 
 	// returns the new other half
@@ -1177,74 +1409,101 @@ extension OsmMapData {
 		}
 	}
 
-	func canCircularizeWay(_ way: OsmWay) throws -> EditAction {
-		if !(way.isWay() != nil) || !way.isClosed() || way.nodes.count < 4 {
+	// MARK: canCircularizeWay
+
+	private func AverageDistanceToCenter(_ way: OsmWay, _ center: LatLon) -> Double {
+		var d: Double = 0
+		for i in 0..<(way.nodes.count - 1) {
+			let n = way.nodes[i]
+			d += hypot(n.latLon.lon - center.lon,
+			           lat2latp(n.latLon.lat) - center.lat)
+		}
+		d /= Double(way.nodes.count - 1)
+		return d
+	}
+
+	func canCircularizeWay(_ way: OsmWay, nodeCount: Int) throws -> EditAction {
+		if !way.isClosed() || way.nodes.count < 4 {
 			throw EditError.text(NSLocalizedString("Requires a closed way with at least 3 nodes", comment: ""))
 		}
+		let nodes = Array(way.nodes.dropLast()) // closed ways repeat the first node at the end
 
-		func insertNode(in way: OsmWay, withCenter center: LatLon, angle: Double, radius: Double, atIndex index: Int) {
-			let point = LatLon(latitude: latp2lat(center.lat + cos(angle * .pi / 180) * radius),
-			                   longitude: center.lon + sin(angle * .pi / 180) * radius)
-			let node = createNode(atLocation: point)
-			addNodeUnsafe(node, to: way, at: index)
+		// Nodes we're not allowed to delete. Node 0 is also pinned because it doubles
+		// as the closing node, which keeps the deletion step simple.
+		func isPinned(_ i: Int) -> Bool {
+			i == 0 || nodes[i].wayCount > 1 || nodes[i].hasInterestingTags() || !nodes[i].parentRelations.isEmpty
+		}
+		let pinnedCount = nodes.indices.filter(isPinned).count
+		if pinnedCount > nodeCount {
+			throw EditError.text(String.localizedStringWithFormat(
+				NSLocalizedString("The way has too many nodes that can't be removed.", comment: ""),
+				pinnedCount, nodeCount))
+		}
+
+		// Work in Mercator-projected coordinates so the result is round on screen.
+		var center = way.centerPoint()
+		center.lat = lat2latp(center.lat)
+		let radius = AverageDistanceToCenter(way, center)
+
+		// Compass bearing of each node from the center: north = 0, increasing clockwise.
+		let bearings = nodes.map { node in
+			atan2(node.latLon.lon - center.lon, lat2latp(node.latLon.lat) - center.lat) * 180 / .pi
+		}
+		// Signed angular change between consecutive nodes, in (-180, 180].
+		let deltas = bearings.indices.map { i -> Double in
+			var d = bearings[(i + 1) % bearings.count] - bearings[i]
+			if d > 180 { d -= 360 } else if d <= -180 { d += 360 }
+			return d
+		}
+		// Overall direction of travel. Gaps are measured in that direction; a segment
+		// that goes the other way just counts as zero width.
+		let dir: Double = deltas.reduce(0, +) > 0 ? 1 : -1
+		var gaps = deltas.map { max(0, $0 * dir) }
+
+		// Too many nodes: repeatedly remove the removable node whose neighbouring gaps
+		// merge into the smallest one. `keep` holds the surviving original indices;
+		// `gaps[k]` is the angle from keep[k] to keep[k+1].
+		var keep = Array(nodes.indices)
+		while keep.count > nodeCount {
+			let k = keep.indices.filter { !isPinned(keep[$0]) }
+				.min { gaps[$0 - 1] + gaps[$0] < gaps[$1 - 1] + gaps[$1] }! // k > 0 since node 0 is pinned
+			gaps[k - 1] += gaps[k]
+			gaps.remove(at: k)
+			keep.remove(at: k)
+		}
+
+		// Too few nodes: add one at a time to whichever gap currently has the widest spacing.
+		var alloc = [Int](repeating: 0, count: keep.count)
+		for _ in 0..<(nodeCount - keep.count) {
+			let k = gaps.indices.max {
+				gaps[$0] / Double(alloc[$0] + 1) < gaps[$1] / Double(alloc[$1] + 1)
+			}!
+			alloc[k] += 1
 		}
 
 		return { [self] in
-			var center = way.centerPoint()
-			center.lat = lat2latp(center.lat)
-			let radius = AverageDistanceToCenter(way, center)
-
-			for n in way.nodes.dropLast() {
-				let c = hypot(n.latLon.lon - center.lon,
-				              lat2latp(n.latLon.lat) - center.lat)
-				let lat = latp2lat(center.lat + (lat2latp(n.latLon.lat) - center.lat) / c * radius)
-				let lon = center.lon + (n.latLon.lon - center.lon) / c * radius
-				let latLon = LatLon(x: lon, y: lat)
-				setLatLon(latLon, forNode: n)
+			registerUndoCommentString(NSLocalizedString("Make Circular", comment: "Edit action"))
+			let step = dir * 360 / Double(nodeCount)
+			func point(atSlot slot: Int) -> LatLon {
+				let b = (bearings[0] + Double(slot) * step) * .pi / 180
+				return LatLon(latitude: latp2lat(center.lat + cos(b) * radius),
+				              longitude: center.lon + sin(b) * radius)
 			}
-
-			// Insert extra nodes to make circle
-			// clockwise: angles decrease, wrapping round from -170 to 170
-			let clockwise = way.isClockwise()
-			var i = 0
-			while i < way.nodes.count { // number of nodes is mutated inside the loop
-				var j = (i + 1) % way.nodes.count
-
-				let n1 = way.nodes[i]
-				let n2 = way.nodes[j]
-
-				var a1 = atan2(n1.latLon.lon - center.lon, lat2latp(n1.latLon.lat) - center.lat) * (180 / .pi)
-				var a2 = atan2(n2.latLon.lon - center.lon, lat2latp(n2.latLon.lat) - center.lat) * (180 / .pi)
-				if clockwise {
-					if a2 > a1 {
-						a2 -= 360
-					}
-					let diff = a1 - a2
-					if diff > 20 {
-						var ang = a1 - 20
-						while ang > a2 + 10 {
-							insertNode(in: way, withCenter: center, angle: ang, radius: radius, atIndex: i + 1)
-							j += 1
-							i += 1
-							ang -= 20
-						}
-					}
-				} else {
-					if a1 > a2 {
-						a1 -= 360
-					}
-					let diff = a2 - a1
-					if diff > 20 {
-						var ang = a1 + 20
-						while ang < a2 - 10 {
-							insertNode(in: way, withCenter: center, angle: ang, radius: radius, atIndex: i + 1)
-							j += 1
-							i += 1
-							ang += 20
-						}
-					}
+			// Walk backwards so deletions and insertions never shift an index we haven't visited.
+			var slot = nodeCount
+			var k = keep.count - 1
+			for i in nodes.indices.reversed() {
+				if i != keep[k] {
+					deleteNodeUnsafe(inWay: way, index: i, preserveNode: false)
+					continue
 				}
-				i += 1
+				slot -= alloc[k] + 1
+				setLatLon(point(atSlot: slot), forNode: nodes[i])
+				// Insert in reverse at i+1 so the new nodes end up in way order.
+				for m in stride(from: alloc[k], through: 1, by: -1) {
+					addNodeUnsafe(createNode(atLocation: point(atSlot: slot + m)), to: way, at: i + 1)
+				}
+				k -= 1
 			}
 		}
 	}
@@ -1307,106 +1566,6 @@ extension OsmMapData {
 		}
 		// a non-multipolygon relation
 		return nil
-	}
-
-	// MARK: straightenWay
-
-	private func positionAlongWay(_ node: OSMPoint, _ start: OSMPoint, _ end: OSMPoint) -> Double {
-		return ((node.x - start.x) * (end.x - start.x) + (node.y - start.y) * (end.y - start.y)) /
-			MagSquared(Sub(end, start))
-	}
-
-	// MARK: reverseWay
-
-	static func reverseKey(_ key: String) -> String {
-		// Some keys should never be reversed (e.g. red_turn:right)
-		if key.hasPrefix("red_turn:right") || key.hasPrefix("red_turn:left") {
-			return key
-		}
-		// Try infix replacements first (e.g. cycleway:right:surface)
-		let infixReplacements: [(String, String)] = [
-			(":right:", ":left:"),
-			(":left:", ":right:"),
-			(":forward:", ":backward:"),
-			(":backward:", ":forward:")
-		]
-		for (old, new) in infixReplacements {
-			if key.contains(old) {
-				return key.replacingOccurrences(of: old, with: new)
-			}
-		}
-		// Then try suffix replacements (e.g. cycleway:right)
-		let suffixReplacements: [(String, String)] = [
-			(":right", ":left"),
-			(":left", ":right"),
-			(":forward", ":backward"),
-			(":backward", ":forward")
-		]
-		for (old, new) in suffixReplacements {
-			if key.hasSuffix(old) {
-				return String(key.dropLast(old.count)) + new
-			}
-		}
-		return key
-	}
-
-	private static func isNumeric(_ s: String) -> Bool {
-		return Double(s) != nil
-	}
-
-	/// Check if a key component matches any of the descriptive tag names whose
-	/// values should not be reversed (e.g. name, description, source, etc.)
-	private static func isDescriptiveKey(_ key: String) -> Bool {
-		let descriptiveWords = ["description", "name", "note", "website", "ref",
-		                        "source", "comment", "watch", "attribution"]
-		// Split by : and _ to get key components, matching iD's
-		// /(^|_|:)(description|name|...)(_|:|$)/ regex
-		let components = key.components(separatedBy: CharacterSet(charactersIn: ":_"))
-		return components.contains(where: { descriptiveWords.contains($0) })
-	}
-
-	static func reverseValue(_ key: String, _ value: String, allTags: [String: String]) -> String {
-		// Keys whose values should not be reversed
-		if isDescriptiveKey(key) {
-			return value
-		}
-		if key.hasPrefix("turn:") {
-			return value
-		}
-		if key == "driving_side" {
-			return value
-		}
-		if key == "side" && allTags["highway"] == "cyclist_waiting_aid" {
-			return value
-		}
-		if key == "railway:turnout_side" {
-			return value
-		}
-
-		// Negate numeric incline values
-		if key == "incline" && isNumeric(value) {
-			let ch = value[value.startIndex]
-			if ch == "-" {
-				return String(value.dropFirst())
-			} else if ch == "+" {
-				return "-\(value.dropFirst())"
-			} else {
-				return "-\(value)"
-			}
-		}
-
-		// General value replacements
-		let valueReplacements = [
-			"left": "right",
-			"right": "left",
-			"up": "down",
-			"down": "up",
-			"forward": "backward",
-			"backward": "forward",
-			"forwards": "backward",
-			"backwards": "forward"
-		]
-		return valueReplacements[value] ?? value
 	}
 
 	// MARK: updateMultipolygonRelationRoles
@@ -1482,149 +1641,5 @@ extension OsmMapData {
 			// might have moved an inner outside a multipolygon
 			updateMultipolygonRelationRoles(relation)
 		}
-	}
-
-	// MARK: splitWayAtNode
-
-	// if the way is closed, we need to search for a partner node
-	// to split the way at.
-	//
-	// The following looks for a node that is both far away from
-	// the initial node in terms of way segment length and nearby
-	// in terms of beeline-distance. This assures that areas get
-	// split on the most "natural" points (independent of the number
-	// of nodes).
-	// For example: bone-shaped areas get split across their waist
-	// line, circles across the diameter.
-	private func splitArea(_ nodes: [OsmNode], _ idxA: Int) -> Int {
-		let count = nodes.count
-		var lengths = [Double](repeating: 0.0, count: count)
-		var best: Double = 0
-		var idxB = 0
-
-		assert(idxA >= 0 && idxA < count)
-
-		// calculate lengths
-		var length: Double = 0
-		var i = (idxA + 1) % count
-		while i != idxA {
-			let n1 = nodes[i]
-			let n2 = nodes[(i - 1 + count) % count]
-			length += n1.location().distanceToPoint(n2.location())
-			lengths[i] = length
-			i = (i + 1) % count
-		}
-		lengths[idxA] = 0.0 // never used, but need it to convince static analyzer that it isn't an unitialized variable
-		length = 0
-		i = (idxA - 1 + count) % count
-		while i != idxA {
-			let n1 = nodes[i]
-			let n2 = nodes[(i + 1) % count]
-			length += n1.location().distanceToPoint(n2.location())
-			if length < lengths[i] {
-				lengths[i] = length
-			}
-			i = (i - 1 + count) % count
-		}
-
-		// determine best opposite node to split
-		for i in 0..<count {
-			if i == idxA {
-				continue
-			}
-			let n1 = nodes[idxA]
-			let n2 = nodes[i]
-			let cost = lengths[i] / n1.location().distanceToPoint(n2.location())
-			if cost > best {
-				idxB = i
-				best = cost
-			}
-		}
-
-		return idxB
-	}
-
-	// MARK: Circularize
-
-	private func AverageDistanceToCenter(_ way: OsmWay, _ center: LatLon) -> Double {
-		var d: Double = 0
-		for i in 0..<(way.nodes.count - 1) {
-			let n = way.nodes[i]
-			d += hypot(n.latLon.lon - center.lon,
-			           lat2latp(n.latLon.lat) - center.lat)
-		}
-		d /= Double(way.nodes.count - 1)
-		return d
-	}
-
-	private func filterDotProduct(_ dotp: Double) -> Double {
-		if rectoLowerThreshold > abs(dotp) || abs(dotp) > rectoUpperThreshold {
-			return dotp
-		}
-		return 0.0
-	}
-
-	private func normalizedDotProduct(_ i: Int, _ points: [OSMPoint]) -> Double {
-		let a = points[(i - 1 + points.count) % points.count]
-		let b = points[i]
-		let c = points[(i + 1) % points.count]
-		var p = Sub(a, b)
-		var q = Sub(c, b)
-
-		p = p.unitVector()
-		q = q.unitVector()
-
-		return Dot(p, q)
-	}
-
-	private func squareness(_ points: [OSMPoint]) -> Double {
-		var sum = 0.0
-		for i in points.indices {
-			var dotp = normalizedDotProduct(i, points)
-			dotp = filterDotProduct(dotp)
-			sum += 2.0 * min(abs(dotp - 1.0), min(abs(dotp), abs(dotp + 1.0)))
-		}
-		return sum
-	}
-
-	private func calcMotion(_ b: OSMPoint, _ i: Int, _ array: [OSMPoint], _ pCorner: inout Int,
-	                        _ pDotp: inout Double) -> OSMPoint
-	{
-		let a = array[(i - 1 + array.count) % array.count]
-		let c = array[(i + 1) % array.count]
-		var p = Sub(a, b)
-		var q = Sub(c, b)
-
-		let origin = OSMPoint.zero
-		let scale: Double = 2 * min(p.distanceToPoint(origin), q.distanceToPoint(origin))
-		p = p.unitVector()
-		q = q.unitVector()
-
-		if p.x.isNaN || q.x.isNaN {
-			if pDotp != 0 {
-				pDotp = 1.0
-			}
-			return OSMPoint(x: 0, y: 0)
-		}
-
-		var dotp = filterDotProduct(Dot(p, q))
-
-		// nasty hack to deal with almost-straight segments (angle is closer to 180 than to 90/270).
-		if array.count > 3 {
-			if dotp < -0.707106781186547 {
-				// -sin(PI/4)
-				dotp += 1.0
-			}
-		} else {
-			// for triangles save the best corner
-			if dotp != 0.0, pDotp != 0, abs(Float(dotp)) < Float(pDotp) {
-				pCorner = i
-				pDotp = Double(abs(Float(dotp)))
-			}
-		}
-
-		var r = Add(p, q).unitVector()
-		r = Mult(r, 0.1 * dotp * scale)
-		return r
 	}
 }
