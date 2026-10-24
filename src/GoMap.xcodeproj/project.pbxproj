@@ -307,6 +307,21 @@
 		EDB2C3A12609E2A000C08293 /* LanguageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB2C3A02609E29F00C08293 /* LanguageTableViewController.swift */; };
 		EDB2C3A62609E6E100C08293 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDB2C3A52609E6E100C08293 /* LoginViewController.swift */; };
 		EDDBA55326130287001E7D5C /* GpxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED56E5EA26028B5F000B368C /* GpxViewController.swift */; };
+		A7C000000000000000000110 /* WatchGpxSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C00000000000000000010F /* WatchGpxSession.swift */; };
+		A7C000000000000000000112 /* GpxWatchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C000000000000000000111 /* GpxWatchState.swift */; };
+		A7C000000000000000000113 /* GpxWatchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C000000000000000000111 /* GpxWatchState.swift */; };
+		A7C000000000000000000114 /* GpxWatchState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C000000000000000000111 /* GpxWatchState.swift */; };
+		A7C000000000000000000116 /* GoMapWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C000000000000000000115 /* GoMapWatchApp.swift */; };
+		A7C000000000000000000118 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C000000000000000000117 /* ContentView.swift */; };
+		A7C00000000000000000011A /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C000000000000000000119 /* HistoryView.swift */; };
+		A7C00000000000000000011C /* WatchGpxModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C00000000000000000011B /* WatchGpxModel.swift */; };
+		A7C00000000000000000011E /* TraceRuntimeSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C00000000000000000011D /* TraceRuntimeSession.swift */; };
+		A7C000000000000000000120 /* WatchShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C00000000000000000011F /* WatchShared.swift */; };
+		A7C000000000000000000121 /* WatchShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C00000000000000000011F /* WatchShared.swift */; };
+		A7C000000000000000000125 /* GpxComplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7C000000000000000000124 /* GpxComplication.swift */; };
+		A7C000000000000000000128 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 02C3D889306FE1EB00FB815C /* AppIcon.icon */; };
+		A7C000000000000000000129 /* GoMapWatchWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A7C00000000000000000010E /* GoMapWatchWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A7C00000000000000000012A /* GoMapWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A7C00000000000000000010D /* GoMapWatch.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXBuildRule section */
@@ -370,6 +385,20 @@
 			remoteGlobalIDString = 02ACBA2E16713CCB00BB4414;
 			remoteInfo = "Go Map!!";
 		};
+		A7C00000000000000000012B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02ACBA2616713CCB00BB4414 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A7C000000000000000000016;
+			remoteInfo = GoMapWatch;
+		};
+		A7C00000000000000000012C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 02ACBA2616713CCB00BB4414 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A7C00000000000000000010C;
+			remoteInfo = GoMapWatchWidget;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -383,6 +412,28 @@
 				02D6238926A6628300A4F147 /* PhotoShare.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7C000000000000000000107 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A7C000000000000000000129 /* GoMapWatchWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7C00000000000000000010B /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				A7C00000000000000000012A /* GoMapWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -713,6 +764,21 @@
 		ED964A002601D6A900EC0A60 /* POICommonTagsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = POICommonTagsViewController.swift; sourceTree = "<group>"; };
 		EDB2C3A02609E29F00C08293 /* LanguageTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageTableViewController.swift; sourceTree = "<group>"; };
 		EDB2C3A52609E6E100C08293 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		A7C00000000000000000010F /* WatchGpxSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchGpxSession.swift; sourceTree = "<group>"; };
+		A7C000000000000000000111 /* GpxWatchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxWatchState.swift; sourceTree = "<group>"; };
+		A7C000000000000000000115 /* GoMapWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoMapWatchApp.swift; sourceTree = "<group>"; };
+		A7C000000000000000000117 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A7C000000000000000000119 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		A7C00000000000000000011B /* WatchGpxModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchGpxModel.swift; sourceTree = "<group>"; };
+		A7C00000000000000000011D /* TraceRuntimeSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TraceRuntimeSession.swift; sourceTree = "<group>"; };
+		A7C00000000000000000011F /* WatchShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchShared.swift; sourceTree = "<group>"; };
+		A7C000000000000000000122 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7C000000000000000000123 /* GoMapWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GoMapWatch.entitlements; sourceTree = "<group>"; };
+		A7C000000000000000000124 /* GpxComplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GpxComplication.swift; sourceTree = "<group>"; };
+		A7C000000000000000000126 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7C000000000000000000127 /* GoMapWatchWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GoMapWatchWidget.entitlements; sourceTree = "<group>"; };
+		A7C00000000000000000010D /* GoMapWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GoMapWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A7C00000000000000000010E /* GoMapWatchWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GoMapWatchWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -760,6 +826,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		64348D05225EA24E00ADE7FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7C000000000000000000105 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7C000000000000000000109 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -836,6 +916,7 @@
 			children = (
 				02225DA629EB3AE900859F9D /* GpxTrack.swift */,
 				0210AE062F19A9DF0031F047 /* GpxTracks.swift */,
+				A7C000000000000000000111 /* GpxWatchState.swift */,
 			);
 			name = GpxTracks;
 			path = Shared/GpxTracks;
@@ -904,6 +985,8 @@
 				02CBF3B62BE8529A000DE2AD /* GpxWidget */,
 				02ACBA3216713CCB00BB4414 /* Frameworks */,
 				02ACBA3016713CCB00BB4414 /* Products */,
+				A7C000000000000000000101 /* GoMapWatch */,
+				A7C000000000000000000102 /* GoMapWatchWidget */,
 			);
 			sourceTree = "<group>";
 		};
@@ -915,6 +998,8 @@
 				64348D08225EA24E00ADE7FB /* GoMapUITests.xctest */,
 				02D6237F26A6628300A4F147 /* PhotoShare.appex */,
 				02CBF3B12BE8529A000DE2AD /* GpxWidgetExtension.appex */,
+				A7C00000000000000000010D /* GoMapWatch.app */,
+				A7C00000000000000000010E /* GoMapWatchWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -995,6 +1080,7 @@
 				02E9ABC32BA54C9500F0EF69 /* PrivacyInfo.xcprivacy */,
 				020E0E242F637CB200A9D27C /* RotationGestureRecognizer.swift */,
 				02811D6B2E3176BE00E9D889 /* SceneDelegate.swift */,
+				A7C00000000000000000010F /* WatchGpxSession.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -1395,6 +1481,31 @@
 			path = iD;
 			sourceTree = "<group>";
 		};
+		A7C000000000000000000101 /* GoMapWatch */ = {
+			isa = PBXGroup;
+			children = (
+				A7C000000000000000000115 /* GoMapWatchApp.swift */,
+				A7C000000000000000000117 /* ContentView.swift */,
+				A7C000000000000000000119 /* HistoryView.swift */,
+				A7C00000000000000000011B /* WatchGpxModel.swift */,
+				A7C00000000000000000011D /* TraceRuntimeSession.swift */,
+				A7C00000000000000000011F /* WatchShared.swift */,
+				A7C000000000000000000122 /* Info.plist */,
+				A7C000000000000000000123 /* GoMapWatch.entitlements */,
+			);
+			path = GoMapWatch;
+			sourceTree = "<group>";
+		};
+		A7C000000000000000000102 /* GoMapWatchWidget */ = {
+			isa = PBXGroup;
+			children = (
+				A7C000000000000000000124 /* GpxComplication.swift */,
+				A7C000000000000000000126 /* Info.plist */,
+				A7C000000000000000000127 /* GoMapWatchWidget.entitlements */,
+			);
+			path = GoMapWatchWidget;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1406,6 +1517,7 @@
 				02ACBA2C16713CCB00BB4414 /* Frameworks */,
 				02ACBA2D16713CCB00BB4414 /* Resources */,
 				02D6238E26A6628300A4F147 /* Embed Foundation Extensions */,
+				A7C00000000000000000010B /* Embed Watch Content */,
 			);
 			buildRules = (
 				022B2FD92718C9FC00AB4C28 /* PBXBuildRule */,
@@ -1413,6 +1525,7 @@
 			dependencies = (
 				02D6238826A6628300A4F147 /* PBXTargetDependency */,
 				02CBF3C12BE8529B000DE2AD /* PBXTargetDependency */,
+				A7C00000000000000000012D /* PBXTargetDependency */,
 			);
 			name = "Go Map!!";
 			packageProductDependencies = (
@@ -1493,6 +1606,42 @@
 			productName = GoMapUITests;
 			productReference = 64348D08225EA24E00ADE7FB /* GoMapUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		A7C000000000000000000016 /* GoMapWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7C000000000000000000133 /* Build configuration list for PBXNativeTarget "GoMapWatch" */;
+			buildPhases = (
+				A7C000000000000000000104 /* Sources */,
+				A7C000000000000000000105 /* Frameworks */,
+				A7C000000000000000000106 /* Resources */,
+				A7C000000000000000000107 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A7C00000000000000000012E /* PBXTargetDependency */,
+			);
+			name = GoMapWatch;
+			productName = GoMapWatch;
+			productReference = A7C00000000000000000010D /* GoMapWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A7C00000000000000000010C /* GoMapWatchWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7C000000000000000000134 /* Build configuration list for PBXNativeTarget "GoMapWatchWidget" */;
+			buildPhases = (
+				A7C000000000000000000108 /* Sources */,
+				A7C000000000000000000109 /* Frameworks */,
+				A7C00000000000000000010A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GoMapWatchWidget;
+			productName = GoMapWatchWidget;
+			productReference = A7C00000000000000000010E /* GoMapWatchWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -1581,6 +1730,8 @@
 				64348D07225EA24E00ADE7FB /* GoMapUITests */,
 				02D6237E26A6628300A4F147 /* PhotoShare */,
 				02CBF3B02BE8529A000DE2AD /* GpxWidgetExtension */,
+				A7C000000000000000000016 /* GoMapWatch */,
+				A7C00000000000000000010C /* GoMapWatchWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -1650,6 +1801,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		64348D06225EA24E00ADE7FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7C000000000000000000106 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7C000000000000000000128 /* AppIcon.icon in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7C00000000000000000010A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1887,6 +2053,8 @@
 				ED9649F12601CEC800EC0A60 /* POITabBarController.swift in Sources */,
 				022B2FDB2718CCAC00AB4C28 /* MapboxLocator.secret in Sources */,
 				02148A562FFA1433002D513D /* PanoramaxServer.swift in Sources */,
+				A7C000000000000000000110 /* WatchGpxSession.swift in Sources */,
+				A7C000000000000000000112 /* GpxWatchState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1942,6 +2110,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A7C000000000000000000104 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7C000000000000000000113 /* GpxWatchState.swift in Sources */,
+				A7C000000000000000000116 /* GoMapWatchApp.swift in Sources */,
+				A7C000000000000000000118 /* ContentView.swift in Sources */,
+				A7C00000000000000000011A /* HistoryView.swift in Sources */,
+				A7C00000000000000000011C /* WatchGpxModel.swift in Sources */,
+				A7C00000000000000000011E /* TraceRuntimeSession.swift in Sources */,
+				A7C000000000000000000120 /* WatchShared.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A7C000000000000000000108 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A7C000000000000000000114 /* GpxWatchState.swift in Sources */,
+				A7C000000000000000000121 /* WatchShared.swift in Sources */,
+				A7C000000000000000000125 /* GpxComplication.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1965,6 +2157,17 @@
 			isa = PBXTargetDependency;
 			target = 02ACBA2E16713CCB00BB4414 /* Go Map!! */;
 			targetProxy = 64348D0D225EA24E00ADE7FB /* PBXContainerItemProxy */;
+		};
+		A7C00000000000000000012D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = A7C000000000000000000016 /* GoMapWatch */;
+			targetProxy = A7C00000000000000000012B /* PBXContainerItemProxy */;
+		};
+		A7C00000000000000000012E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A7C00000000000000000010C /* GoMapWatchWidget */;
+			targetProxy = A7C00000000000000000012C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2719,6 +2922,140 @@
 			};
 			name = Release;
 		};
+		A7C00000000000000000012F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GoMapWatch/GoMapWatch.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6201;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MKTTC6734C;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GoMapWatch/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Go Map!!";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Bryce Cogswell. All rights reserved.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bryceco.GoMap;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 6.2.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		A7C000000000000000000130 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = GoMapWatch/GoMapWatch.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6201;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MKTTC6734C;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GoMapWatch/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Go Map!!";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Bryce Cogswell. All rights reserved.";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.bryceco.GoMap;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = NO;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 6.2.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		A7C000000000000000000131 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = GoMapWatchWidget/GoMapWatchWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6201;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = MKTTC6734C;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GoMapWatchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Go Map!!";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Bryce Cogswell. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 6.2.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.watchkitapp.GpxComplication;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		A7C000000000000000000132 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = GoMapWatchWidget/GoMapWatchWidget.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 6201;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = MKTTC6734C;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = GoMapWatchWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Go Map!!";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Bryce Cogswell. All rights reserved.";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 6.2.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bryceco.GoMap.watchkitapp.GpxComplication;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2772,6 +3109,24 @@
 			buildConfigurations = (
 				64348D10225EA24E00ADE7FB /* Debug */,
 				64348D11225EA24E00ADE7FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A7C000000000000000000133 /* Build configuration list for PBXNativeTarget "GoMapWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7C00000000000000000012F /* Debug */,
+				A7C000000000000000000130 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A7C000000000000000000134 /* Build configuration list for PBXNativeTarget "GoMapWatchWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A7C000000000000000000131 /* Debug */,
+				A7C000000000000000000132 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
