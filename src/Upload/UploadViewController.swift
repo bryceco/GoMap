@@ -394,7 +394,7 @@ class UploadViewController: UIViewController {
 	private var connectedGroups: [ConnectedObjects] = []
 	private var selectedGroupIndices: Set<Int> = []
 	private var untaggedGroupIndices: Set<Int> = []
-	/// Groups whose upload failed because the server's version couldn't be merged, keyed by
+	/// Groups whose upload was rejected because another mapper changed an object, keyed by
 	/// ConnectedObjects.minGroupId so the entry survives reloadGroups() and follows a discard.
 	private var conflictMessages: [Int: String] = [:]
 	/// Changeset left open by a failed upload, reused by the next attempt
@@ -882,8 +882,8 @@ class UploadViewController: UIViewController {
 		present(alert, animated: true)
 	}
 
-	/// The server's version of an object couldn't be merged into our edits. Deselect the group
-	/// containing it and explain why, so the user can still upload everything else.
+	/// The server rejected our edit to an object because another mapper changed it. Deselect the
+	/// group containing it and explain why, so the user can still upload everything else.
 	private func deselectConflictingGroup(containing extId: OsmExtendedIdentifier, reason: String, error: Error) {
 		guard
 			let groupIndex = connectedGroups.firstIndex(where: { group in

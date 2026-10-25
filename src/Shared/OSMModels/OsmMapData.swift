@@ -41,7 +41,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		case badXML
 		case serverReturnedUnknownObjectId(OsmIdentifier)
 		case serverSkippedDelete
-		/// Another mapper changed the object and the server's version couldn't be merged into ours.
+		/// Another mapper changed the object since we downloaded it, so the server refused our edit.
 		/// The changeset was left open so the caller can reuse it on the next attempt.
 		case unresolvedConflict(OsmExtendedIdentifier, reason: String, changesetID: Int64)
 
@@ -49,7 +49,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			switch self {
 			case let .unresolvedConflict(extId, reason, _):
 				return String.localizedStringWithFormat(
-					NSLocalizedString("Changes to %1$@ %2$@ made by another mapper couldn't be merged: %3$@",
+					NSLocalizedString("Couldn't upload %1$@ %2$@: %3$@",
 					                  comment: "%1$@ is node/way/relation, %2$@ its ID, %3$@ the reason"),
 					extId.type.string, String(extId.ident), reason)
 			case .unableToOpenDatabase: return "OsmMapDataError.unableToOpenDatabase"
@@ -814,21 +814,15 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		}
 	}
 
-	@MainActor
-	private struct VersionMismatchError: Swift.Error {
-		let objType: String
-		let objId: Int64
-	}
-
 	enum UploadContent {
-		/// OSM objects from which XML is generated internally; retries up to 20 times on version mismatch.
+		/// OSM objects from which XML is generated internally
 		case objects(Set<OsmBaseObject>)
-		/// Pre-built XML (e.g. user-edited); uploaded as-is with no retry on version mismatch.
+		/// Pre-built XML (e.g. user-edited); uploaded as-is
 		case xml(DDXMLDocument)
 	}
 
-	// Performs a single upload attempt. Throws VersionMismatchError if the server
-	// reports a version conflict so the caller can re-fetch and retry.
+	// Uploads the changes. Throws Error.unresolvedConflict if the server reports a
+	// version conflict; the caller can then exclude the object and try again.
 	// Returns true if the server skipped any of our deletes because of if-unused.
 	@MainActor private func uploadChangeset(xml xmlChanges: DDXMLDocument, changesetID: Int64) async throws -> Bool {
 		let postData: Data
@@ -838,21 +832,24 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		                                               method: "POST",
 		                                               xml: xmlChanges)
 		} catch let UrlSessionError.badStatusCode(409, response) where response.hasPrefix("Version mismatch") {
-			// The server reports a conflict as 409 with the details in the body
+			// The server reports a conflict as 409 with the details in the body.
+			// Another mapper changed the object since we downloaded it. We don't try
+			// to merge their version with ours; the user decides what to do with the edit.
 			DLog("Upload error: \(response)")
 			// "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld"
 			let scanner = Scanner(string: response)
 			guard let _ = scanner.scanString("Version mismatch: Provided"),
-			      let localVersion = scanner.scanInt(),
+			      let _ = scanner.scanInt(),
 			      let _ = scanner.scanString(", server had:"),
-			      let serverVersion = scanner.scanInt(),
+			      let _ = scanner.scanInt(),
 			      let _ = scanner.scanString("of"),
 			      let objType = scanner.scanCharacters(from: CharacterSet.alphanumerics),
 			      let objId = scanner.scanInt64()
 			else { throw Error.badServerUpdateValue }
-			print("Updating object from version \(localVersion) to \(serverVersion)")
-			throw VersionMismatchError(objType: objType.lowercased(),
-			                           objId: objId)
+			let extId = try OsmExtendedIdentifier(OSM_TYPE(string: objType.lowercased()), objId)
+			throw Error.unresolvedConflict(extId,
+			                               reason: NSLocalizedString("it was changed by another mapper", comment: ""),
+			                               changesetID: changesetID)
 		}
 
 		let response = String(decoding: postData, as: UTF8.self)
@@ -1052,44 +1049,13 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			OsmMapData.addChangesetId(changesetID, toXML: xmlChanges)
 			skippedDelete = try await uploadChangeset(xml: xmlChanges, changesetID: changesetID)
 		case let .objects(objects):
-			var attempt = 0
-			while true {
-				// generate XML for the changed objects
-				guard let xml = OsmXmlGenerator.createXmlFor(objects: objects, generator: generator) else {
-					throw Error.badXML
-				}
-				// add changeset ID to the XML
-				OsmMapData.addChangesetId(changesetID, toXML: xml)
-				do {
-					// upload to server
-					skippedDelete = try await uploadChangeset(xml: xml, changesetID: changesetID)
-					break
-				} catch let mismatch as VersionMismatchError {
-					// version mismatch error: fetch the server's version and update ourself
-					let extId = try OsmExtendedIdentifier(OSM_TYPE(string: mismatch.objType), mismatch.objId)
-					guard attempt < 20 else {
-						throw Error.unresolvedConflict(extId,
-						                               reason: NSLocalizedString("too many retries", comment: ""),
-						                               changesetID: changesetID)
-					}
-					do {
-						// fetch latest version from server
-						var url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/\(mismatch.objType)/\(mismatch.objId)")
-						if mismatch.objType == "way" || mismatch.objType == "relation" {
-							url = url.appendingPathComponent("full")
-						}
-						let data = try await OsmDownloader.osmData(forUrl: url)
-						// merging updates the objects in-place, which works because they are reference objects
-						try await saveAndMerge(data)
-					} catch {
-						// Report which object is the problem so the caller can leave it out of the upload
-						throw Error.unresolvedConflict(extId,
-						                               reason: error.localizedDescription,
-						                               changesetID: changesetID)
-					}
-					attempt += 1
-				}
+			// generate XML for the changed objects
+			guard let xml = OsmXmlGenerator.createXmlFor(objects: objects, generator: generator) else {
+				throw Error.badXML
 			}
+			// add changeset ID to the XML
+			OsmMapData.addChangesetId(changesetID, toXML: xml)
+			skippedDelete = try await uploadChangeset(xml: xml, changesetID: changesetID)
 		}
 
 		try await closeChangeset(changesetID)
@@ -1104,16 +1070,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	/// Upload xml generated by mapData.
 	/// The procedure is:
-	///		- Ask the server to open a changeset and retrieve the changesetID
-	///		- Loop (implemented via recursion since calls are async):
-	///			- Generate XML for user modifications
-	///			- Insert the changesetID into the XML
-	///			- Upload the XML to the server
-	///			- If success then break loop
-	///			- Otherwise parse the result for version mismatch
-	///			- Download the server's version of the object that doesn't match
-	///			- Integrate the server version into our data
-	///			- Repeat until either there is no mismatch, or retry count is reached
+	///		- Ask the server to open a changeset (or reuse one from a failed attempt) and retrieve the changesetID
+	///		- Generate XML for user modifications
+	///		- Insert the changesetID into the XML
+	///		- Upload the XML to the server
+	///		- If the server reports a version mismatch, throw Error.unresolvedConflict
+	///		  identifying the object, leaving the changeset open for the caller to retry without it
 	///		- Ask the server to close the changeset
 	///		- Have the undo manager remove associated undo groups
 	@MainActor func uploadChangeset(for groups: [ConnectedObjects],
