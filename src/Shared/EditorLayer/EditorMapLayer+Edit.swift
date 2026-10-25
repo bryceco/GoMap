@@ -490,7 +490,7 @@ extension EditorMapLayer {
 		} else {
 			// rotate object geometry
 			let axis = viewPort.mapTransform.screenPoint(forLatLon: center, birdsEye: true)
-			let rotatedObject = selectedRelation ?? selectedWay
+			let rotatedObject = selectedWay ?? selectedRelation
 			if let nodeSet = rotatedObject?.nodeSet() {
 				for node in nodeSet {
 					let pt = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
