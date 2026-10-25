@@ -41,17 +41,15 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		case badXML
 		case serverReturnedUnknownObjectId(OsmIdentifier)
 		case serverSkippedDelete
-		/// Another mapper changed the object since we downloaded it, so the server refused our edit.
-		/// The changeset was left open so the caller can reuse it on the next attempt.
-		case unresolvedConflict(OsmExtendedIdentifier, reason: String, changesetID: Int64)
+		case versionMismatch(OsmExtendedIdentifier, changesetID: Int64)
 
 		public var errorDescription: String? {
 			switch self {
-			case let .unresolvedConflict(extId, reason, _):
+			case let .versionMismatch(extId, _):
 				return String.localizedStringWithFormat(
-					NSLocalizedString("Couldn't upload %1$@ %2$@: %3$@",
-					                  comment: "%1$@ is node/way/relation, %2$@ its ID, %3$@ the reason"),
-					extId.type.string, String(extId.ident), reason)
+					NSLocalizedString("Couldn't upload %1$@ %2$@: Version mismatch",
+					                  comment: "%1$@ is node/way/relation, %2$@ its ID"),
+					extId.type.string, String(extId.ident))
 			case .unableToOpenDatabase: return "OsmMapDataError.unableToOpenDatabase"
 			case .osmWayResolveToMapDataFoundNilNodeRefs: return "OsmMapDataError.osmWayResolveToMapDataFoundNilNodeRefs"
 			case .osmWayResolveToMapDataCouldntFindNodeRef: return "OsmMapDataError.osmWayResolveToMapDataCouldntFindNodeRef"
@@ -847,9 +845,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			      let objId = scanner.scanInt64()
 			else { throw Error.badServerUpdateValue }
 			let extId = try OsmExtendedIdentifier(OSM_TYPE(string: objType.lowercased()), objId)
-			throw Error.unresolvedConflict(extId,
-			                               reason: NSLocalizedString("it was changed by another mapper", comment: ""),
-			                               changesetID: changesetID)
+			throw Error.versionMismatch(extId, changesetID: changesetID)
 		}
 
 		let response = String(decoding: postData, as: UTF8.self)
