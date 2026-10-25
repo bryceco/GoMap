@@ -244,7 +244,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 					command(NSLocalizedString("Search", comment: "Search button label") + "…",
 					        #selector(mvc.searchMenuItem(_:)), "f"),
 					command(NSLocalizedString("Add node", comment: ""),
-					        #selector(mvc.addNodeMenuItem(_:)), "n")
+					        #selector(mvc.addNodeMenuItem(_:)), "n"),
+					command(NSLocalizedString("Tags", comment: "Edit action") + "…",
+					        #selector(mvc.tagsMenuItem(_:)), "t")
 				]),
 				section([
 					command(NSLocalizedString("Display options", comment: "") + "…",

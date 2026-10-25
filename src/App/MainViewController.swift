@@ -996,6 +996,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 			return presentedViewController == nil && LocationProvider.shared.currentLocation != nil
 		case #selector(addNodeMenuItem(_:)):
 			return presentedViewController == nil && !addNodeButton.isHidden
+		case #selector(tagsMenuItem(_:)):
+			return presentedViewController == nil && mapView.pushPin != nil
 		case #selector(uploadMenuItem(_:)):
 			return presentedViewController == nil && uploadButton.isEnabled
 #endif
@@ -1066,6 +1068,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	@objc func addNodeMenuItem(_ sender: Any?) {
 		mapView.addNode(at: mapView.bounds.center())
+	}
+
+	@objc func tagsMenuItem(_ sender: Any?) {
+		mapView.presentTagEditor(sender)
 	}
 
 	@objc func displayOptionsMenuItem(_ sender: Any?) {
