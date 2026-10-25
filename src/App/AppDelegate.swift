@@ -235,21 +235,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 				section([
 					command(NSLocalizedString("Center on My Location", comment: "Mac menu item"),
 					        #selector(mvc.centerOnLocationMenuItem(_:)), "l"),
-					command(NSLocalizedString("Follow My Location", comment: "Mac menu item"),
+					command(NSLocalizedString("GPS", comment: "GPS button label"),
 					        #selector(mvc.followLocationMenuItem(_:)), "l", [.command, .alternate]),
 					command(NSLocalizedString("Face North", comment: "Mac menu item"),
 					        #selector(mvc.faceNorthMenuItem(_:)), "n", [.command, .shift])
 				]),
 				section([
-					command(NSLocalizedString("Search…", comment: "Mac menu item"),
+					command(NSLocalizedString("Search", comment: "Search button label") + "…",
 					        #selector(mvc.searchMenuItem(_:)), "f"),
-					command(NSLocalizedString("Add Node", comment: "Mac menu item"),
+					command(NSLocalizedString("Add node", comment: ""),
 					        #selector(mvc.addNodeMenuItem(_:)), "n")
 				]),
 				section([
-					command(NSLocalizedString("Display Options…", comment: "Mac menu item"),
+					command(NSLocalizedString("Display options", comment: "") + "…",
 					        #selector(mvc.displayOptionsMenuItem(_:)), "d"),
-					command(NSLocalizedString("Upload Changes…", comment: "Mac menu item"),
+					command(NSLocalizedString("Upload your changes", comment: "") + "…",
 					        #selector(mvc.uploadMenuItem(_:)), "u")
 				])
 			])

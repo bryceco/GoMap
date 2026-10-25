@@ -19450,7 +19450,7 @@
       }
     },
     "Add Node" : {
-      "comment" : "Edit action\nMac menu item"
+      "comment" : "Edit action"
     },
     "add node to way" : {
       "localizations" : {
@@ -32401,9 +32401,6 @@
         }
       }
     },
-    "Display Options…" : {
-      "comment" : "Mac menu item"
-    },
     "Distance: %1$@ ± %2$@ meters" : {
       "comment" : "Distance to an object with an error value",
       "localizations" : {
@@ -35275,9 +35272,6 @@
           }
         }
       }
-    },
-    "Follow My Location" : {
-      "comment" : "Mac menu item"
     },
     "ft" : {
       "comment" : "Height or width in feet, please abbreviate",
@@ -54888,9 +54882,6 @@
         }
       }
     },
-    "Search…" : {
-      "comment" : "Mac menu item"
-    },
     "Select a highway approaching the intersection" : {
       "localizations" : {
         "ar" : {
@@ -64060,9 +64051,6 @@
           }
         }
       }
-    },
-    "Upload Changes…" : {
-      "comment" : "Mac menu item"
     },
     "Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map." : {
       "comment" : "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings",
