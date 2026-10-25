@@ -205,11 +205,7 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 			? (brand + feature.friendlyName())
 			: feature.friendlyName()
 		cell.pickerImage.image = icon
-		if #available(iOS 13.0, *) {
-			cell.pickerImage.tintColor = UIColor.label
-		} else {
-			cell.pickerImage.tintColor = UIColor.black
-		}
+		cell.pickerImage.tintColor = UIColor.label
 		cell.pickerImage.contentMode = .scaleAspectFit
 		cell.setNeedsUpdateConstraints()
 		let description = feature.wikiDescription(update: { [weak self] desc in

@@ -58,22 +58,12 @@ final class MagnifyingGlass: UIView {
 		superview.removeConstraints(superview.constraints.compactMap({
 			($0.firstItem as? UIView == self || $0.secondItem as? UIView == self) ? $0 : nil }))
 		removeConstraints(constraints)
-		if #available(iOS 11.0, *) {
-			topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor).isActive = true
-			switch pos {
-			case .topLeft:
-				leftAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leftAnchor).isActive = true
-			case .topRight:
-				rightAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.rightAnchor).isActive = true
-			}
-		} else {
-			topAnchor.constraint(equalTo: superview.topAnchor, constant: layoutMargins.top).isActive = true
-			switch pos {
-			case .topLeft:
-				leftAnchor.constraint(equalTo: superview.leftAnchor, constant: layoutMargins.left).isActive = true
-			case .topRight:
-				rightAnchor.constraint(equalTo: superview.rightAnchor, constant: layoutMargins.right).isActive = true
-			}
+		topAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.topAnchor).isActive = true
+		switch pos {
+		case .topLeft:
+			leftAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.leftAnchor).isActive = true
+		case .topRight:
+			rightAnchor.constraint(equalTo: superview.safeAreaLayoutGuide.rightAnchor).isActive = true
 		}
 		widthAnchor.constraint(equalToConstant: 2 * radius).isActive = true
 		heightAnchor.constraint(equalToConstant: 2 * radius).isActive = true

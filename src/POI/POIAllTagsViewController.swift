@@ -30,11 +30,7 @@ private class SectionHeaderCell: UITableViewHeaderFooterView {
 		label.translatesAutoresizingMaskIntoConstraints = false
 		button.translatesAutoresizingMaskIntoConstraints = false
 
-		if #available(iOS 13.0, *) {
-			label.textColor = UIColor.secondaryLabel
-		} else {
-			label.textColor = UIColor.darkGray
-		}
+		label.textColor = UIColor.secondaryLabel
 		button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
 		button.tintColor = UIColor.systemBlue
 		button.addTarget(self, action: #selector(pickFeature(_:)), for: .touchUpInside)
@@ -144,9 +140,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 		tableView.reloadData()
 
 		saveButton.isEnabled = tabController.isTagDictChanged()
-		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = saveButton.isEnabled
-		}
+		tabBarController?.isModalInPresentation = saveButton.isEnabled
 
 		return nextRow
 	}
@@ -369,9 +363,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 
 		let tabController = tabBarController as! POITabBarController
 		saveButton.isEnabled = tabController.isTagDictChanged(tags.keyValueDictionary())
-		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = saveButton.isEnabled
-		}
+		tabBarController?.isModalInPresentation = saveButton.isEnabled
 	}
 
 	func keyValueEditingEnded(for kvCell: KeyValueTableCell) {
@@ -498,9 +490,7 @@ class POIAllTagsViewController: UITableViewController, POIFeaturePickerDelegate,
 			}
 
 			saveButton.isEnabled = tabController.isTagDictChanged()
-			if #available(iOS 13.0, *) {
-				tabBarController?.isModalInPresentation = saveButton.isEnabled
-			}
+			tabBarController?.isModalInPresentation = saveButton.isEnabled
 		} else if editingStyle == .insert {
 			// Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
 		}

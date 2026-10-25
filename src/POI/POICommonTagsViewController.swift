@@ -38,21 +38,9 @@ class FeaturePresetAreaCell: UITableViewCell {
 		valueField.textColor = Self.regularColor
 	}
 
-	private static let placeholderColor: UIColor = {
-		if #available(iOS 13.0, *) {
-			return UIColor.placeholderText
-		} else {
-			return UIColor.lightText
-		}
-	}()
+	private static let placeholderColor: UIColor = .placeholderText
 
-	private static let regularColor: UIColor = {
-		if #available(iOS 13.0, *) {
-			return UIColor.label
-		} else {
-			return UIColor.black
-		}
-	}()
+	private static let regularColor: UIColor = .label
 
 	func placeholderText() -> String {
 		return presetKey.placeholder
@@ -165,9 +153,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		}
 
 		saveButton.isEnabled = tabController.isTagDictChanged()
-		if #available(iOS 13.0, *) {
-			tabController.isModalInPresentation = saveButton.isEnabled
-		}
+		tabController.isModalInPresentation = saveButton.isEnabled
 	}
 
 	func updateTagDict(withValue value: String, forKey key: String) {
@@ -210,9 +196,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		let tabController = tabBarController as! POITabBarController
 
 		saveButton.isEnabled = tabController.isTagDictChanged()
-		if #available(iOS 13.0, *) {
-			tabController.isModalInPresentation = saveButton.isEnabled
-		}
+		tabController.isModalInPresentation = saveButton.isEnabled
 
 		if drillDownGroup == nil {
 			if let feature = tabController.currentFeature {
@@ -411,9 +395,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 					cell.valueField.autocapitalizationType = .sentences
 					cell.valueField.smartDashesType = .default
 				}
-				if #available(iOS 13.0, *) {
-					cell.valueField.backgroundColor = UIColor.secondarySystemGroupedBackground
-				}
+				cell.valueField.backgroundColor = UIColor.secondarySystemGroupedBackground
 				if value != "" {
 					// This shouldn't be necessary but the cell height isn't correct
 					// when the cell first appears.
@@ -729,9 +711,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	@IBAction func textFieldChanged(_ textField: UITextField) {
 		saveButton.isEnabled = true
-		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = saveButton.isEnabled
-		}
+		tabBarController?.isModalInPresentation = saveButton.isEnabled
 		if let cell = textField.superview(ofType: UITableViewCell.self) {
 			switch cell {
 			case let cell as FeaturePresetCell:
@@ -789,9 +769,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 
 	func textViewDidChange(_ textView: UITextView) {
 		saveButton.isEnabled = true
-		if #available(iOS 13.0, *) {
-			tabBarController?.isModalInPresentation = saveButton.isEnabled
-		}
+		tabBarController?.isModalInPresentation = saveButton.isEnabled
 
 		// This resizes the cell to be appropriate for the content
 		updateTextViewSize(textView)

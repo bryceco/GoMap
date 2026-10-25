@@ -203,10 +203,7 @@ final class OsmXmlGenerator {
 		let font = NSFont.labelFont(ofSize: 12)
 #endif
 
-		var foregroundColor = UIColor.black
-		if #available(iOS 13.0, *) {
-			foregroundColor = UIColor.label
-		}
+		let foregroundColor = UIColor.label
 
 		let text =
 			"\t\t\(tag.attribute(forName: "k")?.stringValue ?? "") = \(tag.attribute(forName: "v")?.stringValue ?? "")\n"
@@ -222,10 +219,7 @@ final class OsmXmlGenerator {
 #else
 		let font = NSFont.labelFont(ofSize: 12)
 #endif
-		var foregroundColor = UIColor.black
-		if #available(iOS 13.0, *) {
-			foregroundColor = UIColor.label
-		}
+		let foregroundColor = UIColor.label
 
 		let text =
 			"\t\t\(tag.attribute(forName: "type")?.stringValue ?? "") \(tag.attribute(forName: "ref")?.stringValue ?? ""): \"\(tag.attribute(forName: "role")?.stringValue ?? "")\"\n"
@@ -247,10 +241,7 @@ final class OsmXmlGenerator {
 		let boldFont = NSFont.boldSystemFont(ofSize: 12)
 #endif
 
-		var foregroundColor = UIColor.black
-		if #available(iOS 13.0, *) {
-			foregroundColor = UIColor.label
-		}
+		let foregroundColor = UIColor.label
 
 		let nodeName = node.attribute(forName: "id")?.stringValue
 		let ident = nodeName.flatMap { Int64($0) }
@@ -323,10 +314,7 @@ final class OsmXmlGenerator {
 		let boldFont = NSFont.boldSystemFont(ofSize: 12)
 #endif
 
-		var foregroundColor = UIColor.black
-		if #available(iOS 13.0, *) {
-			foregroundColor = UIColor.label
-		}
+		let foregroundColor = UIColor.label
 
 		let wayName = way.attribute(forName: "id")?.stringValue
 		let ident = wayName.flatMap { Int64($0) }
@@ -401,10 +389,7 @@ final class OsmXmlGenerator {
 		let boldFont = NSFont.boldSystemFont(ofSize: 12)
 #endif
 
-		var foregroundColor = UIColor.black
-		if #available(iOS 13.0, *) {
-			foregroundColor = UIColor.label
-		}
+		let foregroundColor = UIColor.label
 
 		let relationName = relation.attribute(forName: "id")?.stringValue
 		let ident = relationName.flatMap { Int64($0) }
@@ -466,10 +451,7 @@ final class OsmXmlGenerator {
 			return
 		}
 
-		var foregroundColor = UIColor.black
-		if #available(iOS 13.0, *) {
-			foregroundColor = UIColor.label
-		}
+		let foregroundColor = UIColor.label
 
 #if os(iOS)
 		let font = UIFont.preferredFont(forTextStyle: .headline)

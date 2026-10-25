@@ -270,12 +270,11 @@ final class PushPinView: UIButton, MapPositionedView, CAAnimationDelegate, UIGes
 			return self
 		}
 
-		if #available(iOS 13.0, *),
-		   // also hit the arrow point if they're using a mouse
-		   let isIndirect = (UIApplication.shared as? MyApplication)?.currentEventIsIndirect,
-		   isIndirect,
-		   abs(point.y) < 12,
-		   abs(point.x - hittestRect.origin.x - hittestRect.size.width / 2) < 12
+		if // also hit the arrow point if they're using a mouse
+			let isIndirect = (UIApplication.shared as? MyApplication)?.currentEventIsIndirect,
+			isIndirect,
+			abs(point.y) < 12,
+			abs(point.x - hittestRect.origin.x - hittestRect.size.width / 2) < 12
 		{
 			return self
 		}

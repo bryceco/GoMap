@@ -16,9 +16,7 @@ class OfflineTableViewCell: UITableViewCell {
 	var tileLayer: TilesProvider?
 
 	override func awakeFromNib() {
-		if #available(iOS 13.0, *) {
-			activityView.style = .medium
-		}
+		activityView.style = .medium
 	}
 }
 

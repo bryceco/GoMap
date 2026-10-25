@@ -897,11 +897,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 			{
 				let image = button.currentImage?.withRenderingMode(.alwaysTemplate)
 				button.setImage(image, for: .normal)
-				if #available(iOS 13.0, *) {
-					button.tintColor = UIColor.link
-				} else {
-					button.tintColor = UIColor.systemBlue
-				}
+				button.tintColor = UIColor.link
 				button.setImage(image?.withConfiguration(UIImage.SymbolConfiguration(pointSize: 24)), for: .normal)
 			}
 
@@ -940,10 +936,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 #else
 		if #available(iOS 26.0, *) {
 			// don't modify glass
-		} else if #available(iOS 13.0, *) {
-			button.backgroundColor = UIColor.secondarySystemBackground
 		} else {
-			button.backgroundColor = UIColor.lightGray
+			button.backgroundColor = UIColor.secondarySystemBackground
 		}
 #endif
 	}
@@ -954,10 +948,8 @@ final class MainViewController: UIViewController, DPadDelegate,
 #else
 		if #available(iOS 26.0, *) {
 			// don't modify glass
-		} else if #available(iOS 13.0, *) {
-			button.backgroundColor = UIColor.systemBackground
 		} else {
-			button.backgroundColor = UIColor.white
+			button.backgroundColor = UIColor.systemBackground
 		}
 		if button == aerialAlignmentButton {
 			button.backgroundColor = button.backgroundColor?.withAlphaComponent(0.4)

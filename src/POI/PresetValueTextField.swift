@@ -259,11 +259,6 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 
 		rightView = associatedView1 ?? associatedView2
 		rightViewMode = rightView != nil ? .always : .never
-		if #available(iOS 13.0, *) {
-			// great
-		} else {
-			rightView?.frame = CGRect(x: 0, y: 0, width: 28, height: 28)
-		}
 	}
 
 	// MARK: Color preview

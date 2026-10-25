@@ -182,12 +182,7 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 				// cell doesn't always scroll to the same place, so give it a moment before we add the completion table
 				DispatchQueue.main.async(execute: {
 					// add completion table to tableview
-					let backgroundColor: UIColor
-					if #available(iOS 13.0, *) {
-						backgroundColor = UIColor.systemBackground
-					} else {
-						backgroundColor = UIColor(white: 0.88, alpha: 1.0)
-					}
+					let backgroundColor: UIColor = UIColor.systemBackground
 
 					let rect = self.frameForCompletionTableView()
 					let view = UITableView(frame: rect, style: .plain)
@@ -259,11 +254,7 @@ class AutocompleteTextField: UITextField, UITableViewDataSource, UITableViewDele
 		if let label {
 			cell.textLabel?.text = label.title
 			cell.detailTextLabel?.text = label.subtitle
-			if #available(iOS 13.0, *) {
-				cell.detailTextLabel?.textColor = .secondaryLabel
-			} else {
-				cell.detailTextLabel?.textColor = .gray
-			}
+			cell.detailTextLabel?.textColor = .secondaryLabel
 		} else {
 			cell.textLabel?.text = value
 		}

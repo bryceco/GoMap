@@ -69,9 +69,7 @@ final class LocationProvider: NSObject, CLLocationManagerDelegate {
 		locationManager.pausesLocationUpdatesAutomatically = false
 		locationManager.allowsBackgroundLocationUpdates =
 			AppState.shared.gpxTracks.recordTracksInBackground && AppDelegate.shared.mainView.settings.displayGpxTracks
-		if #available(iOS 11.0, *) {
-			locationManager.showsBackgroundLocationIndicator = true
-		}
+		locationManager.showsBackgroundLocationIndicator = true
 		locationManager.activityType = .other
 
 		locationManager.delegate = self

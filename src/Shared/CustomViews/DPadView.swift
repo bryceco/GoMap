@@ -49,11 +49,7 @@ class DPadView: UIView {
 		let arrowLayer = CAShapeLayer()
 		arrowLayer.path = arrowPath.cgPath
 		arrowLayer.fillColor = UIColor.white.cgColor
-		if #available(iOS 13.0, *) {
-			arrowLayer.strokeColor = UIColor.link.cgColor
-		} else {
-			arrowLayer.strokeColor = UIColor.systemBlue.cgColor
-		}
+		arrowLayer.strokeColor = UIColor.link.cgColor
 		button.layer.addSublayer(arrowLayer)
 
 		switch dir {

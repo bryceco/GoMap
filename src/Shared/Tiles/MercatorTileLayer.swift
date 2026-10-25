@@ -265,7 +265,6 @@ final class MercatorTileLayer: CALayer {
 						return nil
 					}
 					if self.supportDarkMode,
-					   #available(iOS 13.0, *),
 					   UIScreen.main.traitCollection.userInterfaceStyle == .dark
 					{
 						return DarkModeImage.shared.darkModeImageFor(data: data)

@@ -491,11 +491,7 @@ class QuestList {
 
 	func exportQuests() throws -> String {
 		let encoder = JSONEncoder()
-		if #available(iOS 13.0, *) {
-			encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
-		} else {
-			encoder.outputFormatting = [.prettyPrinted]
-		}
+		encoder.outputFormatting = [.prettyPrinted, .withoutEscapingSlashes]
 		let data = try encoder.encode(QuestList.shared.userQuests)
 		return String(decoding: data, as: UTF8.self)
 	}

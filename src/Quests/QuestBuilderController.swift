@@ -110,10 +110,8 @@ class QuestBuilderController: UIViewController, UICollectionViewDataSource, UICo
 		// monitor when keyboard is visible
 		registerKeyboardNotifications()
 
-		if #available(iOS 13.0, *) {
-			// prevent swiping down to dismiss
-			self.isModalInPresentation = true
-		}
+		// prevent swiping down to dismiss
+		self.isModalInPresentation = true
 
 		if let flowLayout = includeFeaturesView?.collectionViewLayout as? UICollectionViewFlowLayout {
 			flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
