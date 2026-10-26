@@ -54,8 +54,12 @@ class LanguageTableViewController: TableViewControllerMac {
 			// name in native language
 			cell.textLabel?.text = PresetLanguages.languageNameForCode(code!) ?? code
 
-			// name in current language
-			cell.detailTextLabel?.text = PresetLanguages.localLanguageNameForCode(code!) ?? code
+			// name in current language, plus how much of the presets are translated
+			var detail = PresetLanguages.localLanguageNameForCode(code!) ?? code!
+			let pct = PresetLanguages.coverage[code!] ?? 0.0
+			let pctString = String(format: "%.0f", pct)
+			detail += " (\(pctString)%)"
+			cell.detailTextLabel?.text = detail
 		}
 
 		// accessory checkmark

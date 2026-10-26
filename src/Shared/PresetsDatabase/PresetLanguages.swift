@@ -19,6 +19,7 @@ final class PresetLanguages {
 			return []
 		}
 		var list = files
+			.filter { $0 != "coverage.json" }
 			.map({ $0.replacingOccurrences(of: ".json", with: "") })
 			.filter { languageNameForCode($0) != nil } // ignore non-real languages
 		list.sort(by: { code1, code2 -> Bool in
@@ -27,6 +28,16 @@ final class PresetLanguages {
 			return s1.caseInsensitiveCompare(s2) == .orderedAscending
 		})
 		return list
+	}()
+
+	// Percent of preset strings translated for each language, written by presets/update.sh
+	static let coverage: [String: Double] = {
+		guard let data = try? PresetsDatabase.dataForFile("translations/coverage.json"),
+		      let json = try? JSONSerialization.jsonObject(with: data)
+		else {
+			return [:]
+		}
+		return json as! [String: Double]
 	}()
 
 	class func preferredLanguageIsDefault() -> Bool {

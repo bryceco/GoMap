@@ -57,8 +57,20 @@ for index,(k,v) in enumerate(dict.items()):
 EOF
 )
 
-languages=$(curl -fLsS $DIST/translations/index.json |
-python3 -c "$GET_LANGS")
+# python script to write the percent translated for every language, so the
+# app can display it in the preset language picker
+WRITE_COVERAGE=$(cat <<EOF
+import sys, json
+dict=json.load(sys.stdin)
+coverage={k:v['pct']*100 for k,v in dict.items()}
+json.dump(coverage, sys.stdout, indent=1, sort_keys=True)
+print()
+EOF
+)
+
+index=$(curl -fLsS $DIST/translations/index.json)
+
+languages=$(echo "$index" | python3 -c "$GET_LANGS")
 
 # remove old translations because sometimes they are stale
 (git rm --cached translations/*.json
@@ -71,5 +83,7 @@ for lang in $languages; do
 	echo $lang
 	curl -fLsS --output translations/$lang.json $DIST/translations/$lang.min.json
 done
+
+echo "$index" | python3 -c "$WRITE_COVERAGE" > translations/coverage.json
 
 git add translations/*.json
