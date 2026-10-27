@@ -14,15 +14,15 @@ Do you want to help testing pre-releases of Go Map!!?
 
 ## Source code structure
 
-* iOS - App-specific UI code
-	* CustomViews - A collection of UIViews and CALayers primarily used by MapView
-	* Direction - The view controller for measuring direction
-	* Height - The view controller for measuring height
-	* OpeningHours - Support for recognizing hours via camera 
-	* PhotoShare - App extension so we appear in the system Share menu
-	* POI - View Controllers for tagging objects
-	* Quests - Quest VCs and related code
-	* Upload - View controller for uploading changesets
+* App - Top level views and infrastructure
+* CustomViews - A collection of UIViews and CALayers primarily used by MapView
+* Direction - The view controller for measuring direction
+* Height - The view controller for measuring height
+* OpeningHours - Support for recognizing hours via camera 
+* PhotoShare - App extension so we appear in the system Share menu
+* POI - View Controllers for tagging objects
+* Quests - Quest VCs and related code
+* Upload - View controller for uploading changesets
 * Shared - General purpose code (drawing code, OSM data structures, etc)
 	* Database - A SQLite3 database storing downloaded OSM data
 	* EditorLayer - The low-level graphical display for drawing nodes/ways
@@ -42,11 +42,11 @@ Do you want to help testing pre-releases of Go Map!!?
 ## External assets
 
 A number of assets used in the app come from other repositories, and should be periodically updated. Because updating these items can be a lengthy process it is performed manually rather than at build time:
-- iD presets database (https://github.com/openstreetmap/id-tagging-schema) 
-- iD presets icons (https://github.com/ideditor/temaki, https://github.com/mapbox/maki)
+- iD presets database (https://github.com/openstreetmap/id-tagging-schema)
+- Preset icons come from [Maki][11] (Mapbox), [Temaki][12] (ideditor), [Röntgen][13] (enzet), [Pinhead][14], and [iD][15]'s own sprite and bundled [Font Awesome][16] icons.
 - Name Suggestion Index (https://github.com/osmlab/name-suggestion-index)
 - NSI brand imagery (pulled from Facebook/Twitter/Wikipedia)
-- StreetComplete quest filters (https://github.com/streetcomplete/StreetComplete)
+- StreetComplete quest icons (https://github.com/streetcomplete/StreetComplete)
 - Weblate translations (https://hosted.weblate.org/projects/go-map/app)
 
 ### Updating external assets
@@ -70,6 +70,12 @@ Git hook, as described [here][7].
 
 The Go Map!! app icon was created by [@Binnette][5].
 
+## Presets and translation
+
+Go Map!! translations are hosted on [Weblate](https://hosted.weblate.org/projects/go-map/).
+Go Map!! uses the iD presets, so you can improve tag presets and their translations by contributing to the [iD Tagging Schema](https://github.com/openstreetmap/id-tagging-schema).
+
+
 [1]: https://www.openstreetmap.org
 [2]: download-on-the-app-store.png
 [3]: https://itunes.apple.com/app/id592990211
@@ -78,9 +84,9 @@ The Go Map!! app icon was created by [@Binnette][5].
 [6]: https://github.com/nicklockwood/SwiftFormat
 [7]: https://github.com/nicklockwood/SwiftFormat#git-pre-commit-hook
 [8]: https://wiki.openstreetmap.org/w/index.php?title=Go_Map!!
-
-
-## Presets and translation
-
-Go Map!! is using iD presets, so you can improve translations [by improving translations of iD presets](https://github.com/openstreetmap/id-tagging-schema).
-
+[11]: https://github.com/mapbox/maki
+[12]: https://github.com/ideditor/temaki
+[13]: https://github.com/enzet/Roentgen
+[14]: https://pinhead.ink
+[15]: https://github.com/openstreetmap/iD
+[16]: https://fontawesome.com
