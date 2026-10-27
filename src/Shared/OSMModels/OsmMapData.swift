@@ -689,6 +689,29 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		try await saveAndMerge(data)
 	}
 
+	/// Downloads fresh copies of the specified objects from the server and merges
+	/// them into the local data store. For ways and relations the `/full` endpoint
+	/// is used so that member objects are also updated.
+	@MainActor
+	func downloadFreshCopies(of objects: Set<OsmBaseObject>) async {
+		var combinedData = OsmServerData()
+		for object in objects where object.ident > 0 {
+			var url = OSM_SERVER.apiURL.appendingPathComponent("api/0.6/\(object.osmType.string)/\(object.ident)")
+			if object.osmType != .NODE {
+				url = url.appendingPathComponent("full")
+			}
+			do {
+				let data = try await OsmDownloader.osmData(forUrl: url)
+				combinedData.nodes.append(contentsOf: data.nodes)
+				combinedData.ways.append(contentsOf: data.ways)
+				combinedData.relations.append(contentsOf: data.relations)
+			} catch {
+				DLog("Failed to download \(object.osmType.string) \(object.ident): \(error)")
+			}
+		}
+		try? await saveAndMerge(combinedData)
+	}
+
 	func cancelCurrentDownloads() async {
 		if DownloadThreadPool.osmPool.downloadsInProgress() > 0 {
 			await DownloadThreadPool.osmPool.cancelAllDownloads()

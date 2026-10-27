@@ -177,6 +177,8 @@ private final class MessageCell: UITableViewCell {
 
 	private let iconView = UIImageView()
 	private let messageLabel = UILabel()
+	fileprivate let viewOnServerButton = UIButton(type: .system)
+	var onViewOnServer: (() -> Void)?
 
 	override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
 		super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -191,7 +193,14 @@ private final class MessageCell: UITableViewCell {
 		messageLabel.numberOfLines = 0
 		messageLabel.adjustsFontForContentSizeCategory = true
 
-		let stack = UIStackView(arrangedSubviews: [iconView, messageLabel])
+		let eyeConfig = UIImage.SymbolConfiguration(pointSize: 14)
+		viewOnServerButton.setImage(UIImage(systemName: "eye", withConfiguration: eyeConfig), for: .normal)
+		viewOnServerButton.tintColor = .systemBlue
+		viewOnServerButton.setContentHuggingPriority(.required, for: .horizontal)
+		viewOnServerButton.setContentCompressionResistancePriority(.required, for: .horizontal)
+		viewOnServerButton.addTarget(self, action: #selector(viewOnServerTapped), for: .touchUpInside)
+
+		let stack = UIStackView(arrangedSubviews: [iconView, messageLabel, viewOnServerButton])
 		stack.axis = .horizontal
 		stack.spacing = 10
 		stack.alignment = .center
@@ -212,8 +221,14 @@ private final class MessageCell: UITableViewCell {
 	@available(*, unavailable)
 	required init?(coder: NSCoder) { fatalError() }
 
+	@objc private func viewOnServerTapped() {
+		onViewOnServer?()
+	}
+
 	func configure(text: String, style: Style) {
 		messageLabel.text = text
+		onViewOnServer = nil
+		viewOnServerButton.isHidden = true
 		switch style {
 		case .warning:
 			iconView.isHidden = false
@@ -397,7 +412,7 @@ class UploadViewController: UIViewController {
 	private var untaggedGroupIndices: Set<Int> = []
 	/// Groups whose upload was rejected because another mapper changed an object, keyed by
 	/// ConnectedObjects.minGroupId so the entry survives reloadGroups() and follows a discard.
-	private var conflictMessages: [Int: String] = [:]
+	private var conflictMessages: [Int: (message: String, extId: OsmExtendedIdentifier)] = [:]
 	/// Changeset left open by a failed upload, reused by the next attempt
 	private var pendingChangesetID: Int64?
 
@@ -695,9 +710,19 @@ class UploadViewController: UIViewController {
 	}
 
 	private func discardGroup(_ group: ConnectedObjects) {
+		let objectsToRefresh = group.objects
+		conflictMessages.removeValue(forKey: group.minGroupId)
 		mapData.undoManager.discardGroups(group.undoGroups)
 		reloadGroups()
 		AppDelegate.shared.mapView.setNeedsLayout()
+
+		// Download the server's current version of the discarded objects
+		// so the user sees up-to-date data and avoids repeated conflicts.
+		Task { [weak self] in
+			guard let self, let mapData = self.mapData else { return }
+			await mapData.downloadFreshCopies(of: objectsToRefresh)
+			AppDelegate.shared.mapView.setNeedsLayout()
+		}
 	}
 
 	private func currentImagery() -> String {
@@ -968,11 +993,12 @@ class UploadViewController: UIViewController {
 		}
 		let (name, feature) = object.friendlyDescriptionWithFeature()
 		let description = name.map { "\($0) (\(feature))" } ?? feature
-		conflictMessages[connectedGroups[groupIndex].minGroupId] = String.localizedStringWithFormat(
+		let message = String.localizedStringWithFormat(
 			NSLocalizedString(
-				"%@ wasn't uploaded because it conflicts with another user's edits. Discard these edits.",
+				"%@ wasn't uploaded because it conflicts with another user's edits.\nDiscarding these edits will refresh it with the server's copy.",
 				comment: "Warning shown above an edit group that couldn't be uploaded"),
 			description)
+		conflictMessages[connectedGroups[groupIndex].minGroupId] = (message: message, extId: extId)
 		selectedGroupIndices.remove(groupIndex)
 		return true
 	}
@@ -1156,8 +1182,15 @@ extension UploadViewController: UITableViewDataSource {
 			let cell = tableView.dequeueReusableCell(
 				withIdentifier: MessageCell.reuseIdentifier,
 				for: indexPath) as! MessageCell
-			cell.configure(text: conflictMessages[connectedGroups[groupIndex].minGroupId] ?? "",
-			               style: .warning)
+			let conflict = conflictMessages[connectedGroups[groupIndex].minGroupId]
+			cell.configure(text: conflict?.message ?? "", style: .warning)
+			if let extId = conflict?.extId {
+				cell.onViewOnServer = { [weak self] in
+					let url = OSM_SERVER.serverURL.appendingPathComponent("\(extId.type.string)/\(extId.ident)")
+					self?.present(SFSafariViewController(url: url), animated: true)
+				}
+				cell.viewOnServerButton.isHidden = false
+			}
 			return cell
 		case let .group(groupIndex):
 			return groupCell(for: connectedGroups[groupIndex], at: indexPath)

@@ -7033,7 +7033,7 @@
         }
       }
     },
-    "%@ wasn't uploaded because it conflicts with another user's edits. Discard these edits." : {
+    "%@ wasn't uploaded because it conflicts with another user's edits.\nDiscarding these edits will refresh it with the server's copy." : {
       "comment" : "Warning shown above an edit group that couldn't be uploaded"
     },
     "%ld Days" : {
@@ -56375,7 +56375,7 @@
     "Some changes contain objects with no tags and have been deselected. Add tags before uploading." : {
       "comment" : "Warning shown on upload screen when a group contains untagged objects"
     },
-    "Some edits couldn't be committed because another user changed the same object." : {
+    "Some edits were committed, but others couldn't be committed because another user changed the same object." : {
 
     },
     "Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." : {
