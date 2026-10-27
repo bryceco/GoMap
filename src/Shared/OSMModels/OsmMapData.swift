@@ -41,15 +41,12 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		case badXML
 		case serverReturnedUnknownObjectId(OsmIdentifier)
 		case serverSkippedDelete
-		case versionMismatch(OsmExtendedIdentifier, changesetID: Int64)
+		case versionMismatch(OsmExtendedIdentifier, changesetID: Int64, localVersion: Int, serverVersion: Int)
 
 		public var errorDescription: String? {
 			switch self {
-			case let .versionMismatch(extId, _):
-				return String.localizedStringWithFormat(
-					NSLocalizedString("Couldn't upload %1$@ %2$@: Version mismatch",
-					                  comment: "%1$@ is node/way/relation, %2$@ its ID"),
-					extId.type.string, String(extId.ident))
+			case let .versionMismatch(extId, _, localVersion, serverVersion):
+				return "Version mismatch: \(extId.type.string) \(extId.ident) (local \(localVersion), server \(serverVersion))"
 			case .unableToOpenDatabase: return "OsmMapDataError.unableToOpenDatabase"
 			case .osmWayResolveToMapDataFoundNilNodeRefs: return "OsmMapDataError.osmWayResolveToMapDataFoundNilNodeRefs"
 			case .osmWayResolveToMapDataCouldntFindNodeRef: return "OsmMapDataError.osmWayResolveToMapDataCouldntFindNodeRef"
@@ -57,12 +54,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			case let .otherError(message): return "OsmMapDataError.otherError(\(message))"
 			case .badServerUpdateValue: return "badServerUpdateValue"
 			case .badXML: return "OsmMapDataError:badXML"
-			// these two are different, but user doesn't need to know the details
-			case .serverSkippedDelete,
-			     .serverReturnedUnknownObjectId:
-				return NSLocalizedString(
-					"Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map.",
-					comment: "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings")
+			case .serverSkippedDelete: return "serverSkippedDelete"
+			case let .serverReturnedUnknownObjectId(id): return "serverReturnedUnknownObjectId(\(id))"
 			}
 		}
 	}
@@ -826,9 +819,9 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		let postData: Data
 		do {
 			postData = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(changesetID)/upload",
-		                                               queryItems: [:],
-		                                               method: "POST",
-		                                               xml: xmlChanges)
+			                                           queryItems: [:],
+			                                           method: "POST",
+			                                           xml: xmlChanges)
 		} catch let UrlSessionError.badStatusCode(409, response) where response.hasPrefix("Version mismatch") {
 			// The server reports a conflict as 409 with the details in the body.
 			// Another mapper changed the object since we downloaded it. We don't try
@@ -837,15 +830,15 @@ final class OsmMapData: NSObject, NSSecureCoding {
 			// "Version mismatch: Provided %d, server had: %d of %[a-zA-Z] %lld"
 			let scanner = Scanner(string: response)
 			guard let _ = scanner.scanString("Version mismatch: Provided"),
-			      let _ = scanner.scanInt(),
+			      let localVersion = scanner.scanInt(),
 			      let _ = scanner.scanString(", server had:"),
-			      let _ = scanner.scanInt(),
+			      let serverVersion = scanner.scanInt(),
 			      let _ = scanner.scanString("of"),
 			      let objType = scanner.scanCharacters(from: CharacterSet.alphanumerics),
 			      let objId = scanner.scanInt64()
 			else { throw Error.badServerUpdateValue }
 			let extId = try OsmExtendedIdentifier(OSM_TYPE(string: objType.lowercased()), objId)
-			throw Error.versionMismatch(extId, changesetID: changesetID)
+			throw Error.versionMismatch(extId, changesetID: changesetID, localVersion: localVersion, serverVersion: serverVersion)
 		}
 
 		let response = String(decoding: postData, as: UTF8.self)
@@ -896,7 +889,8 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		return skippedDelete
 	}
 
-	private func closeChangeset(_ changesetID: Int64) async throws {
+	// can be called by UploadViewController to manually close a changeset that had errors and couldn't be completed.
+	func closeChangeset(_ changesetID: Int64) async throws {
 		_ = try await OSM_SERVER.putRequest(relativeUrl: "api/0.6/changeset/\(changesetID)/close",
 		                                    queryItems: [:],
 		                                    method: "PUT",

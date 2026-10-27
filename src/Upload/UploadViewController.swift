@@ -8,6 +8,7 @@
 
 import KissXML
 import MessageUI
+import SafariServices
 import UIKit
 
 // Section header titles and the comment placeholder. Kept as named constants (rather than
@@ -810,6 +811,7 @@ class UploadViewController: UIViewController {
 		cancelButton.isEnabled = false
 		exportOscButton.isEnabled = false
 		editXmlButton.isEnabled = false
+		tableView.isUserInteractionEnabled = false
 		let generator = appDelegate.generator
 
 		view.endEditing(true)
@@ -827,9 +829,10 @@ class UploadViewController: UIViewController {
 
 		// The server reports only one conflicting object per attempt, so each time it rejects
 		// the upload we deselect the group containing that object and try again with the rest.
-		var hadConflict = false
+		var doingConflictResolution = false
 		while true {
 			do {
+				// This throws various types of errors which we catch below
 				let changesetID = try await mapData.uploadChangeset(for: selectedGroups,
 				                                                    comment: comment,
 				                                                    source: source,
@@ -837,70 +840,109 @@ class UploadViewController: UIViewController {
 				                                                    generator: generator,
 				                                                    locale: locale,
 				                                                    reusingChangeset: pendingChangesetID)
+				// Success!
 				pendingChangesetID = nil
-				if hadConflict {
-					// Stay on this screen so the user can see which edits were left behind and why
-					progressView.stopAnimating()
-					cancelButton.isEnabled = true
-					reloadGroups()
-				} else {
-					dismiss(animated: true)
-				}
-				MainActor.runAfter(nanoseconds: 300_000000) {
-					appDelegate.mapView.setNeedsLayout()
-					MessageDisplay.shared.flashMessage(
-						title: nil,
-						message: String.localizedStringWithFormat(NSLocalizedString("Changes saved in changeset %@", comment: ""),
-						                                          String(changesetID)),
-						duration: 4.0,
-						link: OSM_SERVER.serverURL.appendingPathComponent("changeset/\(changesetID)"))
+				let message = String.localizedStringWithFormat(NSLocalizedString("Changes saved in changeset %@", comment: ""),
+				                                               String(changesetID))
+				if !doingConflictResolution {
+					// Normal success path: dismiss the view and flash a success message to user
 					var editCount = UserPrefs.shared.uploadCountPerVersion.value ?? 0
 					editCount += 1
 					UserPrefs.shared.uploadCountPerVersion.value = editCount
-					appDelegate.mainView.askToRate(uploadCount: editCount)
+					dismiss(animated: true, completion: {
+						appDelegate.mapView.setNeedsLayout()
+						MessageDisplay.shared.flashMessage(
+							title: nil,
+							message: message,
+							duration: 4.0,
+							link: OSM_SERVER.serverURL.appendingPathComponent("changeset/\(changesetID)"))
+						appDelegate.mainView.askToRate(uploadCount: editCount)
+					})
+				} else {
+					// We were doing conflict resolution and eventually uploaded something successfully
+					// Stay on the upload screen so the user can see which edits were left behind and why.
+					progressView.stopAnimating()
+					cancelButton.isEnabled = true
+					tableView.isUserInteractionEnabled = true
+					reloadGroups()
+					appDelegate.mapView.setNeedsLayout()
+					let alert = UIAlertController(
+						title: NSLocalizedString("Upload Incomplete", comment: "Only part of the upload succceeded"),
+						message: NSLocalizedString(
+							"Some edits were committed, but others couldn't be committed because another user changed the same object.",
+							comment: ""),
+						preferredStyle: .alert)
+					alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
+					alert.addAction(UIAlertAction(title: NSLocalizedString("View Changeset",
+					                                                       comment: "Opens the changeset in a browser"),
+					                              style: .default)
+					{ [weak self] _ in
+						let url = OSM_SERVER.serverURL.appendingPathComponent("changeset/\(changesetID)")
+						self?.present(SFSafariViewController(url: url), animated: true)
+						})
+					present(alert, animated: true)
 				}
+				return
+			} catch let OsmMapData.Error.versionMismatch(extId, changesetID: changesetID, localVersion: _, serverVersion: _) {
+				pendingChangesetID = changesetID
+
+				// deselect the group containing the OSM object with invalid version
+				guard deselectConflictingGroup(containing: extId) else {
+					// Couldn't identify which group to deselect (shouldn't happen)
+					DbgAssert(false)
+					progressView.stopAnimating()
+					cancelButton.isEnabled = true
+					tableView.isUserInteractionEnabled = true
+					updateActionButtons()
+					Self.presentUploadError(vc: self, "Version mismatch: \(extId.type.string) \(extId.ident)")
+					return
+				}
+				// If there are still things to upload then try again
+				if !selectedGroupIndices.isEmpty {
+					doingConflictResolution = true
+					continue
+				}
+
+				// All groups exhausted by conflicts
+				progressView.stopAnimating()
+				cancelButton.isEnabled = true
+				tableView.isUserInteractionEnabled = true
+				reloadGroups()
+				Self.presentUploadError(vc: self,
+				                        NSLocalizedString("All edits conflict with changes made by other users.", comment: ""))
 				return
 			} catch UrlSessionError.badStatusCode(401, _) {
 				OSM_SERVER.oAuth2?.removeAuthorization()
 				progressView.stopAnimating()
 				commitButton.isEnabled = true
 				cancelButton.isEnabled = true
+				tableView.isUserInteractionEnabled = true
 				performSegue(withIdentifier: "loginSegue", sender: self)
 				return
-			} catch let error as OsmMapData.Error {
-				if case let .versionMismatch(extId, changesetID) = error {
-					pendingChangesetID = changesetID
-					if deselectConflictingGroup(containing: extId),
-					   !selectedGroupIndices.isEmpty
-					{
-						hadConflict = true
-						continue
-					}
-					// Nothing left to upload, or we couldn't tell which group to deselect
-					progressView.stopAnimating()
-					cancelButton.isEnabled = true
-					updateActionButtons()
-					if !selectedGroupIndices.isEmpty {
-						presentUploadError(error.localizedDescription)
-					}
-					return
-				}
+			} catch OsmMapData.Error.serverSkippedDelete,
+				OsmMapData.Error.serverReturnedUnknownObjectId
+			{
 				progressView.stopAnimating()
 				cancelButton.isEnabled = true
+				tableView.isUserInteractionEnabled = true
 				updateActionButtons()
-				presentUploadError(error.localizedDescription)
+				Self.presentUploadError(vc: self,
+				                        NSLocalizedString(
+				                        	"Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map.",
+				                        	comment: "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings"))
 				return
 			} catch {
 				progressView.stopAnimating()
 				cancelButton.isEnabled = true
+				tableView.isUserInteractionEnabled = true
 				updateActionButtons()
-				presentUploadError(error.localizedDescription)
+				Self.presentUploadError(vc: self, error.localizedDescription)
 				return
 			}
 		}
 	}
 
-	private func presentUploadError(_ message: String) {
+	static func presentUploadError(vc: UIViewController, _ message: String) {
 		let alert = UIAlertController(
 			title: NSLocalizedString("Unable to upload changes", comment: ""),
 			message: message,
@@ -908,7 +950,7 @@ class UploadViewController: UIViewController {
 		alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""),
 		                              style: .cancel,
 		                              handler: nil))
-		present(alert, animated: true)
+		vc.present(alert, animated: true)
 	}
 
 	/// The server rejected our edit to an object because another mapper changed it. Deselect the
@@ -928,26 +970,10 @@ class UploadViewController: UIViewController {
 		let description = name.map { "\($0) (\(feature))" } ?? feature
 		conflictMessages[connectedGroups[groupIndex].minGroupId] = String.localizedStringWithFormat(
 			NSLocalizedString(
-				"%@ couldn't be uploaded because it conflicts with another user's edits. These edits have been deselected so you can upload the rest.",
+				"%@ wasn't uploaded because it conflicts with another user's edits. Discard these edits.",
 				comment: "Warning shown above an edit group that couldn't be uploaded"),
 			description)
 		selectedGroupIndices.remove(groupIndex)
-
-		// Rebuild just the group sections so a warning appears above the affected group
-		sections.removeAll {
-			switch $0 {
-			case .conflictWarning, .group: return true
-			default: return false
-			}
-		}
-		sections += groupSections()
-		tableView.reloadData()
-		if let section = sections.firstIndex(where: {
-			if case let .conflictWarning(index) = $0 { return index == groupIndex }
-			return false
-		}) {
-			tableView.scrollToRow(at: IndexPath(row: 0, section: section), at: .top, animated: true)
-		}
 		return true
 	}
 
@@ -996,6 +1022,11 @@ class UploadViewController: UIViewController {
 	}
 
 	@IBAction func cancel(_ sender: Any?) {
+		if let changesetID = pendingChangesetID {
+			// Don't leave an empty changeset open on the server
+			pendingChangesetID = nil
+			Task { try? await mapData.closeChangeset(changesetID) }
+		}
 		dismiss(animated: true)
 	}
 }

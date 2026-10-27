@@ -7033,8 +7033,8 @@
         }
       }
     },
-    "%1$@ couldn't be uploaded: %2$@. These edits have been deselected so you can upload the rest." : {
-      "comment" : "Warning shown above an edit group that couldn't be uploaded; %1$@ is the object, %2$@ the reason"
+    "%@ wasn't uploaded because it conflicts with another user's edits. Discard these edits." : {
+      "comment" : "Warning shown above an edit group that couldn't be uploaded"
     },
     "%ld Days" : {
       "comment" : "One or more days",
@@ -22147,6 +22147,9 @@
         }
       }
     },
+    "All edits conflict with changes made by other users." : {
+
+    },
     "All map tiles for the currently selected base map (Mapnik, Americana, etc)." : {
       "localizations" : {
         "cs" : {
@@ -26555,9 +26558,6 @@
     },
     "Changes saved in changeset %@" : {
       "comment" : "A message that appears in a banner at the top of the screen after a set of changes has been uploaded to the OpenStreetMap server. The argument is the changeset ID."
-    },
-    "Changes to %1$@ %2$@ made by another mapper couldn't be merged: %3$@" : {
-      "comment" : "%1$@ is node/way/relation, %2$@ its ID, %3$@ the reason"
     },
     "Changeset" : {
       "comment" : "OSM changeset identifier",
@@ -56375,6 +56375,9 @@
     "Some changes contain objects with no tags and have been deselected. Add tags before uploading." : {
       "comment" : "Warning shown on upload screen when a group contains untagged objects"
     },
+    "Some edits couldn't be committed because another user changed the same object." : {
+
+    },
     "Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." : {
       "localizations" : {
         "ar" : {
@@ -61146,9 +61149,6 @@
         }
       }
     },
-    "too many retries" : {
-
-    },
     "Travel ALLOWED from %@ to %@" : {
       "localizations" : {
         "ar" : {
@@ -64067,6 +64067,9 @@
         }
       }
     },
+    "Upload Incomplete" : {
+      "comment" : "Only part of the upload succceeded"
+    },
     "Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map." : {
       "comment" : "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings",
       "localizations" : {
@@ -64980,6 +64983,9 @@
         }
       }
     },
+    "Version mismatch for %1$@ %2$@: local version: %3$d, server version: %4$d." : {
+      "comment" : "%1$@ is node/way/relation, %2$@ its ID, %3$d local version, %4$d server version"
+    },
     "Vertex" : {
       "comment" : "Object geometry: a node that is part of a way",
       "localizations" : {
@@ -65086,6 +65092,9 @@
           }
         }
       }
+    },
+    "View Changeset" : {
+      "comment" : "Opens the changeset in a browser"
     },
     "vintage %@" : {
       "comment" : "Year aerial imagery was created",

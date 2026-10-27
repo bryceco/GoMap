@@ -89,21 +89,40 @@ final class XmlEditorViewController: UIViewController {
 			                                                    generator: generator,
 			                                                    locale: locale,
 			                                                    groupIds: undoGroups)
-			navigationController?.dismiss(animated: true)
-			let appDelegate = AppDelegate.shared
-			MainActor.runAfter(nanoseconds: 300_000000) {
-				appDelegate.mapView.setNeedsLayout()
+			navigationController?.dismiss(animated: true, completion: {
+				AppDelegate.shared.mapView.setNeedsLayout()
 				MessageDisplay.shared.flashMessage(
 					title: nil,
 					message: String.localizedStringWithFormat(NSLocalizedString("Changes saved in changeset %@", comment: ""),
 					                                          String(changesetID)),
 					duration: 4.0,
 					link: OSM_SERVER.serverURL.appendingPathComponent("changeset/\(changesetID)"))
-				var editCount = UserPrefs.shared.uploadCountPerVersion.value ?? 0
-				editCount += 1
-				UserPrefs.shared.uploadCountPerVersion.value = editCount
-				appDelegate.mainView.askToRate(uploadCount: editCount)
-			}
+			})
+		} catch let OsmMapData.Error.versionMismatch(
+			extId,
+			changesetID: changesetID,
+			localVersion: localVersion,
+			serverVersion: serverVersion)
+		{
+			// No automatic recovery here: the user is editing the XML by hand
+			try? await mapData.closeChangeset(changesetID)
+			progressView.stopAnimating()
+			commitBarButton.isEnabled = true
+			UploadViewController.presentUploadError(vc: self,
+			                                        String.localizedStringWithFormat(
+			                                        	NSLocalizedString(
+			                                        		"Version mismatch for %1$@ %2$@: local version: %3$d, server version: %4$d.",
+			                                        		comment: "%1$@ is node/way/relation, %2$@ its ID, %3$d local version, %4$d server version"),
+			                                        	extId.type.string, String(extId.ident), localVersion, serverVersion))
+		} catch OsmMapData.Error.serverSkippedDelete,
+			OsmMapData.Error.serverReturnedUnknownObjectId
+		{
+			progressView.stopAnimating()
+			commitBarButton.isEnabled = true
+			UploadViewController.presentUploadError(vc: self,
+			                                        NSLocalizedString(
+			                                        	"Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map.",
+			                                        	comment: "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings"))
 		} catch UrlSessionError.badStatusCode(401, _) {
 			OSM_SERVER.oAuth2?.removeAuthorization()
 			progressView.stopAnimating()
@@ -112,12 +131,8 @@ final class XmlEditorViewController: UIViewController {
 		} catch {
 			progressView.stopAnimating()
 			commitBarButton.isEnabled = true
-			let alert = UIAlertController(
-				title: NSLocalizedString("Unable to upload changes", comment: ""),
-				message: error.localizedDescription,
-				preferredStyle: .alert)
-			alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
-			present(alert, animated: true)
+			UploadViewController.presentUploadError(vc: self,
+			                                        error.localizedDescription)
 		}
 	}
 }
