@@ -100,16 +100,53 @@ extension MapViewPort {
 		mapTransform.transform = t
 	}
 
-	private func rotate(by angle: CGFloat, around center: CGPoint) {
-		guard angle != 0.0 else {
-			return
+	/// Runs a DisplayLink animation with ease-in/ease-out over `duration` seconds.
+	/// The `update` closure receives eased progress from 0 to 1.
+	private func animateWithEasing(_ animationId: DisplayLink.AnimationId,
+	                               duration: Double,
+	                               update: @escaping (_ progress: Double) -> Void)
+	{
+		let startTime = CACurrentMediaTime()
+		DisplayLink.shared.add(animationId, block: {
+			var elapsed = CACurrentMediaTime() - startTime
+			if elapsed > duration {
+				elapsed = duration
+			}
+			let t = elapsed / duration
+			let progress = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
+			update(progress)
+			if elapsed >= duration {
+				DisplayLink.shared.remove(animationId)
+			}
+		})
+	}
+
+	func animateOrigin(by delta: CGPoint) {
+		var prevProgress = 0.0
+		animateWithEasing(.panSmoothing, duration: 0.25) { [weak self] progress in
+			let step = progress - prevProgress
+			self?.adjustOrigin(by: CGPoint(x: delta.x * step, y: delta.y * step))
+			prevProgress = progress
 		}
+	}
+
+	func animateZoom(by ratio: CGFloat, aroundScreenPoint zoomCenter: CGPoint) {
+		let totalRatio = Double(ratio)
+		var prevRatio = 1.0
+		animateWithEasing(.zoomSmoothing, duration: 0.4) { [weak self] progress in
+			let currentRatio = 1.0 + (totalRatio - 1.0) * progress
+			self?.adjustZoom(by: currentRatio / prevRatio, aroundScreenPoint: zoomCenter)
+			prevRatio = currentRatio
+		}
+	}
+
+	private func rotate(by angle: CGFloat, around center: CGPoint) {
+		guard angle != 0.0 else { return }
 		let offset = mapTransform.mapPoint(forScreenPoint: OSMPoint(center), birdsEye: false)
-		var t = mapTransform.transform
-		t = t.translatedBy(dx: offset.x, dy: offset.y)
-		t = t.rotatedBy(Double(angle))
-		t = t.translatedBy(dx: -offset.x, dy: -offset.y)
-		mapTransform.transform = t
+		mapTransform.transform = mapTransform.transform
+			.translatedBy(dx: offset.x, dy: offset.y)
+			.rotatedBy(angle)
+			.translatedBy(dx: -offset.x, dy: -offset.y)
 	}
 
 	func rotate(by deltaHeading: Double,
@@ -134,11 +171,12 @@ extension MapViewPort {
 			self.rotate(by: deltaHeading, around: center)
 
 		case .smallShift:
+			// used when the user is following a bearing and direction only changes a few degrees
 			var currentDelta = 0.0
 			DisplayLink.shared.add(.rotateScreenSmoothing, block: { [weak self] in
 				guard let self else { return }
 				var delta = deltaHeading - currentDelta
-				if abs(delta) < 0.0001 {
+				if abs(delta) < 0.001 {
 					DisplayLink.shared.remove(.rotateScreenSmoothing)
 				} else {
 					delta *= 0.15
@@ -148,35 +186,13 @@ extension MapViewPort {
 			})
 
 		case .largeShift:
-			func easeInOutQuad(_ t: Double, _ b: Double, _ c: Double, _ d: Double) -> Double {
-				var t = t
-				t /= d / 2
-				if t < 1 {
-					return c / 2 * t * t + b
-				}
-				t -= 1
-				return -c / 2 * (t * (t - 2) - 1) + b
+			// used when the compass is enabled/disabled and we rotate a large amount
+			var prevHeading = 0.0
+			animateWithEasing(.rotateScreenSmoothing, duration: 0.4) { [weak self] progress in
+				let currentHeading = deltaHeading * progress
+				self?.rotate(by: currentHeading - prevHeading, around: center)
+				prevHeading = currentHeading
 			}
-
-			let duration = 0.4
-			var prevHeading: Double = 0
-			let startTime = CACurrentMediaTime()
-			DisplayLink.shared.add(.rotateScreenSmoothing, block: { [weak self] in
-				guard let self else { return }
-
-				var elapsedTime = CACurrentMediaTime() - startTime
-				if elapsedTime > duration {
-					elapsedTime = CFTimeInterval(duration) // don't want to over-rotate
-				}
-				// Rotate using an ease-in/out curve. This ensures that small changes in direction don't cause jerkiness.
-				// result = interpolated value, t = current time, b = initial value, c = delta value, d = duration
-				let miniHeading = easeInOutQuad(elapsedTime, 0, deltaHeading, duration)
-				self.rotate(by: CGFloat(miniHeading - prevHeading), around: center)
-				prevHeading = miniHeading
-				if elapsedTime >= duration {
-					DisplayLink.shared.remove(.rotateScreenSmoothing)
-				}
-			})
 		}
 	}
 

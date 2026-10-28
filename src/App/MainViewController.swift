@@ -734,10 +734,10 @@ final class MainViewController: UIViewController, DPadDelegate,
 		let size = view.bounds.size
 		let delta = CGPoint(x: size.width * 0.15, y: size.height * 0.15)
 		switch key.keyCode {
-		case .keyboardRightArrow: viewPort.adjustOrigin(by: CGPoint(x: -delta.x, y: 0))
-		case .keyboardLeftArrow: viewPort.adjustOrigin(by: CGPoint(x: delta.x, y: 0))
-		case .keyboardDownArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: -delta.y))
-		case .keyboardUpArrow: viewPort.adjustOrigin(by: CGPoint(x: 0, y: delta.y))
+		case .keyboardRightArrow: viewPort.animateOrigin(by: CGPoint(x: -delta.x, y: 0))
+		case .keyboardLeftArrow: viewPort.animateOrigin(by: CGPoint(x: delta.x, y: 0))
+		case .keyboardDownArrow: viewPort.animateOrigin(by: CGPoint(x: 0, y: -delta.y))
+		case .keyboardUpArrow: viewPort.animateOrigin(by: CGPoint(x: 0, y: delta.y))
 		default:
 			return mapView.keypressAction(key: key)
 		}
@@ -1033,11 +1033,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 	}
 
 	@objc func zoomInMenuItem(_ sender: Any?) {
-		viewPort.adjustZoom(by: 2.0, aroundScreenPoint: mapView.bounds.center())
+		viewPort.animateZoom(by: 2.0, aroundScreenPoint: mapView.bounds.center())
 	}
 
 	@objc func zoomOutMenuItem(_ sender: Any?) {
-		viewPort.adjustZoom(by: 0.5, aroundScreenPoint: mapView.bounds.center())
+		viewPort.animateZoom(by: 0.5, aroundScreenPoint: mapView.bounds.center())
 	}
 
 	@objc func searchMenuItem(_ sender: Any?) {
@@ -1202,10 +1202,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 		} else if pan.state == .ended || pan.state == .cancelled {
 			// cancelled occurs when we throw an error dialog
 
-#if targetEnvironment(macCatalyst)
-			// mac provides it's own inertia
-			return
-#else
 			// finish pan with inertia
 			let initialVelocity = pan.velocity(in: self.view)
 			guard hypot(initialVelocity.x, initialVelocity.y) >= 100.0 else {
@@ -1230,7 +1226,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 				                          y: CGFloat(1 - t) * initialVelocity.y * dt)
 				self.viewPort.adjustOrigin(by: translation)
 			})
-#endif
 		} else if pan.state == .failed {
 			DLog("pan gesture failed")
 		} else {

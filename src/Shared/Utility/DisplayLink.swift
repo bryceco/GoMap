@@ -13,6 +13,8 @@ final class DisplayLink {
 
 	enum AnimationId {
 		case rotateScreenSmoothing // smoothly rotates the screen when compass is enabled/disabled
+		case zoomSmoothing // smoothly zooms in/out for menu item zoom
+		case panSmoothing // smoothly pans for arrow key presses
 		case automatedFramerateTest // automatically pans the screen during FPS test
 		case fpsLabelUpdate // updates the FPS test label
 		case pinDragScroll // pans the screen when pushpin is dragged to edge
