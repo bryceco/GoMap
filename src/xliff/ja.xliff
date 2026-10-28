@@ -329,6 +329,11 @@
         <target state="translated">%@ メートル</target>
         <note>Always plural</note>
       </trans-unit>
+      <trans-unit id="%@ wasn't uploaded because it conflicts with another user's edits.&#10;Discarding these edits will refresh it with the server's copy." xml:space="preserve">
+        <source>%@ wasn't uploaded because it conflicts with another user's edits.
+Discarding these edits will refresh it with the server's copy.</source>
+        <note>Warning shown above an edit group that couldn't be uploaded</note>
+      </trans-unit>
       <trans-unit id="%ld Days|==|plural.other" xml:space="preserve">
         <source>%ld Days</source>
         <target state="translated">%ld 日</target>
@@ -431,6 +436,10 @@
         <target state="translated">(ノード)</target>
         <note />
       </trans-unit>
+      <trans-unit id="(none)" xml:space="preserve">
+        <source>(none)</source>
+        <note>Tag is not present</note>
+      </trans-unit>
       <trans-unit id="(relation %@)" xml:space="preserve">
         <source>(relation %@)</source>
         <target state="translated">(リレーション %@)</target>
@@ -484,6 +493,10 @@
         <target state="translated">承諾</target>
         <note />
       </trans-unit>
+      <trans-unit id="Add" xml:space="preserve">
+        <source>Add</source>
+        <note>Tag will be added</note>
+      </trans-unit>
       <trans-unit id="Add Building Type" xml:space="preserve">
         <source>Add Building Type</source>
         <target state="translated">建物の種類を追加</target>
@@ -502,9 +515,17 @@
         <target state="translated">道路の路面を追加</target>
         <note>A type of quest</note>
       </trans-unit>
+      <trans-unit id="Add Node" xml:space="preserve">
+        <source>Add Node</source>
+        <note>Edit action</note>
+      </trans-unit>
       <trans-unit id="Add Note" xml:space="preserve">
         <source>Add Note</source>
         <target state="translated">メモを追加</target>
+        <note>Edit action</note>
+      </trans-unit>
+      <trans-unit id="Add Note…" xml:space="preserve">
+        <source>Add Note…</source>
         <note>Edit action</note>
       </trans-unit>
       <trans-unit id="Add Opening Hours" xml:space="preserve">
@@ -613,6 +634,10 @@
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
         <target state="translated">全体から選ぶ</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="All edits conflict with changes made by other users." xml:space="preserve">
+        <source>All edits conflict with changes made by other users.</source>
         <note />
       </trans-unit>
       <trans-unit id="All map tiles for the currently selected base map (Mapnik, Americana, etc)." xml:space="preserve">
@@ -762,6 +787,10 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="translated">中止</target>
         <note />
       </trans-unit>
+      <trans-unit id="Cancel Upload?" xml:space="preserve">
+        <source>Cancel Upload?</source>
+        <note />
+      </trans-unit>
       <trans-unit id="Cannot compose message" xml:space="preserve">
         <source>Cannot compose message</source>
         <target state="translated">メッセージを作成できません</target>
@@ -772,10 +801,18 @@ Object geometry: a closed way or multipolygon)</note>
         <target state="translated">innerウェイはouterウェイに接続できません</target>
         <note />
       </trans-unit>
+      <trans-unit id="Center" xml:space="preserve">
+        <source>Center</source>
+        <note>Center button label</note>
+      </trans-unit>
       <trans-unit id="Change" xml:space="preserve">
         <source>Change</source>
         <target state="translated">変更</target>
-        <note />
+        <note>Tag value will change</note>
+      </trans-unit>
+      <trans-unit id="Changes saved in changeset %@" xml:space="preserve">
+        <source>Changes saved in changeset %@</source>
+        <note>A message that appears in a banner at the top of the screen after a set of changes has been uploaded to the OpenStreetMap server. The argument is the changeset ID.</note>
       </trans-unit>
       <trans-unit id="Changeset" xml:space="preserve">
         <source>Changeset</source>
@@ -795,6 +832,10 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Clear All</source>
         <target state="translated">すべてクリア</target>
         <note />
+      </trans-unit>
+      <trans-unit id="Clipboard" xml:space="preserve">
+        <source>Clipboard</source>
+        <note>Column header: tags being pasted</note>
       </trans-unit>
       <trans-unit id="Close Area" xml:space="preserve">
         <source>Close Area</source>
@@ -822,6 +863,10 @@ Object geometry: a closed way or multipolygon)</note>
       <trans-unit id="Connecting the nodes would damage a relation" xml:space="preserve">
         <source>Connecting the nodes would damage a relation</source>
         <target state="translated">このノードを接続するとリレーションを壊す可能性があります</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Continue Upload" xml:space="preserve">
+        <source>Continue Upload</source>
         <note />
       </trans-unit>
       <trans-unit id="Copied" xml:space="preserve">
@@ -869,6 +914,10 @@ Object geometry: a closed way or multipolygon)</note>
         <source>Current Track</source>
         <target state="translated">現在のトラック</target>
         <note>current GPX track</note>
+      </trans-unit>
+      <trans-unit id="Current zoom: %@. Download zoom %@–%@ (%@ at zoom %@)." xml:space="preserve">
+        <source>Current zoom: %1$@. Download zoom %2$@–%3$@ (%4$@ at zoom %5$@).</source>
+        <note>Offline screen header: current zoom, download range of zoom levels, and resolution in meters/pixel</note>
       </trans-unit>
       <trans-unit id="Database error" xml:space="preserve">
         <source>Database error</source>
@@ -957,6 +1006,14 @@ Discard changes</note>
       <trans-unit id="Downloaded nodes, ways and relations, and any edits you have made." xml:space="preserve">
         <source>Downloaded nodes, ways and relations, and any edits you have made.</source>
         <note />
+      </trans-unit>
+      <trans-unit id="Dragged node" xml:space="preserve">
+        <source>Dragged node</source>
+        <note>Column header: tags on the node being dragged</note>
+      </trans-unit>
+      <trans-unit id="Dragged node joining %@" xml:space="preserve">
+        <source>Dragged node joining %@</source>
+        <note>Merge Tags subtitle, %@ is an object name</note>
       </trans-unit>
       <trans-unit id="Duplicate" xml:space="preserve">
         <source>Duplicate</source>
@@ -1101,6 +1158,10 @@ Error: %@</source>
         <source>Help</source>
         <note>Help button label</note>
       </trans-unit>
+      <trans-unit id="How many nodes?" xml:space="preserve">
+        <source>How many nodes?</source>
+        <note>Ask the user the number of nodes to use</note>
+      </trans-unit>
       <trans-unit id="I'll do it!" xml:space="preserve">
         <source>I'll do it!</source>
         <target state="translated">実行します！</target>
@@ -1167,6 +1228,11 @@ Error: %@</source>
         <source>Joining would invalidate a Turn Restriction the way belongs to</source>
         <target state="translated">ジョインするとこのウェイが属する進行方向制限を無効にする可能性があります</target>
         <note />
+      </trans-unit>
+      <trans-unit id="Keep" xml:space="preserve">
+        <source>Keep</source>
+        <note>Keep the tag value
+Tag value will be kept</note>
       </trans-unit>
       <trans-unit id="Key = value" xml:space="preserve">
         <source>Key = value</source>
@@ -1253,6 +1319,10 @@ Error: %@</source>
         <target state="translated">直角化</target>
         <note>Edit action</note>
       </trans-unit>
+      <trans-unit id="Map" xml:space="preserve">
+        <source>Map</source>
+        <note>Map menu in Mac menu bar</note>
+      </trans-unit>
       <trans-unit id="Map Tiles" xml:space="preserve">
         <source>Map Tiles</source>
         <note>Delete cached data</note>
@@ -1303,10 +1373,14 @@ Error: %@</source>
         <source>Members can't be removed from this type of relation</source>
         <note />
       </trans-unit>
+      <trans-unit id="Merge" xml:space="preserve">
+        <source>Merge</source>
+        <note>Apply merge preset to all tags</note>
+      </trans-unit>
       <trans-unit id="Merge Tags" xml:space="preserve">
         <source>Merge Tags</source>
         <target state="translated">タグをマージ</target>
-        <note />
+        <note>Title of the tag merge sheet</note>
       </trans-unit>
       <trans-unit id="Missing way to connect to" xml:space="preserve">
         <source>Missing way to connect to</source>
@@ -1533,6 +1607,10 @@ Never delete old tracks</note>
         <target state="translated">古い値: %@</target>
         <note>previous tag value</note>
       </trans-unit>
+      <trans-unit id="On object" xml:space="preserve">
+        <source>On object</source>
+        <note>Column header: tags currently on the object</note>
+      </trans-unit>
       <trans-unit id="Only Left Turn restriction" xml:space="preserve">
         <source>Only Left Turn restriction</source>
         <target state="translated">左折のみ</target>
@@ -1577,6 +1655,10 @@ Never delete old tracks</note>
         <target state="translated">貼付</target>
         <note>Edit action</note>
       </trans-unit>
+      <trans-unit id="Paste Tags" xml:space="preserve">
+        <source>Paste Tags</source>
+        <note>Edit action</note>
+      </trans-unit>
       <trans-unit id="Paste the JSON for your quests into the field below" xml:space="preserve">
         <source>Paste the JSON for your quests into the field below</source>
         <target state="translated">あなたのクエストのJSONを下記フィールドに貼り付け</target>
@@ -1591,6 +1673,10 @@ Never delete old tracks</note>
         <source>Pasting %ld tags</source>
         <target state="translated">%ld 件のタグを貼り付け中</target>
         <note />
+      </trans-unit>
+      <trans-unit id="Pasting onto %@" xml:space="preserve">
+        <source>Pasting onto %@</source>
+        <note>Merge Tags subtitle, %@ is an object name</note>
       </trans-unit>
       <trans-unit id="Pause GPX" xml:space="preserve">
         <source>Pause GPX</source>
@@ -1660,6 +1746,10 @@ Never delete old tracks</note>
         <target state="translated">このアプリを評価すると他のマッパーが見つけやすくなり、OpenStreetMap自体も閲覧されやすくなります。</target>
         <note />
       </trans-unit>
+      <trans-unit id="Read more on the Wiki" xml:space="preserve">
+        <source>Read more on the Wiki</source>
+        <note />
+      </trans-unit>
       <trans-unit id="Recent Aerial Imagery" xml:space="preserve">
         <source>Recent Aerial Imagery</source>
         <target state="translated">最近使った航空画像</target>
@@ -1697,6 +1787,14 @@ Never delete old tracks</note>
         <source>Relations</source>
         <target state="translated">リレーション</target>
         <note>Title of the page listing relation members</note>
+      </trans-unit>
+      <trans-unit id="Remove" xml:space="preserve">
+        <source>Remove</source>
+        <note>Tag will be removed</note>
+      </trans-unit>
+      <trans-unit id="Replace" xml:space="preserve">
+        <source>Replace</source>
+        <note>Apply replace preset to all tags</note>
       </trans-unit>
       <trans-unit id="Replace Tags" xml:space="preserve">
         <source>Replace Tags</source>
@@ -1829,6 +1927,10 @@ Title for sharing options</note>
         <target state="translated">最近の項目を表示</target>
         <note />
       </trans-unit>
+      <trans-unit id="Skip" xml:space="preserve">
+        <source>Skip</source>
+        <note>Tag will not be added</note>
+      </trans-unit>
       <trans-unit id="Some changes are in a different location and have been deselected. Upload them as a separate changeset." xml:space="preserve">
         <source>Some changes are in a different location and have been deselected. Upload them as a separate changeset.</source>
         <note>Warning shown on upload screen when distant edit groups are automatically deselected</note>
@@ -1836,6 +1938,10 @@ Title for sharing options</note>
       <trans-unit id="Some changes contain objects with no tags and have been deselected. Add tags before uploading." xml:space="preserve">
         <source>Some changes contain objects with no tags and have been deselected. Add tags before uploading.</source>
         <note>Warning shown on upload screen when a group contains untagged objects</note>
+      </trans-unit>
+      <trans-unit id="Some edits were committed, but others couldn't be committed because another user changed the same object." xml:space="preserve">
+        <source>Some edits were committed, but others couldn't be committed because another user changed the same object.</source>
+        <note />
       </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
         <source>Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry.</source>
@@ -1916,6 +2022,10 @@ Title for sharing options</note>
         <target state="translated">タグ</target>
         <note>Edit action</note>
       </trans-unit>
+      <trans-unit id="Tags are identical" xml:space="preserve">
+        <source>Tags are identical</source>
+        <note />
+      </trans-unit>
       <trans-unit id="Take New Photo" xml:space="preserve">
         <source>Take New Photo</source>
         <target state="translated">新しい写真を撮る</target>
@@ -1925,10 +2035,20 @@ Title for sharing options</note>
         <source>Tap a highlighted path to close the area, or tap elsewhere to cancel.</source>
         <note />
       </trans-unit>
+      <trans-unit id="Target node" xml:space="preserve">
+        <source>Target node</source>
+        <note>Column header: tags on the node dragged onto</note>
+      </trans-unit>
       <trans-unit id="The + button can be positioned on either the left or right side of the screen" xml:space="preserve">
         <source>The + button can be positioned on either the left or right side of the screen</source>
         <target state="translated">+ ボタンは画面の左側または右側に配置できます</target>
         <note />
+      </trans-unit>
+      <trans-unit id="The OpenStreetMap Wiki says values for %@ should match this pattern:&#10;&#10;%@" xml:space="preserve">
+        <source>The OpenStreetMap Wiki says values for %1$@ should match this pattern:
+
+%2$@</source>
+        <note>tag key, regular expression</note>
       </trans-unit>
       <trans-unit id="The current location cannot be determined: " xml:space="preserve">
         <source>The current location cannot be determined: </source>
@@ -2001,6 +2121,10 @@ Title for sharing options</note>
       <trans-unit id="The way belongs to a relation that is not fully downloaded" xml:space="preserve">
         <source>The way belongs to a relation that is not fully downloaded</source>
         <target state="translated">このウェイはまだダウンロードしきれていないリレーションに属しています</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="The way has too many nodes that can't be removed." xml:space="preserve">
+        <source>The way has too many nodes that can't be removed.</source>
         <note />
       </trans-unit>
       <trans-unit id="The way is not sufficiently straight" xml:space="preserve">
@@ -2121,6 +2245,10 @@ Select the highway from which you are approaching the intersection, then tap an 
         <target state="translated">元に戻す</target>
         <note />
       </trans-unit>
+      <trans-unit id="Unexpected Format" xml:space="preserve">
+        <source>Unexpected Format</source>
+        <note />
+      </trans-unit>
       <trans-unit id="Unexpected for this role" xml:space="preserve">
         <source>Unexpected for this role</source>
         <note>A relation member has the wrong geometry or tags for its role</note>
@@ -2163,10 +2291,9 @@ Select the highway from which you are approaching the intersection, then tap an 
         <target state="translated">メモを更新中...</target>
         <note>OSM Note</note>
       </trans-unit>
-      <trans-unit id="Upload complete!" xml:space="preserve">
-        <source>Upload complete!</source>
-        <target state="translated">アップロード完了！</target>
-        <note />
+      <trans-unit id="Upload Incomplete" xml:space="preserve">
+        <source>Upload Incomplete</source>
+        <note>Only part of the upload succceeded</note>
       </trans-unit>
       <trans-unit id="Upload succeeded but the server returned mismatched data.&#10;&#10;You should use Clear Cache &gt; OSM Data before continuing to map." xml:space="preserve">
         <source>Upload succeeded but the server returned mismatched data.
@@ -2204,10 +2331,18 @@ You should use Clear Cache &gt; OSM Data before continuing to map.</source>
         <target state="translated">バージョン</target>
         <note>OSM object version</note>
       </trans-unit>
+      <trans-unit id="Version mismatch for %1$@ %2$@: local version: %3$d, server version: %4$d." xml:space="preserve">
+        <source>Version mismatch for %1$@ %2$@: local version: %3$d, server version: %4$d.</source>
+        <note>%1$@ is node/way/relation, %2$@ its ID, %3$d local version, %4$d server version</note>
+      </trans-unit>
       <trans-unit id="Vertex" xml:space="preserve">
         <source>Vertex</source>
         <target state="translated">頂点ノード</target>
         <note>Object geometry: a node that is part of a way</note>
+      </trans-unit>
+      <trans-unit id="View Changeset" xml:space="preserve">
+        <source>View Changeset</source>
+        <note>Opens the changeset in a browser</note>
       </trans-unit>
       <trans-unit id="Warning" xml:space="preserve">
         <source>Warning</source>
@@ -2291,6 +2426,14 @@ You may want to clear the cache (under Display settings) to improve performance.
 
 処理速度改善のためにキャッシュのクリア(表示設定の下)を実施した方が良いかもしれません。</target>
         <note />
+      </trans-unit>
+      <trans-unit id="Zoom In" xml:space="preserve">
+        <source>Zoom In</source>
+        <note>Mac menu item</note>
+      </trans-unit>
+      <trans-unit id="Zoom Out" xml:space="preserve">
+        <source>Zoom Out</source>
+        <note>Mac menu item</note>
       </trans-unit>
       <trans-unit id="Zoom to Edit" xml:space="preserve">
         <source>Zoom to Edit</source>

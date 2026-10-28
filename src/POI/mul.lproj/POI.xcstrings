@@ -4673,6 +4673,12 @@
             "value" : "Punkt"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Point"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",

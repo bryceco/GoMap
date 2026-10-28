@@ -1823,6 +1823,12 @@
             "value" : "OpenStreetMap kontua"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compte OpenStreetMap"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",

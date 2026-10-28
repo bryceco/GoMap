@@ -551,6 +551,12 @@
             "value" : "Dogs Allowed"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chiens admis"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2063,6 +2069,12 @@
             "value" : "Line"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ligne"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2147,6 +2159,12 @@
             "value" : "Title"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Titre"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2199,6 +2217,12 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Value"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valeur"
           }
         },
         "id" : {

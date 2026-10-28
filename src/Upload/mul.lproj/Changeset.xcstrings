@@ -1571,6 +1571,12 @@
             "value" : "Kirjelda oma muudatusi... "
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Décrivez vos changements... "
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",

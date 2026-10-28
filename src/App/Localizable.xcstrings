@@ -18927,10 +18927,31 @@
       "comment" : "Tag will be added"
     },
     "Add a changeset comment to help other mappers understand your changes." : {
-      "comment" : "Recommendation shown when the changeset comment is empty"
+      "comment" : "Recommendation shown when the changeset comment is empty",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidejte komentář k sadě změn, který ostatním maperům pomůže pochopit vaše úpravy."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增變更集摘要能幫助其他圖客理解你做出的變動。"
+          }
+        }
+      }
     },
     "Add a row for each condition an object must match. Tap AND/OR to change how a group's rows combine, and + to add a condition or nested group of conditions." : {
-
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "為每個物件的條件新增一列必須吻合條件。點和/或來變動群組列組合，以及+來新增條件，或是巢狀群組條件。"
+          }
+        }
+      }
     },
     "Add Building Type" : {
       "comment" : "A type of quest",
@@ -19105,7 +19126,21 @@
       }
     },
     "Add Cuisine" : {
-      "comment" : "Sample title for a Quest"
+      "comment" : "Sample title for a Quest",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat kuchyň"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增菜系"
+          }
+        }
+      }
     },
     "Add Highway Surface" : {
       "comment" : "A type of quest",
@@ -20834,7 +20869,20 @@
       }
     },
     "Add to relation?" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přidat do relace?"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增到關聯嗎？"
+          }
+        }
+      }
     },
     "Add way to multipolygon?" : {
       "extractionState" : "stale",
@@ -21260,7 +21308,14 @@
       }
     },
     "added to relation" : {
-
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新增到關聯"
+          }
+        }
+      }
     },
     "Adding members:" : {
       "localizations" : {
@@ -22375,7 +22430,21 @@
       }
     },
     "Always matches" : {
-      "comment" : "Warning that a quest filter group's conditions match every object"
+      "comment" : "Warning that a quest filter group's conditions match every object",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vždy se shoduje"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "總是吻合"
+          }
+        }
+      }
     },
     "An error occured while exporting: %@" : {
       "comment" : "Show an error message",
@@ -22628,10 +22697,38 @@
       }
     },
     "AND" : {
-      "comment" : "Logical operator combining quest filter conditions"
+      "comment" : "Logical operator combining quest filter conditions",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "和"
+          }
+        }
+      }
     },
     "AND/OR group" : {
-      "comment" : "Menu item adding a nested AND/OR group to a quest filter"
+      "comment" : "Menu item adding a nested AND/OR group to a quest filter",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "skupina A/NEBO"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "和/或群組"
+          }
+        }
+      }
     },
     "Area" : {
       "comment" : "Area of an object in m^2\nObject geometry: a closed way or multipolygon)",
@@ -22771,7 +22868,21 @@
       }
     },
     "At most %d" : {
-      "comment" : "A relation has more members with a role than are allowed"
+      "comment" : "A relation has more members with a role than are allowed",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nanejvýš %d"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最多 %d"
+          }
+        }
+      }
     },
     "Attention" : {
       "localizations" : {
@@ -31782,6 +31893,12 @@
             "value" : "Popište vaše změny…"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Décrivez vos changements..."
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32082,6 +32199,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zahodit změny"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Annuler changements"
           }
         },
         "id" : {
@@ -32725,6 +32848,12 @@
             "value" : "Runter"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bas"
+          }
+        },
         "id" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32758,7 +32887,21 @@
       }
     },
     "Download all members" : {
-      "comment" : "Button to download the members of a relation"
+      "comment" : "Button to download the members of a relation",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stáhnout všechny členy"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下載所有成員"
+          }
+        }
+      }
     },
     "Downloaded nodes, ways and relations, and any edits you have made." : {
       "localizations" : {
@@ -34048,10 +34191,38 @@
       }
     },
     "Empty tag key is not permitted" : {
-      "comment" : "Quest validation error"
+      "comment" : "Quest validation error",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prázdné značky nejsou povoleny"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不允許空白的標籤鍵值"
+          }
+        }
+      }
     },
     "Empty tag value is not permitted" : {
-      "comment" : "Quest validation error"
+      "comment" : "Quest validation error",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prázdné hodnoty značek nejsou povoleny"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不允許空白的標籤值"
+          }
+        }
+      }
     },
     "Ensure Location Services is enabled and you have granted this application access.\n\nError: %@" : {
       "localizations" : {
@@ -34796,7 +34967,15 @@
       }
     },
     "exists" : {
-      "comment" : "the tag key is present"
+      "comment" : "the tag key is present",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "有存在"
+          }
+        }
+      }
     },
     "Extending a 'via' in a Turn Restriction will break the relation" : {
       "localizations" : {
@@ -35148,7 +35327,21 @@
       }
     },
     "Filter" : {
-      "comment" : "Header for quest filter section"
+      "comment" : "Header for quest filter section",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtr"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "篩選"
+          }
+        }
+      }
     },
     "Filters" : {
       "comment" : "Header for quest filters section",
@@ -38012,16 +38205,72 @@
       "comment" : "Keep the tag value\nTag value will be kept"
     },
     "Key = value" : {
-      "comment" : "Menu item adding a quest filter condition"
+      "comment" : "Menu item adding a quest filter condition",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klíč=hodnota"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵=值"
+          }
+        }
+      }
     },
     "Key ≠ value" : {
-      "comment" : "Menu item adding a quest filter condition"
+      "comment" : "Menu item adding a quest filter condition",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Klíč ≠ hodnota"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵 ≠ 值"
+          }
+        }
+      }
     },
     "Key exists" : {
-      "comment" : "Menu item adding a quest filter condition"
+      "comment" : "Menu item adding a quest filter condition",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Přítomnost klíče"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "鍵存在"
+          }
+        }
+      }
     },
     "Key missing" : {
-      "comment" : "Menu item adding a quest filter condition"
+      "comment" : "Menu item adding a quest filter condition",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nepřítomnost klíče"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "並沒有鍵值"
+          }
+        }
+      }
     },
     "Keys" : {
       "comment" : "The tag keys section of a quest definition",
@@ -41101,7 +41350,21 @@
       }
     },
     "Member of" : {
-      "comment" : "Header for the relations an object belongs to"
+      "comment" : "Header for the relations an object belongs to",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Členem"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所屬的成員"
+          }
+        }
+      }
     },
     "Member of multipolygon relation" : {
       "localizations" : {
@@ -41240,7 +41503,20 @@
       }
     },
     "Member of relation" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Člen relace"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關聯所屬的成員"
+          }
+        }
+      }
     },
     "Members" : {
       "localizations" : {
@@ -41391,10 +41667,36 @@
       }
     },
     "Members can't be added to this type of relation" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Do tohoto typu relace nelze přidat členy"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "無法加入成員到這一類型關聯"
+          }
+        }
+      }
     },
     "Members can't be removed from this type of relation" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Z tohoto typu relace nelze odebrat členy"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "成員無法加入這一類型的關聯"
+          }
+        }
+      }
     },
     "Merge" : {
       "comment" : "Apply merge preset to all tags"
@@ -41798,7 +42100,21 @@
       }
     },
     "missing" : {
-      "comment" : "the tag key is absent"
+      "comment" : "the tag key is absent",
+      "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "manque"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "缺漏"
+          }
+        }
+      }
     },
     "Missing way to connect to" : {
       "localizations" : {
@@ -42092,7 +42408,20 @@
       }
     },
     "Modified Objects" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Upravené objekty"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已經變動的物件"
+          }
+        }
+      }
     },
     "Modify" : {
       "localizations" : {
@@ -43348,6 +43677,12 @@
             "value" : "mi/t"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mile/h"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -44124,7 +44459,21 @@
       }
     },
     "Never matches" : {
-      "comment" : "Warning that a quest filter group's conditions contradict each other"
+      "comment" : "Warning that a quest filter group's conditions contradict each other",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nikdy se neshoduje"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "永遠無法吻合"
+          }
+        }
+      }
     },
     "no" : {
       "localizations" : {
@@ -44144,6 +44493,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "no"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "non"
           }
         },
         "hr" : {
@@ -44547,7 +44902,15 @@
       }
     },
     "No filters are defined for the quest" : {
-      "comment" : "Quest validation error"
+      "comment" : "Quest validation error",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "V úkolu nejsou žádné filtry"
+          }
+        }
+      }
     },
     "No Left Turn restriction" : {
       "localizations" : {
@@ -45076,7 +45439,15 @@
       }
     },
     "No role" : {
-      "comment" : "A relation member that doesn't have a role assigned"
+      "comment" : "A relation member that doesn't have a role assigned",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Žádná role"
+          }
+        }
+      }
     },
     "No route data found." : {
       "localizations" : {
@@ -46491,7 +46862,15 @@
       }
     },
     "None" : {
-      "comment" : "A relation has no members with a role"
+      "comment" : "A relation has no members with a role",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Žádné"
+          }
+        }
+      }
     },
     "Not found" : {
       "comment" : "User credentials not found",
@@ -48517,7 +48896,15 @@
       }
     },
     "OR" : {
-      "comment" : "Logical operator combining quest filter conditions"
+      "comment" : "Logical operator combining quest filter conditions",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "NEBO"
+          }
+        }
+      }
     },
     "OSM Data" : {
       "comment" : "Delete cached data",
@@ -50620,6 +51007,12 @@
             "value" : "Fotot pole saadaval"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Photo non dispo"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -50950,6 +51343,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Eelmääratletud"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prédéfini"
           }
         },
         "hr" : {
@@ -52596,10 +52995,38 @@
       }
     },
     "Relation Member" : {
-      "comment" : "Title of the page listing the relations an object is a member of"
+      "comment" : "Title of the page listing the relations an object is a member of",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Člen relace"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關聯成員"
+          }
+        }
+      }
     },
     "Relation Members" : {
-      "comment" : "Title of the page listing the members of a relation"
+      "comment" : "Title of the page listing the members of a relation",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Členové relace"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關聯成員"
+          }
+        }
+      }
     },
     "Relation Tags" : {
       "localizations" : {
@@ -53019,14 +53446,24 @@
     "Remove" : {
       "comment" : "Tag will be removed"
     },
-    "removed" : {
-      "comment" : "Tag will be removed"
-    },
     "Replace" : {
       "comment" : "Apply replace preset to all tags"
     },
     "Replace all existing quests" : {
-
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nahradit všechny stávající úkoly"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取代所有既有的任務"
+          }
+        }
+      }
     },
     "Replace Tags" : {
       "extractionState" : "stale",
@@ -53172,7 +53609,21 @@
       }
     },
     "Required" : {
-      "comment" : "A relation doesn't have a member with a required role"
+      "comment" : "A relation doesn't have a member with a required role",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Požadováno"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "必須"
+          }
+        }
+      }
     },
     "Requires a closed way with at least 3 nodes" : {
       "localizations" : {
@@ -54640,6 +55091,12 @@
             "value" : "Salvesta"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enregistrer"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -54851,6 +55308,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Otsi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chercher"
           }
         },
         "id" : {
@@ -55158,7 +55621,15 @@
       }
     },
     "Select role" : {
-      "comment" : "Choose the role of the first member of a new relation"
+      "comment" : "Choose the role of the first member of a new relation",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選取成員角色"
+          }
+        }
+      }
     },
     "Select the language used for Presets. Other app content will use your default language." : {
       "localizations" : {
@@ -56647,6 +57118,12 @@
             "value" : "Espacio"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Espace"
+          }
+        },
         "hr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -57274,6 +57751,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Käivita GPX"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Démarrer GPX"
           }
         },
         "hr" : {
@@ -62933,7 +63416,15 @@
       }
     },
     "Unexpected for this role" : {
-      "comment" : "A relation member has the wrong geometry or tags for its role"
+      "comment" : "A relation member has the wrong geometry or tags for its role",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "這角色是非預期的"
+          }
+        }
+      }
     },
     "Unexpected Format" : {
 
@@ -63428,6 +63919,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Hoch"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Haut"
           }
         },
         "id" : {
@@ -65909,7 +66406,15 @@
       }
     },
     "What is the name of this quest? This is best written in the form of an action like 'Add Cuisine':" : {
-      "comment" : "'Add Cuisine' should match the use this sample text elsewhere in the app"
+      "comment" : "'Add Cuisine' should match the use this sample text elsewhere in the app",
+      "localizations" : {
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "這一任務的名稱是什麼？這型式如「新增菜系」會寫在表單上。"
+          }
+        }
+      }
     },
     "What is the name of this quest? This is best written in the form of an action like 'Add Surface':" : {
       "extractionState" : "stale",
