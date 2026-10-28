@@ -26410,8 +26410,8 @@
         }
       }
     },
-    "Center on My Location" : {
-      "comment" : "Mac menu item"
+    "Center" : {
+      "comment" : "Center button label"
     },
     "Change" : {
       "comment" : "Tag value will change",
@@ -35140,9 +35140,6 @@
           }
         }
       }
-    },
-    "Face North" : {
-      "comment" : "Mac menu item"
     },
     "Filter" : {
       "comment" : "Header for quest filter section"

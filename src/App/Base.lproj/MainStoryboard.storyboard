@@ -209,7 +209,7 @@
                                 </constraints>
                                 <state key="normal" image="location" catalog="system"/>
                                 <connections>
-                                    <action selector="toggleLocationButton" destination="2" eventType="touchUpInside" id="Mpy-Fc-LKH"/>
+                                    <action selector="toggleLocationButton:" destination="2" eventType="touchUpInside" id="Mpy-Fc-LKH"/>
                                 </connections>
                             </button>
                             <activityIndicatorView hidden="YES" contentMode="scaleToFill" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Zh9-uC-62t">

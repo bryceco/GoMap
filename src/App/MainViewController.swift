@@ -980,12 +980,12 @@ final class MainViewController: UIViewController, DPadDelegate,
 #if targetEnvironment(macCatalyst)
 		case #selector(zoomInMenuItem(_:)),
 		     #selector(zoomOutMenuItem(_:)),
-		     #selector(followLocationMenuItem(_:)),
-		     #selector(faceNorthMenuItem(_:)),
+		     #selector(toggleLocationButton(_:)),
+		     #selector(compassPressed(_:)),
 		     #selector(searchMenuItem(_:)),
 		     #selector(displayOptionsMenuItem(_:)):
 			return presentedViewController == nil
-		case #selector(centerOnLocationMenuItem(_:)):
+		case #selector(centerOnGPS(_:)):
 			return presentedViewController == nil && LocationProvider.shared.currentLocation != nil
 		case #selector(addNodeMenuItem(_:)):
 			return presentedViewController == nil && !addNodeButton.isHidden
@@ -1027,7 +1027,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	override func validate(_ command: UICommand) {
 		super.validate(command)
-		if command.action == #selector(followLocationMenuItem(_:)) {
+		if command.action == #selector(toggleLocationButton(_:)) {
 			command.state = gpsState == .NONE ? .off : .on
 		}
 	}
@@ -1038,21 +1038,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	@objc func zoomOutMenuItem(_ sender: Any?) {
 		viewPort.adjustZoom(by: 0.5, aroundScreenPoint: mapView.bounds.center())
-	}
-
-	@objc func centerOnLocationMenuItem(_ sender: Any?) {
-		centerOnGPS(sender as Any)
-	}
-
-	@objc func followLocationMenuItem(_ sender: Any?) {
-		toggleLocationButton()
-	}
-
-	@objc func faceNorthMenuItem(_ sender: Any?) {
-		if gpsState == .HEADING {
-			gpsState = .LOCATION
-		}
-		viewPort.rotateToHeading(0.0)
 	}
 
 	@objc func searchMenuItem(_ sender: Any?) {
@@ -1648,7 +1633,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	// MARK: Button actions
 
-	@IBAction func toggleLocationButton() {
+	@IBAction func toggleLocationButton(_ sender: Any?) {
 		switch gpsState {
 		case GPS_STATE.NONE:
 			// if the user hasn't rotated the screen then start facing north, otherwise follow heading
@@ -1677,7 +1662,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
-	@IBAction func centerOnGPS(_ sender: Any) {
+	@IBAction func centerOnGPS(_ sender: Any?) {
 		if let location = LocationProvider.shared.currentLocation {
 			userOverrodeLocationPosition = false
 			viewPort.centerOn2(latLon: LatLon(location.coordinate),

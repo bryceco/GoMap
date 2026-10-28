@@ -202,8 +202,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		builder.remove(menu: .open)
 		builder.remove(menu: .openRecent)
 		builder.remove(menu: .toolbar)
-		builder.remove(menu: .sidebar)
 		builder.remove(menu: .find)
+		if #available(macCatalyst 15.0, *) {
+			builder.remove(menu: .sidebar)
+		}
 		if #available(iOS 16.0, *) {
 			builder.remove(menu: .document)
 		}
@@ -214,8 +216,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	private func mapMenu() -> UIMenu {
 		func command(_ title: String,
 		             _ action: Selector,
-		             _ input: String,
-		             _ modifiers: UIKeyModifierFlags = .command) -> UIKeyCommand
+		             _ modifiers: UIKeyModifierFlags,
+		             _ input: String) -> UIKeyCommand
 		{
 			return UIKeyCommand(title: title, action: action, input: input, modifierFlags: modifiers)
 		}
@@ -228,31 +230,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 			children: [
 				section([
 					command(NSLocalizedString("Zoom In", comment: "Mac menu item"),
-					        #selector(mvc.zoomInMenuItem(_:)), "+"),
+					        #selector(mvc.zoomInMenuItem(_:)), .command, "+"),
 					command(NSLocalizedString("Zoom Out", comment: "Mac menu item"),
-					        #selector(mvc.zoomOutMenuItem(_:)), "-")
+					        #selector(mvc.zoomOutMenuItem(_:)), .command, "-")
 				]),
 				section([
-					command(NSLocalizedString("Center on My Location", comment: "Mac menu item"),
-					        #selector(mvc.centerOnLocationMenuItem(_:)), "l"),
+					command(NSLocalizedString("Center", comment: "Center button label"),
+					        #selector(mvc.centerOnGPS(_:)), .command, "l"),
 					command(NSLocalizedString("GPS", comment: "GPS button label"),
-					        #selector(mvc.followLocationMenuItem(_:)), "l", [.command, .alternate]),
-					command(NSLocalizedString("Face North", comment: "Mac menu item"),
-					        #selector(mvc.faceNorthMenuItem(_:)), "n", [.command, .shift])
+					        #selector(mvc.toggleLocationButton(_:)), [.command, .alternate], "l"),
+					command(NSLocalizedString("Compass", comment: "Compass button label"),
+					        #selector(mvc.compassPressed(_:)), [.command, .shift], "n")
 				]),
 				section([
 					command(NSLocalizedString("Search", comment: "Search button label") + "…",
-					        #selector(mvc.searchMenuItem(_:)), "f"),
+					        #selector(mvc.searchMenuItem(_:)), .command, "f"),
 					command(NSLocalizedString("Add node", comment: ""),
-					        #selector(mvc.addNodeMenuItem(_:)), "n"),
+					        #selector(mvc.addNodeMenuItem(_:)), .command, "n"),
 					command(NSLocalizedString("Tags", comment: "Edit action") + "…",
-					        #selector(mvc.tagsMenuItem(_:)), "t")
+					        #selector(mvc.tagsMenuItem(_:)), .command, "t")
 				]),
 				section([
 					command(NSLocalizedString("Display options", comment: "") + "…",
-					        #selector(mvc.displayOptionsMenuItem(_:)), "d"),
+					        #selector(mvc.displayOptionsMenuItem(_:)), .command, "d"),
 					command(NSLocalizedString("Upload your changes", comment: "") + "…",
-					        #selector(mvc.uploadMenuItem(_:)), "u")
+					        #selector(mvc.uploadMenuItem(_:)), .command, "u")
 				])
 			])
 	}
