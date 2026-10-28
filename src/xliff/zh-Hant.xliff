@@ -2192,6 +2192,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Unexpected for this role" xml:space="preserve">
         <source>Unexpected for this role</source>
+        <target state="translated">這角色是非預期的</target>
         <note>A relation member has the wrong geometry or tags for its role</note>
       </trans-unit>
       <trans-unit id="Unknown" xml:space="preserve">
@@ -2300,6 +2301,7 @@ You should use Clear Cache &gt; OSM Data before continuing to map.</source>
       </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Cuisine':" xml:space="preserve">
         <source>What is the name of this quest? This is best written in the form of an action like 'Add Cuisine':</source>
+        <target state="translated">這一任務的名稱是什麼？這型式如「新增菜系」會寫在表單上。</target>
         <note>'Add Cuisine' should match the use this sample text elsewhere in the app</note>
       </trans-unit>
       <trans-unit id="What is the name of this quest? This is best written in the form of an action like 'Add Surface':" xml:space="preserve">
@@ -2388,6 +2390,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="added to relation" xml:space="preserve">
         <source>added to relation</source>
+        <target state="translated">新增到關聯</target>
         <note/>
       </trans-unit>
       <trans-unit id="computing size..." xml:space="preserve">
@@ -2462,6 +2465,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="exists" xml:space="preserve">
         <source>exists</source>
+        <target state="translated">有存在</target>
         <note>the tag key is present</note>
       </trans-unit>
       <trans-unit id="ft" xml:space="preserve">
@@ -2511,6 +2515,7 @@ You may want to clear the cache (under Display settings) to improve performance.
       </trans-unit>
       <trans-unit id="missing" xml:space="preserve">
         <source>missing</source>
+        <target state="translated">缺漏</target>
         <note>the tag key is absent</note>
       </trans-unit>
       <trans-unit id="move" xml:space="preserve">
