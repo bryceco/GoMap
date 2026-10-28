@@ -1726,7 +1726,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 			return
 		}
 		let countLog10 = log10(Double(uploadCount))
-		if uploadCount > 1 && countLog10 == floor(countLog10) {
+		if uploadCount > 1,
+		   countLog10 == floor(countLog10)
+		{
 			// StoreKit decides whether the prompt is actually displayed (at most 3 times per year)
 			if #available(iOS 16, *) {
 				guard let scene = view.window?.windowScene else { return }

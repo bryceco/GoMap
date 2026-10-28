@@ -30,6 +30,14 @@ enum AppEnvironment {
 		return !isRunningOnMac
 	}
 
+	/// A short description of the kind of device we're running on: "iPhone", "iPad", "Mac", etc.
+	static var deviceType: String {
+		if isRunningOnMac {
+			return "Mac"
+		}
+		return UIDevice.current.model
+	}
+
 	static var hasRearCamera: Bool {
 		return !isRunningOnMac
 	}
