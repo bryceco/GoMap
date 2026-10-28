@@ -26410,6 +26410,9 @@
         }
       }
     },
+    "Center on My Location" : {
+      "comment" : "Mac menu item"
+    },
     "Change" : {
       "comment" : "Tag value will change",
       "localizations" : {
@@ -35138,6 +35141,9 @@
         }
       }
     },
+    "Face North" : {
+      "comment" : "Mac menu item"
+    },
     "Filter" : {
       "comment" : "Header for quest filter section"
     },
@@ -40488,6 +40494,9 @@
           }
         }
       }
+    },
+    "Map" : {
+      "comment" : "Map menu in Mac menu bar"
     },
     "Map Tiles" : {
       "comment" : "Delete cached data",
@@ -67727,6 +67736,12 @@
           }
         }
       }
+    },
+    "Zoom In" : {
+      "comment" : "Mac menu item"
+    },
+    "Zoom Out" : {
+      "comment" : "Mac menu item"
     },
     "Zoom to Edit" : {
       "localizations" : {

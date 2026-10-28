@@ -429,6 +429,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
+#if targetEnvironment(macCatalyst)
+		reclaimMenuFocus()
+#endif
 
 		if !isInitialized {
 			isInitialized = true
@@ -974,10 +977,104 @@ final class MainViewController: UIViewController, DPadDelegate,
 			return mapView.selectedPrimary != nil && mapView.selections.relation == nil
 		case #selector(showHelp(_:)):
 			return true
+#if targetEnvironment(macCatalyst)
+		case #selector(zoomInMenuItem(_:)),
+		     #selector(zoomOutMenuItem(_:)),
+		     #selector(followLocationMenuItem(_:)),
+		     #selector(faceNorthMenuItem(_:)),
+		     #selector(searchMenuItem(_:)),
+		     #selector(displayOptionsMenuItem(_:)):
+			return presentedViewController == nil
+		case #selector(centerOnLocationMenuItem(_:)):
+			return presentedViewController == nil && LocationProvider.shared.currentLocation != nil
+		case #selector(addNodeMenuItem(_:)):
+			return presentedViewController == nil && !addNodeButton.isHidden
+		case #selector(tagsMenuItem(_:)):
+			return presentedViewController == nil && mapView.pushPin != nil
+		case #selector(uploadMenuItem(_:)):
+			return presentedViewController == nil && uploadButton.isEnabled
+#endif
 		default:
 			return false
 		}
 	}
+
+#if targetEnvironment(macCatalyst)
+	override var canBecomeFirstResponder: Bool {
+		return true
+	}
+
+	func reclaimMenuFocus() {
+		guard presentedViewController == nil,
+		      let window = view.window
+		else {
+			return
+		}
+		if !window.isKeyWindow {
+			window.makeKey()
+		}
+		if !isFirstResponder {
+			becomeFirstResponder()
+		}
+	}
+
+	override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+		super.dismiss(animated: flag, completion: { [weak self] in
+			completion?()
+			self?.reclaimMenuFocus()
+		})
+	}
+
+	override func validate(_ command: UICommand) {
+		super.validate(command)
+		if command.action == #selector(followLocationMenuItem(_:)) {
+			command.state = gpsState == .NONE ? .off : .on
+		}
+	}
+
+	@objc func zoomInMenuItem(_ sender: Any?) {
+		viewPort.adjustZoom(by: 2.0, aroundScreenPoint: mapView.bounds.center())
+	}
+
+	@objc func zoomOutMenuItem(_ sender: Any?) {
+		viewPort.adjustZoom(by: 0.5, aroundScreenPoint: mapView.bounds.center())
+	}
+
+	@objc func centerOnLocationMenuItem(_ sender: Any?) {
+		centerOnGPS(sender as Any)
+	}
+
+	@objc func followLocationMenuItem(_ sender: Any?) {
+		toggleLocationButton()
+	}
+
+	@objc func faceNorthMenuItem(_ sender: Any?) {
+		if gpsState == .HEADING {
+			gpsState = .LOCATION
+		}
+		viewPort.rotateToHeading(0.0)
+	}
+
+	@objc func searchMenuItem(_ sender: Any?) {
+		searchButton.sendActions(for: .touchUpInside)
+	}
+
+	@objc func addNodeMenuItem(_ sender: Any?) {
+		mapView.addNode(at: mapView.bounds.center())
+	}
+
+	@objc func tagsMenuItem(_ sender: Any?) {
+		mapView.presentTagEditor(sender)
+	}
+
+	@objc func displayOptionsMenuItem(_ sender: Any?) {
+		displayButton.sendActions(for: .touchUpInside)
+	}
+
+	@objc func uploadMenuItem(_ sender: Any?) {
+		uploadButton.sendActions(for: .touchUpInside)
+	}
+#endif
 
 	@objc func undo(_ sender: Any?) {
 		mapView.undo(sender)
@@ -1157,6 +1254,9 @@ final class MainViewController: UIViewController, DPadDelegate,
 	}
 
 	@objc func handleTapGesture(_ tap: UITapGestureRecognizer) {
+#if targetEnvironment(macCatalyst)
+		reclaimMenuFocus()
+#endif
 		mapView.handleTapGesture(tap)
 	}
 
