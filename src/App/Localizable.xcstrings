@@ -36373,6 +36373,7 @@
     },
     "I'll do it!" : {
       "comment" : "rate the app now",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -40809,6 +40810,7 @@
     },
     "Maybe later..." : {
       "comment" : "rate the app later",
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -51873,6 +51875,7 @@
       }
     },
     "Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap." : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -66919,6 +66922,7 @@
       }
     },
     "You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "variations" : {

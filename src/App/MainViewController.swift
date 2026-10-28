@@ -8,6 +8,7 @@
 
 import CoreLocation
 import SafariServices
+import StoreKit
 import UIKit
 
 enum MainViewButtonLayout: Int {
@@ -1660,15 +1661,6 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 	}
 
-	func showInAppStore() {
-		let appStoreId = "592990211"
-		let urlText = "itms-apps://itunes.apple.com/app/id\(appStoreId)"
-		let url = URL(string: urlText)
-		if let url = url {
-			UIApplication.shared.open(url, options: [:], completionHandler: nil)
-		}
-	}
-
 	// MARK: Aerial imagery alignment
 
 	@IBAction func aerialAlignmentPressed(_ sender: Any) {
@@ -1734,29 +1726,17 @@ final class MainViewController: UIViewController, DPadDelegate,
 			return
 		}
 		let countLog10 = log10(Double(uploadCount))
-		if uploadCount > 1, countLog10 == floor(countLog10) {
-			let title = String.localizedStringWithFormat(
-				NSLocalizedString("You've uploaded %ld changesets with this version of Go Map!!\n\nRate this app?",
-				                  comment: ""),
-				uploadCount)
-			let alertViewRateApp = UIAlertController(
-				title: title,
-				message: NSLocalizedString(
-					"Rating this app makes it easier for other mappers to discover it and increases the visibility of OpenStreetMap.",
-					comment: ""),
-				preferredStyle: .alert)
-			alertViewRateApp.addAction(UIAlertAction(
-				title: NSLocalizedString("Maybe later...", comment: "rate the app later"),
-				style: .cancel,
-				handler: { _ in
-				}))
-			alertViewRateApp.addAction(UIAlertAction(
-				title: NSLocalizedString("I'll do it!", comment: "rate the app now"),
-				style: .default,
-				handler: { [self] _ in
-					showInAppStore()
-				}))
-			present(alertViewRateApp, animated: true)
+		if uploadCount > 1 && countLog10 == floor(countLog10) {
+			// StoreKit decides whether the prompt is actually displayed (at most 3 times per year)
+			if #available(iOS 16, *) {
+				guard let scene = view.window?.windowScene else { return }
+				AppStore.requestReview(in: scene)
+			} else if #available(iOS 14, *) {
+				guard let scene = view.window?.windowScene else { return }
+				SKStoreReviewController.requestReview(in: scene)
+			} else {
+				SKStoreReviewController.requestReview()
+			}
 		}
 	}
 
