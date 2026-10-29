@@ -1557,8 +1557,6 @@
 				ars,
 				et,
 				uk,
-				in,
-				no,
 				"pt-BR",
 				oc,
 				pt,
