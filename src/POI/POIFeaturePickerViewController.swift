@@ -91,12 +91,15 @@ class POIFeaturePickerViewController: UITableViewController, UISearchBarDelegate
 		{
 			suggestedFeatureIDs = Set(wayFeature.expectedVertices)
 			if !suggestedFeatureIDs.isEmpty {
-				let promoted = featureList.filter {
-					if case let .feature(f) = $0 { return suggestedFeatureIDs.contains(f.featureID) }
-					return false
+				let promoted: [PresetFeatureOrCategory] = wayFeature.expectedVertices.compactMap { id in
+					guard let feature = PresetsDatabase.shared.presetFeatureForFeatureID(id)
+					else { return nil }
+					return .feature(feature)
 				}
 				let rest = featureList.filter {
-					if case let .feature(f) = $0 { return !suggestedFeatureIDs.contains(f.featureID) }
+					if case let .feature(f) = $0 {
+						return !suggestedFeatureIDs.contains(f.featureID)
+					}
 					return true
 				}
 				featureList = promoted + rest
