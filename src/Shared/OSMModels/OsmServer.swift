@@ -243,7 +243,7 @@ extension OsmServer {
 	                method: String,
 	                xml: DDXMLDocument?) async throws -> Data
 	{
-		let url = OSM_SERVER.apiURL
+		let url = apiURL
 			.appendingPathComponent(relativeUrl)
 			.appendingQueryItems(queryItems)
 
