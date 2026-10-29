@@ -377,8 +377,8 @@ class UploadViewController: UIViewController {
 		case distanceWarning // Banner warning that some groups were auto-deselected because they are far away
 		case untaggedWarning // Banner warning that some groups contain untagged objects
 		case noChanges // Placeholder shown when there are no pending changes
-		case conflictWarning(Int) // Banner shown directly above a group whose upload failed due to an unresolved conflict
-		case group(Int) // A group of connected objects that can be uploaded together
+		case group(Int) // A group of connected objects that can be uploaded together. If its upload
+		// failed due to a conflict the card gets an extra warning row above the details.
 	}
 
 	var mapData: OsmMapData!
@@ -516,21 +516,15 @@ class UploadViewController: UIViewController {
 			if !untaggedGroupIndices.isEmpty {
 				sections.append(.untaggedWarning)
 			}
-			sections += groupSections()
+			sections += connectedGroups.indices.map { Section.group($0) }
 		}
 
 		updateActionButtons()
 		tableView.reloadData()
 	}
 
-	/// One section per group, preceded by a warning section for any group that failed to upload.
-	private func groupSections() -> [Section] {
-		connectedGroups.indices.flatMap { index -> [Section] in
-			if conflictMessages[connectedGroups[index].minGroupId] != nil {
-				return [.conflictWarning(index), .group(index)]
-			}
-			return [.group(index)]
-		}
+	private func conflict(forGroup groupIndex: Int) -> (message: String, extId: OsmExtendedIdentifier)? {
+		conflictMessages[connectedGroups[groupIndex].minGroupId]
 	}
 
 	private func sectionIndex(forGroup groupIndex: Int) -> Int? {
@@ -892,9 +886,9 @@ class UploadViewController: UIViewController {
 					reloadGroups()
 					appDelegate.mapView.setNeedsLayout()
 					let alert = UIAlertController(
-						title: NSLocalizedString("Upload Incomplete", comment: "Only part of the upload succceeded"),
+						title: NSLocalizedString("Upload Incomplete", comment: "Only part of the upload succeeded"),
 						message: NSLocalizedString(
-							"Some edits were committed, but others couldn't be committed because another user changed the same object.",
+							"Some changes were uploaded, but others couldn't be because another user changed the same objects.",
 							comment: ""),
 						preferredStyle: .alert)
 					alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .cancel))
@@ -934,7 +928,9 @@ class UploadViewController: UIViewController {
 				tableView.isUserInteractionEnabled = true
 				reloadGroups()
 				Self.presentUploadError(vc: self,
-				                        NSLocalizedString("All edits conflict with changes made by other users.", comment: ""))
+				                        NSLocalizedString(
+				                        	"No changes were uploaded because another user changed the same objects.",
+				                        	comment: ""))
 				return
 			} catch UrlSessionError.badStatusCode(401, _) {
 				OSM_SERVER.oAuth2?.removeAuthorization()
@@ -995,8 +991,8 @@ class UploadViewController: UIViewController {
 		let description = name.map { "\($0) (\(feature))" } ?? feature
 		let message = String.localizedStringWithFormat(
 			NSLocalizedString(
-				"%@ wasn't uploaded because it conflicts with another user's edits.\nDiscarding these edits will refresh it with the server's copy.",
-				comment: "Warning shown above an edit group that couldn't be uploaded"),
+				"%@ was already changed by another user, so this change can't be uploaded. Discarding it will reload the latest version.",
+				comment: ""),
 			description)
 		conflictMessages[connectedGroups[groupIndex].minGroupId] = (message: message, extId: extId)
 		selectedGroupIndices.remove(groupIndex)
@@ -1124,14 +1120,20 @@ extension UploadViewController: UITableViewDataSource {
 	}
 
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		1
+		// A group that failed to upload gets a warning row above its details
+		if case let .group(groupIndex) = sections[section],
+		   conflict(forGroup: groupIndex) != nil
+		{
+			return 2
+		}
+		return 1
 	}
 
 	func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
 		switch sections[section] {
 		case .comment: return UploadStrings.commentHeader
 		case .source: return UploadStrings.sourceHeader
-		case .emptyCommentWarning, .distanceWarning, .untaggedWarning, .noChanges, .conflictWarning, .group: return nil
+		case .emptyCommentWarning, .distanceWarning, .untaggedWarning, .noChanges, .group: return nil
 		}
 	}
 
@@ -1178,21 +1180,21 @@ extension UploadViewController: UITableViewDataSource {
 				text: NSLocalizedString("Nothing to upload, no changes have been made.", comment: ""),
 				style: .empty)
 			return cell
-		case let .conflictWarning(groupIndex):
-			let cell = tableView.dequeueReusableCell(
-				withIdentifier: MessageCell.reuseIdentifier,
-				for: indexPath) as! MessageCell
-			let conflict = conflictMessages[connectedGroups[groupIndex].minGroupId]
-			cell.configure(text: conflict?.message ?? "", style: .warning)
-			if let extId = conflict?.extId {
+		case let .group(groupIndex):
+			if indexPath.row == 0, let conflict = conflict(forGroup: groupIndex) {
+				// Warning row at the top of the card, so it's unambiguous which group it belongs to
+				let cell = tableView.dequeueReusableCell(
+					withIdentifier: MessageCell.reuseIdentifier,
+					for: indexPath) as! MessageCell
+				cell.configure(text: conflict.message, style: .warning)
 				cell.onViewOnServer = { [weak self] in
-					let url = OSM_SERVER.serverURL.appendingPathComponent("\(extId.type.string)/\(extId.ident)")
+					let url = OSM_SERVER.serverURL
+						.appendingPathComponent("\(conflict.extId.type.string)/\(conflict.extId.ident)")
 					self?.present(SFSafariViewController(url: url), animated: true)
 				}
 				cell.viewOnServerButton.isHidden = false
+				return cell
 			}
-			return cell
-		case let .group(groupIndex):
 			return groupCell(for: connectedGroups[groupIndex], at: indexPath)
 		}
 	}
@@ -1244,7 +1246,7 @@ extension UploadViewController: UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
 		switch sections[section] {
-		case .emptyCommentWarning, .distanceWarning, .untaggedWarning, .conflictWarning:
+		case .emptyCommentWarning, .distanceWarning, .untaggedWarning:
 			return .leastNonzeroMagnitude
 		default:
 			return UITableView.automaticDimension
@@ -1253,7 +1255,7 @@ extension UploadViewController: UITableViewDelegate {
 
 	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
 		switch sections[section] {
-		case .emptyCommentWarning, .distanceWarning, .untaggedWarning, .conflictWarning:
+		case .emptyCommentWarning, .distanceWarning, .untaggedWarning:
 			return 5
 		default:
 			return UITableView.automaticDimension

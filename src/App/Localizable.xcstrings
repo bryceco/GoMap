@@ -7033,8 +7033,8 @@
         }
       }
     },
-    "%@ wasn't uploaded because it conflicts with another user's edits.\nDiscarding these edits will refresh it with the server's copy." : {
-      "comment" : "Warning shown above an edit group that couldn't be uploaded"
+    "%@ was already changed by another user, so this change can't be uploaded. Discarding it will reload the latest version." : {
+
     },
     "%ld Days" : {
       "comment" : "One or more days",
@@ -22201,9 +22201,6 @@
           }
         }
       }
-    },
-    "All edits conflict with changes made by other users." : {
-
     },
     "All map tiles for the currently selected base map (Mapnik, Americana, etc)." : {
       "localizations" : {
@@ -44718,6 +44715,9 @@
         }
       }
     },
+    "No changes were uploaded because another user changed the same objects." : {
+
+    },
     "No connecting path found to close the way" : {
       "localizations" : {
         "cs" : {
@@ -56846,7 +56846,7 @@
     "Some changes contain objects with no tags and have been deselected. Add tags before uploading." : {
       "comment" : "Warning shown on upload screen when a group contains untagged objects"
     },
-    "Some edits were committed, but others couldn't be committed because another user changed the same object." : {
+    "Some changes were uploaded, but others couldn't be because another user changed the same objects." : {
 
     },
     "Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." : {
@@ -64565,7 +64565,7 @@
       }
     },
     "Upload Incomplete" : {
-      "comment" : "Only part of the upload succceeded"
+      "comment" : "Only part of the upload succeeded"
     },
     "Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map." : {
       "comment" : "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings",

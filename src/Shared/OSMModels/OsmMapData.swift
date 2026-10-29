@@ -835,7 +835,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 		case xml(DDXMLDocument)
 	}
 
-	// Uploads the changes. Throws Error.unresolvedConflict if the server reports a
+	// Uploads the changes. Throws Error.versionMismatch if the server reports a
 	// version conflict; the caller can then exclude the object and try again.
 	// Returns true if the server skipped any of our deletes because of if-unused.
 	@MainActor private func uploadChangeset(xml xmlChanges: DDXMLDocument, changesetID: Int64) async throws -> Bool {
@@ -1087,7 +1087,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	///		- Generate XML for user modifications
 	///		- Insert the changesetID into the XML
 	///		- Upload the XML to the server
-	///		- If the server reports a version mismatch, throw Error.unresolvedConflict
+	///		- If the server reports a version mismatch, throw Error.versionMismatch
 	///		  identifying the object, leaving the changeset open for the caller to retry without it
 	///		- Ask the server to close the changeset
 	///		- Have the undo manager remove associated undo groups
