@@ -432,10 +432,9 @@
         <target state="translated">%@ метров</target>
         <note>Always plural</note>
       </trans-unit>
-      <trans-unit id="%@ wasn't uploaded because it conflicts with another user's edits.&#10;Discarding these edits will refresh it with the server's copy." xml:space="preserve">
-        <source>%@ wasn't uploaded because it conflicts with another user's edits.
-Discarding these edits will refresh it with the server's copy.</source>
-        <note>Warning shown above an edit group that couldn't be uploaded</note>
+      <trans-unit id="%@ was already changed by another user, so this change can't be uploaded. Discarding it will reload the latest version." xml:space="preserve">
+        <source>%@ was already changed by another user, so this change can't be uploaded. Discarding it will reload the latest version.</source>
+        <note />
       </trans-unit>
       <trans-unit id="%ld Days|==|plural.few" xml:space="preserve">
         <source>%ld Days</source>
@@ -936,10 +935,6 @@ Discarding these edits will refresh it with the server's copy.</source>
       <trans-unit id="All choices" xml:space="preserve">
         <source>All choices</source>
         <target state="translated">Все варианты</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="All edits conflict with changes made by other users." xml:space="preserve">
-        <source>All edits conflict with changes made by other users.</source>
         <note />
       </trans-unit>
       <trans-unit id="All map tiles for the currently selected base map (Mapnik, Americana, etc)." xml:space="preserve">
@@ -1817,6 +1812,10 @@ Never delete old tracks</note>
         <target state="translated">Нет активного трека</target>
         <note>GPX track</note>
       </trans-unit>
+      <trans-unit id="No changes were uploaded because another user changed the same objects." xml:space="preserve">
+        <source>No changes were uploaded because another user changed the same objects.</source>
+        <note />
+      </trans-unit>
       <trans-unit id="No connecting path found to close the way" xml:space="preserve">
         <source>No connecting path found to close the way</source>
         <note />
@@ -2294,8 +2293,8 @@ Title for sharing options</note>
         <source>Some changes contain objects with no tags and have been deselected. Add tags before uploading.</source>
         <note>Warning shown on upload screen when a group contains untagged objects</note>
       </trans-unit>
-      <trans-unit id="Some edits were committed, but others couldn't be committed because another user changed the same object." xml:space="preserve">
-        <source>Some edits were committed, but others couldn't be committed because another user changed the same object.</source>
+      <trans-unit id="Some changes were uploaded, but others couldn't be because another user changed the same objects." xml:space="preserve">
+        <source>Some changes were uploaded, but others couldn't be because another user changed the same objects.</source>
         <note />
       </trans-unit>
       <trans-unit id="Something went wrong while attempting to restore your data. Any pending changes have been lost. Sorry." xml:space="preserve">
@@ -2653,7 +2652,7 @@ Select the highway from which you are approaching the intersection, then tap an 
       </trans-unit>
       <trans-unit id="Upload Incomplete" xml:space="preserve">
         <source>Upload Incomplete</source>
-        <note>Only part of the upload succceeded</note>
+        <note>Only part of the upload succeeded</note>
       </trans-unit>
       <trans-unit id="Upload succeeded but the server returned mismatched data.&#10;&#10;You should use Clear Cache &gt; OSM Data before continuing to map." xml:space="preserve">
         <source>Upload succeeded but the server returned mismatched data.
