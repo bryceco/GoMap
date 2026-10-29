@@ -519,7 +519,7 @@ class PresetValueTextField: AutocompleteTextField, PanoramaxDelegate {
 		guard
 			#available(iOS 14.0, *), // also validates SwiftUI is available
 			AppEnvironment.hasRearCamera,
-			OsmTags.isKey(key, variantOf: "opening_hours")
+			presetKey?.type == .schedule
 		else {
 			return nil
 		}

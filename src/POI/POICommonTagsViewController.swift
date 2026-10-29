@@ -371,7 +371,7 @@ class POICommonTagsViewController: UITableViewController, UITextFieldDelegate, U
 		case let PresetKeyOrGroup.key(presetKey):
 			let key = presetKey.tagKey
 
-			let isOpeningHours = (key == "opening_hours") && false // FIXME: once we support enhanced text areas
+			let isOpeningHours = (presetKey.type == .schedule) && false // FIXME: once we support enhanced text areas
 			if presetKey.type == .textarea || isOpeningHours {
 				// special case for keys that contain large amounts of text
 				let cell = tableView.dequeueReusableCell(withIdentifier: "CommonTagArea",
