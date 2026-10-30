@@ -459,7 +459,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 				(AppTips.orientation, compassButton),
 				(AppTips.search, searchButton),
 				(AppTips.mapLayers, displayButton),
-				(AppTips.addButton, addNodeButton)
+				(AppTips.dropNode, addNodeButton)
 			])
 		}
 	}

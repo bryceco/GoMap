@@ -19142,9 +19142,6 @@
         }
       }
     },
-    "Add features faster" : {
-
-    },
     "Add Highway Surface" : {
       "comment" : "A type of quest",
       "localizations" : {
@@ -38210,9 +38207,6 @@
     "Keep" : {
       "comment" : "Keep the tag value\nTag value will be kept"
     },
-    "Keep the switch on to capture or review your GPS tracks while you map." : {
-
-    },
     "Key = value" : {
       "comment" : "Menu item adding a quest filter condition",
       "localizations" : {
@@ -52437,9 +52431,6 @@
         }
       }
     },
-    "Re-center the map" : {
-
-    },
     "Read more on the Wiki" : {
 
     },
@@ -58983,12 +58974,6 @@
       }
     },
     "Tap for display options or long-press to pick recent imagery." : {
-
-    },
-    "Tap once to jump to your location and again to follow your heading." : {
-
-    },
-    "Tap to add at the crosshairs or drag and long-press for precise placement." : {
 
     },
     "Target node" : {

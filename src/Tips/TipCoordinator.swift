@@ -4,6 +4,24 @@ import UIKit
 
 // MARK: - Tip definition
 
+/// Identifier for every tip in the app. Not availability-gated so call sites
+/// that invalidate tips don't need `#available` checks.
+enum TipID: String, CaseIterable {
+	// Onboarding, in order
+	case location, dropNode, editTags, upload
+	case extendToWay, closeWayByDrag, makeRectangular
+	// Main map
+	case orientation, search, mapLayers
+	case holdAndTap, doubleTapDragZoom, overlappingObjects, plusButtonSide
+	// Editing
+	case closeWay, circularize, turnRestrictions, copyPasteTags
+	case compassDirection, buildingHeight, openingHoursCamera, wikiInfo
+	// Display settings
+	case gpxTraces, quests, questBuilder, dataLayers, notesAndFixme, imageryOffset
+	// Settings / data
+	case customFeatures, customFields, filesApp, searchCoordinates, clearCache, alternateServer
+}
+
 @available(iOS 17.0, *)
 struct AppTip: Tip {
 	let id: String
@@ -11,15 +29,20 @@ struct AppTip: Tip {
 	let message: Text?
 	let image: Image?
 	let rules: [Rule]
+	/// False while the tip exists only in the catalog and no screen presents it yet.
+	let implemented: Bool
 
 	var options: [TipOption] { [Tips.MaxDisplayCount(1)] }
 
-	init(title: String, message: String, image: Image? = nil, rules: [Rule] = []) {
-		self.id = title
+	init(_ id: TipID, title: String, message: String, image: Image? = nil, rules: [Rule] = [],
+	     implemented: Bool = false)
+	{
+		self.id = id.rawValue
 		self.title = Text(title)
 		self.message = Text(message)
 		self.image = image
 		self.rules = rules
+		self.implemented = implemented
 	}
 }
 
@@ -27,43 +50,176 @@ struct AppTip: Tip {
 
 @available(iOS 17.0, *)
 enum AppTips {
-	static let location = AppTip(title: "Re-center the map",
-	                             message: "Tap once to jump to your location and again to follow your heading.",
-	                             image: Image(systemName: "location"))
-	static let orientation = AppTip(title: "Stay oriented",
+	// Onboarding
+	static let location = AppTip(.location, title: "Find yourself",
+	                             message: "Tap to jump to your current location. Tap again to follow your heading.",
+	                             image: Image(systemName: "location"), implemented: true)
+	static let dropNode = AppTip(.dropNode, title: "Add something",
+	                             message: "Tap + to drop a point at the crosshairs.",
+	                             image: Image(systemName: "plus"), implemented: true)
+	static let editTags = AppTip(.editTags, title: "Say what it is",
+	                             message: "Tap Tags to choose a feature type and fill in details.",
+	                             image: Image(systemName: "tag"))
+	static let upload = AppTip(.upload, title: "Share your work",
+	                           message: "Tap Upload to send your edits to OpenStreetMap.",
+	                           image: Image(systemName: "icloud.and.arrow.up"))
+	static let extendToWay = AppTip(.extendToWay, title: "Draw a line",
+	                                message: "With a point selected, tap + again to extend it into a way.",
+	                                image: Image(systemName: "scribble"))
+	static let closeWayByDrag = AppTip(.closeWayByDrag, title: "Close the loop",
+	                                   message: "Drag the last point onto the first to make a closed area.",
+	                                   image: Image(systemName: "arrow.triangle.capsulepath"))
+	static let makeRectangular = AppTip(.makeRectangular, title: "Square it up",
+	                                    message: "Choose More… then Make Rectangular to straighten the corners.",
+	                                    image: Image(systemName: "square"))
+
+	// Main map
+	static let orientation = AppTip(.orientation, title: "Stay oriented",
 	                                message: "Use the compass to switch between north-up and heading-up views.",
-	                                image: Image(uiImage: UIImage(named: "temaki-compass")!.withRenderingMode(.alwaysTemplate)))
-	static let search = AppTip(title: "Find places quickly",
+	                                image: Image(uiImage: UIImage(named: "temaki-compass")!.withRenderingMode(.alwaysTemplate)),
+	                                implemented: true)
+	static let search = AppTip(.search, title: "Find places quickly",
 	                           message: "Search for addresses, places, and presets without leaving the map.",
-	                           image: Image(systemName: "magnifyingglass"))
-	static let mapLayers = AppTip(title: "Switch map layers",
+	                           image: Image(systemName: "magnifyingglass"), implemented: true)
+	static let mapLayers = AppTip(.mapLayers, title: "Switch map layers",
 	                              message: "Tap for display options or long-press to pick recent imagery.",
-	                              image: Image(systemName: "map"))
-	static let addButton = AppTip(title: "Add features faster",
-	                              message: "Tap to add at the crosshairs or drag and long-press for precise placement.",
-	                              image: Image(systemName: "plus"))
-	static let gpxTraces = AppTip(title: "Record GPX traces",
-	                              message: "Keep the switch on to capture or review your GPS tracks while you map.")
-	static let quests = AppTip(title: "Tackle quests",
-	                           message: "Show quests to discover nearby tasks contributed by the community.")
-	static let dataLayers = AppTip(title: "Overlay more data",
-	                               message: "Enable data layers to compare third-party maps and QA overlays while editing.")
-	static let alternateServer = AppTip(title: "Map beyond OSM",
-	                                    message: "Pick OpenHistoricalMap or OpenGeofiction to contribute to other communities.")
+	                              image: Image(systemName: "map"), implemented: true)
+	static let holdAndTap = AppTip(.holdAndTap, title: "Add points faster",
+	                               message: "Hold the + button and tap the map to add several points without lifting your finger.",
+	                               image: Image(systemName: "hand.tap"))
+	static let doubleTapDragZoom = AppTip(.doubleTapDragZoom, title: "Zoom with one finger",
+	                                      message: "Double-tap and drag up or down to zoom without pinching.",
+	                                      image: Image(systemName: "plus.magnifyingglass"))
+	static let overlappingObjects = AppTip(.overlappingObjects, title: "Pick from overlapping objects",
+	                                       message: "Long-press the map to get a menu of everything under your finger.",
+	                                       image: Image(systemName: "square.3.layers.3d"))
+	static let plusButtonSide = AppTip(.plusButtonSide, title: "Left-handed?",
+	                                   message: "You can move the + button to the other side of the screen in Display settings.",
+	                                   image: Image(systemName: "arrow.left.arrow.right"))
+
+	// Editing
+	static let closeWay = AppTip(.closeWay, title: "Close this way",
+	                             message: "Areas like buildings need a closed outline. Use Close Way from the edit menu.",
+	                             image: Image(systemName: "arrow.triangle.capsulepath"))
+	static let circularize = AppTip(.circularize,
+	                                title: "Make it round",
+	                                message: "Choose More… then Make Circular. Pick the number of points to get an octagon or other polygon instead.",
+	                                image: Image(systemName: "circle"))
+	static let turnRestrictions = AppTip(.turnRestrictions, title: "Edit turn restrictions",
+	                                     message: "Select a node shared by two roads and choose Restrict from the edit menu.",
+	                                     image: Image(systemName: "arrow.turn.up.right"))
+	static let copyPasteTags = AppTip(.copyPasteTags,
+	                                  title: "Copy and paste tags",
+	                                  message: "Copy tags from one object and paste them onto another. Paste also accepts text from any app, one key=value per line.",
+	                                  image: Image(systemName: "doc.on.doc"))
+	static let compassDirection = AppTip(.compassDirection,
+	                                     title: "Set direction with the compass",
+	                                     message: "Tap the compass next to the Direction field and point your phone the way the feature faces.",
+	                                     image: Image(systemName: "location.north.line"))
+	static let buildingHeight = AppTip(.buildingHeight, title: "Measure height with the camera",
+	                                   message: "Tap the ruler next to the Height field to measure a building with your camera.",
+	                                   image: Image(systemName: "ruler"))
+	static let openingHoursCamera = AppTip(.openingHoursCamera, title: "Read hours from a sign",
+	                                       message: "Point the camera at an opening-hours sign and the text is recognized for you.",
+	                                       image: Image(systemName: "camera.viewfinder"))
+	static let wikiInfo = AppTip(.wikiInfo, title: "Look up a tag",
+	                             message: "Tap the info button next to any tag to open its OpenStreetMap wiki page.",
+	                             image: Image(systemName: "info.circle"))
+
+	// Display settings
+	static let gpxTraces = AppTip(.gpxTraces,
+	                              title: "Record GPX traces",
+	                              message: "Keep the switch on to capture tracks in the background, or import a GPX via Files or the share sheet.",
+	                              implemented: true)
+	static let quests = AppTip(.quests, title: "Tackle quests",
+	                           message: "Show quests to discover nearby tasks contributed by the community.",
+	                           implemented: true)
+	static let questBuilder = AppTip(.questBuilder, title: "Build your own quests",
+	                                 message: "The quest builder lets you define custom quests for the tags you care about.")
+	static let dataLayers = AppTip(.dataLayers, title: "Overlay more data",
+	                               message: "Enable data layers to compare third-party maps and QA overlays while editing.",
+	                               implemented: true)
+	static let notesAndFixme = AppTip(.notesAndFixme, title: "See notes and fixme markers",
+	                                  message: "Turn on Notes to show OSM notes and fixme tags on the map.",
+	                                  image: Image(systemName: "note.text"))
+	static let imageryOffset = AppTip(.imageryOffset, title: "Fix misaligned imagery",
+	                                  message: "Use the imagery offset button to nudge aerial imagery into alignment with GPS traces.",
+	                                  image: Image(systemName: "arrow.up.and.down.and.arrow.left.and.right"))
+
+	// Settings / data
+	static let customFeatures = AppTip(.customFeatures, title: "Create custom features",
+	                                   message: "Define your own presets in Settings when the built-in ones don't fit.")
+	static let customFields = AppTip(.customFields, title: "Create custom fields",
+	                                 message: "Add fields for tags you use often so they appear in the editor.")
+	static let filesApp = AppTip(.filesApp, title: "Find app data in Files",
+	                             message: "Your GPX traces, GeoJSON and custom presets live in the Files app under Go Map!!.",
+	                             image: Image(systemName: "folder"))
+	static let searchCoordinates = AppTip(.searchCoordinates, title: "Search by coordinates or URL",
+	                                      message: "Type latitude, longitude or paste an OSM URL to jump straight there.",
+	                                      image: Image(systemName: "mappin.and.ellipse"))
+	static let clearCache = AppTip(.clearCache, title: "Data looking stale?",
+	                               message: "Clear the cache in Settings to re-download the current area.",
+	                               image: Image(systemName: "arrow.clockwise"))
+	static let alternateServer = AppTip(.alternateServer, title: "Map beyond OSM",
+	                                    message: "Pick OpenHistoricalMap or OpenGeofiction to contribute to other communities.",
+	                                    implemented: true)
+
+	/// Every tip, in TipID order.
+	static let all: [AppTip] = [
+		location, dropNode, editTags, upload, extendToWay, closeWayByDrag, makeRectangular,
+		orientation, search, mapLayers, holdAndTap, doubleTapDragZoom, overlappingObjects, plusButtonSide,
+		closeWay, circularize, turnRestrictions, copyPasteTags,
+		compassDirection, buildingHeight, openingHoursCamera, wikiInfo,
+		gpxTraces, quests, questBuilder, dataLayers, notesAndFixme, imageryOffset,
+		customFeatures, customFields, filesApp, searchCoordinates, clearCache, alternateServer
+	]
+
+	static func tip(_ id: TipID) -> AppTip {
+		return all.first(where: { $0.id == id.rawValue })!
+	}
 }
 
 // MARK: - Configuration
 
-func configureTipsIfNeeded() {
+func configureTips() {
 	guard #available(iOS 17.0, *) else { return }
 	do {
 		try Tips.configure([
 			.displayFrequency(.immediate)
 		])
+#if DEBUG
+		debugPrintTipStatus()
+#endif
 	} catch {
 		print("[TipKit] configuration failed: \(error)")
 	}
 }
+
+#if DEBUG
+/// Print every tip and whether it has been implemented and whether the user
+/// has already performed the action it describes. For testing only.
+@available(iOS 17.0, *)
+private func debugPrintTipStatus() {
+	Task { @MainActor in
+		// the datastore loads asynchronously
+		try? await Task.sleep(for: .seconds(1))
+		for tip in AppTips.all {
+			let status: String
+			switch tip.status {
+			case .pending:
+				status = "not eligible"
+			case .available:
+				status = "ready"
+			case .invalidated(let x):
+				status = "perfomed: \(x)"
+			@unknown default:
+				fatalError()
+			}
+			print("[TipKit] \(tip.id): implemented=\(tip.implemented ? "yes" : "no") status=\(status)")
+		}
+	}
+}
+#endif
 
 // MARK: - Presentation
 
