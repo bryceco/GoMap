@@ -8485,6 +8485,42 @@
         }
       }
     },
+    "Tq7-ps-B7n.normalTitle" : {
+      "comment" : "Class = \"UIButton\"; normalTitle = \"Reset\"; ObjectID = \"Tq7-ps-B7n\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Reset"
+          }
+        }
+      }
+    },
+    "Tq7-ps-D6s.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Show all tips again\"; ObjectID = \"Tq7-ps-D6s\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Show all tips again"
+          }
+        }
+      }
+    },
+    "Tq7-ps-L5t.text" : {
+      "comment" : "Class = \"UILabel\"; text = \"Reset Tips\"; ObjectID = \"Tq7-ps-L5t\";",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Reset Tips"
+          }
+        }
+      }
+    },
     "TrT-Nn-WKe.text" : {
       "comment" : "Class = \"UILabel\"; text = \"Join the TestFlight Beta\"; ObjectID = \"TrT-Nn-WKe\";",
       "extractionState" : "extracted_with_value",

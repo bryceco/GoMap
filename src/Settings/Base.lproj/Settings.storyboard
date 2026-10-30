@@ -911,6 +911,47 @@ http://glyphish.com
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Tq7-ps-C1l" userLabel="Reset Tips Cell">
+                                        <rect key="frame" x="0.0" y="321" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tq7-ps-C1l" id="Tq7-ps-V1w">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Reset Tips" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tq7-ps-L5t">
+                                                    <rect key="frame" x="17" y="3" width="86" height="21.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="100" text="Show all tips again" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Tq7-ps-D6s">
+                                                    <rect key="frame" x="17" y="24.5" width="215" height="16"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tq7-ps-B7n">
+                                                    <rect key="frame" x="349" y="6" width="47" height="32"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
+                                                    <state key="normal" title="Reset"/>
+                                                    <connections>
+                                                        <action selector="resetTips:" destination="bSZ-Mq-pv6" eventType="touchUpInside" id="Tq7-ps-A4k"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Tq7-ps-L5t" firstAttribute="leading" secondItem="Tq7-ps-V1w" secondAttribute="leading" constant="17" id="Tq7-ps-K1a"/>
+                                                <constraint firstItem="Tq7-ps-L5t" firstAttribute="top" secondItem="Tq7-ps-V1w" secondAttribute="top" constant="3" id="Tq7-ps-K2b"/>
+                                                <constraint firstItem="Tq7-ps-D6s" firstAttribute="top" secondItem="Tq7-ps-L5t" secondAttribute="bottom" id="Tq7-ps-K3c"/>
+                                                <constraint firstItem="Tq7-ps-D6s" firstAttribute="leading" secondItem="Tq7-ps-L5t" secondAttribute="leading" id="Tq7-ps-K4d"/>
+                                                <constraint firstAttribute="bottom" secondItem="Tq7-ps-D6s" secondAttribute="bottom" constant="3" id="Tq7-ps-K5e"/>
+                                                <constraint firstItem="Tq7-ps-B7n" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tq7-ps-L5t" secondAttribute="trailing" constant="4" id="Tq7-ps-K6f"/>
+                                                <constraint firstItem="Tq7-ps-B7n" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tq7-ps-D6s" secondAttribute="trailing" constant="4" id="Tq7-ps-K7g"/>
+                                                <constraint firstAttribute="trailing" secondItem="Tq7-ps-B7n" secondAttribute="trailing" constant="18" id="Tq7-ps-K8h"/>
+                                                <constraint firstItem="Tq7-ps-B7n" firstAttribute="centerY" secondItem="Tq7-ps-V1w" secondAttribute="centerY" id="Tq7-ps-K9i"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>

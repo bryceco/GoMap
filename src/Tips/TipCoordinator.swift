@@ -57,9 +57,6 @@ enum AppTips {
 func configureTipsIfNeeded() {
 	guard #available(iOS 17.0, *) else { return }
 	do {
-#if DEBUG
-		try? Tips.resetDatastore()
-#endif
 		try Tips.configure([
 			.displayFrequency(.immediate)
 		])

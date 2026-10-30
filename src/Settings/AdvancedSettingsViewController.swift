@@ -5,6 +5,7 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
+import TipKit
 import UIKit
 
 class AdvancedSettingsViewController: TableViewControllerMac, UIAdaptivePresentationControllerDelegate {
@@ -101,6 +102,25 @@ class AdvancedSettingsViewController: TableViewControllerMac, UIAdaptivePresenta
 			// Call this after updating DisplayLink speed
 			mapLibre.setPreferredFrameRate()
 		}
+	}
+
+	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		let count = super.tableView(tableView, numberOfRowsInSection: section)
+		// The Reset Tips row is the last row of the Developer settings section,
+		// and TipKit requires iOS 17, so hide it on older systems.
+		if section == 1,
+		   #unavailable(iOS 17.0)
+		{
+			return count - 1
+		}
+		return count
+	}
+
+	@available(iOS 17.0, *)
+	@IBAction func resetTips(_ sender: UIButton) {
+		try? Tips.resetDatastore()
+		sender.isEnabled = false
+		dismiss(animated: true)
 	}
 
 	@IBAction func showServersList(_ sender: Any) {
