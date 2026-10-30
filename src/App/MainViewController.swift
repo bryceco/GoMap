@@ -459,7 +459,13 @@ final class MainViewController: UIViewController, DPadDelegate,
 				(AppTips.orientation, compassButton),
 				(AppTips.search, searchButton),
 				(AppTips.mapLayers, displayButton),
-				(AppTips.dropNode, addNodeButton)
+				(AppTips.dropNode, addNodeButton),
+				// situational tips; these wait until their anchor is visible and rules are met
+				(AppTips.editTags, mapView.editToolbar),
+				(AppTips.upload, uploadButton),
+				(AppTips.extendToWay, addNodeButton),
+				(AppTips.closeWayByDrag, mapView.editToolbar),
+				(AppTips.makeRectangular, mapView.editToolbar)
 			])
 		}
 	}
@@ -1639,6 +1645,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 	// MARK: Button actions
 
 	@IBAction func toggleLocationButton(_ sender: Any?) {
+		tipActionPerformed(.location)
 		switch gpsState {
 		case GPS_STATE.NONE:
 			// if the user hasn't rotated the screen then start facing north, otherwise follow heading

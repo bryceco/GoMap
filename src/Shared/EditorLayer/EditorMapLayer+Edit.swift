@@ -411,6 +411,9 @@ extension EditorMapLayer {
 	}
 
 	private func finishNodeMerge(survivor: OsmNode, dragWay: OsmWay) {
+		if dragWay.isClosed() {
+			tipActionPerformed(.closeWayByDrag)
+		}
 		if dragWay.isArea() {
 			selectedNode = nil
 			let pt = viewPort.mapTransform.screenPoint(forLatLon: survivor.latLon, birdsEye: true)
@@ -859,6 +862,7 @@ extension EditorMapLayer {
 				}
 				owner.startObjectRotation()
 			case .RECTANGULARIZE:
+				tipActionPerformed(.makeRectangular)
 				guard let way = selectedWay else { return }
 				if way.ident >= 0, !viewPort.boundingLatLonForScreen().containsRect(way.boundingBox) {
 					throw OsmMapData.EditError.text(NSLocalizedString("The selected way must be completely visible",
@@ -928,6 +932,7 @@ extension EditorMapLayer {
 				presentAlert(alert: sheet, location: .rect(rc))
 				return // skip the setNeedsLayout/didUpdateObject at the end since action is deferred
 			case .EDITTAGS:
+				tipActionPerformed(.editTags)
 				owner.presentTagEditor(nil)
 			case .ADDNOTE:
 				owner.addNote()
@@ -1407,6 +1412,7 @@ extension EditorMapLayer {
 			// drop a new pin
 			owner.unselectAll()
 			owner.placePushpin(at: dropPoint, object: nil)
+			tipActionPerformed(.dropNode)
 			return
 		}
 
@@ -1445,6 +1451,7 @@ extension EditorMapLayer {
 		switch extendSelectedWay(to: dropPoint, from: pushpinView.arrowPoint) {
 		case let .success(pt):
 			owner.placePushpinForSelection(at: pt)
+			tipActionPerformed(.extendToWay)
 		case let .failure(error):
 			if case let .text(text) = error {
 				display.showAlert(NSLocalizedString("Can't extend way", comment: ""), message: text)

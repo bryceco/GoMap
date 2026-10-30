@@ -868,6 +868,7 @@ class UploadViewController: UIViewController {
 					var editCount = UserPrefs.shared.uploadCountPerVersion.value ?? 0
 					editCount += 1
 					UserPrefs.shared.uploadCountPerVersion.value = editCount
+					tipActionPerformed(.upload)
 					dismiss(animated: true, completion: {
 						appDelegate.mapView.setNeedsLayout()
 						MessageDisplay.shared.flashMessage(

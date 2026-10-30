@@ -428,6 +428,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 	// show/hide edit control based on selection
 	func updateEditControl() {
+		tipSelectionChanged(hasPushpin: pushPin != nil, selection: editorLayer.selectedPrimary)
 		let show = pushPin != nil || editorLayer.selectedPrimary != nil
 		editToolbar.isHidden = !show
 		mainView.rulerView.isHidden = show

@@ -2,6 +2,34 @@ import SwiftUI
 import TipKit
 import UIKit
 
+// MARK: - State
+
+@available(iOS 17.0, *)
+enum TipState {
+	/// What the user currently has selected, for tips that only make sense
+	/// in a particular situation. Updated from MapView.updateEditControl().
+	@Parameter(.transient) static var hasPushpin: Bool = false
+	/// 0 when no way is selected
+	@Parameter(.transient) static var selectedWayNodeCount: Int = 0
+	@Parameter(.transient) static var selectedWayIsClosed: Bool = false
+}
+
+/// Record that the user performed the action a tip describes, so it is never shown.
+func tipActionPerformed(_ id: TipID) {
+	if #available(iOS 17.0, *) {
+		AppTips.tip(id).invalidate(reason: .actionPerformed)
+	}
+}
+
+/// Update selection state used by tip rules.
+func tipSelectionChanged(hasPushpin: Bool, selection: OsmBaseObject?) {
+	guard #available(iOS 17.0, *) else { return }
+	let way = selection as? OsmWay
+	TipState.hasPushpin = hasPushpin
+	TipState.selectedWayNodeCount = way?.nodes.count ?? 0
+	TipState.selectedWayIsClosed = way?.isClosed() ?? false
+}
+
 // MARK: - Tip definition
 
 /// Identifier for every tip in the app. Not availability-gated so call sites
@@ -53,25 +81,37 @@ enum AppTips {
 	// Onboarding
 	static let location = AppTip(.location, title: "Find yourself",
 	                             message: "Tap to jump to your current location. Tap again to follow your heading.",
-	                             image: Image(systemName: "location"), implemented: true)
+	                             image: Image(systemName: "location"),
+	                             implemented: true)
 	static let dropNode = AppTip(.dropNode, title: "Add something",
 	                             message: "Tap + to drop a point at the crosshairs.",
-	                             image: Image(systemName: "plus"), implemented: true)
+	                             image: Image(systemName: "plus"),
+	                             implemented: true)
 	static let editTags = AppTip(.editTags, title: "Say what it is",
 	                             message: "Tap Tags to choose a feature type and fill in details.",
-	                             image: Image(systemName: "tag"))
+	                             image: Image(systemName: "tag"),
+	                             implemented: true)
 	static let upload = AppTip(.upload, title: "Share your work",
 	                           message: "Tap Upload to send your edits to OpenStreetMap.",
-	                           image: Image(systemName: "icloud.and.arrow.up"))
+	                           image: Image(systemName: "icloud.and.arrow.up"),
+	                           implemented: true)
 	static let extendToWay = AppTip(.extendToWay, title: "Draw a line",
 	                                message: "With a point selected, tap + again to extend it into a way.",
-	                                image: Image(systemName: "scribble"))
+	                                image: Image(systemName: "scribble"),
+	                                rules: [#Rule(TipState.$hasPushpin) { $0 == true },
+	                                        #Rule(TipState.$selectedWayNodeCount) { $0 == 0 }],
+	                                implemented: true)
 	static let closeWayByDrag = AppTip(.closeWayByDrag, title: "Close the loop",
 	                                   message: "Drag the last point onto the first to make a closed area.",
-	                                   image: Image(systemName: "arrow.triangle.capsulepath"))
+	                                   image: Image(systemName: "arrow.triangle.capsulepath"),
+	                                   rules: [#Rule(TipState.$selectedWayIsClosed) { $0 == false },
+	                                           #Rule(TipState.$selectedWayNodeCount) { $0 >= 4 }],
+	                                   implemented: true)
 	static let makeRectangular = AppTip(.makeRectangular, title: "Square it up",
 	                                    message: "Choose More… then Make Rectangular to straighten the corners.",
-	                                    image: Image(systemName: "square"))
+	                                    image: Image(systemName: "square"),
+	                                    rules: [#Rule(TipState.$selectedWayIsClosed) { $0 == true }],
+	                                    implemented: true)
 
 	// Main map
 	static let orientation = AppTip(.orientation, title: "Stay oriented",
@@ -164,19 +204,48 @@ enum AppTips {
 	                                    message: "Pick OpenHistoricalMap or OpenGeofiction to contribute to other communities.",
 	                                    implemented: true)
 
-	/// Every tip, in TipID order.
-	static let all: [AppTip] = [
-		location, dropNode, editTags, upload, extendToWay, closeWayByDrag, makeRectangular,
-		orientation, search, mapLayers, holdAndTap, doubleTapDragZoom, overlappingObjects, plusButtonSide,
-		closeWay, circularize, turnRestrictions, copyPasteTags,
-		compassDirection, buildingHeight, openingHoursCamera, wikiInfo,
-		gpxTraces, quests, questBuilder, dataLayers, notesAndFixme, imageryOffset,
-		customFeatures, customFields, filesApp, searchCoordinates, clearCache, alternateServer
-	]
-
+	/// Exhaustive so the compiler flags a TipID with no catalog entry.
 	static func tip(_ id: TipID) -> AppTip {
-		return all.first(where: { $0.id == id.rawValue })!
+		switch id {
+		case .location: return location
+		case .dropNode: return dropNode
+		case .editTags: return editTags
+		case .upload: return upload
+		case .extendToWay: return extendToWay
+		case .closeWayByDrag: return closeWayByDrag
+		case .makeRectangular: return makeRectangular
+		case .orientation: return orientation
+		case .search: return search
+		case .mapLayers: return mapLayers
+		case .holdAndTap: return holdAndTap
+		case .doubleTapDragZoom: return doubleTapDragZoom
+		case .overlappingObjects: return overlappingObjects
+		case .plusButtonSide: return plusButtonSide
+		case .closeWay: return closeWay
+		case .circularize: return circularize
+		case .turnRestrictions: return turnRestrictions
+		case .copyPasteTags: return copyPasteTags
+		case .compassDirection: return compassDirection
+		case .buildingHeight: return buildingHeight
+		case .openingHoursCamera: return openingHoursCamera
+		case .wikiInfo: return wikiInfo
+		case .gpxTraces: return gpxTraces
+		case .quests: return quests
+		case .questBuilder: return questBuilder
+		case .dataLayers: return dataLayers
+		case .notesAndFixme: return notesAndFixme
+		case .imageryOffset: return imageryOffset
+		case .customFeatures: return customFeatures
+		case .customFields: return customFields
+		case .filesApp: return filesApp
+		case .searchCoordinates: return searchCoordinates
+		case .clearCache: return clearCache
+		case .alternateServer: return alternateServer
+		}
 	}
+
+	/// Every tip, in TipID order.
+	static let all: [AppTip] = TipID.allCases.map(tip)
 }
 
 // MARK: - Configuration
@@ -225,22 +294,30 @@ private func debugPrintTipStatus() {
 
 @available(iOS 17.0, *)
 extension UIViewController {
-	/// Present each eligible tip in order, waiting for dismissal between them.
-	func showTips(_ tips: [(any Tip, UIView?)]) {
-		Task { @MainActor in
-			for (tip, view) in tips {
-				guard let view, view.window != nil else { continue }
+	/// Present each eligible tip, waiting for dismissal between them. Each tip
+	/// waits independently for its rules to be satisfied and its anchor to be
+	/// visible, so a tip that never becomes eligible doesn't block the ones
+	/// after it, and situational tips can appear long after the screen was shown.
+	@MainActor func showTips(_ tips: [(any Tip, UIView?)]) {
+		for (tip, view) in tips {
+			guard let view, view.window != nil else { continue }
+			// a screen may call this on every viewDidAppear; don't wait twice for the same tip
+			guard !tipsBeingWaitedOn.contains(tip.id) else { continue }
+			tipsBeingWaitedOn.insert(tip.id)
 
-				// Wait for tip to become eligible (data store loads async).
+			Task { @MainActor in
+				defer { tipsBeingWaitedOn.remove(tip.id) }
+
+				// Wait for tip to become eligible (data store loads async, rules may be met later).
 				// If the tip is invalidated the sequence completes and we skip it.
 				for await shouldDisplay in tip.shouldDisplayUpdates {
 					guard shouldDisplay else { continue }
 					break
 				}
-				guard tip.shouldDisplay else { continue }
+				guard tip.shouldDisplay else { return }
 
-				// Wait for any previous popover to be dismissed.
-				while view.isHidden || presentedViewController != nil {
+				// Wait for the anchor to be visible and any previous popover to be dismissed.
+				while view.isHidden || view.window == nil || presentedViewController != nil {
 					try? await Task.sleep(for: .milliseconds(200))
 				}
 
@@ -253,6 +330,8 @@ extension UIViewController {
 		}
 	}
 }
+
+@MainActor private var tipsBeingWaitedOn = Set<String>()
 
 @available(iOS 17.0, *)
 extension UIViewController {
