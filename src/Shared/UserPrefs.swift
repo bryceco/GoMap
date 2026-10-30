@@ -95,6 +95,7 @@ final class UserPrefs {
 	let uploadSource = Pref<String>(key: "uploadSource", ubiquitous: true)
 	let userDidPreviousUpload = Pref<Bool>(key: "userDidPreviousUpload", ubiquitous: true)
 	let uploadCountPerVersion = Pref<Int>(key: "uploadCount")
+	let resetTipsOnNextLaunch = Pref<Bool>(key: "resetTipsOnNextLaunch")
 
 	// MapView
 	let view_scale = Pref<Double>(key: "view.scale")

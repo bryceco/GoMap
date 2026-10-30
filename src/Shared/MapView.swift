@@ -427,6 +427,11 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 	let editToolbarPasteButtonDark: UIView? = pasteButtonWith(style: .dark)
 
 	// show/hide edit control based on selection
+	/// The edit toolbar button for an action, if it is currently shown. Used to anchor tips.
+	func editToolbarButton(for action: EDIT_ACTION) -> UIView? {
+		return editToolbar.isHidden ? nil : editToolbar.controls.first(where: { $0.tag == action.rawValue })
+	}
+
 	func updateEditControl() {
 		tipSelectionChanged(hasPushpin: pushPin != nil, selection: editorLayer.selectedPrimary)
 		let show = pushPin != nil || editorLayer.selectedPrimary != nil
@@ -481,6 +486,7 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 					button.onTap = { [weak self] _ in
 						self?.editorLayer.performEdit(action)
 					}
+					button.tag = action.rawValue
 					return button
 				}
 			}

@@ -461,11 +461,14 @@ final class MainViewController: UIViewController, DPadDelegate,
 				(AppTips.mapLayers, displayButton),
 				(AppTips.dropNode, addNodeButton),
 				// situational tips; these wait until their anchor is visible and rules are met
-				(AppTips.editTags, mapView.editToolbar),
 				(AppTips.upload, uploadButton),
-				(AppTips.extendToWay, addNodeButton),
-				(AppTips.closeWayByDrag, mapView.editToolbar),
-				(AppTips.makeRectangular, mapView.editToolbar)
+				(AppTips.extendToWay, addNodeButton)
+			])
+			// toolbar buttons are recreated whenever the selection changes, so look them up lazily
+			showTips([
+				(AppTips.editTags, { [weak self] in self?.mapView.editToolbarButton(for: .EDITTAGS) }),
+				(AppTips.closeWayByDrag, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) }),
+				(AppTips.makeRectangular, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) })
 			])
 		}
 	}

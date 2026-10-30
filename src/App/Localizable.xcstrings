@@ -53903,6 +53903,12 @@
         }
       }
     },
+    "Reset and Quit" : {
+
+    },
+    "Reset Tips" : {
+
+    },
     "Restrict" : {
       "comment" : "Edit action",
       "localizations" : {
@@ -59114,6 +59120,9 @@
           }
         }
       }
+    },
+    "The app will quit. Tips are reset when it is next launched." : {
+
     },
     "The current location cannot be determined: " : {
       "localizations" : {

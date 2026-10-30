@@ -5,7 +5,6 @@
 //  Copyright © 2021 Bryce Cogswell. All rights reserved.
 //
 
-import TipKit
 import UIKit
 
 class AdvancedSettingsViewController: TableViewControllerMac, UIAdaptivePresentationControllerDelegate {
@@ -118,9 +117,22 @@ class AdvancedSettingsViewController: TableViewControllerMac, UIAdaptivePresenta
 
 	@available(iOS 17.0, *)
 	@IBAction func resetTips(_ sender: UIButton) {
-		try? Tips.resetDatastore()
-		sender.isEnabled = false
-		dismiss(animated: true)
+		// TipKit only allows resetting before Tips.configure(), so flag it and
+		// relaunch. Quitting programmatically is acceptable for a developer setting.
+		let alert = UIAlertController(
+			title: NSLocalizedString("Reset Tips", comment: ""),
+			message: NSLocalizedString("The app will quit. Tips are reset when it is next launched.",
+			                           comment: ""),
+			preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .cancel))
+		alert.addAction(UIAlertAction(title: NSLocalizedString("Reset and Quit", comment: ""),
+		                              style: .destructive)
+		{ _ in
+			UserPrefs.shared.resetTipsOnNextLaunch.value = true
+			UserPrefs.shared.synchronize()
+			exit(0)
+			})
+		present(alert, animated: true)
 	}
 
 	@IBAction func showServersList(_ sender: Any) {

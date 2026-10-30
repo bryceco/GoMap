@@ -253,6 +253,10 @@ enum AppTips {
 func configureTips() {
 	guard #available(iOS 17.0, *) else { return }
 	do {
+		if UserPrefs.shared.resetTipsOnNextLaunch.value ?? false {
+			UserPrefs.shared.resetTipsOnNextLaunch.value = false
+			try Tips.resetDatastore()
+		}
 		try Tips.configure([
 			.displayFrequency(.immediate)
 		])
@@ -279,12 +283,12 @@ private func debugPrintTipStatus() {
 				status = "not eligible"
 			case .available:
 				status = "ready"
-			case .invalidated(let x):
+			case let .invalidated(x):
 				status = "perfomed: \(x)"
 			@unknown default:
 				fatalError()
 			}
-			print("[TipKit] \(tip.id): implemented=\(tip.implemented ? "yes" : "no") status=\(status)")
+			print("[TipKit] \(tip.id): implemented=\(tip.implemented ? "yes" : "no") status=\"\(status)\"")
 		}
 	}
 }
@@ -299,8 +303,16 @@ extension UIViewController {
 	/// visible, so a tip that never becomes eligible doesn't block the ones
 	/// after it, and situational tips can appear long after the screen was shown.
 	@MainActor func showTips(_ tips: [(any Tip, UIView?)]) {
-		for (tip, view) in tips {
-			guard let view, view.window != nil else { continue }
+		showTips(tips.compactMap { tip, view in
+			guard let view, view.window != nil else { return nil }
+			return (tip, { view })
+		})
+	}
+
+	/// As above, but the anchor view is looked up when the tip is ready to be shown.
+	/// Use this for views that are created lazily or recreated, such as toolbar buttons.
+	@MainActor func showTips(_ tips: [(any Tip, () -> UIView?)]) {
+		for (tip, anchorView) in tips {
 			// a screen may call this on every viewDidAppear; don't wait twice for the same tip
 			guard !tipsBeingWaitedOn.contains(tip.id) else { continue }
 			tipsBeingWaitedOn.insert(tip.id)
@@ -316,8 +328,13 @@ extension UIViewController {
 				}
 				guard tip.shouldDisplay else { return }
 
-				// Wait for the anchor to be visible and any previous popover to be dismissed.
-				while view.isHidden || view.window == nil || presentedViewController != nil {
+				// Wait for the anchor to exist and be visible, and any previous popover to be dismissed.
+				var view: UIView
+				while true {
+					if let v = anchorView(), !v.isHidden, v.window != nil, presentedViewController == nil {
+						view = v
+						break
+					}
 					try? await Task.sleep(for: .milliseconds(200))
 				}
 
