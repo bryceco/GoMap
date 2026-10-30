@@ -517,6 +517,8 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 
 			editToolbar.controls = actions
 		}
+		// after the toolbar is rebuilt, so tips can find its buttons
+		mainView.showSituationalTips()
 	}
 
 	func presentEditActionSheet(_ sender: Any?) {

@@ -6,18 +6,51 @@ import UIKit
 
 @available(iOS 17.0, *)
 enum TipState {
+	/// Lifetime number of edits the user has made. Used to hold back tips that
+	/// aren't useful until the user has done some mapping.
+	@Parameter static var editCount: Int = 0
 	/// What the user currently has selected, for tips that only make sense
 	/// in a particular situation. Updated from MapView.updateEditControl().
 	@Parameter(.transient) static var hasPushpin: Bool = false
+	/// False when the pushpin is for a new, not-yet-created node
+	@Parameter(.transient) static var hasSelection: Bool = false
+	/// Whether the user has ever opened and closed the tag editor
+	@Parameter static var hasOpenedTags: Bool = false
+	/// Whether the user has ever set tags on an object
+	@Parameter static var hasSetTags: Bool = false
 	/// 0 when no way is selected
 	@Parameter(.transient) static var selectedWayNodeCount: Int = 0
 	@Parameter(.transient) static var selectedWayIsClosed: Bool = false
+}
+
+/// Record that the user made an edit. Called from OsmMapData.
+func tipDidEdit() {
+	if #available(iOS 17.0, *) {
+		TipState.editCount += 1
+	}
+}
+
+/// Record that the tag editor was dismissed. Called from POITabBarController.
+func tipTagEditorClosed() {
+	if #available(iOS 17.0, *) {
+		TipState.hasOpenedTags = true
+	}
+}
+
+/// Record that tags were set on an object. Called from OsmMapData.
+func tipDidSetTags() {
+	if #available(iOS 17.0, *) {
+		TipState.hasSetTags = true
+	}
 }
 
 /// Record that the user performed the action a tip describes, so it is never shown.
 func tipActionPerformed(_ id: TipID) {
 	if #available(iOS 17.0, *) {
 		AppTips.tip(id).invalidate(reason: .actionPerformed)
+		MainActor.assumeIsolated {
+			TipPresenter.shared.actionPerformed(id)
+		}
 	}
 }
 
@@ -26,6 +59,7 @@ func tipSelectionChanged(hasPushpin: Bool, selection: OsmBaseObject?) {
 	guard #available(iOS 17.0, *) else { return }
 	let way = selection as? OsmWay
 	TipState.hasPushpin = hasPushpin
+	TipState.hasSelection = selection != nil
 	TipState.selectedWayNodeCount = way?.nodes.count ?? 0
 	TipState.selectedWayIsClosed = way?.isClosed() ?? false
 }
@@ -94,12 +128,14 @@ enum AppTips {
 	static let upload = AppTip(.upload, title: "Share your work",
 	                           message: "Tap Upload to send your edits to OpenStreetMap.",
 	                           image: Image(systemName: "icloud.and.arrow.up"),
+	                           rules: [#Rule(TipState.$hasSetTags) { $0 == true }],
 	                           implemented: true)
 	static let extendToWay = AppTip(.extendToWay, title: "Draw a line",
 	                                message: "With a point selected, tap + again to extend it into a way.",
 	                                image: Image(systemName: "scribble"),
-	                                rules: [#Rule(TipState.$hasPushpin) { $0 == true },
-	                                        #Rule(TipState.$selectedWayNodeCount) { $0 == 0 }],
+	                                rules: [#Rule(TipState.$hasOpenedTags) { $0 == true },
+	                                        #Rule(TipState.$hasPushpin) { $0 == true },
+	                                        #Rule(TipState.$hasSelection) { $0 == false }],
 	                                implemented: true)
 	static let closeWayByDrag = AppTip(.closeWayByDrag, title: "Close the loop",
 	                                   message: "Drag the last point onto the first to make a closed area.",
@@ -117,13 +153,18 @@ enum AppTips {
 	static let orientation = AppTip(.orientation, title: "Stay oriented",
 	                                message: "Use the compass to switch between north-up and heading-up views.",
 	                                image: Image(uiImage: UIImage(named: "temaki-compass")!.withRenderingMode(.alwaysTemplate)),
+	                                rules: [#Rule(TipState.$editCount) { $0 >= 5 }],
 	                                implemented: true)
 	static let search = AppTip(.search, title: "Find places quickly",
 	                           message: "Search for addresses, places, and presets without leaving the map.",
-	                           image: Image(systemName: "magnifyingglass"), implemented: true)
+	                           image: Image(systemName: "magnifyingglass"),
+	                           rules: [#Rule(TipState.$editCount) { $0 >= 5 }],
+	                           implemented: true)
 	static let mapLayers = AppTip(.mapLayers, title: "Switch map layers",
 	                              message: "Tap for display options or long-press to pick recent imagery.",
-	                              image: Image(systemName: "map"), implemented: true)
+	                              image: Image(systemName: "map"),
+	                              rules: [#Rule(TipState.$editCount) { $0 >= 5 }],
+	                              implemented: true)
 	static let holdAndTap = AppTip(.holdAndTap, title: "Add points faster",
 	                               message: "Hold the + button and tap the map to add several points without lifting your finger.",
 	                               image: Image(systemName: "hand.tap"))
@@ -170,6 +211,7 @@ enum AppTips {
 	static let gpxTraces = AppTip(.gpxTraces,
 	                              title: "Record GPX traces",
 	                              message: "Keep the switch on to capture tracks in the background, or import a GPX via Files or the share sheet.",
+	                              rules: [#Rule(TipState.$editCount) { $0 >= 25 }],
 	                              implemented: true)
 	static let quests = AppTip(.quests, title: "Tackle quests",
 	                           message: "Show quests to discover nearby tasks contributed by the community.",
@@ -296,73 +338,164 @@ private func debugPrintTipStatus() {
 
 // MARK: - Presentation
 
+/// A tip and the view it points at. The view is looked up when the tip is
+/// about to be shown, since toolbar buttons are recreated on selection changes.
 @available(iOS 17.0, *)
-extension UIViewController {
-	/// Present each eligible tip, waiting for dismissal between them. Each tip
-	/// waits independently for its rules to be satisfied and its anchor to be
-	/// visible, so a tip that never becomes eligible doesn't block the ones
-	/// after it, and situational tips can appear long after the screen was shown.
-	@MainActor func showTips(_ tips: [(any Tip, UIView?)]) {
-		showTips(tips.compactMap { tip, view in
-			guard let view, view.window != nil else { return nil }
-			return (tip, { view })
-		})
-	}
+typealias TipCandidate = (tip: AppTip, anchor: () -> UIView?)
 
-	/// As above, but the anchor view is looked up when the tip is ready to be shown.
-	/// Use this for views that are created lazily or recreated, such as toolbar buttons.
-	@MainActor func showTips(_ tips: [(any Tip, () -> UIView?)]) {
-		for (tip, anchorView) in tips {
-			// a screen may call this on every viewDidAppear; don't wait twice for the same tip
-			guard !tipsBeingWaitedOn.contains(tip.id) else { continue }
-			tipsBeingWaitedOn.insert(tip.id)
+/// Decides which tip, if any, to show right now. Shows at most one tip at a
+/// time and no more than one every `cooldown` seconds, so the user is never
+/// faced with a string of popovers. Candidates are listed in priority order.
+@available(iOS 17.0, *)
+@MainActor
+final class TipPresenter {
+	static let shared = TipPresenter()
 
-			Task { @MainActor in
-				defer { tipsBeingWaitedOn.remove(tip.id) }
+	/// Time to wait after a tip is shown before showing another, unless the
+	/// user performs the action the tip describes (see actionPerformed).
+	var cooldown: TimeInterval = 30
 
-				// Wait for tip to become eligible (data store loads async, rules may be met later).
-				// If the tip is invalidated the sequence completes and we skip it.
+	private var nextAllowed = Date.distantPast
+	private var retry: Task<Void, Never>?
+	/// One observer per tip, kept for the life of the app.
+	private var observers: [String: Task<Void, Never>] = [:]
+	private var current: (tip: AppTip, popover: UIViewController)?
+	/// Dismisses the current tip when its button is tapped
+	private var anchorTapAction: UIAction?
+	/// The most recent candidate lists, re-evaluated after the cooldown so a
+	/// tip that was held back by it still gets its turn.
+	private var launchCandidates: [TipCandidate] = []
+	private var situationalCandidates: [TipCandidate] = []
+	private weak var presenter: UIViewController?
+
+	private init() {}
+
+	/// Watch a tip's eligibility. When it becomes eligible (the datastore
+	/// finished loading, or a rule was satisfied) try to show it. When it is
+	/// invalidated (the user tapped the close button, or performed the action)
+	/// dismiss its popover, which TipKit doesn't do for us in UIKit.
+	private func observe(_ candidates: [TipCandidate]) {
+		for (tip, _) in candidates where observers[tip.id] == nil {
+			observers[tip.id] = Task { @MainActor in
 				for await shouldDisplay in tip.shouldDisplayUpdates {
-					guard shouldDisplay else { continue }
-					break
-				}
-				guard tip.shouldDisplay else { return }
-
-				// Wait for the anchor to exist and be visible, and any previous popover to be dismissed.
-				var view: UIView
-				while true {
-					if let v = anchorView(), !v.isHidden, v.window != nil, presentedViewController == nil {
-						view = v
-						break
+					if shouldDisplay {
+						showNext()
+					} else if let current, current.tip.id == tip.id {
+						current.popover.dismiss(animated: true)
+						self.current = nil
 					}
-					try? await Task.sleep(for: .milliseconds(200))
 				}
-
-				let anchor = tipAnchor(for: view)
-				let popover = TipUIPopoverViewController(tip, sourceItem: view)
-				popover.popoverPresentationController?.sourceRect = anchor.rect
-				popover.popoverPresentationController?.permittedArrowDirections = anchor.arrow
-				present(popover, animated: true)
 			}
 		}
 	}
-}
 
-@MainActor private var tipsBeingWaitedOn = Set<String>()
+	/// Tips tied to a screen rather than to what the user is doing. Called once from viewDidAppear.
+	func setLaunchCandidates(_ candidates: [TipCandidate], from vc: UIViewController) {
+		launchCandidates = candidates
+		presenter = vc
+		observe(candidates)
+		showNext()
+	}
 
-@available(iOS 17.0, *)
-extension UIViewController {
+	/// Tips tied to the current selection. Called whenever the selection changes.
+	func setSituationalCandidates(_ candidates: [TipCandidate], from vc: UIViewController) {
+		situationalCandidates = candidates
+		presenter = vc
+		observe(candidates)
+		showNext()
+	}
+
+	/// The user did the thing a tip describes, so the next tip can follow
+	/// promptly rather than waiting out the cooldown.
+	func actionPerformed(_ id: TipID) {
+		let delay: TimeInterval
+		switch id {
+		case .location: delay = 5 // give the map a moment to move
+		case .dropNode: delay = 1 // let the toolbar appear
+		default: delay = 0
+		}
+		nextAllowed = min(nextAllowed, Date().addingTimeInterval(delay))
+		showNext()
+	}
+
+	private func showNext() {
+		guard let vc = presenter else { return }
+		// Something else (possibly a scene being dismissed) is up; try again shortly.
+		var remaining = nextAllowed.timeIntervalSinceNow
+		if vc.presentedViewController != nil {
+			remaining = max(remaining, 0.5)
+		}
+		if remaining > 0 {
+			// replace any pending retry, which may have been scheduled for later
+			retry?.cancel()
+			retry = Task { @MainActor in
+				try? await Task.sleep(for: .seconds(remaining))
+				guard !Task.isCancelled else { return }
+				showNext()
+			}
+			return
+		}
+		// situational tips first: they're about what the user is doing right now
+		for (tip, anchor) in situationalCandidates + launchCandidates {
+			guard tip.shouldDisplay,
+			      let view = anchor(), !view.isHidden, view.window != nil
+			else { continue }
+			// a freshly created toolbar button has no size until layout runs
+			vc.view.layoutIfNeeded()
+			guard !view.bounds.isEmpty else { continue }
+			nextAllowed = Date().addingTimeInterval(cooldown)
+			let a = Self.tipAnchor(for: view, in: vc.view)
+			let popover = TipUIPopoverViewController(tip, sourceItem: view)
+			popover.popoverPresentationController?.sourceRect = a.rect
+			popover.popoverPresentationController?.permittedArrowDirections = a.arrow
+			if let control = view as? UIControl {
+				// Let the tap reach the button rather than being swallowed as a
+				// tap-outside-to-dismiss. Close the popover on touch-down, without
+				// animation, so that by touch-up the button is free to present
+				// something of its own.
+				popover.popoverPresentationController?.passthroughViews = [control]
+				let action = UIAction { [weak self, weak control] _ in
+					popover.dismiss(animated: false)
+					tip.invalidate(reason: .actionPerformed)
+					if let self, let control, let anchorTapAction {
+						control.removeAction(anchorTapAction, for: .touchDown)
+						self.anchorTapAction = nil
+						self.current = nil
+					}
+				}
+				control.addAction(action, for: .touchDown)
+				anchorTapAction = action
+			}
+			current = (tip, popover)
+			vc.present(popover, animated: true)
+			return
+		}
+	}
+
 	/// Anchor on the edge of `view` that faces away from the nearest screen edge,
 	/// and force the matching arrow, so the arrow touches the button's border.
-	private func tipAnchor(for view: UIView) -> (rect: CGRect, arrow: UIPopoverArrowDirection) {
-		let f = view.convert(view.bounds, to: self.view)
+	private static func tipAnchor(for view: UIView,
+	                              in container: UIView) -> (rect: CGRect, arrow: UIPopoverArrowDirection)
+	{
+		let f = view.convert(view.bounds, to: container)
 		let b = view.bounds
-		if f.midY > self.view.bounds.midY {
+		if f.midY > container.bounds.midY {
 			// lower half of screen: popover above, arrow touches the top edge
 			return (CGRect(x: b.minX, y: b.minY, width: b.width, height: 1), .down)
 		} else {
 			// upper half: popover below, arrow touches the bottom edge
 			return (CGRect(x: b.minX, y: b.maxY - 1, width: b.width, height: 1), .up)
 		}
+	}
+}
+
+@available(iOS 17.0, *)
+extension UIViewController {
+	/// Show the first eligible tip for this screen, subject to the global cooldown.
+	@MainActor func showTips(_ tips: [(AppTip, UIView?)]) {
+		TipPresenter.shared.setLaunchCandidates(tips.compactMap { tip, view in
+			guard let view else { return nil }
+			return (tip, { view })
+		}, from: self)
 	}
 }

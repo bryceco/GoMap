@@ -295,6 +295,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 
 	@objc
 	func setTags(_ dict: [String: String], for object: OsmBaseObject) {
+		tipDidSetTags()
 		let localDict = OsmTags.DictWithTagsTruncatedTo255(dict)
 		registerUndoCommentString(NSLocalizedString("set tags", comment: ""))
 		undoManager.apply(.setTags(object, localDict))
@@ -493,6 +494,7 @@ final class OsmMapData: NSObject, NSSecureCoding {
 	}
 
 	func registerUndoCommentString(_ comment: String) {
+		tipDidEdit()
 		if let context = undoContextForComment?(comment) {
 			registerUndoCommentContext(context)
 		}

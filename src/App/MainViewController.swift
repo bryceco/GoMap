@@ -454,23 +454,27 @@ final class MainViewController: UIViewController, DPadDelegate,
 		}
 
 		if #available(iOS 17.0, *) {
+			// in priority order; at most one is shown per launch/cooldown
 			showTips([
 				(AppTips.location, locationButton),
+				(AppTips.dropNode, addNodeButton),
 				(AppTips.orientation, compassButton),
 				(AppTips.search, searchButton),
-				(AppTips.mapLayers, displayButton),
-				(AppTips.dropNode, addNodeButton),
-				// situational tips; these wait until their anchor is visible and rules are met
-				(AppTips.upload, uploadButton),
-				(AppTips.extendToWay, addNodeButton)
-			])
-			// toolbar buttons are recreated whenever the selection changes, so look them up lazily
-			showTips([
-				(AppTips.editTags, { [weak self] in self?.mapView.editToolbarButton(for: .EDITTAGS) }),
-				(AppTips.closeWayByDrag, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) }),
-				(AppTips.makeRectangular, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) })
+				(AppTips.mapLayers, displayButton)
 			])
 		}
+	}
+
+	/// Tips about the current selection or pushpin. Called whenever it changes.
+	func showSituationalTips() {
+		guard #available(iOS 17.0, *) else { return }
+		TipPresenter.shared.setSituationalCandidates([
+			(AppTips.editTags, { [weak self] in self?.mapView.editToolbarButton(for: .EDITTAGS) }),
+			(AppTips.closeWayByDrag, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) }),
+			(AppTips.makeRectangular, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) }),
+			(AppTips.extendToWay, { [weak self] in self?.addNodeButton }),
+			(AppTips.upload, { [weak self] in self?.uploadButton })
+		], from: self)
 	}
 
 	func setupAccessibility() {
@@ -688,6 +692,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		uploadButton.tintColor = color
 		uploadButton.isEnabled = changeCount > 0
 		uploadButton.isHidden = changeCount == 0
+		showSituationalTips()
 	}
 
 	func updateGpsButtonState() {

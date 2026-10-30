@@ -124,7 +124,7 @@ protocol EditorMapLayerOwner: UIView {
 
 enum EDIT_ACTION: Int {
 	// used by edit toolbar:
-	case EDITTAGS
+	case EDITTAGS = 1 // starts at 1 so rawValue can be used as a UIView.tag
 	case ADDNOTE
 	case DELETE
 	case MORE

@@ -169,6 +169,7 @@ class POITabBarController: UITabBarController {
 		super.viewWillDisappear(animated)
 		if isBeingDismissed {
 			preservedFeatureTypeSearchText = nil
+			tipTagEditorClosed()
 		}
 	}
 
