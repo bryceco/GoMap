@@ -15,8 +15,8 @@ class FeaturePresetCell: UITableViewCell {
 
 	override func prepareForReuse() {
 		super.prepareForReuse()
-		valueField.key = ""
-		valueField.text = ""
+		valueField?.key = ""
+		valueField?.text = ""
 	}
 }
 
