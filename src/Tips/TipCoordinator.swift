@@ -76,7 +76,7 @@ enum TipID: String, CaseIterable {
 	case orientation, search, mapLayers
 	case holdAndTap, doubleTapDragZoom, overlappingObjects, plusButtonSide
 	// Editing
-	case closeWay, circularize, turnRestrictions, copyPasteTags
+	case closeArea, circularize, turnRestrictions, copyPasteTags
 	case compassDirection, buildingHeight, openingHoursCamera, wikiInfo
 	// Display settings
 	case gpxTraces, quests, questBuilder, dataLayers, notesAndFixme, imageryOffset
@@ -155,7 +155,7 @@ extension TipID {
 		case .makeRectangular:
 			return AppTip(self, title: "Square it up",
 			              message: "Choose More… then Make Rectangular to straighten the corners.",
-			              image: Image(systemName: "square"),
+			              image: Image(systemName: "rectangle"),
 			              rules: [#Rule(TipState.$selectedWayIsClosed) { $0 == true }],
 			              implemented: true)
 		// Main map
@@ -194,10 +194,10 @@ extension TipID {
 			              message: "You can move the + button to the other side of the screen in Display settings.",
 			              image: Image(systemName: "arrow.left.arrow.right"))
 		// Editing
-		case .closeWay:
-			return AppTip(self, title: "Close this way",
-			              message: "Areas like buildings need a closed outline. Use Close Way from the edit menu.",
-			              image: Image(systemName: "arrow.triangle.capsulepath"))
+		case .closeArea:
+			return AppTip(self, title: "Close this area",
+			              message: "Close an area by automatically sharing the nodes of an existing way.",
+			              image: Image(systemName: "arrow.triangle.turn.up.right.circle"))
 		case .circularize:
 			return AppTip(self, title: "Make it round",
 			              message: "Choose More… then Make Circular. Pick the number of points to get an octagon or other polygon instead.",
@@ -205,7 +205,7 @@ extension TipID {
 		case .turnRestrictions:
 			return AppTip(self, title: "Edit turn restrictions",
 			              message: "Select a node shared by two roads and choose Restrict from the edit menu.",
-			              image: Image(systemName: "arrow.turn.up.right"))
+			              image: Image(systemName: "nosign"))
 		case .copyPasteTags:
 			return AppTip(self,
 			              title: "Copy and paste tags",

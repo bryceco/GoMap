@@ -470,7 +470,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		guard #available(iOS 17.0, *) else { return }
 		TipPresenter.shared.setSituationalCandidates([
 			(TipID.editTags.tip, { [weak self] in self?.mapView.editToolbarButton(for: .EDITTAGS) }),
-			(TipID.closeWayByDrag.tip, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) }),
+			(TipID.closeWayByDrag.tip, { [weak self] in self?.mapView.tipViewForSelectedWayFirstNode() }),
 			(TipID.makeRectangular.tip, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) }),
 			(TipID.extendToWay.tip, { [weak self] in self?.addNodeButton }),
 			(TipID.upload.tip, { [weak self] in self?.uploadButton })

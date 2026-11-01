@@ -432,6 +432,23 @@ final class MapView: UIView, UIGestureRecognizerDelegate, UIContextMenuInteracti
 		return editToolbar.isHidden ? nil : editToolbar.controls.first(where: { $0.tag == action.rawValue })
 	}
 
+	/// An invisible view placed over a point on the map, used to anchor tips.
+	private lazy var tipAnchorView: UIView = {
+		let view = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 16))
+		view.isUserInteractionEnabled = false
+		addSubview(view)
+		return view
+	}()
+
+	/// A view positioned over the first node of the selected way, if it is on screen. Used to anchor tips.
+	func tipViewForSelectedWayFirstNode() -> UIView? {
+		guard let node = editorLayer.selectedWay?.nodes.first else { return nil }
+		let point = viewPort.mapTransform.screenPoint(forLatLon: node.latLon, birdsEye: true)
+		guard bounds.contains(point) else { return nil }
+		tipAnchorView.center = point
+		return tipAnchorView
+	}
+
 	func updateEditControl() {
 		tipSelectionChanged(hasPushpin: pushPin != nil, selection: editorLayer.selectedPrimary)
 		let show = pushPin != nil || editorLayer.selectedPrimary != nil
