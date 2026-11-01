@@ -456,11 +456,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 		if #available(iOS 17.0, *) {
 			// in priority order; at most one is shown per launch/cooldown
 			showTips([
-				(AppTips.location, locationButton),
-				(AppTips.dropNode, addNodeButton),
-				(AppTips.orientation, compassButton),
-				(AppTips.search, searchButton),
-				(AppTips.mapLayers, displayButton)
+				(TipID.location.tip, locationButton),
+				(TipID.dropNode.tip, addNodeButton),
+				(TipID.orientation.tip, compassButton),
+				(TipID.search.tip, searchButton),
+				(TipID.mapLayers.tip, displayButton)
 			])
 		}
 	}
@@ -469,11 +469,11 @@ final class MainViewController: UIViewController, DPadDelegate,
 	func showSituationalTips() {
 		guard #available(iOS 17.0, *) else { return }
 		TipPresenter.shared.setSituationalCandidates([
-			(AppTips.editTags, { [weak self] in self?.mapView.editToolbarButton(for: .EDITTAGS) }),
-			(AppTips.closeWayByDrag, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) }),
-			(AppTips.makeRectangular, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) }),
-			(AppTips.extendToWay, { [weak self] in self?.addNodeButton }),
-			(AppTips.upload, { [weak self] in self?.uploadButton })
+			(TipID.editTags.tip, { [weak self] in self?.mapView.editToolbarButton(for: .EDITTAGS) }),
+			(TipID.closeWayByDrag.tip, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) }),
+			(TipID.makeRectangular.tip, { [weak self] in self?.mapView.editToolbarButton(for: .MORE) }),
+			(TipID.extendToWay.tip, { [weak self] in self?.addNodeButton }),
+			(TipID.upload.tip, { [weak self] in self?.uploadButton })
 		], from: self)
 	}
 

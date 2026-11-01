@@ -136,9 +136,9 @@ class DisplayViewController: UITableViewController {
 
 		if #available(iOS 17.0, *) {
 			showTips([
-				(AppTips.gpxTraces, gpxLoggingSwitch),
-				(AppTips.quests, questsSwitch),
-				(AppTips.dataLayers, dataOverlaySwitch)
+				(TipID.gpxTraces.tip, gpxLoggingSwitch),
+				(TipID.quests.tip, questsSwitch),
+				(TipID.dataLayers.tip, dataOverlaySwitch)
 			])
 		}
 	}
