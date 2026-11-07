@@ -969,12 +969,15 @@ final class MainViewController: UIViewController, DPadDelegate,
 			return !mapView.isHidden && mapView.mapData.canUndo()
 		case #selector(redo(_:)):
 			return !mapView.isHidden && mapView.mapData.canRedo()
+		// Copy, paste, and delete act on the map selection, but we're also in the
+		// responder chain of any view controller we present, like the tag editor.
+		// Don't claim them then, or a text field with nothing selected offers our Copy.
 		case #selector(copy(_:)):
-			return mapView.selectedPrimary != nil
+			return presentedViewController == nil && mapView.selectedPrimary != nil
 		case #selector(paste(_:)):
-			return mapView.selectedPrimary != nil && mapView.canPasteTags()
+			return presentedViewController == nil && mapView.selectedPrimary != nil && mapView.canPasteTags()
 		case #selector(delete(_:)):
-			return mapView.selectedPrimary != nil && mapView.selections.relation == nil
+			return presentedViewController == nil && mapView.selectedPrimary != nil && mapView.selections.relation == nil
 		case #selector(showHelp(_:)):
 			return true
 #if targetEnvironment(macCatalyst)
