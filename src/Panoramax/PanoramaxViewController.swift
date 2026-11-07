@@ -333,10 +333,31 @@ class PanoramaxViewController: UIViewController {
 				self.photoDate.text = Self.formattedTimestamp(date: date)
 				self.photoUser.text = AppDelegate.shared.userName
 				self.delegate?.panoramaxUpdate(photoID: photoID)
+			} catch is CancellationError {
+				// user cancelled
+			} catch let error as URLError where error.code == .cancelled {
+				// user cancelled
 			} catch {
-				self.showError(error)
+				self.showUploadError(error, image: image, imageData: imageData, date: date)
 			}
 		}
+	}
+
+	@MainActor
+	private func showUploadError(_ error: Error, image: UIImage, imageData: Data, date: Date) {
+		let alert = UIAlertController(title: NSLocalizedString("Upload Failed", comment: ""),
+		                              message: error.localizedDescription,
+		                              preferredStyle: .alert)
+		alert.addAction(UIAlertAction(title: NSLocalizedString("Retry", comment: ""),
+		                              style: .default)
+		{ _ in
+			Task {
+				await self.uploadImage(image: image, imageData: imageData, date: date)
+			}
+			})
+		alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""),
+		                              style: .cancel))
+		present(alert, animated: true)
 	}
 
 	func fetchPhotoAndMetadata() {
