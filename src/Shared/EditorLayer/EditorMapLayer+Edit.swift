@@ -797,22 +797,27 @@ extension EditorMapLayer {
 		return actionList
 	}
 
+	/// If trying to edit a node in a way that has no tags assume user wants to edit the way instead
+	private func promoteSelectedNodeToWay() {
+		if let way = selectedWay,
+		   let node = selectedNode,
+		   node.tags.count == 0,
+		   way.tags.count == 0,
+		   !way.isMultipolygonMember()
+		{
+			// promote the selection to the way
+			selectedNode = nil
+			owner.didUpdateObject()
+		}
+	}
+
 	/// Performs the selected action on the currently selected editor objects
 	func performEdit(_ action: EDIT_ACTION) {
-		// if trying to edit a node in a way that has no tags assume user wants to edit the way instead
+		// If trying to edit a node in a way that has no tags assume user wants to edit the way instead
 		switch action {
 		case .RECTANGULARIZE, .STRAIGHTEN, .REVERSE, .DUPLICATE, .ROTATE, .CIRCULARIZE, .COPYTAGS, .PASTETAGS,
 		     .EDITTAGS, .CREATE_RELATION:
-			if let way = selectedWay,
-			   let node = selectedNode,
-			   node.tags.count == 0,
-			   way.tags.count == 0,
-			   !way.isMultipolygonMember()
-			{
-				// promote the selection to the way
-				selectedNode = nil
-				owner.didUpdateObject()
-			}
+			promoteSelectedNodeToWay()
 		case .SPLIT, .JOIN, .DISCONNECT, .EXTRACTNODE, .RESTRICT, .ADDNOTE, .DELETE, .MORE, .CLOSE_AREA,
 		     .ALIGN_NODE, .DROP_PIN:
 			break
@@ -1476,6 +1481,7 @@ extension EditorMapLayer: UIPasteConfigurationSupporting {
 				_ = item.loadObject(ofClass: String.self) { [weak self] text, _ in
 					if let text {
 						DispatchQueue.main.async {
+							self?.promoteSelectedNodeToWay()
 							self?.pasteTags(string: text)
 						}
 					}
