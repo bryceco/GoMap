@@ -35,6 +35,7 @@ class QuestSolverController: TableViewControllerMac, PresetValueTextFieldOwner {
 				{
 					let tag = presetKey.tagKey + "=" + preset.tagValue
 					images[tag] = image.scaledTo(width: Self.ImageWidth, height: nil)
+						.withRenderingMode(.alwaysTemplate)
 				}
 			}
 		}
@@ -310,6 +311,7 @@ class QuestSolverController: TableViewControllerMac, PresetValueTextFieldOwner {
 				if !images.isEmpty {
 					let tag = editKeys[indexPath.section - 1] + "=" + (presetValue?.tagValue ?? "")
 					cell.imageView?.image = images[tag] ?? placeholderImage
+					cell.imageView?.tintColor = UIColor.label
 				}
 				if let value = object.tags[editKeys[indexPath.section - 1]],
 				   value == presetValue?.tagValue
