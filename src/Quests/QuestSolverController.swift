@@ -17,6 +17,8 @@ private let NUMBER_OF_FOOTERS = 2 // ignore + open tag editor
 
 class QuestSolverController: TableViewControllerMac, PresetValueTextFieldOwner {
 	static let ImageWidth = 60.0
+	// Keep icons shorter than the minimum row height so adjacent icons don't touch
+	static let ImageHeight = 40.0
 	var questMarker: QuestMarker!
 	var object: OsmBaseObject!
 	var presetFeature: PresetFeature?
@@ -34,7 +36,7 @@ class QuestSolverController: TableViewControllerMac, PresetValueTextFieldOwner {
 				   let image = UIImage(named: iconName)
 				{
 					let tag = presetKey.tagKey + "=" + preset.tagValue
-					images[tag] = image.scaledTo(width: Self.ImageWidth, height: nil)
+					images[tag] = image.scaledTo(width: Self.ImageWidth, height: Self.ImageHeight)
 						.withRenderingMode(.alwaysTemplate)
 				}
 			}
