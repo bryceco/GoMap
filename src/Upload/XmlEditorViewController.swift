@@ -25,6 +25,7 @@ final class XmlEditorViewController: UIViewController {
 	private let textView = UITextView()
 	private var commitBarButton: UIBarButtonItem!
 	private let progressView = UIActivityIndicatorView(style: .medium)
+	private var progressBarButton: UIBarButtonItem!
 	private var alertShown = false
 
 	override func viewDidLoad() {
@@ -38,10 +39,12 @@ final class XmlEditorViewController: UIViewController {
 			style: .done,
 			target: self,
 			action: #selector(commitTapped))
+		progressBarButton = UIBarButtonItem(customView: progressView)
 		navigationItem.rightBarButtonItems = [
 			commitBarButton,
-			UIBarButtonItem(customView: progressView)
+			progressBarButton
 		]
+		setBusy(false)
 
 		textView.font = UIFont.monospacedSystemFont(ofSize: 12, weight: .regular)
 		textView.autocorrectionType = .no
@@ -71,14 +74,27 @@ final class XmlEditorViewController: UIViewController {
 		present(alert, animated: true)
 	}
 
+	/// Shows/hides the progress spinner and toggles the Commit button.
+	/// The bar button item itself must be hidden, otherwise iOS 26 draws an empty glass capsule.
+	private func setBusy(_ busy: Bool) {
+		if busy {
+			progressView.startAnimating()
+		} else {
+			progressView.stopAnimating()
+		}
+		if #available(iOS 16.0, *) {
+			progressBarButton.isHidden = !busy
+		}
+		commitBarButton.isEnabled = !busy
+	}
+
 	@objc private func commitTapped() {
 		Task { @MainActor in await performCommit() }
 	}
 
 	@MainActor
 	private func performCommit() async {
-		progressView.startAnimating()
-		commitBarButton.isEnabled = false
+		setBusy(true)
 
 		do {
 			let xmlDoc = try DDXMLDocument(xmlString: textView.text ?? "", options: 0)
@@ -106,8 +122,7 @@ final class XmlEditorViewController: UIViewController {
 		{
 			// No automatic recovery here: the user is editing the XML by hand
 			try? await mapData.closeChangeset(changesetID)
-			progressView.stopAnimating()
-			commitBarButton.isEnabled = true
+			setBusy(false)
 			UploadViewController.presentUploadError(vc: self,
 			                                        String.localizedStringWithFormat(
 			                                        	NSLocalizedString(
@@ -117,20 +132,17 @@ final class XmlEditorViewController: UIViewController {
 		} catch OsmMapData.Error.serverSkippedDelete,
 			OsmMapData.Error.serverReturnedUnknownObjectId
 		{
-			progressView.stopAnimating()
-			commitBarButton.isEnabled = true
+			setBusy(false)
 			UploadViewController.presentUploadError(vc: self,
 			                                        NSLocalizedString(
 			                                        	"Upload succeeded but the server returned mismatched data.\n\nYou should use Clear Cache > OSM Data before continuing to map.",
 			                                        	comment: "'Clear Cache' and 'OSM Data' should match what your language uses for the same terms in Display settings"))
 		} catch UrlSessionError.badStatusCode(401, _) {
 			OSM_SERVER.oAuth2?.removeAuthorization()
-			progressView.stopAnimating()
-			commitBarButton.isEnabled = true
+			setBusy(false)
 			navigationController?.popToRootViewController(animated: true)
 		} catch {
-			progressView.stopAnimating()
-			commitBarButton.isEnabled = true
+			setBusy(false)
 			UploadViewController.presentUploadError(vc: self,
 			                                        error.localizedDescription)
 		}
