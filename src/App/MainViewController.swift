@@ -1768,7 +1768,7 @@ final class MainViewController: UIViewController, DPadDelegate,
 		let scale: CGFloat = 0.5
 			    
 		// 1. Get the current map rotation
-	    let rotation = CGFloat(viewPort.mapTransform.rotation())
+		let rotation = CGFloat(viewPort.mapTransform.rotation())
 						    
 		// 2. Apply the INVERSE rotation (-rotation) to map screen-space to layer-space
 		let rotationTransform = CGAffineTransform(rotationAngle: -rotation)
