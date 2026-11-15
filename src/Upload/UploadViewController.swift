@@ -405,6 +405,11 @@ class UploadViewController: UIViewController {
 	private lazy var exportOscButton = UIBarButtonItem(barButtonSystemItem: .action,
 	                                                   target: self,
 	                                                   action: #selector(exportOscFile(_:)))
+	// Toggles between selecting every eligible group and deselecting them all.
+	private lazy var selectAllButton = UIBarButtonItem(title: nil,
+	                                                   style: .plain,
+	                                                   target: self,
+	                                                   action: #selector(toggleSelectAll(_:)))
 
 	private var sections: [Section] = [.comment, .source]
 	private var connectedGroups: [ConnectedObjects] = []
@@ -449,11 +454,15 @@ class UploadViewController: UIViewController {
 		tableView.dataSource = self
 		tableView.delegate = self
 
-		toolbarItems = [
-			editXmlButton,
-			UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
-			exportOscButton
-		]
+		var items = [editXmlButton]
+		// The select-all icons only exist on iOS 16+, so older systems don't get the button.
+		if #available(iOS 16, *) {
+			items += [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+			          selectAllButton]
+		}
+		items += [UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil),
+		          exportOscButton]
+		toolbarItems = items
 
 		progressView.style = .large
 	}
@@ -539,6 +548,25 @@ class UploadViewController: UIViewController {
 		commitButton.isEnabled = hasSelection
 		editXmlButton.isEnabled = hasSelection
 		exportOscButton.isEnabled = !connectedGroups.isEmpty
+
+		let selectable = selectableGroupIndices
+		selectAllButton.isEnabled = !selectable.isEmpty
+		// The icon shows what tapping will do.
+		let allSelected = isAllSelected
+		selectAllButton.image = UIImage(systemName: allSelected ? "checklist.unchecked" : "checklist.checked")
+	}
+
+	/// Groups that Select All will select: untagged groups can't be uploaded, and conflicting
+	/// groups would just be rejected by the server again.
+	private var selectableGroupIndices: Set<Int> {
+		Set(connectedGroups.indices.filter {
+			!untaggedGroupIndices.contains($0) && conflict(forGroup: $0) == nil
+		})
+	}
+
+	private var isAllSelected: Bool {
+		let selectable = selectableGroupIndices
+		return !selectable.isEmpty && selectable.isSubset(of: selectedGroupIndices)
 	}
 
 	/// Inserts or removes the empty-comment warning section
@@ -687,6 +715,22 @@ class UploadViewController: UIViewController {
 		updateActionButtons()
 	}
 
+	@objc private func toggleSelectAll(_ sender: Any) {
+		if isAllSelected {
+			selectedGroupIndices.removeAll()
+		} else {
+			selectedGroupIndices.formUnion(selectableGroupIndices)
+		}
+		// Update the visible headers in place rather than reloading, so the table doesn't jump.
+		for (section, kind) in sections.enumerated() {
+			guard case let .group(groupIndex) = kind,
+			      let header = tableView.headerView(forSection: section) as? GroupSectionHeader
+			else { continue }
+			header.isChecked = selectedGroupIndices.contains(groupIndex)
+		}
+		updateActionButtons()
+	}
+
 	private func confirmDiscard(at groupIndex: Int) {
 		let group = connectedGroups[groupIndex]
 		let alert = UIAlertController(
@@ -830,6 +874,7 @@ class UploadViewController: UIViewController {
 		cancelButton.isEnabled = false
 		exportOscButton.isEnabled = false
 		editXmlButton.isEnabled = false
+		selectAllButton.isEnabled = false
 		tableView.isUserInteractionEnabled = false
 		let generator = appDelegate.generator
 
