@@ -64564,6 +64564,9 @@
         }
       }
     },
+    "Upload Failed" : {
+
+    },
     "Upload Incomplete" : {
       "comment" : "Only part of the upload succeeded"
     },
