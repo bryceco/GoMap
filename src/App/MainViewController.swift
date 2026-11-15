@@ -1781,11 +1781,13 @@ final class MainViewController: UIViewController, DPadDelegate,
 	// MARK: Other stuff
 
 	func setAerialTileServer(_ service: TileServer) {
-		mapLayersView.aerialLayer.tileServer = service
-		updateAerialAttributionButton()
-		// update imagery offset
-		mapLayersView.aerialLayer.imageryOffsetMeters = CGPointZero
-		updateAerialAlignmentButton()
+		if service != mapLayersView.aerialLayer.tileServer {
+			mapLayersView.aerialLayer.tileServer = service
+			updateAerialAttributionButton()
+			// update imagery offset
+			mapLayersView.aerialLayer.imageryOffsetMeters = CGPointZero
+			updateAerialAlignmentButton()
+		}
 	}
 
 	func updateAerialAttributionButton() {
