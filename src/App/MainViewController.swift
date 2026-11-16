@@ -1765,10 +1765,21 @@ final class MainViewController: UIViewController, DPadDelegate,
 	}
 
 	func dPadPress(_ shift: CGPoint) {
-		let scale = 0.5
+		let scale: CGFloat = 0.5
+		let rotation = CGFloat(viewPort.mapTransform.rotation())
+
+		// 1. Convert DPad's Y-up vector into UIKit's Y-down screen space
+		let screenShift = CGPoint(x: shift.x, y: -shift.y)
+
+		// 2. Rotate using -rotation to match mapTransform's angle convention
+		let rotatedScreenShift = screenShift.applying(CGAffineTransform(rotationAngle: -rotation))
+
+		// 3. Convert back to Y-up geographic meters and apply
 		let newOffset = mapLayersView.aerialLayer.imageryOffsetMeters.plus(CGPoint(
-			x: shift.x * scale,
-			y: shift.y * scale))
+			x: rotatedScreenShift.x * scale,
+			y: -rotatedScreenShift.y * scale
+		))
+
 		mapLayersView.aerialLayer.imageryOffsetMeters = newOffset
 		updateAerialAlignmentButton()
 	}
