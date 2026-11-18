@@ -104,6 +104,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 		// access the current OSM server to force capabilities download
 		_ = OSM_SERVER
+
+		WatchGpxSession.shared.activate()
 		return true
 	}
 

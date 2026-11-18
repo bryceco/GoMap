@@ -169,6 +169,9 @@ final class GpxTracks: DiskCacheSizeProtocol {
 		guard let activeTrack else {
 			return
 		}
+		defer {
+			WatchGpxSession.shared.update()
+		}
 #if canImport(ActivityKit) && !targetEnvironment(macCatalyst)
 		defer {
 			if #available(iOS 16.2, *) {
